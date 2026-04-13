@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ハブ ダッシュボード 2026-04-13 - TrePro Share</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.8;
+  }
+  .header {
+    background: linear-gradient(135deg, #1A1A1A 0%, #292F33 100%);
+    color: white;
+    padding: 24px 32px;
+    border-bottom: 4px solid #D20B00;
+  }
+  .header h1 { font-size: 1.4rem; font-weight: 700; }
+  .header .meta { font-size: 0.85rem; color: #aaa; margin-top: 4px; }
+  .header .logo { font-size: 0.75rem; color: #D20B00; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .content {
+    max-width: 860px;
+    margin: 32px auto;
+    background: white;
+    padding: 40px 48px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .content h1 { font-size: 1.5rem; margin: 32px 0 16px; color: #1A1A1A; border-bottom: 2px solid #D20B00; padding-bottom: 8px; }
+  .content h2 { font-size: 1.25rem; margin: 28px 0 12px; color: #1A1A1A; }
+  .content h3 { font-size: 1.1rem; margin: 24px 0 8px; color: #333; }
+  .content p { margin: 12px 0; }
+  .content ul, .content ol { margin: 12px 0 12px 24px; }
+  .content li { margin: 4px 0; }
+  .content code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .content pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 16px 0;
+    line-height: 1.5;
+  }
+  .content pre code { background: none; padding: 0; color: inherit; }
+  .content blockquote {
+    border-left: 4px solid #D20B00;
+    padding: 12px 20px;
+    margin: 16px 0;
+    background: #fdf5f5;
+    color: #555;
+  }
+  .content table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .content th, .content td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  .content th { background: #1A1A1A; color: white; font-weight: 600; }
+  .content tr:nth-child(even) { background: #f9f9f9; }
+  .footer { text-align: center; padding: 24px; color: #999; font-size: 0.8rem; }
+  @media (max-width: 640px) {
+    .content { padding: 24px 20px; margin: 16px; }
+    .header { padding: 16px 20px; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+  <div class="logo">TREPRO SHARE</div>
+  <h1>ハブ ダッシュボード 2026-04-13</h1>
+  <div class="meta">2026年04月13日 16:54 / TrePro</div>
+</div>
+<div class="content">
+<h1 id="trepro-タスクダッシュボード">TrePro タスクダッシュボード</h1>
+<blockquote>
+<p>全プロジェクトの現在地を一目で把握するための統括ビュー 最終更新:
+2026-04-08</p>
+</blockquote>
+<hr />
+<h2 id="今日のフォーカス2026-04-09">今日のフォーカス（2026-04-09）</h2>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>優先度</th>
+<th>タスク</th>
+<th>プロジェクト</th>
+<th>ステータス</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>最高</strong></td>
+<td>Zoom Webhook Secret Token設定→本番接続</td>
+<td>trepro-ai-v4</td>
+<td>ブロック中（Token待ち）</td>
+</tr>
+<tr>
+<td><strong>最高</strong></td>
+<td>ナーチャリング自動化 Phase1着手</td>
+<td>trepro-ai</td>
+<td>進行中（仕様書完了）</td>
+</tr>
+<tr>
+<td><strong>高</strong></td>
+<td>トレタンBot SM日次レポート追加指標実装</td>
+<td>trepro-ai</td>
+<td>進行中</td>
+</tr>
+<tr>
+<td><strong>高</strong></td>
+<td>BANT基準パイプライン定義</td>
+<td>trepro-ai</td>
+<td>未着手</td>
+</tr>
+<tr>
+<td><strong>高</strong></td>
+<td>freee会計API連携の仕上げ</td>
+<td>trepro-ai-v4</td>
+<td>進行中</td>
+</tr>
+<tr>
+<td><strong>中</strong></td>
+<td>MMSSPカレンダー運用ルール CEO提出</td>
+<td>agents-org</td>
+<td>本日期限</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="プロジェクト健全性">プロジェクト健全性</h2>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 14%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>プロジェクト</th>
+<th>状態</th>
+<th>未コミット</th>
+<th>直近の課題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>trepro-ai-v4</td>
+<td>稼働中</td>
+<td>あり（4ファイル）</td>
+<td>freee/SF/MiiTel統合の仕上げ</td>
+</tr>
+<tr>
+<td>claude-code-harness</td>
+<td>開発中</td>
+<td>あり（多数）</td>
+<td>feature/diary-mist マージ待ち</td>
+</tr>
+<tr>
+<td>agent-p2p</td>
+<td>安定</td>
+<td>なし</td>
+<td>オークション機能の安定化</td>
+</tr>
+<tr>
+<td>agents-org</td>
+<td>運用中</td>
+<td>—</td>
+<td>CAIO成果物整理</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="今週の目標">今週の目標</h2>
+<ol type="1">
+<li><label><input type="checkbox" />trepro-ai-v4
+の未コミット変更をすべてコミット・デプロイ</label></li>
+<li><label><input type="checkbox" />DiaryMist を master
+にマージ</label></li>
+<li><label><input
+type="checkbox" />タスク管理ハブを全プロジェクトに展開</label></li>
+<li><label><input type="checkbox" />agents-org
+の自動化パイプライン安定稼働</label></li>
+</ol>
+<hr />
+<h2 id="クイックリンク">クイックリンク</h2>
+<ul>
+<li><strong>タスク詳細</strong>: <a
+href="active-tasks.md"><code>active-tasks.md</code></a></li>
+<li><strong>プロジェクト一覧</strong>: <a
+href="projects.md"><code>projects.md</code></a></li>
+<li><strong>本日のログ</strong>: <a
+href="daily/2026-04-08.md"><code>daily/2026-04-08.md</code></a></li>
+</ul>
+<hr />
+<h2 id="運用ルール">運用ルール</h2>
+<ol type="1">
+<li><strong>セッション開始時</strong>:
+このダッシュボードを確認し、今日のフォーカスを把握する</li>
+<li><strong>作業完了時</strong>: <code>active-tasks.md</code>
+のステータスを更新する</li>
+<li><strong>セッション終了時</strong>: <code>daily/YYYY-MM-DD.md</code>
+にその日の進捗を記録する</li>
+<li><strong>週末</strong>: 完了タスクを <code>active-tasks.md</code>
+からアーカイブする</li>
+</ol>
+</div>
+<div class="footer">
+  Powered by TrePro Share | Claude Code → GitHub Pages
+</div>
+</body>
+</html>
