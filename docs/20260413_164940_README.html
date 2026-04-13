@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テスト共有 - TrePro Share</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.8;
+  }
+  .header {
+    background: linear-gradient(135deg, #1A1A1A 0%, #292F33 100%);
+    color: white;
+    padding: 24px 32px;
+    border-bottom: 4px solid #D20B00;
+  }
+  .header h1 { font-size: 1.4rem; font-weight: 700; }
+  .header .meta { font-size: 0.85rem; color: #aaa; margin-top: 4px; }
+  .header .logo { font-size: 0.75rem; color: #D20B00; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .content {
+    max-width: 860px;
+    margin: 32px auto;
+    background: white;
+    padding: 40px 48px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .content h1 { font-size: 1.5rem; margin: 32px 0 16px; color: #1A1A1A; border-bottom: 2px solid #D20B00; padding-bottom: 8px; }
+  .content h2 { font-size: 1.25rem; margin: 28px 0 12px; color: #1A1A1A; }
+  .content h3 { font-size: 1.1rem; margin: 24px 0 8px; color: #333; }
+  .content p { margin: 12px 0; }
+  .content ul, .content ol { margin: 12px 0 12px 24px; }
+  .content li { margin: 4px 0; }
+  .content code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .content pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 16px 0;
+    line-height: 1.5;
+  }
+  .content pre code { background: none; padding: 0; color: inherit; }
+  .content blockquote {
+    border-left: 4px solid #D20B00;
+    padding: 12px 20px;
+    margin: 16px 0;
+    background: #fdf5f5;
+    color: #555;
+  }
+  .content table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .content th, .content td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  .content th { background: #1A1A1A; color: white; font-weight: 600; }
+  .content tr:nth-child(even) { background: #f9f9f9; }
+  .footer { text-align: center; padding: 24px; color: #999; font-size: 0.8rem; }
+  @media (max-width: 640px) {
+    .content { padding: 24px 20px; margin: 16px; }
+    .header { padding: 16px 20px; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+  <div class="logo">TREPRO SHARE</div>
+  <h1>テスト共有</h1>
+  <div class="meta">2026年04月13日 16:49 / TrePro</div>
+</div>
+<div class="content">
+<h1 id="claude-code-harness-full">Claude Code Harness Full</h1>
+<p>Claude Code
+のスキル・エージェント・設定テンプレートをまとめた構成キットです。<br />
+新規プロジェクトにデプロイすることで、Claude Code
+の機能をすぐに使える状態にします。</p>
+<h2 id="ディレクトリ構成">ディレクトリ構成</h2>
+<pre><code>.
+├── project-config/     # プロジェクトにデプロイされる設定
+│   ├── skills/         # スキル群（スライド生成、レポート等）
+│   └── agents/         # エージェント定義
+├── global-config/      # ~/.claude/ に配置するグローバル設定
+│   ├── skills/         # グローバルスキル
+│   └── agents/         # グローバルエージェント
+├── agents-org/         # マルチエージェント組織シミュレーション
+├── docs/               # Claude Code ガイド・ベストプラクティス
+├── scripts/            # デプロイスクリプト
+├── .env.example        # 環境変数テンプレート
+└── .gitignore</code></pre>
+<h2 id="セットアップ">セットアップ</h2>
+<h3 id="リポジトリをクローン">1. リポジトリをクローン</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/Fukuoka-desu/claude-code-harness.git</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> claude-code-harness</span></code></pre></div>
+<h3 id="環境変数を設定">2. 環境変数を設定</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> .env.example .env</span></code></pre></div>
+<p><code>.env</code> を編集して以下を設定: - <code>GEMINI_API_KEY</code>
+— Gemini API キー（管理者からDMで受け取ってください） -
+<code>DEPLOY_TARGETS</code> — デプロイ先プロジェクトのパス</p>
+<h3 id="プロジェクトにデプロイ">3. プロジェクトにデプロイ</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 単体デプロイ</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/deploy-to-project.sh</span> ~/your-project</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># .env に定義した全プロジェクトに一括デプロイ</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/deploy-all.sh</span></span></code></pre></div>
+<p>デプロイされるもの: - <code>.claude/skills/</code> — スキル群 -
+<code>.claude/agents/</code> — エージェント定義（nanobanana SubAgent
+含む） - <code>.mcp.json</code> — MCP サーバー設定</p>
+<h3 id="gemini-api-キーをプロジェクトに配置">4. Gemini API
+キーをプロジェクトに配置</h3>
+<p>デプロイ先プロジェクトのルートに <code>.env.local</code> を作成:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;GEMINI_API_KEY=your_key_here&quot;</span> <span class="op">&gt;</span> ~/your-project/.env.local</span></code></pre></div>
+<h2 id="含まれるスキル">含まれるスキル</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>カテゴリ</th>
+<th>スキル例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>スライド生成</td>
+<td>業種別提案（美容/介護/建設/製造/運送/福祉等）、代理店経由（電通/博報堂）、AI導入提案</td>
+</tr>
+<tr>
+<td>ドキュメント</td>
+<td>企画書、セールス提案、運用レポート、継続打診資料、効果測定分析</td>
+</tr>
+<tr>
+<td>動画</td>
+<td>スライド→動画変換、画面収録→マニュアル生成</td>
+</tr>
+</tbody>
+</table>
+<h2 id="必要環境">必要環境</h2>
+<ul>
+<li>Claude Code CLI</li>
+<li>Python 3.10+</li>
+<li>Gemini API Key</li>
+<li>LibreOffice（動画・PDF変換スキル使用時）</li>
+</ul>
+<h3 id="auto-mode任意">Auto Mode（任意）</h3>
+<p>長いタスクで承認プロンプトを減らす <a
+href="https://code.claude.com/docs/en/permission-modes#eliminate-prompts-with-auto-mode">Auto
+mode</a> を使う場合、起動時に次のようにする（Team / Enterprise / API
+プラン、Sonnet 4.6 または Opus 4.6 が前提）。</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--enable-auto-mode</span></span></code></pre></div>
+<p>初めから Auto で始める場合は
+<code>claude --enable-auto-mode --permission-mode auto</code>。詳細は
+<code>docs/claude-code-complete-guide.md</code> の「Auto Mode
+を有効にする」を参照。</p>
+</div>
+<div class="footer">
+  Powered by TrePro Share | Claude Code → GitHub Pages
+</div>
+</body>
+</html>

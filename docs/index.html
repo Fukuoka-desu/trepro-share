@@ -6,14 +6,23 @@
 <title>TrePro Share</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Noto Sans JP', sans-serif; background: #f5f5f5; color: #333; }
+  body { font-family: 'Noto Sans JP', -apple-system, sans-serif; background: #f5f5f5; color: #333; }
   .header {
     background: linear-gradient(135deg, #1A1A1A 0%, #292F33 100%);
     color: white; padding: 32px; border-bottom: 4px solid #D20B00; text-align: center;
   }
-  .header .logo { color: #D20B00; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 8px; font-size: 0.8rem; }
   .header h1 { font-size: 1.6rem; }
+  .header .logo { color: #D20B00; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 8px; font-size: 0.8rem; }
   .header p { color: #aaa; font-size: 0.9rem; margin-top: 8px; }
+  .list { max-width: 700px; margin: 32px auto; padding: 0 16px; }
+  .item {
+    background: white; border-radius: 8px; padding: 20px 24px; margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06); display: flex; justify-content: space-between;
+    align-items: center; text-decoration: none; color: #333; transition: box-shadow 0.2s;
+  }
+  .item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+  .item .title { font-weight: 700; font-size: 1rem; }
+  .item .date { color: #999; font-size: 0.85rem; }
   .empty { text-align: center; color: #999; padding: 48px; }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -24,6 +33,11 @@
   <h1>共有ファイル一覧</h1>
   <p>Claude Code の成果物を共有するページです</p>
 </div>
-<div class="empty">まだ共有ファイルはありません<br>share.sh で最初のファイルを共有してみましょう</div>
+<div class="list">
+  <a class="item" href="20260413_164940_README.html">
+    <span class="title">README</span>
+    <span class="date">2026/04/13</span>
+  </a>
+</div>
 </body>
 </html>
