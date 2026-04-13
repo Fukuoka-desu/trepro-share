@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スキル × TrePro Share フロー</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans JP', -apple-system, sans-serif;
+    background: #0f0f0f;
+    color: #eee;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .header .logo { color: #D20B00; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 12px; }
+  .header h1 { font-size: 1.8rem; font-weight: 700; }
+  .header p { color: #888; margin-top: 8px; font-size: 0.9rem; }
+
+  .flow {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ===== STEP ROW ===== */
+  .step-row {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+
+  .step-label {
+    width: 80px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 12px;
+    color: #555;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .cards {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+  }
+
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 14px 18px;
+    flex: 1;
+    min-width: 140px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #D20B00; }
+
+  .card .cmd {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #D20B00;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .card .desc {
+    font-size: 0.78rem;
+    color: #888;
+    line-height: 1.5;
+  }
+  .card .output {
+    margin-top: 8px;
+    font-size: 0.72rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card .output::before {
+    content: '→';
+    color: #444;
+  }
+
+  /* ===== ARROW ===== */
+  .arrow-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .arrow-spacer { width: 80px; flex-shrink: 0; padding-right: 12px; }
+  .arrow-line {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 4px 0;
+    color: #333;
+    font-size: 1.4rem;
+  }
+
+  /* ===== CONVERTER ===== */
+  .converter {
+    max-width: 900px;
+    margin: 0 auto 0;
+  }
+  .converter-inner {
+    margin-left: 92px;
+    background: linear-gradient(135deg, #1a0000 0%, #2a0808 100%);
+    border: 1px solid #D20B00;
+    border-radius: 12px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .converter-icon { font-size: 2rem; }
+  .converter-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ff4444;
+    margin-bottom: 4px;
+  }
+  .converter-cmd {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: #888;
+    background: #0f0f0f;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-top: 6px;
+    display: inline-block;
+  }
+  .converter-desc { font-size: 0.82rem; color: #666; }
+
+  /* ===== OUTPUT ===== */
+  .output-box {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .output-inner {
+    margin-left: 92px;
+    background: #0a1a0a;
+    border: 1px solid #2d6a2d;
+    border-radius: 12px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .output-icon { font-size: 2rem; }
+  .output-title { font-size: 1.1rem; font-weight: 700; color: #4caf50; margin-bottom: 4px; }
+  .output-url {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.78rem;
+    color: #4caf50;
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+  .output-desc { font-size: 0.82rem; color: #555; }
+
+  /* ===== SHARE ROW ===== */
+  .share-row {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .share-inner {
+    margin-left: 92px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 12px 0;
+  }
+  .share-chip {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ===== ONE-SHOT BOX ===== */
+  .oneshot {
+    max-width: 900px;
+    margin: 40px auto 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .oneshot-inner {
+    margin-left: 92px;
+    background: #0d0d1a;
+    border: 1px solid #4444aa;
+    border-radius: 12px;
+    padding: 20px 28px;
+  }
+  .oneshot-title {
+    font-size: 0.75rem;
+    color: #7777cc;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .oneshot-code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #aaaaff;
+    line-height: 2;
+  }
+  .oneshot-code .comment { color: #555; }
+  .oneshot-code .cmd { color: #D20B00; }
+  .oneshot-code .pipe { color: #666; }
+
+  .section-divider {
+    max-width: 900px;
+    margin: 32px auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .divider-inner {
+    margin-left: 92px;
+    border-top: 1px solid #222;
+    padding-top: 8px;
+    font-size: 0.72rem;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  @media (max-width: 640px) {
+    .step-label { width: 50px; font-size: 0.65rem; }
+    .arrow-spacer { width: 50px; }
+    .converter-inner, .output-inner, .share-inner, .oneshot-inner { margin-left: 62px; }
+    .divider-inner { margin-left: 62px; }
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">TREPRO SHARE</div>
+  <h1>スキル → 共有URL 一発フロー</h1>
+  <p>Claude Code のアウトプットを即座にWebページとして共有する</p>
+</div>
+
+<!-- STEP 1 -->
+<div class="flow">
+  <div class="step-row">
+    <div class="step-label">STEP 1</div>
+    <div class="cards">
+      <div class="card">
+        <div class="cmd">/handoff</div>
+        <div class="desc">現在セッションの<br>作業状態・TODOを書き出し</div>
+        <div class="output">handoff-YYYY-MM-DD.md</div>
+      </div>
+      <div class="card">
+        <div class="cmd">/context</div>
+        <div class="desc">別環境での開発継続用<br>コンテキストまとめ</div>
+        <div class="output">context-summary.md</div>
+      </div>
+      <div class="card">
+        <div class="cmd">/hub</div>
+        <div class="desc">全プロジェクト横断<br>ダッシュボード出力</div>
+        <div class="output">DASHBOARD.md</div>
+      </div>
+      <div class="card">
+        <div class="cmd">任意の .md / .html</div>
+        <div class="desc">レポート・分析結果<br>スライド・議事録など</div>
+        <div class="output">any file</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARROW -->
+<div class="arrow-row" style="max-width:900px;margin:0 auto;">
+  <div class="arrow-spacer"></div>
+  <div class="arrow-line">↓</div>
+</div>
+
+<!-- STEP 2: share.sh -->
+<div class="converter" style="margin-bottom:0;">
+  <div class="converter-inner">
+    <div class="converter-icon">⚙️</div>
+    <div>
+      <div class="converter-title">share.sh</div>
+      <div class="converter-desc">Markdown → スタイル付きHTML に変換 → GitHub へ push</div>
+      <div class="converter-cmd">./share.sh file.md "タイトル"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ARROW -->
+<div class="arrow-row" style="max-width:900px;margin:0 auto;">
+  <div class="arrow-spacer"></div>
+  <div class="arrow-line">↓</div>
+</div>
+
+<!-- STEP 3: URL -->
+<div class="output-box">
+  <div class="output-inner">
+    <div class="output-icon">🌐</div>
+    <div>
+      <div class="output-title">GitHub Pages URL が即発行</div>
+      <div class="output-desc">数秒で公開完了。ログイン不要で誰でも閲覧可能</div>
+      <div class="output-url">https://Fukuoka-desu.github.io/trepro-share/20260413_xxx.html</div>
+    </div>
+  </div>
+</div>
+
+<!-- ARROW -->
+<div class="arrow-row" style="max-width:900px;margin:0 auto;">
+  <div class="arrow-spacer"></div>
+  <div class="arrow-line">↓</div>
+</div>
+
+<!-- STEP 4: Share -->
+<div class="share-row">
+  <div class="share-inner">
+    <div class="share-chip">💬 Slack に貼る</div>
+    <div class="share-chip">📱 LINE に貼る</div>
+    <div class="share-chip">📧 メールに貼る</div>
+    <div class="share-chip">🔗 Notion に埋め込む</div>
+    <div class="share-chip">👀 受け取る側はGit不要</div>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="section-divider">
+  <div class="divider-inner">one-liner examples</div>
+</div>
+
+<!-- ONE-SHOT examples -->
+<div class="oneshot">
+  <div class="oneshot-inner">
+    <div class="oneshot-title">⚡ 一発コマンド例</div>
+    <div class="oneshot-code">
+      <span class="comment"># セッション引き継ぎ状態を即共有</span><br>
+      <span class="cmd">/handoff</span> <span class="pipe">→</span> cd ~/trepro-share && ./share.sh ~/.claude/plans/handoff-*.md "引き継ぎ"<br>
+      <br>
+      <span class="comment"># 議事録を即共有</span><br>
+      cd ~/trepro-share && ./share.sh ~/claude-code-harness/2026-04-13_議事録.md "議事録"<br>
+      <br>
+      <span class="comment"># ダッシュボードを即共有</span><br>
+      cd ~/trepro-share && ./share.sh ~/.claude/hub/DASHBOARD.md "今日の進捗"
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:48px 0 24px;color:#333;font-size:0.75rem;">
+  Powered by TrePro Share | Claude Code → GitHub Pages
+</div>
+
+</body>
+</html>
