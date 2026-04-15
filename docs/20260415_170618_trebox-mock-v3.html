@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TreBox</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #FF6B35;
+    --coral-dark: #C84A1F;
+    --coral-50: #FFF4ED;
+    --coral-100: #FFE4D6;
+    --ink: #1A1A1A;
+  }
+  body {
+    margin: 0;
+    font-family: 'Noto Sans JP', -apple-system, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background: #FFFBF5;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+    line-break: strict;
+    overflow-wrap: break-word;
+  }
+  h1, h2, h3 { word-break: keep-all; line-break: strict; }
+  .h-display { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; letter-spacing: -0.02em; }
+  .sticker {
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 8px 24px rgba(255, 107, 53, 0.08);
+    border: 1px solid rgba(255, 107, 53, 0.08);
+  }
+  .glossy-btn {
+    background: linear-gradient(180deg, var(--coral) 0%, var(--coral-dark) 100%);
+    color: white;
+    border: 2px solid white;
+    border-radius: 999px;
+    box-shadow: 0 4px 0 var(--coral-dark), 0 6px 16px rgba(255, 107, 53, 0.35);
+    transition: all .12s;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .glossy-btn:hover { transform: translateY(-1px); }
+  .glossy-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--coral-dark); }
+  .glossy-btn-secondary {
+    background: white;
+    color: var(--coral-dark);
+    border: 3px solid var(--coral);
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .12s;
+    box-shadow: 0 4px 0 var(--coral-100);
+  }
+  .glossy-btn-secondary:hover { background: var(--coral-50); transform: translateY(-1px); }
+  .balloon {
+    background: white;
+    border: 2px solid var(--ink);
+    border-radius: 24px;
+    padding: 18px 22px;
+    box-shadow: 4px 4px 0 var(--ink);
+    position: relative;
+  }
+  .balloon::before {
+    content: ''; position: absolute; left: -16px; top: 30px;
+    width: 0; height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 18px solid var(--ink);
+  }
+  .balloon::after {
+    content: ''; position: absolute; left: -12px; top: 32px;
+    width: 0; height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 14px solid white;
+  }
+  .step-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+  .step-dot.done { background: var(--coral); color: white; }
+  .step-dot.current { background: var(--coral); color: white; box-shadow: 0 0 0 4px var(--coral-100); }
+  .step-dot.pending { background: #F0F0F0; color: #999; }
+  .step-line { flex: 1; height: 3px; background: #F0F0F0; }
+  .step-line.done { background: var(--coral); }
+  .switcher {
+    position: fixed; top: 8px; right: 8px; z-index: 100;
+    background: white; padding: 6px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex; gap: 4px; font-size: 11px;
+  }
+  .switcher button { padding: 6px 10px; border-radius: 6px; background: #f3f4f6; border: none; cursor: pointer; font-weight: 600; }
+  .switcher button.active { background: var(--coral); color: white; }
+  @keyframes float { 0%,100%{ transform: translateY(0)} 50%{ transform: translateY(-8px)} }
+  .float { animation: float 3s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <button class="active" onclick="show('top', this)">TOP</button>
+  <button onclick="show('consult', this)">相談する</button>
+  <button onclick="show('done', this)">完了</button>
+  <button onclick="show('history', this)">履歴</button>
+</div>
+
+<!-- ============ TOP ============ -->
+<section id="top" class="screen">
+  <header class="border-b border-gray-100 bg-white/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div>
+          <div class="h-display text-2xl leading-none">TreBox<span style="color: var(--coral);">.</span></div>
+          <div class="text-[10px] text-gray-500 font-bold">AIエージェント相談箱</div>
+        </div>
+      </div>
+      <button onclick="show('history', document.querySelectorAll('.switcher button')[3])"
+              class="text-sm text-gray-600 hover:text-coral-600 font-bold flex items-center gap-1.5">
+        📜 履歴
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center min-h-[80vh]">
+    <div>
+      <div class="inline-block px-3 py-1 rounded-full text-xs font-bold mb-4" style="background: var(--coral-100); color: var(--coral-dark);">AIエージェント相談箱</div>
+      <h1 class="h-display text-3xl md:text-[2.25rem] leading-tight mb-5" style="word-break: keep-all;">
+        <span class="block">トレプロAIエージェントチームが</span>
+        <span class="block">悩みを解決します<span style="color: var(--coral);">。</span></span>
+      </h1>
+      <p class="text-lg text-gray-700 leading-relaxed mb-10">
+        ざっくりした悩みでOK。<br>
+        AIと一緒に要件を整理して、解決策をお届けします。
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <button onclick="show('consult', document.querySelectorAll('.switcher button')[1])"
+                class="glossy-btn px-10 py-4 text-lg">相談する →</button>
+        <button onclick="show('history', document.querySelectorAll('.switcher button')[3])"
+                class="glossy-btn-secondary px-8 py-4 text-base">📜 履歴を見る</button>
+      </div>
+    </div>
+    <div class="flex justify-center float">
+      <img src="/Users/fukuokayuuki/開発/tretan_illust/24_goyogiki_box.png"
+           alt="ごよぎき箱ライオン"
+           class="w-96 h-96 object-contain"
+           style="filter: drop-shadow(0 12px 30px rgba(255,107,53,0.25));">
+    </div>
+  </main>
+
+  <footer class="border-t border-gray-100 mt-12 py-6 text-center text-xs text-gray-500">
+    TreBox — 株式会社トレプロ
+  </footer>
+</section>
+
+<!-- ============ 相談フォーム ============ -->
+<section id="consult" class="screen hidden">
+  <header class="border-b border-gray-100 bg-white/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="show('top', document.querySelectorAll('.switcher button')[0])" class="text-gray-500 text-sm">← TOP</button>
+        <div class="h-display text-xl">TreBox<span style="color: var(--coral);">.</span></div>
+      </div>
+      <div class="text-xs text-gray-500">所要時間: 約5分</div>
+    </div>
+  </header>
+
+  <div class="max-w-3xl mx-auto px-6 py-8">
+
+    <div class="flex items-center gap-2 mb-3">
+      <div class="step-dot done">✓</div>
+      <div class="step-line done"></div>
+      <div class="step-dot current">2</div>
+      <div class="step-line"></div>
+      <div class="step-dot pending">3</div>
+      <div class="step-line"></div>
+      <div class="step-dot pending">4</div>
+      <div class="step-line"></div>
+      <div class="step-dot pending">5</div>
+    </div>
+    <div class="flex justify-between text-[11px] text-gray-500 mb-10 px-1">
+      <span class="font-bold" style="color: var(--coral);">タイプ</span>
+      <span class="font-bold" style="color: var(--coral);">●ヒアリング</span>
+      <span>AI質問</span>
+      <span>サマリー</span>
+      <span>連絡先</span>
+    </div>
+
+    <h2 class="h-display text-3xl mb-2">悩みを教えてください</h2>
+    <p class="text-gray-500 mb-8">ざっくりでOK。完璧に書こうとしなくて大丈夫です。後でAIが追加質問します。</p>
+
+    <div class="space-y-5">
+
+      <div class="sticker p-6">
+        <label class="block font-bold mb-1">解決したい悩み・困りごと <span style="color: var(--coral);">*</span></label>
+        <p class="text-xs text-gray-500 mb-3">例: 「営業日報を毎日まとめるのが大変。AIで自動化したい」</p>
+        <textarea class="w-full border-2 border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-orange-400" rows="3" placeholder="ざっくりでOK"></textarea>
+      </div>
+
+      <div class="sticker p-6">
+        <label class="block font-bold mb-1">誰のための・どの業務ですか？ <span style="color: var(--coral);">*</span></label>
+        <p class="text-xs text-gray-500 mb-3">例: 「営業部15名 / 各メンバーが個別に書いている日報」</p>
+        <input class="w-full border-2 border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-orange-400" placeholder="部署名・対象業務">
+      </div>
+
+      <div class="sticker p-6">
+        <label class="block font-bold mb-1">現在の業務フロー <span style="color: var(--coral);">*</span></label>
+        <p class="text-xs text-gray-500 mb-3">例: 「Slackに各自書く → 上長が手動で集計してスプシに転記」</p>
+        <textarea class="w-full border-2 border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-orange-400" rows="3" placeholder="今のやり方を簡単に"></textarea>
+      </div>
+
+      <div class="sticker p-6">
+        <label class="block font-bold mb-1">理想の状態 <span style="color: var(--coral);">*</span></label>
+        <p class="text-xs text-gray-500 mb-3">例: 「Slackに書けば自動で集計・可視化される」</p>
+        <textarea class="w-full border-2 border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-orange-400" rows="2" placeholder="こうなったら嬉しい"></textarea>
+      </div>
+
+      <div class="sticker p-6">
+        <label class="block font-bold mb-3">連携が必要なシステム <span style="color: var(--coral);">*</span></label>
+        <div class="flex flex-wrap gap-2">
+          <label class="border-2 px-4 py-2 rounded-full text-sm cursor-pointer font-bold" style="border-color: var(--coral); background: var(--coral-50); color: var(--coral-dark);">✓ Slack</label>
+          <label class="border-2 px-4 py-2 rounded-full text-sm cursor-pointer font-bold" style="border-color: var(--coral); background: var(--coral-50); color: var(--coral-dark);">✓ Googleスプシ</label>
+          <label class="border-2 border-gray-200 px-4 py-2 rounded-full text-sm cursor-pointer">Notion</label>
+          <label class="border-2 border-gray-200 px-4 py-2 rounded-full text-sm cursor-pointer">Salesforce</label>
+          <label class="border-2 border-gray-200 px-4 py-2 rounded-full text-sm cursor-pointer">freee</label>
+          <label class="border-2 border-gray-200 px-4 py-2 rounded-full text-sm cursor-pointer">Gmail</label>
+          <label class="border-2 border-gray-200 px-4 py-2 rounded-full text-sm cursor-pointer">Zoom</label>
+          <label class="border-2 border-gray-200 px-4 py-2 rounded-full text-sm cursor-pointer">その他</label>
+        </div>
+      </div>
+
+      <div class="sticker p-6">
+        <label class="block font-bold mb-3">緊急度 <span style="color: var(--coral);">*</span></label>
+        <div class="grid grid-cols-3 gap-3">
+          <button class="border-2 border-gray-200 p-4 rounded-xl text-sm font-bold hover:border-orange-400">
+            <div class="text-2xl mb-1">🔥</div>すぐ欲しい
+          </button>
+          <button class="border-2 p-4 rounded-xl text-sm font-bold" style="border-color: var(--coral); background: var(--coral-50); color: var(--coral-dark);">
+            <div class="text-2xl mb-1">📅</div>1ヶ月以内
+          </button>
+          <button class="border-2 border-gray-200 p-4 rounded-xl text-sm font-bold hover:border-orange-400">
+            <div class="text-2xl mb-1">🧪</div>検証段階
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="flex justify-between mt-10">
+      <button class="text-gray-500 px-6 py-3 font-bold">← 戻る</button>
+      <button onclick="show('done', document.querySelectorAll('.switcher button')[2])"
+              class="glossy-btn px-8 py-4">次へ →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 完了 ============ -->
+<section id="done" class="screen hidden">
+  <header class="border-b border-gray-100 bg-white/80 backdrop-blur">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <button onclick="show('top', document.querySelectorAll('.switcher button')[0])" class="text-gray-500 text-sm">← TOP</button>
+      <div class="h-display text-xl">TreBox<span style="color: var(--coral);">.</span></div>
+    </div>
+  </header>
+
+  <div class="max-w-3xl mx-auto px-6 py-12">
+    <div class="grid md:grid-cols-2 gap-8 items-center mb-10">
+      <div class="float">
+        <img src="/Users/fukuokayuuki/開発/tretan_illust/24_goyogiki_box.png"
+             alt="挑戦中ライオン"
+             class="w-72 h-72 object-contain mx-auto"
+             style="filter: drop-shadow(0 12px 30px rgba(255,107,53,0.25));">
+      </div>
+      <div>
+        <div class="balloon mb-6">
+          <p class="font-bold leading-relaxed">受け取りました！<br>内容を確認次第ご連絡します<span style="color: var(--coral);">。</span></p>
+        </div>
+        <h1 class="h-display text-4xl mb-3">ご相談ありがとうございます</h1>
+        <p class="text-gray-700 leading-relaxed">トレプロAIエージェントチームが内容を確認次第、<strong style="color: var(--coral);">5〜10営業日以内</strong>にご連絡します。</p>
+      </div>
+    </div>
+
+    <div class="sticker p-6 mb-6">
+      <div class="text-xs font-bold text-gray-500 mb-1">受付ID</div>
+      <div class="h-display text-3xl tracking-wider" style="color: var(--coral);">100B-2026-042</div>
+    </div>
+
+    <div class="sticker p-6 mb-6">
+      <div class="text-xs font-bold text-gray-500 mb-2">📋 AI整理結果</div>
+      <p class="text-sm leading-relaxed mb-4">営業部15名分のSlack日報を自動集計し、Googleスプレッドシートに転記＋テキストコメントの要約を生成するAIエージェント。</p>
+      <div class="rounded-xl p-4 border-2 border-dashed" style="background: var(--coral-50); border-color: var(--coral);">
+        <div class="text-xs font-bold mb-1" style="color: var(--coral-dark);">⏱ 作成日数の目安</div>
+        <div class="h-display text-3xl" style="color: var(--coral);">5〜10営業日</div>
+      </div>
+    </div>
+
+    <div class="text-sm text-gray-600 space-y-2 bg-gray-50 p-5 rounded-xl">
+      <p>📧 <strong>受付確認メール</strong>を送信しました</p>
+      <p>💬 内容に修正がある場合はメールに返信してください</p>
+      <p>📜 履歴ページからもいつでも確認できます</p>
+    </div>
+
+    <div class="flex justify-center gap-3 mt-8">
+      <button onclick="show('history', document.querySelectorAll('.switcher button')[3])"
+              class="glossy-btn-secondary px-6 py-3">📜 履歴を見る</button>
+      <button onclick="show('top', document.querySelectorAll('.switcher button')[0])"
+              class="glossy-btn px-6 py-3">TOPに戻る</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 履歴 ============ -->
+<section id="history" class="screen hidden">
+  <header class="border-b border-gray-100 bg-white/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="show('top', document.querySelectorAll('.switcher button')[0])" class="text-gray-500 text-sm">← TOP</button>
+        <div class="h-display text-xl">TreBox<span style="color: var(--coral);">.</span></div>
+      </div>
+      <button onclick="show('consult', document.querySelectorAll('.switcher button')[1])"
+              class="glossy-btn px-5 py-2 text-sm">＋ 新規相談</button>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto px-6 py-10">
+    <h1 class="h-display text-4xl mb-2">あなたの相談履歴</h1>
+    <p class="text-gray-500 mb-8">過去の相談内容と進捗を確認できます</p>
+
+    <!-- フィルタ -->
+    <div class="flex gap-2 mb-6 text-sm">
+      <button class="px-4 py-2 rounded-full font-bold text-white" style="background: var(--coral);">すべて (4)</button>
+      <button class="px-4 py-2 rounded-full bg-gray-100 font-bold">対応中 (1)</button>
+      <button class="px-4 py-2 rounded-full bg-gray-100 font-bold">完了 (2)</button>
+    </div>
+
+    <!-- 履歴カード -->
+    <div class="space-y-4">
+      <!-- 進行中 -->
+      <div class="sticker p-6">
+        <div class="flex items-start justify-between mb-2">
+          <div>
+            <div class="text-xs font-mono text-gray-500">100B-2026-042</div>
+            <h3 class="h-display text-xl mt-1">営業日報の自動集計AI</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full font-bold" style="background: #FEF3C7; color: #92400E;">⏳ 確認中</span>
+        </div>
+        <p class="text-sm text-gray-600 mb-3 leading-relaxed">営業部15名分のSlack日報を自動集計し、スプシ転記＋AI要約するエージェント</p>
+        <div class="flex items-center gap-4 text-xs text-gray-500 pt-3 border-t">
+          <span>📅 受付: 2026-04-15</span>
+          <span>⏱ 目安: <strong style="color: var(--coral);">5〜10営業日</strong></span>
+          <button class="ml-auto font-bold" style="color: var(--coral);">詳細を見る →</button>
+        </div>
+      </div>
+
+      <!-- 対応中 -->
+      <div class="sticker p-6">
+        <div class="flex items-start justify-between mb-2">
+          <div>
+            <div class="text-xs font-mono text-gray-500">100B-2026-038</div>
+            <h3 class="h-display text-xl mt-1">議事録の要約Bot</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full font-bold" style="background: #DBEAFE; color: #1E40AF;">🔧 対応中</span>
+        </div>
+        <p class="text-sm text-gray-600 mb-3 leading-relaxed">tl;dvの議事録をネクストアクション付きで要約してSlackに通知</p>
+        <div class="flex items-center gap-4 text-xs text-gray-500 pt-3 border-t">
+          <span>📅 受付: 2026-04-08</span>
+          <span>📅 着手予定: 04-22</span>
+          <button class="ml-auto font-bold" style="color: var(--coral);">詳細を見る →</button>
+        </div>
+      </div>
+
+      <!-- 完了 -->
+      <div class="sticker p-6">
+        <div class="flex items-start justify-between mb-2">
+          <div>
+            <div class="text-xs font-mono text-gray-500">100B-2026-021</div>
+            <h3 class="h-display text-xl mt-1">提案書ドラフト生成</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full font-bold" style="background: #D1FAE5; color: #065F46;">✓ 完了</span>
+        </div>
+        <p class="text-sm text-gray-600 mb-3 leading-relaxed">CSVデータから提案書ドラフトを自動生成するClaude Codeテンプレ</p>
+        <div class="flex items-center gap-4 text-xs text-gray-500 pt-3 border-t">
+          <span>📅 受付: 2026-03-22</span>
+          <span>✅ 完了: 2026-03-28</span>
+          <button class="ml-auto font-bold" style="color: var(--coral);">詳細を見る →</button>
+        </div>
+      </div>
+
+      <!-- 完了 -->
+      <div class="sticker p-6">
+        <div class="flex items-start justify-between mb-2">
+          <div>
+            <div class="text-xs font-mono text-gray-500">100B-2026-007</div>
+            <h3 class="h-display text-xl mt-1">メールトリアージ</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full font-bold" style="background: #D1FAE5; color: #065F46;">✓ 完了</span>
+        </div>
+        <p class="text-sm text-gray-600 mb-3 leading-relaxed">受信メールを自動分類＋返信ドラフト生成</p>
+        <div class="flex items-center gap-4 text-xs text-gray-500 pt-3 border-t">
+          <span>📅 受付: 2026-02-14</span>
+          <span>✅ 完了: 2026-02-19</span>
+          <button class="ml-auto font-bold" style="color: var(--coral);">詳細を見る →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 空状態の例（コメントアウト用に下に置いておく） -->
+    <!--
+    <div class="text-center py-16">
+      <div class="text-6xl mb-4">📦</div>
+      <h2 class="h-display text-2xl mb-2">まだ相談がありません</h2>
+      <p class="text-gray-500 mb-6">最初の悩みを箱に入れてみましょう</p>
+      <button class="glossy-btn px-8 py-4">相談する →</button>
+    </div>
+    -->
+  </div>
+</section>
+
+<script>
+  function show(id, btn) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    document.querySelectorAll('.switcher button').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
