@@ -1,10 +1,505 @@
 <!DOCTYPE html>
-<html lang="ja"><head>
-<meta charset="utf-8">
-<meta http-equiv="refresh" content="0; url=https://htmlpreview.github.io/?https://gist.githubusercontent.com/Fukuoka-desu/c5b458bb970c51f6401ca363f819e5d5/raw/2026-06-12_bisco_survey_3day.html">
-<link rel="canonical" href="https://htmlpreview.github.io/?https://gist.githubusercontent.com/Fukuoka-desu/c5b458bb970c51f6401ca363f819e5d5/raw/2026-06-12_bisco_survey_3day.html">
-<title>Redirecting...</title>
-</head><body>
-<script>location.replace("https://htmlpreview.github.io/?https://gist.githubusercontent.com/Fukuoka-desu/c5b458bb970c51f6401ca363f819e5d5/raw/2026-06-12_bisco_survey_3day.html");</script>
-<p>Redirecting to <a href="https://htmlpreview.github.io/?https://gist.githubusercontent.com/Fukuoka-desu/c5b458bb970c51f6401ca363f819e5d5/raw/2026-06-12_bisco_survey_3day.html">https://htmlpreview.github.io/?https://gist.githubusercontent.com/Fukuoka-desu/c5b458bb970c51f6401ca363f819e5d5/raw/2026-06-12_bisco_survey_3day.html</a></p>
-</body></html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BISCO 様 Gemini × Google Workspace 研修 アンケート 3日横断レポート</title>
+<style>
+/* html-report-publish 共通スタイル
+ * 用途別ベースカラーは --primary CSS変数で切替
+ * 緑(#06c755) / 青(#1e88e5) / 橙(#ffa726) / 赤(#e53935)
+ */
+
+:root {
+  --primary: #1e88e5;
+  --primary-dark: #1565c0;
+  --primary-light: #e3f2fd;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic", sans-serif;
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 24px;
+  color: #1a1a1a;
+  line-height: 1.75;
+  background: #fafafa;
+}
+
+img { max-width: 100%; height: auto; }
+pre, code { white-space: pre-wrap; word-wrap: break-word; }
+a { word-break: break-all; }
+
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 28px 32px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.header h1 { margin: 0; font-size: 24px; }
+.header .sub { margin-top: 6px; font-size: 14px; opacity: 0.95; }
+.header .meta { margin-top: 14px; font-size: 13px; opacity: 0.9; }
+
+h2 {
+  font-size: 19px;
+  margin-top: 40px;
+  padding: 10px 14px;
+  background: var(--primary);
+  color: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+h2 .num {
+  background: white;
+  color: var(--primary);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 16px;
+  margin-top: 22px;
+  color: var(--primary-dark);
+  border-left: 4px solid var(--primary);
+  padding-left: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+th, td {
+  border: 1px solid #e0e0e0;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 14px;
+  vertical-align: top;
+}
+th { background: var(--primary-light); font-weight: 600; width: 28%; }
+
+ul {
+  background: white;
+  padding: 14px 14px 14px 36px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+li { margin: 6px 0; font-size: 14px; }
+
+.info-box {
+  background: #e8f5e9;
+  border-left: 5px solid #43a047;
+  padding: 18px 22px;
+  margin: 24px 0;
+  border-radius: 4px;
+}
+.info-box h3 { margin-top: 0; color: #2e7d32; border: none; padding: 0; }
+
+.summary-box {
+  background: #fff8e1;
+  border-left: 5px solid #ffa726;
+  padding: 18px 22px;
+  margin: 24px 0;
+  border-radius: 4px;
+}
+.summary-box h3 { margin-top: 0; color: #e65100; border: none; padding: 0; }
+
+.alert-box {
+  background: #ffebee;
+  border-left: 5px solid #e53935;
+  padding: 18px 22px;
+  margin: 24px 0;
+  border-radius: 4px;
+}
+.alert-box h3 { margin-top: 0; color: #c62828; border: none; padding: 0; }
+
+/* ===== 完全版（AI/人間 統合）セクション ===== */
+details.full-md-section {
+  margin-top: 50px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+details.full-md-section summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--primary-dark);
+  font-size: 14px;
+  padding: 6px 4px;
+  user-select: none;
+}
+details.full-md-section summary:hover {
+  color: var(--primary);
+}
+details.full-md-section[open] summary {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+.full-md-content {
+  background: white;
+  padding: 16px 18px;
+  border-radius: 4px;
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #333;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 600px;
+  overflow-y: auto;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.footer {
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}
+
+/* ===== レスポンシブ対応 ===== */
+@media (max-width: 768px) {
+  body {
+    margin: 16px auto;
+    padding: 0 12px;
+    line-height: 1.65;
+  }
+  .header { padding: 20px 18px; border-radius: 6px; }
+  .header h1 { font-size: 19px; line-height: 1.4; }
+  .header .sub { font-size: 13px; }
+  .header .meta { font-size: 12px; }
+  h2 { font-size: 16px; padding: 8px 10px; margin-top: 32px; flex-wrap: wrap; }
+  h2 .num { width: 24px; height: 24px; font-size: 13px; margin-right: 8px; }
+  h3 { font-size: 14px; }
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  th, td { padding: 8px 10px; font-size: 13px; min-width: 100px; }
+  th { width: auto; white-space: nowrap; }
+  ul { padding: 10px 10px 10px 28px; }
+  li { font-size: 13px; }
+  .info-box, .summary-box, .alert-box { padding: 14px 16px; }
+  details.full-md-section { padding: 10px 12px; margin-top: 36px; }
+  details.full-md-section summary { font-size: 13px; }
+  .full-md-content { padding: 12px; font-size: 11px; max-height: 500px; }
+}
+
+@media (max-width: 480px) {
+  .header h1 { font-size: 17px; }
+  h2 { font-size: 15px; }
+  th, td { font-size: 12px; padding: 6px 8px; }
+}
+
+blockquote { border-left: 4px solid var(--primary); background: var(--primary-light); padding: 8px 14px; margin: 12px 0; color: #444; }
+table { table-layout: auto; width: 100%; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table th, table td { vertical-align: middle; line-height: 1.6; white-space: nowrap; }
+table td:first-child, table th:first-child { white-space: normal; word-break: break-word; min-width: 80px; }
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>BISCO 様 Gemini × Google Workspace 研修 アンケート 3日横断レポート</h1>
+  <div class="sub">Day1〜Day3 受講後アンケート横断レポート</div>
+  <div class="meta">Generated 2026-06-16 by html-report-publish</div>
+</div>
+
+<blockquote>Day1（2026-05-29）／Day2（2026-06-05）／Day3（2026-06-12）の受講後アンケートを横断集計。</blockquote>
+<blockquote>原典: Google スプレッドシート（gid=1872423761 ほか同スキーマ複数タブ）</blockquote>
+<h2>サマリー</h2>
+<table>
+<tr><th>指標</th><th>値</th></tr>
+<tr><td>集計対象</td><td>BISCO Day1〜Day3（3タブ）</td></tr>
+<tr><td>総回答数</td><td>n=33（Day1:16 / Day2:11 / Day3:6）</td></tr>
+<tr><td>ユニーク受講者</td><td>20名前後</td></tr>
+<tr><td>アンケート設問</td><td>講師スキル4項目（5段階）／講習内容3項目（5段階）／自由記述3項目</td></tr>
+</table>
+<p><strong>満足度の高い点 TOP3</strong></p>
+<ol>
+<li>質問対応の手厚さ — 3日通じて「非常によかった」が最多評価層</li>
+<li>業務直結の具体イメージ提示（Gem / NotebookLM / プロンプト4要素を自分の業務に紐づけられた）</li>
+<li>自己流ユーザーの体系化 — 「自己流が間違いではなかった」「基礎を整理できた」系コメント多数</li>
+</ol>
+<p><strong>改善要望 TOP3</strong></p>
+<ol>
+<li><strong>通信品質</strong>（Day1）— 講師側ネットワーク・音切れ・電波。即時改善必須</li>
+<li><strong>進行スピードと「説明 ↔ 手を動かす」の分離</strong>（Day2・Day3）— 操作実演強化、入力例マニュアル配布、説明タイムと演習タイムのセグメント化</li>
+<li><strong>レベル差対応とワークの粒度</strong> — 初心者／経験者混在、ワークのお題が抽象的で手が止まる</li>
+</ol>
+<p><strong>特筆事項</strong></p>
+<ul>
+<li>Day1 → Day3 で<strong>理解度スコアが明確に下振れ</strong>（Day3 で「やや悪かった」初出現）</li>
+<li>原因はツール横断負荷（NotebookLM ↔ Docs ↔ Gemini を同時並行）</li>
+<li>録画＋事後配布の需要が示唆あり</li>
+</ul>
+<h2>回答数と日別概要</h2>
+<table>
+<tr><th>日</th><th>開催日</th><th>回答数</th><th>テーマ</th><th>実施形態</th></tr>
+<tr><td>Day1</td><td>2026-05-29</td><td>16</td><td>Gemini 基礎・プロンプト4要素</td><td>対面</td></tr>
+<tr><td>Day2</td><td>2026-06-05</td><td>11</td><td>自分専用 Gem の作成と活用</td><td>オンライン</td></tr>
+<tr><td>Day3</td><td>2026-06-12</td><td>6</td><td>NotebookLM</td><td>オンライン</td></tr>
+</table>
+<h2>スコアの傾向 — 日が進むほど理解度が下振れ</h2>
+<table>
+<tr><th>日</th><th>全体評価傾向</th><th>理解度の分布</th></tr>
+<tr><td>Day1</td><td>「非常によかった／良かった」中心で安定。質問対応がほぼ満点</td><td>「非常によかった」少なめ、「どちらとも言えない」3名・「やや良かった」4名と分散</td></tr>
+<tr><td>Day2</td><td>「どちらとも言えない」が興味喚起・理解度ともに<strong>4名</strong>へ増加</td><td>中央寄り評価が増加</td></tr>
+<tr><td>Day3</td><td>評価が両極化</td><td><strong>「やや悪かった」初出現</strong>。「どちらとも言えない」2名</td></tr>
+</table>
+<h2>Day1（2026-05-29, n=16）Gemini 基礎・プロンプト</h2>
+<h3>好評コメント（原文引用）</h3>
+<ul>
+<li>「<strong>今までの自分のAIの使い方が間違いではなかったことわかり自信を持てた</strong>」（桑原志津香）</li>
+<li>「<strong>社内メンバーが適当にAI使っているので、一旦基礎知識的な所を説明してくれ内容もよかった</strong>」（山本真司）</li>
+<li>「<strong>プロンプトを入力する際は、自己流で行っていたため、項4項目での指示だしを学べて参考になりました</strong>」（伊達葵）</li>
+<li>「<strong>ジェミニに前提条件を学ばせる方法</strong>」（今堀けい子）</li>
+</ul>
+<h3>改善要望（原文引用）</h3>
+<ul>
+<li>「<strong>声がとぎれとぎれで聞き取りずらかったです</strong>」（桑鶴愛把）</li>
+<li>「<strong>講師側のネットワークが悪いのか、音が途切れることが後半につれ多々あった</strong>」（山本真司）</li>
+<li>「電波が悪かった」（今堀けい子）</li>
+<li>「<strong>初心者と経験者に分けた方かよいのではっと思いました</strong>」（木原 隆）</li>
+</ul>
+<h2>Day2（2026-06-05, n=11）自分専用 Gem の作成と活用</h2>
+<h3>好評コメント</h3>
+<ul>
+<li>「<strong>前回の講義から気になっていたGemの作成と活用についての解像度が上がりました</strong>」（前川暖久）</li>
+<li>「<strong>Gemのプロンプト作成にあたって、プロンプトジェネレーターを活用すると便利になる点</strong>」（田村友嗣）</li>
+<li>「実際の業務に生かせそうなイメージがわいたところ」（三好ゆう子）</li>
+</ul>
+<h3>改善要望</h3>
+<ul>
+<li>「<strong>ワークは口頭ではなく入力例のマニュアルがあるとよいと思いました</strong>」（今堀けい子）</li>
+<li>「<strong>もう少しだけゆっくりお話しいただけるとありがたい</strong>」（古賀綾乃）</li>
+<li>「<strong>Gem化すべき対象、使用イメージがもう少し伝わるとよかった</strong>」（山本真司）</li>
+<li>「<strong>ざっくりとしたお題みたいなものがあるとやりやすかったかもしれません</strong>」（前川暖久）</li>
+</ul>
+<h2>Day3（2026-06-12, n=6）NotebookLM</h2>
+<h3>好評コメント</h3>
+<ul>
+<li>「<strong>NotebookLMの実践的な活用方法</strong>」（山本真司）</li>
+<li>「<strong>裏技や、時短テク、AIの使い方のコツを教えていただけた</strong>」（桑原志津香）</li>
+<li>「<strong>業者面談でいろいろな原料を紹介されるのですが、正直覚えきれません。Google Driveに面談の議事録や資料を入れておいてそこから検索するなど、毎回ノートをペラペラめくらなくていいので探す時間が短縮できそうです</strong>」（立花優依）</li>
+</ul>
+<h3>改善要望（核心コメント）</h3>
+<ul>
+<li>前川暖久 ―「<strong>実際に手を動かす場面と説明を聞く場面の境目があまりなくDay1、Day2よりも理解できた度が少し低く感じました。NotebookLM、ドキュメント、Geminiを行き来しながらコピペをする際に説明を聞きながら作業を同時並行し…1つ作業が追いつかなくなるとその後全くついていけなくなる</strong>」</li>
+<li>桑原志津香 ―「<strong>リアルだったらもっと身になりそう</strong>」「<strong>3日間ありがとうございました！動画で勉強しなおしたい</strong>」</li>
+</ul>
+<h2>横展開（次回・他顧客）への反映ポイント</h2>
+<table>
+<tr><th>課題</th><th>対策案</th></tr>
+<tr><td>ツール横断の理解度低下</td><td>「説明 → 演習」分離型構成へ再設計。説明は画面共有のみ・演習は受講者操作のみで時間を切る</td></tr>
+<tr><td>通信品質（オンライン回）</td><td>講師側回線の冗長化、ピン留め・横向き案内の徹底</td></tr>
+<tr><td>レベル差</td><td>初心者／経験者の事前アンケート分割、または「基礎クラス／応用クラス」並行運用</td></tr>
+<tr><td>ワークの抽象度</td><td>入力例マニュアル（コピペ用）を全ワークに添付</td></tr>
+<tr><td>復習ニーズ</td><td>録画＋資料の事後配布をデフォルト化</td></tr>
+</table>
+<h2>要フォロー対象</h2>
+<p>全項目「どちらとも言えない」回答者の傾向:</p>
+<ul>
+<li><strong>日野教</strong>（Day1・Day3 とも該当）</li>
+<li><strong>木原 隆</strong>（Day1 でレベル分割を提案 → Day2 でも同様回答）→ <strong>レベル別分割ニーズの裏付け</strong></li>
+<li><strong>後藤</strong>（Day1）</li>
+</ul>
+<h2>設問スキーマ（参考）</h2>
+<p>全タブ共通の12列構成。</p>
+<ol>
+<li>タイムスタンプ</li>
+<li>お名前</li>
+<li>講師スキル: 実演</li>
+<li>講師スキル: 興味喚起</li>
+<li>講師スキル: 時間活用</li>
+<li>講師スキル: 質問対応</li>
+<li>講習内容: 学習量</li>
+<li>講習内容: 身になる</li>
+<li>講習内容: 理解度</li>
+<li>役立った点（自由記述）</li>
+<li>改善点（自由記述）</li>
+<li>その他感想（自由記述）</li>
+</ol>
+<h2>集計元</h2>
+<ul>
+<li>スプレッドシート ID: <code>1yp251Tkxj3HTGosFMW2aJNikF6_ObBw-x7LKWCbCxVE</code></li>
+<li>対象タブ: 2026-05-29 / 2026-06-05 / 2026-06-12（同スキーマ計15タブ中の直近3タブ）</li>
+<li>集計日: 2026-06-12</li>
+</ul>
+
+<details class="full-md-section">
+  <summary>📄 完全版（生Markdown / 全ファクト・全発言）を展開する</summary>
+  <pre class="full-md-content"># BISCO 様 Gemini × Google Workspace 研修 アンケート 3日横断レポート
+
+&gt; Day1（2026-05-29）／Day2（2026-06-05）／Day3（2026-06-12）の受講後アンケートを横断集計。
+&gt; 原典: Google スプレッドシート（gid=1872423761 ほか同スキーマ複数タブ）
+
+---
+
+## サマリー
+
+| 指標 | 値 |
+|---|---|
+| 集計対象 | BISCO Day1〜Day3（3タブ） |
+| 総回答数 | n=33（Day1:16 / Day2:11 / Day3:6） |
+| ユニーク受講者 | 20名前後 |
+| アンケート設問 | 講師スキル4項目（5段階）／講習内容3項目（5段階）／自由記述3項目 |
+
+**満足度の高い点 TOP3**
+1. 質問対応の手厚さ — 3日通じて「非常によかった」が最多評価層
+2. 業務直結の具体イメージ提示（Gem / NotebookLM / プロンプト4要素を自分の業務に紐づけられた）
+3. 自己流ユーザーの体系化 — 「自己流が間違いではなかった」「基礎を整理できた」系コメント多数
+
+**改善要望 TOP3**
+1. **通信品質**（Day1）— 講師側ネットワーク・音切れ・電波。即時改善必須
+2. **進行スピードと「説明 ↔ 手を動かす」の分離**（Day2・Day3）— 操作実演強化、入力例マニュアル配布、説明タイムと演習タイムのセグメント化
+3. **レベル差対応とワークの粒度** — 初心者／経験者混在、ワークのお題が抽象的で手が止まる
+
+**特筆事項**
+- Day1 → Day3 で**理解度スコアが明確に下振れ**（Day3 で「やや悪かった」初出現）
+- 原因はツール横断負荷（NotebookLM ↔ Docs ↔ Gemini を同時並行）
+- 録画＋事後配布の需要が示唆あり
+
+---
+
+## 回答数と日別概要
+
+| 日 | 開催日 | 回答数 | テーマ | 実施形態 |
+|---|---|---|---|---|
+| Day1 | 2026-05-29 | 16 | Gemini 基礎・プロンプト4要素 | 対面 |
+| Day2 | 2026-06-05 | 11 | 自分専用 Gem の作成と活用 | オンライン |
+| Day3 | 2026-06-12 | 6 | NotebookLM | オンライン |
+
+---
+
+## スコアの傾向 — 日が進むほど理解度が下振れ
+
+| 日 | 全体評価傾向 | 理解度の分布 |
+|---|---|---|
+| Day1 | 「非常によかった／良かった」中心で安定。質問対応がほぼ満点 | 「非常によかった」少なめ、「どちらとも言えない」3名・「やや良かった」4名と分散 |
+| Day2 | 「どちらとも言えない」が興味喚起・理解度ともに**4名**へ増加 | 中央寄り評価が増加 |
+| Day3 | 評価が両極化 | **「やや悪かった」初出現**。「どちらとも言えない」2名 |
+
+---
+
+## Day1（2026-05-29, n=16）Gemini 基礎・プロンプト
+
+### 好評コメント（原文引用）
+- 「**今までの自分のAIの使い方が間違いではなかったことわかり自信を持てた**」（桑原志津香）
+- 「**社内メンバーが適当にAI使っているので、一旦基礎知識的な所を説明してくれ内容もよかった**」（山本真司）
+- 「**プロンプトを入力する際は、自己流で行っていたため、項4項目での指示だしを学べて参考になりました**」（伊達葵）
+- 「**ジェミニに前提条件を学ばせる方法**」（今堀けい子）
+
+### 改善要望（原文引用）
+- 「**声がとぎれとぎれで聞き取りずらかったです**」（桑鶴愛把）
+- 「**講師側のネットワークが悪いのか、音が途切れることが後半につれ多々あった**」（山本真司）
+- 「電波が悪かった」（今堀けい子）
+- 「**初心者と経験者に分けた方かよいのではっと思いました**」（木原 隆）
+
+---
+
+## Day2（2026-06-05, n=11）自分専用 Gem の作成と活用
+
+### 好評コメント
+- 「**前回の講義から気になっていたGemの作成と活用についての解像度が上がりました**」（前川暖久）
+- 「**Gemのプロンプト作成にあたって、プロンプトジェネレーターを活用すると便利になる点**」（田村友嗣）
+- 「実際の業務に生かせそうなイメージがわいたところ」（三好ゆう子）
+
+### 改善要望
+- 「**ワークは口頭ではなく入力例のマニュアルがあるとよいと思いました**」（今堀けい子）
+- 「**もう少しだけゆっくりお話しいただけるとありがたい**」（古賀綾乃）
+- 「**Gem化すべき対象、使用イメージがもう少し伝わるとよかった**」（山本真司）
+- 「**ざっくりとしたお題みたいなものがあるとやりやすかったかもしれません**」（前川暖久）
+
+---
+
+## Day3（2026-06-12, n=6）NotebookLM
+
+### 好評コメント
+- 「**NotebookLMの実践的な活用方法**」（山本真司）
+- 「**裏技や、時短テク、AIの使い方のコツを教えていただけた**」（桑原志津香）
+- 「**業者面談でいろいろな原料を紹介されるのですが、正直覚えきれません。Google Driveに面談の議事録や資料を入れておいてそこから検索するなど、毎回ノートをペラペラめくらなくていいので探す時間が短縮できそうです**」（立花優依）
+
+### 改善要望（核心コメント）
+- 前川暖久 ―「**実際に手を動かす場面と説明を聞く場面の境目があまりなくDay1、Day2よりも理解できた度が少し低く感じました。NotebookLM、ドキュメント、Geminiを行き来しながらコピペをする際に説明を聞きながら作業を同時並行し…1つ作業が追いつかなくなるとその後全くついていけなくなる**」
+- 桑原志津香 ―「**リアルだったらもっと身になりそう**」「**3日間ありがとうございました！動画で勉強しなおしたい**」
+
+---
+
+## 横展開（次回・他顧客）への反映ポイント
+
+| 課題 | 対策案 |
+|---|---|
+| ツール横断の理解度低下 | 「説明 → 演習」分離型構成へ再設計。説明は画面共有のみ・演習は受講者操作のみで時間を切る |
+| 通信品質（オンライン回） | 講師側回線の冗長化、ピン留め・横向き案内の徹底 |
+| レベル差 | 初心者／経験者の事前アンケート分割、または「基礎クラス／応用クラス」並行運用 |
+| ワークの抽象度 | 入力例マニュアル（コピペ用）を全ワークに添付 |
+| 復習ニーズ | 録画＋資料の事後配布をデフォルト化 |
+
+---
+
+## 要フォロー対象
+
+全項目「どちらとも言えない」回答者の傾向:
+
+- **日野教**（Day1・Day3 とも該当）
+- **木原 隆**（Day1 でレベル分割を提案 → Day2 でも同様回答）→ **レベル別分割ニーズの裏付け**
+- **後藤**（Day1）
+
+---
+
+## 設問スキーマ（参考）
+
+全タブ共通の12列構成。
+
+1. タイムスタンプ
+2. お名前
+3. 講師スキル: 実演
+4. 講師スキル: 興味喚起
+5. 講師スキル: 時間活用
+6. 講師スキル: 質問対応
+7. 講習内容: 学習量
+8. 講習内容: 身になる
+9. 講習内容: 理解度
+10. 役立った点（自由記述）
+11. 改善点（自由記述）
+12. その他感想（自由記述）
+
+---
+
+## 集計元
+
+- スプレッドシート ID: `1yp251Tkxj3HTGosFMW2aJNikF6_ObBw-x7LKWCbCxVE`
+- 対象タブ: 2026-05-29 / 2026-06-05 / 2026-06-12（同スキーマ計15タブ中の直近3タブ）
+- 集計日: 2026-06-12
+</pre>
+</details>
+
+<div class="footer">
+  株式会社トレプロ ／ html-report-publish<br>
+  Generated 2026-06-16<br>
+  <span style="font-size:11px;color:#bbb;">※ ページ下部に完全版を統合配置（AI/人間 兼用）</span>
+</div>
+
+</body>
+</html>
