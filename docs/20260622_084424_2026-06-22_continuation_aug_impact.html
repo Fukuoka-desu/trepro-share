@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>継続契約 8月末まで判定対象 インパクト試算（2026-06-22）</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --card:#ffffff; --ink:#1f2937; --sub:#6b7280; --line:#e5e7eb;
+    --warn:#dc2626; --warn-bg:#fef2f2; --ok:#059669; --neutral:#3b82f6;
+    --mute:#9ca3af; --soft:#fafafa;
+    --bar-stay:#059669; --bar-loss:#dc2626; --bar-neutral:#3b82f6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.6;font-size:14px}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 80px}
+  h1{font-size:22px;margin:0 0 4px;font-weight:600}
+  h2{font-size:17px;margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line);font-weight:600}
+  h3{font-size:14px;margin:18px 0 8px;font-weight:600;color:var(--sub)}
+  .meta{color:var(--sub);font-size:12px;margin-bottom:24px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;margin-right:6px}
+  .badge.warn{background:var(--warn-bg);color:var(--warn)}
+  .badge.ok{background:#ecfdf5;color:var(--ok)}
+  .badge.neutral{background:#eff6ff;color:var(--neutral)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 20px}
+  .lede{background:var(--card);border-left:4px solid var(--warn);border-radius:8px;padding:20px 22px;margin-bottom:20px}
+  .lede .big{font-size:28px;font-weight:600;color:var(--warn);letter-spacing:-0.5px}
+  .lede .sub{color:var(--sub);font-size:13px;margin-top:6px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+  .grid .card{padding:14px}
+  .kpi-label{color:var(--sub);font-size:12px}
+  .kpi-val{font-size:20px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums}
+  .kpi-sub{font-size:11px;color:var(--mute);margin-top:2px}
+  table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+  th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;white-space:nowrap}
+  th{background:var(--soft);font-weight:600;color:var(--sub);font-size:12px}
+  td.num,th.num{text-align:right}
+  td.warn{color:var(--warn);font-weight:600}
+  td.ok{color:var(--ok);font-weight:600}
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  /* bar chart */
+  .scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .sc{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px}
+  .sc .name{font-size:12px;color:var(--sub);font-weight:600}
+  .sc .total{font-size:18px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums}
+  .sc-bar{height:22px;border-radius:4px;overflow:hidden;display:flex;margin-top:12px;background:var(--line)}
+  .sc-bar .stay{background:var(--bar-stay)}
+  .sc-bar .loss{background:var(--bar-loss)}
+  .sc-legend{font-size:11px;color:var(--sub);margin-top:8px;display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+  .sc-legend .stay{color:var(--ok)}
+  .sc-legend .loss{color:var(--warn)}
+  /* top20 horizontal bar */
+  .hbar-row{display:grid;grid-template-columns:200px 1fr 120px;gap:10px;align-items:center;padding:4px 0;font-size:12px}
+  .hbar-row .name{color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+  .hbar-row .amt{text-align:right;font-variant-numeric:tabular-nums;color:var(--sub)}
+  .hbar-track{height:12px;background:var(--soft);border-radius:3px;overflow:hidden}
+  .hbar-fill{height:100%;background:var(--bar-neutral)}
+  .hbar-fill.legacy{background:#0ea5e9}
+  /* monthly distribution */
+  .mdist{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;align-items:end;height:140px;margin-top:8px}
+  .mdist .col{display:flex;flex-direction:column;align-items:center;gap:2px}
+  .mdist .bar{width:100%;background:var(--bar-neutral);border-radius:2px 2px 0 0;min-height:1px}
+  .mdist .bar.future{background:var(--bar-loss)}
+  .mdist .bar.past{background:var(--mute)}
+  .mdist .lab{font-size:9px;color:var(--sub);transform:rotate(-45deg);transform-origin:center;white-space:nowrap;margin-top:6px}
+  .mdist .val{font-size:9px;color:var(--sub);font-variant-numeric:tabular-nums}
+  /* category breakdown */
+  .cat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .cat .card{padding:16px}
+  .donut{display:flex;align-items:center;gap:14px;margin-top:8px}
+  .donut svg{flex-shrink:0}
+  .donut .leg{font-size:12px;color:var(--sub)}
+  .donut .leg div{margin:2px 0}
+  .donut .dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  /* notes */
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 14px;font-size:12px;color:#92400e;margin:10px 0}
+  .note strong{color:#92400e}
+  .legend-row{display:flex;gap:14px;font-size:11px;color:var(--sub);margin-top:6px;flex-wrap:wrap}
+  .legend-row .dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+  @media (max-width:780px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .scenarios{grid-template-columns:1fr}
+    .cat{grid-template-columns:1fr}
+    .hbar-row{grid-template-columns:140px 1fr 90px}
+    .mdist{grid-template-columns:repeat(15,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>継続契約 8月末まで判定対象 インパクト試算</h1>
+<div class="meta">2026-06-22 / 福岡 作成 / データソース: <code>trepro-db.continuation_entries</code> 読み取り専用 / 金山CEO共有用</div>
+
+<!-- LEDE -->
+<div class="lede">
+  <div class="big">月次 ¥49.3M が来期売上から消える可能性</div>
+  <div class="sub">2026-08末までに継続判定を迎える <strong>83社・月額¥89.2M(税込)</strong> に対し、過去実績ベースの荷重継続率 <strong>44.7%</strong> を当てると、月次で <strong style="color:var(--warn)">¥49,340,040</strong>（年換算 約 <strong style="color:var(--warn)">¥5.92億</strong>）の売上が喪失する試算。最大の判定波は <strong>2026-07月の24社・¥21.7M</strong>。</div>
+</div>
+
+<!-- KPI -->
+<div class="grid">
+  <div class="card"><div class="kpi-label">対象企業数</div><div class="kpi-val">83 社</div><div class="kpi-sub">active × 未判定 × renewal_month ≤ 2026-08</div></div>
+  <div class="card"><div class="kpi-label">月次売上 合計</div><div class="kpi-val">¥89,180,358</div><div class="kpi-sub">税込・monthly_amount合計</div></div>
+  <div class="card"><div class="kpi-label">荷重継続率</div><div class="kpi-val" style="color:var(--neutral)">44.7%</div><div class="kpi-sub">過去42件サンプル・金額加重</div></div>
+  <div class="card"><div class="kpi-label">期待値ベース 喪失額/月</div><div class="kpi-val" style="color:var(--warn)">¥49.34M</div><div class="kpi-sub">年換算 約¥5.92億</div></div>
+</div>
+
+<!-- 用語 -->
+<h2>用語と読み方</h2>
+<div class="card" style="font-size:12.5px">
+  <ul style="margin:0;padding-left:20px">
+    <li><strong>判定対象</strong>: active状態 × judge_result IS NULL × renewal_month が 2026-08 以前のレコード。「もうすぐ継続/解約の判定を迎える契約」</li>
+    <li><strong>monthly_amount</strong>: 税込×1.1ベースの月額（177件で標準確認済）。年換算は ×12</li>
+    <li><strong>荷重継続率</strong>: 過去判定済みエントリで `SUM(継続側 monthly_amount) / SUM(全体 monthly_amount)`。件数平均ではなく金額加重</li>
+    <li><strong>サンプル除外</strong>: `initial_churn` カテゴリは確定解約サンプル＝バイアス源のため分母から除外。中立カテゴリ(initial_continuation / legacy_continuation)のみで算出</li>
+    <li>色凡例: <span class="dot" style="background:var(--bar-stay)"></span>残存売上(継続側) <span class="dot" style="background:var(--bar-loss);margin-left:10px"></span>喪失リスク(未継続側) <span class="dot" style="background:var(--bar-neutral);margin-left:10px"></span>判定対象(中立)</li>
+  </ul>
+</div>
+
+<!-- シナリオ比較 -->
+<h2>3シナリオ：来期月次売上インパクト</h2>
+<div class="scenarios">
+  <div class="sc">
+    <div class="name">①全継続（上限ケース）</div>
+    <div class="total">¥89,180,358 <span style="font-size:11px;color:var(--sub);font-weight:400">/月</span></div>
+    <div class="sc-bar"><div class="stay" style="width:100%"></div></div>
+    <div class="sc-legend"><span class="stay">残存 ¥89.18M</span><span>喪失 ¥0</span></div>
+    <div style="font-size:11px;color:var(--sub);margin-top:8px">継続率100% — 営業介入が完璧に効いた場合</div>
+  </div>
+  <div class="sc" style="border-color:var(--neutral);border-width:2px">
+    <div class="name" style="color:var(--neutral)">②荷重期待値 44.7%（過去実績ベース）</div>
+    <div class="total">¥39,840,318 <span style="font-size:11px;color:var(--sub);font-weight:400">/月</span></div>
+    <div class="sc-bar"><div class="stay" style="width:44.7%"></div><div class="loss" style="width:55.3%"></div></div>
+    <div class="sc-legend"><span class="stay">残存 ¥39.84M</span><span class="loss">喪失 ¥49.34M</span></div>
+    <div style="font-size:11px;color:var(--sub);margin-top:8px">過去42件サンプル・金額加重で算出した中央推計</div>
+  </div>
+  <div class="sc">
+    <div class="name">③全解約（下限ケース）</div>
+    <div class="total">¥0 <span style="font-size:11px;color:var(--sub);font-weight:400">/月</span></div>
+    <div class="sc-bar"><div class="loss" style="width:100%"></div></div>
+    <div class="sc-legend"><span>残存 ¥0</span><span class="loss">喪失 ¥89.18M</span></div>
+    <div style="font-size:11px;color:var(--sub);margin-top:8px">継続率0% — 想定外の最悪ケース</div>
+  </div>
+</div>
+<div class="note" style="margin-top:14px"><strong>年換算</strong>: 期待値ベースで月¥49.34M × 12 = <strong>¥5.92億</strong> が来期売上から欠落するリスク。年商規模で見ると無視できない単位。</div>
+
+<!-- 月別判定波 -->
+<h2>判定到来月の分布（83社の月別件数）</h2>
+<div class="card">
+  <div class="mdist" id="mdist"></div>
+  <div class="legend-row" style="margin-top:10px"><span><span class="dot" style="background:var(--mute)"></span>過去到来(判定遅延)</span><span><span class="dot" style="background:var(--bar-neutral)"></span>当月以降の判定波</span><span><span class="dot" style="background:var(--bar-loss)"></span>最大波 2026-07</span></div>
+  <div style="font-size:12px;color:var(--sub);margin-top:10px">2026-07月に24社・¥21.7M/月の判定が集中。営業介入リソースの最優先配置月。</div>
+</div>
+
+<!-- カテゴリ別 -->
+<h2>荷重継続率の根拠カテゴリ（サンプル42件）</h2>
+<div class="cat">
+  <div class="card">
+    <div style="font-size:13px;font-weight:600">件数ベース内訳</div>
+    <div class="donut">
+      <svg width="120" height="120" viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#e5e7eb" stroke-width="4"/>
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--bar-stay)" stroke-width="4" stroke-dasharray="50 50" stroke-dashoffset="25" transform="rotate(-90 18 18)"/>
+      </svg>
+      <div class="leg">
+        <div><span class="dot" style="background:var(--bar-stay)"></span>継続 21件 (50.0%)</div>
+        <div><span class="dot" style="background:var(--bar-loss)"></span>解約 21件 (50.0%)</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--mute)">件数では半々</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:600">金額(monthly_amount)ベース内訳</div>
+    <div class="donut">
+      <svg width="120" height="120" viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#e5e7eb" stroke-width="4"/>
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--bar-stay)" stroke-width="4" stroke-dasharray="44.7 55.3" stroke-dashoffset="25" transform="rotate(-90 18 18)"/>
+      </svg>
+      <div class="leg">
+        <div><span class="dot" style="background:var(--bar-stay)"></span>継続側 ¥11,575,000 (44.7%)</div>
+        <div><span class="dot" style="background:var(--bar-loss)"></span>未継続側 ¥14,335,000 (55.3%)</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--mute)">高額契約が解約に偏る傾向 → 件数ベースより不利</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="note"><strong>注意</strong>: サンプル42件は小さく、サバイバーシップバイアスが残る（継続中で未判定の高額71件・¥67.2M はカウント外）。四半期ごとの再算出を推奨。</div>
+
+<!-- TOP20 -->
+<h2>対象企業 上位20社（monthly_amount 降順）</h2>
+<div class="card" id="top20"></div>
+<div style="font-size:12px;color:var(--sub);margin-top:8px">上位20社で <strong>¥58.2M/月</strong>（全体の65%）を占める。介入の費用対効果は上位集中型。</div>
+
+<!-- 詳細表 -->
+<h2>対象企業 全83社（renewal_month順）</h2>
+<div class="scroll">
+  <table id="full">
+    <thead><tr>
+      <th>更新月</th><th>顧客名</th><th>担当</th><th class="num">monthly_amount</th><th class="num">確度</th><th>カテゴリ</th>
+    </tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- フィージビリティ -->
+<h2>フィージビリティ判定（トレプロAI単独運用可否）</h2>
+<div class="card" style="font-size:13px">
+  <div><span class="badge warn">△ 条件付き可</span> continuation_entries 単独で抽出は機能。ただし以下の補完が前提。</div>
+  <ul style="margin:10px 0 0;padding-left:20px">
+    <li><strong>DB欠落 137件（¥約5億ファクト未登録）</strong>: 2026-06-06 監査で判明。本表に乗らない契約が存在。契約書ファクト軸の別表並走が必須</li>
+    <li><strong>renewal_month の精度</strong>: 手入力起源、occurred_at由来の意味論ズレ50-104件あり。NULL群は occurred_at + contract_period_months で導出可能</li>
+    <li><strong>サンプル小</strong>: 荷重継続率42件は四半期ローリングで再算出</li>
+  </ul>
+  <div style="margin-top:12px"><strong>補完方針:</strong> ①月初に契約書ファクトとの突合スクリプト並走 / ②renewal_month NULL は UI 警告（書込はしない）/ ③荷重継続率は四半期再算出</div>
+</div>
+
+<!-- データ出所 -->
+<h2>データ出所と再現スクリプト</h2>
+<div class="card" style="font-size:12px;color:var(--sub)">
+  <div>DB: <code>trepro-db.continuation_entries</code>（読み取り専用運用 2026-06-06〜）</div>
+  <div>抽出スクリプト: <code>~/trepro-ai-v4/scripts/_analyze-aug-impact.mjs</code></div>
+  <div>検証スクリプト: <code>~/trepro-ai-v4/scripts/_analyze-aug-impact-validate.mjs</code></div>
+  <div>元レポートMD: <code>~/trepro-harness/mdoutput/2026-06-22_continuation_aug_impact.md</code></div>
+  <div>関連監査(2026-06-06): AB- 137件未登録 ¥約5億、真ズレ65件、意味論ズレ147件</div>
+</div>
+
+</div>
+
+<script>
+// monthly distribution data
+const md = [
+  ["2025-02",1,5500000,"past"],
+  ["2025-03",1,4125000,"past"],
+  ["2025-08",1,500000,"past"],
+  ["2025-09",2,3575000,"past"],
+  ["2025-10",4,11220000,"past"],
+  ["2025-11",1,550000,"past"],
+  ["2025-12",2,935000,"past"],
+  ["2026-01",2,605000,"past"],
+  ["2026-02",5,2420000,"past"],
+  ["2026-03",3,1540000,"past"],
+  ["2026-04",2,3850000,"past"],
+  ["2026-05",14,7552858,"past"],
+  ["2026-06",8,11827500,"future"],
+  ["2026-07",24,21670000,"peak"],
+  ["2026-08",13,13310000,"future"],
+];
+const maxC = Math.max(...md.map(r=>r[1]));
+const mdEl = document.getElementById("mdist");
+md.forEach(r=>{
+  const h = Math.round((r[1]/maxC)*110);
+  const cls = r[3]==="peak"?"future":(r[3]==="future"?"":"past");
+  const colorBar = r[3]==="peak" ? "background:var(--bar-loss)" : (r[3]==="future"?"background:var(--bar-neutral)":"background:var(--mute)");
+  mdEl.insertAdjacentHTML("beforeend",
+    `<div class="col"><div class="val">${r[1]}</div><div class="bar" style="${colorBar};height:${h}px"></div><div class="lab">${r[0]}</div></div>`);
+});
+
+// top20
+const all = [
+  ["2025-10","株式会社BISCO","石崎",9625000,100,"initial_continuation"],
+  ["2026-07","カスケード東京/スリーアイビジネスサポート/令和柔整/衛星学園","石崎",8250000,20,"initial_continuation"],
+  ["2026-08","株式会社プラスバイプラス","石崎",6600000,80,"initial_continuation"],
+  ["2025-02","神明株式会社","本山",5500000,100,"legacy_continuation"],
+  ["2025-03","株式会社RIENS","五十嵐",4125000,20,"initial_continuation"],
+  ["2026-04","株式会社廣記商行","三並",3300000,40,"initial_continuation"],
+  ["2026-06","株式会社片山","火原",3300000,40,"initial_continuation"],
+  ["2026-06","デイライフ株式会社","石崎",3300000,20,"initial_continuation"],
+  ["2025-09","河村建築事務所","五十嵐",3025000,40,"initial_continuation"],
+  ["2026-06","株式会社カネマン","石崎",2227500,60,"initial_continuation"],
+  ["2026-08","株式会社dTosh","三並",1100000,40,"initial_continuation"],
+  ["2026-05","株式会社ENERGIZE","橋口",942858,80,"initial_continuation"],
+  ["2026-07","白石 慶次/株式会社OnLine","本山",825000,0,"initial_continuation"],
+  ["2026-07","株式会社アイ・ティ・ブリッジ","五十嵐",825000,10,"initial_continuation"],
+  ["2026-07","株式会社名西工業","石田",825000,60,"initial_continuation"],
+  ["2026-06","株式会社Joint Tech","石崎",770000,40,"initial_continuation"],
+  ["2026-06","サカイキャニング株式会社","本山",770000,80,"initial_continuation"],
+  ["2026-07","石田エンジニアリング株式会社","平田",770000,20,"initial_continuation"],
+  ["2026-07","株式会社岡部","五十嵐",770000,20,"initial_continuation"],
+  ["2026-07","有限会社岡南プラスチック工業所","本山",715000,40,"initial_continuation"],
+];
+const top20El = document.getElementById("top20");
+const maxA = all[0][3];
+all.forEach(r=>{
+  const w = Math.round((r[3]/maxA)*100);
+  const cls = r[5]==="legacy_continuation" ? "legacy" : "";
+  top20El.insertAdjacentHTML("beforeend",
+    `<div class="hbar-row"><div class="name" title="${r[1]}">${r[1]}</div><div class="hbar-track"><div class="hbar-fill ${cls}" style="width:${w}%"></div></div><div class="amt">¥${r[3].toLocaleString()}</div></div>`);
+});
+
+// full table (all 83)
+const full = [
+["2025-02","神明株式会社","本山",5500000,100,"legacy_continuation"],
+["2025-03","株式会社RIENS","五十嵐",4125000,20,"initial_continuation"],
+["2025-08","shes株式会社","三並",500000,100,"legacy_continuation"],
+["2025-09","河村建築事務所","五十嵐",3025000,40,"initial_continuation"],
+["2025-09","株式会社日映志賀","五十嵐",550000,100,"initial_continuation"],
+["2025-10","株式会社BISCO","石崎",9625000,100,"initial_continuation"],
+["2025-10","株式会社Three Beauty","石崎",660000,null,"initial_continuation"],
+["2025-10","株式会社マリージョゼ","福本",550000,40,"initial_continuation"],
+["2025-10","株式会社Sanctuary / 株式会社Siica","五十嵐",385000,20,"legacy_continuation"],
+["2025-11","株式会社ウィルオブ・ワーク","火原",550000,60,"initial_continuation"],
+["2025-12","株式会社ミツバファクトリー","本山",550000,40,"initial_continuation"],
+["2025-12","株式会社LUXU","五十嵐",385000,80,"initial_continuation"],
+["2026-01","B-first株式会社 / Agu.","三並",550000,60,"initial_continuation"],
+["2026-01","デコボコベース株式会社","三並",55000,40,"legacy_continuation"],
+["2026-02","有限会社大地リース","石田",550000,10,"initial_continuation"],
+["2026-02","有限会社大城組","火原",550000,null,"initial_continuation"],
+["2026-02","しろくま電力株式会社","三並",550000,20,"initial_continuation"],
+["2026-02","税理士法人明正会計","若林",550000,20,"initial_continuation"],
+["2026-02","株式会社LTU","本山",220000,40,"legacy_continuation"],
+["2026-03","青晃架設株式会社","本山",550000,40,"initial_continuation"],
+["2026-03","株式会社砂建","本山",550000,100,"legacy_continuation"],
+["2026-03","株式会社ピュアリー","火原",440000,40,"initial_continuation"],
+["2026-04","株式会社廣記商行","三並",3300000,40,"initial_continuation"],
+["2026-04","株式会社ジョイフルリンク","三並",550000,60,"initial_continuation"],
+["2026-05","株式会社ENERGIZE","橋口",942858,80,"initial_continuation"],
+["2026-05","株式会社篤農","石崎",550000,80,"initial_continuation"],
+["2026-05","株式会社Access One","山方",550000,0,"initial_continuation"],
+["2026-05","有限会社山謙","三並",550000,60,"initial_continuation"],
+["2026-05","AOE株式会社","三並",550000,80,"initial_continuation"],
+["2026-05","株式会社アラム・テック","本山",550000,20,"initial_continuation"],
+["2026-05","株式会社キュンティア","五十嵐",550000,40,"initial_continuation"],
+["2026-05","福島建設工業株式会社","鈴鹿",550000,80,"initial_continuation"],
+["2026-05","株式会社PLIME","若林",550000,20,"initial_continuation"],
+["2026-05","株式会社ウィズ・プランニング","本山",500000,20,"initial_continuation"],
+["2026-05","株式会社TOWA/恭子ママ","三並",500000,80,"legacy_continuation"],
+["2026-05","株式会社TCG","明貝",440000,20,"initial_continuation"],
+["2026-05","株式会社総合開発","五十嵐",440000,60,"initial_continuation"],
+["2026-05","株式会社匠オフィス","橋口",330000,40,"initial_continuation"],
+["2026-06","株式会社片山","火原",3300000,40,"initial_continuation"],
+["2026-06","デイライフ株式会社","石崎",3300000,20,"initial_continuation"],
+["2026-06","株式会社カネマン","石崎",2227500,60,"initial_continuation"],
+["2026-06","株式会社Joint Tech","石崎",770000,40,"initial_continuation"],
+["2026-06","サカイキャニング株式会社","本山",770000,80,"initial_continuation"],
+["2026-06","株式会社コンフィ","若林",550000,20,"initial_continuation"],
+["2026-06","ラッキーホールディングス株式会社","石崎",550000,20,"initial_continuation"],
+["2026-06","有限会社小里工業","明貝",360000,20,"initial_continuation"],
+["2026-07","カスケード東京/スリーアイビジネスサポート/令和柔整/衛星学園","石崎",8250000,20,"initial_continuation"],
+["2026-07","白石 慶次/株式会社OnLine","本山",825000,0,"initial_continuation"],
+["2026-07","株式会社アイ・ティ・ブリッジ","五十嵐",825000,10,"initial_continuation"],
+["2026-07","株式会社名西工業","石田",825000,60,"initial_continuation"],
+["2026-07","石田エンジニアリング株式会社","平田",770000,20,"initial_continuation"],
+["2026-07","株式会社岡部","五十嵐",770000,20,"initial_continuation"],
+["2026-07","有限会社岡南プラスチック工業所","本山",715000,40,"initial_continuation"],
+["2026-07","株式会社ReLienエンターテインメント","石田",550000,20,"initial_continuation"],
+["2026-07","株式会社吉住工務店","鈴鹿",550000,10,"initial_continuation"],
+["2026-07","株式会社KIGホールディングス","鈴鹿",550000,40,"initial_continuation"],
+["2026-07","株式会社たかくら","本山",550000,60,"initial_continuation"],
+["2026-07","株式会社キャプテン","石崎",550000,20,"initial_continuation"],
+["2026-07","エコラル株式会社","五十嵐",550000,20,"initial_continuation"],
+["2026-07","中央交通株式会社","火原",550000,80,"initial_continuation"],
+["2026-07","株式会社ミライ","明貝",550000,40,"initial_continuation"],
+["2026-07","株式会社ミツケン","五十嵐",550000,20,"initial_continuation"],
+["2026-07","株式会社ラングローブ","平田",550000,40,"initial_continuation"],
+["2026-07","株式会社旅人","明貝",550000,40,"initial_continuation"],
+["2026-07","株式会社トラスト","火原",550000,60,"initial_continuation"],
+["2026-07","福島興業株式会社","石田",550000,20,"initial_continuation"],
+["2026-07","株式会社グランジュ","鈴鹿",440000,20,"initial_continuation"],
+["2026-07","税理士法人Lien Fort","三並",440000,20,"initial_continuation"],
+["2026-07","株式会社飛馬物流","鈴鹿",330000,60,"initial_continuation"],
+["2026-07","株式会社プラチナキャビン","鈴鹿",330000,60,"initial_continuation"],
+["2026-08","株式会社プラスバイプラス","石崎",6600000,80,"initial_continuation"],
+["2026-08","株式会社dTosh","三並",1100000,40,"initial_continuation"],
+["2026-08","小林食品株式会社","山方",550000,0,"initial_continuation"],
+["2026-08","一般社団法人じゆう","福本",550000,40,"initial_continuation"],
+["2026-08","エネルギーバンク株式会社","若林",550000,20,"initial_continuation"],
+["2026-08","税理士法人イデアコンサルティング","三並",550000,60,"initial_continuation"],
+["2026-08","株式会社タカジョウグループ","石崎",550000,60,"initial_continuation"],
+["2026-08","第一共創建設株式会社","石田",550000,40,"initial_continuation"],
+["2026-08","株式会社ケイシン","山方",550000,20,"initial_continuation"],
+["2026-08","ジャストウィン東京株式会社","火原",550000,60,"initial_continuation"],
+["2026-08","一般社団法人R.KAY","平田",550000,40,"initial_continuation"],
+["2026-08","神姫バス株式会社","石崎",440000,80,"legacy_continuation"],
+["2026-08","三興工業株式会社","本山",220000,60,"initial_continuation"],
+];
+const tbody = document.querySelector("#full tbody");
+full.forEach(r=>{
+  const ang = r[4]===null ? "-" : r[4];
+  const catCls = r[5]==="legacy_continuation" ? "neutral" : "";
+  tbody.insertAdjacentHTML("beforeend",
+    `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="num">¥${r[3].toLocaleString()}</td><td class="num">${ang}</td><td><span class="badge ${catCls}">${r[5]}</span></td></tr>`);
+});
+</script>
+</body>
+</html>
