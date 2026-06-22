@@ -251,6 +251,19 @@ def chapter_markdown(chapter: Chapter, image: dict, extras: list[dict]) -> str:
         chunks.extend(["", "## 補助図の制作指示", ""])
         for extra in extras:
             chunks.extend([image_directive_md(extra), ""])
+    if meta.get("usecases"):
+        chunks.extend(["", "## こんな場面で使う", ""])
+        chunks.append("章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。")
+        chunks.append("")
+        for uc in meta["usecases"]:
+            chunks.extend([
+                f"**場面:** {uc['situation']}",
+                "",
+                f"**こう使う:** {uc['action']}",
+                "",
+                f"**得られるもの:** {uc['benefit']}",
+                "",
+            ])
     chunks.extend([
         "",
         "## 体験ミッション",
@@ -314,6 +327,18 @@ def build_markdown(preamble: str, parts: list[Part], chapters: list[Chapter], ma
             "",
             meta["story"],
             "",
+        ])
+        if meta.get("usecase"):
+            uc = meta["usecase"]
+            out.extend([
+                "**この部で得られる場面**",
+                "",
+                f"- 場面: {uc['situation']}",
+                f"- こう使う: {uc['action']}",
+                f"- 得られるもの: {uc['benefit']}",
+                "",
+            ])
+        out.extend([
             image_directive_md(lookup[f"part-{part.number:02d}"]),
             "",
         ])
@@ -326,21 +351,67 @@ CSS = r"""
 :root{
   --ink:#172033;--muted:#5f6b7e;--paper:#fbf8f1;--panel:#ffffff;--navy:#14213d;
   --blue:#2456d3;--amber:#d7891c;--line:#d9dee8;--soft:#eef3fb;--success:#176b55;
-  --shadow:0 18px 60px rgba(27,39,64,.11);--radius:20px;--max:920px;
+  --usecase-bg:#fff6ec;--usecase-border:#f1c98b;--usecase-accent:#c66a17;
+  --shadow:0 18px 60px rgba(27,39,64,.11);--radius:20px;--max:1480px;--toc-w:280px;
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.9}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.95;font-size:1.05rem}
 a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0 auto 0;height:4px;background:transparent;z-index:100}.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--amber))}
-.site-header{background:linear-gradient(135deg,#101b33,#233961);color:white;padding:18px 24px;position:sticky;top:0;z-index:40;box-shadow:0 8px 28px rgba(0,0,0,.18)}.site-header .inner{max-width:1320px;margin:auto;display:flex;align-items:center;gap:18px}.brand{font-weight:800;letter-spacing:.02em;color:white;text-decoration:none}.site-header nav{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}.site-header nav a{color:#e7edff;text-decoration:none;font-size:.92rem}
-.hero{max-width:1320px;margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.13rem;color:var(--muted);max-width:64ch}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
-.layout{max-width:1320px;margin:auto;padding:20px 24px 80px;display:grid;grid-template-columns:280px minmax(0,1fr);gap:40px}.toc{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 116px);overflow:auto;background:rgba(255,255,255,.76);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:18px}.toc h2{font-size:.95rem;margin:0 0 12px}.toc a{display:block;padding:7px 8px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:.88rem;line-height:1.35}.toc a:hover{background:var(--soft);color:var(--ink)}.toc .part-link{font-weight:800;color:var(--navy);margin-top:8px}
-.content{min-width:0}.part{margin:56px 0 80px}.part-header{padding:42px;border-radius:var(--radius);background:linear-gradient(135deg,#13213e,#26406e);color:white;box-shadow:var(--shadow)}.part-header h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.2;margin:.2em 0}.part-header p{color:#dbe5ff;max-width:70ch}.chapter{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,5vw,56px);margin:34px 0;box-shadow:var(--shadow);scroll-margin-top:90px}.chapter-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}.chapter-head h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;letter-spacing:-.025em;margin:.2em 0}.scene{font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif;font-size:1.1rem;background:linear-gradient(135deg,#fff8e9,#f3f6ff);border-left:5px solid var(--amber);padding:22px 24px;border-radius:0 14px 14px 0;margin:24px 0}.story-essay{font-size:1.04rem}.story-essay p:first-child::first-letter{font-size:3.4em;float:left;line-height:.82;padding:.12em .12em 0 0;color:var(--blue);font-weight:800}
+.site-header{background:linear-gradient(135deg,#101b33,#233961);color:white;padding:14px 24px;position:sticky;top:0;z-index:40;box-shadow:0 8px 28px rgba(0,0,0,.18)}.site-header .inner{max-width:var(--max);margin:auto;display:flex;align-items:center;gap:18px}.brand{font-weight:800;letter-spacing:.02em;color:white;text-decoration:none}.site-header nav{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}.site-header nav a{color:#e7edff;text-decoration:none;font-size:.92rem}
+.toc-toggle{display:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:white;border-radius:10px;padding:6px 12px;font-size:.86rem;font-weight:700;cursor:pointer}
+.toc-toggle:hover{background:rgba(255,255,255,.22)}
+.hero{max-width:var(--max);margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.16rem;color:var(--muted);max-width:64ch}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
+.layout{max-width:var(--max);margin:auto;padding:20px 24px 80px;display:grid;grid-template-columns:var(--toc-w) minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:18px;transition:transform .25s ease,box-shadow .25s ease}
+.toc h2{font-size:.95rem;margin:0 0 12px}
+.toc a{display:block;padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:.88rem;line-height:1.4;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.toc a:hover{background:var(--soft);color:var(--ink)}
+.toc .part-link{font-weight:800;color:var(--navy);margin-top:10px;font-size:.92rem}
+.toc a.active{background:#e6edff;color:var(--ink);border-left-color:var(--blue);font-weight:700}
+.toc a.part-link.active{background:#dde6ff;color:var(--navy);border-left-color:var(--amber)}
+.toc-drawer-close{display:none}
+.toc-overlay{display:none}
+.content{min-width:0}.part{margin:56px 0 80px}.part-header{padding:42px;border-radius:var(--radius);background:linear-gradient(135deg,#13213e,#26406e);color:white;box-shadow:var(--shadow);scroll-margin-top:80px}.part-header h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.2;margin:.2em 0}.part-header p{color:#dbe5ff;max-width:70ch}
+.chapter{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,5vw,56px);margin:34px 0;box-shadow:var(--shadow);scroll-margin-top:80px}
+.chapter-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}.chapter-head h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;letter-spacing:-.025em;margin:.2em 0}
+.scene{font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif;font-size:1.14rem;background:linear-gradient(135deg,#fff8e9,#f3f6ff);border-left:5px solid var(--amber);padding:24px 26px;border-radius:0 14px 14px 0;margin:24px 0;box-shadow:inset 0 0 0 1px rgba(215,137,28,.12)}
+.story-essay{font-size:1.08rem;background:#fbfcff;border:1px solid #e3e9f5;border-radius:14px;padding:22px 26px;margin-top:18px}
+.story-essay p{margin:0 0 1.1em}
+.story-essay p:last-child{margin-bottom:0}
+.story-essay p:first-child::first-letter{font-size:3.4em;float:left;line-height:.82;padding:.12em .12em 0 0;color:var(--blue);font-weight:800}
 .image-shell{margin:34px 0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#e9effa,#fff4df);min-height:260px;position:relative}.image-shell img{width:100%;height:auto;display:block;aspect-ratio:3/2;object-fit:cover}.image-shell.missing img{display:none}.image-shell.missing:before{content:"生成画像の差し込み位置";display:grid;place-items:center;min-height:320px;color:var(--muted);font-weight:800;letter-spacing:.08em}.image-shell figcaption{padding:14px 18px;background:white;color:var(--muted);font-size:.92rem}.image-brief{border-top:1px solid var(--line);background:#fafcff;padding:0 18px}.image-brief summary{cursor:pointer;padding:12px 0;font-weight:800;color:var(--blue)}.image-brief pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#111827;color:#e6edf7;border-radius:12px;padding:16px;font-size:.8rem}
-.reference{margin-top:38px}.reference>h2:first-child{margin-top:0}.reference h2{font-size:1.55rem;margin-top:2.2em;border-left:4px solid var(--blue);padding-left:12px}.reference h3{font-size:1.18rem;margin-top:1.8em}.reference p,.reference li{max-width:76ch}.reference table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:22px 0}.reference th,.reference td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;min-width:130px}.reference th{background:var(--soft);text-align:left}.reference blockquote{margin:20px 0;padding:12px 18px;border-left:4px solid var(--amber);background:#fff9ec;color:#4b5563}.reference code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#edf1f7;padding:.13em .35em;border-radius:5px;font-size:.9em}.code-wrap{position:relative;margin:22px 0}.code-wrap pre{overflow:auto;background:#101827;color:#e6edf7;padding:20px;border-radius:14px;line-height:1.65}.code-wrap code{background:transparent;color:inherit;padding:0}.copy-code{position:absolute;top:10px;right:10px;border:1px solid #52617c;border-radius:8px;background:#1e2a42;color:white;padding:6px 10px;cursor:pointer;font-size:.78rem}
+.reference{margin-top:38px}.reference>h2:first-child{margin-top:0}.reference h2{font-size:1.55rem;margin-top:2.2em;border-left:4px solid var(--blue);padding-left:12px}.reference h3{font-size:1.18rem;margin-top:1.8em}.reference p,.reference li{max-width:76ch}.reference p{margin:1.05em 0}.reference table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:22px 0}.reference th,.reference td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;min-width:130px}.reference th{background:var(--soft);text-align:left}.reference blockquote{margin:20px 0;padding:12px 18px;border-left:4px solid var(--amber);background:#fff9ec;color:#4b5563}.reference code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#edf1f7;padding:.13em .35em;border-radius:5px;font-size:.9em}.code-wrap{position:relative;margin:22px 0}.code-wrap pre{overflow:auto;background:#101827;color:#e6edf7;padding:20px;border-radius:14px;line-height:1.65}.code-wrap code{background:transparent;color:inherit;padding:0}.copy-code{position:absolute;top:10px;right:10px;border:1px solid #52617c;border-radius:8px;background:#1e2a42;color:white;padding:6px 10px;cursor:pointer;font-size:.78rem}
 .mission,.takeaway{border-radius:16px;padding:22px 24px;margin:30px 0}.mission{background:#eef8f4;border:1px solid #b9dfd0}.takeaway{background:#f0f3ff;border:1px solid #c9d2f4}.mission h2,.takeaway h2{margin-top:0;font-size:1.2rem}.mission strong{color:var(--success)}
+.usecases{margin:32px 0;padding:28px;border-radius:18px;background:linear-gradient(140deg,var(--usecase-bg),#fffaf2);border:1px solid var(--usecase-border);box-shadow:0 10px 28px rgba(198,106,23,.08)}
+.usecases>h2{margin:0 0 6px;font-size:1.28rem;color:var(--usecase-accent);display:flex;align-items:center;gap:8px}
+.usecases>h2::before{content:"";display:inline-block;width:8px;height:24px;background:var(--usecase-accent);border-radius:3px}
+.usecases-lede{margin:0 0 18px;color:#5b4a32;font-size:.96rem}
+.usecase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.usecase-card{background:white;border:1px solid #ecd6b3;border-radius:14px;padding:18px 19px;box-shadow:0 6px 18px rgba(150,80,10,.07);transition:transform .18s ease,box-shadow .18s ease}
+.usecase-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(150,80,10,.14)}
+.usecase-card h3{margin:0 0 4px;font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:var(--usecase-accent);font-weight:800}
+.usecase-card p{margin:0 0 10px;font-size:.95rem;line-height:1.75;color:#3c3328}
+.usecase-card p:last-child{margin-bottom:0}
+.part-usecase{margin:22px 0 0;padding:22px 24px;border-radius:16px;background:rgba(255,250,240,.96);border:1px solid rgba(241,201,139,.7);color:#3c3328;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.part-usecase h3{grid-column:1/-1;margin:0;font-size:.92rem;letter-spacing:.1em;text-transform:uppercase;color:var(--usecase-accent)}
+.part-usecase .pu-item h4{margin:0 0 4px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--usecase-accent)}
+.part-usecase .pu-item p{margin:0;font-size:.92rem;line-height:1.72}
 .character-grid,.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 28px rgba(27,39,64,.06)}.card h3{margin:.1em 0}.card p{color:var(--muted)}.chapter-nav{display:flex;justify-content:space-between;gap:16px;margin-top:34px}.chapter-nav a{flex:1;background:white;border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none}.chapter-nav a:last-child{text-align:right}
 .site-footer{background:#111b31;color:#ced7ea;padding:36px 24px}.site-footer .inner{max-width:1200px;margin:auto}.source-note{font-size:.86rem;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;padding-top:20px}
-@media(max-width:980px){.hero-grid,.layout{grid-template-columns:1fr}.toc{position:relative;top:0;max-height:none}.hero-grid{gap:18px}.character-grid,.card-grid{grid-template-columns:1fr}.site-header nav{display:none}}
-@media print{.site-header,.toc,.progress,.copy-code,.image-brief,.hero-actions{display:none!important}.layout{display:block;padding:0}.chapter,.part-header{box-shadow:none;break-inside:avoid;border-color:#bbb}.image-shell{break-inside:avoid}body{background:white}.chapter{page-break-before:always}}
+@media(min-width:1281px){.layout{grid-template-columns:var(--toc-w) minmax(0,1fr)}}
+@media(max-width:1280px) and (min-width:981px){.layout{grid-template-columns:260px minmax(0,1fr);gap:30px}}
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:18px}
+  .layout{display:block;padding:20px 18px 80px}
+  .character-grid,.card-grid{grid-template-columns:1fr}
+  .site-header nav{display:none}
+  .toc-toggle{display:inline-flex}
+  .toc{position:fixed;top:0;left:0;width:min(86vw,320px);height:100vh;max-height:none;border-radius:0;border:none;border-right:1px solid var(--line);transform:translateX(-100%);box-shadow:0 0 40px rgba(0,0,0,.3);z-index:60;padding:18px 18px 60px;background:#fff}
+  .toc.open{transform:translateX(0)}
+  .toc-drawer-close{display:block;position:absolute;top:10px;right:12px;width:36px;height:36px;border:1px solid var(--line);border-radius:10px;background:white;cursor:pointer;font-size:1.2rem;line-height:1}
+  .toc-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,.45);z-index:55}
+  .toc-overlay.open{display:block}
+}
+@media print{.site-header,.toc,.toc-toggle,.toc-overlay,.progress,.copy-code,.image-brief,.hero-actions{display:none!important}.layout{display:block;padding:0}.chapter,.part-header,.usecases{box-shadow:none;break-inside:avoid;border-color:#bbb}.image-shell{break-inside:avoid}body{background:white}.chapter{page-break-before:always}}
 """
 
 JS = r"""
@@ -369,6 +440,75 @@ JS = r"""
     });
     wrap.appendChild(btn);
   });
+
+  // TOC active highlight via IntersectionObserver
+  const toc = document.querySelector('.toc');
+  if (toc) {
+    const links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    const map = new Map();
+    links.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      if (id) map.set(id, a);
+    });
+    const targets = [];
+    map.forEach((_, id) => { const el = document.getElementById(id); if (el) targets.push(el); });
+    if (targets.length && 'IntersectionObserver' in window) {
+      const visible = new Set();
+      const setActive = () => {
+        if (!visible.size) return;
+        // pick the topmost visible target
+        let topId = null, topY = Infinity;
+        visible.forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const y = el.getBoundingClientRect().top;
+          if (y >= -40 && y < topY) { topY = y; topId = id; }
+        });
+        if (!topId) {
+          // fallback to any visible
+          topId = Array.from(visible)[0];
+        }
+        links.forEach(a => a.classList.remove('active'));
+        const link = map.get(topId);
+        if (link) {
+          link.classList.add('active');
+          // also activate the part-link of the surrounding part if chapter
+          const el = document.getElementById(topId);
+          const part = el?.closest('section.part');
+          if (part && part.id) {
+            const partLink = map.get(part.id);
+            if (partLink && partLink !== link) partLink.classList.add('active');
+          }
+        }
+      };
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          const id = e.target.id;
+          if (e.isIntersecting) visible.add(id); else visible.delete(id);
+        });
+        setActive();
+      }, {rootMargin: '-80px 0px -70% 0px', threshold: 0});
+      targets.forEach(t => io.observe(t));
+    }
+
+    // Drawer toggle for mobile
+    const toggle = document.querySelector('.toc-toggle');
+    const overlay = document.querySelector('.toc-overlay');
+    const closeBtn = toc.querySelector('.toc-drawer-close');
+    const openDrawer = () => { toc.classList.add('open'); overlay && overlay.classList.add('open'); };
+    const closeDrawer = () => { toc.classList.remove('open'); overlay && overlay.classList.remove('open'); };
+    toggle && toggle.addEventListener('click', () => {
+      if (toc.classList.contains('open')) closeDrawer(); else openDrawer();
+    });
+    overlay && overlay.addEventListener('click', closeDrawer);
+    closeBtn && closeBtn.addEventListener('click', closeDrawer);
+    // Close drawer on link click (mobile only)
+    toc.addEventListener('click', e => {
+      if (e.target.tagName === 'A' && window.matchMedia('(max-width:980px)').matches) {
+        closeDrawer();
+      }
+    });
+  }
 })();
 """
 
@@ -418,6 +558,28 @@ def story_paragraphs(text: str) -> str:
     return "".join(f"<p>{html.escape(p.strip())}</p>" for p in text.split("\n\n") if p.strip())
 
 
+def usecases_html(meta: dict) -> str:
+    items = meta.get("usecases") or []
+    if not items:
+        return ""
+    cards = []
+    for uc in items:
+        cards.append(
+            '<article class="usecase-card">'
+            f'<h3>場面</h3><p>{html.escape(uc["situation"])}</p>'
+            f'<h3>こう使う</h3><p>{html.escape(uc["action"])}</p>'
+            f'<h3>得られるもの</h3><p>{html.escape(uc["benefit"])}</p>'
+            '</article>'
+        )
+    return (
+        '<section class="usecases" aria-label="こんな場面で使う">'
+        '<h2>こんな場面で使う</h2>'
+        '<p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p>'
+        f'<div class="usecase-grid">{"".join(cards)}</div>'
+        '</section>'
+    )
+
+
 def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extras: bool = True) -> str:
     lookup = manifest_lookup(manifest)
     meta = CHAPTER_META[ch.key]
@@ -448,6 +610,7 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
     {render_reference(ch.body, f'ch-{ch.key}')}
   </section>
   {extra_html}
+  {usecases_html(meta)}
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> {html.escape(meta['mission'])}</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>{html.escape(meta['takeaway'])}</p></section>
 </article>
@@ -459,7 +622,8 @@ PAGE_TEMPLATE = Template(r"""<!doctype html>
 <title>{{ title }}</title><meta name="description" content="{{ description }}">
 {% if inline_assets %}<style>{{ css }}</style>{% else %}<link rel="stylesheet" href="{{ asset_prefix }}assets/styles.css">{% endif %}
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="{{ home_href }}">Claude Code 教科書・ブログ版</a><nav><a href="{{ home_href }}">目次</a><a href="{{ complete_href }}">全章一括</a><a href="{{ image_guide_href }}">画像実装</a></nav></div></header>
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="{{ home_href }}">Claude Code 教科書・ブログ版</a><nav><a href="{{ home_href }}">目次</a><a href="{{ complete_href }}">全章一括</a><a href="{{ image_guide_href }}">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
 {{ body }}
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 {% if inline_assets %}<script>{{ js }}</script>{% else %}<script src="{{ asset_prefix }}assets/app.js"></script>{% endif %}
@@ -475,7 +639,7 @@ def build_toc(parts: list[Part], chapters: list[Chapter], chapter_prefix: str | 
     chapters_by_part: dict[int, list[Chapter]] = {}
     for ch in chapters:
         chapters_by_part.setdefault(ch.part, []).append(ch)
-    links: list[str] = ["<h2>目次</h2>"]
+    links: list[str] = ['<button class="toc-drawer-close" type="button" aria-label="目次を閉じる">×</button>', "<h2>目次</h2>"]
     for part in parts:
         links.append(f'<a class="part-link" href="#part-{part.number}">第{part.number}部 {html.escape(part.title)}</a>')
         for ch in chapters_by_part.get(part.number, []):
@@ -499,6 +663,20 @@ def intro_html(preamble: str, manifest: dict, image_prefix: str) -> str:
 """
 
 
+def part_usecase_html(meta: dict) -> str:
+    uc = meta.get("usecase")
+    if not uc:
+        return ""
+    return (
+        '<section class="part-usecase" aria-label="この部で得られる場面">'
+        '<h3>この部で得られる場面</h3>'
+        f'<div class="pu-item"><h4>場面</h4><p>{html.escape(uc["situation"])}</p></div>'
+        f'<div class="pu-item"><h4>こう使う</h4><p>{html.escape(uc["action"])}</p></div>'
+        f'<div class="pu-item"><h4>得られるもの</h4><p>{html.escape(uc["benefit"])}</p></div>'
+        '</section>'
+    )
+
+
 def part_html(part: Part, chapters: list[Chapter], manifest: dict, image_prefix: str) -> str:
     lookup = manifest_lookup(manifest)
     meta = PART_META[part.number]
@@ -506,6 +684,7 @@ def part_html(part: Part, chapters: list[Chapter], manifest: dict, image_prefix:
     return f"""
 <section class="part" id="part-{part.number}">
   <header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2><p>{html.escape(meta['story'])}</p></header>
+  {part_usecase_html(meta)}
   {image_figure(lookup[f'part-{part.number:02d}'], image_prefix)}
   {articles}
 </section>
@@ -541,19 +720,19 @@ def build_site(preamble: str, parts: list[Part], chapters: list[Chapter], manife
         chapters_by_part.setdefault(ch.part, []).append(ch)
 
     home_main = intro_html(preamble, manifest, "images/")
-    home_main += '<div class="layout"><aside class="toc">' + build_toc(parts, chapters, "chapters/") + '</aside><main class="content">'
+    home_main += '<div class="layout"><aside class="toc" id="site-toc">' + build_toc(parts, chapters, "chapters/") + '</aside><main class="content">'
     for part in parts:
         meta = PART_META[part.number]
         cards = []
         for ch in chapters_by_part.get(part.number, []):
             label = "終章" if ch.key == "final" else f"第{int(ch.key)}章"
             cards.append(f'<a class="card" href="chapters/{ch.key}.html"><div class="eyebrow">{label}</div><h3>{html.escape(ch.title)}</h3><p>{html.escape(CHAPTER_META[ch.key]["takeaway"])}</p></a>')
-        home_main += f'<section class="part" id="part-{part.number}"><header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2><p>{html.escape(meta["story"])}</p></header>{image_figure(manifest_lookup(manifest)[f"part-{part.number:02d}"], "images/")}<div class="card-grid">{"".join(cards)}</div></section>'
+        home_main += f'<section class="part" id="part-{part.number}"><header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2><p>{html.escape(meta["story"])}</p></header>{part_usecase_html(meta)}{image_figure(manifest_lookup(manifest)[f"part-{part.number:02d}"], "images/")}<div class="card-grid">{"".join(cards)}</div></section>'
     home_main += '</main></div>'
     write_page(SITE / "index.html", "Claude Code実践教科書 — ブログ完全版", "Claude Codeを物語と実装で学ぶ完全版ブログ", home_main, asset_prefix="", home_href="index.html", complete_href="complete.html", image_guide_href="image-pipeline.html")
 
     complete_body = intro_html(preamble, manifest, "images/")
-    complete_body += '<div class="layout"><aside class="toc">' + build_toc(parts, chapters, None) + '</aside><main class="content">'
+    complete_body += '<div class="layout"><aside class="toc" id="site-toc">' + build_toc(parts, chapters, None) + '</aside><main class="content">'
     for part in parts:
         complete_body += part_html(part, chapters_by_part.get(part.number, []), manifest, "images/")
     complete_body += '<p class="source-note">本版は、元教科書の全章・全小見出し・コードブロックを保持し、その前後へ物語、体験ミッション、画像制作指示を追加しています。</p></main></div>'
@@ -562,7 +741,7 @@ def build_site(preamble: str, parts: list[Part], chapters: list[Chapter], manife
     pipeline_md_path = ROOT / "IMAGE_PIPELINE.md"
     if pipeline_md_path.exists():
         pipeline_html = render_reference(pipeline_md_path.read_text(encoding="utf-8"), "image-pipeline")
-        pipeline_body = '<div class="layout"><aside class="toc"><h2>画像制作</h2><a href="#image-pipeline-s1">API上の名称</a><a href="index.html">全体目次</a></aside><main class="content"><article class="chapter"><header class="chapter-head"><div class="eyebrow">GPT Image 2</div><h1>画像制作・差し込みパイプライン</h1></header><div class="reference">' + pipeline_html + '</div></article></main></div>'
+        pipeline_body = '<div class="layout"><aside class="toc" id="site-toc"><h2>画像制作</h2><a href="#image-pipeline-s1">API上の名称</a><a href="index.html">全体目次</a></aside><main class="content"><article class="chapter"><header class="chapter-head"><div class="eyebrow">GPT Image 2</div><h1>画像制作・差し込みパイプライン</h1></header><div class="reference">' + pipeline_html + '</div></article></main></div>'
         write_page(SITE / "image-pipeline.html", "GPT Image 2 画像制作パイプライン", "ブログ挿絵をGPT Image 2 APIで生成し差し込む手順", pipeline_body, asset_prefix="", home_href="index.html", complete_href="complete.html", image_guide_href="image-pipeline.html")
 
     for idx, ch in enumerate(chapters):
@@ -572,7 +751,7 @@ def build_site(preamble: str, parts: list[Part], chapters: list[Chapter], manife
         nav += (f'<a href="{prev_ch.key}.html">← {html.escape(prev_ch.title)}</a>' if prev_ch else '<span></span>')
         nav += (f'<a href="{next_ch.key}.html">{html.escape(next_ch.title)} →</a>' if next_ch else '<a href="../index.html">目次へ →</a>')
         nav += '</nav>'
-        body = '<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-' + ch.key + '">' + html.escape(ch.title) + '</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-' + ch.key + '">一括版で開く</a></aside><main class="content">'
+        body = '<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-' + ch.key + '">' + html.escape(ch.title) + '</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-' + ch.key + '">一括版で開く</a></aside><main class="content">'
         body += chapter_article(ch, manifest, "../images/") + nav + '</main></div>'
         write_page(CHAPTER_DIR / f"{ch.key}.html", f"{ch.raw_title} — ブログ版", CHAPTER_META[ch.key]["takeaway"], body, asset_prefix="../", home_href="../index.html", complete_href="../complete.html", image_guide_href="../image-pipeline.html")
 

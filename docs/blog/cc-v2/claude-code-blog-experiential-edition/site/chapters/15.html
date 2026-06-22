@@ -3,8 +3,9 @@
 <title>第15章　MCP、Connectors、APIを安全につなぐ — ブログ版</title><meta name="description" content="外部連携では、できることより先に、読める範囲・書ける範囲・鍵の置き場所を決めます。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-15">MCP、Connectors、APIを安全につなぐ</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-15">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-15">MCP、Connectors、APIを安全につなぐ</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-15">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-15">
   <header class="chapter-head">
     <div class="eyebrow">第15章</div>
@@ -185,6 +186,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の総務（架空）が、Drive連携Skillで毎日のレポート取得を自動化したいが、AIに書き込み権限まで渡すのが怖くて導入が止まっている。</p><h3>こう使う</h3><p>MCP/Connectorの権限をRead Only Scopeに絞り、書き込みはHuman Gateを介する設計にする。</p><h3>得られるもの</h3><p>情報収集の自動化は走り、書き込み事故は構造的に起きない安全な業務基盤になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人ライター（架空）が、外部記事を要約させたら本文に紛れ込んだ命令でAIが意図しない動作をした（Prompt Injection）。</p><h3>こう使う</h3><p>取得文書はデータとして扱い実行しないルール＋書き込みは明示承認のみ、というRuleを書く。</p><h3>得られるもの</h3><p>外部データに混入した悪意ある命令が動作にならず、調査用途として安全に使い続けられる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 使いたい外部サービスを一つ選び、必要なRead権限と不要なWrite権限を分け、Secretの保存場所を決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>外部連携では、できることより先に、読める範囲・書ける範囲・鍵の置き場所を決めます。</p></section>
 </article>

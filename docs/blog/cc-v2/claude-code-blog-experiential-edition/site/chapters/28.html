@@ -3,8 +3,9 @@
 <title>第28章　文書・ファイル・会議 — ブログ版</title><meta name="description" content="文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-28">文書・ファイル・会議</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-28">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-28">文書・ファイル・会議</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-28">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-28">
   <header class="chapter-head">
     <div class="eyebrow">第28章</div>
@@ -97,6 +98,7 @@ Hidden、Package、Symlink、1GB超は対象外。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の経理（架空）が、毎月100枚の請求書PDFを手動で台帳入力し、毎月末に残業4時間を発生させている。</p><h3>こう使う</h3><p>Read-onlyで請求書フォルダの一覧と分類案を作り、抽出項目・例外を定義してから自動化する。</p><h3>得られるもの</h3><p>例外検出を残しつつ標準項目は自動入力でき、残業時間が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>中小法務（架空）が、契約書PDFをAIに『この契約問題ない？』と聞き、誤った法的結論を得て社内へ展開しかけた。</p><h3>こう使う</h3><p>契約書は法的結論ではなく論点整理として扱い、最終判断は人が行う運用ルールを書く。</p><h3>得られるもの</h3><p>AIは負荷の高い論点抽出を担い、人は判断に集中できる。誤断のリスクが消える。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの実務フォルダをRead-onlyで棚卸しし、変更せずに分類案と例外一覧を作ってください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。</p></section>
 </article>

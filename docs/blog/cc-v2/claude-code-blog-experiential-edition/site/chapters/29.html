@@ -3,8 +3,9 @@
 <title>第29章　調査・Content・学習 — ブログ版</title><meta name="description" content="良い調査は情報量ではなく、目的に沿った選別と出典の透明性で決まります。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-29">調査・Content・学習</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-29">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-29">調査・Content・学習</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-29">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-29">
   <header class="chapter-head">
     <div class="eyebrow">第29章</div>
@@ -96,6 +97,7 @@ argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教育系YouTuber（架空）が、教材作成のために動画とSNSを大量視聴し、毎週末が情報収集だけで終わっている。</p><h3>こう使う</h3><p>Skillに対象・期間・一次情報・除外条件・評価軸を持たせ、INTERESTS.mdを参照させる。</p><h3>得られるもの</h3><p>自分にとって価値のある素材だけが残り、教材作成の時間が情報整理から本質的な構成へ移る。</p></article><article class="usecase-card"><h3>場面</h3><p>個人投資家（架空）が、毎朝のニュースサイトを巡回しているが、重複情報で時間を浪費している。</p><h3>こう使う</h3><p>News Dashboardで更新時刻・出典・未確認情報を表示する単一HTMLを作る。</p><h3>得られるもの</h3><p>重複が統合され、未確認情報だけが目立つ。情報収集が10分に収まる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの調査テーマで、公式情報・解説・SNSを分けて集め、重複を統合した一ページのHTMLレポートを作ってください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>良い調査は情報量ではなく、目的に沿った選別と出典の透明性で決まります。</p></section>
 </article>

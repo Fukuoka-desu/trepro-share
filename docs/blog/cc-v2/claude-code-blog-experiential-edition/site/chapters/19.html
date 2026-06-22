@@ -3,8 +3,9 @@
 <title>第19章　Claude Codeを自分専用に育てる — ブログ版</title><meta name="description" content="自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-19">Claude Codeを自分専用に育てる</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-19">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-19">Claude Codeを自分専用に育てる</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-19">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-19">
   <header class="chapter-head">
     <div class="eyebrow">第19章</div>
@@ -260,6 +261,7 @@ Local Storageには回答状態だけを保存する。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人ライター（架空）が、AIに『自分専用化したい』と全会話履歴を渡し、結果として顧客個人情報まで学習対象に紛れて怖くなった。</p><h3>こう使う</h3><p>保存対象を関心・学習課題・好む形式の三つに限定し、秘密情報・顧客データ・雑談は除外定義を書く。</p><h3>得られるもの</h3><p>個人化の便益は得つつ、プライバシーリスクが構造的にゼロへ近づく。</p></article><article class="usecase-card"><h3>場面</h3><p>学習担当（架空）が、社員ごとのスキルレベルを把握したいが、毎回全ログを再走査して処理時間が爆発している。</p><h3>こう使う</h3><p>処理済み位置と新しさ重みを持つINTERESTS.md抽出Skillを作る。</p><h3>得られるもの</h3><p>差分処理になり、関心の最新動向だけ追える。本人が編集・削除できる透明な仕組みになる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 保存してよい学習信号と保存してはいけない情報を定義し、少量の会話ログからINTERESTS.mdの試作を作ってください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。</p></section>
 </article>

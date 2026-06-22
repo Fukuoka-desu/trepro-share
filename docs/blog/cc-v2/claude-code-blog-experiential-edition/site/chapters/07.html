@@ -3,8 +3,9 @@
 <title>第7章　Permission Mode、Sandbox、危険操作 — ブログ版</title><meta name="description" content="権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-07">Permission Mode、Sandbox、危険操作</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-07">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-07">Permission Mode、Sandbox、危険操作</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-07">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-07">
   <header class="chapter-head">
     <div class="eyebrow">第7章</div>
@@ -149,6 +150,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、毎回出る権限確認を面倒に思いBypassを常用した結果、検証中の本番DBへ誤更新コマンドを流してしまった。</p><h3>こう使う</h3><p>Bypassは隔離した使い捨て環境のみ・本番Projectは確認モード固定、というRuleをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>便利さと事故半径のトレードオフが明示され、危険操作が必ず人の目を通るようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、AIに全権を与えるか禁止するかの二択しか出来ず、安全と業務スピードの両立に悩んでいる。</p><h3>こう使う</h3><p>操作を読む・編集する・実行する・ネットワーク・削除の五分類に分け、それぞれ許可ポリシーを別に設計する。</p><h3>得られるもの</h3><p>全権でも全禁止でもなく、業務に必要な範囲だけを許可でき、稟議が通る具体度になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、AIに『古いファイルを掃除して』と頼み、契約PDFまで巻き込まれて削除されかけた。</p><h3>こう使う</h3><p>削除は対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の標準手順をSkill化する。</p><h3>得られるもの</h3><p>削除がワンクリックで進まなくなり、最悪でも実行前のリストで止められる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在のプロジェクトで許可してよい操作と、毎回確認すべき操作を二列に分けて書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。</p></section>
 </article>

@@ -3,8 +3,9 @@
 <title>第2章　安全を最初に設計する — ブログ版</title><meta name="description" content="安全はAIへのお願いではなく、権限・隔離・証拠で設計します。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-02">安全を最初に設計する</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-02">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-02">安全を最初に設計する</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-02">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-02">
   <header class="chapter-head">
     <div class="eyebrow">第2章</div>
@@ -111,6 +112,7 @@ claude
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の経理担当（架空）が、AIに『不要ファイルを整理して』と頼み、稟議添付のExcelを誤って削除する事故が起きた。</p><h3>こう使う</h3><p>作業用フォルダだけを学習Labとして切り出し、削除禁止・外部公開禁止・本番フォルダ参照禁止をProject Ruleに書く。</p><h3>得られるもの</h3><p>事故が起きてもLab内で完結し、本番資料は手付かず。原状復帰がCheckpointで一発でできる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス課長（架空）が、社員のAI利用を許可したいが『何をどこまで触らせるか』を説明できず承認が止まっている。</p><h3>こう使う</h3><p>Read許可・Write許可・実行許可・ネットワーク権限を分けたPermission表をプロジェクトごとに作る。</p><h3>得られるもの</h3><p>稟議で『どの範囲なら安全か』を説明でき、AI導入の承認が下りる。</p></article><article class="usecase-card"><h3>場面</h3><p>副業エンジニア（架空）が、APIキーをチャットへ貼ったまま動画キャプチャを共有し、課金を悪用される事故を経験した。</p><h3>こう使う</h3><p>秘密情報は環境変数と専用ファイルのみに置き、Gitとチャットから除外する三つのルールをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>鍵の露出が物理的に起こらず、共有・録画のたびに気を張り続ける必要がなくなる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 学習用フォルダを作り、『削除しない』『外部公開しない』『秘密情報を貼らない』の三つをプロジェクトルールへ書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>安全はAIへのお願いではなく、権限・隔離・証拠で設計します。</p></section>
 </article>

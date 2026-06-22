@@ -3,8 +3,9 @@
 <title>第0章　教科書を「実行システム」にする — ブログ版</title><meta name="description" content="教科書の単位はページではなく、実行・検証・保存できるLessonです。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-00">教科書を「実行システム」にする</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-00">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-00">教科書を「実行システム」にする</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-00">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-00">
   <header class="chapter-head">
     <div class="eyebrow">第0章</div>
@@ -107,6 +108,7 @@ source_topics:
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の新人エンジニア（架空）が、社内AI研修テキストを最後まで読んだのに、自席で同じ手順を再現できず止まっている。</p><h3>こう使う</h3><p>テキストを章ごとのLessonへ分解し、各章で『何を作り、どの証拠で完成と判断するか』を一行で書かせる。</p><h3>得られるもの</h3><p>読書ではなく実行が単位になり、本人が次の一操作を自分で決められるようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>教育担当の田中さん（架空）が、研修動画を見せても受講者が独自に応用できず、毎回個別指導に時間が消えている。</p><h3>こう使う</h3><p>動画ではなくLesson単位のテキスト＋成果物テンプレートを配り、進捗をseen/practiced/verified/appliedで管理する。</p><h3>得られるもの</h3><p>個別指導の量が減り、受講者は自分のペースで進めて、講師は詰まった人だけを救援できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス担当（架空）が、AIガイドラインをWiki化したが、誰も読まずに同じ事故が繰り返し発生する。</p><h3>こう使う</h3><p>ガイドラインを実行可能なLessonと体験ミッションに書き換え、ミッション達成を読了の証拠にする。</p><h3>得られるもの</h3><p>『読んだ』のあいまいさが消え、ミッション結果という証拠で運用状況を可視化できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自分が非エンジニア、開発者、管理者のどのルートから始めるかを決め、最初に作る成果物と合格証拠を一行で書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>教科書の単位はページではなく、実行・検証・保存できるLessonです。</p></section>
 </article>

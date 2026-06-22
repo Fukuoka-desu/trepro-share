@@ -3,8 +3,9 @@
 <title>第30章　Application開発 — ブログ版</title><meta name="description" content="アプリの完成は画面が出ることではなく、失敗を再現し、検証し、戻せることです。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-30">Application開発</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-30">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-30">Application開発</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-30">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-30">
   <header class="chapter-head">
     <div class="eyebrow">第30章</div>
@@ -95,6 +96,7 @@ Loss limit/Kill switch
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、AIで作ったタスク管理アプリが『動いた』と思って公開したら、エッジケースで毎日エラーが出てユーザー離脱が始まった。</p><h3>こう使う</h3><p>再現テスト・正常系・異常系・Diff・Rollback手順を実装と同時に作る運用に変える。</p><h3>得られるもの</h3><p>公開後の事故時も再現と巻き戻しが両方できる。ユーザー信頼が壊れない。</p></article><article class="usecase-card"><h3>場面</h3><p>中小ヘルスケア事業者（架空）が、健康Dashboardに自動アドバイス機能を入れたら誤情報のリスクで弁護士からNGが出た。</p><h3>こう使う</h3><p>意思決定を自動化せず、情報整理と注意喚起へ機能を限定する。出典・更新失敗・誤差は明示する。</p><h3>得られるもの</h3><p>法的リスクが下がり、機能を成立させながら世に出せる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 小さなLocal Appへ一つ機能を追加し、再現テスト、正常系、異常系、Diff、Rollbackを記録してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>アプリの完成は画面が出ることではなく、失敗を再現し、検証し、戻せることです。</p></section>
 </article>

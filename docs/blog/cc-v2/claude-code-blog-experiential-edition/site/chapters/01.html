@@ -3,8 +3,9 @@
 <title>第1章　Claude Codeは何が違うのか — ブログ版</title><meta name="description" content="Claude Codeの価値はコード生成ではなく、探索・編集・実行・検証を同じ場所で回せることにあります。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-01">Claude Codeは何が違うのか</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-01">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-01">Claude Codeは何が違うのか</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-01">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-01">
   <header class="chapter-head">
     <div class="eyebrow">第1章</div>
@@ -169,6 +170,7 @@ Codeで実装・検証・公開準備
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ広告のプランナー（架空）が、チャットAIに『議事録まとめて』と頼み、毎回手元のWordへコピペして整形に1時間かけている。</p><h3>こう使う</h3><p>Claude Codeに目的とフォルダを渡し、議事録ファイルとタスクJSONを同じ場所で生成・確認まで一気に走らせる。</p><h3>得られるもの</h3><p>コピペ往復が消え、成果物がフォルダに残る。次回からは同じ手順で5分の作業になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者の佐々木さん（架空）が、複数ファイルにまたがる修正をチャットAIで進めるたび、貼り付け漏れで動かなくなる。</p><h3>こう使う</h3><p>Claude Codeに編集権限とプロジェクトを渡し、探索→修正→テスト実行までを同じセッションで完結させる。</p><h3>得られるもの</h3><p>ファイルの一貫性が保たれ、貼り付け事故と再質問のループから抜けられる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> いま抱えている仕事を一つ選び、Chat・Cowork・Code・Designのどこで始め、どこへ渡すかを書き分けてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Claude Codeの価値はコード生成ではなく、探索・編集・実行・検証を同じ場所で回せることにあります。</p></section>
 </article>

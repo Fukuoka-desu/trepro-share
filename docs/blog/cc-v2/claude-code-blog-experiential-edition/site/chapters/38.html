@@ -3,8 +3,9 @@
 <title>第38章　Coverage Map — ブログ版</title><meta name="description" content="網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-38">Coverage Map</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-38">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-38">Coverage Map</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-38">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-38">
   <header class="chapter-head">
     <div class="eyebrow">第38章</div>
@@ -152,6 +153,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教科書編集者（架空）が、『全部の機能を解説した』と思って入稿したら、レビューで重要トピックの抜けが多数発見され大改修になった。</p><h3>こう使う</h3><p>Coverage Mapで各Source Topicが説明・実習・Template・運用のどこで扱われるかを表にする。</p><h3>得られるもの</h3><p>抜けと重複が事前に検出でき、レビュー時に『どの章に入っているか』を即答できる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅IT企業（架空）が、AI研修テキストの追加教材を入れるたびに既存章と矛盾し、整合性チェックに毎回数日かかる。</p><h3>こう使う</h3><p>追加素材を統合する際に既存章への対応・重複・追加実習をCoverage Mapへ記録する。</p><h3>得られるもの</h3><p>整合性チェックが表の更新で済み、改訂サイクルが大幅に短縮される。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 新しく追加した素材を一つ選び、既存章への統合先、重複、追加すべき実習、更新日をCoverage Mapへ記録してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。</p></section>
 </article>

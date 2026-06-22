@@ -3,8 +3,9 @@
 <title>第3章　導入とProject Folder — ブログ版</title><meta name="description" content="Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-03">導入とProject Folder</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-03">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-03">導入とProject Folder</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-03">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-03">
   <header class="chapter-head">
     <div class="eyebrow">第3章</div>
@@ -107,6 +108,7 @@ claude --resume               # 保存Sessionを選んで再開
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業担当（架空）が、デスクトップに『AI作業』フォルダひとつへ複数案件を放り込み、どのSkillがどの顧客のものか分からなくなっている。</p><h3>こう使う</h3><p>顧客ごとに専用Project Folderを作り、docs/input/output/testsの最小構造に分けて開く。</p><h3>得られるもの</h3><p>AIが見るべき範囲が顧客単位に閉じ、案件の取り違えと情報漏えいリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中小企業の総務（架空）が、AI導入を始めたいが『どこから手を付けるか』分からず、毎週違うフォルダで実験して挫折している。</p><h3>こう使う</h3><p>learning-labという練習専用フォルダを切り、その中だけで実験→検証→Skill化の小さなサイクルを回す。</p><h3>得られるもの</h3><p>練習と本番が物理的に分かれ、失敗を恐れず実験できる。成功したものだけを本番Projectへ移せる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 空のlearning-labを作り、docs・input・output・testsの最小構造を用意してCursorでそのフォルダだけを開いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。</p></section>
 </article>

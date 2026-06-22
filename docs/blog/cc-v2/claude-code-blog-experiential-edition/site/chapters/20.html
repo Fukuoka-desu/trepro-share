@@ -3,8 +3,9 @@
 <title>第20章　`/goal`、Headless、定期実行 — ブログ版</title><meta name="description" content="良い自律化は、達成条件と停止条件の両方を検証可能にします。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-20">`/goal`、Headless、定期実行</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-20">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-20">`/goal`、Headless、定期実行</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-20">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-20">
   <header class="chapter-head">
     <div class="eyebrow">第20章</div>
@@ -113,6 +114,7 @@ mv "$OUT.tmp" "$OUT"
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、AIに『テストが通るまで直して』と頼み、無限ループで朝までCPUが回り続けて停止条件もなく止まれない。</p><h3>こう使う</h3><p>成功条件・最大ターン・Timeout・許可範囲・失敗時停止を/goal仕様として先に書き出す。</p><h3>得られるもの</h3><p>夜間自動実行が安全に走り、達成 or 安全停止の二状態で終わる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、毎日のレポート自動配信を構築したいが、誤送信時の責任の所在が決まらず承認が出ない。</p><h3>こう使う</h3><p>公開・送信・課金・削除は完全自動化せず、最後の一歩を人間承認に残す設計にする。</p><h3>得られるもの</h3><p>副作用のある操作だけ責任者が承認し、それ以外は自動で進む構造になり、承認が下りる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自動化したい仕事を一つ選び、成功条件・最大回数・Timeout・禁止する副作用・人間の承認地点を書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>良い自律化は、達成条件と停止条件の両方を検証可能にします。</p></section>
 </article>

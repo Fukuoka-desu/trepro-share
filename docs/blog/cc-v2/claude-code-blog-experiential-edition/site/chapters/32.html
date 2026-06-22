@@ -3,8 +3,9 @@
 <title>第32章　継続業務の自動化 — ブログ版</title><meta name="description" content="自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-32">継続業務の自動化</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-32">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-32">継続業務の自動化</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-32">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-32">
   <header class="chapter-head">
     <div class="eyebrow">第32章</div>
@@ -90,6 +91,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業企画（架空）が、毎日のニュースとTask Boardを手動更新しており、休む日は誰も状況を把握できない。</p><h3>こう使う</h3><p>情報源と更新時刻を固定したMorning Brief Skillを作り、毎朝Scheduledで配信する。</p><h3>得られるもの</h3><p>休んでも止まらない情報基盤になり、属人化と業務継続性のリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅人事（架空）が、毎月のSkill評価を手作業で集計し、月初の3日間を奪われている。</p><h3>こう使う</h3><p>実行ログ・失敗Fixture・評価点を集めるSkill改善LoopをCanary更新と組む。</p><h3>得られるもの</h3><p>評価が自動化され、人は問題のあるSkillだけ集中的に直せる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 週一回以上繰り返す仕事を一つ選び、入力の安定性・検証可能性・副作用・失敗時対応を採点してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。</p></section>
 </article>

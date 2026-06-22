@@ -3,8 +3,9 @@
 <title>第11章　CLAUDE.md、Rules、Auto Memory — ブログ版</title><meta name="description" content="知識は量ではなく、適切なScopeへ置くことで効きます。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-11">CLAUDE.md、Rules、Auto Memory</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-11">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-11">CLAUDE.md、Rules、Auto Memory</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-11">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-11">
   <header class="chapter-head">
     <div class="eyebrow">第11章</div>
@@ -192,6 +193,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサル（架空）のCLAUDE.mdが3,000行を超え、毎回読み込みに時間がかかり、AIが本来の指示を見落とすようになっている。</p><h3>こう使う</h3><p>CLAUDE.mdは『常に読みたい短い案内板』だけ残し、Path固有事項はRules、業務手順はSkillsへ移す。</p><h3>得られるもの</h3><p>起動が軽くなり、AIが本当に必要な指示を確実に拾うようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、Project AとProject Bで日本語化ルールが毎回ぶつかり、混乱した出力を受け取り続けている。</p><h3>こう使う</h3><p>全社共通ルールはGlobal CLAUDE.mdへ、Project個別はProject CLAUDE.mdへ、Path別はRulesへと役割を分ける。</p><h3>得られるもの</h3><p>ルール衝突が物理的に起きず、どこを直せばどこへ効くかが明確になる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> CLAUDE.mdの各行を『毎回必要か』で見直し、手順はSkillへ、Path固有事項はRulesへ移してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>知識は量ではなく、適切なScopeへ置くことで効きます。</p></section>
 </article>

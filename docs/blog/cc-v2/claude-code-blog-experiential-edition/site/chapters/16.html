@@ -3,8 +3,9 @@
 <title>第16章　MarkdownよりHTMLが向く仕事 — ブログ版</title><meta name="description" content="HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-16">MarkdownよりHTMLが向く仕事</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-16">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-16">MarkdownよりHTMLが向く仕事</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-16">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-16">
   <header class="chapter-head">
     <div class="eyebrow">第16章</div>
@@ -152,6 +153,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、毎月の予実報告をMarkdownで提出するが、役員が目を通さず会議で同じ説明を繰り返している。</p><h3>こう使う</h3><p>同内容を単一HTMLレポートへ変換し、結論カード・グラフ・強調点を1ページに集約する。</p><h3>得られるもの</h3><p>結論到達時間が短くなり、会議の冒頭で『見ました』前提で議論が始まる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅メーカーの開発者（架空）が、テストレポートをスクリーンショットで貼り、後日参照しても何が壊れていたか追えない。</p><h3>こう使う</h3><p>テスト結果を単一HTMLで保存し、印刷・スマホ・Alt textで読める形式に揃える。</p><h3>得られるもの</h3><p>障害後の振り返り会議で誰でも開けて確認でき、Markdown原本との二重管理にしなくて済む。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 同じ小さなレポートをMarkdownと単一HTMLで作り、読み手が結論へ到達する時間を比べてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。</p></section>
 </article>

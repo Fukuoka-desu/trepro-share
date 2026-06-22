@@ -3,8 +3,9 @@
 <title>終章　最強のまま保つ — ブログ版</title><meta name="description" content="完成よりも、検証可能に更新し続けられることが『最強』の条件です。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-final">最強のまま保つ</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-final">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-final">最強のまま保つ</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-final">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-final">
   <header class="chapter-head">
     <div class="eyebrow">終章</div>
@@ -74,6 +75,7 @@ migration_note
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC社のAI推進リーダー（架空）が、AI環境を一度完成させたあと、半年後に劣化したことに気づかず競合に追い抜かれた。</p><h3>こう使う</h3><p>Owner・Fixture・評価日・Release段階を持つLessonまたはSkillを月次で改善し続ける。</p><h3>得られるもの</h3><p>完成形ではなく更新可能性が組織能力となり、競合変化に追随できる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、最初に作ったSkillを使い回し続けて陳腐化に気づかず、ある日突然動かなくなった。</p><h3>こう使う</h3><p>30日ごとに次に改善するLessonまたはSkillを選び、検証可能なRelease段階で更新する。</p><h3>得られるもの</h3><p>個人レベルでも更新Loopが回り、陳腐化や急停止のリスクが低くなる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 次の30日で改善するLessonまたはSkillを一つ選び、Owner、Fixture、評価日、Release段階を決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>完成よりも、検証可能に更新し続けられることが『最強』の条件です。</p></section>
 </article>

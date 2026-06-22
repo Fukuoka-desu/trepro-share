@@ -3,8 +3,9 @@
 <title>第9章　SessionとContext — ブログ版</title><meta name="description" content="会話履歴に依存せず、再開に必要な状態をファイルへ外部化します。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-09">SessionとContext</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-09">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-09">SessionとContext</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-09">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-09">
   <header class="chapter-head">
     <div class="eyebrow">第9章</div>
@@ -84,6 +85,7 @@ claude --resume
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、午前は予算検討・午後はSlack文面・夕方はバグ修正を全部同じセッションで進め、AIが古い前提を引きずって変な提案を出している。</p><h3>こう使う</h3><p>仕事の単位ごとにセッションを切り直し、RESUME.mdへ現在地・決定・次の一操作を残す。</p><h3>得られるもの</h3><p>AIの回答が現状に合うようになり、翌日の再開も会話履歴ではなくファイルだけで成立する。</p></article><article class="usecase-card"><h3>場面</h3><p>兼業ライター（架空）が、長時間セッションで記事執筆→AIが急に話題を取り違える→/compactしても直らない、を繰り返している。</p><h3>こう使う</h3><p>話題切替時は新セッションを開き、必要な状態をresumeメモへ外部化する運用に変える。</p><h3>得られるもの</h3><p>AIの混乱が消え、文脈の引き継ぎが意図したファイルのみに限定される。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> いまの作業について、次回再開時に必要な状態をRESUME.mdへ書き、会話を閉じても続けられるか確認してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>会話履歴に依存せず、再開に必要な状態をファイルへ外部化します。</p></section>
 </article>

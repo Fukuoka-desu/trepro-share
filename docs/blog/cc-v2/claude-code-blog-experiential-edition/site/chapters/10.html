@@ -3,8 +3,9 @@
 <title>第10章　GitとCheckpoint — ブログ版</title><meta name="description" content="可逆性は勇気ではなく、CheckpointとGitで設計する能力です。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-10">GitとCheckpoint</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-10">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-10">GitとCheckpoint</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-10">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-10">
   <header class="chapter-head">
     <div class="eyebrow">第10章</div>
@@ -92,6 +93,7 @@ git worktree add ../project-agent-docs -b agent/docs
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小Webサイト運営者（架空）が、AIに『大胆に作り直して』を依頼するたび、戻したい時に戻せず古い版を失っている。</p><h3>こう使う</h3><p>毎回の作業開始前に良い状態をCommitし、Checkpoint＋Gitの二重保存で『戻れる』を物理的に作る。</p><h3>得られるもの</h3><p>AIへ強気に試行させても、いつでも前に戻れる安心が手に入る。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人開発（架空）が、複数機能を同時に試したくて同じファイルを並列編集し、お互いの変更を上書きして混乱した。</p><h3>こう使う</h3><p>Worktreeで作業ツリーを物理的に分け、機能ごとに別ディレクトリで並列に動かす。</p><h3>得られるもの</h3><p>AIに並列実装させても衝突が起きず、後でCherry-pickで良い変更だけを統合できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の良い状態をCommitし、その後に小さな変更を加えてDiffを確認し、元へ戻せることを試してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>可逆性は勇気ではなく、CheckpointとGitで設計する能力です。</p></section>
 </article>

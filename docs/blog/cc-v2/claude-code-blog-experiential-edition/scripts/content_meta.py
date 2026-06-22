@@ -28,46 +28,91 @@ PART_META = {
         "title": "最適な教科書の設計",
         "story": "遥はすでに便利なSkillを使っていました。それでも、うまくいかなかった瞬間に直せないことが不安でした。そこで四人は、知識を並べた資料ではなく、操作・証拠・保存・再開まで含む『実行できる教科書』を作ることにします。",
         "image_concept": "A workshop where pages from a technical book unfold into interactive tools, checkpoints, a terminal, and a learning path, with four Japanese office workers collaborating",
+        "usecase": {
+            "situation": "ABC商事の社内勉強会で、AIツール本を回し読みしても誰も再現できない状況が続いている。",
+            "action": "本ではなく、章ごとに前提・成果物・検証を持つLesson単位の実行教科書として再設計する。",
+            "benefit": "読んだ／使った／検証したの段階で進捗が記録でき、勉強会後も全員が同じLevelへ到達できる。",
+        },
     },
     1: {
         "title": "Claude Codeの全体像と最初の成果物",
         "story": "最初の目標は、難しい機能を暗記することではありません。会議の文字起こしを、議事録・タスク・HTMLへ変える小さな成果物を完成させます。『動いた』という体験が、その後の学習を現実のものに変えます。",
         "image_concept": "A beginner-friendly desk scene where a meeting transcript flows into notes, tasks, and a clean web dashboard, warm editorial technology illustration",
+        "usecase": {
+            "situation": "XYZ工業の総務チームは、毎週の議事録作成に2時間かかり、タスク漏れで翌週まで動けない。",
+            "action": "Claude Codeのフォルダへ文字起こしを置き、議事録・タスク・HTMLレポートの三点セットを作るLessonを一周する。",
+            "benefit": "1回の体験で『動かす・確かめる・再利用する』感覚が掴め、次の会議から再現可能な業務型として使える。",
+        },
     },
     2: {
         "title": "標準作業ループ",
         "story": "一度だけ成功する指示と、何度でも再現できる仕事の型は別物です。四人は、探索から保存までを七つの段階に分け、どんな案件でも同じ順序で進められる共通言語を作ります。",
         "image_concept": "A circular seven-stage workflow on a studio floor, people moving from exploration to planning, implementation, verification, review, and commit",
+        "usecase": {
+            "situation": "ある製造業の社内開発チームは、担当者によって作業順序がバラバラで、レビューや戻し作業に時間を奪われている。",
+            "action": "Explore→Plan→Implement→Verify→Review→Commitの七段階を共通言語にし、依頼の単位を統一する。",
+            "benefit": "順序が揃うことで抜けや手戻りが減り、新人でも先輩と同じ手順で安全に進められる。",
+        },
     },
     3: {
         "title": "Claude Codeを育てる拡張レイヤー",
         "story": "会話で得たコツを、その会話の中だけに置いておくと、翌日にはまた同じ説明が必要です。ここからは、知識をCLAUDE.md、Rules、Skills、Subagents、Hooksへ昇格させ、個人の工夫を仕組みに変えていきます。",
         "image_concept": "Layered transparent cards representing project guidance, rules, skills, specialist agents, and automated quality gates around an AI workspace",
+        "usecase": {
+            "situation": "個人で成果を出している人事の田中さん（架空）が、同じ説明を毎週新人へ繰り返し、本人の時間が削られている。",
+            "action": "成功した会話をCLAUDE.md・Rules・Skillへ昇格させ、誰でも同じ手順で呼べる業務パッケージへ変える。",
+            "benefit": "属人化した工夫が組織の資産になり、説明の繰り返しから解放されて改善側に時間を回せる。",
+        },
     },
     4: {
         "title": "外部連携と伝わる成果物",
         "story": "仕事はパソコンの中だけでは終わりません。カレンダー、メール、Drive、社内データ、デザイン、公開先へつながります。同時に、正しいだけで読まれない成果物を、理解されるHTMLへ変える必要があります。",
         "image_concept": "Secure bridges connecting a local AI workspace to calendar, mail, cloud documents, design tools, and a polished HTML report",
+        "usecase": {
+            "situation": "ある広告会社の運用チームは、Drive上のレポートをそのまま送って『長すぎて読まれない』とクライアントから言われ続けている。",
+            "action": "Driveとの安全な接続を設計しつつ、長文を1ページHTMLレポートへ翻訳するSkillを作る。",
+            "benefit": "情報量を落とさず読解時間が半分になり、レビュー打ち返しが減って意思決定が速くなる。",
+        },
     },
     5: {
         "title": "パーソナライズと自律化",
         "story": "便利な自動化ほど、止まる条件と学び方が重要です。四人は、対話履歴から関心を抽出し、明確なゴールだけを自律実行させ、必要なときに人間へ戻す設計を学びます。",
         "image_concept": "A personal knowledge garden connected to a carefully bounded automation loop with visible stop conditions and human checkpoints",
+        "usecase": {
+            "situation": "ある情シスのリーダーは、毎朝のニュース要約とTask Boardを手動で作っており、属人的で休めない状態が続く。",
+            "action": "成功条件・最大回数・Timeout・承認地点を持つ自律実行を設計し、副作用は人間承認を残す。",
+            "benefit": "毎朝の繰り返し作業が安全に自動化され、休んでも崩れず、品質が落ちた瞬間だけ人へ戻る運用になる。",
+        },
     },
     6: {
         "title": "トレプロハーネスの全社実装",
         "story": "遥のMacだけで成功しても、会社の仕組みにはなりません。美咲は、同じSkillと安全策を全社員へ届け、更新失敗や誤配布が起きても戻せる配布基盤を設計します。",
         "image_concept": "An enterprise control room distributing a consistent AI coding environment to many Mac laptops with canary rings, monitoring, and rollback",
+        "usecase": {
+            "situation": "ある中堅企業（架空）では、AIに強い社員のSkillが個人Macだけに留まり、他部署へ広がらず会社の力にならない。",
+            "action": "正本・配布・強制・個人差分を分離した配布基盤を作り、Canary→Pilot→Stableで段階展開する。",
+            "benefit": "個人の成功が事故なく全社へ届き、誤配布もRollbackで戻せるため、攻めと守りを両立できる。",
+        },
     },
     7: {
         "title": "実務ユースケース集",
         "story": "原則を理解したら、仕事へ戻します。請求書、会議、調査、学習、アプリ、資料、定期業務を題材に、どのレイヤーを組み合わせればよいかを実戦形式で確かめます。",
         "image_concept": "A montage of practical office workflows: invoices, meeting notes, research, a local app, an HTML report, and scheduled automation",
+        "usecase": {
+            "situation": "ある総務担当（架空）は、請求書整理・会議メモ・調査・週報を毎日手作業で回し、定型業務に1日の半分を奪われている。",
+            "action": "業務ごとにRead-only棚卸し→Dry-run→可逆処理→Skillという同じ型を適用する。",
+            "benefit": "業務種類が違っても同じ流れで処理でき、新しい業務も学習コストを抑えて自動化候補へ載せられる。",
+        },
     },
     8: {
         "title": "テンプレートとアプリ化",
         "story": "最後に、学びを配れる形へ固定します。コピーできるテンプレート、構造化されたLesson、進捗データ、Feature Registryを組み合わせ、教科書そのものを対話型アプリへ育てます。",
         "image_concept": "A modular learning product made from templates, lesson cards, progress states, code samples, and a browser-based navigator",
+        "usecase": {
+            "situation": "教育担当の佐藤さん（架空）は、研修資料を毎回ゼロから作り直し、受講者の進捗を Excel で追えなくなっている。",
+            "action": "Lesson JSON・進捗State・Feature Registryを持つ教材アプリへ変換し、章番号で再開できるようにする。",
+            "benefit": "資料が再利用可能な学習プロダクトへ変わり、受講者の現在地と証拠が見える形で運用できる。",
+        },
     },
 }
 
@@ -79,6 +124,23 @@ CHAPTER_META = {
         "takeaway": "教科書の単位はページではなく、実行・検証・保存できるLessonです。",
         "image_concept": "A technical book transforming into an interactive workshop with lesson cards, checkpoints, and executable tools",
         "image_kind": "editorial concept illustration",
+        "usecases": [
+            {
+                "situation": "ABC商事の新人エンジニア（架空）が、社内AI研修テキストを最後まで読んだのに、自席で同じ手順を再現できず止まっている。",
+                "action": "テキストを章ごとのLessonへ分解し、各章で『何を作り、どの証拠で完成と判断するか』を一行で書かせる。",
+                "benefit": "読書ではなく実行が単位になり、本人が次の一操作を自分で決められるようになる。",
+            },
+            {
+                "situation": "教育担当の田中さん（架空）が、研修動画を見せても受講者が独自に応用できず、毎回個別指導に時間が消えている。",
+                "action": "動画ではなくLesson単位のテキスト＋成果物テンプレートを配り、進捗をseen/practiced/verified/appliedで管理する。",
+                "benefit": "個別指導の量が減り、受講者は自分のペースで進めて、講師は詰まった人だけを救援できる。",
+            },
+            {
+                "situation": "情シス担当（架空）が、AIガイドラインをWiki化したが、誰も読まずに同じ事故が繰り返し発生する。",
+                "action": "ガイドラインを実行可能なLessonと体験ミッションに書き換え、ミッション達成を読了の証拠にする。",
+                "benefit": "『読んだ』のあいまいさが消え、ミッション結果という証拠で運用状況を可視化できる。",
+            },
+        ],
     },
     "01": {
         "scene": "遥が『この資料をまとめて』と頼むと、チャットAIは文章を返しました。Claude Codeへ同じ目的を渡すと、フォルダを読み、ファイルを作り、コマンドを実行し、結果を確かめ始めます。画面の向こうにいるのは、回答者ではなく作業者でした。",
@@ -87,6 +149,18 @@ CHAPTER_META = {
         "takeaway": "Claude Codeの価値はコード生成ではなく、探索・編集・実行・検証を同じ場所で回せることにあります。",
         "image_concept": "Three generations of AI work: copy-paste chat, AI editor assistance, and a full autonomous agent loop in one coherent scene",
         "image_kind": "editorial timeline illustration",
+        "usecases": [
+            {
+                "situation": "XYZ広告のプランナー（架空）が、チャットAIに『議事録まとめて』と頼み、毎回手元のWordへコピペして整形に1時間かけている。",
+                "action": "Claude Codeに目的とフォルダを渡し、議事録ファイルとタスクJSONを同じ場所で生成・確認まで一気に走らせる。",
+                "benefit": "コピペ往復が消え、成果物がフォルダに残る。次回からは同じ手順で5分の作業になる。",
+            },
+            {
+                "situation": "個人開発者の佐々木さん（架空）が、複数ファイルにまたがる修正をチャットAIで進めるたび、貼り付け漏れで動かなくなる。",
+                "action": "Claude Codeに編集権限とプロジェクトを渡し、探索→修正→テスト実行までを同じセッションで完結させる。",
+                "benefit": "ファイルの一貫性が保たれ、貼り付け事故と再質問のループから抜けられる。",
+            },
+        ],
     },
     "02": {
         "scene": "最初の実習で、Claude Codeがファイル変更の許可を求めました。遥は早く進めたくて承認しかけますが、美咲が止めます。『何を許可したか説明できないなら、まだ押さない』。便利さより先に、安全の言葉を共有する瞬間でした。",
@@ -95,6 +169,23 @@ CHAPTER_META = {
         "takeaway": "安全はAIへのお願いではなく、権限・隔離・証拠で設計します。",
         "image_concept": "A protected sandbox workspace surrounded by layered safety rails, permission gates, checkpoints, and an audit trail",
         "image_kind": "isometric safety illustration",
+        "usecases": [
+            {
+                "situation": "ABC商事の経理担当（架空）が、AIに『不要ファイルを整理して』と頼み、稟議添付のExcelを誤って削除する事故が起きた。",
+                "action": "作業用フォルダだけを学習Labとして切り出し、削除禁止・外部公開禁止・本番フォルダ参照禁止をProject Ruleに書く。",
+                "benefit": "事故が起きてもLab内で完結し、本番資料は手付かず。原状復帰がCheckpointで一発でできる。",
+            },
+            {
+                "situation": "情シス課長（架空）が、社員のAI利用を許可したいが『何をどこまで触らせるか』を説明できず承認が止まっている。",
+                "action": "Read許可・Write許可・実行許可・ネットワーク権限を分けたPermission表をプロジェクトごとに作る。",
+                "benefit": "稟議で『どの範囲なら安全か』を説明でき、AI導入の承認が下りる。",
+            },
+            {
+                "situation": "副業エンジニア（架空）が、APIキーをチャットへ貼ったまま動画キャプチャを共有し、課金を悪用される事故を経験した。",
+                "action": "秘密情報は環境変数と専用ファイルのみに置き、Gitとチャットから除外する三つのルールをCLAUDE.mdへ書く。",
+                "benefit": "鍵の露出が物理的に起こらず、共有・録画のたびに気を張り続ける必要がなくなる。",
+            },
+        ],
     },
     "03": {
         "scene": "遥のデスクトップには、資料、画像、テスト用ファイルが混ざった『AI作業』フォルダがありました。蓮は新しい空のフォルダを作り、そこだけをCursorで開きます。作業場所を決めただけで、AIが見てよい範囲と人が確認すべき範囲がはっきりしました。",
@@ -103,6 +194,18 @@ CHAPTER_META = {
         "takeaway": "Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。",
         "image_concept": "An organized digital workbench with a clearly bounded project folder, labeled zones for input, docs, output, tests, and terminal",
         "image_kind": "editorial workspace illustration",
+        "usecases": [
+            {
+                "situation": "ある営業担当（架空）が、デスクトップに『AI作業』フォルダひとつへ複数案件を放り込み、どのSkillがどの顧客のものか分からなくなっている。",
+                "action": "顧客ごとに専用Project Folderを作り、docs/input/output/testsの最小構造に分けて開く。",
+                "benefit": "AIが見るべき範囲が顧客単位に閉じ、案件の取り違えと情報漏えいリスクが消える。",
+            },
+            {
+                "situation": "中小企業の総務（架空）が、AI導入を始めたいが『どこから手を付けるか』分からず、毎週違うフォルダで実験して挫折している。",
+                "action": "learning-labという練習専用フォルダを切り、その中だけで実験→検証→Skill化の小さなサイクルを回す。",
+                "benefit": "練習と本番が物理的に分かれ、失敗を恐れず実験できる。成功したものだけを本番Projectへ移せる。",
+            },
+        ],
     },
     "04": {
         "scene": "四人が最初に選んだ題材は、会議アシスタントでした。雑然とした文字起こしを入れると、議事録、タスク一覧、機械可読JSON、見やすいHTMLが出る。小さいけれど、要件・実装・検証・再利用がすべて入った題材です。",
@@ -111,6 +214,18 @@ CHAPTER_META = {
         "takeaway": "最初の成果物は、作る・確かめる・再利用するまでを一周できるものが最適です。",
         "image_concept": "A meeting transcript flowing through an AI-assisted pipeline into minutes, a task board, structured JSON, and a polished HTML dashboard",
         "image_kind": "editorial process illustration",
+        "usecases": [
+            {
+                "situation": "XYZ商社の営業企画（架空）が、週5本の商談記録から議事録・タスク・送付メールを手動で2時間かけて作っている。",
+                "action": "サンプル文字起こしからminutes.md、tasks.json、report.htmlを作る90分実習を一周し、自分のSkillへ昇格させる。",
+                "benefit": "次回からは同じテンプレで5分。文字起こしを入れる→3点セットが出る、を仕事の型として固定できる。",
+            },
+            {
+                "situation": "ある総務リーダー（架空）が、AI活用の第一歩として何を作ればよいか分からず、3週間プロジェクトが止まっている。",
+                "action": "入力・出力・検証が全部入った最小の題材として会議アシスタントを選び、90分の体験ミッションを完走する。",
+                "benefit": "『動いた』体験で全員のスタート地点が揃い、その後の応用先（請求書・週報など）に展開しやすくなる。",
+            },
+        ],
     },
     "05": {
         "scene": "遥は『いい感じのアプリを作って』と入力し、期待と違う画面を受け取りました。蓮はプロンプトの言い回しを直す代わりに、目的、利用者、制約、成果物、完了条件を一緒に書き出します。結果は、呪文より仕事の定義で変わりました。",
@@ -119,6 +234,18 @@ CHAPTER_META = {
         "takeaway": "プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。",
         "image_concept": "A vague cloud-shaped request being transformed into a clear structured brief with purpose, constraints, deliverables, and evidence",
         "image_kind": "conceptual editorial illustration",
+        "usecases": [
+            {
+                "situation": "ある中堅メーカーのマーケ担当（架空）が、AIに『いい感じのLP作って』と頼み、期待と違う画面が出ては手戻りを繰り返している。",
+                "action": "目的・利用者・制約・成果物・完了条件・証拠の六項目テンプレートを使って依頼文を書き直す。",
+                "benefit": "AIの判断材料が揃って一発で意図に近い出力になり、手戻り回数が大幅に減る。",
+            },
+            {
+                "situation": "PM経験ゼロの開発者（架空）が、上司から『この依頼を技術翻訳して』と毎回言われ、要件整理だけで一日を消費している。",
+                "action": "曖昧な依頼を完了報告テンプレ（変更/検証/残リスク）まで含めて構造化し、AIへ渡す前に人へ見せる。",
+                "benefit": "上司確認も同じテンプレで進み、要件と完了の認識ズレが消える。",
+            },
+        ],
     },
     "06": {
         "scene": "会議アシスタントは動きました。しかし翌週、別の素材で試すと抜けが出ます。蓮は成功した一回を称賛する前に、七つのカードを机へ並べました。Explore、Specify、Plan、Implement、Verify、Review、Commit。",
@@ -127,6 +254,18 @@ CHAPTER_META = {
         "takeaway": "速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。",
         "image_concept": "A seven-station circular workflow with exploration, specification, planning, implementation, verification, review, and commit represented as tangible workstations",
         "image_kind": "workflow illustration",
+        "usecases": [
+            {
+                "situation": "ABC物流の社内システム改修で、依頼→実装→『動いたっぽい』→本番→事故、という流れを毎月繰り返している。",
+                "action": "Explore→Specify→Plan→Implement→Verify→Review→Commitの七段階に依頼テンプレを揃え、各段階で証拠を残す。",
+                "benefit": "本番事故の発生源を段階に切り分けて潰せるようになり、改修1本あたりの平均事故件数が減る。",
+            },
+            {
+                "situation": "Webデザイナー（架空）が、AIに『修正お願い』と頼んだら関係ない部分まで書き換えられ、何が変わったか追えない。",
+                "action": "Plan段階で変更範囲をAIに宣言させ、Verifyで差分とテスト結果を見てからCommitする運用にする。",
+                "benefit": "予期しない書き換えがPlanで弾かれ、レビュー時間が短く、巻き戻しも安全になる。",
+            },
+        ],
     },
     "07": {
         "scene": "実装中、許可確認が何度も現れ、遥は『全部自動にできないの？』と尋ねます。美咲は、自動化の速度ではなく、事故が起きたときの半径を見せました。自由度を上げる前に、どこまで壊れてもよいかを決める必要があります。",
@@ -135,6 +274,23 @@ CHAPTER_META = {
         "takeaway": "権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。",
         "image_concept": "A series of permission gates around a coding workspace, from read-only to edit, command execution, network access, and destructive actions",
         "image_kind": "security concept illustration",
+        "usecases": [
+            {
+                "situation": "ある社内開発者（架空）が、毎回出る権限確認を面倒に思いBypassを常用した結果、検証中の本番DBへ誤更新コマンドを流してしまった。",
+                "action": "Bypassは隔離した使い捨て環境のみ・本番Projectは確認モード固定、というRuleをCLAUDE.mdへ書く。",
+                "benefit": "便利さと事故半径のトレードオフが明示され、危険操作が必ず人の目を通るようになる。",
+            },
+            {
+                "situation": "情シス（架空）が、AIに全権を与えるか禁止するかの二択しか出来ず、安全と業務スピードの両立に悩んでいる。",
+                "action": "操作を読む・編集する・実行する・ネットワーク・削除の五分類に分け、それぞれ許可ポリシーを別に設計する。",
+                "benefit": "全権でも全禁止でもなく、業務に必要な範囲だけを許可でき、稟議が通る具体度になる。",
+            },
+            {
+                "situation": "個人事業主（架空）が、AIに『古いファイルを掃除して』と頼み、契約PDFまで巻き込まれて削除されかけた。",
+                "action": "削除は対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の標準手順をSkill化する。",
+                "benefit": "削除がワンクリックで進まなくなり、最悪でも実行前のリストで止められる。",
+            },
+        ],
     },
     "08": {
         "scene": "遥は難しい仕事ほど常に最上位モデルを選ぼうとしました。ところが利用上限が早く来て、単純な修正まで止まります。蓮は、モデル名ではなく、計画、実装、軽い整理、評価という役割で選ぶよう提案します。",
@@ -143,6 +299,18 @@ CHAPTER_META = {
         "takeaway": "モデルは強さではなく役割で選び、変動情報は本文から切り離します。",
         "image_concept": "Three differently sized precision instruments assigned to lightweight work, standard implementation, and high-stakes planning, balanced against time and cost",
         "image_kind": "editorial metaphor illustration",
+        "usecases": [
+            {
+                "situation": "個人開発者（架空）が、すべての作業を最上位モデル＋最大Effortで回した結果、月初に利用上限に達して残り3週間を低性能モデルで耐えている。",
+                "action": "業務を軽量処理・標準処理・高難度判断の三つに分類し、Effortを上げるのは判断系のみにする。",
+                "benefit": "利用上限の発火が遅れ、難所だけに高性能を集中投下できる。コスト効率が大きく改善する。",
+            },
+            {
+                "situation": "ABC SIerのテックリード（架空）が、レビュー指摘の質に悩み、レビュー専用モデルを高Effortで分けたいが手順が決まっていない。",
+                "action": "Plan/Implement/Reviewそれぞれにモデル設定を分け、変動するモデル名はFeature Registryへ外出しする。",
+                "benefit": "重要レビューだけ深く考えさせる構造になり、後でモデル名が変わってもRegistry更新で済む。",
+            },
+        ],
     },
     "09": {
         "scene": "同じセッションで要件、雑談、バグ修正、別の資料作成まで続けた結果、Claude Codeは古い前提を引きずり始めました。机の上に資料を積み続けたような状態です。遥は、会話を続けることと文脈を守ることが同じではないと気づきます。",
@@ -151,6 +319,18 @@ CHAPTER_META = {
         "takeaway": "会話履歴に依存せず、再開に必要な状態をファイルへ外部化します。",
         "image_concept": "A cluttered desk of accumulated conversation context beside a clean reset desk with a concise resume note and organized project state",
         "image_kind": "before-and-after editorial illustration",
+        "usecases": [
+            {
+                "situation": "ある経営企画（架空）が、午前は予算検討・午後はSlack文面・夕方はバグ修正を全部同じセッションで進め、AIが古い前提を引きずって変な提案を出している。",
+                "action": "仕事の単位ごとにセッションを切り直し、RESUME.mdへ現在地・決定・次の一操作を残す。",
+                "benefit": "AIの回答が現状に合うようになり、翌日の再開も会話履歴ではなくファイルだけで成立する。",
+            },
+            {
+                "situation": "兼業ライター（架空）が、長時間セッションで記事執筆→AIが急に話題を取り違える→/compactしても直らない、を繰り返している。",
+                "action": "話題切替時は新セッションを開き、必要な状態をresumeメモへ外部化する運用に変える。",
+                "benefit": "AIの混乱が消え、文脈の引き継ぎが意図したファイルのみに限定される。",
+            },
+        ],
     },
     "10": {
         "scene": "修正後の画面が崩れ、遥は『ひとつ前へ戻して』と頼みます。Checkpointで戻せる変更もありましたが、セッションをまたいだ手編集までは戻りません。蓮はGitを開き、『戻る』を偶然ではなく履歴にしようと説明します。",
@@ -159,6 +339,18 @@ CHAPTER_META = {
         "takeaway": "可逆性は勇気ではなく、CheckpointとGitで設計する能力です。",
         "image_concept": "A mountain trail with frequent checkpoints and a durable map archive, symbolizing quick rewind and long-term Git history",
         "image_kind": "editorial metaphor illustration",
+        "usecases": [
+            {
+                "situation": "中小Webサイト運営者（架空）が、AIに『大胆に作り直して』を依頼するたび、戻したい時に戻せず古い版を失っている。",
+                "action": "毎回の作業開始前に良い状態をCommitし、Checkpoint＋Gitの二重保存で『戻れる』を物理的に作る。",
+                "benefit": "AIへ強気に試行させても、いつでも前に戻れる安心が手に入る。",
+            },
+            {
+                "situation": "ある個人開発（架空）が、複数機能を同時に試したくて同じファイルを並列編集し、お互いの変更を上書きして混乱した。",
+                "action": "Worktreeで作業ツリーを物理的に分け、機能ごとに別ディレクトリで並列に動かす。",
+                "benefit": "AIに並列実装させても衝突が起きず、後でCherry-pickで良い変更だけを統合できる。",
+            },
+        ],
     },
     "11": {
         "scene": "毎回『日本語で』『このプロジェクトは何をするか』を説明するのに疲れた遥は、すべてをCLAUDE.mdへ詰め込みました。翌日、どの仕事でも長い指示が読み込まれ、かえって動きが鈍くなります。知識には置き場所があると分かる失敗でした。",
@@ -167,6 +359,18 @@ CHAPTER_META = {
         "takeaway": "知識は量ではなく、適切なScopeへ置くことで効きます。",
         "image_concept": "A layered memory system with a small project sign, path-specific rule cards, reusable skill manuals, and compact discovered notes",
         "image_kind": "layered architecture illustration",
+        "usecases": [
+            {
+                "situation": "ABCコンサル（架空）のCLAUDE.mdが3,000行を超え、毎回読み込みに時間がかかり、AIが本来の指示を見落とすようになっている。",
+                "action": "CLAUDE.mdは『常に読みたい短い案内板』だけ残し、Path固有事項はRules、業務手順はSkillsへ移す。",
+                "benefit": "起動が軽くなり、AIが本当に必要な指示を確実に拾うようになる。",
+            },
+            {
+                "situation": "個人開発者（架空）が、Project AとProject Bで日本語化ルールが毎回ぶつかり、混乱した出力を受け取り続けている。",
+                "action": "全社共通ルールはGlobal CLAUDE.mdへ、Project個別はProject CLAUDE.mdへ、Path別はRulesへと役割を分ける。",
+                "benefit": "ルール衝突が物理的に起きず、どこを直せばどこへ効くかが明確になる。",
+            },
+        ],
     },
     "12": {
         "scene": "会議アシスタントを三度改善したあと、遥は『この成功手順を名前付きで呼びたい』と考えます。ナビゲーターは会話ログを保存するのではなく、入力、手順、検証、失敗時対応をまとめたSkillへ変換します。",
@@ -175,6 +379,18 @@ CHAPTER_META = {
         "takeaway": "Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。",
         "image_concept": "A well-used work process being distilled into a reusable field manual with inputs, steps, outputs, quality checks, and references",
         "image_kind": "editorial manual illustration",
+        "usecases": [
+            {
+                "situation": "XYZ広告のプランナー（架空）が、毎週類似のレポート依頼に対して毎回プロンプトを書き直し、品質も毎回ぶれている。",
+                "action": "成功した会話を入力・処理・出力・品質基準・失敗時対応の形式へ整理し、Skill化する。",
+                "benefit": "次週からは『あのSkillで』の一言で同品質の成果物が出る。教育コストもSkill共有で済む。",
+            },
+            {
+                "situation": "ある制作チーム（架空）が、複数メンバーで同じSkillを書き散らし、似て非なるSkillが乱立して使い分けに迷っている。",
+                "action": "正本名・Owner・参照資料を持つSKILL.mdテンプレートを揃え、referencesに長文を逃がすProgressive Disclosureを徹底する。",
+                "benefit": "Skillの重複が抑えられ、新規メンバーも『どれを使えばよいか』を迷わず選べる。",
+            },
+        ],
     },
     "13": {
         "scene": "自分で作った資料を自分でレビューすると、どうしても甘くなります。蓮は、実装を担当したセッションを閉じ、背景を知らないReviewer Agentへ成果物だけを渡しました。初めて見える欠点が、いくつも出てきます。",
@@ -183,6 +399,18 @@ CHAPTER_META = {
         "takeaway": "複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。",
         "image_concept": "A small expert team with separate researcher, builder, and independent reviewer desks coordinated by one project lead",
         "image_kind": "team editorial illustration",
+        "usecases": [
+            {
+                "situation": "ある個人開発者（架空）が、自分のコードを自分でレビューさせるとAIが甘く採点し、毎回バグを見落としている。",
+                "action": "実装セッションを閉じ、背景を知らない独立コンテキストのReviewer Agentへ成果物だけ渡す。",
+                "benefit": "迎合バイアスが消え、要件・安全・保守性の三観点で本当の指摘が返ってくる。",
+            },
+            {
+                "situation": "中堅企業のリサーチチーム（架空）が、調査・検証・統合を一人のAIに任せ、結論が初期仮説に引きずられる傾向が抜けない。",
+                "action": "Research・Verify・Synthesizeを別Agentに分け、各役割の入力と期待出力を明示する。",
+                "benefit": "仮説バイアスが分離され、反証も合わせて統合できる。結論の信頼度が説明可能になる。",
+            },
+        ],
     },
     "14": {
         "scene": "安全ルールを文書に書いても、忙しい日に見落とされることがあります。美咲は、危険なコマンドの直前で止め、編集後に型チェックを走らせ、終了時に保存を促す仕組みを作ります。注意を、決定的な動作へ変える章です。",
@@ -191,6 +419,18 @@ CHAPTER_META = {
         "takeaway": "絶対に守らせたいことは文章ではなく、HookとPolicyで実行時に強制します。",
         "image_concept": "A software factory with deterministic quality gates before commands, after edits, at session start, and at completion",
         "image_kind": "isometric quality-control illustration",
+        "usecases": [
+            {
+                "situation": "情シス（架空）が、CLAUDE.mdに『rm -rf禁止』と書いても、繁忙期にAIが破壊的コマンドを生成して事故が起きる。",
+                "action": "PreToolUseでrm -rf・本番DB操作・外部送信を物理的に拒否するHookを書き、Fixtureテストを通す。",
+                "benefit": "AIがどんなに賢くてもHookで止まる。文章のお願いから決定論的な強制へ昇格できる。",
+            },
+            {
+                "situation": "ある制作チーム（架空）が、編集後のTypeScript型エラーを翌朝まで気づかず、毎週の月曜に手戻りが発生している。",
+                "action": "PostToolUseでEdit/Write後にtsc --noEmitを自動実行するHookを入れる。",
+                "benefit": "型エラーが編集の瞬間に検出され、月曜の手戻り会議が消える。",
+            },
+        ],
     },
     "15": {
         "scene": "会議アシスタントをGoogle Driveとつなげたい遥は、APIキーをチャットへ貼ろうとします。美咲が止め、鍵は会話ではなく環境変数と秘密管理へ置きます。外部連携は能力を広げる一方、信頼境界も広げます。",
@@ -199,6 +439,18 @@ CHAPTER_META = {
         "takeaway": "外部連携では、できることより先に、読める範囲・書ける範囲・鍵の置き場所を決めます。",
         "image_concept": "A secure bridge from a local AI workspace to cloud services, with a locked key vault, read-only lanes, and guarded write lanes",
         "image_kind": "security integration illustration",
+        "usecases": [
+            {
+                "situation": "ABC商事の総務（架空）が、Drive連携Skillで毎日のレポート取得を自動化したいが、AIに書き込み権限まで渡すのが怖くて導入が止まっている。",
+                "action": "MCP/Connectorの権限をRead Only Scopeに絞り、書き込みはHuman Gateを介する設計にする。",
+                "benefit": "情報収集の自動化は走り、書き込み事故は構造的に起きない安全な業務基盤になる。",
+            },
+            {
+                "situation": "個人ライター（架空）が、外部記事を要約させたら本文に紛れ込んだ命令でAIが意図しない動作をした（Prompt Injection）。",
+                "action": "取得文書はデータとして扱い実行しないルール＋書き込みは明示承認のみ、というRuleを書く。",
+                "benefit": "外部データに混入した悪意ある命令が動作にならず、調査用途として安全に使い続けられる。",
+            },
+        ],
     },
     "16": {
         "scene": "同じ分析結果をMarkdownとHTMLで見せると、会議室の反応が変わりました。長い文章では見落とされた傾向が、カード、グラフ、強調された結論によって一目で伝わります。HTMLは装飾ではなく、理解の速度を設計する形式でした。",
@@ -207,6 +459,18 @@ CHAPTER_META = {
         "takeaway": "HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。",
         "image_concept": "A split-screen comparison of a dense markdown document and a clear editorial HTML report with cards, charts, and interactive controls",
         "image_kind": "editorial comparison illustration",
+        "usecases": [
+            {
+                "situation": "ある経営企画（架空）が、毎月の予実報告をMarkdownで提出するが、役員が目を通さず会議で同じ説明を繰り返している。",
+                "action": "同内容を単一HTMLレポートへ変換し、結論カード・グラフ・強調点を1ページに集約する。",
+                "benefit": "結論到達時間が短くなり、会議の冒頭で『見ました』前提で議論が始まる。",
+            },
+            {
+                "situation": "中堅メーカーの開発者（架空）が、テストレポートをスクリーンショットで貼り、後日参照しても何が壊れていたか追えない。",
+                "action": "テスト結果を単一HTMLで保存し、印刷・スマホ・Alt textで読める形式に揃える。",
+                "benefit": "障害後の振り返り会議で誰でも開けて確認でき、Markdown原本との二重管理にしなくて済む。",
+            },
+        ],
     },
     "17": {
         "scene": "いきなりコードからLPを作ると、情報構造と見た目と実装が同時に揺れました。遥はClaude Designで白黒のワイヤーフレームを作り、内容の順序を固めてから、Design Systemを適用してCodeへ渡します。",
@@ -215,6 +479,18 @@ CHAPTER_META = {
         "takeaway": "情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。",
         "image_concept": "A clean progression from grayscale wireframe to branded design system components to a functioning responsive web application",
         "image_kind": "design process illustration",
+        "usecases": [
+            {
+                "situation": "ある中小Web会社（架空）が、AIに『LPを作って』と頼むたびに情報構造とビジュアルが同時に揺れて、毎回ゼロからやり直している。",
+                "action": "白黒Wireframe→Design System適用→実装の三段階に分け、各段階の決定事項を記録する。",
+                "benefit": "情報・見た目・動作の修正コストが分離され、出戻りが特定段階だけで済む。",
+            },
+            {
+                "situation": "個人事業主（架空）が、複数LPで色・フォント・余白がバラバラになり、ブランドの一貫性が失われている。",
+                "action": "Design Systemを別Projectとして固定し、各LPはそれを参照する形に揃える。",
+                "benefit": "1箇所直せば全LPに反映され、ブランド資産として再利用できる。",
+            },
+        ],
     },
     "18": {
         "scene": "週報を毎回作るのではなく、開くたびに最新のDrive情報を読み込むDashboardにできないか。遥の問いから、CoworkとLive Artifactsの実験が始まりました。作る資料から、更新される業務画面へ発想が変わります。",
@@ -223,6 +499,18 @@ CHAPTER_META = {
         "takeaway": "Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。",
         "image_concept": "A live operations dashboard pulling current meeting files from cloud storage, summarizing them, caching results, and showing update status",
         "image_kind": "dashboard concept illustration",
+        "usecases": [
+            {
+                "situation": "ある営業マネージャー（架空）が、週報を毎週手動更新しており、開くたびに最新化されないため週末まで状況が見えない。",
+                "action": "Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするLive Artifact Dashboardを作る。",
+                "benefit": "開いた瞬間に最新の進捗が見え、週次更新作業そのものが不要になる。",
+            },
+            {
+                "situation": "中小オペレーター（架空）が、外部APIを毎リロードで叩く実装にして請求金額がはねた。",
+                "action": "Cache・更新時刻・出典・失敗時のStale表示を分離して設計する。",
+                "benefit": "コストとUXのバランスが取れ、データ取得失敗時にも古い情報と明示できる。",
+            },
+        ],
     },
     "19": {
         "scene": "数週間使うと、遥の質問には興味や苦手分野が表れ始めました。ナビゲーターは会話を丸ごと記憶するのではなく、未分析ログから必要な信号だけを抽出し、INTERESTS.mdへまとめます。自分専用化を、プライバシーと一緒に設計します。",
@@ -231,6 +519,18 @@ CHAPTER_META = {
         "takeaway": "自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。",
         "image_concept": "A private personal knowledge garden growing from carefully filtered conversation signals, with sensitive data kept outside a protected boundary",
         "image_kind": "editorial privacy illustration",
+        "usecases": [
+            {
+                "situation": "ある個人ライター（架空）が、AIに『自分専用化したい』と全会話履歴を渡し、結果として顧客個人情報まで学習対象に紛れて怖くなった。",
+                "action": "保存対象を関心・学習課題・好む形式の三つに限定し、秘密情報・顧客データ・雑談は除外定義を書く。",
+                "benefit": "個人化の便益は得つつ、プライバシーリスクが構造的にゼロへ近づく。",
+            },
+            {
+                "situation": "学習担当（架空）が、社員ごとのスキルレベルを把握したいが、毎回全ログを再走査して処理時間が爆発している。",
+                "action": "処理済み位置と新しさ重みを持つINTERESTS.md抽出Skillを作る。",
+                "benefit": "差分処理になり、関心の最新動向だけ追える。本人が編集・削除できる透明な仕組みになる。",
+            },
+        ],
     },
     "20": {
         "scene": "『テストが通るまで直して』は便利ですが、条件が曖昧だと永遠に動き続けます。蓮は、終了条件、最大回数、許可範囲、ログ、失敗時の停止を先に書きます。自律化は、始め方より止め方を設計する仕事でした。",
@@ -239,6 +539,18 @@ CHAPTER_META = {
         "takeaway": "良い自律化は、達成条件と停止条件の両方を検証可能にします。",
         "image_concept": "A bounded autonomous loop with measurable goals, a turn counter, timeout clock, logs, and a clear human approval gate before external effects",
         "image_kind": "automation control illustration",
+        "usecases": [
+            {
+                "situation": "ある社内開発者（架空）が、AIに『テストが通るまで直して』と頼み、無限ループで朝までCPUが回り続けて停止条件もなく止まれない。",
+                "action": "成功条件・最大ターン・Timeout・許可範囲・失敗時停止を/goal仕様として先に書き出す。",
+                "benefit": "夜間自動実行が安全に走り、達成 or 安全停止の二状態で終わる。",
+            },
+            {
+                "situation": "情シス（架空）が、毎日のレポート自動配信を構築したいが、誤送信時の責任の所在が決まらず承認が出ない。",
+                "action": "公開・送信・課金・削除は完全自動化せず、最後の一歩を人間承認に残す設計にする。",
+                "benefit": "副作用のある操作だけ責任者が承認し、それ以外は自動で進む構造になり、承認が下りる。",
+            },
+        ],
     },
     "21": {
         "scene": "一つのAgentに調査、検証、執筆を全部任せると、最初の思い込みが最後まで残ることがあります。そこで調査者、検証者、統合者を分けます。ただし人数を増やせばよいわけではなく、費用と情報量も急増します。",
@@ -247,6 +559,18 @@ CHAPTER_META = {
         "takeaway": "複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。",
         "image_concept": "Three coordinated specialist agents researching, verifying, and synthesizing evidence, with visible cost and scope controls",
         "image_kind": "multi-agent workflow illustration",
+        "usecases": [
+            {
+                "situation": "中堅リサーチ会社（架空）が、新市場調査をひとりのAIに任せたら初期仮説に引きずられて、後で重大な事実を見逃したと判明した。",
+                "action": "Research・Verify・Synthesizeの三役を独立Agentに分け、Cost上限と再試行回数も決める。",
+                "benefit": "仮説バイアスが分離され、結論への反証も統合される。意思決定の質が説明可能になる。",
+            },
+            {
+                "situation": "ある個人投資家（架空）が、複数Agent構成にしたら検索量が爆発し、月のAPI料金が想定の5倍になった。",
+                "action": "Agent数・検索範囲・最大トークンを段階的に制限し、各段階の中間成果物を保存する。",
+                "benefit": "暴走しないCost構造になり、シンプルな調査は手動Workflowへ戻す判断もできる。",
+            },
+        ],
     },
     "22": {
         "scene": "最新機能のレポートを読んだ美咲は、結論より先に『どの主張が、どの一次情報に支えられているか』を尋ねました。SNSの勢いを、会社の判断材料へ変えるには、出典と不確実性を分ける必要があります。",
@@ -255,6 +579,18 @@ CHAPTER_META = {
         "takeaway": "調査品質は文章の滑らかさではなく、主張と証拠の追跡可能性で判断します。",
         "image_concept": "An evidence board linking claims to official sources, dates, confidence levels, and counterevidence, arranged like an investigative newsroom",
         "image_kind": "editorial evidence illustration",
+        "usecases": [
+            {
+                "situation": "経営企画（架空）が、AIに業界レポートを作らせたが、根拠不明の数字や古い情報が混じり、役員プレゼンで矛盾を指摘された。",
+                "action": "Claim Ledgerに主張・根拠・日付・確度・反証を必須項目で記録するSkillを作る。",
+                "benefit": "プレゼン前に根拠を逆引きでき、『この数字の出所は？』に即答できる。",
+            },
+            {
+                "situation": "ある個人ブロガー（架空）が、最新機能の解説を書こうとして、SNSの噂と公式情報が混在し、結果として誤情報を発信して訂正に追われた。",
+                "action": "出典の優先度を公式→一次→解説→SNSの順で重み付けし、変動情報には確認日を付ける。",
+                "benefit": "発信前にSNS情報を切り分けでき、訂正リスクが大幅に減る。",
+            },
+        ],
     },
     "23": {
         "scene": "遥のSkillが好評になり、『全員へ配ろう』という話が出ます。美咲はZIPを送る代わりに、正本、配布先、個人差分、強制Policy、Release段階を図にします。個人の便利ツールが、組織のインフラへ変わる境目です。",
@@ -263,6 +599,18 @@ CHAPTER_META = {
         "takeaway": "全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。",
         "image_concept": "An enterprise harness architecture with four planes—guidance, enforcement, content, and delivery—feeding staged release rings across employee laptops",
         "image_kind": "enterprise architecture illustration",
+        "usecases": [
+            {
+                "situation": "ある中堅企業（架空）が、AIで成果を出した社員のSkill群をZIPで全社配布した結果、人によって設定が壊れ、サポートが回らなくなった。",
+                "action": "Guidance・Enforcement・Content・Deliveryの四面に分け、各面の正本と更新方法を定義する。",
+                "benefit": "個別調整がDelivery層で吸収され、共通層は壊れない。サポート問い合わせの種類が分類できる。",
+            },
+            {
+                "situation": "情シス（架空）が、全社一斉配布したSkillにバグが見つかった時、誰がどこから戻せるのか分からず深夜対応になった。",
+                "action": "Canary→Pilot→StableのRelease Flowを設け、各段階のExit Criteriaを書く。",
+                "benefit": "事故は小さい範囲で止まり、Stable到達前にロールバックできる構造になる。",
+            },
+        ],
     },
     "24": {
         "scene": "翌朝の自動更新で一部端末だけ失敗したとき、配布基盤の本当の品質が試されます。美咲は、何度実行しても壊れないBootstrap、削除まで追従するSync、検証、Rollbackを一つの流れにします。",
@@ -271,6 +619,18 @@ CHAPTER_META = {
         "takeaway": "配布の完成条件はコピー成功ではなく、収束・検証・復旧が繰り返し成立することです。",
         "image_concept": "A reliable software distribution conveyor showing bootstrap, manifest sync, verification, staged rollout, and one-click rollback",
         "image_kind": "isometric delivery pipeline illustration",
+        "usecases": [
+            {
+                "situation": "情シス（架空）が、毎朝の自動更新スクリプトがネット不安定の社員端末で半端な状態で止まり、AIの動作が日替わりで変わる現象に悩んでいる。",
+                "action": "Bootstrap・Updateを冪等に作り直し、Manifest比較で追加・変更・削除を最終状態へ収束させる。",
+                "benefit": "ネットワーク失敗時も次回で復旧でき、端末ごとの設定差が物理的に解消する。",
+            },
+            {
+                "situation": "ある中堅IT部門（架空）が、配布事故の際に『誰の端末がどの版か』を集計できず、対応に半日かかった。",
+                "action": "配布後Verify＋端末Inventoryを構造化ログで持ち、Rollbackは署名済み旧版へ一操作で戻せるようにする。",
+                "benefit": "事故時の影響範囲が即座に見え、復旧が分単位になる。",
+            },
+        ],
     },
     "25": {
         "scene": "Skillが増えると、似た名前、古い手順、評価されていない資産が混ざり始めます。美咲は数を成果にせず、提案、生成、評価、Canary、Stable、廃止というLifecycleを導入します。",
@@ -279,6 +639,18 @@ CHAPTER_META = {
         "takeaway": "Skillの価値は数ではなく、再現性、責任者、評価、廃止まで追えることです。",
         "image_concept": "A governed skill lifecycle from proposal to generator, evaluator, canary, stable release, deprecation, and archive",
         "image_kind": "lifecycle infographic illustration",
+        "usecases": [
+            {
+                "situation": "ある制作会社（架空）が、200個のSkillが乱立し、似た名前と古い手順が混ざって誰も全体像を把握できなくなった。",
+                "action": "Canonical Name・Category・Owner・Version・Fixture・評価点を持たせ、4軸の評価器で採点する。",
+                "benefit": "Skill群が製品台帳として管理でき、廃止予告も移行先付きで安全に出せる。",
+            },
+            {
+                "situation": "ある中規模IT会社（架空）が、Claude Code用とCodex用のSkillを二重管理して、片方だけ修正された結果、社員間で動作が違う事態が起きた。",
+                "action": "skill-srcを正本にしてBuildで両Runtimeへ展開する構造に変える。",
+                "benefit": "二重編集の手間がなくなり、Runtime差での挙動ズレが消える。",
+            },
+        ],
     },
     "26": {
         "scene": "『CLAUDE.mdに削除禁止と書いたから安全』という説明に、美咲は首を振ります。攻撃や誤操作が起きたとき、文書を無視しても止まる仕組みが必要です。Managed Policyと観測性が、組織の最後の防波堤になります。",
@@ -287,6 +659,18 @@ CHAPTER_META = {
         "takeaway": "組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。",
         "image_concept": "An enterprise security operations room with managed policy, guarded tool access, structured event logs, metrics, and incident rollback controls",
         "image_kind": "security operations illustration",
+        "usecases": [
+            {
+                "situation": "ある金融系IT部門（架空）が、AI導入の安全策をCLAUDE.mdで案内したが、外部社員の端末で簡単に書き換えられて事故が起きた。",
+                "action": "Managed SettingsとManaged MCPで組織Policyを固定し、HookのBlock Eventを構造化ログへ残す。",
+                "benefit": "文書ではなく実行時の強制で安全が成立し、誰の端末でも改変できない。",
+            },
+            {
+                "situation": "情シス（架空）が、Block件数だけ報告しているが、誤検知が多すぎて社員から信頼を失っている。",
+                "action": "誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を含む指標を一緒に測る。",
+                "benefit": "数字で『守りすぎ』『緩すぎ』のバランスが見え、Policy調整に根拠が持てる。",
+            },
+        ],
     },
     "27": {
         "scene": "新人へ大量の資料を渡しても、最初の一歩で止まれば定着しません。遥が体験した会議アシスタントを、30分の導入、初日のSafety、Bronze認定、障害時Runbookへ変えます。",
@@ -295,6 +679,18 @@ CHAPTER_META = {
         "takeaway": "Onboardingのゴールは『入った』ではなく、『安全に一人で一周できた』です。",
         "image_concept": "A clear onboarding journey from a new laptop through setup, safety lab, first artifact, verification badge, and support runbook",
         "image_kind": "journey illustration",
+        "usecases": [
+            {
+                "situation": "ABC人事（架空）が、新人配属時にAIガイドを渡しても初日のセットアップで詰まり、本人のやる気が消える事例が続いている。",
+                "action": "30分の導入Flow（環境診断→Lab→成果物→証拠→再開）を作り、つまずきポイントを切り分け診断する。",
+                "benefit": "初日にBronze相当の成果物が完成し、本人のAI導入感が一気に立ち上がる。",
+            },
+            {
+                "situation": "情シス（架空）が、新人サポート問い合わせが配属直後に集中し、月初の業務が回らない。",
+                "action": "Runbookで認証・権限・Path・Versionの障害分類と対応手順を整える。",
+                "benefit": "新人が自分でRunbookを引いて解決でき、情シスの負荷が分散する。",
+            },
+        ],
     },
     "28": {
         "scene": "ここから四人は現場へ戻ります。最初の机には請求書、契約書、会議メモ、整理されていないフォルダが積まれていました。どれも派手ではありませんが、時間を奪う仕事です。",
@@ -303,6 +699,18 @@ CHAPTER_META = {
         "takeaway": "文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。",
         "image_concept": "An AI-assisted office desk organizing invoices, contracts, meeting notes, and messy folders into structured, reviewable outputs",
         "image_kind": "practical editorial illustration",
+        "usecases": [
+            {
+                "situation": "ABC商事の経理（架空）が、毎月100枚の請求書PDFを手動で台帳入力し、毎月末に残業4時間を発生させている。",
+                "action": "Read-onlyで請求書フォルダの一覧と分類案を作り、抽出項目・例外を定義してから自動化する。",
+                "benefit": "例外検出を残しつつ標準項目は自動入力でき、残業時間が大幅に減る。",
+            },
+            {
+                "situation": "中小法務（架空）が、契約書PDFをAIに『この契約問題ない？』と聞き、誤った法的結論を得て社内へ展開しかけた。",
+                "action": "契約書は法的結論ではなく論点整理として扱い、最終判断は人が行う運用ルールを書く。",
+                "benefit": "AIは負荷の高い論点抽出を担い、人は判断に集中できる。誤断のリスクが消える。",
+            },
+        ],
     },
     "29": {
         "scene": "次の机には、YouTube、SNS、論文、ニュースが並んでいます。遥は情報を集めるだけで満足せず、自分の番組や学習目的に合う形へ変えたいと考えます。",
@@ -311,6 +719,18 @@ CHAPTER_META = {
         "takeaway": "良い調査は情報量ではなく、目的に沿った選別と出典の透明性で決まります。",
         "image_concept": "A research studio combining videos, social posts, papers, and news into a personalized evidence-based learning report",
         "image_kind": "editorial research illustration",
+        "usecases": [
+            {
+                "situation": "ある教育系YouTuber（架空）が、教材作成のために動画とSNSを大量視聴し、毎週末が情報収集だけで終わっている。",
+                "action": "Skillに対象・期間・一次情報・除外条件・評価軸を持たせ、INTERESTS.mdを参照させる。",
+                "benefit": "自分にとって価値のある素材だけが残り、教材作成の時間が情報整理から本質的な構成へ移る。",
+            },
+            {
+                "situation": "個人投資家（架空）が、毎朝のニュースサイトを巡回しているが、重複情報で時間を浪費している。",
+                "action": "News Dashboardで更新時刻・出典・未確認情報を表示する単一HTMLを作る。",
+                "benefit": "重複が統合され、未確認情報だけが目立つ。情報収集が10分に収まる。",
+            },
+        ],
     },
     "30": {
         "scene": "遥はタスク管理アプリを作り、蓮は『動いた』の次に、エラー時、データ保存、テスト、変更履歴を確認します。個人用デモと、他人が使うApplicationの間には、品質の橋が必要です。",
@@ -319,6 +739,18 @@ CHAPTER_META = {
         "takeaway": "アプリの完成は画面が出ることではなく、失敗を再現し、検証し、戻せることです。",
         "image_concept": "A local web application evolving from prototype to tested product with data schema, automated tests, bug reproduction, and rollback",
         "image_kind": "application lifecycle illustration",
+        "usecases": [
+            {
+                "situation": "ある個人開発者（架空）が、AIで作ったタスク管理アプリが『動いた』と思って公開したら、エッジケースで毎日エラーが出てユーザー離脱が始まった。",
+                "action": "再現テスト・正常系・異常系・Diff・Rollback手順を実装と同時に作る運用に変える。",
+                "benefit": "公開後の事故時も再現と巻き戻しが両方できる。ユーザー信頼が壊れない。",
+            },
+            {
+                "situation": "中小ヘルスケア事業者（架空）が、健康Dashboardに自動アドバイス機能を入れたら誤情報のリスクで弁護士からNGが出た。",
+                "action": "意思決定を自動化せず、情報整理と注意喚起へ機能を限定する。出典・更新失敗・誤差は明示する。",
+                "benefit": "法的リスクが下がり、機能を成立させながら世に出せる。",
+            },
+        ],
     },
     "31": {
         "scene": "資料やLPが完成すると、次に『共有したい』『公開したい』という欲求が生まれます。公開は最後のボタンではなく、情報、ブランド、権限、リンク、戻し方を確認する別の工程です。",
@@ -327,6 +759,18 @@ CHAPTER_META = {
         "takeaway": "公開は生成の続きではなく、独立した品質・安全Gateです。",
         "image_concept": "A design system flowing into a landing page, slide deck, PDF export, preview environment, and carefully gated production release",
         "image_kind": "publishing workflow illustration",
+        "usecases": [
+            {
+                "situation": "中小マーケ会社（架空）が、AIで作ったLPを即本番公開した結果、テスト用Analytics IDや本番用APIキーが残ったまま外に出てしまった。",
+                "action": "Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを設ける。",
+                "benefit": "公開前事故が体系的に防げ、本番公開を安心して進められる。",
+            },
+            {
+                "situation": "ある提案チーム（架空）が、HTMLからPPT/PDFをExportするたびにフォントが崩れ、毎回手動修正に数時間を奪われている。",
+                "action": "Export時にレイアウト・フォント・ページ分割を確認する標準Checkを書く。",
+                "benefit": "崩れ箇所だけを集中修正でき、Export成果物の品質が安定する。",
+            },
+        ],
     },
     "32": {
         "scene": "毎朝のニュース、会議後のTask Board、月次のSkill評価。繰り返しが見えたとき、四人は人を速くするのではなく、仕組みへ移すことを考えます。",
@@ -335,6 +779,18 @@ CHAPTER_META = {
         "takeaway": "自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。",
         "image_concept": "A calm operations rhythm showing morning brief, meeting-to-task flow, scheduled skill evaluation, and monitored automation maturity stages",
         "image_kind": "operations illustration",
+        "usecases": [
+            {
+                "situation": "ある営業企画（架空）が、毎日のニュースとTask Boardを手動更新しており、休む日は誰も状況を把握できない。",
+                "action": "情報源と更新時刻を固定したMorning Brief Skillを作り、毎朝Scheduledで配信する。",
+                "benefit": "休んでも止まらない情報基盤になり、属人化と業務継続性のリスクが消える。",
+            },
+            {
+                "situation": "中堅人事（架空）が、毎月のSkill評価を手作業で集計し、月初の3日間を奪われている。",
+                "action": "実行ログ・失敗Fixture・評価点を集めるSkill改善LoopをCanary更新と組む。",
+                "benefit": "評価が自動化され、人は問題のあるSkillだけ集中的に直せる。",
+            },
+        ],
     },
     "33": {
         "scene": "最後に四人は、うまくいった話ではなく、何度も起きた失敗を壁へ貼りました。巨大なCLAUDE.md、無検証の完了、Bypass常用、同じ会話の引き延ばし、全社即時配布。失敗Patternは、最も実用的な教材です。",
@@ -343,6 +799,18 @@ CHAPTER_META = {
         "takeaway": "失敗を記録するだけでなく、次回のRule・Skill・Hookへ変換して初めて学習になります。",
         "image_concept": "A wall of common AI workflow pitfalls being converted into safeguards, checklists, tests, and reusable lessons",
         "image_kind": "editorial lessons-learned illustration",
+        "usecases": [
+            {
+                "situation": "ある制作チーム（架空）が、AIが古い情報のまま動く事故を毎月起こすが、振り返りメモを書くだけで終わって再発を防げていない。",
+                "action": "失敗を人・手順・権限・検証・配布で分解し、Rule/Skill/Hook/Runbookのどこへ落とすか決める。",
+                "benefit": "失敗が組織の改善資産となり、同じ条件が来たら自動で気づける仕組みへ変換できる。",
+            },
+            {
+                "situation": "情シス（架空）が、社員がBypass常用したことによる事故をたびたび経験し、注意喚起では止まらないと判明した。",
+                "action": "BypassをHookで物理ブロックし、Runbookで例外申請の手順を書く。",
+                "benefit": "便利さの誘惑が物理的に断たれ、必要時だけ手続きを経て解除できる。",
+            },
+        ],
     },
     "34": {
         "scene": "理解した内容を毎回白紙から書く必要はありません。四人は、全社共通、Project、要件定義、実装計画、完了報告、Quality Gate、Reviewer、Definition of Doneを道具箱へまとめます。",
@@ -351,6 +819,18 @@ CHAPTER_META = {
         "takeaway": "テンプレートは答えではなく、考えるべき問いを再現可能にする道具です。",
         "image_concept": "A professional toolkit containing reusable project guidance, requirements, plans, quality gates, reviewer briefs, and definition-of-done cards",
         "image_kind": "editorial toolkit illustration",
+        "usecases": [
+            {
+                "situation": "ABCコンサルのプロジェクトマネージャ（架空）が、要件定義のたびに項目を思い出しながら書き、毎回抜けが出てクライアント手戻りが発生している。",
+                "action": "Requirements・Implementation Plan・Completion Reportのテンプレを揃え、案件ごとにコピーして埋める。",
+                "benefit": "考えるべき項目が抜けなくなり、レビュー時の追加質問が減って初稿の合格率が上がる。",
+            },
+            {
+                "situation": "新人マネージャ（架空）が、Definition of Doneを定義できず、毎回『完成』の認識ズレで揉めている。",
+                "action": "Definition of Doneカードをテンプレ化し、PJ開始時に必ず合意して書面化する。",
+                "benefit": "『完成』の定義が共通化され、納品時の認識ズレが激減する。",
+            },
+        ],
     },
     "35": {
         "scene": "教科書をHTMLへしただけでは、遥が途中で止まった場所も、何を実践したかも分かりません。そこで本文をLesson Dataへ分け、ナビゲーターが状態を読みながら次の一操作を案内する学習アプリを設計します。",
@@ -359,6 +839,18 @@ CHAPTER_META = {
         "takeaway": "学習アプリの中心は本文表示ではなく、行動・証拠・状態・再開です。",
         "image_concept": "A browser-based learning navigator with role paths, lesson cards, progress states, next action, evidence checks, and save-resume controls",
         "image_kind": "product concept illustration",
+        "usecases": [
+            {
+                "situation": "ある教育担当（架空）が、HTML教材をPDFビューアで配り、受講者の進捗が分からず修了判定もできない状況に詰まっている。",
+                "action": "本文をLesson JSONへ分解し、前提・成果物・チェック・進捗（seen/practiced/verified/applied）をSchema検証する。",
+                "benefit": "誰がどこまでできたかが本人にも管理者にも見え、修了判定が客観的にできる。",
+            },
+            {
+                "situation": "オンラインスクール（架空）が、ブラウザから任意Shellを実行する設計で監査NGを受けた。",
+                "action": "ブラウザ実行はAllowlist付きLocal Companionへ任せ、画面側は次の一操作・期待結果・証拠提示に専念する。",
+                "benefit": "監査要件を満たしつつ、学習者は手元で安全に実行できる設計に置き換わる。",
+            },
+        ],
     },
     "36": {
         "scene": "大きな構想は、最初の一か月へ落とさなければ動きません。美咲は、棚卸し、正本化、Canary、研修、Pilot、全社展開を四週間へ分けます。",
@@ -367,6 +859,18 @@ CHAPTER_META = {
         "takeaway": "変革は大きな完成図ではなく、検証可能な一週間の積み重ねで進めます。",
         "image_concept": "A four-week implementation roadmap with inventory, build and test, canary training, pilot, stable rollout, and measurable outcomes",
         "image_kind": "roadmap illustration",
+        "usecases": [
+            {
+                "situation": "ある中堅企業（架空）の経営者が、半年計画でAI全社展開を始めたが、3ヶ月目で社内疲れて停滞している。",
+                "action": "1週目Inventory/Policy→2週目Build/Test→3週目Canary/Bronze研修→4週目Pilot/Stableに分け、各週Exit条件を置く。",
+                "benefit": "一気に動かさず、検証単位で前進するため疲弊せず、未完成基盤の全社展開も防げる。",
+            },
+            {
+                "situation": "情シス（架空）が、AI導入のKPIをCEOから求められたが、何を測ればよいか答えられない。",
+                "action": "導入時間・更新率・認定完了・Rollback Drill・Critical Gapを30日後測定指標として宣言する。",
+                "benefit": "経営報告に使える数字が揃い、AI推進の費用対効果を定量で説明できる。",
+            },
+        ],
     },
     "37": {
         "scene": "動画で見たモデル名やコマンドが、数週間後には変わっていることがあります。遥は『教科書が間違った』のではなく、変動情報を本文へ固定した設計が間違いだと学びます。",
@@ -375,6 +879,18 @@ CHAPTER_META = {
         "takeaway": "長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理します。",
         "image_concept": "A stable stone foundation of principles beneath changing signboards for models, commands, pricing, beta features, and versions",
         "image_kind": "editorial metaphor illustration",
+        "usecases": [
+            {
+                "situation": "ある社内研修担当（架空）が、半年前のテキストでモデル名・料金・UIが現行と違い、受講者から『間違っている』と総ツッコミを受けた。",
+                "action": "変動情報をFeature Registryへ抜き出し、確認日・公式Source・代替手順を持たせる。",
+                "benefit": "テキスト本体は更新せずRegistryだけ差し替えればよくなり、改訂コストが下がる。",
+            },
+            {
+                "situation": "個人技術ブロガー（架空）が、過去記事のモデル仕様が古くなり、SEO的にも信頼を失っている。",
+                "action": "原則とFeatureを分離して書き、Featureには確認日とDeprecated移行案内を入れる。",
+                "benefit": "原則は長く使え、Featureだけ更新すれば記事全体の信頼が保てる。",
+            },
+        ],
     },
     "38": {
         "scene": "最後の確認で、美咲は『読みやすくなったか』だけでなく、『素材のどの話題が、どこへ入ったか』を尋ねます。網羅性は印象ではなく、Coverage Mapで証明します。",
@@ -383,6 +899,18 @@ CHAPTER_META = {
         "takeaway": "網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。",
         "image_concept": "A comprehensive coverage map connecting source videos, official documentation, requirements, chapters, exercises, and templates without gaps",
         "image_kind": "information map illustration",
+        "usecases": [
+            {
+                "situation": "ある教科書編集者（架空）が、『全部の機能を解説した』と思って入稿したら、レビューで重要トピックの抜けが多数発見され大改修になった。",
+                "action": "Coverage Mapで各Source Topicが説明・実習・Template・運用のどこで扱われるかを表にする。",
+                "benefit": "抜けと重複が事前に検出でき、レビュー時に『どの章に入っているか』を即答できる。",
+            },
+            {
+                "situation": "中堅IT企業（架空）が、AI研修テキストの追加教材を入れるたびに既存章と矛盾し、整合性チェックに毎回数日かかる。",
+                "action": "追加素材を統合する際に既存章への対応・重複・追加実習をCoverage Mapへ記録する。",
+                "benefit": "整合性チェックが表の更新で済み、改訂サイクルが大幅に短縮される。",
+            },
+        ],
     },
     "final": {
         "scene": "教科書を書き終えた日、遥はもう『分からなくなったら最初からやり直す』とは考えませんでした。現在地を保存し、証拠を見て、必要なLessonへ戻り、成功した手順をSkillへ直せるからです。",
@@ -391,6 +919,18 @@ CHAPTER_META = {
         "takeaway": "完成よりも、検証可能に更新し続けられることが『最強』の条件です。",
         "image_concept": "A lighthouse guiding an evolving network of learners, tools, and safe release loops, symbolizing continuous improvement rather than a fixed finish line",
         "image_kind": "cinematic editorial illustration",
+        "usecases": [
+            {
+                "situation": "ABC社のAI推進リーダー（架空）が、AI環境を一度完成させたあと、半年後に劣化したことに気づかず競合に追い抜かれた。",
+                "action": "Owner・Fixture・評価日・Release段階を持つLessonまたはSkillを月次で改善し続ける。",
+                "benefit": "完成形ではなく更新可能性が組織能力となり、競合変化に追随できる。",
+            },
+            {
+                "situation": "個人開発者（架空）が、最初に作ったSkillを使い回し続けて陳腐化に気づかず、ある日突然動かなくなった。",
+                "action": "30日ごとに次に改善するLessonまたはSkillを選び、検証可能なRelease段階で更新する。",
+                "benefit": "個人レベルでも更新Loopが回り、陳腐化や急停止のリスクが低くなる。",
+            },
+        ],
     },
 }
 

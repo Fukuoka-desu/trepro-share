@@ -3,8 +3,9 @@
 <title>第5章　強い指示の書き方 — ブログ版</title><meta name="description" content="プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-05">強い指示の書き方</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-05">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-05">強い指示の書き方</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-05">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-05">
   <header class="chapter-head">
     <div class="eyebrow">第5章</div>
@@ -98,6 +99,7 @@ Sample Dataで起動し、Test/Build成功を完了条件とする。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅メーカーのマーケ担当（架空）が、AIに『いい感じのLP作って』と頼み、期待と違う画面が出ては手戻りを繰り返している。</p><h3>こう使う</h3><p>目的・利用者・制約・成果物・完了条件・証拠の六項目テンプレートを使って依頼文を書き直す。</p><h3>得られるもの</h3><p>AIの判断材料が揃って一発で意図に近い出力になり、手戻り回数が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>PM経験ゼロの開発者（架空）が、上司から『この依頼を技術翻訳して』と毎回言われ、要件整理だけで一日を消費している。</p><h3>こう使う</h3><p>曖昧な依頼を完了報告テンプレ（変更/検証/残リスク）まで含めて構造化し、AIへ渡す前に人へ見せる。</p><h3>得られるもの</h3><p>上司確認も同じテンプレで進み、要件と完了の認識ズレが消える。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 曖昧な依頼を一つ選び、目的・文脈・制約・成果物・完了条件・証拠の六項目へ書き直してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。</p></section>
 </article>

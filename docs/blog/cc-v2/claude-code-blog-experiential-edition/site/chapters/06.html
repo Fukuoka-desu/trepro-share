@@ -3,8 +3,9 @@
 <title>第6章　Explore → Specify → Plan → Implement → Verify → Review → Commit — ブログ版</title><meta name="description" content="速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-06">Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-06">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-06">Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-06">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-06">
   <header class="chapter-head">
     <div class="eyebrow">第6章</div>
@@ -156,6 +157,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC物流の社内システム改修で、依頼→実装→『動いたっぽい』→本番→事故、という流れを毎月繰り返している。</p><h3>こう使う</h3><p>Explore→Specify→Plan→Implement→Verify→Review→Commitの七段階に依頼テンプレを揃え、各段階で証拠を残す。</p><h3>得られるもの</h3><p>本番事故の発生源を段階に切り分けて潰せるようになり、改修1本あたりの平均事故件数が減る。</p></article><article class="usecase-card"><h3>場面</h3><p>Webデザイナー（架空）が、AIに『修正お願い』と頼んだら関係ない部分まで書き換えられ、何が変わったか追えない。</p><h3>こう使う</h3><p>Plan段階で変更範囲をAIに宣言させ、Verifyで差分とテスト結果を見てからCommitする運用にする。</p><h3>得られるもの</h3><p>予期しない書き換えがPlanで弾かれ、レビュー時間が短く、巻き戻しも安全になる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 次に行う作業を七段階の見出しで書き、各段階の成果物を一つずつ決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</p></section>
 </article>

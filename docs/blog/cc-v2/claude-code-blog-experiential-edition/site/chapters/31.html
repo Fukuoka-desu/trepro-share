@@ -3,8 +3,9 @@
 <title>第31章　Design・資料・公開 — ブログ版</title><meta name="description" content="公開は生成の続きではなく、独立した品質・安全Gateです。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-31">Design・資料・公開</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-31">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-31">Design・資料・公開</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-31">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-31">
   <header class="chapter-head">
     <div class="eyebrow">第31章</div>
@@ -60,6 +61,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小マーケ会社（架空）が、AIで作ったLPを即本番公開した結果、テスト用Analytics IDや本番用APIキーが残ったまま外に出てしまった。</p><h3>こう使う</h3><p>Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを設ける。</p><h3>得られるもの</h3><p>公開前事故が体系的に防げ、本番公開を安心して進められる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある提案チーム（架空）が、HTMLからPPT/PDFをExportするたびにフォントが崩れ、毎回手動修正に数時間を奪われている。</p><h3>こう使う</h3><p>Export時にレイアウト・フォント・ページ分割を確認する標準Checkを書く。</p><h3>得られるもの</h3><p>崩れ箇所だけを集中修正でき、Export成果物の品質が安定する。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 既存HTMLをPreview公開し、スマホ表示・リンク・秘密情報・Rollback手順を確認してから、本番可否を判断してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>公開は生成の続きではなく、独立した品質・安全Gateです。</p></section>
 </article>

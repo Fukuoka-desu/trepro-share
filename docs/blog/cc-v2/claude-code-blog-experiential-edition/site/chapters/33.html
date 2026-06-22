@@ -3,8 +3,9 @@
 <title>第33章　失敗Pattern — ブログ版</title><meta name="description" content="失敗を記録するだけでなく、次回のRule・Skill・Hookへ変換して初めて学習になります。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-33">失敗Pattern</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-33">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-33">失敗Pattern</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-33">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-33">
   <header class="chapter-head">
     <div class="eyebrow">第33章</div>
@@ -89,6 +90,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、AIが古い情報のまま動く事故を毎月起こすが、振り返りメモを書くだけで終わって再発を防げていない。</p><h3>こう使う</h3><p>失敗を人・手順・権限・検証・配布で分解し、Rule/Skill/Hook/Runbookのどこへ落とすか決める。</p><h3>得られるもの</h3><p>失敗が組織の改善資産となり、同じ条件が来たら自動で気づける仕組みへ変換できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、社員がBypass常用したことによる事故をたびたび経験し、注意喚起では止まらないと判明した。</p><h3>こう使う</h3><p>BypassをHookで物理ブロックし、Runbookで例外申請の手順を書く。</p><h3>得られるもの</h3><p>便利さの誘惑が物理的に断たれ、必要時だけ手続きを経て解除できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 最近の失敗を一つ選び、原因を人・手順・権限・検証・配布の観点で分解し、再発防止の置き場所を決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>失敗を記録するだけでなく、次回のRule・Skill・Hookへ変換して初めて学習になります。</p></section>
 </article>

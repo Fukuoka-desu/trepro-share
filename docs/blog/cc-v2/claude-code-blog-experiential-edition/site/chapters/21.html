@@ -3,8 +3,9 @@
 <title>第21章　Dynamic Workflowsと複数Agent — ブログ版</title><meta name="description" content="複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-21">Dynamic Workflowsと複数Agent</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-21">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-21">Dynamic Workflowsと複数Agent</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-21">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-21">
   <header class="chapter-head">
     <div class="eyebrow">第21章</div>
@@ -88,6 +89,7 @@ SNSは反応のみ。最大8 Agent、25分。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中堅リサーチ会社（架空）が、新市場調査をひとりのAIに任せたら初期仮説に引きずられて、後で重大な事実を見逃したと判明した。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeの三役を独立Agentに分け、Cost上限と再試行回数も決める。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、結論への反証も統合される。意思決定の質が説明可能になる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人投資家（架空）が、複数Agent構成にしたら検索量が爆発し、月のAPI料金が想定の5倍になった。</p><h3>こう使う</h3><p>Agent数・検索範囲・最大トークンを段階的に制限し、各段階の中間成果物を保存する。</p><h3>得られるもの</h3><p>暴走しないCost構造になり、シンプルな調査は手動Workflowへ戻す判断もできる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの調査テーマをResearch・Verify・Synthesizeへ分け、各担当へ渡す入力と受け取る出力を定義してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。</p></section>
 </article>

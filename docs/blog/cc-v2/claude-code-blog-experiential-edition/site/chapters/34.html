@@ -3,8 +3,9 @@
 <title>第34章　コピペ用標準テンプレート — ブログ版</title><meta name="description" content="テンプレートは答えではなく、考えるべき問いを再現可能にする道具です。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-34">コピペ用標準テンプレート</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-34">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-34">コピペ用標準テンプレート</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-34">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-34">
   <header class="chapter-head">
     <div class="eyebrow">第34章</div>
@@ -232,6 +233,7 @@ Separate blockers from suggestions.
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサルのプロジェクトマネージャ（架空）が、要件定義のたびに項目を思い出しながら書き、毎回抜けが出てクライアント手戻りが発生している。</p><h3>こう使う</h3><p>Requirements・Implementation Plan・Completion Reportのテンプレを揃え、案件ごとにコピーして埋める。</p><h3>得られるもの</h3><p>考えるべき項目が抜けなくなり、レビュー時の追加質問が減って初稿の合格率が上がる。</p></article><article class="usecase-card"><h3>場面</h3><p>新人マネージャ（架空）が、Definition of Doneを定義できず、毎回『完成』の認識ズレで揉めている。</p><h3>こう使う</h3><p>Definition of Doneカードをテンプレ化し、PJ開始時に必ず合意して書面化する。</p><h3>得られるもの</h3><p>『完成』の定義が共通化され、納品時の認識ズレが激減する。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> Requirements TemplateとCompletion Reportを自分の案件へコピーし、実際の内容で一度完成させてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>テンプレートは答えではなく、考えるべき問いを再現可能にする道具です。</p></section>
 </article>

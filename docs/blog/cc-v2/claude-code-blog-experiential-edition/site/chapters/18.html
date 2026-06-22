@@ -3,8 +3,9 @@
 <title>第18章　CoworkとLive Artifacts — ブログ版</title><meta name="description" content="Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-18">CoworkとLive Artifacts</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-18">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-18">CoworkとLive Artifacts</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-18">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-18">
   <header class="chapter-head">
     <div class="eyebrow">第18章</div>
@@ -144,6 +145,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業マネージャー（架空）が、週報を毎週手動更新しており、開くたびに最新化されないため週末まで状況が見えない。</p><h3>こう使う</h3><p>Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするLive Artifact Dashboardを作る。</p><h3>得られるもの</h3><p>開いた瞬間に最新の進捗が見え、週次更新作業そのものが不要になる。</p></article><article class="usecase-card"><h3>場面</h3><p>中小オペレーター（架空）が、外部APIを毎リロードで叩く実装にして請求金額がはねた。</p><h3>こう使う</h3><p>Cache・更新時刻・出典・失敗時のStale表示を分離して設計する。</p><h3>得られるもの</h3><p>コストとUXのバランスが取れ、データ取得失敗時にも古い情報と明示できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> ローカルの会議データを表示する小さなDashboardを作り、更新・キャッシュ・出典表示の三点を確認してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。</p></section>
 </article>

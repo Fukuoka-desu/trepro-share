@@ -5,24 +5,71 @@
 :root{
   --ink:#172033;--muted:#5f6b7e;--paper:#fbf8f1;--panel:#ffffff;--navy:#14213d;
   --blue:#2456d3;--amber:#d7891c;--line:#d9dee8;--soft:#eef3fb;--success:#176b55;
-  --shadow:0 18px 60px rgba(27,39,64,.11);--radius:20px;--max:920px;
+  --usecase-bg:#fff6ec;--usecase-border:#f1c98b;--usecase-accent:#c66a17;
+  --shadow:0 18px 60px rgba(27,39,64,.11);--radius:20px;--max:1480px;--toc-w:280px;
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.9}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.95;font-size:1.05rem}
 a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0 auto 0;height:4px;background:transparent;z-index:100}.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--amber))}
-.site-header{background:linear-gradient(135deg,#101b33,#233961);color:white;padding:18px 24px;position:sticky;top:0;z-index:40;box-shadow:0 8px 28px rgba(0,0,0,.18)}.site-header .inner{max-width:1320px;margin:auto;display:flex;align-items:center;gap:18px}.brand{font-weight:800;letter-spacing:.02em;color:white;text-decoration:none}.site-header nav{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}.site-header nav a{color:#e7edff;text-decoration:none;font-size:.92rem}
-.hero{max-width:1320px;margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.13rem;color:var(--muted);max-width:64ch}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
-.layout{max-width:1320px;margin:auto;padding:20px 24px 80px;display:grid;grid-template-columns:280px minmax(0,1fr);gap:40px}.toc{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 116px);overflow:auto;background:rgba(255,255,255,.76);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:18px}.toc h2{font-size:.95rem;margin:0 0 12px}.toc a{display:block;padding:7px 8px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:.88rem;line-height:1.35}.toc a:hover{background:var(--soft);color:var(--ink)}.toc .part-link{font-weight:800;color:var(--navy);margin-top:8px}
-.content{min-width:0}.part{margin:56px 0 80px}.part-header{padding:42px;border-radius:var(--radius);background:linear-gradient(135deg,#13213e,#26406e);color:white;box-shadow:var(--shadow)}.part-header h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.2;margin:.2em 0}.part-header p{color:#dbe5ff;max-width:70ch}.chapter{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,5vw,56px);margin:34px 0;box-shadow:var(--shadow);scroll-margin-top:90px}.chapter-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}.chapter-head h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;letter-spacing:-.025em;margin:.2em 0}.scene{font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif;font-size:1.1rem;background:linear-gradient(135deg,#fff8e9,#f3f6ff);border-left:5px solid var(--amber);padding:22px 24px;border-radius:0 14px 14px 0;margin:24px 0}.story-essay{font-size:1.04rem}.story-essay p:first-child::first-letter{font-size:3.4em;float:left;line-height:.82;padding:.12em .12em 0 0;color:var(--blue);font-weight:800}
+.site-header{background:linear-gradient(135deg,#101b33,#233961);color:white;padding:14px 24px;position:sticky;top:0;z-index:40;box-shadow:0 8px 28px rgba(0,0,0,.18)}.site-header .inner{max-width:var(--max);margin:auto;display:flex;align-items:center;gap:18px}.brand{font-weight:800;letter-spacing:.02em;color:white;text-decoration:none}.site-header nav{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}.site-header nav a{color:#e7edff;text-decoration:none;font-size:.92rem}
+.toc-toggle{display:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:white;border-radius:10px;padding:6px 12px;font-size:.86rem;font-weight:700;cursor:pointer}
+.toc-toggle:hover{background:rgba(255,255,255,.22)}
+.hero{max-width:var(--max);margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.16rem;color:var(--muted);max-width:64ch}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
+.layout{max-width:var(--max);margin:auto;padding:20px 24px 80px;display:grid;grid-template-columns:var(--toc-w) minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:18px;transition:transform .25s ease,box-shadow .25s ease}
+.toc h2{font-size:.95rem;margin:0 0 12px}
+.toc a{display:block;padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:.88rem;line-height:1.4;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.toc a:hover{background:var(--soft);color:var(--ink)}
+.toc .part-link{font-weight:800;color:var(--navy);margin-top:10px;font-size:.92rem}
+.toc a.active{background:#e6edff;color:var(--ink);border-left-color:var(--blue);font-weight:700}
+.toc a.part-link.active{background:#dde6ff;color:var(--navy);border-left-color:var(--amber)}
+.toc-drawer-close{display:none}
+.toc-overlay{display:none}
+.content{min-width:0}.part{margin:56px 0 80px}.part-header{padding:42px;border-radius:var(--radius);background:linear-gradient(135deg,#13213e,#26406e);color:white;box-shadow:var(--shadow);scroll-margin-top:80px}.part-header h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.2;margin:.2em 0}.part-header p{color:#dbe5ff;max-width:70ch}
+.chapter{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,5vw,56px);margin:34px 0;box-shadow:var(--shadow);scroll-margin-top:80px}
+.chapter-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}.chapter-head h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;letter-spacing:-.025em;margin:.2em 0}
+.scene{font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif;font-size:1.14rem;background:linear-gradient(135deg,#fff8e9,#f3f6ff);border-left:5px solid var(--amber);padding:24px 26px;border-radius:0 14px 14px 0;margin:24px 0;box-shadow:inset 0 0 0 1px rgba(215,137,28,.12)}
+.story-essay{font-size:1.08rem;background:#fbfcff;border:1px solid #e3e9f5;border-radius:14px;padding:22px 26px;margin-top:18px}
+.story-essay p{margin:0 0 1.1em}
+.story-essay p:last-child{margin-bottom:0}
+.story-essay p:first-child::first-letter{font-size:3.4em;float:left;line-height:.82;padding:.12em .12em 0 0;color:var(--blue);font-weight:800}
 .image-shell{margin:34px 0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#e9effa,#fff4df);min-height:260px;position:relative}.image-shell img{width:100%;height:auto;display:block;aspect-ratio:3/2;object-fit:cover}.image-shell.missing img{display:none}.image-shell.missing:before{content:"生成画像の差し込み位置";display:grid;place-items:center;min-height:320px;color:var(--muted);font-weight:800;letter-spacing:.08em}.image-shell figcaption{padding:14px 18px;background:white;color:var(--muted);font-size:.92rem}.image-brief{border-top:1px solid var(--line);background:#fafcff;padding:0 18px}.image-brief summary{cursor:pointer;padding:12px 0;font-weight:800;color:var(--blue)}.image-brief pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#111827;color:#e6edf7;border-radius:12px;padding:16px;font-size:.8rem}
-.reference{margin-top:38px}.reference>h2:first-child{margin-top:0}.reference h2{font-size:1.55rem;margin-top:2.2em;border-left:4px solid var(--blue);padding-left:12px}.reference h3{font-size:1.18rem;margin-top:1.8em}.reference p,.reference li{max-width:76ch}.reference table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:22px 0}.reference th,.reference td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;min-width:130px}.reference th{background:var(--soft);text-align:left}.reference blockquote{margin:20px 0;padding:12px 18px;border-left:4px solid var(--amber);background:#fff9ec;color:#4b5563}.reference code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#edf1f7;padding:.13em .35em;border-radius:5px;font-size:.9em}.code-wrap{position:relative;margin:22px 0}.code-wrap pre{overflow:auto;background:#101827;color:#e6edf7;padding:20px;border-radius:14px;line-height:1.65}.code-wrap code{background:transparent;color:inherit;padding:0}.copy-code{position:absolute;top:10px;right:10px;border:1px solid #52617c;border-radius:8px;background:#1e2a42;color:white;padding:6px 10px;cursor:pointer;font-size:.78rem}
+.reference{margin-top:38px}.reference>h2:first-child{margin-top:0}.reference h2{font-size:1.55rem;margin-top:2.2em;border-left:4px solid var(--blue);padding-left:12px}.reference h3{font-size:1.18rem;margin-top:1.8em}.reference p,.reference li{max-width:76ch}.reference p{margin:1.05em 0}.reference table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:22px 0}.reference th,.reference td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;min-width:130px}.reference th{background:var(--soft);text-align:left}.reference blockquote{margin:20px 0;padding:12px 18px;border-left:4px solid var(--amber);background:#fff9ec;color:#4b5563}.reference code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#edf1f7;padding:.13em .35em;border-radius:5px;font-size:.9em}.code-wrap{position:relative;margin:22px 0}.code-wrap pre{overflow:auto;background:#101827;color:#e6edf7;padding:20px;border-radius:14px;line-height:1.65}.code-wrap code{background:transparent;color:inherit;padding:0}.copy-code{position:absolute;top:10px;right:10px;border:1px solid #52617c;border-radius:8px;background:#1e2a42;color:white;padding:6px 10px;cursor:pointer;font-size:.78rem}
 .mission,.takeaway{border-radius:16px;padding:22px 24px;margin:30px 0}.mission{background:#eef8f4;border:1px solid #b9dfd0}.takeaway{background:#f0f3ff;border:1px solid #c9d2f4}.mission h2,.takeaway h2{margin-top:0;font-size:1.2rem}.mission strong{color:var(--success)}
+.usecases{margin:32px 0;padding:28px;border-radius:18px;background:linear-gradient(140deg,var(--usecase-bg),#fffaf2);border:1px solid var(--usecase-border);box-shadow:0 10px 28px rgba(198,106,23,.08)}
+.usecases>h2{margin:0 0 6px;font-size:1.28rem;color:var(--usecase-accent);display:flex;align-items:center;gap:8px}
+.usecases>h2::before{content:"";display:inline-block;width:8px;height:24px;background:var(--usecase-accent);border-radius:3px}
+.usecases-lede{margin:0 0 18px;color:#5b4a32;font-size:.96rem}
+.usecase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.usecase-card{background:white;border:1px solid #ecd6b3;border-radius:14px;padding:18px 19px;box-shadow:0 6px 18px rgba(150,80,10,.07);transition:transform .18s ease,box-shadow .18s ease}
+.usecase-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(150,80,10,.14)}
+.usecase-card h3{margin:0 0 4px;font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:var(--usecase-accent);font-weight:800}
+.usecase-card p{margin:0 0 10px;font-size:.95rem;line-height:1.75;color:#3c3328}
+.usecase-card p:last-child{margin-bottom:0}
+.part-usecase{margin:22px 0 0;padding:22px 24px;border-radius:16px;background:rgba(255,250,240,.96);border:1px solid rgba(241,201,139,.7);color:#3c3328;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.part-usecase h3{grid-column:1/-1;margin:0;font-size:.92rem;letter-spacing:.1em;text-transform:uppercase;color:var(--usecase-accent)}
+.part-usecase .pu-item h4{margin:0 0 4px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--usecase-accent)}
+.part-usecase .pu-item p{margin:0;font-size:.92rem;line-height:1.72}
 .character-grid,.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 28px rgba(27,39,64,.06)}.card h3{margin:.1em 0}.card p{color:var(--muted)}.chapter-nav{display:flex;justify-content:space-between;gap:16px;margin-top:34px}.chapter-nav a{flex:1;background:white;border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none}.chapter-nav a:last-child{text-align:right}
 .site-footer{background:#111b31;color:#ced7ea;padding:36px 24px}.site-footer .inner{max-width:1200px;margin:auto}.source-note{font-size:.86rem;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;padding-top:20px}
-@media(max-width:980px){.hero-grid,.layout{grid-template-columns:1fr}.toc{position:relative;top:0;max-height:none}.hero-grid{gap:18px}.character-grid,.card-grid{grid-template-columns:1fr}.site-header nav{display:none}}
-@media print{.site-header,.toc,.progress,.copy-code,.image-brief,.hero-actions{display:none!important}.layout{display:block;padding:0}.chapter,.part-header{box-shadow:none;break-inside:avoid;border-color:#bbb}.image-shell{break-inside:avoid}body{background:white}.chapter{page-break-before:always}}
+@media(min-width:1281px){.layout{grid-template-columns:var(--toc-w) minmax(0,1fr)}}
+@media(max-width:1280px) and (min-width:981px){.layout{grid-template-columns:260px minmax(0,1fr);gap:30px}}
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:18px}
+  .layout{display:block;padding:20px 18px 80px}
+  .character-grid,.card-grid{grid-template-columns:1fr}
+  .site-header nav{display:none}
+  .toc-toggle{display:inline-flex}
+  .toc{position:fixed;top:0;left:0;width:min(86vw,320px);height:100vh;max-height:none;border-radius:0;border:none;border-right:1px solid var(--line);transform:translateX(-100%);box-shadow:0 0 40px rgba(0,0,0,.3);z-index:60;padding:18px 18px 60px;background:#fff}
+  .toc.open{transform:translateX(0)}
+  .toc-drawer-close{display:block;position:absolute;top:10px;right:12px;width:36px;height:36px;border:1px solid var(--line);border-radius:10px;background:white;cursor:pointer;font-size:1.2rem;line-height:1}
+  .toc-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,.45);z-index:55}
+  .toc-overlay.open{display:block}
+}
+@media print{.site-header,.toc,.toc-toggle,.toc-overlay,.progress,.copy-code,.image-brief,.hero-actions{display:none!important}.layout{display:block;padding:0}.chapter,.part-header,.usecases{box-shadow:none;break-inside:avoid;border-color:#bbb}.image-shell{break-inside:avoid}body{background:white}.chapter{page-break-before:always}}
 </style>
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="index.html">Claude Code 教科書・ブログ版</a><nav><a href="index.html">目次</a><a href="complete.html">全章一括</a><a href="image-pipeline.html">画像実装</a></nav></div></header>
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="index.html">Claude Code 教科書・ブログ版</a><nav><a href="index.html">目次</a><a href="complete.html">全章一括</a><a href="image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
 
 <section class="hero"><div class="hero-grid"><div><div class="eyebrow">Story-driven complete edition</div><h1>Claude Code実践教科書<br>物語で歩くブログ完全版</h1><p class="lede">『使えている』から、『直せる・説明できる・安全に配れる』へ。初心者の最初の一操作から、Skills、Hooks、MCP、HTML、全社ハーネスまでを一続きの物語として学びます。</p><div class="hero-actions"><a class="button primary" href="#part-0">物語を始める</a><a class="button" href="complete.html">全章を一括で読む</a></div></div>
 <figure class="image-shell" data-image-id="cover-main">
@@ -88,9 +135,10 @@ Composition: Wide 16:9 cover with open space on the upper-left for the Japanese 
 </ul>
 <hr/>
 </div></div></section>
-<div class="layout"><aside class="toc"><h2>目次</h2><a class="part-link" href="#part-0">第0部 最適な教科書の設計</a><a href="#chapter-00">第0章 教科書を「実行システム」にする</a><a class="part-link" href="#part-1">第1部 Claude Codeの全体像と最初の成果物</a><a href="#chapter-01">第1章 Claude Codeは何が違うのか</a><a href="#chapter-02">第2章 安全を最初に設計する</a><a href="#chapter-03">第3章 導入とProject Folder</a><a href="#chapter-04">第4章 最初の90分実習：会議アシスタント</a><a href="#chapter-05">第5章 強い指示の書き方</a><a class="part-link" href="#part-2">第2部 標準作業ループ</a><a href="#chapter-06">第6章 Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="#chapter-07">第7章 Permission Mode、Sandbox、危険操作</a><a href="#chapter-08">第8章 ModelとEffort</a><a href="#chapter-09">第9章 SessionとContext</a><a href="#chapter-10">第10章 GitとCheckpoint</a><a class="part-link" href="#part-3">第3部 Claude Codeを育てる拡張レイヤー</a><a href="#chapter-11">第11章 CLAUDE.md、Rules、Auto Memory</a><a href="#chapter-12">第12章 Skills設計</a><a href="#chapter-13">第13章 Subagents、Agent View、並列作業</a><a href="#chapter-14">第14章 HooksとPlugins</a><a class="part-link" href="#part-4">第4部 外部連携と伝わる成果物</a><a href="#chapter-15">第15章 MCP、Connectors、APIを安全につなぐ</a><a href="#chapter-16">第16章 MarkdownよりHTMLが向く仕事</a><a href="#chapter-17">第17章 Claude Designから実装へ</a><a href="#chapter-18">第18章 CoworkとLive Artifacts</a><a class="part-link" href="#part-5">第5部 パーソナライズと自律化</a><a href="#chapter-19">第19章 Claude Codeを自分専用に育てる</a><a href="#chapter-20">第20章 `/goal`、Headless、定期実行</a><a href="#chapter-21">第21章 Dynamic Workflowsと複数Agent</a><a href="#chapter-22">第22章 信頼できる調査とレポート</a><a class="part-link" href="#part-6">第6部 トレプロハーネスの全社実装</a><a href="#chapter-23">第23章 最適Architecture</a><a href="#chapter-24">第24章 配布、同期、更新、Rollback</a><a href="#chapter-25">第25章 Skill Governance</a><a href="#chapter-26">第26章 Managed Policy、Security、Observability</a><a href="#chapter-27">第27章 OnboardingとRunbook</a><a class="part-link" href="#part-7">第7部 実務ユースケース集</a><a href="#chapter-28">第28章 文書・ファイル・会議</a><a href="#chapter-29">第29章 調査・Content・学習</a><a href="#chapter-30">第30章 Application開発</a><a href="#chapter-31">第31章 Design・資料・公開</a><a href="#chapter-32">第32章 継続業務の自動化</a><a href="#chapter-33">第33章 失敗Pattern</a><a class="part-link" href="#part-8">第8部 テンプレートとアプリ化</a><a href="#chapter-34">第34章 コピペ用標準テンプレート</a><a href="#chapter-35">第35章 教科書アプリの情報設計</a><a href="#chapter-36">第36章 30日導入計画</a><a href="#chapter-37">第37章 素材と現行仕様の補正</a><a href="#chapter-38">第38章 Coverage Map</a><a href="#chapter-final">終章 最強のまま保つ</a></aside><main class="content">
+<div class="layout"><aside class="toc" id="site-toc"><button class="toc-drawer-close" type="button" aria-label="目次を閉じる">×</button><h2>目次</h2><a class="part-link" href="#part-0">第0部 最適な教科書の設計</a><a href="#chapter-00">第0章 教科書を「実行システム」にする</a><a class="part-link" href="#part-1">第1部 Claude Codeの全体像と最初の成果物</a><a href="#chapter-01">第1章 Claude Codeは何が違うのか</a><a href="#chapter-02">第2章 安全を最初に設計する</a><a href="#chapter-03">第3章 導入とProject Folder</a><a href="#chapter-04">第4章 最初の90分実習：会議アシスタント</a><a href="#chapter-05">第5章 強い指示の書き方</a><a class="part-link" href="#part-2">第2部 標準作業ループ</a><a href="#chapter-06">第6章 Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="#chapter-07">第7章 Permission Mode、Sandbox、危険操作</a><a href="#chapter-08">第8章 ModelとEffort</a><a href="#chapter-09">第9章 SessionとContext</a><a href="#chapter-10">第10章 GitとCheckpoint</a><a class="part-link" href="#part-3">第3部 Claude Codeを育てる拡張レイヤー</a><a href="#chapter-11">第11章 CLAUDE.md、Rules、Auto Memory</a><a href="#chapter-12">第12章 Skills設計</a><a href="#chapter-13">第13章 Subagents、Agent View、並列作業</a><a href="#chapter-14">第14章 HooksとPlugins</a><a class="part-link" href="#part-4">第4部 外部連携と伝わる成果物</a><a href="#chapter-15">第15章 MCP、Connectors、APIを安全につなぐ</a><a href="#chapter-16">第16章 MarkdownよりHTMLが向く仕事</a><a href="#chapter-17">第17章 Claude Designから実装へ</a><a href="#chapter-18">第18章 CoworkとLive Artifacts</a><a class="part-link" href="#part-5">第5部 パーソナライズと自律化</a><a href="#chapter-19">第19章 Claude Codeを自分専用に育てる</a><a href="#chapter-20">第20章 `/goal`、Headless、定期実行</a><a href="#chapter-21">第21章 Dynamic Workflowsと複数Agent</a><a href="#chapter-22">第22章 信頼できる調査とレポート</a><a class="part-link" href="#part-6">第6部 トレプロハーネスの全社実装</a><a href="#chapter-23">第23章 最適Architecture</a><a href="#chapter-24">第24章 配布、同期、更新、Rollback</a><a href="#chapter-25">第25章 Skill Governance</a><a href="#chapter-26">第26章 Managed Policy、Security、Observability</a><a href="#chapter-27">第27章 OnboardingとRunbook</a><a class="part-link" href="#part-7">第7部 実務ユースケース集</a><a href="#chapter-28">第28章 文書・ファイル・会議</a><a href="#chapter-29">第29章 調査・Content・学習</a><a href="#chapter-30">第30章 Application開発</a><a href="#chapter-31">第31章 Design・資料・公開</a><a href="#chapter-32">第32章 継続業務の自動化</a><a href="#chapter-33">第33章 失敗Pattern</a><a class="part-link" href="#part-8">第8部 テンプレートとアプリ化</a><a href="#chapter-34">第34章 コピペ用標準テンプレート</a><a href="#chapter-35">第35章 教科書アプリの情報設計</a><a href="#chapter-36">第36章 30日導入計画</a><a href="#chapter-37">第37章 素材と現行仕様の補正</a><a href="#chapter-38">第38章 Coverage Map</a><a href="#chapter-final">終章 最強のまま保つ</a></aside><main class="content">
 <section class="part" id="part-0">
   <header class="part-header"><div class="eyebrow">Part 0</div><h2>第0部　最適な教科書の設計</h2><p>遥はすでに便利なSkillを使っていました。それでも、うまくいかなかった瞬間に直せないことが不安でした。そこで四人は、知識を並べた資料ではなく、操作・証拠・保存・再開まで含む『実行できる教科書』を作ることにします。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>ABC商事の社内勉強会で、AIツール本を回し読みしても誰も再現できない状況が続いている。</p></div><div class="pu-item"><h4>こう使う</h4><p>本ではなく、章ごとに前提・成果物・検証を持つLesson単位の実行教科書として再設計する。</p></div><div class="pu-item"><h4>得られるもの</h4><p>読んだ／使った／検証したの段階で進捗が記録でき、勉強会後も全員が同じLevelへ到達できる。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-00">
   <img src="images/part-00-da41b3.webp" alt="第0部『最適な教科書の設計』の概念イラスト" loading="lazy" decoding="async">
@@ -211,6 +259,7 @@ source_topics:
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の新人エンジニア（架空）が、社内AI研修テキストを最後まで読んだのに、自席で同じ手順を再現できず止まっている。</p><h3>こう使う</h3><p>テキストを章ごとのLessonへ分解し、各章で『何を作り、どの証拠で完成と判断するか』を一行で書かせる。</p><h3>得られるもの</h3><p>読書ではなく実行が単位になり、本人が次の一操作を自分で決められるようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>教育担当の田中さん（架空）が、研修動画を見せても受講者が独自に応用できず、毎回個別指導に時間が消えている。</p><h3>こう使う</h3><p>動画ではなくLesson単位のテキスト＋成果物テンプレートを配り、進捗をseen/practiced/verified/appliedで管理する。</p><h3>得られるもの</h3><p>個別指導の量が減り、受講者は自分のペースで進めて、講師は詰まった人だけを救援できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス担当（架空）が、AIガイドラインをWiki化したが、誰も読まずに同じ事故が繰り返し発生する。</p><h3>こう使う</h3><p>ガイドラインを実行可能なLessonと体験ミッションに書き換え、ミッション達成を読了の証拠にする。</p><h3>得られるもの</h3><p>『読んだ』のあいまいさが消え、ミッション結果という証拠で運用状況を可視化できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自分が非エンジニア、開発者、管理者のどのルートから始めるかを決め、最初に作る成果物と合格証拠を一行で書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>教科書の単位はページではなく、実行・検証・保存できるLessonです。</p></section>
 </article>
@@ -219,6 +268,7 @@ source_topics:
 
 <section class="part" id="part-1">
   <header class="part-header"><div class="eyebrow">Part 1</div><h2>第1部　Claude Codeの全体像と最初の成果物</h2><p>最初の目標は、難しい機能を暗記することではありません。会議の文字起こしを、議事録・タスク・HTMLへ変える小さな成果物を完成させます。『動いた』という体験が、その後の学習を現実のものに変えます。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>XYZ工業の総務チームは、毎週の議事録作成に2時間かかり、タスク漏れで翌週まで動けない。</p></div><div class="pu-item"><h4>こう使う</h4><p>Claude Codeのフォルダへ文字起こしを置き、議事録・タスク・HTMLレポートの三点セットを作るLessonを一周する。</p></div><div class="pu-item"><h4>得られるもの</h4><p>1回の体験で『動かす・確かめる・再利用する』感覚が掴め、次の会議から再現可能な業務型として使える。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-01">
   <img src="images/part-01-7616a4.webp" alt="第1部『Claude Codeの全体像と最初の成果物』の概念イラスト" loading="lazy" decoding="async">
@@ -401,6 +451,7 @@ Codeで実装・検証・公開準備
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ広告のプランナー（架空）が、チャットAIに『議事録まとめて』と頼み、毎回手元のWordへコピペして整形に1時間かけている。</p><h3>こう使う</h3><p>Claude Codeに目的とフォルダを渡し、議事録ファイルとタスクJSONを同じ場所で生成・確認まで一気に走らせる。</p><h3>得られるもの</h3><p>コピペ往復が消え、成果物がフォルダに残る。次回からは同じ手順で5分の作業になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者の佐々木さん（架空）が、複数ファイルにまたがる修正をチャットAIで進めるたび、貼り付け漏れで動かなくなる。</p><h3>こう使う</h3><p>Claude Codeに編集権限とプロジェクトを渡し、探索→修正→テスト実行までを同じセッションで完結させる。</p><h3>得られるもの</h3><p>ファイルの一貫性が保たれ、貼り付け事故と再質問のループから抜けられる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> いま抱えている仕事を一つ選び、Chat・Cowork・Code・Designのどこで始め、どこへ渡すかを書き分けてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Claude Codeの価値はコード生成ではなく、探索・編集・実行・検証を同じ場所で回せることにあります。</p></section>
 </article>
@@ -511,6 +562,7 @@ claude
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の経理担当（架空）が、AIに『不要ファイルを整理して』と頼み、稟議添付のExcelを誤って削除する事故が起きた。</p><h3>こう使う</h3><p>作業用フォルダだけを学習Labとして切り出し、削除禁止・外部公開禁止・本番フォルダ参照禁止をProject Ruleに書く。</p><h3>得られるもの</h3><p>事故が起きてもLab内で完結し、本番資料は手付かず。原状復帰がCheckpointで一発でできる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス課長（架空）が、社員のAI利用を許可したいが『何をどこまで触らせるか』を説明できず承認が止まっている。</p><h3>こう使う</h3><p>Read許可・Write許可・実行許可・ネットワーク権限を分けたPermission表をプロジェクトごとに作る。</p><h3>得られるもの</h3><p>稟議で『どの範囲なら安全か』を説明でき、AI導入の承認が下りる。</p></article><article class="usecase-card"><h3>場面</h3><p>副業エンジニア（架空）が、APIキーをチャットへ貼ったまま動画キャプチャを共有し、課金を悪用される事故を経験した。</p><h3>こう使う</h3><p>秘密情報は環境変数と専用ファイルのみに置き、Gitとチャットから除外する三つのルールをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>鍵の露出が物理的に起こらず、共有・録画のたびに気を張り続ける必要がなくなる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 学習用フォルダを作り、『削除しない』『外部公開しない』『秘密情報を貼らない』の三つをプロジェクトルールへ書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>安全はAIへのお願いではなく、権限・隔離・証拠で設計します。</p></section>
 </article>
@@ -617,6 +669,7 @@ claude --resume               # 保存Sessionを選んで再開
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業担当（架空）が、デスクトップに『AI作業』フォルダひとつへ複数案件を放り込み、どのSkillがどの顧客のものか分からなくなっている。</p><h3>こう使う</h3><p>顧客ごとに専用Project Folderを作り、docs/input/output/testsの最小構造に分けて開く。</p><h3>得られるもの</h3><p>AIが見るべき範囲が顧客単位に閉じ、案件の取り違えと情報漏えいリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中小企業の総務（架空）が、AI導入を始めたいが『どこから手を付けるか』分からず、毎週違うフォルダで実験して挫折している。</p><h3>こう使う</h3><p>learning-labという練習専用フォルダを切り、その中だけで実験→検証→Skill化の小さなサイクルを回す。</p><h3>得られるもの</h3><p>練習と本番が物理的に分かれ、失敗を恐れず実験できる。成功したものだけを本番Projectへ移せる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 空のlearning-labを作り、docs・input・output・testsの最小構造を用意してCursorでそのフォルダだけを開いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。</p></section>
 </article>
@@ -816,6 +869,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ商社の営業企画（架空）が、週5本の商談記録から議事録・タスク・送付メールを手動で2時間かけて作っている。</p><h3>こう使う</h3><p>サンプル文字起こしからminutes.md、tasks.json、report.htmlを作る90分実習を一周し、自分のSkillへ昇格させる。</p><h3>得られるもの</h3><p>次回からは同じテンプレで5分。文字起こしを入れる→3点セットが出る、を仕事の型として固定できる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある総務リーダー（架空）が、AI活用の第一歩として何を作ればよいか分からず、3週間プロジェクトが止まっている。</p><h3>こう使う</h3><p>入力・出力・検証が全部入った最小の題材として会議アシスタントを選び、90分の体験ミッションを完走する。</p><h3>得られるもの</h3><p>『動いた』体験で全員のスタート地点が揃い、その後の応用先（請求書・週報など）に展開しやすくなる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> サンプル文字起こしからminutes.md、tasks.json、report.htmlを作り、JSONの構造とHTMLの表示を自分の目で確認してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>最初の成果物は、作る・確かめる・再利用するまでを一周できるものが最適です。</p></section>
 </article>
@@ -913,6 +967,7 @@ Sample Dataで起動し、Test/Build成功を完了条件とする。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅メーカーのマーケ担当（架空）が、AIに『いい感じのLP作って』と頼み、期待と違う画面が出ては手戻りを繰り返している。</p><h3>こう使う</h3><p>目的・利用者・制約・成果物・完了条件・証拠の六項目テンプレートを使って依頼文を書き直す。</p><h3>得られるもの</h3><p>AIの判断材料が揃って一発で意図に近い出力になり、手戻り回数が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>PM経験ゼロの開発者（架空）が、上司から『この依頼を技術翻訳して』と毎回言われ、要件整理だけで一日を消費している。</p><h3>こう使う</h3><p>曖昧な依頼を完了報告テンプレ（変更/検証/残リスク）まで含めて構造化し、AIへ渡す前に人へ見せる。</p><h3>得られるもの</h3><p>上司確認も同じテンプレで進み、要件と完了の認識ズレが消える。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 曖昧な依頼を一つ選び、目的・文脈・制約・成果物・完了条件・証拠の六項目へ書き直してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。</p></section>
 </article>
@@ -921,6 +976,7 @@ Sample Dataで起動し、Test/Build成功を完了条件とする。
 
 <section class="part" id="part-2">
   <header class="part-header"><div class="eyebrow">Part 2</div><h2>第2部　標準作業ループ</h2><p>一度だけ成功する指示と、何度でも再現できる仕事の型は別物です。四人は、探索から保存までを七つの段階に分け、どんな案件でも同じ順序で進められる共通言語を作ります。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>ある製造業の社内開発チームは、担当者によって作業順序がバラバラで、レビューや戻し作業に時間を奪われている。</p></div><div class="pu-item"><h4>こう使う</h4><p>Explore→Plan→Implement→Verify→Review→Commitの七段階を共通言語にし、依頼の単位を統一する。</p></div><div class="pu-item"><h4>得られるもの</h4><p>順序が揃うことで抜けや手戻りが減り、新人でも先輩と同じ手順で安全に進められる。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-02">
   <img src="images/part-02-89308c.webp" alt="第2部『標準作業ループ』の概念イラスト" loading="lazy" decoding="async">
@@ -1090,6 +1146,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC物流の社内システム改修で、依頼→実装→『動いたっぽい』→本番→事故、という流れを毎月繰り返している。</p><h3>こう使う</h3><p>Explore→Specify→Plan→Implement→Verify→Review→Commitの七段階に依頼テンプレを揃え、各段階で証拠を残す。</p><h3>得られるもの</h3><p>本番事故の発生源を段階に切り分けて潰せるようになり、改修1本あたりの平均事故件数が減る。</p></article><article class="usecase-card"><h3>場面</h3><p>Webデザイナー（架空）が、AIに『修正お願い』と頼んだら関係ない部分まで書き換えられ、何が変わったか追えない。</p><h3>こう使う</h3><p>Plan段階で変更範囲をAIに宣言させ、Verifyで差分とテスト結果を見てからCommitする運用にする。</p><h3>得られるもの</h3><p>予期しない書き換えがPlanで弾かれ、レビュー時間が短く、巻き戻しも安全になる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 次に行う作業を七段階の見出しで書き、各段階の成果物を一つずつ決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</p></section>
 </article>
@@ -1238,6 +1295,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、毎回出る権限確認を面倒に思いBypassを常用した結果、検証中の本番DBへ誤更新コマンドを流してしまった。</p><h3>こう使う</h3><p>Bypassは隔離した使い捨て環境のみ・本番Projectは確認モード固定、というRuleをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>便利さと事故半径のトレードオフが明示され、危険操作が必ず人の目を通るようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、AIに全権を与えるか禁止するかの二択しか出来ず、安全と業務スピードの両立に悩んでいる。</p><h3>こう使う</h3><p>操作を読む・編集する・実行する・ネットワーク・削除の五分類に分け、それぞれ許可ポリシーを別に設計する。</p><h3>得られるもの</h3><p>全権でも全禁止でもなく、業務に必要な範囲だけを許可でき、稟議が通る具体度になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、AIに『古いファイルを掃除して』と頼み、契約PDFまで巻き込まれて削除されかけた。</p><h3>こう使う</h3><p>削除は対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の標準手順をSkill化する。</p><h3>得られるもの</h3><p>削除がワンクリックで進まなくなり、最悪でも実行前のリストで止められる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在のプロジェクトで許可してよい操作と、毎回確認すべき操作を二列に分けて書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。</p></section>
 </article>
@@ -1327,6 +1385,7 @@ high: 複数File、分析、重要文書
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、すべての作業を最上位モデル＋最大Effortで回した結果、月初に利用上限に達して残り3週間を低性能モデルで耐えている。</p><h3>こう使う</h3><p>業務を軽量処理・標準処理・高難度判断の三つに分類し、Effortを上げるのは判断系のみにする。</p><h3>得られるもの</h3><p>利用上限の発火が遅れ、難所だけに高性能を集中投下できる。コスト効率が大きく改善する。</p></article><article class="usecase-card"><h3>場面</h3><p>ABC SIerのテックリード（架空）が、レビュー指摘の質に悩み、レビュー専用モデルを高Effortで分けたいが手順が決まっていない。</p><h3>こう使う</h3><p>Plan/Implement/Reviewそれぞれにモデル設定を分け、変動するモデル名はFeature Registryへ外出しする。</p><h3>得られるもの</h3><p>重要レビューだけ深く考えさせる構造になり、後でモデル名が変わってもRegistry更新で済む。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自分の典型業務を、軽量処理・標準処理・高難度判断の三つへ分類し、どこでEffortを上げるか決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>モデルは強さではなく役割で選び、変動情報は本文から切り離します。</p></section>
 </article>
@@ -1410,6 +1469,7 @@ claude --resume
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、午前は予算検討・午後はSlack文面・夕方はバグ修正を全部同じセッションで進め、AIが古い前提を引きずって変な提案を出している。</p><h3>こう使う</h3><p>仕事の単位ごとにセッションを切り直し、RESUME.mdへ現在地・決定・次の一操作を残す。</p><h3>得られるもの</h3><p>AIの回答が現状に合うようになり、翌日の再開も会話履歴ではなくファイルだけで成立する。</p></article><article class="usecase-card"><h3>場面</h3><p>兼業ライター（架空）が、長時間セッションで記事執筆→AIが急に話題を取り違える→/compactしても直らない、を繰り返している。</p><h3>こう使う</h3><p>話題切替時は新セッションを開き、必要な状態をresumeメモへ外部化する運用に変える。</p><h3>得られるもの</h3><p>AIの混乱が消え、文脈の引き継ぎが意図したファイルのみに限定される。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> いまの作業について、次回再開時に必要な状態をRESUME.mdへ書き、会話を閉じても続けられるか確認してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>会話履歴に依存せず、再開に必要な状態をファイルへ外部化します。</p></section>
 </article>
@@ -1501,6 +1561,7 @@ git worktree add ../project-agent-docs -b agent/docs
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小Webサイト運営者（架空）が、AIに『大胆に作り直して』を依頼するたび、戻したい時に戻せず古い版を失っている。</p><h3>こう使う</h3><p>毎回の作業開始前に良い状態をCommitし、Checkpoint＋Gitの二重保存で『戻れる』を物理的に作る。</p><h3>得られるもの</h3><p>AIへ強気に試行させても、いつでも前に戻れる安心が手に入る。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人開発（架空）が、複数機能を同時に試したくて同じファイルを並列編集し、お互いの変更を上書きして混乱した。</p><h3>こう使う</h3><p>Worktreeで作業ツリーを物理的に分け、機能ごとに別ディレクトリで並列に動かす。</p><h3>得られるもの</h3><p>AIに並列実装させても衝突が起きず、後でCherry-pickで良い変更だけを統合できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の良い状態をCommitし、その後に小さな変更を加えてDiffを確認し、元へ戻せることを試してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>可逆性は勇気ではなく、CheckpointとGitで設計する能力です。</p></section>
 </article>
@@ -1509,6 +1570,7 @@ git worktree add ../project-agent-docs -b agent/docs
 
 <section class="part" id="part-3">
   <header class="part-header"><div class="eyebrow">Part 3</div><h2>第3部　Claude Codeを育てる拡張レイヤー</h2><p>会話で得たコツを、その会話の中だけに置いておくと、翌日にはまた同じ説明が必要です。ここからは、知識をCLAUDE.md、Rules、Skills、Subagents、Hooksへ昇格させ、個人の工夫を仕組みに変えていきます。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>個人で成果を出している人事の田中さん（架空）が、同じ説明を毎週新人へ繰り返し、本人の時間が削られている。</p></div><div class="pu-item"><h4>こう使う</h4><p>成功した会話をCLAUDE.md・Rules・Skillへ昇格させ、誰でも同じ手順で呼べる業務パッケージへ変える。</p></div><div class="pu-item"><h4>得られるもの</h4><p>属人化した工夫が組織の資産になり、説明の繰り返しから解放されて改善側に時間を回せる。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-03">
   <img src="images/part-03-2f78b1.webp" alt="第3部『Claude Codeを育てる拡張レイヤー』の概念イラスト" loading="lazy" decoding="async">
@@ -1714,6 +1776,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサル（架空）のCLAUDE.mdが3,000行を超え、毎回読み込みに時間がかかり、AIが本来の指示を見落とすようになっている。</p><h3>こう使う</h3><p>CLAUDE.mdは『常に読みたい短い案内板』だけ残し、Path固有事項はRules、業務手順はSkillsへ移す。</p><h3>得られるもの</h3><p>起動が軽くなり、AIが本当に必要な指示を確実に拾うようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、Project AとProject Bで日本語化ルールが毎回ぶつかり、混乱した出力を受け取り続けている。</p><h3>こう使う</h3><p>全社共通ルールはGlobal CLAUDE.mdへ、Project個別はProject CLAUDE.mdへ、Path別はRulesへと役割を分ける。</p><h3>得られるもの</h3><p>ルール衝突が物理的に起きず、どこを直せばどこへ効くかが明確になる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> CLAUDE.mdの各行を『毎回必要か』で見直し、手順はSkillへ、Path固有事項はRulesへ移してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>知識は量ではなく、適切なScopeへ置くことで効きます。</p></section>
 </article>
@@ -1891,6 +1954,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ広告のプランナー（架空）が、毎週類似のレポート依頼に対して毎回プロンプトを書き直し、品質も毎回ぶれている。</p><h3>こう使う</h3><p>成功した会話を入力・処理・出力・品質基準・失敗時対応の形式へ整理し、Skill化する。</p><h3>得られるもの</h3><p>次週からは『あのSkillで』の一言で同品質の成果物が出る。教育コストもSkill共有で済む。</p></article><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、複数メンバーで同じSkillを書き散らし、似て非なるSkillが乱立して使い分けに迷っている。</p><h3>こう使う</h3><p>正本名・Owner・参照資料を持つSKILL.mdテンプレートを揃え、referencesに長文を逃がすProgressive Disclosureを徹底する。</p><h3>得られるもの</h3><p>Skillの重複が抑えられ、新規メンバーも『どれを使えばよいか』を迷わず選べる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 最近うまくいった作業を一つ選び、SKILL.mdへ入力・手順・出力・検証・失敗時対応を書き出してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。</p></section>
 </article>
@@ -2011,6 +2075,7 @@ SNS、Code変更、最終結論は禁止。15分で打ち切る。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、自分のコードを自分でレビューさせるとAIが甘く採点し、毎回バグを見落としている。</p><h3>こう使う</h3><p>実装セッションを閉じ、背景を知らない独立コンテキストのReviewer Agentへ成果物だけ渡す。</p><h3>得られるもの</h3><p>迎合バイアスが消え、要件・安全・保守性の三観点で本当の指摘が返ってくる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅企業のリサーチチーム（架空）が、調査・検証・統合を一人のAIに任せ、結論が初期仮説に引きずられる傾向が抜けない。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeを別Agentに分け、各役割の入力と期待出力を明示する。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、反証も合わせて統合できる。結論の信頼度が説明可能になる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の成果物を、新しいセッションまたはReviewer Agentへ渡し、要件充足・安全・保守性の三観点で評価させてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。</p></section>
 </article>
@@ -2194,6 +2259,7 @@ force push → 拒否
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、CLAUDE.mdに『rm -rf禁止』と書いても、繁忙期にAIが破壊的コマンドを生成して事故が起きる。</p><h3>こう使う</h3><p>PreToolUseでrm -rf・本番DB操作・外部送信を物理的に拒否するHookを書き、Fixtureテストを通す。</p><h3>得られるもの</h3><p>AIがどんなに賢くてもHookで止まる。文章のお願いから決定論的な強制へ昇格できる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、編集後のTypeScript型エラーを翌朝まで気づかず、毎週の月曜に手戻りが発生している。</p><h3>こう使う</h3><p>PostToolUseでEdit/Write後にtsc --noEmitを自動実行するHookを入れる。</p><h3>得られるもの</h3><p>型エラーが編集の瞬間に検出され、月曜の手戻り会議が消える。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 危険な削除コマンドを拒否する最小PreToolUse Hookを作り、安全な入力と危険な入力のFixtureでテストしてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>絶対に守らせたいことは文章ではなく、HookとPolicyで実行時に強制します。</p></section>
 </article>
@@ -2202,6 +2268,7 @@ force push → 拒否
 
 <section class="part" id="part-4">
   <header class="part-header"><div class="eyebrow">Part 4</div><h2>第4部　外部連携と伝わる成果物</h2><p>仕事はパソコンの中だけでは終わりません。カレンダー、メール、Drive、社内データ、デザイン、公開先へつながります。同時に、正しいだけで読まれない成果物を、理解されるHTMLへ変える必要があります。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>ある広告会社の運用チームは、Drive上のレポートをそのまま送って『長すぎて読まれない』とクライアントから言われ続けている。</p></div><div class="pu-item"><h4>こう使う</h4><p>Driveとの安全な接続を設計しつつ、長文を1ページHTMLレポートへ翻訳するSkillを作る。</p></div><div class="pu-item"><h4>得られるもの</h4><p>情報量を落とさず読解時間が半分になり、レビュー打ち返しが減って意思決定が速くなる。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-04">
   <img src="images/part-04-29b035.webp" alt="第4部『外部連携と伝わる成果物』の概念イラスト" loading="lazy" decoding="async">
@@ -2400,6 +2467,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の総務（架空）が、Drive連携Skillで毎日のレポート取得を自動化したいが、AIに書き込み権限まで渡すのが怖くて導入が止まっている。</p><h3>こう使う</h3><p>MCP/Connectorの権限をRead Only Scopeに絞り、書き込みはHuman Gateを介する設計にする。</p><h3>得られるもの</h3><p>情報収集の自動化は走り、書き込み事故は構造的に起きない安全な業務基盤になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人ライター（架空）が、外部記事を要約させたら本文に紛れ込んだ命令でAIが意図しない動作をした（Prompt Injection）。</p><h3>こう使う</h3><p>取得文書はデータとして扱い実行しないルール＋書き込みは明示承認のみ、というRuleを書く。</p><h3>得られるもの</h3><p>外部データに混入した悪意ある命令が動作にならず、調査用途として安全に使い続けられる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 使いたい外部サービスを一つ選び、必要なRead権限と不要なWrite権限を分け、Secretの保存場所を決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>外部連携では、できることより先に、読める範囲・書ける範囲・鍵の置き場所を決めます。</p></section>
 </article>
@@ -2551,6 +2619,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、毎月の予実報告をMarkdownで提出するが、役員が目を通さず会議で同じ説明を繰り返している。</p><h3>こう使う</h3><p>同内容を単一HTMLレポートへ変換し、結論カード・グラフ・強調点を1ページに集約する。</p><h3>得られるもの</h3><p>結論到達時間が短くなり、会議の冒頭で『見ました』前提で議論が始まる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅メーカーの開発者（架空）が、テストレポートをスクリーンショットで貼り、後日参照しても何が壊れていたか追えない。</p><h3>こう使う</h3><p>テスト結果を単一HTMLで保存し、印刷・スマホ・Alt textで読める形式に揃える。</p><h3>得られるもの</h3><p>障害後の振り返り会議で誰でも開けて確認でき、Markdown原本との二重管理にしなくて済む。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 同じ小さなレポートをMarkdownと単一HTMLで作り、読み手が結論へ到達する時間を比べてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。</p></section>
 </article>
@@ -2685,6 +2754,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中小Web会社（架空）が、AIに『LPを作って』と頼むたびに情報構造とビジュアルが同時に揺れて、毎回ゼロからやり直している。</p><h3>こう使う</h3><p>白黒Wireframe→Design System適用→実装の三段階に分け、各段階の決定事項を記録する。</p><h3>得られるもの</h3><p>情報・見た目・動作の修正コストが分離され、出戻りが特定段階だけで済む。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、複数LPで色・フォント・余白がバラバラになり、ブランドの一貫性が失われている。</p><h3>こう使う</h3><p>Design Systemを別Projectとして固定し、各LPはそれを参照する形に揃える。</p><h3>得られるもの</h3><p>1箇所直せば全LPに反映され、ブランド資産として再利用できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つのページを、情報だけのWireframe、Design System適用版、実装版の三段階で作り、各段階の決定事項を記録してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。</p></section>
 </article>
@@ -2828,6 +2898,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業マネージャー（架空）が、週報を毎週手動更新しており、開くたびに最新化されないため週末まで状況が見えない。</p><h3>こう使う</h3><p>Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするLive Artifact Dashboardを作る。</p><h3>得られるもの</h3><p>開いた瞬間に最新の進捗が見え、週次更新作業そのものが不要になる。</p></article><article class="usecase-card"><h3>場面</h3><p>中小オペレーター（架空）が、外部APIを毎リロードで叩く実装にして請求金額がはねた。</p><h3>こう使う</h3><p>Cache・更新時刻・出典・失敗時のStale表示を分離して設計する。</p><h3>得られるもの</h3><p>コストとUXのバランスが取れ、データ取得失敗時にも古い情報と明示できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> ローカルの会議データを表示する小さなDashboardを作り、更新・キャッシュ・出典表示の三点を確認してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。</p></section>
 </article>
@@ -2836,6 +2907,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
 <section class="part" id="part-5">
   <header class="part-header"><div class="eyebrow">Part 5</div><h2>第5部　パーソナライズと自律化</h2><p>便利な自動化ほど、止まる条件と学び方が重要です。四人は、対話履歴から関心を抽出し、明確なゴールだけを自律実行させ、必要なときに人間へ戻す設計を学びます。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>ある情シスのリーダーは、毎朝のニュース要約とTask Boardを手動で作っており、属人的で休めない状態が続く。</p></div><div class="pu-item"><h4>こう使う</h4><p>成功条件・最大回数・Timeout・承認地点を持つ自律実行を設計し、副作用は人間承認を残す。</p></div><div class="pu-item"><h4>得られるもの</h4><p>毎朝の繰り返し作業が安全に自動化され、休んでも崩れず、品質が落ちた瞬間だけ人へ戻る運用になる。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-05">
   <img src="images/part-05-3e6b6c.webp" alt="第5部『パーソナライズと自律化』の概念イラスト" loading="lazy" decoding="async">
@@ -3109,6 +3181,7 @@ Local Storageには回答状態だけを保存する。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人ライター（架空）が、AIに『自分専用化したい』と全会話履歴を渡し、結果として顧客個人情報まで学習対象に紛れて怖くなった。</p><h3>こう使う</h3><p>保存対象を関心・学習課題・好む形式の三つに限定し、秘密情報・顧客データ・雑談は除外定義を書く。</p><h3>得られるもの</h3><p>個人化の便益は得つつ、プライバシーリスクが構造的にゼロへ近づく。</p></article><article class="usecase-card"><h3>場面</h3><p>学習担当（架空）が、社員ごとのスキルレベルを把握したいが、毎回全ログを再走査して処理時間が爆発している。</p><h3>こう使う</h3><p>処理済み位置と新しさ重みを持つINTERESTS.md抽出Skillを作る。</p><h3>得られるもの</h3><p>差分処理になり、関心の最新動向だけ追える。本人が編集・削除できる透明な仕組みになる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 保存してよい学習信号と保存してはいけない情報を定義し、少量の会話ログからINTERESTS.mdの試作を作ってください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。</p></section>
 </article>
@@ -3221,6 +3294,7 @@ mv "$OUT.tmp" "$OUT"
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、AIに『テストが通るまで直して』と頼み、無限ループで朝までCPUが回り続けて停止条件もなく止まれない。</p><h3>こう使う</h3><p>成功条件・最大ターン・Timeout・許可範囲・失敗時停止を/goal仕様として先に書き出す。</p><h3>得られるもの</h3><p>夜間自動実行が安全に走り、達成 or 安全停止の二状態で終わる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、毎日のレポート自動配信を構築したいが、誤送信時の責任の所在が決まらず承認が出ない。</p><h3>こう使う</h3><p>公開・送信・課金・削除は完全自動化せず、最後の一歩を人間承認に残す設計にする。</p><h3>得られるもの</h3><p>副作用のある操作だけ責任者が承認し、それ以外は自動で進む構造になり、承認が下りる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自動化したい仕事を一つ選び、成功条件・最大回数・Timeout・禁止する副作用・人間の承認地点を書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>良い自律化は、達成条件と停止条件の両方を検証可能にします。</p></section>
 </article>
@@ -3308,6 +3382,7 @@ SNSは反応のみ。最大8 Agent、25分。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中堅リサーチ会社（架空）が、新市場調査をひとりのAIに任せたら初期仮説に引きずられて、後で重大な事実を見逃したと判明した。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeの三役を独立Agentに分け、Cost上限と再試行回数も決める。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、結論への反証も統合される。意思決定の質が説明可能になる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人投資家（架空）が、複数Agent構成にしたら検索量が爆発し、月のAPI料金が想定の5倍になった。</p><h3>こう使う</h3><p>Agent数・検索範囲・最大トークンを段階的に制限し、各段階の中間成果物を保存する。</p><h3>得られるもの</h3><p>暴走しないCost構造になり、シンプルな調査は手動Workflowへ戻す判断もできる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの調査テーマをResearch・Verify・Synthesizeへ分け、各担当へ渡す入力と受け取る出力を定義してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。</p></section>
 </article>
@@ -3404,6 +3479,7 @@ argument-hint: "&lt;question&gt;"
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>経営企画（架空）が、AIに業界レポートを作らせたが、根拠不明の数字や古い情報が混じり、役員プレゼンで矛盾を指摘された。</p><h3>こう使う</h3><p>Claim Ledgerに主張・根拠・日付・確度・反証を必須項目で記録するSkillを作る。</p><h3>得られるもの</h3><p>プレゼン前に根拠を逆引きでき、『この数字の出所は？』に即答できる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人ブロガー（架空）が、最新機能の解説を書こうとして、SNSの噂と公式情報が混在し、結果として誤情報を発信して訂正に追われた。</p><h3>こう使う</h3><p>出典の優先度を公式→一次→解説→SNSの順で重み付けし、変動情報には確認日を付ける。</p><h3>得られるもの</h3><p>発信前にSNS情報を切り分けでき、訂正リスクが大幅に減る。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの最新機能について三つの主張を選び、Claim Ledgerへ一次情報・確認日・確度・反証を書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>調査品質は文章の滑らかさではなく、主張と証拠の追跡可能性で判断します。</p></section>
 </article>
@@ -3412,6 +3488,7 @@ argument-hint: "&lt;question&gt;"
 
 <section class="part" id="part-6">
   <header class="part-header"><div class="eyebrow">Part 6</div><h2>第6部　トレプロハーネスの全社実装</h2><p>遥のMacだけで成功しても、会社の仕組みにはなりません。美咲は、同じSkillと安全策を全社員へ届け、更新失敗や誤配布が起きても戻せる配布基盤を設計します。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>ある中堅企業（架空）では、AIに強い社員のSkillが個人Macだけに留まり、他部署へ広がらず会社の力にならない。</p></div><div class="pu-item"><h4>こう使う</h4><p>正本・配布・強制・個人差分を分離した配布基盤を作り、Canary→Pilot→Stableで段階展開する。</p></div><div class="pu-item"><h4>得られるもの</h4><p>個人の成功が事故なく全社へ届き、誤配布もRollbackで戻せるため、攻めと守りを両立できる。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-06">
   <img src="images/part-06-82ff99.webp" alt="第6部『トレプロハーネスの全社実装』の概念イラスト" loading="lazy" decoding="async">
@@ -3669,6 +3746,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅企業（架空）が、AIで成果を出した社員のSkill群をZIPで全社配布した結果、人によって設定が壊れ、サポートが回らなくなった。</p><h3>こう使う</h3><p>Guidance・Enforcement・Content・Deliveryの四面に分け、各面の正本と更新方法を定義する。</p><h3>得られるもの</h3><p>個別調整がDelivery層で吸収され、共通層は壊れない。サポート問い合わせの種類が分類できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、全社一斉配布したSkillにバグが見つかった時、誰がどこから戻せるのか分からず深夜対応になった。</p><h3>こう使う</h3><p>Canary→Pilot→StableのRelease Flowを設け、各段階のExit Criteriaを書く。</p><h3>得られるもの</h3><p>事故は小さい範囲で止まり、Stable到達前にロールバックできる構造になる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の共通資産をGuidance・Enforcement・Content・Deliveryの四面へ分類し、正本をどこに置くか決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。</p></section>
 </article>
@@ -3936,6 +4014,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、毎朝の自動更新スクリプトがネット不安定の社員端末で半端な状態で止まり、AIの動作が日替わりで変わる現象に悩んでいる。</p><h3>こう使う</h3><p>Bootstrap・Updateを冪等に作り直し、Manifest比較で追加・変更・削除を最終状態へ収束させる。</p><h3>得られるもの</h3><p>ネットワーク失敗時も次回で復旧でき、端末ごとの設定差が物理的に解消する。</p></article><article class="usecase-card"><h3>場面</h3><p>ある中堅IT部門（架空）が、配布事故の際に『誰の端末がどの版か』を集計できず、対応に半日かかった。</p><h3>こう使う</h3><p>配布後Verify＋端末Inventoryを構造化ログで持ち、Rollbackは署名済み旧版へ一操作で戻せるようにする。</p><h3>得られるもの</h3><p>事故時の影響範囲が即座に見え、復旧が分単位になる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 小さなサンプル構成でdry-run、同期、削除追従、個人フォルダ保護、Rollbackを順にテストしてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>配布の完成条件はコピー成功ではなく、収束・検証・復旧が繰り返し成立することです。</p></section>
 </article>
@@ -4205,6 +4284,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある制作会社（架空）が、200個のSkillが乱立し、似た名前と古い手順が混ざって誰も全体像を把握できなくなった。</p><h3>こう使う</h3><p>Canonical Name・Category・Owner・Version・Fixture・評価点を持たせ、4軸の評価器で採点する。</p><h3>得られるもの</h3><p>Skill群が製品台帳として管理でき、廃止予告も移行先付きで安全に出せる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある中規模IT会社（架空）が、Claude Code用とCodex用のSkillを二重管理して、片方だけ修正された結果、社員間で動作が違う事態が起きた。</p><h3>こう使う</h3><p>skill-srcを正本にしてBuildで両Runtimeへ展開する構造に変える。</p><h3>得られるもの</h3><p>二重編集の手間がなくなり、Runtime差での挙動ズレが消える。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 既存Skillを三つ選び、Owner・Version・Fixture・評価点・重複候補を棚卸ししてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Skillの価値は数ではなく、再現性、責任者、評価、廃止まで追えることです。</p></section>
 </article>
@@ -4536,6 +4616,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある金融系IT部門（架空）が、AI導入の安全策をCLAUDE.mdで案内したが、外部社員の端末で簡単に書き換えられて事故が起きた。</p><h3>こう使う</h3><p>Managed SettingsとManaged MCPで組織Policyを固定し、HookのBlock Eventを構造化ログへ残す。</p><h3>得られるもの</h3><p>文書ではなく実行時の強制で安全が成立し、誰の端末でも改変できない。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、Block件数だけ報告しているが、誤検知が多すぎて社員から信頼を失っている。</p><h3>こう使う</h3><p>誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を含む指標を一緒に測る。</p><h3>得られるもの</h3><p>数字で『守りすぎ』『緩すぎ』のバランスが見え、Policy調整に根拠が持てる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自組織のThreat Modelを五項目書き、各項目を予防・検知・復旧の三列へ割り当ててください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。</p></section>
 </article>
@@ -4697,6 +4778,7 @@ Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC人事（架空）が、新人配属時にAIガイドを渡しても初日のセットアップで詰まり、本人のやる気が消える事例が続いている。</p><h3>こう使う</h3><p>30分の導入Flow（環境診断→Lab→成果物→証拠→再開）を作り、つまずきポイントを切り分け診断する。</p><h3>得られるもの</h3><p>初日にBronze相当の成果物が完成し、本人のAI導入感が一気に立ち上がる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、新人サポート問い合わせが配属直後に集中し、月初の業務が回らない。</p><h3>こう使う</h3><p>Runbookで認証・権限・Path・Versionの障害分類と対応手順を整える。</p><h3>得られるもの</h3><p>新人が自分でRunbookを引いて解決でき、情シスの負荷が分散する。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 新人が30分で終える導入手順を、環境診断・Lab作成・成果物・証拠・再開の五段階で書いてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Onboardingのゴールは『入った』ではなく、『安全に一人で一周できた』です。</p></section>
 </article>
@@ -4705,6 +4787,7 @@ Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
 
 <section class="part" id="part-7">
   <header class="part-header"><div class="eyebrow">Part 7</div><h2>第7部　実務ユースケース集</h2><p>原則を理解したら、仕事へ戻します。請求書、会議、調査、学習、アプリ、資料、定期業務を題材に、どのレイヤーを組み合わせればよいかを実戦形式で確かめます。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>ある総務担当（架空）は、請求書整理・会議メモ・調査・週報を毎日手作業で回し、定型業務に1日の半分を奪われている。</p></div><div class="pu-item"><h4>こう使う</h4><p>業務ごとにRead-only棚卸し→Dry-run→可逆処理→Skillという同じ型を適用する。</p></div><div class="pu-item"><h4>得られるもの</h4><p>業務種類が違っても同じ流れで処理でき、新しい業務も学習コストを抑えて自動化候補へ載せられる。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-07">
   <img src="images/part-07-15885b.webp" alt="第7部『実務ユースケース集』の概念イラスト" loading="lazy" decoding="async">
@@ -4815,6 +4898,7 @@ Hidden、Package、Symlink、1GB超は対象外。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の経理（架空）が、毎月100枚の請求書PDFを手動で台帳入力し、毎月末に残業4時間を発生させている。</p><h3>こう使う</h3><p>Read-onlyで請求書フォルダの一覧と分類案を作り、抽出項目・例外を定義してから自動化する。</p><h3>得られるもの</h3><p>例外検出を残しつつ標準項目は自動入力でき、残業時間が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>中小法務（架空）が、契約書PDFをAIに『この契約問題ない？』と聞き、誤った法的結論を得て社内へ展開しかけた。</p><h3>こう使う</h3><p>契約書は法的結論ではなく論点整理として扱い、最終判断は人が行う運用ルールを書く。</p><h3>得られるもの</h3><p>AIは負荷の高い論点抽出を担い、人は判断に集中できる。誤断のリスクが消える。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの実務フォルダをRead-onlyで棚卸しし、変更せずに分類案と例外一覧を作ってください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。</p></section>
 </article>
@@ -4910,6 +4994,7 @@ argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教育系YouTuber（架空）が、教材作成のために動画とSNSを大量視聴し、毎週末が情報収集だけで終わっている。</p><h3>こう使う</h3><p>Skillに対象・期間・一次情報・除外条件・評価軸を持たせ、INTERESTS.mdを参照させる。</p><h3>得られるもの</h3><p>自分にとって価値のある素材だけが残り、教材作成の時間が情報整理から本質的な構成へ移る。</p></article><article class="usecase-card"><h3>場面</h3><p>個人投資家（架空）が、毎朝のニュースサイトを巡回しているが、重複情報で時間を浪費している。</p><h3>こう使う</h3><p>News Dashboardで更新時刻・出典・未確認情報を表示する単一HTMLを作る。</p><h3>得られるもの</h3><p>重複が統合され、未確認情報だけが目立つ。情報収集が10分に収まる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの調査テーマで、公式情報・解説・SNSを分けて集め、重複を統合した一ページのHTMLレポートを作ってください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>良い調査は情報量ではなく、目的に沿った選別と出典の透明性で決まります。</p></section>
 </article>
@@ -5004,6 +5089,7 @@ Loss limit/Kill switch
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、AIで作ったタスク管理アプリが『動いた』と思って公開したら、エッジケースで毎日エラーが出てユーザー離脱が始まった。</p><h3>こう使う</h3><p>再現テスト・正常系・異常系・Diff・Rollback手順を実装と同時に作る運用に変える。</p><h3>得られるもの</h3><p>公開後の事故時も再現と巻き戻しが両方できる。ユーザー信頼が壊れない。</p></article><article class="usecase-card"><h3>場面</h3><p>中小ヘルスケア事業者（架空）が、健康Dashboardに自動アドバイス機能を入れたら誤情報のリスクで弁護士からNGが出た。</p><h3>こう使う</h3><p>意思決定を自動化せず、情報整理と注意喚起へ機能を限定する。出典・更新失敗・誤差は明示する。</p><h3>得られるもの</h3><p>法的リスクが下がり、機能を成立させながら世に出せる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 小さなLocal Appへ一つ機能を追加し、再現テスト、正常系、異常系、Diff、Rollbackを記録してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>アプリの完成は画面が出ることではなく、失敗を再現し、検証し、戻せることです。</p></section>
 </article>
@@ -5063,6 +5149,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小マーケ会社（架空）が、AIで作ったLPを即本番公開した結果、テスト用Analytics IDや本番用APIキーが残ったまま外に出てしまった。</p><h3>こう使う</h3><p>Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを設ける。</p><h3>得られるもの</h3><p>公開前事故が体系的に防げ、本番公開を安心して進められる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある提案チーム（架空）が、HTMLからPPT/PDFをExportするたびにフォントが崩れ、毎回手動修正に数時間を奪われている。</p><h3>こう使う</h3><p>Export時にレイアウト・フォント・ページ分割を確認する標準Checkを書く。</p><h3>得られるもの</h3><p>崩れ箇所だけを集中修正でき、Export成果物の品質が安定する。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 既存HTMLをPreview公開し、スマホ表示・リンク・秘密情報・Rollback手順を確認してから、本番可否を判断してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>公開は生成の続きではなく、独立した品質・安全Gateです。</p></section>
 </article>
@@ -5152,6 +5239,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業企画（架空）が、毎日のニュースとTask Boardを手動更新しており、休む日は誰も状況を把握できない。</p><h3>こう使う</h3><p>情報源と更新時刻を固定したMorning Brief Skillを作り、毎朝Scheduledで配信する。</p><h3>得られるもの</h3><p>休んでも止まらない情報基盤になり、属人化と業務継続性のリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅人事（架空）が、毎月のSkill評価を手作業で集計し、月初の3日間を奪われている。</p><h3>こう使う</h3><p>実行ログ・失敗Fixture・評価点を集めるSkill改善LoopをCanary更新と組む。</p><h3>得られるもの</h3><p>評価が自動化され、人は問題のあるSkillだけ集中的に直せる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 週一回以上繰り返す仕事を一つ選び、入力の安定性・検証可能性・副作用・失敗時対応を採点してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。</p></section>
 </article>
@@ -5240,6 +5328,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、AIが古い情報のまま動く事故を毎月起こすが、振り返りメモを書くだけで終わって再発を防げていない。</p><h3>こう使う</h3><p>失敗を人・手順・権限・検証・配布で分解し、Rule/Skill/Hook/Runbookのどこへ落とすか決める。</p><h3>得られるもの</h3><p>失敗が組織の改善資産となり、同じ条件が来たら自動で気づける仕組みへ変換できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、社員がBypass常用したことによる事故をたびたび経験し、注意喚起では止まらないと判明した。</p><h3>こう使う</h3><p>BypassをHookで物理ブロックし、Runbookで例外申請の手順を書く。</p><h3>得られるもの</h3><p>便利さの誘惑が物理的に断たれ、必要時だけ手続きを経て解除できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 最近の失敗を一つ選び、原因を人・手順・権限・検証・配布の観点で分解し、再発防止の置き場所を決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>失敗を記録するだけでなく、次回のRule・Skill・Hookへ変換して初めて学習になります。</p></section>
 </article>
@@ -5248,6 +5337,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
 <section class="part" id="part-8">
   <header class="part-header"><div class="eyebrow">Part 8</div><h2>第8部　テンプレートとアプリ化</h2><p>最後に、学びを配れる形へ固定します。コピーできるテンプレート、構造化されたLesson、進捗データ、Feature Registryを組み合わせ、教科書そのものを対話型アプリへ育てます。</p></header>
+  <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>教育担当の佐藤さん（架空）は、研修資料を毎回ゼロから作り直し、受講者の進捗を Excel で追えなくなっている。</p></div><div class="pu-item"><h4>こう使う</h4><p>Lesson JSON・進捗State・Feature Registryを持つ教材アプリへ変換し、章番号で再開できるようにする。</p></div><div class="pu-item"><h4>得られるもの</h4><p>資料が再利用可能な学習プロダクトへ変わり、受講者の現在地と証拠が見える形で運用できる。</p></div></section>
   
 <figure class="image-shell" data-image-id="part-08">
   <img src="images/part-08-7a0669.webp" alt="第8部『テンプレートとアプリ化』の概念イラスト" loading="lazy" decoding="async">
@@ -5493,6 +5583,7 @@ Separate blockers from suggestions.
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサルのプロジェクトマネージャ（架空）が、要件定義のたびに項目を思い出しながら書き、毎回抜けが出てクライアント手戻りが発生している。</p><h3>こう使う</h3><p>Requirements・Implementation Plan・Completion Reportのテンプレを揃え、案件ごとにコピーして埋める。</p><h3>得られるもの</h3><p>考えるべき項目が抜けなくなり、レビュー時の追加質問が減って初稿の合格率が上がる。</p></article><article class="usecase-card"><h3>場面</h3><p>新人マネージャ（架空）が、Definition of Doneを定義できず、毎回『完成』の認識ズレで揉めている。</p><h3>こう使う</h3><p>Definition of Doneカードをテンプレ化し、PJ開始時に必ず合意して書面化する。</p><h3>得られるもの</h3><p>『完成』の定義が共通化され、納品時の認識ズレが激減する。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> Requirements TemplateとCompletion Reportを自分の案件へコピーし、実際の内容で一度完成させてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>テンプレートは答えではなく、考えるべき問いを再現可能にする道具です。</p></section>
 </article>
@@ -5672,6 +5763,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教育担当（架空）が、HTML教材をPDFビューアで配り、受講者の進捗が分からず修了判定もできない状況に詰まっている。</p><h3>こう使う</h3><p>本文をLesson JSONへ分解し、前提・成果物・チェック・進捗（seen/practiced/verified/applied）をSchema検証する。</p><h3>得られるもの</h3><p>誰がどこまでできたかが本人にも管理者にも見え、修了判定が客観的にできる。</p></article><article class="usecase-card"><h3>場面</h3><p>オンラインスクール（架空）が、ブラウザから任意Shellを実行する設計で監査NGを受けた。</p><h3>こう使う</h3><p>ブラウザ実行はAllowlist付きLocal Companionへ任せ、画面側は次の一操作・期待結果・証拠提示に専念する。</p><h3>得られるもの</h3><p>監査要件を満たしつつ、学習者は手元で安全に実行できる設計に置き換わる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一章をLesson JSONへ変換し、前提・成果物・チェック・所要時間・版情報をSchemaで検証してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>学習アプリの中心は本文表示ではなく、行動・証拠・状態・再開です。</p></section>
 </article>
@@ -5750,6 +5842,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅企業（架空）の経営者が、半年計画でAI全社展開を始めたが、3ヶ月目で社内疲れて停滞している。</p><h3>こう使う</h3><p>1週目Inventory/Policy→2週目Build/Test→3週目Canary/Bronze研修→4週目Pilot/Stableに分け、各週Exit条件を置く。</p><h3>得られるもの</h3><p>一気に動かさず、検証単位で前進するため疲弊せず、未完成基盤の全社展開も防げる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、AI導入のKPIをCEOから求められたが、何を測ればよいか答えられない。</p><h3>こう使う</h3><p>導入時間・更新率・認定完了・Rollback Drill・Critical Gapを30日後測定指標として宣言する。</p><h3>得られるもの</h3><p>経営報告に使える数字が揃い、AI推進の費用対効果を定量で説明できる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自組織向けに四週間の導入表を作り、各週のOwner、成果物、合格条件、Rollback条件を記入してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>変革は大きな完成図ではなく、検証可能な一週間の積み重ねで進めます。</p></section>
 </article>
@@ -5838,6 +5931,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内研修担当（架空）が、半年前のテキストでモデル名・料金・UIが現行と違い、受講者から『間違っている』と総ツッコミを受けた。</p><h3>こう使う</h3><p>変動情報をFeature Registryへ抜き出し、確認日・公式Source・代替手順を持たせる。</p><h3>得られるもの</h3><p>テキスト本体は更新せずRegistryだけ差し替えればよくなり、改訂コストが下がる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人技術ブロガー（架空）が、過去記事のモデル仕様が古くなり、SEO的にも信頼を失っている。</p><h3>こう使う</h3><p>原則とFeatureを分離して書き、Featureには確認日とDeprecated移行案内を入れる。</p><h3>得られるもの</h3><p>原則は長く使え、Featureだけ更新すれば記事全体の信頼が保てる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 本文にある変動情報を三つ見つけ、Feature Registryへ名前・状態・確認日・公式Source・代替手順として移してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理します。</p></section>
 </article>
@@ -5989,6 +6083,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教科書編集者（架空）が、『全部の機能を解説した』と思って入稿したら、レビューで重要トピックの抜けが多数発見され大改修になった。</p><h3>こう使う</h3><p>Coverage Mapで各Source Topicが説明・実習・Template・運用のどこで扱われるかを表にする。</p><h3>得られるもの</h3><p>抜けと重複が事前に検出でき、レビュー時に『どの章に入っているか』を即答できる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅IT企業（架空）が、AI研修テキストの追加教材を入れるたびに既存章と矛盾し、整合性チェックに毎回数日かかる。</p><h3>こう使う</h3><p>追加素材を統合する際に既存章への対応・重複・追加実習をCoverage Mapへ記録する。</p><h3>得られるもの</h3><p>整合性チェックが表の更新で済み、改訂サイクルが大幅に短縮される。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 新しく追加した素材を一つ選び、既存章への統合先、重複、追加すべき実習、更新日をCoverage Mapへ記録してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。</p></section>
 </article>
@@ -6062,6 +6157,7 @@ migration_note
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC社のAI推進リーダー（架空）が、AI環境を一度完成させたあと、半年後に劣化したことに気づかず競合に追い抜かれた。</p><h3>こう使う</h3><p>Owner・Fixture・評価日・Release段階を持つLessonまたはSkillを月次で改善し続ける。</p><h3>得られるもの</h3><p>完成形ではなく更新可能性が組織能力となり、競合変化に追随できる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、最初に作ったSkillを使い回し続けて陳腐化に気づかず、ある日突然動かなくなった。</p><h3>こう使う</h3><p>30日ごとに次に改善するLessonまたはSkillを選び、検証可能なRelease段階で更新する。</p><h3>得られるもの</h3><p>個人レベルでも更新Loopが回り、陳腐化や急停止のリスクが低くなる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 次の30日で改善するLessonまたはSkillを一つ選び、Owner、Fixture、評価日、Release段階を決めてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>完成よりも、検証可能に更新し続けられることが『最強』の条件です。</p></section>
 </article>
@@ -6095,6 +6191,75 @@ migration_note
     });
     wrap.appendChild(btn);
   });
+
+  // TOC active highlight via IntersectionObserver
+  const toc = document.querySelector('.toc');
+  if (toc) {
+    const links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    const map = new Map();
+    links.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      if (id) map.set(id, a);
+    });
+    const targets = [];
+    map.forEach((_, id) => { const el = document.getElementById(id); if (el) targets.push(el); });
+    if (targets.length && 'IntersectionObserver' in window) {
+      const visible = new Set();
+      const setActive = () => {
+        if (!visible.size) return;
+        // pick the topmost visible target
+        let topId = null, topY = Infinity;
+        visible.forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const y = el.getBoundingClientRect().top;
+          if (y >= -40 && y < topY) { topY = y; topId = id; }
+        });
+        if (!topId) {
+          // fallback to any visible
+          topId = Array.from(visible)[0];
+        }
+        links.forEach(a => a.classList.remove('active'));
+        const link = map.get(topId);
+        if (link) {
+          link.classList.add('active');
+          // also activate the part-link of the surrounding part if chapter
+          const el = document.getElementById(topId);
+          const part = el?.closest('section.part');
+          if (part && part.id) {
+            const partLink = map.get(part.id);
+            if (partLink && partLink !== link) partLink.classList.add('active');
+          }
+        }
+      };
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          const id = e.target.id;
+          if (e.isIntersecting) visible.add(id); else visible.delete(id);
+        });
+        setActive();
+      }, {rootMargin: '-80px 0px -70% 0px', threshold: 0});
+      targets.forEach(t => io.observe(t));
+    }
+
+    // Drawer toggle for mobile
+    const toggle = document.querySelector('.toc-toggle');
+    const overlay = document.querySelector('.toc-overlay');
+    const closeBtn = toc.querySelector('.toc-drawer-close');
+    const openDrawer = () => { toc.classList.add('open'); overlay && overlay.classList.add('open'); };
+    const closeDrawer = () => { toc.classList.remove('open'); overlay && overlay.classList.remove('open'); };
+    toggle && toggle.addEventListener('click', () => {
+      if (toc.classList.contains('open')) closeDrawer(); else openDrawer();
+    });
+    overlay && overlay.addEventListener('click', closeDrawer);
+    closeBtn && closeBtn.addEventListener('click', closeDrawer);
+    // Close drawer on link click (mobile only)
+    toc.addEventListener('click', e => {
+      if (e.target.tagName === 'A' && window.matchMedia('(max-width:980px)').matches) {
+        closeDrawer();
+      }
+    });
+  }
 })();
 </script>
 </body></html>

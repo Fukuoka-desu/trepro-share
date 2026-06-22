@@ -3,8 +3,9 @@
 <title>第12章　Skills設計 — ブログ版</title><meta name="description" content="Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-12">Skills設計</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-12">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-12">Skills設計</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-12">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-12">
   <header class="chapter-head">
     <div class="eyebrow">第12章</div>
@@ -178,6 +179,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ広告のプランナー（架空）が、毎週類似のレポート依頼に対して毎回プロンプトを書き直し、品質も毎回ぶれている。</p><h3>こう使う</h3><p>成功した会話を入力・処理・出力・品質基準・失敗時対応の形式へ整理し、Skill化する。</p><h3>得られるもの</h3><p>次週からは『あのSkillで』の一言で同品質の成果物が出る。教育コストもSkill共有で済む。</p></article><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、複数メンバーで同じSkillを書き散らし、似て非なるSkillが乱立して使い分けに迷っている。</p><h3>こう使う</h3><p>正本名・Owner・参照資料を持つSKILL.mdテンプレートを揃え、referencesに長文を逃がすProgressive Disclosureを徹底する。</p><h3>得られるもの</h3><p>Skillの重複が抑えられ、新規メンバーも『どれを使えばよいか』を迷わず選べる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 最近うまくいった作業を一つ選び、SKILL.mdへ入力・手順・出力・検証・失敗時対応を書き出してください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。</p></section>
 </article>

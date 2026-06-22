@@ -3,8 +3,9 @@
 <title>GPT Image 2 画像制作パイプライン</title><meta name="description" content="ブログ挿絵をGPT Image 2 APIで生成し差し込む手順">
 <link rel="stylesheet" href="assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="index.html">Claude Code 教科書・ブログ版</a><nav><a href="index.html">目次</a><a href="complete.html">全章一括</a><a href="image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>画像制作</h2><a href="#image-pipeline-s1">API上の名称</a><a href="index.html">全体目次</a></aside><main class="content"><article class="chapter"><header class="chapter-head"><div class="eyebrow">GPT Image 2</div><h1>画像制作・差し込みパイプライン</h1></header><div class="reference"><h1>GPT Image 2 画像制作・差し込みパイプライン</h1>
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="index.html">Claude Code 教科書・ブログ版</a><nav><a href="index.html">目次</a><a href="complete.html">全章一括</a><a href="image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>画像制作</h2><a href="#image-pipeline-s1">API上の名称</a><a href="index.html">全体目次</a></aside><main class="content"><article class="chapter"><header class="chapter-head"><div class="eyebrow">GPT Image 2</div><h1>画像制作・差し込みパイプライン</h1></header><div class="reference"><h1>GPT Image 2 画像制作・差し込みパイプライン</h1>
 <p>このブログは、画像が未生成でも本文・代替テキスト・Captionだけで理解できます。画像は概念理解と読後感を補助する編集素材として扱い、重要な手順や数値を画像だけに載せません。</p>
 <h2 id="image-pipeline-s1">API上の名称</h2>
 <p>ChatGPT上の製品名は <strong>ChatGPT Images 2.0</strong> ですが、APIで直接指定する現行モデル名は <strong><code>gpt-image-2</code></strong> です。再現性を固定したいReleaseでは、Manifestに記載したSnapshot <strong><code>gpt-image-2-2026-04-21</code></strong> へ切り替えられます。</p>

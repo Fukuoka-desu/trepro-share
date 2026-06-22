@@ -3,8 +3,9 @@
 <title>第13章　Subagents、Agent View、並列作業 — ブログ版</title><meta name="description" content="複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-13">Subagents、Agent View、並列作業</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-13">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-13">Subagents、Agent View、並列作業</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-13">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-13">
   <header class="chapter-head">
     <div class="eyebrow">第13章</div>
@@ -121,6 +122,7 @@ SNS、Code変更、最終結論は禁止。15分で打ち切る。
 
   </section>
   
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、自分のコードを自分でレビューさせるとAIが甘く採点し、毎回バグを見落としている。</p><h3>こう使う</h3><p>実装セッションを閉じ、背景を知らない独立コンテキストのReviewer Agentへ成果物だけ渡す。</p><h3>得られるもの</h3><p>迎合バイアスが消え、要件・安全・保守性の三観点で本当の指摘が返ってくる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅企業のリサーチチーム（架空）が、調査・検証・統合を一人のAIに任せ、結論が初期仮説に引きずられる傾向が抜けない。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeを別Agentに分け、各役割の入力と期待出力を明示する。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、反証も合わせて統合できる。結論の信頼度が説明可能になる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の成果物を、新しいセッションまたはReviewer Agentへ渡し、要件充足・安全・保守性の三観点で評価させてください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。</p></section>
 </article>

@@ -3,8 +3,9 @@
 <title>第26章　Managed Policy、Security、Observability — ブログ版</title><meta name="description" content="組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。">
 <link rel="stylesheet" href="../assets/styles.css">
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
-<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-26">Managed Policy、Security、Observability</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-26">一括版で開く</a></aside><main class="content">
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="toc-overlay" aria-hidden="true"></div>
+<div class="layout"><aside class="toc" id="site-toc"><h2>この章</h2><a href="#chapter-26">Managed Policy、Security、Observability</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-26">一括版で開く</a></aside><main class="content">
 <article class="chapter" id="chapter-26">
   <header class="chapter-head">
     <div class="eyebrow">第26章</div>
@@ -332,6 +333,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある金融系IT部門（架空）が、AI導入の安全策をCLAUDE.mdで案内したが、外部社員の端末で簡単に書き換えられて事故が起きた。</p><h3>こう使う</h3><p>Managed SettingsとManaged MCPで組織Policyを固定し、HookのBlock Eventを構造化ログへ残す。</p><h3>得られるもの</h3><p>文書ではなく実行時の強制で安全が成立し、誰の端末でも改変できない。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、Block件数だけ報告しているが、誤検知が多すぎて社員から信頼を失っている。</p><h3>こう使う</h3><p>誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を含む指標を一緒に測る。</p><h3>得られるもの</h3><p>数字で『守りすぎ』『緩すぎ』のバランスが見え、Policy調整に根拠が持てる。</p></article></div></section>
   <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自組織のThreat Modelを五項目書き、各項目を予防・検知・復旧の三列へ割り当ててください。</p></section>
   <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。</p></section>
 </article>
