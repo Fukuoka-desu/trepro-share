@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第20章　`/goal`、Headless、定期実行 — ブログ版</title><meta name="description" content="良い自律化は、達成条件と停止条件の両方を検証可能にします。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-20">`/goal`、Headless、定期実行</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-20">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-20">
+  <header class="chapter-head">
+    <div class="eyebrow">第20章</div>
+    <h1>`/goal`、Headless、定期実行</h1>
+  </header>
+  <section aria-labelledby="story-20">
+    <h2 id="story-20">物語の現在地</h2>
+    <div class="scene">『テストが通るまで直して』は便利ですが、条件が曖昧だと永遠に動き続けます。蓮は、終了条件、最大回数、許可範囲、ログ、失敗時の停止を先に書きます。自律化は、始め方より止め方を設計する仕事でした。</div>
+    <div class="story-essay"><p>/goalやHeadless実行は、検証可能な条件がある仕事に向きます。成功条件を機械で確かめられ、最大ターンやTimeoutがあり、副作用が限定されていることが前提です。定期実行では重複防止、ロック、ログ、通知、再試行を持たせます。</p><p>人の承認が必要な公開、送信、課金、削除は完全自動化しません。自動化の境界を明示し、最後の一歩を人間へ残します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-20">
+  <img src="../images/chapter-20-25d3a1.webp" alt="第20章『`/goal`、Headless、定期実行』を表すautomation control illustration" loading="lazy" decoding="async">
+  <figcaption>良い自律化は、達成条件と停止条件の両方を検証可能にします。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第20章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> automation control illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: automation control illustration.
+Scene and concept: A bounded autonomous loop with measurable goals, a turn counter, timeout clock, logs, and a clear human approval gate before external effects.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-20-s1">20.1 自律化の4要素</h2>
+<pre><code class="language-text">Goal      達成状態
+Verifier  判定方法
+Budget    Turn/時間/Token/費用上限
+Stop      成功/失敗/異常停止
+</code></pre>
+<h2 id="ch-20-s2">20.2 良いGoal</h2>
+<pre><code class="language-text">/goal 次をすべて満たすまで修正。ただし最大15ターン、30分。
+- npm test成功
+- npm run typecheck成功
+- npm run build成功
+- 主要3画面のE2E成功
+- Critical/High Issue 0
+未達時は `goal-report.md` に残課題と最後のErrorを保存。
+</code></pre>
+<h2 id="ch-20-s3">20.3 Headless</h2>
+<pre><code class="language-bash">claude -p "READMEを読み、起動Commandと前提をJSONで返す" \
+  --output-format json &gt; /tmp/project-summary.json
+</code></pre>
+<p>Flagは<code>claude --help</code>で確認する。Headlessは対話承認できないためRead-only、Allowed Tool、Sandboxを絞る。</p>
+<h2 id="ch-20-s4">20.4 安全なWrapper</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." &amp;&amp; pwd)"
+OUT="$ROOT/output/daily-summary.json"
+LOCK="$ROOT/.locks/daily-summary.lock"
+
+mkdir -p "$ROOT/output" "$ROOT/.locks"
+if ! mkdir "$LOCK" 2&gt;/dev/null; then
+  echo "already running" &gt;&amp;2
+  exit 0
+fi
+trap 'rmdir "$LOCK" 2&gt;/dev/null || true' EXIT
+
+cd "$ROOT"
+claude -p "Read-onlyで昨日の変更を要約しJSONで返す。File変更禁止。" \
+  --output-format json &gt; "$OUT.tmp"
+mv "$OUT.tmp" "$OUT"
+</code></pre>
+<h2 id="ch-20-s5">20.5 Scheduled必須要件</h2>
+<pre><code class="language-text">[ ] 冪等
+[ ] Lock
+[ ] Timeout
+[ ] 有限Retry
+[ ] 前回成功を壊さない
+[ ] 0件を扱う
+[ ] JST/UTC明記
+[ ] Working Directory固定
+[ ] stdout/stderr保存
+[ ] Alert先
+</code></pre>
+<h2 id="ch-20-s6">20.6 LaunchAgent例</h2>
+<pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+&lt;dict&gt;
+  &lt;key&gt;Label&lt;/key&gt;&lt;string&gt;com.example.daily-claude-summary&lt;/string&gt;
+  &lt;key&gt;ProgramArguments&lt;/key&gt;
+  &lt;array&gt;
+    &lt;string&gt;/bin/zsh&lt;/string&gt;
+    &lt;string&gt;/Users/REPLACE_ME/project/scripts/daily-summary.sh&lt;/string&gt;
+  &lt;/array&gt;
+  &lt;key&gt;StartCalendarInterval&lt;/key&gt;
+  &lt;dict&gt;&lt;key&gt;Hour&lt;/key&gt;&lt;integer&gt;8&lt;/integer&gt;&lt;key&gt;Minute&lt;/key&gt;&lt;integer&gt;0&lt;/integer&gt;&lt;/dict&gt;
+  &lt;key&gt;WorkingDirectory&lt;/key&gt;&lt;string&gt;/Users/REPLACE_ME/project&lt;/string&gt;
+  &lt;key&gt;StandardOutPath&lt;/key&gt;&lt;string&gt;/Users/REPLACE_ME/Library/Logs/daily-summary.log&lt;/string&gt;
+  &lt;key&gt;StandardErrorPath&lt;/key&gt;&lt;string&gt;/Users/REPLACE_ME/Library/Logs/daily-summary.error.log&lt;/string&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+<p>会社では個人Agentを乱立させずHarnessへ集約する。</p>
+<h2 id="ch-20-s7">20.7 自動化しないもの</h2>
+<p>人間承認なしで行わない：本番Deploy、外部送信、Payment、契約、Data削除、権限変更、公開範囲変更、高Risk判断。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自動化したい仕事を一つ選び、成功条件・最大回数・Timeout・禁止する副作用・人間の承認地点を書いてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>良い自律化は、達成条件と停止条件の両方を検証可能にします。</p></section>
+</article>
+<nav class="chapter-nav"><a href="19.html">← Claude Codeを自分専用に育てる</a><a href="21.html">Dynamic Workflowsと複数Agent →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

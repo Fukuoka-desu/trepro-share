@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第22章　信頼できる調査とレポート — ブログ版</title><meta name="description" content="調査品質は文章の滑らかさではなく、主張と証拠の追跡可能性で判断します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-22">信頼できる調査とレポート</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-22">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-22">
+  <header class="chapter-head">
+    <div class="eyebrow">第22章</div>
+    <h1>信頼できる調査とレポート</h1>
+  </header>
+  <section aria-labelledby="story-22">
+    <h2 id="story-22">物語の現在地</h2>
+    <div class="scene">最新機能のレポートを読んだ美咲は、結論より先に『どの主張が、どの一次情報に支えられているか』を尋ねました。SNSの勢いを、会社の判断材料へ変えるには、出典と不確実性を分ける必要があります。</div>
+    <div class="story-essay"><p>信頼できる調査では、公式文書、一次資料、実測、信頼できる解説、SNSの順に重みを変えます。Claim Ledgerへ、主張、根拠、日付、確度、反証を記録し、変動情報には確認日を付けます。</p><p>動画やSNSを統合するときは、同じ内容を重複カウントせず、発言と事実を区別します。最後に、未確認事項と次に検証すべき点を明示します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-22">
+  <img src="../images/chapter-22-2141f7.webp" alt="第22章『信頼できる調査とレポート』を表すeditorial evidence illustration" loading="lazy" decoding="async">
+  <figcaption>調査品質は文章の滑らかさではなく、主張と証拠の追跡可能性で判断します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第22章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial evidence illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial evidence illustration.
+Scene and concept: An evidence board linking claims to official sources, dates, confidence levels, and counterevidence, arranged like an investigative newsroom.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-22-s1">22.1 Source優先度</h2>
+<pre><code class="language-text">1. 公式Document/Changelog/原論文/法令/一次Data
+2. 開発者・当事者発表
+3. 信頼できる専門媒体
+4. 高品質解説
+5. SNS/掲示板/Comment
+</code></pre>
+<p>SNSは発見と反応に使い、仕様確定に使わない。</p>
+<h2 id="ch-22-s2">22.2 Claim Ledger</h2>
+<pre><code class="language-csv">claim_id,claim,status,source_type,source_title,source_url,published_at,retrieved_at,evidence,notes
+C001,"Dynamic Workflows is available on paid plans",verified,official,"Dynamic workflows",...,2026-06-...,2026-06-22,"...","Check minimum version"
+</code></pre>
+<p>Status：<code>verified</code>、<code>supported</code>、<code>disputed</code>、<code>unverified</code>、<code>obsolete</code>。</p>
+<h2 id="ch-22-s3">22.3 Research Skill</h2>
+<pre><code class="language-markdown">---
+name: source-grounded-research
+description: Research a current topic using primary sources, build a claim ledger, verify dates, and produce a cited report.
+argument-hint: "&lt;question&gt;"
+---
+
+# Rules
+- Primary sources first.
+- Publication date, event date, retrieval date separately.
+- Social posts are not fact without verification.
+- Mark inferences.
+- Preserve credible disagreement.
+
+# Workflow
+1. Split into subquestions.
+2. Define freshness.
+3. Collect primary sources.
+4. Build claims.csv.
+5. Fresh reviewer verifies high-impact claims.
+6. Draft only from verified/supported claims.
+7. Add uncertainty and missing evidence.
+
+# Deliverables
+- research/report.md
+- research/claims.csv
+- research/sources.json
+- research/open-questions.md
+</code></pre>
+<h2 id="ch-22-s4">22.4 動画/SNS統合</h2>
+<pre><code class="language-text">収集 → 完全文字起こし → 動画別Topic → 重複Cluster → Claim分解
+→ 公式検証 → 原則/手順/例/注意へ再構成 → Coverage Matrix
+</code></pre>
+<h2 id="ch-22-s5">22.5 完了条件</h2>
+<pre><code class="language-text">[ ] 質問へ直接回答
+[ ] 重要Claimに根拠
+[ ] 現在/過去を分離
+[ ] 投稿日/Event Dateを分離
+[ ] 反対情報
+[ ] 推論の明示
+[ ] 数値の単位/母数
+[ ] 未確認事項
+[ ] Sourceと本文の対応
+[ ] 次Action
+</code></pre>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの最新機能について三つの主張を選び、Claim Ledgerへ一次情報・確認日・確度・反証を書いてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>調査品質は文章の滑らかさではなく、主張と証拠の追跡可能性で判断します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="21.html">← Dynamic Workflowsと複数Agent</a><a href="23.html">最適Architecture →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第2章　安全を最初に設計する — ブログ版</title><meta name="description" content="安全はAIへのお願いではなく、権限・隔離・証拠で設計します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-02">安全を最初に設計する</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-02">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-02">
+  <header class="chapter-head">
+    <div class="eyebrow">第2章</div>
+    <h1>安全を最初に設計する</h1>
+  </header>
+  <section aria-labelledby="story-02">
+    <h2 id="story-02">物語の現在地</h2>
+    <div class="scene">最初の実習で、Claude Codeがファイル変更の許可を求めました。遥は早く進めたくて承認しかけますが、美咲が止めます。『何を許可したか説明できないなら、まだ押さない』。便利さより先に、安全の言葉を共有する瞬間でした。</div>
+    <div class="story-essay"><p>安全は注意書きだけでは作れません。最小権限、隔離、戻せる履歴、検証、監査を重ねて初めて、失敗しても被害を限定できます。CLAUDE.mdのお願いはGuidanceであり、絶対に止めたい操作はPermissions、Sandbox、Managed Settings、HooksでEnforcementします。</p><p>初心者は、実データや本番環境から離れた学習用フォルダで始めます。外部公開、メール送信、課金、Git pushのような副作用は、ファイルの巻き戻しだけでは元に戻らないことも忘れてはいけません。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-02">
+  <img src="../images/chapter-02-ce4fe9.webp" alt="第2章『安全を最初に設計する』を表すisometric safety illustration" loading="lazy" decoding="async">
+  <figcaption>安全はAIへのお願いではなく、権限・隔離・証拠で設計します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第2章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> isometric safety illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: isometric safety illustration.
+Scene and concept: A protected sandbox workspace surrounded by layered safety rails, permission gates, checkpoints, and an audit trail.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-02-s1">2.1 安全の基本式</h2>
+<pre><code class="language-text">安全性 = 最小権限 × 隔離 × 可逆性 × 検証 × 監査
+</code></pre>
+<p>Claude Codeは優秀だが、初日の新人と同じく、Projectの暗黙知を知らない。最初から本番権限を渡さない。</p>
+<h2 id="ch-02-s2">2.2 GuidanceとEnforcement</h2>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>Guidance</th>
+<th>Enforcement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日本語で返す</td>
+<td>CLAUDE.md</td>
+<td>不要</td>
+</tr>
+<tr>
+<td><code>.env</code>を読まない</td>
+<td>CLAUDE.md</td>
+<td>Permission deny / Sandbox denyRead</td>
+</tr>
+<tr>
+<td>削除前に確認</td>
+<td>CLAUDE.md</td>
+<td>Ask Rule / Hook</td>
+</tr>
+<tr>
+<td>本番Deploy禁止</td>
+<td>CLAUDE.md</td>
+<td>Ask/Deny + Hook + CI権限</td>
+</tr>
+<tr>
+<td>Typecheck必須</td>
+<td>CLAUDE.md</td>
+<td>PostToolUse Hook / CI</td>
+</tr>
+</tbody>
+</table>
+<p>重要な禁止事項をPromptだけに頼らない。</p>
+<h2 id="ch-02-s3">2.3 初心者が最初に禁止すること</h2>
+<pre><code class="language-text">- --dangerously-skip-permissions
+- 本番・顧客Folderでの練習
+- APIキーの貼り付け
+- 無承認の削除・送信・公開・Deploy
+- Test/Lint/Typecheckの弱体化
+- 出所不明MCP/Pluginの追加
+- Git diffを見ないCommit
+</code></pre>
+<h2 id="ch-02-s4">2.4 安全な練習場</h2>
+<pre><code class="language-bash">mkdir -p ~/claude-lab/meeting-assistant
+cd ~/claude-lab/meeting-assistant
+git init
+printf '# Claude Lab\n' &gt; README.md
+git add README.md
+git commit -m 'chore: initialize safe lab'
+claude
+</code></pre>
+<p>個人用のCopyデータだけを置き、Secretsと本番接続を入れない。</p>
+<h2 id="ch-02-s5">2.5 外部副作用はCheckpointで戻らない</h2>
+<p>CheckpointやGitで戻せるのはローカルファイル中心である。次は別のRollbackが必要。</p>
+<ul>
+<li>送信したEmail。</li>
+<li>公開したWebページ。</li>
+<li>Production Deploy。</li>
+<li>DB更新。</li>
+<li>Calendar作成・削除。</li>
+<li>Payment、注文、契約。</li>
+</ul>
+<p>外部副作用は <code>Draft → Preview → Human Approval → Execute</code> に分離する。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 学習用フォルダを作り、『削除しない』『外部公開しない』『秘密情報を貼らない』の三つをプロジェクトルールへ書いてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>安全はAIへのお願いではなく、権限・隔離・証拠で設計します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="01.html">← Claude Codeは何が違うのか</a><a href="03.html">導入とProject Folder →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

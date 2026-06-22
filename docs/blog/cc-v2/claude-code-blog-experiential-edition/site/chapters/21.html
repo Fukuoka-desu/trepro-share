@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第21章　Dynamic Workflowsと複数Agent — ブログ版</title><meta name="description" content="複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-21">Dynamic Workflowsと複数Agent</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-21">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-21">
+  <header class="chapter-head">
+    <div class="eyebrow">第21章</div>
+    <h1>Dynamic Workflowsと複数Agent</h1>
+  </header>
+  <section aria-labelledby="story-21">
+    <h2 id="story-21">物語の現在地</h2>
+    <div class="scene">一つのAgentに調査、検証、執筆を全部任せると、最初の思い込みが最後まで残ることがあります。そこで調査者、検証者、統合者を分けます。ただし人数を増やせばよいわけではなく、費用と情報量も急増します。</div>
+    <div class="story-essay"><p>Dynamic Workflowsは入力に応じて複数Agentの流れを組みます。代表的な形はResearch、Verify、Synthesizeです。異なる情報源を探し、主張を検証し、重複と矛盾を整理して最終成果物へ統合します。</p><p>単純な仕事では手動の小さなWorkflowの方が速く安価です。Agent数、検索範囲、最大トークン、再試行を制限し、各段階の中間成果物を保存します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-21">
+  <img src="../images/chapter-21-71acac.webp" alt="第21章『Dynamic Workflowsと複数Agent』を表すmulti-agent workflow illustration" loading="lazy" decoding="async">
+  <figcaption>複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第21章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> multi-agent workflow illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: multi-agent workflow illustration.
+Scene and concept: Three coordinated specialist agents researching, verifying, and synthesizing evidence, with visible cost and scope controls.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-21-s1">21.1 Dynamicとは</h2>
+<p>依頼内容からClaudeが工程とAgent構成を組み立てる。利用前に最低Version、対象Plan、<code>/config</code>を確認する。</p>
+<p>代表入口：</p>
+<pre><code class="language-text">ultracode
+/workflows
+</code></pre>
+<h2 id="ch-21-s2">21.2 Research → Verify → Synthesize</h2>
+<pre><code class="language-text">Research: 公式、一次Data、反対意見
+Verify: 出典、Date、数値、矛盾
+Synthesize: 結論、根拠、影響、不確定、Action
+</code></pre>
+<pre><code class="language-text">ultracode
+Claude Code直近30日の主要変更を調査。
+公式Anthropicを最優先。各Claimに取得日と出典。
+SNSは反応のみ。最大8 Agent、25分。
+出力は research/claude-code-update/。
+</code></pre>
+<h2 id="ch-21-s3">21.3 Cost Control</h2>
+<pre><code class="language-text">総入力 ≒ 共通知識量 × Agent数 + 固有入力
+</code></pre>
+<ul>
+<li>ResearchをClaim Ledgerへ圧縮してVerifyへ。</li>
+<li>範囲を分割。</li>
+<li>全文を全員へ渡さない。</li>
+<li>Agent数・時間上限。</li>
+<li>高価Modelは難所/統合だけ。</li>
+<li>中間Fileを再利用。</li>
+</ul>
+<h2 id="ch-21-s4">21.4 Dynamicを使わない</h2>
+<p>小修正、正解が明確、頻繁な低Cost処理、単純要約、Write権限作業はSingle Agent/Skill/Scriptがよい。</p>
+<h2 id="ch-21-s5">21.5 手動Workflow</h2>
+<pre><code class="language-text">1. 3 Research Agentが公式/実例/失敗を分担。
+2. raw結果を別Fileへ保存。
+3. Fresh Reviewerがclaims.csvを作る。
+4. Writerは検証済みClaimだけで執筆。
+5. 別Reviewerが欠落と過剰断定を確認。
+最大6 Agent。Code変更禁止。
+</code></pre>
+<h2 id="ch-21-s6">21.6 Acceptance</h2>
+<pre><code class="language-text">[ ] Single AgentよりWorkflowが必要
+[ ] Agent/時間上限
+[ ] 入出力追跡
+[ ] 作成者/評価者分離
+[ ] ClaimとSource対応
+[ ] 途中再開
+[ ] 冪等
+[ ] Human Gate
+[ ] Cost停止
+</code></pre>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの調査テーマをResearch・Verify・Synthesizeへ分け、各担当へ渡す入力と受け取る出力を定義してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。</p></section>
+</article>
+<nav class="chapter-nav"><a href="20.html">← `/goal`、Headless、定期実行</a><a href="22.html">信頼できる調査とレポート →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

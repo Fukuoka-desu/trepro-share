@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第24章　配布、同期、更新、Rollback — ブログ版</title><meta name="description" content="配布の完成条件はコピー成功ではなく、収束・検証・復旧が繰り返し成立することです。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-24">配布、同期、更新、Rollback</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-24">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-24">
+  <header class="chapter-head">
+    <div class="eyebrow">第24章</div>
+    <h1>配布、同期、更新、Rollback</h1>
+  </header>
+  <section aria-labelledby="story-24">
+    <h2 id="story-24">物語の現在地</h2>
+    <div class="scene">翌朝の自動更新で一部端末だけ失敗したとき、配布基盤の本当の品質が試されます。美咲は、何度実行しても壊れないBootstrap、削除まで追従するSync、検証、Rollbackを一つの流れにします。</div>
+    <div class="story-essay"><p>BootstrapとUpdateは冪等で、ネットワーク障害時には安全に次回へ持ち越し、同時実行をロックで防ぎます。Syncは前回Manifestと今回の正本を比較し、追加・変更・削除へ収束させながら、個人Layerへ触れません。</p><p>配布後はVerifyで存在、Version、Hook動作を確認し、問題があれば署名済みの以前のReleaseへ一操作で戻します。ログと端末Inventoryがなければ、配布の成功は判断できません。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-24">
+  <img src="../images/chapter-24-6d204a.webp" alt="第24章『配布、同期、更新、Rollback』を表すisometric delivery pipeline illustration" loading="lazy" decoding="async">
+  <figcaption>配布の完成条件はコピー成功ではなく、収束・検証・復旧が繰り返し成立することです。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第24章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> isometric delivery pipeline illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: isometric delivery pipeline illustration.
+Scene and concept: A reliable software distribution conveyor showing bootstrap, manifest sync, verification, staged rollout, and one-click rollback.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-24-s1">24.1 Bootstrap責務</h2>
+<pre><code class="language-text">1 macOS/Architecture
+2 Command Line Tools
+3 Homebrew
+4 git/gh/Node等
+5 Claude Code Native Install
+6 GitHub認証
+7 Private Repo Clone/Update
+8 sync
+9 Kandji/LaunchAgent
+10 verify
+</code></pre>
+<h2 id="ch-24-s2">24.2 GitHub認証</h2>
+<p>Fine-grained、Read最小、期限付き。URL、History、<code>.git/config</code>へTokenを入れない。</p>
+<pre><code class="language-bash">if [[ -n "${TREPRO_GITHUB_TOKEN:-}" ]]; then
+  printf '%s' "$TREPRO_GITHUB_TOKEN" | gh auth login --hostname github.com --with-token
+  unset TREPRO_GITHUB_TOKEN
+fi
+gh auth setup-git
+</code></pre>
+<pre><code class="language-bash">if git config --local --get remote.origin.url | grep -Eq '(token|@github\.com.*:)'; then
+  echo "unsafe credential in git remote" &gt;&amp;2
+  exit 1
+fi
+</code></pre>
+<p>将来はSSO、GitHub App、Device Flow、短期Credentialを優先。</p>
+<h2 id="ch-24-s3">24.3 <code>common.sh</code></h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+HARNESS_NAME="trepro-harness"
+LOG_DIR="${HARNESS_LOG_DIR:-$HOME/Library/Logs/$HARNESS_NAME}"
+LOCK_DIR="${HARNESS_LOCK_DIR:-$HOME/Library/Caches/$HARNESS_NAME/locks}"
+MAX_LOG_BYTES="${MAX_LOG_BYTES:-1048576}"
+mkdir -p "$LOG_DIR" "$LOCK_DIR"
+
+now() { date '+%Y-%m-%dT%H:%M:%S%z'; }
+log() { printf '%s [%s] %s\n' "$(now)" "$1" "$2"; }
+info() { log INFO "$*"; }
+warn() { log WARN "$*" &gt;&amp;2; }
+die() { log ERROR "$*" &gt;&amp;2; exit 1; }
+
+rotate_log() {
+  local file="$1" size
+  [[ -f "$file" ]] || return 0
+  size="$(stat -f%z "$file" 2&gt;/dev/null || echo 0)"
+  (( size &lt; MAX_LOG_BYTES )) || mv "$file" "$file.1"
+}
+
+acquire_lock() {
+  local name="$1" stale="${2:-1800}" path="$LOCK_DIR/$name.lock"
+  if mkdir "$path" 2&gt;/dev/null; then
+    date +%s &gt; "$path/started_at"
+  else
+    local started now_epoch
+    started="$(cat "$path/started_at" 2&gt;/dev/null || echo 0)"
+    now_epoch="$(date +%s)"
+    if (( now_epoch - started &lt;= stale )); then return 1; fi
+    warn "remove stale lock $path"
+    rm -rf -- "$path"; mkdir "$path"; date +%s &gt; "$path/started_at"
+  fi
+  export HARNESS_ACTIVE_LOCK="$path"
+  trap 'rm -rf -- "${HARNESS_ACTIVE_LOCK:-}" 2&gt;/dev/null || true' EXIT INT TERM
+}
+
+network_ok() { curl -fsSIL --max-time 10 https://github.com &gt;/dev/null 2&gt;&amp;1; }
+</code></pre>
+<h2 id="ch-24-s4">24.4 Convergent Sync</h2>
+<pre><code class="language-text">Current Manifest = 今回配るPath
+Previous Manifest = 前回配ったPath
+Delete = Previous - Current
+Copy = Current
+Preserve = Harness未所有Path
+</code></pre>
+<p><code>sync.sh</code>骨格：</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" &amp;&amp; pwd)"
+SOURCE="$ROOT/global-config"
+DEST="${CLAUDE_HOME:-$HOME/.claude}"
+MANIFEST="$DEST/.trepro-harness-manifest"
+DRY_RUN=0
+[[ "${1:-}" == "--dry-run" ]] &amp;&amp; DRY_RUN=1
+
+run() {
+  if (( DRY_RUN )); then printf '[dry-run]'; printf ' %q' "$@"; printf '\n';
+  else "$@"; fi
+}
+is_protected() {
+  case "$1" in local|local/*|settings.local.json|*.bak) return 0;; *) return 1;; esac
+}
+
+[[ -d "$SOURCE" ]] || exit 1
+run mkdir -p "$DEST"
+TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
+CURRENT="$TMP/current"; PREVIOUS="$TMP/previous"
+
+find "$SOURCE" -type l | grep -q . &amp;&amp; { echo "symlink blocked" &gt;&amp;2; exit 1; }
+(cd "$SOURCE" &amp;&amp; find . -type f -print | sed 's#^\./##' | LC_ALL=C sort) &gt; "$CURRENT"
+[[ -f "$MANIFEST" ]] &amp;&amp; cp "$MANIFEST" "$PREVIOUS" || : &gt; "$PREVIOUS"
+
+while IFS= read -r rel; do
+  [[ -n "$rel" &amp;&amp; "$rel" != /* &amp;&amp; "$rel" != *".."* ]] || exit 1
+done &lt; "$CURRENT"
+
+if [[ -f "$DEST/CLAUDE.md" &amp;&amp; -f "$SOURCE/CLAUDE.md" ]] &amp;&amp; \
+   ! cmp -s "$DEST/CLAUDE.md" "$SOURCE/CLAUDE.md"; then
+  run cp "$DEST/CLAUDE.md" "$DEST/CLAUDE.md.bak"
+fi
+
+comm -23 "$PREVIOUS" "$CURRENT" | while IFS= read -r rel; do
+  [[ -n "$rel" ]] || continue
+  is_protected "$rel" &amp;&amp; { echo "protected $rel"; continue; }
+  case "$DEST/$rel" in "$DEST"/*) run rm -f -- "$DEST/$rel";; *) exit 1;; esac
+done
+
+while IFS= read -r rel; do
+  [[ -n "$rel" ]] || continue
+  run mkdir -p "$(dirname "$DEST/$rel")"
+  if [[ ! -f "$DEST/$rel" ]] || ! cmp -s "$SOURCE/$rel" "$DEST/$rel"; then
+    run install -m 0644 "$SOURCE/$rel" "$DEST/$rel"
+  fi
+done &lt; "$CURRENT"
+
+if (( ! DRY_RUN )); then
+  install -m 0644 "$CURRENT" "$MANIFEST.tmp"
+  mv "$MANIFEST.tmp" "$MANIFEST"
+fi
+</code></pre>
+<p>Hookへ<code>0755</code>を設定し、<code>.agents/skills</code> Merge、Hash、Overlayを追加する。</p>
+<h2 id="ch-24-s5">24.5 Skill Merge</h2>
+<p>移行中：</p>
+<pre><code class="language-text">.agents/skills → temp
+then global-config/skills overwrites
+→ validate → Claude/Codexへ配布
+</code></pre>
+<p>長期は<code>skill-src</code>から両方生成。衝突を黙って上書きしない。</p>
+<h2 id="ch-24-s6">24.6 <code>update.sh</code></h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+ROOT="${HARNESS_ROOT:-$HOME/.local/share/trepro-harness}"
+source "$ROOT/deploy/lib/common.sh"
+LOG_FILE="$LOG_DIR/update.log"; rotate_log "$LOG_FILE"; exec &gt;&gt;"$LOG_FILE" 2&gt;&amp;1
+acquire_lock update 1800 || exit 0
+network_ok || { warn "offline; skip"; exit 0; }
+cd "$ROOT"
+
+git fetch --prune --tags origin
+CHANNEL="${HARNESS_CHANNEL:-stable}"
+case "$CHANNEL" in
+  stable) ref="$(git tag --sort=-version:refname | head -n1)";;
+  canary) ref="origin/canary";;
+  *) die "unknown channel";;
+esac
+
+git checkout --detach "$ref"
+"$ROOT/sync.sh"
+"$ROOT/deploy/verify.sh" --quiet
+</code></pre>
+<p>本番は署名Tag、許可Version、失敗Rollbackを追加。</p>
+<h2 id="ch-24-s7">24.7 Verify</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+failures=0
+check() { local d="$1"; shift; "$@" &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo "PASS $d" || { echo "FAIL $d"; failures=$((failures+1)); }; }
+check "claude" command -v claude
+check "version" claude --version
+check "doctor" claude doctor
+check "CLAUDE.md" test -f "$HOME/.claude/CLAUDE.md"
+check "skills" test -d "$HOME/.claude/skills"
+check "hooks" test -d "$HOME/.claude/hooks"
+check "manifest" test -f "$HOME/.claude/.trepro-harness-manifest"
+check "managed" test -f "/Library/Application Support/ClaudeCode/managed-settings.json"
+(( failures == 0 ))
+</code></pre>
+<p>代表Skill認識、Hook Fixture、Token非混入、Local保持、Dry-run、Claude/Codex Hashも検査する。</p>
+<h2 id="ch-24-s8">24.8 Rollback</h2>
+<pre><code class="language-bash">git rev-parse HEAD &gt; "$HOME/.claude/.trepro-harness-previous-version"
+# rollback
+previous="$(cat "$HOME/.claude/.trepro-harness-previous-version")"
+cd "$HOME/.local/share/trepro-harness"
+git checkout --detach "$previous"
+./sync.sh
+./deploy/verify.sh
+</code></pre>
+<p>外部MCP変更、送信/Deploy、副作用、Claude本体Versionは別Rollbackが必要。</p>
+<h2 id="ch-24-s9">24.9 配布方式</h2>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kandji</td>
+<td>本番全社、管理者権限</td>
+</tr>
+<tr>
+<td>LaunchAgent</td>
+<td>POC/Fallback</td>
+</tr>
+<tr>
+<td>Server-managed</td>
+<td>Claude.ai組織Policy</td>
+</tr>
+<tr>
+<td>File-based managed</td>
+<td>任意Provider、Kandji配布</td>
+</tr>
+</tbody>
+</table>
+<p>本番はKandji、LaunchAgentはPOCまたはFallback。</p>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch24-sync-rollback">
+  <img src="../images/diagram-ch24-sync-rollback.webp" alt="Manifest方式の同期、検証、Rollbackの流れ" loading="lazy" decoding="async">
+  <figcaption>配布は毎回、同じ正しい状態へ収束し、失敗時には既知のReleaseへ戻します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第24章24.4の直後。Manifest同期とRollback。</p>
+    <p><strong>種類:</strong> delivery sequence background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: delivery sequence background.
+Scene and concept: A sequence diagram background for remote release, local update lock, manifest comparison, safe copy and deletion, verification, inventory update, and rollback path, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 小さなサンプル構成でdry-run、同期、削除追従、個人フォルダ保護、Rollbackを順にテストしてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>配布の完成条件はコピー成功ではなく、収束・検証・復旧が繰り返し成立することです。</p></section>
+</article>
+<nav class="chapter-nav"><a href="23.html">← 最適Architecture</a><a href="25.html">Skill Governance →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

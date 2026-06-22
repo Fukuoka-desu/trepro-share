@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第9章　SessionとContext — ブログ版</title><meta name="description" content="会話履歴に依存せず、再開に必要な状態をファイルへ外部化します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-09">SessionとContext</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-09">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-09">
+  <header class="chapter-head">
+    <div class="eyebrow">第9章</div>
+    <h1>SessionとContext</h1>
+  </header>
+  <section aria-labelledby="story-09">
+    <h2 id="story-09">物語の現在地</h2>
+    <div class="scene">同じセッションで要件、雑談、バグ修正、別の資料作成まで続けた結果、Claude Codeは古い前提を引きずり始めました。机の上に資料を積み続けたような状態です。遥は、会話を続けることと文脈を守ることが同じではないと気づきます。</div>
+    <div class="story-essay"><p>Sessionは仕事の単位で分けます。新しい目的へ移るなら新しいセッションを開き、必要な状態はファイルへ保存します。/clearや/compactは便利ですが、重要な判断や次の操作を会話の中だけに残さないことが本質です。</p><p>Resumeは作業再開の補助であり、教材やチーム運用では独立したStateを正本にします。画像入力や割り込みも、現在の目的を明確に保つ範囲で使います。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-09">
+  <img src="../images/chapter-09-bc9b92.webp" alt="第9章『SessionとContext』を表すbefore-and-after editorial illustration" loading="lazy" decoding="async">
+  <figcaption>会話履歴に依存せず、再開に必要な状態をファイルへ外部化します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第9章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> before-and-after editorial illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: before-and-after editorial illustration.
+Scene and concept: A cluttered desk of accumulated conversation context beside a clean reset desk with a concise resume note and organized project state.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-09-s1">9.1 Sessionを分ける基準</h2>
+<p>新しいSessionにする：</p>
+<ul>
+<li>目的が変わる。</li>
+<li>別Project/別Issueへ移る。</li>
+<li>前提を一度捨ててReviewしたい。</li>
+<li>長い探索後に実装へ移る。</li>
+<li>同じ会話が過去の誤りへ引っ張られる。</li>
+</ul>
+<p>同じSessionを続ける：</p>
+<ul>
+<li>同じ完了条件へ向けた修正。</li>
+<li>直前のTest結果を受けたDebug。</li>
+<li>承認済みPlanの実装。</li>
+</ul>
+<h2 id="ch-09-s2">9.2 <code>/clear</code>、<code>/compact</code>、<code>/context</code></h2>
+<pre><code class="language-text">/clear   違う仕事へ切り替える
+/compact 同じ仕事の履歴を圧縮
+/context 何がContextを占めるか確認
+</code></pre>
+<p>「40%を超えたら必ず性能低下」のような固定閾値を一般Ruleにしない。出力品質、Context内訳、Task境界で判断する。</p>
+<h2 id="ch-09-s3">9.3 Contextを節約する設計</h2>
+<ul>
+<li>CLAUDE.mdを短くする。</li>
+<li>長い手順をSkillへ移す。</li>
+<li>詳細を<code>references/</code>へ分離する。</li>
+<li>調査結果をClaim LedgerやSummary Fileへ保存する。</li>
+<li>大きなLogを丸ごと貼らず、必要範囲だけ読む。</li>
+<li>Subagentへ独立範囲を渡す。</li>
+</ul>
+<h2 id="ch-09-s4">9.4 Resume</h2>
+<pre><code class="language-bash">claude --continue
+claude --resume
+</code></pre>
+<p>再開時も、現在のGit状態、Issue、完了条件を確認する。過去SessionのContextと現在のFileがずれている可能性がある。</p>
+<h2 id="ch-09-s5">9.5 履歴を残さない実行</h2>
+<p>機密性や自動化要件により、非対話実行でSession Persistenceを無効化する選択肢がある。利用Versionの<code>--help</code>と組織Policyを確認する。</p>
+<h2 id="ch-09-s6">9.6 画像と割り込み</h2>
+<ul>
+<li>UI崩れ、Diagram、Error画面は画像で伝える。</li>
+<li>個人情報・秘密を先にMaskする。</li>
+<li>作業中の追加指示は次の安全な区切りで反映されることがある。</li>
+<li>緊急停止はEsc等の停止操作を使う。</li>
+<li>音声入力のPath、Command、数値は実行前に復唱させる。</li>
+</ul>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> いまの作業について、次回再開時に必要な状態をRESUME.mdへ書き、会話を閉じても続けられるか確認してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>会話履歴に依存せず、再開に必要な状態をファイルへ外部化します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="08.html">← ModelとEffort</a><a href="10.html">GitとCheckpoint →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

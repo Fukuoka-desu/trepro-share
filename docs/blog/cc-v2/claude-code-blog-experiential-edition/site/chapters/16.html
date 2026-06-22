@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第16章　MarkdownよりHTMLが向く仕事 — ブログ版</title><meta name="description" content="HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-16">MarkdownよりHTMLが向く仕事</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-16">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-16">
+  <header class="chapter-head">
+    <div class="eyebrow">第16章</div>
+    <h1>MarkdownよりHTMLが向く仕事</h1>
+  </header>
+  <section aria-labelledby="story-16">
+    <h2 id="story-16">物語の現在地</h2>
+    <div class="scene">同じ分析結果をMarkdownとHTMLで見せると、会議室の反応が変わりました。長い文章では見落とされた傾向が、カード、グラフ、強調された結論によって一目で伝わります。HTMLは装飾ではなく、理解の速度を設計する形式でした。</div>
+    <div class="story-essay"><p>Markdownは執筆と差分管理に強く、HTMLは情報密度、視認性、操作性、共有性に強みがあります。CSV分析、スライド風資料、ディスカッションボードのように、見る人が比較・操作する仕事ではHTMLが向きます。</p><p>ただし生成画像や派手な装飾に重要情報を閉じ込めません。本文、Alt、Captionだけでも意味が通り、単一HTMLで開け、印刷・スマホ・アクセシビリティを確認します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-16">
+  <img src="../images/chapter-16-bebf82.webp" alt="第16章『MarkdownよりHTMLが向く仕事』を表すeditorial comparison illustration" loading="lazy" decoding="async">
+  <figcaption>HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第16章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial comparison illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial comparison illustration.
+Scene and concept: A split-screen comparison of a dense markdown document and a clear editorial HTML report with cards, charts, and interactive controls.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-16-s1">16.1 形式選択</h2>
+<table>
+<thead>
+<tr>
+<th>形式</th>
+<th>強み</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Markdown</td>
+<td>軽い、Diff、再利用</td>
+<td>仕様、議事録、Runbook</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>Graph、Filter、操作、情報密度</td>
+<td>Report、Dashboard、教材</td>
+</tr>
+<tr>
+<td>PPT/PDF</td>
+<td>配布・発表互換</td>
+<td>正式発表、顧客提出</td>
+</tr>
+<tr>
+<td>Web App</td>
+<td>Data更新、入力、状態</td>
+<td>継続業務Tool</td>
+</tr>
+</tbody>
+</table>
+<p>原則は、正本をMarkdown/JSON/CSVで持ち、HTMLをViewとして生成する。</p>
+<h2 id="ch-16-s2">16.2 単一HTMLの標準</h2>
+<pre><code class="language-text">- 1 Fileで開ける
+- 外部CDNに依存しない
+- Mobile対応
+- Print CSS
+- 見出し/Keyboard/Contrast
+- 更新日・出典・母数
+- GraphとTableを併記
+- JS無効でも主要情報が読める
+</code></pre>
+<h2 id="ch-16-s3">16.3 CSV分析Prompt</h2>
+<pre><code class="language-text">`data/survey.csv` を分析し、経営会議向け単一HTMLを作る。
+
+Analysis:
+- 回答数、欠損率、KPI
+- 設問分布
+- 自由記述Theme
+- Positive/Negative要因
+- 優先度付き改善案
+
+Output:
+- output/report.html
+- output/analysis.md
+- output/metrics.json
+
+Rules:
+- 元Dataを改変しない
+- 推測は明記
+- 個人特定を匿名化
+- 母数と計算式を表示
+- JavaScript Errorなし
+- Screenshotを保存
+</code></pre>
+<h2 id="ch-16-s4">16.4 HTML Slide</h2>
+<pre><code class="language-text">1. 表紙
+2. 結論
+3. 背景
+4. 根拠Data
+5. 選択肢
+6. 推奨
+7. 実行計画
+8. Risk
+9. 意思決定
+</code></pre>
+<pre><code class="language-text">`output/analysis.md`を16:9 HTML Slideにしてください。
+1 Slide 1 Message、本文最大6行。矢印Key/PageUp/PageDownで移動し、Print/PDF対応にしてください。
+</code></pre>
+<h2 id="ch-16-s5">16.5 Discussion Board</h2>
+<pre><code class="language-text">会議用の単一HTML Boardを作る。
+列は「今やる」「次」「調査」「見送り」。
+CardはDragでき、担当、期限、根拠、決定者を編集可能。
+Local Storageへ保存し、「決定事項をMarkdownでCopy」Buttonを付ける。
+</code></pre>
+<p>Local StorageへSecrets、原文、不要な個人情報を保存しない。</p>
+<h2 id="ch-16-s6">16.6 品質Check</h2>
+<pre><code class="language-text">[ ] 結論が最初にある
+[ ] 元Dataへ追跡可能
+[ ] 色だけで状態区別しない
+[ ] 375/768/1440px確認
+[ ] Keyboard操作
+[ ] Print/PDF欠落なし
+[ ] 外部Scriptなし
+[ ] Console Errorなし
+</code></pre>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch16-format-choice">
+  <img src="../images/diagram-ch16-format-choice.webp" alt="MarkdownとHTMLの用途比較" loading="lazy" decoding="async">
+  <figcaption>正本の書きやすさと、読み手の理解しやすさを分けて選びます。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第16章16.1の直後。MarkdownとHTMLの適性比較。</p>
+    <p><strong>種類:</strong> comparison infographic background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: comparison infographic background.
+Scene and concept: A balanced comparison background: a structured text document for drafting and version control on one side, an interactive visual web report for presentation and exploration on the other, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 同じ小さなレポートをMarkdownと単一HTMLで作り、読み手が結論へ到達する時間を比べてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。</p></section>
+</article>
+<nav class="chapter-nav"><a href="15.html">← MCP、Connectors、APIを安全につなぐ</a><a href="17.html">Claude Designから実装へ →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

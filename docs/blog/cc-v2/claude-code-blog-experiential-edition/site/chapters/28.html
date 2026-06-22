@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第28章　文書・ファイル・会議 — ブログ版</title><meta name="description" content="文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-28">文書・ファイル・会議</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-28">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-28">
+  <header class="chapter-head">
+    <div class="eyebrow">第28章</div>
+    <h1>文書・ファイル・会議</h1>
+  </header>
+  <section aria-labelledby="story-28">
+    <h2 id="story-28">物語の現在地</h2>
+    <div class="scene">ここから四人は現場へ戻ります。最初の机には請求書、契約書、会議メモ、整理されていないフォルダが積まれていました。どれも派手ではありませんが、時間を奪う仕事です。</div>
+    <div class="story-essay"><p>文書・ファイル業務では、まずRead-onlyで一覧と分類案を作り、変更前に対象と件数を確認します。請求書は抽出項目と例外を定義し、契約書は法的結論ではなく論点整理として扱い、会議データは議事録・タスク・週報へ連結します。</p><p>整理や削除は、元データを残し、移動先を明示し、結果一覧を出す可逆的な手順から始めます。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-28">
+  <img src="../images/chapter-28-2fa636.webp" alt="第28章『文書・ファイル・会議』を表すpractical editorial illustration" loading="lazy" decoding="async">
+  <figcaption>文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第28章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> practical editorial illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: practical editorial illustration.
+Scene and concept: An AI-assisted office desk organizing invoices, contracts, meeting notes, and messy folders into structured, reviewable outputs.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-28-s1">28.1 請求書Folderを一覧化</h2>
+<p>Input：<code>inputs/invoices/</code>。Output：CSV、Review表、読取不能一覧。</p>
+<pre><code class="language-text">請求書を読み、source_file, vendor_name, invoice_number, invoice_date,
+due_date, subtotal, tax, total, currency, extraction_confidence, review_note
+の列でCSV化してください。
+
+- 元Fileを変更/移動/削除しない
+- 不明項目を推測しない
+- total = subtotal + taxを検算
+- 同一Invoice Numberを重複候補にする
+- 低信頼行をReview表へ
+- 支払/会計登録はしない
+</code></pre>
+<pre><code class="language-text">[ ] File数と行数
+[ ] 金額再計算
+[ ] 通貨混在
+[ ] 重複
+[ ] 元File Link
+[ ] 経理Human Review
+</code></pre>
+<h2 id="ch-28-s2">28.2 Folder整理</h2>
+<pre><code class="language-text">Explore → organization-plan.csv → Human Review → Move
+→ quarantine/YYYY-MM-DD → Retention → Delete Approval
+</code></pre>
+<pre><code class="language-text">`inputs/mixed-files/`を分析し、まだ操作せず、source, proposed_destination,
+category, reason, duplicate_group, riskを持つPlanを作る。
+Hidden、Package、Symlink、1GB超は対象外。
+</code></pre>
+<p>実行時は上書き禁止、移動前後のPath/HashをResultへ保存。</p>
+<h2 id="ch-28-s3">28.3 契約書論点</h2>
+<p>AIへ有効/無効を断定させず、条項、平易な説明、義務、金額/期限、曖昧点、専門家への質問を作る。最終判断は法務へ。</p>
+<h2 id="ch-28-s4">28.4 会議Assistant本番化</h2>
+<ul>
+<li>Meeting IDで冪等。</li>
+<li>Participant表記統一。</li>
+<li>Decision/Proposal分離。</li>
+<li>TaskにOwner/Due/Source Quote。</li>
+<li>不明は<code>null</code>。</li>
+<li>原文Link。</li>
+<li>JSON Schema。</li>
+<li>Retention。</li>
+</ul>
+<pre><code class="language-json">{
+  "task_id": "meeting-20260622-001",
+  "title": "新LPの見出し案を作成",
+  "owner": "山田",
+  "due_date": "2026-06-26",
+  "status": "todo",
+  "source": {
+    "meeting_id": "meeting-20260622",
+    "quote": "山田さん、金曜までに見出し案をお願いします"
+  },
+  "confidence": 0.96,
+  "needs_confirmation": false
+}
+</code></pre>
+<h2 id="ch-28-s5">28.5 週報</h2>
+<p>過去3件から形式だけを抽出し、今週の議事録/Taskから実績、数字、進行、Blocker、来週、支援依頼をDraft化。誇張せず、送信しない。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つの実務フォルダをRead-onlyで棚卸しし、変更せずに分類案と例外一覧を作ってください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。</p></section>
+</article>
+<nav class="chapter-nav"><a href="27.html">← OnboardingとRunbook</a><a href="29.html">調査・Content・学習 →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

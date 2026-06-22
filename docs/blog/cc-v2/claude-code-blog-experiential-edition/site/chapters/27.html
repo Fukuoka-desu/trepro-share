@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第27章　OnboardingとRunbook — ブログ版</title><meta name="description" content="Onboardingのゴールは『入った』ではなく、『安全に一人で一周できた』です。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-27">OnboardingとRunbook</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-27">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-27">
+  <header class="chapter-head">
+    <div class="eyebrow">第27章</div>
+    <h1>OnboardingとRunbook</h1>
+  </header>
+  <section aria-labelledby="story-27">
+    <h2 id="story-27">物語の現在地</h2>
+    <div class="scene">新人へ大量の資料を渡しても、最初の一歩で止まれば定着しません。遥が体験した会議アシスタントを、30分の導入、初日のSafety、Bronze認定、障害時Runbookへ変えます。</div>
+    <div class="story-essay"><p>Onboardingはインストール完了ではなく、本人が安全なLabで成果物を作り、証拠を示し、再開できる状態までを含みます。自動診断で環境を確認し、つまずきやすい認証、権限、Path、Versionを切り分けます。</p><p>認定は知識問題だけでなく、Plan、Verify、Git、Skill化を実演させます。運用開始後も、月次診断、更新確認、Incident演習をCadenceへ入れます。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-27">
+  <img src="../images/chapter-27-c19877.webp" alt="第27章『OnboardingとRunbook』を表すjourney illustration" loading="lazy" decoding="async">
+  <figcaption>Onboardingのゴールは『入った』ではなく、『安全に一人で一周できた』です。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第27章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> journey illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: journey illustration.
+Scene and concept: A clear onboarding journey from a new laptop through setup, safety lab, first artifact, verification badge, and support runbook.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-27-s1">27.1 30分Flow</h2>
+<h3 id="ch-27-s2">0〜5分</h3>
+<pre><code class="language-text">[ ] 管理Mac
+[ ] 対応macOS
+[ ] GitHub組織
+[ ] Claude権限
+[ ] Network/Proxy
+[ ] Data研修
+</code></pre>
+<h3 id="ch-27-s3">5〜15分</h3>
+<pre><code class="language-bash">export TREPRO_GITHUB_TOKEN='短期Token'
+curl -fsSL https://INTERNAL_APPROVED_URL/install.sh | bash
+unset TREPRO_GITHUB_TOKEN
+</code></pre>
+<p>内部URLと署名/Hashを確認し、任意Internet ScriptをPipe実行しない。</p>
+<h3 id="ch-27-s4">15〜20分</h3>
+<pre><code class="language-bash">claude --version
+claude doctor
+gh auth status
+$HOME/.local/share/trepro-harness/deploy/verify.sh
+</code></pre>
+<h3 id="ch-27-s5">20〜30分</h3>
+<pre><code class="language-text">training/meeting-assistantを開く
+Plan → 実装 → git diff → Test → /rewind → Skill評価
+</code></pre>
+<h2 id="ch-27-s6">27.2 初日Safety</h2>
+<pre><code class="language-text">- 本番/顧客で練習しない
+- Bypass禁止
+- API Keyを貼らない
+- 削除はDry-run/Manifest
+- DiffなしCommit禁止
+- 外部送信/公開/Deployは承認
+- 不明MCP/Plugin禁止
+- Error/Logを隠さない
+</code></pre>
+<h2 id="ch-27-s7">27.3 認定</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>到達</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bronze</td>
+<td>安全、Plan、Diff、Checkpoint</td>
+</tr>
+<tr>
+<td>Silver</td>
+<td>CLAUDE.md/Skill、Fixture、HTML/MCP Read-only</td>
+</tr>
+<tr>
+<td>Gold</td>
+<td>Agent/Hook/Policy、Evaluation、Incident</td>
+</tr>
+<tr>
+<td>Admin</td>
+<td>Kandji、Marketplace、Audit、Release</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-27-s8">27.4 運用Cadence</h2>
+<pre><code class="language-text">Daily: Update失敗/SEV
+Weekly: Canary/Skill候補/Cost
+Monthly: Harness診断/Skill抜取/Deprecation/Version/Incident
+Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
+</code></pre>
+<h2 id="ch-27-s9">27.5 障害表</h2>
+<table>
+<thead>
+<tr>
+<th>症状</th>
+<th>対処</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>claudeなし</td>
+<td>Native Installer</td>
+</tr>
+<tr>
+<td>Skill不明</td>
+<td>Name/Frontmatter/Manifest/Validator</td>
+</tr>
+<tr>
+<td>Hook不動</td>
+<td>Scope/Permission/Managed-only/Log</td>
+</tr>
+<tr>
+<td>MCP不明</td>
+<td>managed-mcp/Allowlist/OAuth</td>
+</tr>
+<tr>
+<td>Update不動</td>
+<td>Network/Lock/Auth/LaunchAgent</td>
+</tr>
+<tr>
+<td>個人設定消失</td>
+<td>Manifest所有範囲修正</td>
+</tr>
+<tr>
+<td>Sandbox失敗</td>
+<td>Domain/Socket/Apple Event最小例外</td>
+</tr>
+<tr>
+<td>Context重い</td>
+<td><code>/context</code>、分割、整理</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-27-s10">27.6 Diagnostics</h2>
+<pre><code class="language-bash">{
+  echo "date=$(date -Iseconds)"
+  echo "macos=$(sw_vers -productVersion)"
+  echo "arch=$(uname -m)"
+  echo "claude=$(claude --version 2&gt;&amp;1)"
+  echo "harness=$(cat ~/.claude/.trepro-harness-version 2&gt;/dev/null || echo unknown)"
+  echo "git=$(git --version)"
+  echo "gh_auth=$(gh auth status 2&gt;&amp;1 | sed -E 's/(token:).*/\1 [REDACTED]/')"
+} &gt; /tmp/trepro-harness-diagnostics.txt
+</code></pre>
+<p>会話、Secret、顧客Fileを自動添付しない。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 新人が30分で終える導入手順を、環境診断・Lab作成・成果物・証拠・再開の五段階で書いてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Onboardingのゴールは『入った』ではなく、『安全に一人で一周できた』です。</p></section>
+</article>
+<nav class="chapter-nav"><a href="26.html">← Managed Policy、Security、Observability</a><a href="28.html">文書・ファイル・会議 →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

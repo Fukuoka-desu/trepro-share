@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第17章　Claude Designから実装へ — ブログ版</title><meta name="description" content="情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-17">Claude Designから実装へ</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-17">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-17">
+  <header class="chapter-head">
+    <div class="eyebrow">第17章</div>
+    <h1>Claude Designから実装へ</h1>
+  </header>
+  <section aria-labelledby="story-17">
+    <h2 id="story-17">物語の現在地</h2>
+    <div class="scene">いきなりコードからLPを作ると、情報構造と見た目と実装が同時に揺れました。遥はClaude Designで白黒のワイヤーフレームを作り、内容の順序を固めてから、Design Systemを適用してCodeへ渡します。</div>
+    <div class="story-essay"><p>Designでは、情報構造を決めるWireframe、見た目のルールを持つDesign System、動作を確かめるPrototype、実装を担うCodeを分けます。各段階で何を確定したかが分かると、修正コストが下がります。</p><p>同期機能やUI名は変化しやすいため、公式の現行入口を確認しながら使います。公開前にはレスポンシブ、アクセシビリティ、リンク、秘密情報、ブランド整合性をCode側で再検証します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-17">
+  <img src="../images/chapter-17-c96cf4.webp" alt="第17章『Claude Designから実装へ』を表すdesign process illustration" loading="lazy" decoding="async">
+  <figcaption>情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第17章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> design process illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: design process illustration.
+Scene and concept: A clean progression from grayscale wireframe to branded design system components to a functioning responsive web application.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-17-s1">17.1 分離する</h2>
+<pre><code class="language-text">要件 → Wireframe → Prototype → Design System → 実装 → 視覚/Accessibility検証
+</code></pre>
+<p>Wireframeでは装飾より、情報の順序とActionを決める。</p>
+<h2 id="ch-17-s2">17.2 Design SystemとProject</h2>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Design System</td>
+<td>色、文字、余白、Component、状態、Brand Rule</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>Design Systemを使う具体物</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-17-s3">17.3 最小構造</h2>
+<pre><code class="language-text">design-system/
+├── README.md
+├── tokens/
+│   ├── color.json
+│   ├── typography.json
+│   ├── spacing.json
+│   └── radius.json
+├── components/
+│   ├── button.md
+│   ├── card.md
+│   ├── form.md
+│   └── navigation.md
+├── assets/
+└── examples/
+</code></pre>
+<h2 id="ch-17-s4">17.4 標準Flow</h2>
+<ol>
+<li>Wireframe作成。</li>
+<li>情報の欠落・重複・順序Review。</li>
+<li>Prototypeで遷移確認。</li>
+<li>Design System適用、Desktop/Mobile確認。</li>
+<li>Claude Codeへ渡す。</li>
+<li>Component対応表、Token、Test計画。</li>
+<li>実装後のScreen差分確認。</li>
+<li>汎用ComponentをDesign Systemへ戻す。</li>
+</ol>
+<p>現行の <code>/design</code> と <code>/design-sync</code> を <code>/help</code> と公式情報で確認する。</p>
+<h2 id="ch-17-s5">17.5 Codeへ渡すPrompt</h2>
+<pre><code class="language-text">Designを写経せず、まず次を含む実装計画を作る。
+- 画面/Component対応
+- Token/CSS変数
+- Responsive
+- Hover/Focus/Disabled/Error/Loading
+- Accessibility
+- Mock範囲
+- Acceptance Test
+承認前に変更しない。
+</code></pre>
+<h2 id="ch-17-s6">17.6 Sync Rule</h2>
+<ul>
+<li>Token/共通ComponentはGit側を正本。</li>
+<li>Designで探索し、採用変更だけCodeへ。</li>
+<li>Codeで生まれた汎用部品はReview後に戻す。</li>
+<li>Sync前後にDiff保存。</li>
+<li>Beta変換に備えGit Commit。</li>
+</ul>
+<h2 id="ch-17-s7">17.7 公開前</h2>
+<pre><code class="language-text">[ ] 全遷移
+[ ] 未実装Buttonの明示
+[ ] Responsive
+[ ] Focus/Error/Loading/Success
+[ ] Contrast
+[ ] 自動Accessibility検査
+[ ] Design差分Screenshot
+[ ] 環境変数/認証/Log
+</code></pre>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch17-design-to-code">
+  <img src="../images/diagram-ch17-design-to-code.webp" alt="Wireframe、Design System、Prototype、Codeの流れ" loading="lazy" decoding="async">
+  <figcaption>情報・見た目・動作を段階的に確定します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第17章17.4の直後。Wireframeから実装・検証まで。</p>
+    <p><strong>種類:</strong> design pipeline background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: design pipeline background.
+Scene and concept: A four-stage design pipeline background from grayscale wireframe to design system components, interactive prototype, and tested responsive code, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つのページを、情報だけのWireframe、Design System適用版、実装版の三段階で作り、各段階の決定事項を記録してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。</p></section>
+</article>
+<nav class="chapter-nav"><a href="16.html">← MarkdownよりHTMLが向く仕事</a><a href="18.html">CoworkとLive Artifacts →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

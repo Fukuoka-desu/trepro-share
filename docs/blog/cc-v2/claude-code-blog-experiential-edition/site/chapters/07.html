@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第7章　Permission Mode、Sandbox、危険操作 — ブログ版</title><meta name="description" content="権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-07">Permission Mode、Sandbox、危険操作</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-07">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-07">
+  <header class="chapter-head">
+    <div class="eyebrow">第7章</div>
+    <h1>Permission Mode、Sandbox、危険操作</h1>
+  </header>
+  <section aria-labelledby="story-07">
+    <h2 id="story-07">物語の現在地</h2>
+    <div class="scene">実装中、許可確認が何度も現れ、遥は『全部自動にできないの？』と尋ねます。美咲は、自動化の速度ではなく、事故が起きたときの半径を見せました。自由度を上げる前に、どこまで壊れてもよいかを決める必要があります。</div>
+    <div class="story-essay"><p>Permission Modeは快適さの設定ではなく、責任の境界です。読む、編集する、コマンドを実行する、ネットワークへ出る、削除するという操作を分け、必要なものだけ許可します。Bypassは隔離された使い捨て環境に限定します。</p><p>Secretsはチャットへ貼らず、環境変数や専用ファイルへ保存し、Gitから除外します。削除は対象一覧、件数、バックアップ、実行後確認を通す標準手順にします。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-07">
+  <img src="../images/chapter-07-2e6462.webp" alt="第7章『Permission Mode、Sandbox、危険操作』を表すsecurity concept illustration" loading="lazy" decoding="async">
+  <figcaption>権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第7章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> security concept illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: security concept illustration.
+Scene and concept: A series of permission gates around a coding workspace, from read-only to edit, command execution, network access, and destructive actions.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-07-s1">7.1 Permission Mode</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>役割</th>
+<th>推奨用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>default</td>
+<td>Toolごとに通常の確認</td>
+<td>初心者、未知Project</td>
+</tr>
+<tr>
+<td>acceptEdits</td>
+<td>File編集を円滑化</td>
+<td>Local開発</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>読む・計画する</td>
+<td>要件化、高Risk変更</td>
+</tr>
+<tr>
+<td>auto</td>
+<td>Classifierが行動を判定</td>
+<td>対応環境で慣れた利用者</td>
+</tr>
+<tr>
+<td>dontAsk</td>
+<td>確認できない操作を拒否</td>
+<td>Headless/限定Workflow</td>
+</tr>
+<tr>
+<td>bypassPermissions</td>
+<td>確認をほぼ飛ばす</td>
+<td>使い捨て隔離環境のみ</td>
+</tr>
+</tbody>
+</table>
+<p>Mode名と提供範囲はVersionで変わり得る。<code>/permissions</code>と現行公式情報を確認する。</p>
+<h2 id="ch-07-s2">7.2 Permission Rule</h2>
+<p>Ruleの評価は、基本的に <code>deny → ask → allow</code> の順である。広いdenyに狭いallowを重ねても例外にはならない。</p>
+<pre><code class="language-json">{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Bash(rm -rf *)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(gcloud run deploy *)"
+    ],
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(npm run test *)"
+    ]
+  }
+}
+</code></pre>
+<p>Bash文字列Patternだけで完全なSecurity境界を作れない。HookとSandboxを併用する。</p>
+<h2 id="ch-07-s3">7.3 Bypassを使ってよい条件</h2>
+<p>すべて必要：</p>
+<pre><code class="language-text">[ ] 使い捨てContainer/VM/Codespace
+[ ] 本番Credentialなし
+[ ] Hostの重要DirectoryをMountしない
+[ ] Networkを制限
+[ ] Gitで復元可能
+[ ] Timeout/Kill Switchあり
+[ ] Side Effectなし
+</code></pre>
+<p>全社MacではManaged Settingsで無効化する。</p>
+<h2 id="ch-07-s4">7.4 Sandbox</h2>
+<p>Session内で：</p>
+<pre><code class="language-text">/sandbox
+</code></pre>
+<p>厳格なManaged例：</p>
+<pre><code class="language-json">{
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "autoAllowBashIfSandboxed": false,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyRead": ["~/.ssh", "~/.aws", "~/.kube"]
+    }
+  }
+}
+</code></pre>
+<p>SandboxはPermission Modeとは別物である。Permissionは「実行してよいか」、Sandboxは「実行後に何へ触れられるか」を制御する。</p>
+<h2 id="ch-07-s5">7.5 Secrets</h2>
+<pre><code class="language-text">- Chatへ貼らない
+- `.env`を読ませない
+- Keychain/Secret Manager/CI Secretを使う
+- Logへ出さない
+- `.env.example`には名前だけ
+- Scope最小、期限付き、Rotation可能
+</code></pre>
+<p>Prompt：</p>
+<pre><code class="language-text">認証情報は環境変数 INTERNAL_API_TOKEN から読み、値を表示・保存・Test Fixtureへ含めない実装にしてください。
+</code></pre>
+<h2 id="ch-07-s6">7.6 削除の標準手順</h2>
+<pre><code class="language-text">List → Dry-run → Human Review → Quarantine → Retention → Delete Approval
+</code></pre>
+<p>50 File以上、顧客Data、DB、Cloud Resourceは専用Safety Railを通す。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在のプロジェクトで許可してよい操作と、毎回確認すべき操作を二列に分けて書いてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="06.html">← Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="08.html">ModelとEffort →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

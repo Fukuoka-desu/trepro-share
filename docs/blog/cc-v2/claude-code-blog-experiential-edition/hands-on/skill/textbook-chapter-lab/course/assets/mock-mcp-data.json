@@ -1,0 +1,12 @@
+{
+  "calendar": [
+    {
+      "date": "2026-06-25",
+      "title": "Security review"
+    }
+  ],
+  "permissions": [
+    "read"
+  ],
+  "write_enabled": false
+}

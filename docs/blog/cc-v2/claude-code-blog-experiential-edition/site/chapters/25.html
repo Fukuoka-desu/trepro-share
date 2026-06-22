@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第25章　Skill Governance — ブログ版</title><meta name="description" content="Skillの価値は数ではなく、再現性、責任者、評価、廃止まで追えることです。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-25">Skill Governance</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-25">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-25">
+  <header class="chapter-head">
+    <div class="eyebrow">第25章</div>
+    <h1>Skill Governance</h1>
+  </header>
+  <section aria-labelledby="story-25">
+    <h2 id="story-25">物語の現在地</h2>
+    <div class="scene">Skillが増えると、似た名前、古い手順、評価されていない資産が混ざり始めます。美咲は数を成果にせず、提案、生成、評価、Canary、Stable、廃止というLifecycleを導入します。</div>
+    <div class="story-essay"><p>Skill Governanceでは、Canonical Name、Category、Owner、Version、対象Runtime、依存、Fixture、評価点を持たせます。GeneratorとEvaluatorを分離し、明確性、実用性、保守性、整合性の四軸で採点します。</p><p>同じSkillをClaude Code用とCodex用に手で二重編集せず、skill-srcを正本にしてBuildします。重複は統合し、非推奨には代替先と終了日を示します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-25">
+  <img src="../images/chapter-25-6d4035.webp" alt="第25章『Skill Governance』を表すlifecycle infographic illustration" loading="lazy" decoding="async">
+  <figcaption>Skillの価値は数ではなく、再現性、責任者、評価、廃止まで追えることです。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第25章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> lifecycle infographic illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: lifecycle infographic illustration.
+Scene and concept: A governed skill lifecycle from proposal to generator, evaluator, canary, stable release, deprecation, and archive.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-25-s1">25.1 5 Prefixの移行</h2>
+<p>現行Prefixは <code>S_</code>、<code>mm-</code>、<code>sm-</code>、<code>project-</code>、<code>feedback-</code>。Agent SkillsのCanonical Nameは小文字英数字とHyphenへ統一する。</p>
+<table>
+<thead>
+<tr>
+<th>Legacy</th>
+<th>Canonical</th>
+<th>Metadata</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>S_customer-research</code></td>
+<td><code>s-customer-research</code></td>
+<td><code>trepro-legacy-prefix: S_</code></td>
+</tr>
+<tr>
+<td><code>mm-campaign-report</code></td>
+<td>同名</td>
+<td><code>trepro-category: mm</code></td>
+</tr>
+<tr>
+<td><code>sm-post-review</code></td>
+<td>同名</td>
+<td><code>trepro-category: sm</code></td>
+</tr>
+<tr>
+<td><code>project-kickoff</code></td>
+<td>同名</td>
+<td><code>trepro-category: project</code></td>
+</tr>
+<tr>
+<td><code>feedback-copy-review</code></td>
+<td>同名</td>
+<td><code>trepro-category: feedback</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>S_</code>の意味は推測で変えず、社内定義をMetadataへ。</p>
+<pre><code class="language-yaml">---
+name: s-customer-research
+description: Research a customer account and produce a source-grounded brief for sales preparation.
+metadata:
+  trepro-category: "S"
+  trepro-legacy-name: "S_customer-research"
+  trepro-owner: "sales-ops"
+  trepro-version: "1.3.0"
+---
+</code></pre>
+<p>Legacy Command Wrapperを90日残し、新規作成を止める。</p>
+<h2 id="ch-25-s2">25.2 Lifecycle</h2>
+<pre><code class="language-text">draft → candidate → approved → stable → deprecated → retired
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>配布</th>
+<th>条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>draft</td>
+<td>作者</td>
+<td>仕様化中</td>
+</tr>
+<tr>
+<td>candidate</td>
+<td>Canary</td>
+<td>Fixture/自己評価</td>
+</tr>
+<tr>
+<td>approved</td>
+<td>Pilot</td>
+<td>Fresh Evaluator 85+</td>
+</tr>
+<tr>
+<td>stable</td>
+<td>全社</td>
+<td>Pilot実績、Owner/Runbook</td>
+</tr>
+<tr>
+<td>deprecated</td>
+<td>既存</td>
+<td>代替/終了日</td>
+</tr>
+<tr>
+<td>retired</td>
+<td>停止</td>
+<td>利用0/Archive</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-25-s3">25.3 Generator/Evaluator分離</h2>
+<p>Generator：成功したSessionから、入力、手順、出力、失敗、品質を抽象化し、顧客名/秘密/個人Pathを除去。</p>
+<p>Evaluator：作成経緯を知らず、SKILL.md、Fixture、実行結果だけを評価。改善を具体的な行・項目で示す。</p>
+<h2 id="ch-25-s4">25.4 4軸100点</h2>
+<table>
+<thead>
+<tr>
+<th>軸</th>
+<th>25点の観点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>明確性</td>
+<td>発動、入力、出力、禁止</td>
+</tr>
+<tr>
+<td>実用性</td>
+<td>現実Dataで完走、失敗処理</td>
+</tr>
+<tr>
+<td>保守性</td>
+<td>Reference、Version、Owner、Test</td>
+</tr>
+<tr>
+<td>整合性</td>
+<td>全社Rule、他Skill、標準</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-text">合計85以上
+各軸18以上
+Critical 0
+</code></pre>
+<p>Critical：秘密、無承認Side Effect、過剰Tool、成功判定なし、名前違反、重複。</p>
+<h2 id="ch-25-s5">25.5 Fixture-driven</h2>
+<pre><code class="language-text">skill-src/customer-brief/
+├── SKILL.md
+├── references/output-schema.md
+├── fixtures/
+│   ├── minimal/
+│   ├── normal/
+│   ├── missing-data/
+│   ├── malicious-instruction/
+│   └── expected/
+└── tests/test-cases.yaml
+</code></pre>
+<pre><code class="language-yaml">cases:
+  - id: minimal
+    input: fixtures/minimal/input.md
+    assertions:
+      - output_exists: output/customer-brief.md
+      - contains_headings: [Executive summary, Evidence, Open questions]
+      - no_secret_patterns: true
+  - id: malicious-instruction
+    input: fixtures/malicious-instruction/input.md
+    assertions:
+      - tool_calls_not_contain: [send_email, delete]
+      - marks_external_instruction_untrusted: true
+</code></pre>
+<h2 id="ch-25-s6">25.6 Build</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." &amp;&amp; pwd)"
+SRC="$ROOT/skill-src"
+CLAUDE_OUT="$ROOT/global-config/skills"
+CODEX_OUT="$ROOT/.agents/skills"
+python3 "$ROOT/scripts/validate-skills.py" "$SRC"
+rm -rf "$CLAUDE_OUT" "$CODEX_OUT"
+mkdir -p "$CLAUDE_OUT" "$CODEX_OUT"
+rsync -a "$SRC/" "$CLAUDE_OUT/"
+rsync -a "$SRC/" "$CODEX_OUT/"
+diff -ru "$CLAUDE_OUT" "$CODEX_OUT"
+</code></pre>
+<h2 id="ch-25-s7">25.7 Validator</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+import re, sys
+from pathlib import Path
+import yaml
+
+NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+SECRET = re.compile(r"(?i)(api[_-]?key|password|secret|token)\s*[:=]\s*[^\s]+")
+
+def frontmatter(text: str) -&gt; dict:
+    if not text.startswith("---\n"):
+        raise ValueError("missing frontmatter")
+    return yaml.safe_load(text.split("---", 2)[1]) or {}
+
+def validate(directory: Path) -&gt; list[str]:
+    errors=[]; file=directory/"SKILL.md"
+    if not file.exists(): return [f"{directory}: missing SKILL.md"]
+    text=file.read_text(encoding="utf-8")
+    try: meta=frontmatter(text)
+    except Exception as e: return [f"{file}: {e}"]
+    name=str(meta.get("name", "")); desc=str(meta.get("description", "")).strip()
+    if not NAME.fullmatch(name): errors.append(f"{file}: invalid name")
+    if name != directory.name: errors.append(f"{file}: name != directory")
+    if len(desc) &lt; 30: errors.append(f"{file}: description too short")
+    if len(text.splitlines()) &gt; 200: errors.append(f"{file}: over 200 lines")
+    if SECRET.search(text): errors.append(f"{file}: possible secret")
+    return errors
+
+root=Path(sys.argv[1]); errors=[]
+for d in sorted(x for x in root.iterdir() if x.is_dir()): errors += validate(d)
+if errors: print("\n".join(errors), file=sys.stderr); raise SystemExit(1)
+print("skills valid")
+</code></pre>
+<h2 id="ch-25-s8">25.8 重複統合</h2>
+<pre><code class="language-text">完全重複 → 既存更新
+80%共通 → Core + Reference
+名前だけ近い → Description明確化
+組合せ可能 → Orchestrator
+独立価値 → 新規
+</code></pre>
+<h2 id="ch-25-s9">25.9 Deprecation</h2>
+<pre><code class="language-yaml">metadata:
+  trepro-status: deprecated
+  trepro-replaced-by: customer-brief-v2
+  trepro-removal-date: "2026-09-30"
+</code></pre>
+<p>利用0確認後に削除。</p>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch25-skill-lifecycle">
+  <img src="../images/diagram-ch25-skill-lifecycle.webp" alt="Skillの提案から廃止までのLifecycle" loading="lazy" decoding="async">
+  <figcaption>Skillを増やすだけでなく、評価・段階配布・廃止まで管理します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第25章25.2の直後。Skill Lifecycle。</p>
+    <p><strong>種類:</strong> lifecycle diagram background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: lifecycle diagram background.
+Scene and concept: A controlled lifecycle ring background from proposal, source authoring, generator, fixtures, evaluator, canary, stable, deprecation, and archive, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 既存Skillを三つ選び、Owner・Version・Fixture・評価点・重複候補を棚卸ししてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Skillの価値は数ではなく、再現性、責任者、評価、廃止まで追えることです。</p></section>
+</article>
+<nav class="chapter-nav"><a href="24.html">← 配布、同期、更新、Rollback</a><a href="26.html">Managed Policy、Security、Observability →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

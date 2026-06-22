@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第0章　教科書を「実行システム」にする — ブログ版</title><meta name="description" content="教科書の単位はページではなく、実行・検証・保存できるLessonです。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-00">教科書を「実行システム」にする</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-00">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-00">
+  <header class="chapter-head">
+    <div class="eyebrow">第0章</div>
+    <h1>教科書を「実行システム」にする</h1>
+  </header>
+  <section aria-labelledby="story-00">
+    <h2 id="story-00">物語の現在地</h2>
+    <div class="scene">月曜日の朝、遥はスライド生成Skillを呼び出し、見栄えのよい資料を作りました。ところが、途中で処理が止まると、どのファイルを見ればよいのか分かりませんでした。『使える』と『理解している』の間にある距離が、この教科書の出発点です。</div>
+    <div class="story-essay"><p>ナビゲーターは、最初に章を読むようには言いませんでした。代わりに、誰が、何を作り、どの証拠で完成と判断するのかを決めようと提案します。教科書を実行システムにするとは、説明をLessonへ分解し、前提・成果物・検証・版情報を持たせることです。</p><p>非エンジニア、開発者、管理者では必要な順序が違います。ただし全員に共通するのは、見たことではなく、再現できたことを進捗にする点です。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-00">
+  <img src="../images/chapter-00-8d4a0b.webp" alt="第0章『教科書を「実行システム」にする』を表すeditorial concept illustration" loading="lazy" decoding="async">
+  <figcaption>教科書の単位はページではなく、実行・検証・保存できるLessonです。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第0章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial concept illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial concept illustration.
+Scene and concept: A technical book transforming into an interactive workshop with lesson cards, checkpoints, and executable tools.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-00-s1">0.1 3つの学習ルート</h2>
+<h3 id="ch-00-s2">非エンジニアルート</h3>
+<pre><code class="language-text">全体像 → 安全 → Project Folder → 会議Assistant → HTML/Cowork → 実務レシピ
+</code></pre>
+<p>到達点：ローカル資料から議事録、週報、レポート、簡易アプリを作り、危険操作を避けられる。</p>
+<h3 id="ch-00-s3">開発者ルート</h3>
+<pre><code class="language-text">標準ループ → Permissions/Sandbox → Git/Context → Skills/Agents/Hooks → MCP → 自律化
+</code></pre>
+<p>到達点：複数ファイルの実装、テスト、修正、レビュー、長時間タスクを再現可能に運用できる。</p>
+<h3 id="ch-00-s4">管理者ルート</h3>
+<pre><code class="language-text">安全境界 → Managed Policy → Harness配布 → Skill Governance → Telemetry/Incident
+</code></pre>
+<p>到達点：全社員へ同じ環境を配布し、品質とセキュリティを強制・監査できる。</p>
+<h2 id="ch-00-s5">0.2 Lessonの標準形</h2>
+<p>将来アプリ化しやすいよう、各Lessonを次の単位で管理する。</p>
+<pre><code class="language-yaml">lesson_id: cc-core-plan-verify
+status: stable
+level: beginner
+estimated_minutes: 25
+prerequisites:
+  - cc-core-project-folder
+outcomes:
+  - 計画と実装を分けられる
+  - 完了条件を検証可能に書ける
+artifacts:
+  - requirements.md
+  - implementation-plan.md
+checks:
+  - テスト結果または画面証拠を提示できる
+verified_at: 2026-06-22
+source_topics:
+  - video-v01-plan-mode
+  - video-v04-meeting-assistant
+  - official-best-practices
+</code></pre>
+<h2 id="ch-00-s6">0.3 各章の統一フォーマット</h2>
+<pre><code class="language-text">目的
+  ↓
+概念
+  ↓
+手順
+  ↓
+コピペ例
+  ↓
+検証方法
+  ↓
+事故防止
+  ↓
+発展課題
+</code></pre>
+<h2 id="ch-00-s7">0.4 変わりにくい原則と変わりやすい情報を分ける</h2>
+<h3 id="ch-00-s8">本文へ固定</h3>
+<ul>
+<li>Planと実装を分ける。</li>
+<li>完了条件を先に定義する。</li>
+<li>最小権限、隔離、可逆性、検証、監査。</li>
+<li>作成者と評価者を分ける。</li>
+<li>GitとCheckpointを併用する。</li>
+<li>会話の知見をSkillやRuleへ昇格させる。</li>
+</ul>
+<h3 id="ch-00-s9">Feature Registryへ分離</h3>
+<ul>
+<li>Model名と利用可否。</li>
+<li>料金と上限。</li>
+<li>UI名、Slash Command、対象Plan。</li>
+<li>Beta/Preview/Suspended状態。</li>
+<li>最低Claude Code Version。</li>
+</ul>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自分が非エンジニア、開発者、管理者のどのルートから始めるかを決め、最初に作る成果物と合格証拠を一行で書いてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>教科書の単位はページではなく、実行・検証・保存できるLessonです。</p></section>
+</article>
+<nav class="chapter-nav"><span></span><a href="01.html">Claude Codeは何が違うのか →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

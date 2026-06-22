@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第19章　Claude Codeを自分専用に育てる — ブログ版</title><meta name="description" content="自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-19">Claude Codeを自分専用に育てる</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-19">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-19">
+  <header class="chapter-head">
+    <div class="eyebrow">第19章</div>
+    <h1>Claude Codeを自分専用に育てる</h1>
+  </header>
+  <section aria-labelledby="story-19">
+    <h2 id="story-19">物語の現在地</h2>
+    <div class="scene">数週間使うと、遥の質問には興味や苦手分野が表れ始めました。ナビゲーターは会話を丸ごと記憶するのではなく、未分析ログから必要な信号だけを抽出し、INTERESTS.mdへまとめます。自分専用化を、プライバシーと一緒に設計します。</div>
+    <div class="story-essay"><p>パーソナライズでは、何を保存しないかが重要です。秘密、個人情報、顧客データ、単なる雑談を除外し、関心、学習課題、好む形式のような再利用価値のある信号だけを抽出します。処理済み位置を持ち、毎回全ログを読み直しません。</p><p>新しさと深掘り回数を重み付けすると、現在の関心を反映できます。そのProfileから調査テーマや復習問題を作り、学習者自身が編集・削除できるようにします。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-19">
+  <img src="../images/chapter-19-b96750.webp" alt="第19章『Claude Codeを自分専用に育てる』を表すeditorial privacy illustration" loading="lazy" decoding="async">
+  <figcaption>自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第19章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial privacy illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial privacy illustration.
+Scene and concept: A private personal knowledge garden growing from carefully filtered conversation signals, with sensitive data kept outside a protected boundary.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-19-s1">19.1 外部化する情報</h2>
+<ul>
+<li>最近の関心。</li>
+<li>よく詰まる概念。</li>
+<li>好む説明形式。</li>
+<li>継続中の学習Theme。</li>
+<li>次のResearch候補。</li>
+<li>復習すべき内容。</li>
+</ul>
+<pre><code class="language-text">personalization/
+├── state.json
+├── signals.jsonl
+├── INTERESTS.md
+├── LEARNING.md
+├── preferences.md
+└── quizzes/
+</code></pre>
+<h2 id="ch-19-s2">19.2 Privacy by Design</h2>
+<pre><code class="language-text">- 対象ProjectをAllowlist
+- 顧客案件はOpt-in
+- SecretをMask
+- 生LogのRetention
+- Sensitive Traitを推測しない
+- 人事評価へ使わない
+- UserがReview/Delete可能
+</code></pre>
+<h2 id="ch-19-s3">19.3 未分析Logだけを抽出するScript</h2>
+<p>Local履歴形式は更新され得る。実環境のJSONL Schemaを確認して使う。</p>
+<p><code>tools/extract_user_signals.py</code>：</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Iterable
+
+DEFAULT_ROOT = Path.home() / ".claude" / "projects"
+DEFAULT_STATE = Path("personalization/state.json")
+DEFAULT_OUTPUT = Path("personalization/signals.jsonl")
+
+NOISE = [
+    re.compile(r"^(こんにちは|ありがとう|了解|ok|okay|yes|no)[。!！ ]*$", re.I),
+    re.compile(r"^/[a-z0-9_-]+(?:\s+.*)?$", re.I),
+]
+SECRETS = [
+    re.compile(r"(?i)(api[_-]?key|token|secret|password)\s*[:=]\s*[^\s,;]+"),
+    re.compile(r"\b(?:sk|ghp|github_pat)_[A-Za-z0-9_-]{16,}\b"),
+]
+
+
+def load_json(path: Path, default: Any) -&gt; Any:
+    if not path.exists():
+        return default
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return default
+
+
+def atomic_json(path: Path, value: Any) -&gt; None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp.replace(path)
+
+
+def text_blocks(content: Any) -&gt; Iterable[str]:
+    if isinstance(content, str):
+        yield content
+    elif isinstance(content, list):
+        for block in content:
+            if isinstance(block, str):
+                yield block
+            elif isinstance(block, dict) and block.get("type") in {"text", "input_text"}:
+                value = block.get("text") or block.get("content")
+                if isinstance(value, str):
+                    yield value
+
+
+def user_text(record: dict[str, Any]) -&gt; str:
+    record_type = str(record.get("type", "")).lower()
+    message = record.get("message")
+    if isinstance(message, dict):
+        role = str(message.get("role", "")).lower()
+        if role != "user" and record_type != "user":
+            return ""
+        content = message.get("content", "")
+    else:
+        role = str(record.get("role", "")).lower()
+        if role != "user" and record_type != "user":
+            return ""
+        content = record.get("content", "")
+    return "\n".join(x.strip() for x in text_blocks(content) if x.strip()).strip()
+
+
+def redact(text: str) -&gt; str:
+    for pattern in SECRETS:
+        text = pattern.sub("[REDACTED_SECRET]", text)
+    return text[:5000]
+
+
+def is_noise(text: str) -&gt; bool:
+    normalized = " ".join(text.split()).strip()
+    return len(normalized) &lt; 12 or any(p.match(normalized) for p in NOISE)
+
+
+def source_id(path: Path, root: Path) -&gt; str:
+    rel = str(path.relative_to(root))
+    return hashlib.sha256(rel.encode()).hexdigest()[:16]
+
+
+def main() -&gt; int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--log-root", type=Path, default=DEFAULT_ROOT)
+    parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--allow-project", action="append", default=[])
+    args = parser.parse_args()
+
+    root = args.log_root.expanduser().resolve()
+    if not root.exists():
+        raise SystemExit(f"log directory not found: {root}")
+
+    state: dict[str, int] = load_json(args.state, {})
+    new_state = dict(state)
+    allow = {x.lower() for x in args.allow_project}
+    rows: list[dict[str, Any]] = []
+
+    for path in sorted(root.rglob("*.jsonl")):
+        rel = str(path.relative_to(root)).lower()
+        if allow and not any(name in rel for name in allow):
+            continue
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+        start = min(max(0, int(state.get(str(path), 0))), len(lines))
+        for line_no, line in enumerate(lines[start:], start=start + 1):
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(record, dict):
+                continue
+            text = redact(user_text(record))
+            if not text or is_noise(text):
+                continue
+            timestamp = record.get("timestamp") or record.get("created_at")
+            if not isinstance(timestamp, str):
+                timestamp = datetime.now(timezone.utc).isoformat()
+            sid = source_id(path, root)
+            rid = hashlib.sha256(f"{sid}:{line_no}:{text}".encode()).hexdigest()
+            rows.append({"id": rid, "timestamp": timestamp, "source": sid, "text": text})
+        new_state[str(path)] = len(lines)
+
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    with args.output.open("a", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+    atomic_json(args.state, new_state)
+    print(f"appended={len(rows)} output={args.output}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+</code></pre>
+<pre><code class="language-bash">mkdir -p personalization tools
+python3 tools/extract_user_signals.py --allow-project my-workspace
+</code></pre>
+<h2 id="ch-19-s4">19.4 Interest Profile Skill</h2>
+<pre><code class="language-markdown">---
+name: interest-profile
+description: Analyze new user-authored interaction signals and update a concise privacy-safe interest and learning profile. Use when syncing interests, personalizing research, or creating review material.
+argument-hint: "sync | research-brief | quiz"
+disable-model-invocation: true
+---
+
+# Objective
+Turn `personalization/signals.jsonl` into user-reviewable context.
+Never infer sensitive traits or employee performance.
+
+# Exclusions
+Do not retain credentials, customer secrets, health, political, religious,
+sexual, financial-account, or private family information.
+Do not quote long messages.
+
+# Scoring
+Assess frequency across sessions, follow-up depth, explicit interest,
+recency, and whether the topic remains active.
+
+# Workflow
+1. Read new signals and existing profiles.
+2. Remove greetings, commands, pasted source text, and operational noise.
+3. Group similar topics.
+4. Merge rather than duplicate.
+5. Mark uncertain inferences as hypotheses.
+6. Keep no more than 15 active topics.
+7. Update INTERESTS.md and LEARNING.md.
+8. Show the diff for user approval.
+</code></pre>
+<h2 id="ch-19-s5">19.5 Recency Score</h2>
+<pre><code class="language-text">base = explicit_interest × 3
+     + distinct_sessions × 2
+     + follow_up_depth
+     + repeated_actions
+score = base × 0.5^(days_since_last / half_life_days)
+</code></pre>
+<p>数値は並べ替え補助であり、人間評価へ使わない。</p>
+<h2 id="ch-19-s6">19.6 学習問題</h2>
+<pre><code class="language-text">`LEARNING.md`から想起学習用HTMLを作る。
+20問。定義、比較、原因、実装、Debugを混ぜる。
+答えを初期非表示にし、自信度と不正解再出題を持つ。
+Local Storageには回答状態だけを保存する。
+</code></pre>
+<h2 id="ch-19-s7">19.7 音声・画像・割り込み</h2>
+<p>長い依頼は音声入力と相性がよいが、Command、Path、数値を実行前に復唱させる。</p>
+<pre><code class="language-text">今の依頼を、目的、対象File、禁止、完了条件に分けて復唱してください。まだ実行しないでください。
+</code></pre>
+<p>画像はUI差分やError画面へ使い、SecretsをMaskする。緊急停止は割り込みTextではなく停止操作を使う。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 保存してよい学習信号と保存してはいけない情報を定義し、少量の会話ログからINTERESTS.mdの試作を作ってください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。</p></section>
+</article>
+<nav class="chapter-nav"><a href="18.html">← CoworkとLive Artifacts</a><a href="20.html">`/goal`、Headless、定期実行 →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

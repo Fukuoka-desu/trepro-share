@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第6章　Explore → Specify → Plan → Implement → Verify → Review → Commit — ブログ版</title><meta name="description" content="速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-06">Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-06">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-06">
+  <header class="chapter-head">
+    <div class="eyebrow">第6章</div>
+    <h1>Explore → Specify → Plan → Implement → Verify → Review → Commit</h1>
+  </header>
+  <section aria-labelledby="story-06">
+    <h2 id="story-06">物語の現在地</h2>
+    <div class="scene">会議アシスタントは動きました。しかし翌週、別の素材で試すと抜けが出ます。蓮は成功した一回を称賛する前に、七つのカードを机へ並べました。Explore、Specify、Plan、Implement、Verify、Review、Commit。</div>
+    <div class="story-essay"><p>この七段階は、アプリ開発だけの手順ではありません。資料作成、調査、ファイル整理、Skill改善にも使える仕事の骨格です。探索で事実を集め、仕様で成功条件を固定し、計画で変更範囲を絞り、実装後は証拠で検証します。</p><p>さらに、作成者とは別の文脈でレビューし、良い状態をGitへ保存します。各段階を飛ばさないことで、速さを落とすのではなく、やり直しを減らします。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-06">
+  <img src="../images/chapter-06-3ebed7.webp" alt="第6章『Explore → Specify → Plan → Implement → Verify → Review → Commit』を表すworkflow illustration" loading="lazy" decoding="async">
+  <figcaption>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第6章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> workflow illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: workflow illustration.
+Scene and concept: A seven-station circular workflow with exploration, specification, planning, implementation, verification, review, and commit represented as tangible workstations.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-06-s1">6.1 全業務を同じ型へ入れる</h2>
+<pre><code class="language-text">Explore    現状を読む
+Specify    目的と完了条件を固定
+Plan       変更範囲と検証方法を決める
+Implement  小さく変更
+Verify     機械的・視覚的に確認
+Review     別文脈で欠陥を探す
+Commit     良い状態を保存
+</code></pre>
+<p>このLoopはCodeだけでなく、資料、調査、業務自動化にも使える。</p>
+<h2 id="ch-06-s2">6.2 Explore</h2>
+<p>最初に読ませるもの：</p>
+<ul>
+<li><code>README.md</code>、<code>CLAUDE.md</code>、<code>AGENTS.md</code>。</li>
+<li>Requirements、Architecture、Runbook。</li>
+<li>Package/Build/Test設定。</li>
+<li>関係Codeと既存Test。</li>
+<li><code>git status</code>、最近の変更。</li>
+</ul>
+<p>Prompt：</p>
+<pre><code class="language-text">まだ編集しないでください。
+この依頼に関係するFile、既存挙動、Test、制約、未知点を調査し、Evidence付きでまとめてください。
+</code></pre>
+<h2 id="ch-06-s3">6.3 Specify</h2>
+<p>完了条件は動詞ではなく、判定可能な状態にする。</p>
+<table>
+<thead>
+<tr>
+<th>曖昧</th>
+<th>検証可能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>速くする</td>
+<td>p95が500ms以下</td>
+</tr>
+<tr>
+<td>見やすくする</td>
+<td>375pxで横Scrollなし、Contrast基準を通す</td>
+</tr>
+<tr>
+<td>Bugを直す</td>
+<td>再現Testが修正前Fail、修正後Pass</td>
+</tr>
+<tr>
+<td>整理する</td>
+<td>Manifestどおり移動しHash一致</td>
+</tr>
+<tr>
+<td>調査する</td>
+<td>全主要Claimに一次出典と取得日</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-06-s4">6.4 Plan</h2>
+<p>Planで確認する項目：</p>
+<pre><code class="language-text">- 変更Fileと理由
+- 既存設計との整合
+- Data Migration
+- External Side Effect
+- Test/Verification
+- Security/Privacy
+- Rollback
+- 対象外
+- 承認が必要な点
+</code></pre>
+<p>複数File、Data変更、外部連携、高RiskはPlan Modeを使う。</p>
+<h2 id="ch-06-s5">6.5 Implement</h2>
+<ul>
+<li>1回の変更を小さくする。</li>
+<li>無関係Refactorを混ぜない。</li>
+<li>既存規約を守る。</li>
+<li>Config弱体化でTestを通さない。</li>
+<li>長時間Taskは途中成果物をFileへ保存する。</li>
+<li>同じFileを複数Agentが同時編集しない。</li>
+</ul>
+<h2 id="ch-06-s6">6.6 Verify</h2>
+<pre><code class="language-text">Static: format, lint, typecheck, schema, secret scan
+Behavior: unit, integration, E2E, replay
+Visual: screenshot, responsive, PDF/print
+Data: row count, totals, hash, duplicate, null
+Operations: logs, retry, timeout, rollback
+</code></pre>
+<p>Claudeへ証拠を要求する。</p>
+<pre><code class="language-text">完了条件ごとに、実行したCommand、Exit Code、出力要約、Artifact Pathを表で示してください。
+未実行は未実行と書いてください。
+</code></pre>
+<h2 id="ch-06-s7">6.7 Review</h2>
+<p>作ったSessionは自分の判断へ引っ張られる。新しいSessionまたはFresh Reviewerを使う。</p>
+<pre><code class="language-text">このDiffを、要件、Security、Data loss、Edge case、Test不足の観点で独立Reviewしてください。
+実装者の説明を鵜呑みにせず、FileとLineを根拠にしてください。
+</code></pre>
+<h2 id="ch-06-s8">6.8 Commit</h2>
+<p>Commit前：</p>
+<pre><code class="language-bash">git status --short
+git diff --check
+git diff --stat
+git diff
+</code></pre>
+<p>Commitは1つの意図にまとめ、Secrets、生成Noise、他人の変更を含めない。</p>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch06-standard-loop">
+  <img src="../images/diagram-ch06-standard-loop.webp" alt="探索からCommitまでの七段階標準Loop" loading="lazy" decoding="async">
+  <figcaption>どの仕事も同じLoopへ入れると、抜けと手戻りを発見しやすくなります。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第6章6.1の直後。七段階の標準Loopを俯瞰する。</p>
+    <p><strong>種類:</strong> circular workflow diagram background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: circular workflow diagram background.
+Scene and concept: A precise seven-step circular workflow background with seven empty labeled zones and a central human quality decision point, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 次に行う作業を七段階の見出しで書き、各段階の成果物を一つずつ決めてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="05.html">← 強い指示の書き方</a><a href="07.html">Permission Mode、Sandbox、危険操作 →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

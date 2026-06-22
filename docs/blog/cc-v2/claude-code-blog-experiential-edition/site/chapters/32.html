@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第32章　継続業務の自動化 — ブログ版</title><meta name="description" content="自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-32">継続業務の自動化</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-32">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-32">
+  <header class="chapter-head">
+    <div class="eyebrow">第32章</div>
+    <h1>継続業務の自動化</h1>
+  </header>
+  <section aria-labelledby="story-32">
+    <h2 id="story-32">物語の現在地</h2>
+    <div class="scene">毎朝のニュース、会議後のTask Board、月次のSkill評価。繰り返しが見えたとき、四人は人を速くするのではなく、仕組みへ移すことを考えます。</div>
+    <div class="story-essay"><p>継続業務は、入力が安定し、完了条件が検証でき、失敗時に人へ戻せるものから自動化します。毎朝Briefは情報源と更新時刻を固定し、会議からTask Boardへの流れは重複登録と担当者確認を持たせます。</p><p>Skill改善Loopでは、実行ログ、失敗Fixture、評価点を集め、Canaryで更新します。成熟度は、個人の手作業から再利用、半自動、監視付き自動へ段階的に上げます。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-32">
+  <img src="../images/chapter-32-1b77d9.webp" alt="第32章『継続業務の自動化』を表すoperations illustration" loading="lazy" decoding="async">
+  <figcaption>自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第32章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> operations illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: operations illustration.
+Scene and concept: A calm operations rhythm showing morning brief, meeting-to-task flow, scheduled skill evaluation, and monitored automation maturity stages.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-32-s1">32.1 毎朝Brief</h2>
+<p>Calendar、未返信候補、締切Task、重要Mentionから、今日の予定、準備Meeting、返信Draft、Riskを作る。送信/予定変更/Task更新はしない。</p>
+<h2 id="ch-32-s2">32.2 会議→Task Board</h2>
+<pre><code class="language-text">Transcript → Meeting Skill → Human Review → Task JSON → Dashboard
+→ 承認済みTaskだけ外部SystemへDraft登録
+</code></pre>
+<h2 id="ch-32-s3">32.3 Skill改善Loop</h2>
+<pre><code class="language-text">実行 → User評価 → 失敗Fixture → Generator → Fresh Evaluator
+→ Canary → Metrics → Stable
+</code></pre>
+<p>会話中に即全社上書きしない。</p>
+<h2 id="ch-32-s4">32.4 成熟度</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>状態</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>手動Chat</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Skill</td>
+</tr>
+<tr>
+<td>2</td>
+<td>File/Test</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Hook/MCP/Scheduled</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Subagent Workflow</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Goal + Verifier + Human Gate</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Harness + Audit + Release</td>
+</tr>
+</tbody>
+</table>
+<p>必要な最小Levelを選ぶ。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 週一回以上繰り返す仕事を一つ選び、入力の安定性・検証可能性・副作用・失敗時対応を採点してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。</p></section>
+</article>
+<nav class="chapter-nav"><a href="31.html">← Design・資料・公開</a><a href="33.html">失敗Pattern →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

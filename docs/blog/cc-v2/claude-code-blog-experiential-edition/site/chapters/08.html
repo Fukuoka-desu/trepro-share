@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第8章　ModelとEffort — ブログ版</title><meta name="description" content="モデルは強さではなく役割で選び、変動情報は本文から切り離します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-08">ModelとEffort</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-08">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-08">
+  <header class="chapter-head">
+    <div class="eyebrow">第8章</div>
+    <h1>ModelとEffort</h1>
+  </header>
+  <section aria-labelledby="story-08">
+    <h2 id="story-08">物語の現在地</h2>
+    <div class="scene">遥は難しい仕事ほど常に最上位モデルを選ぼうとしました。ところが利用上限が早く来て、単純な修正まで止まります。蓮は、モデル名ではなく、計画、実装、軽い整理、評価という役割で選ぶよう提案します。</div>
+    <div class="story-essay"><p>ModelとEffortは品質を上げる魔法のつまみではありません。問題の難しさ、失敗コスト、必要な速度に合わせて使い分けます。深く考える価値があるのは、設計判断、複雑な原因分析、重要なレビューです。</p><p>一方、定型変換や軽い修正まで最大Effortにすると、時間とコストだけが増えます。変動するモデル名や提供条件はFeature Registryへ分離し、教科書の原則を特定モデルへ依存させません。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-08">
+  <img src="../images/chapter-08-2ebf79.webp" alt="第8章『ModelとEffort』を表すeditorial metaphor illustration" loading="lazy" decoding="async">
+  <figcaption>モデルは強さではなく役割で選び、変動情報は本文から切り離します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第8章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial metaphor illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial metaphor illustration.
+Scene and concept: Three differently sized precision instruments assigned to lightweight work, standard implementation, and high-stakes planning, balanced against time and cost.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-08-s1">8.1 Model名ではなく役割で選ぶ</h2>
+<table>
+<thead>
+<tr>
+<th>役割</th>
+<th>選び方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>軽量</td>
+<td>定型変換、分類、短い要約</td>
+</tr>
+<tr>
+<td>標準</td>
+<td>通常実装、文章、調査、Test</td>
+</tr>
+<tr>
+<td>高性能</td>
+<td>Architecture、難しいDebug、重要Review</td>
+</tr>
+<tr>
+<td>長時間最上位</td>
+<td>複雑な探索・Workflow。ただしCostと提供状況を確認</td>
+</tr>
+</tbody>
+</table>
+<p>日常は標準Modelを使い、計画、難所、最終Reviewだけ高性能へ切り替える。</p>
+<h2 id="ch-08-s2">8.2 Effort</h2>
+<p>Effortは、考える深さ、時間、利用量のTrade-offである。</p>
+<pre><code class="language-text">low/medium: 定型、軽い修正
+high: 複数File、分析、重要文書
+最大: 難しいArchitecture、長時間探索
+</code></pre>
+<p>深く考えるほど常に良いわけではない。曖昧な依頼を長く考えても、曖昧なままである。</p>
+<h2 id="ch-08-s3">8.3 <code>ultrathink</code></h2>
+<p>難しい計画・Reviewで「徹底的に考える」Signalとして使える場合がある。</p>
+<pre><code class="language-text">ultrathink
+既存Architecture、Data Migration、Failure Modeを比較し、最小Riskの計画を作ってください。
+</code></pre>
+<p>Magic Wordだけに依存せず、比較軸、制約、証拠を明示する。</p>
+<h2 id="ch-08-s4">8.4 Advisor</h2>
+<p>標準Modelを主に使い、重要な局面だけ高性能Modelの助言を得る設計は、品質とCostのBalanceがよい。現行の <code>/advisor</code> と提供条件を確認する。</p>
+<h2 id="ch-08-s5">8.5 Fable 5の扱い</h2>
+<p>素材中では長時間Taskに強い最上位Modelとして紹介されるが、基準日にはアクセス停止中である。</p>
+<ul>
+<li>教材の必須手順にしない。</li>
+<li>Feature Registryで<code>suspended</code>を表示する。</li>
+<li>再開後もCost、Safety、対象Planを再検証する。</li>
+<li>Workflow設計はModel非依存にする。</li>
+</ul>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自分の典型業務を、軽量処理・標準処理・高難度判断の三つへ分類し、どこでEffortを上げるか決めてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>モデルは強さではなく役割で選び、変動情報は本文から切り離します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="07.html">← Permission Mode、Sandbox、危険操作</a><a href="09.html">SessionとContext →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第37章　素材と現行仕様の補正 — ブログ版</title><meta name="description" content="長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-37">素材と現行仕様の補正</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-37">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-37">
+  <header class="chapter-head">
+    <div class="eyebrow">第37章</div>
+    <h1>素材と現行仕様の補正</h1>
+  </header>
+  <section aria-labelledby="story-37">
+    <h2 id="story-37">物語の現在地</h2>
+    <div class="scene">動画で見たモデル名やコマンドが、数週間後には変わっていることがあります。遥は『教科書が間違った』のではなく、変動情報を本文へ固定した設計が間違いだと学びます。</div>
+    <div class="story-essay"><p>原則とFeatureを分けます。PlanとVerifyの重要性は長く使えますが、モデル名、料金、利用上限、UI、Beta状態は確認日と公式Sourceを持つRegistryへ置きます。動画の主張は素材として活かし、現行仕様で補正します。</p><p>更新時は差分を記録し、SuspendedやDeprecatedを明示し、古い手順から安全に移行できる案内を付けます。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-37">
+  <img src="../images/chapter-37-150455.webp" alt="第37章『素材と現行仕様の補正』を表すeditorial metaphor illustration" loading="lazy" decoding="async">
+  <figcaption>長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第37章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial metaphor illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial metaphor illustration.
+Scene and concept: A stable stone foundation of principles beneath changing signboards for models, commands, pricing, beta features, and versions.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <table>
+<thead>
+<tr>
+<th>素材上</th>
+<th>本書の現行扱い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fable 5利用可能</td>
+<td>2026-06-12から停止。依存させない</td>
+</tr>
+<tr>
+<td>Dynamic Workflows Max限定</td>
+<td>v2.1.154以降の有料Plan。Proは設定確認</td>
+</tr>
+<tr>
+<td>Custom Commands/Skills別</td>
+<td>CommandsはSkillsへ統合。新規はSkills</td>
+</tr>
+<tr>
+<td>任意Skill名</td>
+<td>共通正本はlowercase-hyphen</td>
+</tr>
+<tr>
+<td><code>/design-login</code></td>
+<td><code>/design</code>、<code>/design-sync</code>を確認</td>
+</tr>
+<tr>
+<td>Context 40%閾値</td>
+<td>固定Ruleにしない</td>
+</tr>
+<tr>
+<td>Bypass効率的</td>
+<td>隔離限定、全社禁止推奨</td>
+</tr>
+<tr>
+<td>CLAUDE.mdが全Rule</td>
+<td>Guidance。強制はPolicy/Hook</td>
+</tr>
+<tr>
+<td>会話を続けるほど育つ</td>
+<td>知見を適切なLayerへ昇格</td>
+</tr>
+<tr>
+<td>料金/上限/Model</td>
+<td>Registry更新</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 本文にある変動情報を三つ見つけ、Feature Registryへ名前・状態・確認日・公式Source・代替手順として移してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="36.html">← 30日導入計画</a><a href="38.html">Coverage Map →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

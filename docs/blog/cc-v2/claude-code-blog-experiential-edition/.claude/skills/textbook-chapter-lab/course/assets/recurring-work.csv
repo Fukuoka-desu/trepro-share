@@ -1,0 +1,5 @@
+task,frequency,input_stability,verification,side_effect
+news brief,daily,high,high,low
+client email,weekly,medium,medium,high
+production deploy,monthly,low,high,high
+meeting summary,weekly,high,high,low

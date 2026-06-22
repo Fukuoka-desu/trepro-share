@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第10章　GitとCheckpoint — ブログ版</title><meta name="description" content="可逆性は勇気ではなく、CheckpointとGitで設計する能力です。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-10">GitとCheckpoint</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-10">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-10">
+  <header class="chapter-head">
+    <div class="eyebrow">第10章</div>
+    <h1>GitとCheckpoint</h1>
+  </header>
+  <section aria-labelledby="story-10">
+    <h2 id="story-10">物語の現在地</h2>
+    <div class="scene">修正後の画面が崩れ、遥は『ひとつ前へ戻して』と頼みます。Checkpointで戻せる変更もありましたが、セッションをまたいだ手編集までは戻りません。蓮はGitを開き、『戻る』を偶然ではなく履歴にしようと説明します。</div>
+    <div class="story-essay"><p>CheckpointとGitは競合しません。Checkpointは会話中の素早い巻き戻し、Gitはセッションや人をまたぐ正式な履歴です。意味のある単位でCommitし、変更理由と検証結果を残します。</p><p>並列作業ではWorktreeを使い、別の作業が同じファイルを奪い合わないようにします。保存地点を先に作ると、AIへ大胆な試行を許可しやすくなります。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-10">
+  <img src="../images/chapter-10-2950ba.webp" alt="第10章『GitとCheckpoint』を表すeditorial metaphor illustration" loading="lazy" decoding="async">
+  <figcaption>可逆性は勇気ではなく、CheckpointとGitで設計する能力です。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第10章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial metaphor illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial metaphor illustration.
+Scene and concept: A mountain trail with frequent checkpoints and a durable map archive, symbolizing quick rewind and long-term Git history.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-10-s1">10.1 両方必要</h2>
+<table>
+<thead>
+<tr>
+<th>仕組み</th>
+<th>強み</th>
+<th>限界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Checkpoint <code>/rewind</code></td>
+<td>Session内の素早い巻戻し</td>
+<td>外部副作用、手動変更、長期履歴は限定</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>Sessionを跨ぐ履歴、Review、Branch</td>
+<td>Commit前の細かい対話状態は持たない</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-10-s2">10.2 Checkpoint</h2>
+<pre><code class="language-text">/rewind
+</code></pre>
+<p>またはEscを2回押して履歴選択へ入れる場合がある。CodeとConversationのどちらを戻すか確認する。</p>
+<p>CheckpointはGitの代わりではない。</p>
+<h2 id="ch-10-s3">10.3 最小Git運用</h2>
+<pre><code class="language-bash">git init
+git add .
+git commit -m 'chore: baseline before agent changes'
+
+git status --short
+git diff
+# 検証後
+git add &lt;intentional-files&gt;
+git commit -m 'feat: add meeting task extraction'
+</code></pre>
+<h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2>
+<pre><code class="language-text">- Commit前にDiffを見せる
+- 変更目的を1つにする
+- Secrets Scan
+- Test Evidence
+- 他人の変更を含めない
+- Force Pushしない
+- Commit Messageへ事実だけを書く
+</code></pre>
+<h2 id="ch-10-s5">10.5 Worktree</h2>
+<p>Agentを並列化する時は、同じWorking Treeを共有しない。</p>
+<pre><code class="language-bash">git worktree add ../project-agent-tests -b agent/tests
+git worktree add ../project-agent-docs -b agent/docs
+</code></pre>
+<p>各Agentへ編集範囲を割り当て、人間が統合する。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の良い状態をCommitし、その後に小さな変更を加えてDiffを確認し、元へ戻せることを試してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>可逆性は勇気ではなく、CheckpointとGitで設計する能力です。</p></section>
+</article>
+<nav class="chapter-nav"><a href="09.html">← SessionとContext</a><a href="11.html">CLAUDE.md、Rules、Auto Memory →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

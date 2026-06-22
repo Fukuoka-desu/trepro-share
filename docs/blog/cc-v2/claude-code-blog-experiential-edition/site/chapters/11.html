@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第11章　CLAUDE.md、Rules、Auto Memory — ブログ版</title><meta name="description" content="知識は量ではなく、適切なScopeへ置くことで効きます。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-11">CLAUDE.md、Rules、Auto Memory</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-11">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-11">
+  <header class="chapter-head">
+    <div class="eyebrow">第11章</div>
+    <h1>CLAUDE.md、Rules、Auto Memory</h1>
+  </header>
+  <section aria-labelledby="story-11">
+    <h2 id="story-11">物語の現在地</h2>
+    <div class="scene">毎回『日本語で』『このプロジェクトは何をするか』を説明するのに疲れた遥は、すべてをCLAUDE.mdへ詰め込みました。翌日、どの仕事でも長い指示が読み込まれ、かえって動きが鈍くなります。知識には置き場所があると分かる失敗でした。</div>
+    <div class="story-essay"><p>CLAUDE.mdはプロジェクトの短い案内板です。Path固有のルールはRulesへ、繰り返す業務手順はSkillsへ、AIが見つけた短い事実はAuto Memoryへ分けます。常に読み込む情報ほど短く、安定した内容にします。</p><p>/initは初稿を作る助けになりますが、生成された説明をそのまま肥大化させないことが重要です。実際の失敗から、必要な最小ルールだけを追加します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-11">
+  <img src="../images/chapter-11-d5b01f.webp" alt="第11章『CLAUDE.md、Rules、Auto Memory』を表すlayered architecture illustration" loading="lazy" decoding="async">
+  <figcaption>知識は量ではなく、適切なScopeへ置くことで効きます。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第11章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> layered architecture illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: layered architecture illustration.
+Scene and concept: A layered memory system with a small project sign, path-specific rule cards, reusable skill manuals, and compact discovered notes.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-11-s1">11.1 責務</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>誰が書く</th>
+<th>何を書く</th>
+<th>強制力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLAUDE.md</td>
+<td>人間・Team</td>
+<td>Project概要、Command、方針</td>
+<td>Guidance</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>人間・Team</td>
+<td>Pathや領域別の指示</td>
+<td>Guidance</td>
+</tr>
+<tr>
+<td>Auto Memory</td>
+<td>Claude</td>
+<td>Build、Debug、習慣の短い知見</td>
+<td>Guidance</td>
+</tr>
+<tr>
+<td>Managed Settings</td>
+<td>管理者</td>
+<td>Permission/Sandbox/MCP等</td>
+<td>Enforced</td>
+</tr>
+<tr>
+<td>Hook</td>
+<td>管理者/開発者</td>
+<td>Eventに対する決定的処理</td>
+<td>Enforced</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-11-s2">11.2 CLAUDE.mdのScope</h2>
+<p>代表的なScope：</p>
+<ul>
+<li>Managed policy: 組織共通、ユーザーが除外できない。</li>
+<li>User: <code>~/.claude/CLAUDE.md</code>。</li>
+<li>Project: Repository Rootの<code>CLAUDE.md</code>。</li>
+<li>Local: Git管理しない個人差分。</li>
+</ul>
+<p>全社の外せない指示はmacOSでは管理領域へ置く。</p>
+<pre><code class="language-text">/Library/Application Support/ClaudeCode/CLAUDE.md
+</code></pre>
+<p>ただし、ここもBehavior Guidanceであり、Tool実行の強制制御はSettings/Hookで行う。</p>
+<h2 id="ch-11-s3">11.3 良いCLAUDE.md</h2>
+<pre><code class="language-markdown"># Project overview
+[目的と主要User]
+
+# Architecture
+[主要Directoryと責務]
+
+# Commands
+- install:
+- dev:
+- lint:
+- typecheck:
+- test:
+- build:
+
+# Required workflow
+[調査→計画→実装→検証]
+
+# Constraints
+[Technology、Data、Security]
+
+# Do not
+[Config弱体化、本番接続、生成物直接編集]
+</code></pre>
+<p>短く、具体的、重複なし。200行未満を目安にする。</p>
+<h2 id="ch-11-s4">11.4 <code>/init</code></h2>
+<p>Projectを読み、初期CLAUDE.mdを作る起点にできる。ただし生成物をそのまま採用しない。</p>
+<p>Review項目：</p>
+<ul>
+<li>実際のCommandと一致。</li>
+<li>古いFile説明がない。</li>
+<li>当たり前の文章を削除。</li>
+<li>Security RuleをSettings/Hookへ移す。</li>
+<li>長い手順をSkillへ移す。</li>
+</ul>
+<h2 id="ch-11-s5">11.5 Rules</h2>
+<p><code>.claude/rules/</code>へ領域別Ruleを分ける。</p>
+<pre><code class="language-text">.claude/rules/
+├── frontend.md
+├── api.md
+├── database.md
+└── tests.md
+</code></pre>
+<p>Path条件を使えるVersionではFrontmatterで対象を限定する。</p>
+<pre><code class="language-markdown">---
+paths:
+  - "src/api/**/*.ts"
+---
+
+- Validate all external input.
+- Return typed errors.
+- Do not log request bodies containing personal data.
+</code></pre>
+<h2 id="ch-11-s6">11.6 AGENTS.mdとの共存</h2>
+<p>Claude CodeとCodexを併用する場合：</p>
+<ul>
+<li>共通原則は<code>AGENTS.md</code>。</li>
+<li>Claude固有は<code>CLAUDE.md</code>。</li>
+<li>同じ文章を二重編集しない。</li>
+<li>Build Scriptで共通Sectionを生成するか、Canonical Docを参照する。</li>
+</ul>
+<h2 id="ch-11-s7">11.7 Auto Memory</h2>
+<p>ClaudeがBuild Command、Debug Insight、Architecture Note等を保存する。便利だが、次を定期確認する。</p>
+<pre><code class="language-text">/memory
+</code></pre>
+<ul>
+<li>古い情報を削除。</li>
+<li>秘密・顧客情報を保存しない。</li>
+<li>Teamで共有すべき知見はCLAUDE.md/Rule/Skillへ昇格。</li>
+<li>端末固有の一時情報を共通Ruleへ入れない。</li>
+</ul>
+<h2 id="ch-11-s8">11.8 改善Loop</h2>
+<pre><code class="language-text">会話中の修正
+  ↓
+再発するか評価
+  ↓
+一時的 → Sessionのみ
+個人習慣 → Auto Memory/User CLAUDE.md
+Project規約 → CLAUDE.md/Rules
+業務手順 → Skill
+必須制御 → Hook/Managed Settings
+</code></pre>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch11-knowledge-layers">
+  <img src="../images/diagram-ch11-knowledge-layers.webp" alt="CLAUDE.md、Rules、Skills、Auto Memoryの責務レイヤー" loading="lazy" decoding="async">
+  <figcaption>常時読む情報ほど短くし、詳細手順は必要時だけ読み込みます。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第11章11.1の直後。CLAUDE.md、Rules、Skills、Memoryの責務分離。</p>
+    <p><strong>種類:</strong> layered architecture background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: layered architecture background.
+Scene and concept: A four-layer architecture background with a small always-on guidance layer, path-specific rules, on-demand manuals, and compact discovered memory, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> CLAUDE.mdの各行を『毎回必要か』で見直し、手順はSkillへ、Path固有事項はRulesへ移してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>知識は量ではなく、適切なScopeへ置くことで効きます。</p></section>
+</article>
+<nav class="chapter-nav"><a href="10.html">← GitとCheckpoint</a><a href="12.html">Skills設計 →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

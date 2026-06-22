@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第18章　CoworkとLive Artifacts — ブログ版</title><meta name="description" content="Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-18">CoworkとLive Artifacts</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-18">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-18">
+  <header class="chapter-head">
+    <div class="eyebrow">第18章</div>
+    <h1>CoworkとLive Artifacts</h1>
+  </header>
+  <section aria-labelledby="story-18">
+    <h2 id="story-18">物語の現在地</h2>
+    <div class="scene">週報を毎回作るのではなく、開くたびに最新のDrive情報を読み込むDashboardにできないか。遥の問いから、CoworkとLive Artifactsの実験が始まりました。作る資料から、更新される業務画面へ発想が変わります。</div>
+    <div class="story-essay"><p>Coworkは非開発業務の複数ステップに向きます。Projectで文脈を固定し、Scheduledで定期実行し、Artifactsで結果を操作可能な画面へし、ConnectorやMCPから最新情報を取り込みます。</p><p>Live Artifactでは、データ取得、整形、表示、AI要約、キャッシュを分けて設計します。読み込みのたびに高価な処理を繰り返さず、更新時刻と出典を表示し、失敗時には古いデータであることを明示します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-18">
+  <img src="../images/chapter-18-bee544.webp" alt="第18章『CoworkとLive Artifacts』を表すdashboard concept illustration" loading="lazy" decoding="async">
+  <figcaption>Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第18章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> dashboard concept illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: dashboard concept illustration.
+Scene and concept: A live operations dashboard pulling current meeting files from cloud storage, summarizing them, caching results, and showing update status.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-18-s1">18.1 Cowork向き</h2>
+<ul>
+<li>議事録→週報/Task。</li>
+<li>Drive資料の整理・要約。</li>
+<li>毎朝News Dashboard。</li>
+<li>社内文書View。</li>
+<li>Scheduled Task。</li>
+</ul>
+<p>Codeへ移す目安：Git履歴、独自Library/Test、認証/DB、本番Deploy、複雑な監視が必要。</p>
+<h2 id="ch-18-s2">18.2 主要領域</h2>
+<table>
+<thead>
+<tr>
+<th>領域</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project</td>
+<td>Folder、指示、素材</td>
+</tr>
+<tr>
+<td>Artifacts</td>
+<td>永続的なHTML等</td>
+</tr>
+<tr>
+<td>Scheduled</td>
+<td>定期実行</td>
+</tr>
+<tr>
+<td>Dispatch</td>
+<td>離れた端末から指示</td>
+</tr>
+<tr>
+<td>Customize</td>
+<td>Skills/Connectors</td>
+</tr>
+</tbody>
+</table>
+<p>UI名より役割を教材化する。</p>
+<h2 id="ch-18-s3">18.3 Live Artifactの5層</h2>
+<pre><code class="language-text">Source → Fetch → Transform → Cache → View
+Drive     MCP     Parse/Summary  Hash    Filter/Search/Ask
+</code></pre>
+<h2 id="ch-18-s4">18.4 会議Dashboard Prompt</h2>
+<pre><code class="language-text">Google Driveの「全社会議文字起こし」を参照するLive Artifactを作る。
+
+- 最新File一覧
+- 日付、題名、参加者、決定、担当、期限
+- 全文検索/担当Filter
+- 原文Link
+- 短いAI要約
+- 会議ごとの質問欄
+- 失敗/権限不足/空Data状態
+
+Performance:
+- source_id + content_hash + prompt_versionでCache
+- 変更Fileだけ再要約
+- 30秒Timeout、Retry Button
+
+Safety:
+- Read-only
+- 権限変更なし
+- 原文全文/個人情報をLocal Storageへ保存しない
+</code></pre>
+<p>動画で紹介されたArtifact内API名はBetaで変化し得る。作成時の公式Helpを正とする。</p>
+<h2 id="ch-18-s5">18.5 Scheduled設計</h2>
+<pre><code class="language-text">- 対象期間
+- 既処理判定
+- Timezone
+- Retry上限
+- 重複起動Lock
+- 失敗通知
+- 保存先
+- 0件時の挙動
+</code></pre>
+<h2 id="ch-18-s6">18.6 Acceptance</h2>
+<pre><code class="language-text">[ ] Add/Deleteで更新
+[ ] 未変更Dataを再処理しない
+[ ] 権限不足説明
+[ ] 0件/部分失敗/Timeout
+[ ] 原文へ戻れる
+[ ] AI要約と原文を区別
+[ ] 更新日時
+[ ] Mobile
+[ ] Write権限不要
+[ ] Browser Storageへ機密なし
+</code></pre>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch18-live-artifact-layers">
+  <img src="../images/diagram-ch18-live-artifact-layers.webp" alt="Live Artifactのデータ取得、整形、表示、AI要約、キャッシュ" loading="lazy" decoding="async">
+  <figcaption>更新される画面は、表示だけでなく取得・AI処理・キャッシュまで分離します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第18章18.3の直後。Live Artifactの五層。</p>
+    <p><strong>種類:</strong> stack diagram background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: stack diagram background.
+Scene and concept: A five-layer live dashboard stack background for external data retrieval, normalization, display, AI summary, and local cache with freshness indicator, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> ローカルの会議データを表示する小さなDashboardを作り、更新・キャッシュ・出典表示の三点を確認してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。</p></section>
+</article>
+<nav class="chapter-nav"><a href="17.html">← Claude Designから実装へ</a><a href="19.html">Claude Codeを自分専用に育てる →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

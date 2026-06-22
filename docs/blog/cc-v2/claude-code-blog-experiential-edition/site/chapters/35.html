@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第35章　教科書アプリの情報設計 — ブログ版</title><meta name="description" content="学習アプリの中心は本文表示ではなく、行動・証拠・状態・再開です。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-35">教科書アプリの情報設計</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-35">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-35">
+  <header class="chapter-head">
+    <div class="eyebrow">第35章</div>
+    <h1>教科書アプリの情報設計</h1>
+  </header>
+  <section aria-labelledby="story-35">
+    <h2 id="story-35">物語の現在地</h2>
+    <div class="scene">教科書をHTMLへしただけでは、遥が途中で止まった場所も、何を実践したかも分かりません。そこで本文をLesson Dataへ分け、ナビゲーターが状態を読みながら次の一操作を案内する学習アプリを設計します。</div>
+    <div class="story-essay"><p>最適な教科書アプリはPDF Viewerではありません。Role別Path、Lesson、前提、成果物、Check、Feature Registry、進捗、質問履歴を構造化します。進捗はseen、practiced、verified、appliedの段階で持ちます。</p><p>ブラウザから任意Shellを直接実行せず、将来はAllowlist付きLocal Companionと連携します。画面は現在地、次の一操作、期待結果、証拠、保存・再開を中心に設計します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-35">
+  <img src="../images/chapter-35-1dc9d6.webp" alt="第35章『教科書アプリの情報設計』を表すproduct concept illustration" loading="lazy" decoding="async">
+  <figcaption>学習アプリの中心は本文表示ではなく、行動・証拠・状態・再開です。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第35章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> product concept illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: product concept illustration.
+Scene and concept: A browser-based learning navigator with role paths, lesson cards, progress states, next action, evidence checks, and save-resume controls.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-35-s1">35.1 最適形</h2>
+<p>PDF Viewerではなく、次を持つ実行支援Learning Systemにする。</p>
+<ul>
+<li>Role別Path。</li>
+<li>Lesson進捗。</li>
+<li>Copy可能なPrompt/Code。</li>
+<li>Terminal Check。</li>
+<li>Artifact確認。</li>
+<li>Quiz/Hands-on。</li>
+<li>Version差分。</li>
+<li>Harness Status。</li>
+<li>Skill Catalog/Score。</li>
+<li>Admin Coverage Dashboard。</li>
+</ul>
+<h2 id="ch-35-s2">35.2 Content Model</h2>
+<pre><code class="language-json">{
+  "course_id": "claude-code-ultimate",
+  "version": "1.0.0",
+  "verified_at": "2026-06-22",
+  "audiences": ["non-engineer", "developer", "admin"],
+  "modules": [
+    {
+      "module_id": "core-loop",
+      "title": "標準作業ループ",
+      "order": 2,
+      "lessons": [
+        {
+          "lesson_id": "plan-implement-verify",
+          "status": "stable",
+          "level": "beginner",
+          "estimated_minutes": 25,
+          "prerequisites": ["project-folder"],
+          "outcomes": ["計画と実装を分ける", "証拠で完了判定する"],
+          "steps": [],
+          "checks": [],
+          "assets": [],
+          "sources": [],
+          "change_notes": []
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<h2 id="ch-35-s3">35.3 Lesson JSON Schema</h2>
+<pre><code class="language-json">{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trepro.example/schemas/lesson.schema.json",
+  "type": "object",
+  "required": ["lesson_id", "title", "status", "level", "outcomes", "steps", "checks", "verified_at"],
+  "properties": {
+    "lesson_id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string", "minLength": 1},
+    "status": {"enum": ["stable", "beta", "preview", "suspended", "deprecated"]},
+    "level": {"enum": ["beginner", "intermediate", "advanced", "admin"]},
+    "estimated_minutes": {"type": "integer", "minimum": 1},
+    "outcomes": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step_id", "type", "body"],
+        "properties": {
+          "step_id": {"type": "string"},
+          "type": {"enum": ["explain", "command", "prompt", "edit", "verify", "quiz"]},
+          "body": {"type": "string"},
+          "copyable": {"type": "boolean"},
+          "risk": {"enum": ["low", "medium", "high"]}
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "description"],
+        "properties": {
+          "check_id": {"type": "string"},
+          "description": {"type": "string"},
+          "evidence_type": {"enum": ["manual", "command", "file", "quiz", "review"]}
+        }
+      }
+    },
+    "verified_at": {"type": "string", "format": "date"}
+  }
+}
+</code></pre>
+<h2 id="ch-35-s4">35.4 Feature Registry</h2>
+<pre><code class="language-json">{
+  "feature_id": "dynamic-workflows",
+  "status": "available",
+  "minimum_version": "2.1.154",
+  "plans": ["paid"],
+  "verified_at": "2026-06-22",
+  "official_source": "official-doc-id",
+  "notes": "Pro may require enabling in config"
+}
+</code></pre>
+<p>古い<code>verified_at</code>へWarningを出す。</p>
+<h2 id="ch-35-s5">35.5 Progress</h2>
+<pre><code class="language-text">seen → practiced → verified → applied
+</code></pre>
+<p>認定は<code>verified</code>以上を数える。</p>
+<h2 id="ch-35-s6">35.6 実行連携</h2>
+<ol>
+<li>Copy Button。</li>
+<li>Local Companion CLIがLesson IDを受ける。</li>
+<li>Allowlist Commandだけ実行。</li>
+<li>Exit Code/Artifact Pathを返す。</li>
+<li>高Riskは手動承認。</li>
+</ol>
+<p>Browserから任意Shellを直接実行しない。</p>
+<h2 id="ch-35-s7">35.7 画面</h2>
+<pre><code class="language-text">Home
+Learning Path
+Lesson Player
+Template Library
+Skill Catalog
+Practice Projects
+Update Center
+Harness Status
+Admin Coverage
+Certification
+</code></pre>
+<p>管理者へ個人会話内容を見せない。</p>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch35-learning-system">
+  <img src="../images/diagram-ch35-learning-system.webp" alt="教科書アプリのLearning Path、Lesson、証拠、Feature Registry、進捗、Local Companion" loading="lazy" decoding="async">
+  <figcaption>本文、行動、証拠、状態、Version差分を一つの学習Systemとして扱います。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第35章35.2の直後。教材アプリのContent Model。</p>
+    <p><strong>種類:</strong> product architecture background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: product architecture background.
+Scene and concept: A learning system architecture background connecting role-based paths, structured lessons, artifacts, evidence checks, feature registry, progress state, and local companion, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一章をLesson JSONへ変換し、前提・成果物・チェック・所要時間・版情報をSchemaで検証してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>学習アプリの中心は本文表示ではなく、行動・証拠・状態・再開です。</p></section>
+</article>
+<nav class="chapter-nav"><a href="34.html">← コピペ用標準テンプレート</a><a href="36.html">30日導入計画 →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

@@ -1,0 +1,15 @@
+{
+  "updated_at": "2026-06-22T09:00:00Z",
+  "meetings": [
+    {
+      "title": "Product Weekly",
+      "status": "fresh",
+      "tasks": 2
+    },
+    {
+      "title": "Sales Sync",
+      "status": "stale",
+      "tasks": 1
+    }
+  ]
+}

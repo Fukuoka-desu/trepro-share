@@ -1,0 +1,4 @@
+filename,type,date,amount,status
+invoice-a.pdf,invoice,2026-06-01,120000,normal
+contract-b.pdf,contract,2026-05-15,,review
+unknown.tmp,unknown,,,exception

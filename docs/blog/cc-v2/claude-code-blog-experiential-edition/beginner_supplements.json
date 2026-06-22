@@ -1,0 +1,745 @@
+{
+  "00": {
+    "minutes": 25,
+    "risk": "low",
+    "slug": "learning-system",
+    "artifacts": [
+      "learning-contract.md",
+      "success-evidence.md"
+    ],
+    "outcome": "学習を行動・成果物・証拠・再開地点へ分解する",
+    "focus": "自分の学習目標と合格証拠を定義する",
+    "terms": {
+      "Lesson": "一回で完結する学習単位",
+      "Artifact": "学習後に残る成果物",
+      "Evidence": "できたことを示す証拠",
+      "Checkpoint": "途中から戻れる保存地点"
+    },
+    "analogy": "ゲームの説明書を暗記するのではなく、短いクエストをクリアしてセーブする。"
+  },
+  "01": {
+    "minutes": 25,
+    "risk": "low",
+    "slug": "agent-basics",
+    "artifacts": [
+      "surface-map.md",
+      "agent-loop.md"
+    ],
+    "outcome": "チャットAIと作業型エージェントの違いを説明する",
+    "focus": "Explore・Edit・Run・Verifyの流れを観察して図にする",
+    "terms": {
+      "Agent": "道具を使って作業するAI",
+      "Tool": "AIが使う読み書き・実行機能",
+      "Command": "パソコンへの一回の命令",
+      "Verify": "結果を証拠で確かめること"
+    },
+    "analogy": "質問に答える家庭教師と、工具を使って作業する新人スタッフの違い。"
+  },
+  "02": {
+    "minutes": 30,
+    "risk": "low",
+    "slug": "safety",
+    "artifacts": [
+      "SAFETY.md",
+      "risk-matrix.md"
+    ],
+    "outcome": "最小権限・隔離・可逆性・検証を組み合わせる",
+    "focus": "練習環境の禁止事項と安全境界を文書化する",
+    "terms": {
+      "Permission": "許される操作の範囲",
+      "Sandbox": "作業範囲を囲う環境",
+      "Secret": "漏れると悪用される情報",
+      "Reversible": "元に戻せる性質"
+    },
+    "analogy": "理科実験を教室全体ではなく、安全眼鏡と実験台の中で行う。"
+  },
+  "03": {
+    "minutes": 30,
+    "risk": "low",
+    "slug": "project-folder",
+    "artifacts": [
+      "environment-report.md",
+      "project-tree.txt"
+    ],
+    "outcome": "安全なProject Folderと開発入口を準備する",
+    "focus": "専用フォルダを作り、環境と構造を確認する",
+    "terms": {
+      "Project Folder": "一つの仕事の作業範囲",
+      "Path": "ファイルの住所",
+      "Root": "Projectの一番上",
+      "CLI": "文字で操作する入口"
+    },
+    "analogy": "課題に必要な資料だけを一つの机へ置く。"
+  },
+  "04": {
+    "minutes": 60,
+    "risk": "low",
+    "slug": "meeting-assistant",
+    "artifacts": [
+      "minutes.md",
+      "tasks.json",
+      "report.html"
+    ],
+    "outcome": "文字起こしから議事録・タスク・HTMLを作り検証する",
+    "focus": "Fixtureの会議文字起こしを三種類の成果物へ変換する",
+    "terms": {
+      "Input": "処理前の材料",
+      "Output": "処理後の成果物",
+      "JSON": "機械が読みやすい構造化形式",
+      "Acceptance": "合格と判断する条件"
+    },
+    "analogy": "同じ食材から、食事用・保存用・配布用の三つの形を作る。"
+  },
+  "05": {
+    "minutes": 30,
+    "risk": "low",
+    "slug": "strong-request",
+    "artifacts": [
+      "request.md",
+      "done-when.md"
+    ],
+    "outcome": "曖昧な希望を検証可能な仕事の定義へ変える",
+    "focus": "目的・Context・制約・成果物・完了条件・証拠を記述する",
+    "terms": {
+      "Prompt": "AIへの依頼文",
+      "Context": "依頼の背景",
+      "Constraint": "守る条件",
+      "Done when": "完了の判定条件"
+    },
+    "analogy": "「いい感じに」ではなく、目的地・予算・時間を伝えて旅行を頼む。"
+  },
+  "06": {
+    "minutes": 45,
+    "risk": "low",
+    "slug": "standard-loop",
+    "artifacts": [
+      "spec.md",
+      "plan.md",
+      "verification.md"
+    ],
+    "outcome": "七段階の標準Loopを一周する",
+    "focus": "小さな編集をExploreからCommitまで順に実行する",
+    "terms": {
+      "Explore": "現状を調べる",
+      "Specify": "要求を決める",
+      "Implement": "実装する",
+      "Review": "別視点で見直す"
+    },
+    "analogy": "工作を、材料確認・設計・製作・検査・記録の順に進める。"
+  },
+  "07": {
+    "minutes": 35,
+    "risk": "medium",
+    "slug": "permissions",
+    "artifacts": [
+      "permission-matrix.md",
+      "deletion-dry-run.txt"
+    ],
+    "outcome": "操作ごとに許可・拒否・確認を設計する",
+    "focus": "危険操作を分類し、削除はDry-runまで体験する",
+    "terms": {
+      "Allow": "自動で許可する",
+      "Deny": "実行を拒否する",
+      "Bypass": "確認を飛ばす危険設定",
+      "Dry-run": "変更せず予定だけ表示する"
+    },
+    "analogy": "校内の部屋ごとに違う鍵と入室ルールを決める。"
+  },
+  "08": {
+    "minutes": 25,
+    "risk": "low",
+    "slug": "model-effort",
+    "artifacts": [
+      "model-effort-matrix.md"
+    ],
+    "outcome": "ModelとEffortを仕事の役割で選ぶ",
+    "focus": "軽作業・標準作業・難所の選択表を作る",
+    "terms": {
+      "Model": "AIの頭脳の種類",
+      "Effort": "考える深さ",
+      "Token": "AIが処理する情報量",
+      "Latency": "結果までの待ち時間"
+    },
+    "analogy": "近所は自転車、旅行は車、荷物運搬はトラックを選ぶ。"
+  },
+  "09": {
+    "minutes": 30,
+    "risk": "low",
+    "slug": "session-context",
+    "artifacts": [
+      "RESUME.md",
+      "context-budget.md"
+    ],
+    "outcome": "会話に依存せず状態を保存・再開する",
+    "focus": "現在地・決定・未完了・次の一操作をRESUMEへ残す",
+    "terms": {
+      "Session": "一続きの会話",
+      "Context": "AIが参照する情報",
+      "Compact": "会話を要約する",
+      "Resume": "保存地点から再開する"
+    },
+    "analogy": "机を片付け、必要な要約だけを次の授業へ持っていく。"
+  },
+  "10": {
+    "minutes": 45,
+    "risk": "medium",
+    "slug": "git-checkpoint",
+    "artifacts": [
+      "git-evidence.md",
+      "change.txt"
+    ],
+    "outcome": "CheckpointとGitを別の時間軸で使い分ける",
+    "focus": "小さな変更をDiff確認し、意味あるCommitとして保存する",
+    "terms": {
+      "Git": "変更履歴の管理",
+      "Commit": "説明付きセーブ地点",
+      "Diff": "変更前後の差",
+      "Worktree": "別作業を分離する作業木"
+    },
+    "analogy": "短いUndoと、日付付きの正式なセーブデータを両方持つ。"
+  },
+  "11": {
+    "minutes": 40,
+    "risk": "low",
+    "slug": "knowledge-layers",
+    "artifacts": [
+      "CLAUDE.md",
+      "rules/example.md",
+      "memory-note.md"
+    ],
+    "outcome": "方針・Path別Rule・個人Memoryを分離する",
+    "focus": "Project方針と局所Ruleを別ファイルへ置く",
+    "terms": {
+      "CLAUDE.md": "Project全体の方針",
+      "Rule": "条件付きで効く決まり",
+      "Scope": "情報が効く範囲",
+      "Memory": "短い個人向け記憶"
+    },
+    "analogy": "校則、理科室ルール、個人ノートを別の棚に置く。"
+  },
+  "12": {
+    "minutes": 50,
+    "risk": "low",
+    "slug": "skills",
+    "artifacts": [
+      "my-first-skill/SKILL.md",
+      "skill-evaluation.md"
+    ],
+    "outcome": "成功手順を再利用可能なSkillへ外部化する",
+    "focus": "入力・前提・Workflow・出力契約・品質確認を持つSkillを作る",
+    "terms": {
+      "Skill": "再利用する業務手順パッケージ",
+      "Trigger": "呼び出す条件",
+      "Workflow": "実行手順",
+      "Output contract": "成果物形式の約束"
+    },
+    "analogy": "一度きりの会話を、誰でも使える部活の作業マニュアルへ直す。"
+  },
+  "13": {
+    "minutes": 45,
+    "risk": "low",
+    "slug": "subagents",
+    "artifacts": [
+      "research.md",
+      "review.md",
+      "delegation-plan.md"
+    ],
+    "outcome": "作成・調査・評価のContextを分ける",
+    "focus": "二つの独立タスクを分担し、統合責任者を決める",
+    "terms": {
+      "Subagent": "一部を任せる別役割AI",
+      "Parallel": "同時に進める",
+      "Reviewer": "評価だけを行う役割",
+      "Delegation": "仕事を条件付きで渡す"
+    },
+    "analogy": "班ごとに調査し、別の先生が共通基準で採点する。"
+  },
+  "14": {
+    "minutes": 55,
+    "risk": "medium",
+    "slug": "hooks",
+    "artifacts": [
+      "hooks/pretool_guard.py",
+      "hook-test-report.md"
+    ],
+    "outcome": "お願いではなく実行時のGuardで制約を強制する",
+    "focus": "危険文字列を拒否する小さなHookとFixture Testを作る",
+    "terms": {
+      "Hook": "Eventで自動実行する処理",
+      "Event": "起動のきっかけ",
+      "Exit code": "成功・失敗を示す番号",
+      "Plugin": "複数拡張の配布単位"
+    },
+    "analogy": "戸締まりを校則だけでなく自動ロックでも守る。"
+  },
+  "15": {
+    "minutes": 45,
+    "risk": "medium",
+    "slug": "mcp-mock",
+    "artifacts": [
+      "mcp-example.json",
+      "trust-boundary.md"
+    ],
+    "outcome": "外部接続をRead/Write・Scope・Secretで分ける",
+    "focus": "実API Keyを使わずMock接続とHuman Gateを設計する",
+    "terms": {
+      "API": "サービス同士の窓口",
+      "MCP": "AIへ外部Toolを渡す標準",
+      "Scope": "許可する範囲",
+      "Prompt Injection": "外部データ内の悪意ある指示"
+    },
+    "analogy": "図書館では閲覧カードと蔵書を書き換える権限を分ける。"
+  },
+  "16": {
+    "minutes": 50,
+    "risk": "low",
+    "slug": "html-report",
+    "artifacts": [
+      "report.md",
+      "report.html",
+      "quality-check.md"
+    ],
+    "outcome": "Markdownを正本にし、伝達用HTMLへ変換する",
+    "focus": "同じ内容を長文ブログ型HTMLへ変え、表示を確認する",
+    "terms": {
+      "Markdown": "編集しやすい文章形式",
+      "HTML": "ブラウザ表示の構造",
+      "CSS": "見た目のルール",
+      "Responsive": "画面幅へ適応する設計"
+    },
+    "analogy": "下書きノートを、読み手向けの展示パネルへ組み替える。"
+  },
+  "17": {
+    "minutes": 60,
+    "risk": "low",
+    "slug": "design-to-code",
+    "artifacts": [
+      "wireframe.html",
+      "design-system.md",
+      "sync-rule.md"
+    ],
+    "outcome": "情報・見た目・実装を段階的に決める",
+    "focus": "白黒WireframeからDesign Ruleと実装へ進む",
+    "terms": {
+      "Wireframe": "画面の配置図",
+      "Design System": "見た目の共通ルール",
+      "Prototype": "操作できる試作品",
+      "Component": "再利用する画面部品"
+    },
+    "analogy": "家を建てる前に間取り、材料ルール、模型の順で確認する。"
+  },
+  "18": {
+    "minutes": 60,
+    "risk": "low",
+    "slug": "live-artifact",
+    "artifacts": [
+      "dashboard.html",
+      "meetings.json",
+      "acceptance.md"
+    ],
+    "outcome": "更新・失敗・Cacheを持つ業務Dashboardを作る",
+    "focus": "Fixture JSONから再読込可能な会議Dashboardを作る",
+    "terms": {
+      "Artifact": "AIが作る成果物",
+      "Live data": "再取得される情報",
+      "Cache": "結果の一時保存",
+      "Stale": "古い可能性がある状態"
+    },
+    "analogy": "貼り紙ではなく、更新時刻と故障表示がある案内板を作る。"
+  },
+  "19": {
+    "minutes": 55,
+    "risk": "medium",
+    "slug": "personalization",
+    "artifacts": [
+      "INTERESTS.md",
+      "privacy-notes.md"
+    ],
+    "outcome": "会話Logから必要なSignalだけを安全に抽出する",
+    "focus": "匿名Fixtureから最近の関心を抽出し本人が修正できるProfileを作る",
+    "terms": {
+      "JSONL": "一行一件のLog形式",
+      "Signal": "関心を示す手がかり",
+      "Recency": "最近さの重み",
+      "Opt-in": "本人が明示同意すること"
+    },
+    "analogy": "日記を全部公開せず、本人が選んだ学習テーマだけカードにする。"
+  },
+  "20": {
+    "minutes": 50,
+    "risk": "medium",
+    "slug": "goal-runner",
+    "artifacts": [
+      "goal-spec.md",
+      "runner.sh",
+      "stop-conditions.md"
+    ],
+    "outcome": "達成条件と停止条件を持つ自律実行を設計する",
+    "focus": "最大回数・時間・Budget・Logを持つMock Runnerを作る",
+    "terms": {
+      "Goal": "検証可能な目標",
+      "Headless": "画面操作なしの実行",
+      "Timeout": "時間上限",
+      "Idempotent": "繰り返しても壊れない性質"
+    },
+    "analogy": "夜間清掃ロボットに、範囲・終了時刻・緊急停止を設定する。"
+  },
+  "21": {
+    "minutes": 55,
+    "risk": "medium",
+    "slug": "multi-agent",
+    "artifacts": [
+      "workflow.md",
+      "research.md",
+      "verification.md",
+      "synthesis.md"
+    ],
+    "outcome": "Research・Verify・Synthesizeを分離する",
+    "focus": "三役の入力・出力・Cost上限を決めた手動Workflowを実行する",
+    "terms": {
+      "Dynamic Workflow": "結果に応じて分岐する流れ",
+      "Research": "情報収集",
+      "Verify": "独立検証",
+      "Synthesize": "統合して結論化する"
+    },
+    "analogy": "資料係、検証係、発表係を分けたグループ研究。"
+  },
+  "22": {
+    "minutes": 60,
+    "risk": "low",
+    "slug": "trusted-research",
+    "artifacts": [
+      "claim-ledger.csv",
+      "research-report.md"
+    ],
+    "outcome": "主張と根拠を追跡可能にする",
+    "focus": "Fixture SourceからClaim Ledgerと反対証拠を持つReportを作る",
+    "terms": {
+      "Primary source": "一次資料",
+      "Claim": "検証すべき主張",
+      "Citation": "根拠の参照",
+      "Traceability": "結果から元資料へ戻れること"
+    },
+    "analogy": "理科レポートの各結論へ、実験記録の番号を付ける。"
+  },
+  "23": {
+    "minutes": 50,
+    "risk": "low",
+    "slug": "architecture",
+    "artifacts": [
+      "architecture.md",
+      "layer-map.md",
+      "release-flow.md"
+    ],
+    "outcome": "正本・配布・強制・個人差分を分離する",
+    "focus": "個人成功を全社Infrastructureへ広げる構成図を作る",
+    "terms": {
+      "Architecture": "部品と関係の全体設計",
+      "Source of truth": "公式な正本",
+      "Managed layer": "中央管理する層",
+      "Canary": "少人数への先行配布"
+    },
+    "analogy": "職員室の公式時間割を配りつつ、生徒のノートは上書きしない。"
+  },
+  "24": {
+    "minutes": 70,
+    "risk": "medium",
+    "slug": "sync-rollback",
+    "artifacts": [
+      "sync.sh",
+      "manifest.txt",
+      "rollback.md"
+    ],
+    "outcome": "冪等・収束的な配布とRollbackを実装する",
+    "focus": "Fixture DirectoryでDry-run、同期、削除追従、復旧を試す",
+    "terms": {
+      "Bootstrap": "初回導入",
+      "Manifest": "配布物一覧",
+      "Convergent": "最終的に正本へ一致する",
+      "Rollback": "以前の版へ戻す"
+    },
+    "analogy": "荷物の明細を照合し、途中失敗なら前の箱へ戻す。"
+  },
+  "25": {
+    "minutes": 55,
+    "risk": "low",
+    "slug": "skill-governance",
+    "artifacts": [
+      "skill-registry.csv",
+      "evaluation.md",
+      "deprecation-plan.md"
+    ],
+    "outcome": "Skillを作成から廃止まで製品として管理する",
+    "focus": "Owner・Fixture・Score・Statusを持つRegistryを作る",
+    "terms": {
+      "Governance": "品質と責任の運用",
+      "Fixture": "固定テスト入力",
+      "Validator": "構造を自動確認するもの",
+      "Deprecation": "移行期間を持つ廃止予告"
+    },
+    "analogy": "図書館の本を登録・点検・統合・除籍まで管理する。"
+  },
+  "26": {
+    "minutes": 60,
+    "risk": "medium",
+    "slug": "managed-security",
+    "artifacts": [
+      "threat-model.md",
+      "policy-example.json",
+      "incident-runbook.md"
+    ],
+    "outcome": "Policy・観測・Incident対応を一体化する",
+    "focus": "Mock Eventから脅威、強制策、Log、復旧手順を整理する",
+    "terms": {
+      "Threat Model": "想定する脅威の整理",
+      "Policy": "中央管理する決まり",
+      "Observability": "状態を外から理解できること",
+      "Incident": "業務へ影響する事故"
+    },
+    "analogy": "薬品庫の鍵、入退室記録、事故連絡網を一緒に設計する。"
+  },
+  "27": {
+    "minutes": 50,
+    "risk": "low",
+    "slug": "onboarding",
+    "artifacts": [
+      "onboarding-30min.md",
+      "runbook.md",
+      "certification.md"
+    ],
+    "outcome": "新人が安全に一周できる導入体験を作る",
+    "focus": "30分Flow、認定、障害時Runbookを作る",
+    "terms": {
+      "Onboarding": "利用開始までの導入体験",
+      "Runbook": "状況別の手順書",
+      "Certification": "操作と理解の確認",
+      "Cadence": "定期運用の周期"
+    },
+    "analogy": "入部初日に説明だけでなく、実技と困った時の連絡先を渡す。"
+  },
+  "28": {
+    "minutes": 45,
+    "risk": "low",
+    "slug": "office-workflows",
+    "artifacts": [
+      "inventory.csv",
+      "dry-run-plan.md",
+      "meeting-output.md"
+    ],
+    "outcome": "文書・ファイル業務を原本保護とReview付きで処理する",
+    "focus": "Fixture一覧を作り、変更予定をDry-runで確認する",
+    "terms": {
+      "Original": "変更しない原本",
+      "Inventory": "対象一覧",
+      "Exception": "通常ルール外の例外",
+      "Dry-run": "変更前の試運転"
+    },
+    "analogy": "倉庫の品物を動かす前に、移動表を作って責任者が確認する。"
+  },
+  "29": {
+    "minutes": 60,
+    "risk": "low",
+    "slug": "content-learning",
+    "artifacts": [
+      "content-report.html",
+      "source-map.csv",
+      "quiz.md"
+    ],
+    "outcome": "動画・SNS素材を検証済み教材へ変える",
+    "focus": "Source Topicを重複整理し、記事と想起問題を作る",
+    "terms": {
+      "Synthesis": "複数情報の統合",
+      "Deduplication": "重複の統合",
+      "Recall": "答えを見ず思い出す学習",
+      "Source Map": "素材と成果物の対応表"
+    },
+    "analogy": "複数のノートを整理し、授業プリントと小テストへ作り直す。"
+  },
+  "30": {
+    "minutes": 75,
+    "risk": "medium",
+    "slug": "app-development",
+    "artifacts": [
+      "app/index.html",
+      "test-report.md",
+      "rollback-plan.md"
+    ],
+    "outcome": "Prototypeを作り、失敗・検証・Rollbackまで確認する",
+    "focus": "ローカルTask Managerを作り、入力・保存・Errorを試す",
+    "terms": {
+      "Frontend": "利用者が見る画面",
+      "Backend": "裏側の処理",
+      "Test": "期待動作の確認",
+      "Prototype": "アイデア確認用の試作品"
+    },
+    "analogy": "見た目だけの模型ではなく、ブレーキまで試す模型車を作る。"
+  },
+  "31": {
+    "minutes": 55,
+    "risk": "medium",
+    "slug": "publish",
+    "artifacts": [
+      "preview/index.html",
+      "publish-checklist.md",
+      "rollback-plan.md"
+    ],
+    "outcome": "生成と公開を別のQuality Gateにする",
+    "focus": "Previewを作り、秘密・Link・Mobile・公開範囲を検査する",
+    "terms": {
+      "Deploy": "利用環境へ配置する",
+      "Preview": "確認用の版",
+      "Production": "本番環境",
+      "A11y": "誰でも利用しやすい設計"
+    },
+    "analogy": "展示物を作った後、一般公開前にリハーサルと持ち物検査をする。"
+  },
+  "32": {
+    "minutes": 55,
+    "risk": "medium",
+    "slug": "automation",
+    "artifacts": [
+      "automation-scorecard.md",
+      "schedule-plan.md",
+      "failure-alert.md"
+    ],
+    "outcome": "安定入力と安全な失敗経路を持つ仕事だけ自動化する",
+    "focus": "繰り返し業務を採点し、半自動からの成熟計画を作る",
+    "terms": {
+      "Schedule": "実行時刻の設定",
+      "Retry": "一時失敗の再試行",
+      "Alert": "問題通知",
+      "Maturity": "自動化の成熟度"
+    },
+    "analogy": "毎日同じ時間割の作業から自動化し、例外は先生へ戻す。"
+  },
+  "33": {
+    "minutes": 40,
+    "risk": "low",
+    "slug": "failure-patterns",
+    "artifacts": [
+      "postmortem.md",
+      "prevention-map.md"
+    ],
+    "outcome": "失敗をRoot CauseとGuardrailへ変える",
+    "focus": "Fixture事故を再現し、Rule・Skill・Hookのどこで防ぐか決める",
+    "terms": {
+      "Failure Pattern": "繰り返す失敗の型",
+      "Root Cause": "根本原因",
+      "Guardrail": "危険を防ぐ安全柵",
+      "Postmortem": "事故後の振り返り"
+    },
+    "analogy": "失点映像から、個人を責めず守備位置と練習方法を直す。"
+  },
+  "34": {
+    "minutes": 50,
+    "risk": "low",
+    "slug": "templates",
+    "artifacts": [
+      "requirements.md",
+      "implementation-plan.md",
+      "completion-report.md"
+    ],
+    "outcome": "依頼・計画・完了報告の抜けをTemplateで防ぐ",
+    "focus": "PlaceholderをProject固有情報へ置換し三文書を完成させる",
+    "terms": {
+      "Template": "再利用するひな形",
+      "Placeholder": "後で置換する空欄",
+      "Schema": "項目と形式のルール",
+      "Definition of Done": "完了の共通定義"
+    },
+    "analogy": "申込書の空欄を具体的に埋め、提出前チェックを行う。"
+  },
+  "35": {
+    "minutes": 60,
+    "risk": "low",
+    "slug": "learning-app",
+    "artifacts": [
+      "lesson.json",
+      "state.json",
+      "RESUME.md"
+    ],
+    "outcome": "本文・状態・証拠・再開を分離した学習Appを設計する",
+    "focus": "一章をLesson JSONへ変換し、Stateと再開メモを作る",
+    "terms": {
+      "Content Model": "教材部品の構造",
+      "State": "現在の進捗",
+      "Schema": "保存形式の規則",
+      "Feature Registry": "変動仕様の台帳"
+    },
+    "analogy": "教科書ページだけでなく、現在地と提出物を持つ学習アプリ。"
+  },
+  "36": {
+    "minutes": 45,
+    "risk": "low",
+    "slug": "rollout",
+    "artifacts": [
+      "30-day-plan.md",
+      "weekly-gates.csv",
+      "kpi.md"
+    ],
+    "outcome": "安全な実験から全社運用へ段階的に広げる",
+    "focus": "四週間のOwner・成果物・Exit Criteria・Rollbackを定義する",
+    "terms": {
+      "Milestone": "途中の大きな区切り",
+      "Pilot": "小規模な試験導入",
+      "KPI": "成果を測る指標",
+      "Exit Criteria": "次へ進む条件"
+    },
+    "analogy": "文化祭展示を試作品、クラス内テスト、本番準備へ分ける。"
+  },
+  "37": {
+    "minutes": 40,
+    "risk": "low",
+    "slug": "feature-registry",
+    "artifacts": [
+      "feature-registry.csv",
+      "correction-notes.md"
+    ],
+    "outcome": "安定原則と変動仕様を別の更新周期で管理する",
+    "focus": "古い主張を公式Sourceと照合し、確認日付きRegistryへ移す",
+    "terms": {
+      "Stable Principle": "変わりにくい原則",
+      "Volatile": "変わりやすい情報",
+      "Changelog": "変更履歴",
+      "Verified at": "最後の確認日"
+    },
+    "analogy": "物理法則は教科書へ、器具の型番と価格は更新表へ置く。"
+  },
+  "38": {
+    "minutes": 45,
+    "risk": "low",
+    "slug": "coverage",
+    "artifacts": [
+      "coverage-map.csv",
+      "gap-report.md"
+    ],
+    "outcome": "素材Topicの抜け・重複・配置先を証明する",
+    "focus": "Source Topicを章へMappingし未配置を検出する",
+    "terms": {
+      "Coverage": "必要範囲の網羅",
+      "Mapping": "対応関係",
+      "Gap": "未配置の抜け",
+      "Traceability": "元資料へ戻れる性質"
+    },
+    "analogy": "試験範囲の各項目が、どのノートページにあるか一覧化する。"
+  },
+  "final": {
+    "minutes": 90,
+    "risk": "medium",
+    "slug": "capstone",
+    "artifacts": [
+      "release/README.md",
+      "release/quality-report.md",
+      "release/rollback.md"
+    ],
+    "outcome": "学習・実務・改善・配布の循環を一つの卒業制作へ統合する",
+    "focus": "任意の業務を標準LoopとSkillへ落とし、検証済みReleaseを作る",
+    "terms": {
+      "Maintenance": "使い続けるための保守",
+      "Owner": "品質責任者",
+      "Feedback Loop": "結果を次の改善へ戻す循環",
+      "Sunset": "安全な終了・廃止"
+    },
+    "analogy": "強い部活動が練習記録を見直し、試し、標準を更新し続ける。"
+  }
+}

@@ -1,0 +1,2352 @@
+{
+  "package_name": "claude-code-blog-experiential-edition",
+  "edition": "slide-integrated-blog-and-chapter-number-hands-on",
+  "created_at": "2026-06-22T14:11:37+00:00",
+  "source_pdf": {
+    "filename": "2026-06-22_claude-code-textbook.pdf",
+    "pages": 147,
+    "rendered_slide_assets": 147
+  },
+  "learning_system": {
+    "chapters": 40,
+    "steps": 160,
+    "runtimes": [
+      "cursor",
+      "claude",
+      "codex"
+    ],
+    "skill_name": "textbook-chapter-lab",
+    "state_directory": ".trepro-learning"
+  },
+  "content": {
+    "beginner_sections": 40,
+    "hands_on_launchers": 40,
+    "slides_in_html": 147,
+    "original_content_order_preserved": true
+  },
+  "integrity_scope": "All package files except PACKAGE_MANIFEST.json and SHA256SUMS.txt",
+  "file_count": 464,
+  "total_size_bytes": 24373450,
+  "files": [
+    {
+      "path": ".agents/skills/textbook-chapter-lab/SKILL.md",
+      "size_bytes": 3481,
+      "sha256": "c24b2283a6ed84b7843ff7374bf93aa9b3da405250118366672ba2abcae003db"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/dangerous-commands.txt",
+      "size_bytes": 53,
+      "sha256": "33b904bbe30bfdf114985318d4ebf288e2721ff86cf2f9b5ed45bb99e7e1c920"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/failure-case.md",
+      "size_bytes": 207,
+      "sha256": "063b25906108fbbbdbfc820c3e1b5183b22631b2cacfc3bf3345533a2c5baa82"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/meeting-transcript.md",
+      "size_bytes": 354,
+      "sha256": "83bde780fae8b6f9f3a8c2061a4c4155c0ff39fc1629f3ddbcfc2acf9a74c9b1"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/meetings.json",
+      "size_bytes": 235,
+      "sha256": "428f45222503a02544a1332e1f19729c7216536b3f26762cffa0ba05b3fe913c"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/mock-mcp-data.json",
+      "size_bytes": 158,
+      "sha256": "b2861885b005da64f73e8332b0ba6ba41cadb6a5327911004522527d70e14fac"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/office-files.csv",
+      "size_bytes": 155,
+      "sha256": "c488a491795b1048a9950dc71c3b070144e0ed283e5207a60b1bba3ef6179159"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/recurring-work.csv",
+      "size_bytes": 203,
+      "sha256": "c57533d5a7534a3c3ebea674042c9ecab082a961142b5172344b60f75014426f"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/sample-log.jsonl",
+      "size_bytes": 199,
+      "sha256": "10499fc8366b156ff7dc1bb7df18a36d6468a857a420cf9b347a50028763e5b7"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/source-pack.md",
+      "size_bytes": 303,
+      "sha256": "03072ed51612f34ecbb6bf39516652fc8a3e8f9b15b973d4f334f2406d49f716"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/source-topics.csv",
+      "size_bytes": 180,
+      "sha256": "da6bd821eb356fb687f4acad697dcaacbc7e2e9979ba4a88bb53a313319186cd"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/vague-request.txt",
+      "size_bytes": 106,
+      "sha256": "514ad28cd4bf16405eb4ed696b40ea5911bdb379c8e6998e5863fd2ed56e3b56"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/assets/volatile-claims.md",
+      "size_bytes": 242,
+      "sha256": "3255c4d7450b28e48082456a589d5cb4d0e851674f1ead98aae58347955150a8"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapter-index.json",
+      "size_bytes": 19524,
+      "sha256": "ecd33c06b3590893640a2b0e2a19635ff387b92e296d468dde75d6474601a4b3"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-00.json",
+      "size_bytes": 5160,
+      "sha256": "f317ad6040d02a1c8f783ad321b54eaef2fe16f4bb0ffc36aa871a4cbe618886"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-01.json",
+      "size_bytes": 5175,
+      "sha256": "bf0d34837cfda2919fcc902e7e80d5baf403a35c569019ed4e4fc8750c0e29be"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-02.json",
+      "size_bytes": 5031,
+      "sha256": "83ad569d3ca63e81716bdff030b5b84f703812ab6e62867ed49e21c908cd68d9"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-03.json",
+      "size_bytes": 5176,
+      "sha256": "e2bb6a022a40c4bc2d5e647b1157ff2b70c4346d80deff6f7851571a2e7951d5"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-04.json",
+      "size_bytes": 5304,
+      "sha256": "4db265e62795c2a90b63f34be508e2b52e47912c21ad204dfdbabf9dc0680b30"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-05.json",
+      "size_bytes": 5224,
+      "sha256": "3f25ae4c7dd8dfd87e5f37238ae249a1463e63bfbd453fac596da8fae90dee2d"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-06.json",
+      "size_bytes": 5101,
+      "sha256": "7b85ee8f6037a8483a717366b137da2daaeb7c0c1fc65832238b4ce311d95d59"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-07.json",
+      "size_bytes": 5209,
+      "sha256": "7784535f8f21f822520e27ea5da1a8e0ef8028b6c9b5d5f73621bea45039a1e4"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-08.json",
+      "size_bytes": 5060,
+      "sha256": "f18688584a1a98c1155d2e9a39bb5837e47b95873d775833a8f131027d9678f2"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-09.json",
+      "size_bytes": 5123,
+      "sha256": "e8ea4d82e8438bfa2dfb967b5da0d071252805b0e341c4d6afa933375b8fd46d"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-10.json",
+      "size_bytes": 5188,
+      "sha256": "6498caae5613ae110d8341781c596185ed8f134e675f01cb51829474a3bed914"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-11.json",
+      "size_bytes": 5104,
+      "sha256": "05797aad3fb6edce1b3f43f3e304f69cda9a8c5c2069c15c5f4ba59f37dc5495"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-12.json",
+      "size_bytes": 5192,
+      "sha256": "b9a2243136a3a6e2f7ab180727ba17d5e2e1d9f21faaa1c864959de9fc82e588"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-13.json",
+      "size_bytes": 5090,
+      "sha256": "af35d1580912fca87acb5b4710dd5bdfba76c617e067b9d31b122bd6a6adfaa2"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-14.json",
+      "size_bytes": 5137,
+      "sha256": "2b99dbe17acad095efb2433f8072e44d6d6811361d92e6c99602e3e973bf23cb"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-15.json",
+      "size_bytes": 5126,
+      "sha256": "119d434e93e2b48c03a4d7e33ec8d05a45d9c297c965f23d983346ea21b4584f"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-16.json",
+      "size_bytes": 5128,
+      "sha256": "9882a3f481c181851009ec0fcf3642c03937f2b86b3e9fc636d448f2ca44a355"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-17.json",
+      "size_bytes": 5086,
+      "sha256": "fb2926fdfbd39714a98df260324c882b539796d682748d77ce7beb17d46ab625"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-18.json",
+      "size_bytes": 5167,
+      "sha256": "9de92b54d7020fe64adf541bc9b5d5a4b61f5fcac8a41a51f712ef8f7ff1ada0"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-19.json",
+      "size_bytes": 5334,
+      "sha256": "110b606d415f55abcd95132185c3958b728dff39b7f430904a3c59bd089802eb"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-20.json",
+      "size_bytes": 5166,
+      "sha256": "929585e7eb682dcafa52c0f52e6bed2dee47870b97f068f21a4eed206d1c9822"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-21.json",
+      "size_bytes": 5187,
+      "sha256": "6f711b5fd47688d7b2941206fdd34f3454106ee0d5571fc5c760d540c7a20c89"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-22.json",
+      "size_bytes": 5207,
+      "sha256": "b3b82175b6c7a73af37ad19d851c9f8a7f7cfe7b031c9a199d322866ffebd7d7"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-23.json",
+      "size_bytes": 5156,
+      "sha256": "88793fec4e55b343f8e1c568bca51ab6707fe7b3cba81039ab0239cadaad54e8"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-24.json",
+      "size_bytes": 5165,
+      "sha256": "26bf3f59476393a48fea99c4c6f58b628e577e9303c287ef60fc76bd672c7195"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-25.json",
+      "size_bytes": 5214,
+      "sha256": "df463223797c4173a44101d63d655f26a12b5470349da2ea48bf065864ea0e09"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-26.json",
+      "size_bytes": 5260,
+      "sha256": "c07a97714da68815f31427e6521a70c222bee2f93f5d0f6d512057cb8b6eeadc"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-27.json",
+      "size_bytes": 5072,
+      "sha256": "9aa650d563cd30f4f27e928ea48e0afe61c1dec544ce201d4de209a93e8c81a3"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-28.json",
+      "size_bytes": 5264,
+      "sha256": "6ab551465be183bb56337fc9a5da89982513adf867ae4c781e6a7ec9d14be22d"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-29.json",
+      "size_bytes": 5233,
+      "sha256": "0c16e473ea42814e2bfca95db76fd2c022703b41d749a8728ed8dfc9d03aabef"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-30.json",
+      "size_bytes": 5230,
+      "sha256": "7df22bf8de495fc037b1e96df411fa666704bcf2f9a2952ec5a9d2db3da6de2b"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-31.json",
+      "size_bytes": 5130,
+      "sha256": "5a5c66c7594cc592d51560702f56d68973c6f0058df64be5a2668344627cabce"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-32.json",
+      "size_bytes": 5311,
+      "sha256": "ccdd691e76b6f442b95898fe77ee1ba0140f5583edc05272b946849c9fe2845a"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-33.json",
+      "size_bytes": 5197,
+      "sha256": "6ba707da92eb74d96c4adcca99f13f9a6a4785f1ce0e98974e4b04731f402100"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-34.json",
+      "size_bytes": 5209,
+      "sha256": "410b87f67bef9a1eeb6dfb5075fa4269aab30fb86eda51bca7d2f9d1b4ac65e0"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-35.json",
+      "size_bytes": 5176,
+      "sha256": "26fda77b57126f3088827417790a0f29bf768f5e6ad88e402f14784c6f38f87d"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-36.json",
+      "size_bytes": 5100,
+      "sha256": "8cac4b1b754a212d5e5ecec94db0f143157b5483983905451fafa84766eb47c8"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-37.json",
+      "size_bytes": 5299,
+      "sha256": "c08e49e74dd8b524521006bf8e181bf201cc8bbd86dce8db529e8059334279e7"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-38.json",
+      "size_bytes": 5034,
+      "sha256": "924ee0c1436c832074bfd16d48e356286441ff3380ae72fbc8deaf8c3d989b36"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/course/chapters/chapter-final.json",
+      "size_bytes": 5377,
+      "sha256": "1976c2fb5397a926dc4784f94892e90a747f2a278a35022f32c99811d9d08cf1"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/references/chapter-map.md",
+      "size_bytes": 4009,
+      "sha256": "9cef6b6e62f9c9493f775ab20c62470c7928351c0e36af54896d9313a63b4c3e"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/references/runtime-guide.md",
+      "size_bytes": 194,
+      "sha256": "0713e648467d85e5173fdce0d24de411e27c865223054a43a61585fc0227863e"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/references/safety-policy.md",
+      "size_bytes": 189,
+      "sha256": "051a20eb3fb8191eeaa64364d9c35dad7ff8cff9859b02e1d100dc48cd0f0eb5"
+    },
+    {
+      "path": ".agents/skills/textbook-chapter-lab/scripts/textbook_lab.py",
+      "size_bytes": 14437,
+      "sha256": "c365ad53845d4c5aaa87883275235705cab204e2c484c06b90751391445f230f"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/SKILL.md",
+      "size_bytes": 3481,
+      "sha256": "c24b2283a6ed84b7843ff7374bf93aa9b3da405250118366672ba2abcae003db"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/dangerous-commands.txt",
+      "size_bytes": 53,
+      "sha256": "33b904bbe30bfdf114985318d4ebf288e2721ff86cf2f9b5ed45bb99e7e1c920"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/failure-case.md",
+      "size_bytes": 207,
+      "sha256": "063b25906108fbbbdbfc820c3e1b5183b22631b2cacfc3bf3345533a2c5baa82"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/meeting-transcript.md",
+      "size_bytes": 354,
+      "sha256": "83bde780fae8b6f9f3a8c2061a4c4155c0ff39fc1629f3ddbcfc2acf9a74c9b1"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/meetings.json",
+      "size_bytes": 235,
+      "sha256": "428f45222503a02544a1332e1f19729c7216536b3f26762cffa0ba05b3fe913c"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/mock-mcp-data.json",
+      "size_bytes": 158,
+      "sha256": "b2861885b005da64f73e8332b0ba6ba41cadb6a5327911004522527d70e14fac"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/office-files.csv",
+      "size_bytes": 155,
+      "sha256": "c488a491795b1048a9950dc71c3b070144e0ed283e5207a60b1bba3ef6179159"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/recurring-work.csv",
+      "size_bytes": 203,
+      "sha256": "c57533d5a7534a3c3ebea674042c9ecab082a961142b5172344b60f75014426f"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/sample-log.jsonl",
+      "size_bytes": 199,
+      "sha256": "10499fc8366b156ff7dc1bb7df18a36d6468a857a420cf9b347a50028763e5b7"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/source-pack.md",
+      "size_bytes": 303,
+      "sha256": "03072ed51612f34ecbb6bf39516652fc8a3e8f9b15b973d4f334f2406d49f716"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/source-topics.csv",
+      "size_bytes": 180,
+      "sha256": "da6bd821eb356fb687f4acad697dcaacbc7e2e9979ba4a88bb53a313319186cd"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/vague-request.txt",
+      "size_bytes": 106,
+      "sha256": "514ad28cd4bf16405eb4ed696b40ea5911bdb379c8e6998e5863fd2ed56e3b56"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/assets/volatile-claims.md",
+      "size_bytes": 242,
+      "sha256": "3255c4d7450b28e48082456a589d5cb4d0e851674f1ead98aae58347955150a8"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapter-index.json",
+      "size_bytes": 19524,
+      "sha256": "ecd33c06b3590893640a2b0e2a19635ff387b92e296d468dde75d6474601a4b3"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-00.json",
+      "size_bytes": 5160,
+      "sha256": "f317ad6040d02a1c8f783ad321b54eaef2fe16f4bb0ffc36aa871a4cbe618886"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-01.json",
+      "size_bytes": 5175,
+      "sha256": "bf0d34837cfda2919fcc902e7e80d5baf403a35c569019ed4e4fc8750c0e29be"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-02.json",
+      "size_bytes": 5031,
+      "sha256": "83ad569d3ca63e81716bdff030b5b84f703812ab6e62867ed49e21c908cd68d9"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-03.json",
+      "size_bytes": 5176,
+      "sha256": "e2bb6a022a40c4bc2d5e647b1157ff2b70c4346d80deff6f7851571a2e7951d5"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-04.json",
+      "size_bytes": 5304,
+      "sha256": "4db265e62795c2a90b63f34be508e2b52e47912c21ad204dfdbabf9dc0680b30"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-05.json",
+      "size_bytes": 5224,
+      "sha256": "3f25ae4c7dd8dfd87e5f37238ae249a1463e63bfbd453fac596da8fae90dee2d"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-06.json",
+      "size_bytes": 5101,
+      "sha256": "7b85ee8f6037a8483a717366b137da2daaeb7c0c1fc65832238b4ce311d95d59"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-07.json",
+      "size_bytes": 5209,
+      "sha256": "7784535f8f21f822520e27ea5da1a8e0ef8028b6c9b5d5f73621bea45039a1e4"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-08.json",
+      "size_bytes": 5060,
+      "sha256": "f18688584a1a98c1155d2e9a39bb5837e47b95873d775833a8f131027d9678f2"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-09.json",
+      "size_bytes": 5123,
+      "sha256": "e8ea4d82e8438bfa2dfb967b5da0d071252805b0e341c4d6afa933375b8fd46d"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-10.json",
+      "size_bytes": 5188,
+      "sha256": "6498caae5613ae110d8341781c596185ed8f134e675f01cb51829474a3bed914"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-11.json",
+      "size_bytes": 5104,
+      "sha256": "05797aad3fb6edce1b3f43f3e304f69cda9a8c5c2069c15c5f4ba59f37dc5495"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-12.json",
+      "size_bytes": 5192,
+      "sha256": "b9a2243136a3a6e2f7ab180727ba17d5e2e1d9f21faaa1c864959de9fc82e588"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-13.json",
+      "size_bytes": 5090,
+      "sha256": "af35d1580912fca87acb5b4710dd5bdfba76c617e067b9d31b122bd6a6adfaa2"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-14.json",
+      "size_bytes": 5137,
+      "sha256": "2b99dbe17acad095efb2433f8072e44d6d6811361d92e6c99602e3e973bf23cb"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-15.json",
+      "size_bytes": 5126,
+      "sha256": "119d434e93e2b48c03a4d7e33ec8d05a45d9c297c965f23d983346ea21b4584f"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-16.json",
+      "size_bytes": 5128,
+      "sha256": "9882a3f481c181851009ec0fcf3642c03937f2b86b3e9fc636d448f2ca44a355"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-17.json",
+      "size_bytes": 5086,
+      "sha256": "fb2926fdfbd39714a98df260324c882b539796d682748d77ce7beb17d46ab625"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-18.json",
+      "size_bytes": 5167,
+      "sha256": "9de92b54d7020fe64adf541bc9b5d5a4b61f5fcac8a41a51f712ef8f7ff1ada0"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-19.json",
+      "size_bytes": 5334,
+      "sha256": "110b606d415f55abcd95132185c3958b728dff39b7f430904a3c59bd089802eb"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-20.json",
+      "size_bytes": 5166,
+      "sha256": "929585e7eb682dcafa52c0f52e6bed2dee47870b97f068f21a4eed206d1c9822"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-21.json",
+      "size_bytes": 5187,
+      "sha256": "6f711b5fd47688d7b2941206fdd34f3454106ee0d5571fc5c760d540c7a20c89"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-22.json",
+      "size_bytes": 5207,
+      "sha256": "b3b82175b6c7a73af37ad19d851c9f8a7f7cfe7b031c9a199d322866ffebd7d7"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-23.json",
+      "size_bytes": 5156,
+      "sha256": "88793fec4e55b343f8e1c568bca51ab6707fe7b3cba81039ab0239cadaad54e8"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-24.json",
+      "size_bytes": 5165,
+      "sha256": "26bf3f59476393a48fea99c4c6f58b628e577e9303c287ef60fc76bd672c7195"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-25.json",
+      "size_bytes": 5214,
+      "sha256": "df463223797c4173a44101d63d655f26a12b5470349da2ea48bf065864ea0e09"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-26.json",
+      "size_bytes": 5260,
+      "sha256": "c07a97714da68815f31427e6521a70c222bee2f93f5d0f6d512057cb8b6eeadc"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-27.json",
+      "size_bytes": 5072,
+      "sha256": "9aa650d563cd30f4f27e928ea48e0afe61c1dec544ce201d4de209a93e8c81a3"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-28.json",
+      "size_bytes": 5264,
+      "sha256": "6ab551465be183bb56337fc9a5da89982513adf867ae4c781e6a7ec9d14be22d"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-29.json",
+      "size_bytes": 5233,
+      "sha256": "0c16e473ea42814e2bfca95db76fd2c022703b41d749a8728ed8dfc9d03aabef"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-30.json",
+      "size_bytes": 5230,
+      "sha256": "7df22bf8de495fc037b1e96df411fa666704bcf2f9a2952ec5a9d2db3da6de2b"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-31.json",
+      "size_bytes": 5130,
+      "sha256": "5a5c66c7594cc592d51560702f56d68973c6f0058df64be5a2668344627cabce"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-32.json",
+      "size_bytes": 5311,
+      "sha256": "ccdd691e76b6f442b95898fe77ee1ba0140f5583edc05272b946849c9fe2845a"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-33.json",
+      "size_bytes": 5197,
+      "sha256": "6ba707da92eb74d96c4adcca99f13f9a6a4785f1ce0e98974e4b04731f402100"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-34.json",
+      "size_bytes": 5209,
+      "sha256": "410b87f67bef9a1eeb6dfb5075fa4269aab30fb86eda51bca7d2f9d1b4ac65e0"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-35.json",
+      "size_bytes": 5176,
+      "sha256": "26fda77b57126f3088827417790a0f29bf768f5e6ad88e402f14784c6f38f87d"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-36.json",
+      "size_bytes": 5100,
+      "sha256": "8cac4b1b754a212d5e5ecec94db0f143157b5483983905451fafa84766eb47c8"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-37.json",
+      "size_bytes": 5299,
+      "sha256": "c08e49e74dd8b524521006bf8e181bf201cc8bbd86dce8db529e8059334279e7"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-38.json",
+      "size_bytes": 5034,
+      "sha256": "924ee0c1436c832074bfd16d48e356286441ff3380ae72fbc8deaf8c3d989b36"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/course/chapters/chapter-final.json",
+      "size_bytes": 5377,
+      "sha256": "1976c2fb5397a926dc4784f94892e90a747f2a278a35022f32c99811d9d08cf1"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/references/chapter-map.md",
+      "size_bytes": 4009,
+      "sha256": "9cef6b6e62f9c9493f775ab20c62470c7928351c0e36af54896d9313a63b4c3e"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/references/runtime-guide.md",
+      "size_bytes": 194,
+      "sha256": "0713e648467d85e5173fdce0d24de411e27c865223054a43a61585fc0227863e"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/references/safety-policy.md",
+      "size_bytes": 189,
+      "sha256": "051a20eb3fb8191eeaa64364d9c35dad7ff8cff9859b02e1d100dc48cd0f0eb5"
+    },
+    {
+      "path": ".claude/skills/textbook-chapter-lab/scripts/textbook_lab.py",
+      "size_bytes": 14437,
+      "sha256": "c365ad53845d4c5aaa87883275235705cab204e2c484c06b90751391445f230f"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/SKILL.md",
+      "size_bytes": 3481,
+      "sha256": "c24b2283a6ed84b7843ff7374bf93aa9b3da405250118366672ba2abcae003db"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/dangerous-commands.txt",
+      "size_bytes": 53,
+      "sha256": "33b904bbe30bfdf114985318d4ebf288e2721ff86cf2f9b5ed45bb99e7e1c920"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/failure-case.md",
+      "size_bytes": 207,
+      "sha256": "063b25906108fbbbdbfc820c3e1b5183b22631b2cacfc3bf3345533a2c5baa82"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/meeting-transcript.md",
+      "size_bytes": 354,
+      "sha256": "83bde780fae8b6f9f3a8c2061a4c4155c0ff39fc1629f3ddbcfc2acf9a74c9b1"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/meetings.json",
+      "size_bytes": 235,
+      "sha256": "428f45222503a02544a1332e1f19729c7216536b3f26762cffa0ba05b3fe913c"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/mock-mcp-data.json",
+      "size_bytes": 158,
+      "sha256": "b2861885b005da64f73e8332b0ba6ba41cadb6a5327911004522527d70e14fac"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/office-files.csv",
+      "size_bytes": 155,
+      "sha256": "c488a491795b1048a9950dc71c3b070144e0ed283e5207a60b1bba3ef6179159"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/recurring-work.csv",
+      "size_bytes": 203,
+      "sha256": "c57533d5a7534a3c3ebea674042c9ecab082a961142b5172344b60f75014426f"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/sample-log.jsonl",
+      "size_bytes": 199,
+      "sha256": "10499fc8366b156ff7dc1bb7df18a36d6468a857a420cf9b347a50028763e5b7"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/source-pack.md",
+      "size_bytes": 303,
+      "sha256": "03072ed51612f34ecbb6bf39516652fc8a3e8f9b15b973d4f334f2406d49f716"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/source-topics.csv",
+      "size_bytes": 180,
+      "sha256": "da6bd821eb356fb687f4acad697dcaacbc7e2e9979ba4a88bb53a313319186cd"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/vague-request.txt",
+      "size_bytes": 106,
+      "sha256": "514ad28cd4bf16405eb4ed696b40ea5911bdb379c8e6998e5863fd2ed56e3b56"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/assets/volatile-claims.md",
+      "size_bytes": 242,
+      "sha256": "3255c4d7450b28e48082456a589d5cb4d0e851674f1ead98aae58347955150a8"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapter-index.json",
+      "size_bytes": 19524,
+      "sha256": "ecd33c06b3590893640a2b0e2a19635ff387b92e296d468dde75d6474601a4b3"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-00.json",
+      "size_bytes": 5160,
+      "sha256": "f317ad6040d02a1c8f783ad321b54eaef2fe16f4bb0ffc36aa871a4cbe618886"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-01.json",
+      "size_bytes": 5175,
+      "sha256": "bf0d34837cfda2919fcc902e7e80d5baf403a35c569019ed4e4fc8750c0e29be"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-02.json",
+      "size_bytes": 5031,
+      "sha256": "83ad569d3ca63e81716bdff030b5b84f703812ab6e62867ed49e21c908cd68d9"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-03.json",
+      "size_bytes": 5176,
+      "sha256": "e2bb6a022a40c4bc2d5e647b1157ff2b70c4346d80deff6f7851571a2e7951d5"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-04.json",
+      "size_bytes": 5304,
+      "sha256": "4db265e62795c2a90b63f34be508e2b52e47912c21ad204dfdbabf9dc0680b30"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-05.json",
+      "size_bytes": 5224,
+      "sha256": "3f25ae4c7dd8dfd87e5f37238ae249a1463e63bfbd453fac596da8fae90dee2d"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-06.json",
+      "size_bytes": 5101,
+      "sha256": "7b85ee8f6037a8483a717366b137da2daaeb7c0c1fc65832238b4ce311d95d59"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-07.json",
+      "size_bytes": 5209,
+      "sha256": "7784535f8f21f822520e27ea5da1a8e0ef8028b6c9b5d5f73621bea45039a1e4"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-08.json",
+      "size_bytes": 5060,
+      "sha256": "f18688584a1a98c1155d2e9a39bb5837e47b95873d775833a8f131027d9678f2"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-09.json",
+      "size_bytes": 5123,
+      "sha256": "e8ea4d82e8438bfa2dfb967b5da0d071252805b0e341c4d6afa933375b8fd46d"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-10.json",
+      "size_bytes": 5188,
+      "sha256": "6498caae5613ae110d8341781c596185ed8f134e675f01cb51829474a3bed914"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-11.json",
+      "size_bytes": 5104,
+      "sha256": "05797aad3fb6edce1b3f43f3e304f69cda9a8c5c2069c15c5f4ba59f37dc5495"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-12.json",
+      "size_bytes": 5192,
+      "sha256": "b9a2243136a3a6e2f7ab180727ba17d5e2e1d9f21faaa1c864959de9fc82e588"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-13.json",
+      "size_bytes": 5090,
+      "sha256": "af35d1580912fca87acb5b4710dd5bdfba76c617e067b9d31b122bd6a6adfaa2"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-14.json",
+      "size_bytes": 5137,
+      "sha256": "2b99dbe17acad095efb2433f8072e44d6d6811361d92e6c99602e3e973bf23cb"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-15.json",
+      "size_bytes": 5126,
+      "sha256": "119d434e93e2b48c03a4d7e33ec8d05a45d9c297c965f23d983346ea21b4584f"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-16.json",
+      "size_bytes": 5128,
+      "sha256": "9882a3f481c181851009ec0fcf3642c03937f2b86b3e9fc636d448f2ca44a355"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-17.json",
+      "size_bytes": 5086,
+      "sha256": "fb2926fdfbd39714a98df260324c882b539796d682748d77ce7beb17d46ab625"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-18.json",
+      "size_bytes": 5167,
+      "sha256": "9de92b54d7020fe64adf541bc9b5d5a4b61f5fcac8a41a51f712ef8f7ff1ada0"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-19.json",
+      "size_bytes": 5334,
+      "sha256": "110b606d415f55abcd95132185c3958b728dff39b7f430904a3c59bd089802eb"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-20.json",
+      "size_bytes": 5166,
+      "sha256": "929585e7eb682dcafa52c0f52e6bed2dee47870b97f068f21a4eed206d1c9822"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-21.json",
+      "size_bytes": 5187,
+      "sha256": "6f711b5fd47688d7b2941206fdd34f3454106ee0d5571fc5c760d540c7a20c89"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-22.json",
+      "size_bytes": 5207,
+      "sha256": "b3b82175b6c7a73af37ad19d851c9f8a7f7cfe7b031c9a199d322866ffebd7d7"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-23.json",
+      "size_bytes": 5156,
+      "sha256": "88793fec4e55b343f8e1c568bca51ab6707fe7b3cba81039ab0239cadaad54e8"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-24.json",
+      "size_bytes": 5165,
+      "sha256": "26bf3f59476393a48fea99c4c6f58b628e577e9303c287ef60fc76bd672c7195"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-25.json",
+      "size_bytes": 5214,
+      "sha256": "df463223797c4173a44101d63d655f26a12b5470349da2ea48bf065864ea0e09"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-26.json",
+      "size_bytes": 5260,
+      "sha256": "c07a97714da68815f31427e6521a70c222bee2f93f5d0f6d512057cb8b6eeadc"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-27.json",
+      "size_bytes": 5072,
+      "sha256": "9aa650d563cd30f4f27e928ea48e0afe61c1dec544ce201d4de209a93e8c81a3"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-28.json",
+      "size_bytes": 5264,
+      "sha256": "6ab551465be183bb56337fc9a5da89982513adf867ae4c781e6a7ec9d14be22d"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-29.json",
+      "size_bytes": 5233,
+      "sha256": "0c16e473ea42814e2bfca95db76fd2c022703b41d749a8728ed8dfc9d03aabef"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-30.json",
+      "size_bytes": 5230,
+      "sha256": "7df22bf8de495fc037b1e96df411fa666704bcf2f9a2952ec5a9d2db3da6de2b"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-31.json",
+      "size_bytes": 5130,
+      "sha256": "5a5c66c7594cc592d51560702f56d68973c6f0058df64be5a2668344627cabce"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-32.json",
+      "size_bytes": 5311,
+      "sha256": "ccdd691e76b6f442b95898fe77ee1ba0140f5583edc05272b946849c9fe2845a"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-33.json",
+      "size_bytes": 5197,
+      "sha256": "6ba707da92eb74d96c4adcca99f13f9a6a4785f1ce0e98974e4b04731f402100"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-34.json",
+      "size_bytes": 5209,
+      "sha256": "410b87f67bef9a1eeb6dfb5075fa4269aab30fb86eda51bca7d2f9d1b4ac65e0"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-35.json",
+      "size_bytes": 5176,
+      "sha256": "26fda77b57126f3088827417790a0f29bf768f5e6ad88e402f14784c6f38f87d"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-36.json",
+      "size_bytes": 5100,
+      "sha256": "8cac4b1b754a212d5e5ecec94db0f143157b5483983905451fafa84766eb47c8"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-37.json",
+      "size_bytes": 5299,
+      "sha256": "c08e49e74dd8b524521006bf8e181bf201cc8bbd86dce8db529e8059334279e7"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-38.json",
+      "size_bytes": 5034,
+      "sha256": "924ee0c1436c832074bfd16d48e356286441ff3380ae72fbc8deaf8c3d989b36"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/course/chapters/chapter-final.json",
+      "size_bytes": 5377,
+      "sha256": "1976c2fb5397a926dc4784f94892e90a747f2a278a35022f32c99811d9d08cf1"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/references/chapter-map.md",
+      "size_bytes": 4009,
+      "sha256": "9cef6b6e62f9c9493f775ab20c62470c7928351c0e36af54896d9313a63b4c3e"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/references/runtime-guide.md",
+      "size_bytes": 194,
+      "sha256": "0713e648467d85e5173fdce0d24de411e27c865223054a43a61585fc0227863e"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/references/safety-policy.md",
+      "size_bytes": 189,
+      "sha256": "051a20eb3fb8191eeaa64364d9c35dad7ff8cff9859b02e1d100dc48cd0f0eb5"
+    },
+    {
+      "path": ".cursor/skills/textbook-chapter-lab/scripts/textbook_lab.py",
+      "size_bytes": 14437,
+      "sha256": "c365ad53845d4c5aaa87883275235705cab204e2c484c06b90751391445f230f"
+    },
+    {
+      "path": ".gitignore",
+      "size_bytes": 18,
+      "sha256": "b40a3cbd1f13a9beaa6b6c4294743ec260b6d44a1a9218b5f994c819c4590595"
+    },
+    {
+      "path": "BLOG_DESIGN_SUMMARY.md",
+      "size_bytes": 2827,
+      "sha256": "6b6e8401109ab01dd8b5f02b541be1dbee1d98ace231e6ca6b270c198b289dba"
+    },
+    {
+      "path": "CHAPTER_HANDS_ON_MAP.md",
+      "size_bytes": 4009,
+      "sha256": "9cef6b6e62f9c9493f775ab20c62470c7928351c0e36af54896d9313a63b4c3e"
+    },
+    {
+      "path": "EXPERIENTIAL_VALIDATION_REPORT.md",
+      "size_bytes": 598,
+      "sha256": "2d84b327968c52a8cb1f18707b3ed226cf753f8a16fe154c62ccc11fb97ea38d"
+    },
+    {
+      "path": "HANDS_ON_GUIDE.md",
+      "size_bytes": 1435,
+      "sha256": "6a2a9b38b21c656eec804cb244966467e5400d606411b16633afc80bf3ff0e8a"
+    },
+    {
+      "path": "IMAGE_PIPELINE.md",
+      "size_bytes": 6081,
+      "sha256": "7c37fa47ef0c885d7d15bf35247fc185f10528583effd070846078fbd8fb7333"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 3851,
+      "sha256": "f630a151b5dbec58dc1410f75bd0c8fae01d007831edeea8a40f02a0ae96a304"
+    },
+    {
+      "path": "SLIDE_INTEGRATION_REPORT.md",
+      "size_bytes": 944,
+      "sha256": "09a64e9df9498437ec8a487c74e2cf0c60f90ee92a55abe269c6168cf9d5e3a3"
+    },
+    {
+      "path": "SLIDE_PLACEMENT_MAP.md",
+      "size_bytes": 19089,
+      "sha256": "38f923a676f5ad7c0f198fe6f402e6b1d34d324b32e5d50e943e6131f3cf1134"
+    },
+    {
+      "path": "SOURCES.md",
+      "size_bytes": 916,
+      "sha256": "e50883b0d48d911b63254d206d73d3b9fca39950e3c6cde0ca304ebdd44497a4"
+    },
+    {
+      "path": "SOURCE_PDF_METADATA.json",
+      "size_bytes": 305,
+      "sha256": "a44b2fe0276badf7c1c49129c70ab36aebd08e9d16a695184c26c786d2db2f5d"
+    },
+    {
+      "path": "assets/slides/slide-001.webp",
+      "size_bytes": 160700,
+      "sha256": "db5aee4bd6822eb7c75e5b0effdf17ec604110205f2665db22c0773a5c9fe9f9"
+    },
+    {
+      "path": "assets/slides/slide-002.webp",
+      "size_bytes": 152852,
+      "sha256": "8c4b769d4d0e3f652bc129627795bdafbc913f69d1ec82ecb1a6b19ca24f5e93"
+    },
+    {
+      "path": "assets/slides/slide-003.webp",
+      "size_bytes": 98944,
+      "sha256": "df7c6412fb8ef1cc1cf00da72d26fb148ff869f7706ba3d1d4f1d4a7f5a938c1"
+    },
+    {
+      "path": "assets/slides/slide-004.webp",
+      "size_bytes": 178818,
+      "sha256": "a04bdc91619fd0fa51612d6cf565a9ad2c4050348661a7cc1bcd89ec3ebf0e69"
+    },
+    {
+      "path": "assets/slides/slide-005.webp",
+      "size_bytes": 156192,
+      "sha256": "6bccb4d1a68864e7feb8946927197d40dd88105ca4e682ee82ae6fc032df31c0"
+    },
+    {
+      "path": "assets/slides/slide-006.webp",
+      "size_bytes": 143138,
+      "sha256": "fb3e6edd3f31a41f88d65ac2bf843a5bee36382657666cfbe770d17b9f5a84c4"
+    },
+    {
+      "path": "assets/slides/slide-007.webp",
+      "size_bytes": 138080,
+      "sha256": "44ecedcb14d3e14e90ab8dc53b33ea4ef9b178011358d1dc5c331e4c91d02c80"
+    },
+    {
+      "path": "assets/slides/slide-008.webp",
+      "size_bytes": 161560,
+      "sha256": "bc489e73cfccdc1aa1ca5883294e3a82e4c5a56036631198b6ea3e35813455b5"
+    },
+    {
+      "path": "assets/slides/slide-009.webp",
+      "size_bytes": 149590,
+      "sha256": "736b79b1d605df5fabe4bcde11d05ede2daf7bbdf8bb07a0b2c2cfd5e24c29f4"
+    },
+    {
+      "path": "assets/slides/slide-010.webp",
+      "size_bytes": 126256,
+      "sha256": "1faf067746872f541648eebf66e2ab5644f3dc35c08630742964e63198872494"
+    },
+    {
+      "path": "assets/slides/slide-011.webp",
+      "size_bytes": 151618,
+      "sha256": "cb611e1071b650dd680fb7e299aa7f198c1f612e40d927e34cafe1937e4bd542"
+    },
+    {
+      "path": "assets/slides/slide-012.webp",
+      "size_bytes": 99264,
+      "sha256": "8ddd12bc2f9bab969e604b17b9bf8a8330a74e81c97f84c8bc0e057b64951285"
+    },
+    {
+      "path": "assets/slides/slide-013.webp",
+      "size_bytes": 161124,
+      "sha256": "6a5183ec2a86f932d2a1cbb6227196688e561ba084881369564cba505d2c4d0f"
+    },
+    {
+      "path": "assets/slides/slide-014.webp",
+      "size_bytes": 151266,
+      "sha256": "d858c04a103bf3fb72cefc58e2b69752e9342ccb0033ed0a452e982a565367b7"
+    },
+    {
+      "path": "assets/slides/slide-015.webp",
+      "size_bytes": 103422,
+      "sha256": "4711d50c6fbe75b18889d4749834bb8bf54e0c9a3400911206de6fb1905c5d27"
+    },
+    {
+      "path": "assets/slides/slide-016.webp",
+      "size_bytes": 133356,
+      "sha256": "88608054d5df41861f2375132350c355e69b38d5597523029c68226526c0b1b1"
+    },
+    {
+      "path": "assets/slides/slide-017.webp",
+      "size_bytes": 141392,
+      "sha256": "56305a2477224e903c8ecb94ba252d0f1cbe8f633dc6219a29ff911511b4e40c"
+    },
+    {
+      "path": "assets/slides/slide-018.webp",
+      "size_bytes": 118056,
+      "sha256": "087fc8bbd0c88f5688952fc0f84d590380065921dc1e56386026986a8ec2d491"
+    },
+    {
+      "path": "assets/slides/slide-019.webp",
+      "size_bytes": 154348,
+      "sha256": "e59c8e2667e9e33476d53f6a09f959e3d1eb9d07f08ce221e644097f3f3682bc"
+    },
+    {
+      "path": "assets/slides/slide-020.webp",
+      "size_bytes": 142996,
+      "sha256": "4e30fa60b74aed8087d85d9addddb0fc46ee8d7b02ca424922b214addfc57f40"
+    },
+    {
+      "path": "assets/slides/slide-021.webp",
+      "size_bytes": 175160,
+      "sha256": "ede1143510c74d2e365cae7c25e04764cbeccea72633865f0ec6484fe01c408f"
+    },
+    {
+      "path": "assets/slides/slide-022.webp",
+      "size_bytes": 114752,
+      "sha256": "6e884f15eb0b13ac7b1ae5fa0270b7bae5a99230d55b3607815821c66cb1971a"
+    },
+    {
+      "path": "assets/slides/slide-023.webp",
+      "size_bytes": 147152,
+      "sha256": "dea24ea78a6ab2d75bcf288ca3c3f3a1dcb040a9a8234e71977f9c4b8270f5d5"
+    },
+    {
+      "path": "assets/slides/slide-024.webp",
+      "size_bytes": 132826,
+      "sha256": "b5dde782597feafc5984d7543b5c1cbd2e142a67532d56eae42a5f7401df392b"
+    },
+    {
+      "path": "assets/slides/slide-025.webp",
+      "size_bytes": 156544,
+      "sha256": "6413f83e12233de75bc2b4758d562d2e2cf16bacf119996f7526631e8560e3fe"
+    },
+    {
+      "path": "assets/slides/slide-026.webp",
+      "size_bytes": 133724,
+      "sha256": "39d4460e590beaf0ea1eb5a3e68709c5691c70348a1373a749c328940421b672"
+    },
+    {
+      "path": "assets/slides/slide-027.webp",
+      "size_bytes": 90722,
+      "sha256": "757b38952ffae197ec87aab2553afccdb673bfcaf37d6cee2bed0195f0bacc69"
+    },
+    {
+      "path": "assets/slides/slide-028.webp",
+      "size_bytes": 171238,
+      "sha256": "ca0eef8ef4a38b73b5beb3669de921bd0c8c7b78f3bb21abc6ca762054c68e51"
+    },
+    {
+      "path": "assets/slides/slide-029.webp",
+      "size_bytes": 169706,
+      "sha256": "c24d3e5fc18e5f4e234a11cfae4201124e45377fe71b89b983137928204e88a2"
+    },
+    {
+      "path": "assets/slides/slide-030.webp",
+      "size_bytes": 140978,
+      "sha256": "dd688c4610a686e200f3ad5e93d6d31956734332360c7b2cf62f3407fb0196e1"
+    },
+    {
+      "path": "assets/slides/slide-031.webp",
+      "size_bytes": 114312,
+      "sha256": "6da90273dbfc2229211c7adf653676b8461c89f46cd47925a40f722f986577cb"
+    },
+    {
+      "path": "assets/slides/slide-032.webp",
+      "size_bytes": 132336,
+      "sha256": "9bd2065f3551f901e7cd19f5d80cb8d8c576ff8d8560b95fc7df189fd2ddd3cd"
+    },
+    {
+      "path": "assets/slides/slide-033.webp",
+      "size_bytes": 142020,
+      "sha256": "0540ea922653f5dbc17cbf71d5a6e4edfc1b5402afb62e169cd53fd18b26159c"
+    },
+    {
+      "path": "assets/slides/slide-034.webp",
+      "size_bytes": 163742,
+      "sha256": "64be0759dd7ee8183f93956d08b3ea31985e1e988024e0dbca598995ea3acdd4"
+    },
+    {
+      "path": "assets/slides/slide-035.webp",
+      "size_bytes": 100790,
+      "sha256": "2fe4319c20ed98fdd17001935bdf4c2605c05d5ac0684bfed3f2c5dc4e0cf3a0"
+    },
+    {
+      "path": "assets/slides/slide-036.webp",
+      "size_bytes": 150744,
+      "sha256": "0de34f287ba1f5b618faec0a8fe396fbe0285a70c436d37a1b88a54d95003ab8"
+    },
+    {
+      "path": "assets/slides/slide-037.webp",
+      "size_bytes": 143508,
+      "sha256": "e8b80da95bdd0b284fe6fe537fbcbdd6654a2dc7c4972aa3f81306cdd8e59330"
+    },
+    {
+      "path": "assets/slides/slide-038.webp",
+      "size_bytes": 158964,
+      "sha256": "70a0f99c42bbd1adc18b88fbe23444676330f70e219852869251bd7e2a213cdf"
+    },
+    {
+      "path": "assets/slides/slide-039.webp",
+      "size_bytes": 159060,
+      "sha256": "bb91bc97c49df60c763be0aa75673d034b1e36a94ecd0fbe6288d1ed1c4f10b2"
+    },
+    {
+      "path": "assets/slides/slide-040.webp",
+      "size_bytes": 157930,
+      "sha256": "36fb37162ae4a0cf061ddc27ffcbe06abf879c67f74bb94db6c90ba5f7255b43"
+    },
+    {
+      "path": "assets/slides/slide-041.webp",
+      "size_bytes": 93910,
+      "sha256": "c6c30f4d00d40774951d76d81ee27b846f0c830013a94f2299f5934b1c035514"
+    },
+    {
+      "path": "assets/slides/slide-042.webp",
+      "size_bytes": 138694,
+      "sha256": "3f0e2e2907f9b0b3da2832cc028df76a0ebd912033c8016994f00882a889ea80"
+    },
+    {
+      "path": "assets/slides/slide-043.webp",
+      "size_bytes": 126530,
+      "sha256": "959898c754c8fce724c92290cd9449c9721a6f4e2bfb3ffae11d4da8b8fa6b5f"
+    },
+    {
+      "path": "assets/slides/slide-044.webp",
+      "size_bytes": 139220,
+      "sha256": "40c86bf241a9de5e57e9d57459e58b2c097424a869f570a5d92871eb5060cb0e"
+    },
+    {
+      "path": "assets/slides/slide-045.webp",
+      "size_bytes": 91588,
+      "sha256": "49eb49781b5af8cc257cfe0fd802176770f8c6e04bf68686d46c0eaf7ce5db99"
+    },
+    {
+      "path": "assets/slides/slide-046.webp",
+      "size_bytes": 163028,
+      "sha256": "14d2c89d331919d10136fdd3236dfeb4fb2cf0c609b552a514bcff21fea8fbb1"
+    },
+    {
+      "path": "assets/slides/slide-047.webp",
+      "size_bytes": 178908,
+      "sha256": "49367d4957a78716e431131202198a28535ffa372e8b0aaa9a6651a57ff754cf"
+    },
+    {
+      "path": "assets/slides/slide-048.webp",
+      "size_bytes": 171140,
+      "sha256": "89d615787508e333d46f28a8a35b12873434117175eedb90c506e9f8fe8fd5cd"
+    },
+    {
+      "path": "assets/slides/slide-049.webp",
+      "size_bytes": 85484,
+      "sha256": "91a901fba28d30dfb7d1cc80d9078dca10026b421cdbc0c2177d2e2713d83dd0"
+    },
+    {
+      "path": "assets/slides/slide-050.webp",
+      "size_bytes": 149956,
+      "sha256": "fe39975ddf524d759ab23418ba3894f1cc0cac8e670ea0334ca60b001dd3a85e"
+    },
+    {
+      "path": "assets/slides/slide-051.webp",
+      "size_bytes": 134994,
+      "sha256": "5c29513660302914cc757da865c8eb0604bb89fceb594c064af808e38c4cd98f"
+    },
+    {
+      "path": "assets/slides/slide-052.webp",
+      "size_bytes": 171038,
+      "sha256": "d5590674bcefbe360747d4268e610c822b2b54db298c0fd5ca7c851f8d29c0d0"
+    },
+    {
+      "path": "assets/slides/slide-053.webp",
+      "size_bytes": 127204,
+      "sha256": "e2bab52b0042fb8132c3274f60c03d779fab7a16c6ef0096713d6d5fc5e4805c"
+    },
+    {
+      "path": "assets/slides/slide-054.webp",
+      "size_bytes": 169650,
+      "sha256": "da189ffc10c5670eb6b3ce9702d74e3b8ec7aba491c8089795c1f91a9dd8cedd"
+    },
+    {
+      "path": "assets/slides/slide-055.webp",
+      "size_bytes": 145328,
+      "sha256": "dc23cffdfec2a878f9b76b3eece7a42489bfa791c36f8cfb61dbd48b5aa32516"
+    },
+    {
+      "path": "assets/slides/slide-056.webp",
+      "size_bytes": 156954,
+      "sha256": "d14157c23fb68f20b2d0f541b11e2d131625f834115f95648bbfd413070a9d72"
+    },
+    {
+      "path": "assets/slides/slide-057.webp",
+      "size_bytes": 158290,
+      "sha256": "ac9153e52c14aedd98654f82e93e6c2368534abf08b29777d0556bcdaf5616f4"
+    },
+    {
+      "path": "assets/slides/slide-058.webp",
+      "size_bytes": 77370,
+      "sha256": "3d9ae80bb81cfef7377533f5500a950a6bfd8eb8b63edd3af29eb77f332e7d7f"
+    },
+    {
+      "path": "assets/slides/slide-059.webp",
+      "size_bytes": 148796,
+      "sha256": "99b33f118515a21323ce0ca76a2643fa687b8c24290f0b186e8cfc9452a7d210"
+    },
+    {
+      "path": "assets/slides/slide-060.webp",
+      "size_bytes": 168162,
+      "sha256": "e62f408c45f2a122153db393500414777baef71e6c40fa2ffa0ef1367189732d"
+    },
+    {
+      "path": "assets/slides/slide-061.webp",
+      "size_bytes": 119130,
+      "sha256": "a3e49ce072b2c5c828c95982accc65a2a5dc6f0851ec375356e688c5ef331e00"
+    },
+    {
+      "path": "assets/slides/slide-062.webp",
+      "size_bytes": 151076,
+      "sha256": "7053fc3723eaf56d9bc14536e5b295d74780c615e9d7295a22e2eb472d7d7ca5"
+    },
+    {
+      "path": "assets/slides/slide-063.webp",
+      "size_bytes": 131014,
+      "sha256": "b0be4fe93bfdc415e2f703b3f7c5215ee774334207714930d2c2a38f0537f7e2"
+    },
+    {
+      "path": "assets/slides/slide-064.webp",
+      "size_bytes": 104306,
+      "sha256": "cec187f9adf00e4da13190dc2a4446681d0d30fa978679233be108c055c0dce6"
+    },
+    {
+      "path": "assets/slides/slide-065.webp",
+      "size_bytes": 179538,
+      "sha256": "7574acf77accfb7698e073fece063e19b563a64c43a43313e85e2950975e1e0f"
+    },
+    {
+      "path": "assets/slides/slide-066.webp",
+      "size_bytes": 150080,
+      "sha256": "42c669edb0eb126482e0e480fc3c15516e1ebe044bf306677dbc14d8b9c52603"
+    },
+    {
+      "path": "assets/slides/slide-067.webp",
+      "size_bytes": 140788,
+      "sha256": "09a0b2b6cd3cbea8b32e5825a6b2229700a329062ee1eed1d014b92c42dddcbb"
+    },
+    {
+      "path": "assets/slides/slide-068.webp",
+      "size_bytes": 159530,
+      "sha256": "81273bbe7e9047b81e5b24ad78b1007877e8b78c75687478e0a75f4524efe45e"
+    },
+    {
+      "path": "assets/slides/slide-069.webp",
+      "size_bytes": 110242,
+      "sha256": "f1567c41d9256ad7ffec91d0352995a005f1ec9f22af4dc388304e857d566d1b"
+    },
+    {
+      "path": "assets/slides/slide-070.webp",
+      "size_bytes": 153648,
+      "sha256": "338ed56c3c29418aa2c6d766d119a25858b4c9dc2eee1a2cebf7ba2482ac4615"
+    },
+    {
+      "path": "assets/slides/slide-071.webp",
+      "size_bytes": 118080,
+      "sha256": "e239e3d91a3177d396197ae5dddc0b3dccaf0bc761f05c82e7480f39e39a2183"
+    },
+    {
+      "path": "assets/slides/slide-072.webp",
+      "size_bytes": 116920,
+      "sha256": "8e043a14ad1c60bb35c892ddf4269da0685f9949c0ce4059ef6dc146a1d07351"
+    },
+    {
+      "path": "assets/slides/slide-073.webp",
+      "size_bytes": 130628,
+      "sha256": "bdc5e69b0f483acd18be1ada7f67c428a83dd03c02b5f7f3500bf00db367e140"
+    },
+    {
+      "path": "assets/slides/slide-074.webp",
+      "size_bytes": 91912,
+      "sha256": "513e77ccb01cb35f0340c149a3c18a2293fe92462b03678f5be24e702a77e5c6"
+    },
+    {
+      "path": "assets/slides/slide-075.webp",
+      "size_bytes": 143052,
+      "sha256": "3f9fdc870ea5c9938e7806c32d74e59013a1b02f490b2f226505278d545feaea"
+    },
+    {
+      "path": "assets/slides/slide-076.webp",
+      "size_bytes": 142170,
+      "sha256": "06ac67f08c04ed8f62422863121697303dacaeddda951ad001dec236ec9f896b"
+    },
+    {
+      "path": "assets/slides/slide-077.webp",
+      "size_bytes": 149396,
+      "sha256": "f8ae4b677469f64376a3370f495bb0e28cb58bf6fc151b81a247a3fcbac3a3fb"
+    },
+    {
+      "path": "assets/slides/slide-078.webp",
+      "size_bytes": 107402,
+      "sha256": "de9da01b3414ca9c71c243db7f7491fde6e035ca78dd7f21bf410e59e8f836b3"
+    },
+    {
+      "path": "assets/slides/slide-079.webp",
+      "size_bytes": 173916,
+      "sha256": "ea226678cc7ff2e0d9391ecc539c101f1657c6280c776f22ebfbdd1ad136a2bf"
+    },
+    {
+      "path": "assets/slides/slide-080.webp",
+      "size_bytes": 122582,
+      "sha256": "dbf66e0be84ac6a74f77e47d097ead2fe8a00122388bedc2c26faf2452f98694"
+    },
+    {
+      "path": "assets/slides/slide-081.webp",
+      "size_bytes": 138680,
+      "sha256": "d0d70cdb41ec2ce60bd2077b85d3b465454c71a1e5677bbf4098b0dbd877ec30"
+    },
+    {
+      "path": "assets/slides/slide-082.webp",
+      "size_bytes": 142332,
+      "sha256": "7e48aa30d0cd8ead10ff10fa6e20cdac427df0e159d914ba0127969d35dc6a98"
+    },
+    {
+      "path": "assets/slides/slide-083.webp",
+      "size_bytes": 149604,
+      "sha256": "40f39138ce6746fb486c019a9fb4d22d5462ed31bb7f0af632311b6ee2240795"
+    },
+    {
+      "path": "assets/slides/slide-084.webp",
+      "size_bytes": 143654,
+      "sha256": "ff69318a92d2a826ebf44f583249d0f569b70961d52b6dd517286450aa7e869e"
+    },
+    {
+      "path": "assets/slides/slide-085.webp",
+      "size_bytes": 128818,
+      "sha256": "a3b7734e9d4c189e2b333425ddfbb50d8b77cc49f9fe98953285fb6817174df2"
+    },
+    {
+      "path": "assets/slides/slide-086.webp",
+      "size_bytes": 147734,
+      "sha256": "55787cc27b481f41c3c95d0ddf744aa1f647efd758fa756a28c4822162f99277"
+    },
+    {
+      "path": "assets/slides/slide-087.webp",
+      "size_bytes": 113044,
+      "sha256": "253f97521c65a7ef5cdce1fa860f6dc2beea9065c7028e32eae1972ec6665dad"
+    },
+    {
+      "path": "assets/slides/slide-088.webp",
+      "size_bytes": 168622,
+      "sha256": "48fb0cd105e16dd14ff5561c0851dd798911bc37d26a24afc4be05acde8b5049"
+    },
+    {
+      "path": "assets/slides/slide-089.webp",
+      "size_bytes": 130694,
+      "sha256": "f5eadbb1f1e8cd51c6f7a96ef40e881e0f400c2d13b312d88ae80f2b7ec2c7b1"
+    },
+    {
+      "path": "assets/slides/slide-090.webp",
+      "size_bytes": 142478,
+      "sha256": "7631c9454ba164fa1892d3eb5e9b92b565d61d6e2ade4496065375d44447ef5d"
+    },
+    {
+      "path": "assets/slides/slide-091.webp",
+      "size_bytes": 182746,
+      "sha256": "22436719498d72d921fdea3c173be83b0c6d79be9f7ff7ae1193b98bccc1fe4a"
+    },
+    {
+      "path": "assets/slides/slide-092.webp",
+      "size_bytes": 118120,
+      "sha256": "b00733772640a2d5da29bd95362180d12c95a6a7ccddacd4995b8d614da3c0a6"
+    },
+    {
+      "path": "assets/slides/slide-093.webp",
+      "size_bytes": 157140,
+      "sha256": "8dc3a62b78575a9baf633a3209d78bc3728bfb17bb5d7c1605000d9feeac3265"
+    },
+    {
+      "path": "assets/slides/slide-094.webp",
+      "size_bytes": 121838,
+      "sha256": "80858449b38c91f8b8d2efb43ffb673be7b286f24a826d0387cff60314c6820e"
+    },
+    {
+      "path": "assets/slides/slide-095.webp",
+      "size_bytes": 159148,
+      "sha256": "efefda6219d098b2a581ee592165b295e05d1b652f33b9d33caa2cb42fa642ee"
+    },
+    {
+      "path": "assets/slides/slide-096.webp",
+      "size_bytes": 155574,
+      "sha256": "d6ed7f6e22c8487615f9ef0adc80f68071f40db1927d759e75922b236dab0254"
+    },
+    {
+      "path": "assets/slides/slide-097.webp",
+      "size_bytes": 147290,
+      "sha256": "991e8ca98005c1b4e1e1a9660937c50eaeac2e8cf4fb5727098885422a560a22"
+    },
+    {
+      "path": "assets/slides/slide-098.webp",
+      "size_bytes": 113828,
+      "sha256": "d3fcc28ee9157459424b5ddbdfdfdf1acbabdd22f42ab0673a7d7cdf032ddc17"
+    },
+    {
+      "path": "assets/slides/slide-099.webp",
+      "size_bytes": 142666,
+      "sha256": "33b55c86e9bf349142ccbe03e098f49b654c083d41853e98be9e038c3a4c710a"
+    },
+    {
+      "path": "assets/slides/slide-100.webp",
+      "size_bytes": 131406,
+      "sha256": "9d75c5fb728725d97e9edf8c4ee6adfcde39acad7dfa2f6c6de1e0d954892a7b"
+    },
+    {
+      "path": "assets/slides/slide-101.webp",
+      "size_bytes": 137906,
+      "sha256": "6affc5088a61522798fea8d11a6cbbbbddbaee6bcc6fb282862648b6f5930d8a"
+    },
+    {
+      "path": "assets/slides/slide-102.webp",
+      "size_bytes": 151596,
+      "sha256": "cf79b1379f734d2f4d1a84b7bdf703ab301e28f44824eae437ac7cff9206f7ab"
+    },
+    {
+      "path": "assets/slides/slide-103.webp",
+      "size_bytes": 127824,
+      "sha256": "5b77dacb9fcb32e34041d831b56a38833b71ddb30b5ec6a15270db8d65cb03c3"
+    },
+    {
+      "path": "assets/slides/slide-104.webp",
+      "size_bytes": 131082,
+      "sha256": "d3a373161ea0559774c1cbcd9f30e787fdc8218fed0501ba2c8e219e79baa285"
+    },
+    {
+      "path": "assets/slides/slide-105.webp",
+      "size_bytes": 123718,
+      "sha256": "d0bc77fc854733ad005976320d1d5ff9a96af2e5e24756abae241f46adbba7ef"
+    },
+    {
+      "path": "assets/slides/slide-106.webp",
+      "size_bytes": 155748,
+      "sha256": "21da53d346420d7b1bdf1ec5515f4956ad081e56ad5e38e1cc6650e9098e77bd"
+    },
+    {
+      "path": "assets/slides/slide-107.webp",
+      "size_bytes": 163162,
+      "sha256": "ef60724cc73418978d63b07b0b912cd17a1bda03ba5bc96ba763d31afce54609"
+    },
+    {
+      "path": "assets/slides/slide-108.webp",
+      "size_bytes": 113870,
+      "sha256": "b654efc27a48d8f359082912d65dba914e8f481a8507ad7b623e8d396e87db89"
+    },
+    {
+      "path": "assets/slides/slide-109.webp",
+      "size_bytes": 159028,
+      "sha256": "553dc71e7cefbcc8392ded1f3cb90bff99618984a05894d70bb579ac18c805f2"
+    },
+    {
+      "path": "assets/slides/slide-110.webp",
+      "size_bytes": 154460,
+      "sha256": "19627c7ef028bcb252659b7ca82f38b90bd3cf8384cbbd760a4a7074be818e6e"
+    },
+    {
+      "path": "assets/slides/slide-111.webp",
+      "size_bytes": 122700,
+      "sha256": "f178ca79a1bbce323c93e115ace4c69361d92bfc9e2dec07241a8c1c626b2783"
+    },
+    {
+      "path": "assets/slides/slide-112.webp",
+      "size_bytes": 130854,
+      "sha256": "8f1198cdf0e84e6f13dc0990f9f6e7e21f6b19a31f40154ee72b1c84580fe38e"
+    },
+    {
+      "path": "assets/slides/slide-113.webp",
+      "size_bytes": 173802,
+      "sha256": "29cd9c955d67f92e76eb475b5e3500134275167d7780306612be23801d92b20f"
+    },
+    {
+      "path": "assets/slides/slide-114.webp",
+      "size_bytes": 132186,
+      "sha256": "c58ccf0778edb090a0b9aeee4f1f1317a17785bb1cd9425f8030e14b765df331"
+    },
+    {
+      "path": "assets/slides/slide-115.webp",
+      "size_bytes": 166426,
+      "sha256": "18587e3aa64b5bc7c80f64ddf69bd2237c3db5d755c41605dee36d182bf89acf"
+    },
+    {
+      "path": "assets/slides/slide-116.webp",
+      "size_bytes": 159430,
+      "sha256": "b9f3006bb2b44704ef9ce83d393ab09a81092191b44bb1b9fd166d1fbfd30a49"
+    },
+    {
+      "path": "assets/slides/slide-117.webp",
+      "size_bytes": 124882,
+      "sha256": "d69d79b817c8c0e739bfaf2fae5ade6466276bf7cba8ada2d750eed7a287a849"
+    },
+    {
+      "path": "assets/slides/slide-118.webp",
+      "size_bytes": 147562,
+      "sha256": "b4456e247dc109590af110d7d194c4cfde745302df726029e39f77a5d9d0535d"
+    },
+    {
+      "path": "assets/slides/slide-119.webp",
+      "size_bytes": 110288,
+      "sha256": "5bcc2d14bd08d331979dba9bebae5e2f4e4d8e1ae03f89d1e7ffd9341212fc08"
+    },
+    {
+      "path": "assets/slides/slide-120.webp",
+      "size_bytes": 140818,
+      "sha256": "8ea4091d3f107b56e1766f782e104035eba22f9112bf08115a801fbf1a6a55fd"
+    },
+    {
+      "path": "assets/slides/slide-121.webp",
+      "size_bytes": 99178,
+      "sha256": "d919216f3839fa38cb900fee124be8d05bec781f468512d146d9e02b19b5cb78"
+    },
+    {
+      "path": "assets/slides/slide-122.webp",
+      "size_bytes": 146164,
+      "sha256": "c8ec7817f13389e879633b94009c922f0bcc478cd2330441f459eb648f5743de"
+    },
+    {
+      "path": "assets/slides/slide-123.webp",
+      "size_bytes": 128958,
+      "sha256": "06185e111cce6757201e274241250ea5b43647478af7aba9e20eee119e86bc55"
+    },
+    {
+      "path": "assets/slides/slide-124.webp",
+      "size_bytes": 88970,
+      "sha256": "5286fa3e8c50a6e581825b925e7ddc18f64f790090ca7ae876d7164e2f0f2364"
+    },
+    {
+      "path": "assets/slides/slide-125.webp",
+      "size_bytes": 189168,
+      "sha256": "d40612263ab343d5bef43da8cfaef3367b3c9b8aa0a849ffda18df87b5e499bf"
+    },
+    {
+      "path": "assets/slides/slide-126.webp",
+      "size_bytes": 146804,
+      "sha256": "390cfb7944f09112f9bdb9fbb13d141d4b2c74a8a526e577bfb286d740fcbcaf"
+    },
+    {
+      "path": "assets/slides/slide-127.webp",
+      "size_bytes": 140212,
+      "sha256": "f77d52157551750750f16bd41b494db249bac312aa6fe2c61df8d73b32aafea3"
+    },
+    {
+      "path": "assets/slides/slide-128.webp",
+      "size_bytes": 99686,
+      "sha256": "a17f6441e2956cc6c01b40ab01c0769e2c361fea6ae929f5bc0d695bb3577998"
+    },
+    {
+      "path": "assets/slides/slide-129.webp",
+      "size_bytes": 164110,
+      "sha256": "36b0e55d690825f49b0a3466c60e2650064c08262a549ff7be9ab9719b54c62b"
+    },
+    {
+      "path": "assets/slides/slide-130.webp",
+      "size_bytes": 156764,
+      "sha256": "b8d43dc17da3003ae7b5a69c88704e41808caf3485c798a9d53ed6b0685b3476"
+    },
+    {
+      "path": "assets/slides/slide-131.webp",
+      "size_bytes": 107592,
+      "sha256": "3cd596942e4fe5f0290339a912062280a5c289ec2b777b8733bf75c6409e5f66"
+    },
+    {
+      "path": "assets/slides/slide-132.webp",
+      "size_bytes": 142646,
+      "sha256": "9ba2244cb2ac1f0230deb23c65e11db9c0dbbd8570470cd6ac3e2390a40832af"
+    },
+    {
+      "path": "assets/slides/slide-133.webp",
+      "size_bytes": 109498,
+      "sha256": "33f1002cd69739124e44f9afa0fcbd15923cb13f9fd843b572f7285ca4d8dc35"
+    },
+    {
+      "path": "assets/slides/slide-134.webp",
+      "size_bytes": 146718,
+      "sha256": "44d6951e1fccda05988e30f1158a2aaa49bca12d232a80560def96555283102d"
+    },
+    {
+      "path": "assets/slides/slide-135.webp",
+      "size_bytes": 129762,
+      "sha256": "3526cbffebd0ff3e24783285b3c231242a0a2595bfed92500b23f1ba128f81e7"
+    },
+    {
+      "path": "assets/slides/slide-136.webp",
+      "size_bytes": 124570,
+      "sha256": "527f0b3cf7ca99ffbc20e5a40cd4ddca0f0fb0dc799fec0a9bca26c7fd779417"
+    },
+    {
+      "path": "assets/slides/slide-137.webp",
+      "size_bytes": 128910,
+      "sha256": "f8ef0f0808c0a9e59e9d643517c8c564572c7a44f3038fbfc47fcc18bf057032"
+    },
+    {
+      "path": "assets/slides/slide-138.webp",
+      "size_bytes": 64278,
+      "sha256": "dbc4b7290ef50a00a60464ab8e1bc1a47bfd03708d8530365210982359e793c1"
+    },
+    {
+      "path": "assets/slides/slide-139.webp",
+      "size_bytes": 123758,
+      "sha256": "f3f90ffc2d9646e757d07f61d9b3e79ef6ee08c2fae5ca1da4673c9acd73b25b"
+    },
+    {
+      "path": "assets/slides/slide-140.webp",
+      "size_bytes": 133692,
+      "sha256": "c504dd5a361133c05393de1b676872de263e06351f7a0474d4fb47b2faff191a"
+    },
+    {
+      "path": "assets/slides/slide-141.webp",
+      "size_bytes": 131850,
+      "sha256": "adeb666e17f77fbc95f5f79155c24f3880207f7bae86f9c61dfffdb8acb325df"
+    },
+    {
+      "path": "assets/slides/slide-142.webp",
+      "size_bytes": 113434,
+      "sha256": "ed295e827f2f5671fc1b58644a77b067bdc396d3aed7db4dd8a9cea0a2ad4e5a"
+    },
+    {
+      "path": "assets/slides/slide-143.webp",
+      "size_bytes": 138096,
+      "sha256": "9a3e60d44d9531e22725f12de24bf844a5e7aa23da4fd62c2ff31cc5921e9612"
+    },
+    {
+      "path": "assets/slides/slide-144.webp",
+      "size_bytes": 137046,
+      "sha256": "3daaa32d39eb8777c4a0f7f5498dea9797aa57ea376a4c5897c3c400d0fd13d3"
+    },
+    {
+      "path": "assets/slides/slide-145.webp",
+      "size_bytes": 150238,
+      "sha256": "1be8e335179c3d3e656d17dbe62608a6aae729bb908d0a2e80469ce8dfa1d3f7"
+    },
+    {
+      "path": "assets/slides/slide-146.webp",
+      "size_bytes": 109584,
+      "sha256": "82433f3ee14ffbf42b1e155c6dbb426468803a9815c1209851cc5e22742ceeb8"
+    },
+    {
+      "path": "assets/slides/slide-147.webp",
+      "size_bytes": 145696,
+      "sha256": "ba07fad038a3ff5345b10bf8c4cb20875cf94e210cad6447c55664dd5b64df0c"
+    },
+    {
+      "path": "beginner_supplements.json",
+      "size_bytes": 25271,
+      "sha256": "0d3f9954d9f269d8a665f67f44df36dc2d06c4271ca86b4da3e5549fb6a33aaf"
+    },
+    {
+      "path": "claude-code-blog-complete-beginner-original.md",
+      "size_bytes": 259776,
+      "sha256": "d618109d7386e00c29e2c6f2ea8bfc4f78c880e424bbff1841049ab8a020d1bf"
+    },
+    {
+      "path": "claude-code-blog-complete.md",
+      "size_bytes": 316506,
+      "sha256": "57c160aeda7e34d383398993c28ba7b948e4e8423221aaee28d71718b6456d4f"
+    },
+    {
+      "path": "claude-code-blog-slide-integrated.md",
+      "size_bytes": 316506,
+      "sha256": "57c160aeda7e34d383398993c28ba7b948e4e8423221aaee28d71718b6456d4f"
+    },
+    {
+      "path": "coverage-report.md",
+      "size_bytes": 426,
+      "sha256": "614b126fa94f01c187a792a32577da7414365d13dde4015c8fafd5658e860f25"
+    },
+    {
+      "path": "hands-on/README.md",
+      "size_bytes": 315,
+      "sha256": "4784929a08ee9d4abe03e939c3a89fa63f44a3a62d32af41fd38a590181233f8"
+    },
+    {
+      "path": "hands-on/install.sh",
+      "size_bytes": 2405,
+      "sha256": "51af5bc61ca79bdbedfff705f069b6dd99e99a853d5105cbbb6ccdbda2449321"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/SKILL.md",
+      "size_bytes": 3481,
+      "sha256": "c24b2283a6ed84b7843ff7374bf93aa9b3da405250118366672ba2abcae003db"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/dangerous-commands.txt",
+      "size_bytes": 53,
+      "sha256": "33b904bbe30bfdf114985318d4ebf288e2721ff86cf2f9b5ed45bb99e7e1c920"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/failure-case.md",
+      "size_bytes": 207,
+      "sha256": "063b25906108fbbbdbfc820c3e1b5183b22631b2cacfc3bf3345533a2c5baa82"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/meeting-transcript.md",
+      "size_bytes": 354,
+      "sha256": "83bde780fae8b6f9f3a8c2061a4c4155c0ff39fc1629f3ddbcfc2acf9a74c9b1"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/meetings.json",
+      "size_bytes": 235,
+      "sha256": "428f45222503a02544a1332e1f19729c7216536b3f26762cffa0ba05b3fe913c"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/mock-mcp-data.json",
+      "size_bytes": 158,
+      "sha256": "b2861885b005da64f73e8332b0ba6ba41cadb6a5327911004522527d70e14fac"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/office-files.csv",
+      "size_bytes": 155,
+      "sha256": "c488a491795b1048a9950dc71c3b070144e0ed283e5207a60b1bba3ef6179159"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/recurring-work.csv",
+      "size_bytes": 203,
+      "sha256": "c57533d5a7534a3c3ebea674042c9ecab082a961142b5172344b60f75014426f"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/sample-log.jsonl",
+      "size_bytes": 199,
+      "sha256": "10499fc8366b156ff7dc1bb7df18a36d6468a857a420cf9b347a50028763e5b7"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/source-pack.md",
+      "size_bytes": 303,
+      "sha256": "03072ed51612f34ecbb6bf39516652fc8a3e8f9b15b973d4f334f2406d49f716"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/source-topics.csv",
+      "size_bytes": 180,
+      "sha256": "da6bd821eb356fb687f4acad697dcaacbc7e2e9979ba4a88bb53a313319186cd"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/vague-request.txt",
+      "size_bytes": 106,
+      "sha256": "514ad28cd4bf16405eb4ed696b40ea5911bdb379c8e6998e5863fd2ed56e3b56"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/assets/volatile-claims.md",
+      "size_bytes": 242,
+      "sha256": "3255c4d7450b28e48082456a589d5cb4d0e851674f1ead98aae58347955150a8"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapter-index.json",
+      "size_bytes": 19524,
+      "sha256": "ecd33c06b3590893640a2b0e2a19635ff387b92e296d468dde75d6474601a4b3"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-00.json",
+      "size_bytes": 5160,
+      "sha256": "f317ad6040d02a1c8f783ad321b54eaef2fe16f4bb0ffc36aa871a4cbe618886"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-01.json",
+      "size_bytes": 5175,
+      "sha256": "bf0d34837cfda2919fcc902e7e80d5baf403a35c569019ed4e4fc8750c0e29be"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-02.json",
+      "size_bytes": 5031,
+      "sha256": "83ad569d3ca63e81716bdff030b5b84f703812ab6e62867ed49e21c908cd68d9"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-03.json",
+      "size_bytes": 5176,
+      "sha256": "e2bb6a022a40c4bc2d5e647b1157ff2b70c4346d80deff6f7851571a2e7951d5"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-04.json",
+      "size_bytes": 5304,
+      "sha256": "4db265e62795c2a90b63f34be508e2b52e47912c21ad204dfdbabf9dc0680b30"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-05.json",
+      "size_bytes": 5224,
+      "sha256": "3f25ae4c7dd8dfd87e5f37238ae249a1463e63bfbd453fac596da8fae90dee2d"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-06.json",
+      "size_bytes": 5101,
+      "sha256": "7b85ee8f6037a8483a717366b137da2daaeb7c0c1fc65832238b4ce311d95d59"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-07.json",
+      "size_bytes": 5209,
+      "sha256": "7784535f8f21f822520e27ea5da1a8e0ef8028b6c9b5d5f73621bea45039a1e4"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-08.json",
+      "size_bytes": 5060,
+      "sha256": "f18688584a1a98c1155d2e9a39bb5837e47b95873d775833a8f131027d9678f2"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-09.json",
+      "size_bytes": 5123,
+      "sha256": "e8ea4d82e8438bfa2dfb967b5da0d071252805b0e341c4d6afa933375b8fd46d"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-10.json",
+      "size_bytes": 5188,
+      "sha256": "6498caae5613ae110d8341781c596185ed8f134e675f01cb51829474a3bed914"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-11.json",
+      "size_bytes": 5104,
+      "sha256": "05797aad3fb6edce1b3f43f3e304f69cda9a8c5c2069c15c5f4ba59f37dc5495"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-12.json",
+      "size_bytes": 5192,
+      "sha256": "b9a2243136a3a6e2f7ab180727ba17d5e2e1d9f21faaa1c864959de9fc82e588"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-13.json",
+      "size_bytes": 5090,
+      "sha256": "af35d1580912fca87acb5b4710dd5bdfba76c617e067b9d31b122bd6a6adfaa2"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-14.json",
+      "size_bytes": 5137,
+      "sha256": "2b99dbe17acad095efb2433f8072e44d6d6811361d92e6c99602e3e973bf23cb"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-15.json",
+      "size_bytes": 5126,
+      "sha256": "119d434e93e2b48c03a4d7e33ec8d05a45d9c297c965f23d983346ea21b4584f"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-16.json",
+      "size_bytes": 5128,
+      "sha256": "9882a3f481c181851009ec0fcf3642c03937f2b86b3e9fc636d448f2ca44a355"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-17.json",
+      "size_bytes": 5086,
+      "sha256": "fb2926fdfbd39714a98df260324c882b539796d682748d77ce7beb17d46ab625"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-18.json",
+      "size_bytes": 5167,
+      "sha256": "9de92b54d7020fe64adf541bc9b5d5a4b61f5fcac8a41a51f712ef8f7ff1ada0"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-19.json",
+      "size_bytes": 5334,
+      "sha256": "110b606d415f55abcd95132185c3958b728dff39b7f430904a3c59bd089802eb"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-20.json",
+      "size_bytes": 5166,
+      "sha256": "929585e7eb682dcafa52c0f52e6bed2dee47870b97f068f21a4eed206d1c9822"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-21.json",
+      "size_bytes": 5187,
+      "sha256": "6f711b5fd47688d7b2941206fdd34f3454106ee0d5571fc5c760d540c7a20c89"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-22.json",
+      "size_bytes": 5207,
+      "sha256": "b3b82175b6c7a73af37ad19d851c9f8a7f7cfe7b031c9a199d322866ffebd7d7"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-23.json",
+      "size_bytes": 5156,
+      "sha256": "88793fec4e55b343f8e1c568bca51ab6707fe7b3cba81039ab0239cadaad54e8"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-24.json",
+      "size_bytes": 5165,
+      "sha256": "26bf3f59476393a48fea99c4c6f58b628e577e9303c287ef60fc76bd672c7195"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-25.json",
+      "size_bytes": 5214,
+      "sha256": "df463223797c4173a44101d63d655f26a12b5470349da2ea48bf065864ea0e09"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-26.json",
+      "size_bytes": 5260,
+      "sha256": "c07a97714da68815f31427e6521a70c222bee2f93f5d0f6d512057cb8b6eeadc"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-27.json",
+      "size_bytes": 5072,
+      "sha256": "9aa650d563cd30f4f27e928ea48e0afe61c1dec544ce201d4de209a93e8c81a3"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-28.json",
+      "size_bytes": 5264,
+      "sha256": "6ab551465be183bb56337fc9a5da89982513adf867ae4c781e6a7ec9d14be22d"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-29.json",
+      "size_bytes": 5233,
+      "sha256": "0c16e473ea42814e2bfca95db76fd2c022703b41d749a8728ed8dfc9d03aabef"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-30.json",
+      "size_bytes": 5230,
+      "sha256": "7df22bf8de495fc037b1e96df411fa666704bcf2f9a2952ec5a9d2db3da6de2b"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-31.json",
+      "size_bytes": 5130,
+      "sha256": "5a5c66c7594cc592d51560702f56d68973c6f0058df64be5a2668344627cabce"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-32.json",
+      "size_bytes": 5311,
+      "sha256": "ccdd691e76b6f442b95898fe77ee1ba0140f5583edc05272b946849c9fe2845a"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-33.json",
+      "size_bytes": 5197,
+      "sha256": "6ba707da92eb74d96c4adcca99f13f9a6a4785f1ce0e98974e4b04731f402100"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-34.json",
+      "size_bytes": 5209,
+      "sha256": "410b87f67bef9a1eeb6dfb5075fa4269aab30fb86eda51bca7d2f9d1b4ac65e0"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-35.json",
+      "size_bytes": 5176,
+      "sha256": "26fda77b57126f3088827417790a0f29bf768f5e6ad88e402f14784c6f38f87d"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-36.json",
+      "size_bytes": 5100,
+      "sha256": "8cac4b1b754a212d5e5ecec94db0f143157b5483983905451fafa84766eb47c8"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-37.json",
+      "size_bytes": 5299,
+      "sha256": "c08e49e74dd8b524521006bf8e181bf201cc8bbd86dce8db529e8059334279e7"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-38.json",
+      "size_bytes": 5034,
+      "sha256": "924ee0c1436c832074bfd16d48e356286441ff3380ae72fbc8deaf8c3d989b36"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/course/chapters/chapter-final.json",
+      "size_bytes": 5377,
+      "sha256": "1976c2fb5397a926dc4784f94892e90a747f2a278a35022f32c99811d9d08cf1"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/references/chapter-map.md",
+      "size_bytes": 4009,
+      "sha256": "9cef6b6e62f9c9493f775ab20c62470c7928351c0e36af54896d9313a63b4c3e"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/references/runtime-guide.md",
+      "size_bytes": 194,
+      "sha256": "0713e648467d85e5173fdce0d24de411e27c865223054a43a61585fc0227863e"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/references/safety-policy.md",
+      "size_bytes": 189,
+      "sha256": "051a20eb3fb8191eeaa64364d9c35dad7ff8cff9859b02e1d100dc48cd0f0eb5"
+    },
+    {
+      "path": "hands-on/skill/textbook-chapter-lab/scripts/textbook_lab.py",
+      "size_bytes": 14437,
+      "sha256": "c365ad53845d4c5aaa87883275235705cab204e2c484c06b90751391445f230f"
+    },
+    {
+      "path": "image_manifest.json",
+      "size_bytes": 102435,
+      "sha256": "a8b7c55a72bbe77b158e0f0b29b1740200d18276d4de046bb805b7f5a42625a6"
+    },
+    {
+      "path": "index.html",
+      "size_bytes": 2244,
+      "sha256": "666558857b2547a3b361db89fee2da6b21c3fcdb2ae6a9e3caccf9489be0fbca"
+    },
+    {
+      "path": "requirements.txt",
+      "size_bytes": 69,
+      "sha256": "9045f8694b21ad3704d00391c6258a30a7705cb3aad33089b81616c0d8a4e8e6"
+    },
+    {
+      "path": "scripts/build_blog.py",
+      "size_bytes": 36748,
+      "sha256": "097a736dbf36177a54bb8343202d44cfe984159219e8afe53ef34b894574f1e2"
+    },
+    {
+      "path": "scripts/build_experiential_edition.py",
+      "size_bytes": 58360,
+      "sha256": "75144e228e9e52ea3314b8ebb2dcbf7763581b25678a790d3eb8ca3f9b77e3fe"
+    },
+    {
+      "path": "scripts/build_hands_on_page.py",
+      "size_bytes": 8142,
+      "sha256": "c08e1b1ce7536060380270f1f354314503841424b03f8b1264e4778f3d57e472"
+    },
+    {
+      "path": "scripts/build_hands_on_skill.py",
+      "size_bytes": 31661,
+      "sha256": "9628f12135a3497d50522acf8f88883f51891c7e245f4fb08dbb2f5bd2733e90"
+    },
+    {
+      "path": "scripts/content_meta.py",
+      "size_bytes": 67336,
+      "sha256": "d35ee5fa99a44b7e285ce1e7f8e6590ded4de105e61db521095e90e7b8a2b841"
+    },
+    {
+      "path": "scripts/generate_images.py",
+      "size_bytes": 9113,
+      "sha256": "d797ee697c90342c25d0a83ab57881ca238537e02589346cc12ae83c21e84692"
+    },
+    {
+      "path": "scripts/validate_experiential_edition.py",
+      "size_bytes": 12992,
+      "sha256": "17dd4a4e55ce51fa0f5a5bd5f2d475083d9ff742cda7979288acd0f4a49d73cb"
+    },
+    {
+      "path": "scripts/validate_package.py",
+      "size_bytes": 5008,
+      "sha256": "2c75186bc3239ebc5ae6e859240f5f76e554d5ef0b3d4e503616fdfc982a6afa"
+    },
+    {
+      "path": "site/assets/app.js",
+      "size_bytes": 1302,
+      "sha256": "02517e258bd0b650cad8291939452282b4483db410918dc2d2b837efeed4555c"
+    },
+    {
+      "path": "site/assets/styles.css",
+      "size_bytes": 7294,
+      "sha256": "ca151f34c16a727fd9fc8f8999e600761172c959fcbad6e9e28f8fa36e22b95f"
+    },
+    {
+      "path": "site/chapters/00.html",
+      "size_bytes": 7768,
+      "sha256": "bc826d7199cd00d09af1d34eb3c9b5a439c5f0a5efc3f6b8731a25c7b5a998af"
+    },
+    {
+      "path": "site/chapters/01.html",
+      "size_bytes": 8427,
+      "sha256": "06bab71ff751fa84d3dab8ca412193a94ed0fdb86bf2967d7b9608cbb512baff"
+    },
+    {
+      "path": "site/chapters/02.html",
+      "size_bytes": 7397,
+      "sha256": "2d1cbfe12c3e1d0c3cc9ab4cf05714c6358769369c9e548a3fb49050ab293f47"
+    },
+    {
+      "path": "site/chapters/03.html",
+      "size_bytes": 7796,
+      "sha256": "a211dc3c9b880ce45227d903bcca4bcceb6a508d05a5e94d3298f799ea630df3"
+    },
+    {
+      "path": "site/chapters/04.html",
+      "size_bytes": 11836,
+      "sha256": "957d57eb0f75659609af97e07b29560e91ac329642a220b787be2f27c2eb460d"
+    },
+    {
+      "path": "site/chapters/05.html",
+      "size_bytes": 7099,
+      "sha256": "e93355ecfdf80e3e7475487461ee1bc2500372121f909461619927a441a565c8"
+    },
+    {
+      "path": "site/chapters/06.html",
+      "size_bytes": 10625,
+      "sha256": "a4c877e301bfb0331a94d0327bbebd1448381c4846fa7802876318ea8bcdbbb6"
+    },
+    {
+      "path": "site/chapters/07.html",
+      "size_bytes": 8536,
+      "sha256": "494c119e19542cd4fdc02c0a3f8efe10c7f43c6ccccec54eee332cb4f3dada65"
+    },
+    {
+      "path": "site/chapters/08.html",
+      "size_bytes": 7175,
+      "sha256": "93d8a5cf30400635b564b9dd4ccbe21984ae4498806c5ca42e8c3eedb9ae09ff"
+    },
+    {
+      "path": "site/chapters/09.html",
+      "size_bytes": 7328,
+      "sha256": "1cad80872b677e01c40ebbe44216c2f84688dfe084c8deb71ad6d13c5cacd404"
+    },
+    {
+      "path": "site/chapters/10.html",
+      "size_bytes": 6552,
+      "sha256": "d4086dc91a47bd4f494eee50b013b4998645143ee17b060a0c9dfd08787a4e70"
+    },
+    {
+      "path": "site/chapters/11.html",
+      "size_bytes": 10674,
+      "sha256": "b1574d1111d64d4212a61633a6ed2df6fe98ed188089106771ee714f89f91367"
+    },
+    {
+      "path": "site/chapters/12.html",
+      "size_bytes": 10659,
+      "sha256": "f8cc92fca74a55559cd05d2bef9245868304ca0f21dd177e9212f9856ab7b1c9"
+    },
+    {
+      "path": "site/chapters/13.html",
+      "size_bytes": 8215,
+      "sha256": "1da482bfd098bab35dcba5b9277d5eae36b96c3befa46510f15b2108510923fb"
+    },
+    {
+      "path": "site/chapters/14.html",
+      "size_bytes": 9344,
+      "sha256": "17380a785dd824572d4a170150468326bd477c3e2ad9fe4da8ac66d6037d280e"
+    },
+    {
+      "path": "site/chapters/15.html",
+      "size_bytes": 10627,
+      "sha256": "c3f5715ca47a62835ed7c1301c97bf838765935e2ed42c4fe6f259c8edc7ffea"
+    },
+    {
+      "path": "site/chapters/16.html",
+      "size_bytes": 9539,
+      "sha256": "b3a839722e97cf94b78a46bcec4662749bae5d7bb84e2f5836337d667e3c0741"
+    },
+    {
+      "path": "site/chapters/17.html",
+      "size_bytes": 9275,
+      "sha256": "96db5af6d118954335187829047d4e9a055f64229fd6e3f4d025cd1e552e4886"
+    },
+    {
+      "path": "site/chapters/18.html",
+      "size_bytes": 9256,
+      "sha256": "0baa9a93f4e508b5c1f265d183c5a354e81cb1512b6adb5826f07d36d6f4f5bd"
+    },
+    {
+      "path": "site/chapters/19.html",
+      "size_bytes": 13701,
+      "sha256": "17bfd28ce8e51ca0d733b81d6f3e55037ea53082c9e142d30616323f47d41988"
+    },
+    {
+      "path": "site/chapters/20.html",
+      "size_bytes": 8315,
+      "sha256": "18bd2e853e30d0bdf46707e1ca2ccc49e82927a64cb0554936a9029ed36d96c7"
+    },
+    {
+      "path": "site/chapters/21.html",
+      "size_bytes": 7147,
+      "sha256": "69b43ff80608be61482cacf9be7ad474f158d30ebb27ebfe9ca7c50480278fa1"
+    },
+    {
+      "path": "site/chapters/22.html",
+      "size_bytes": 7295,
+      "sha256": "c259896daaa2c02fcfd6cec2b9361fbaac886bd3591fe97c1b5d181fc3c98e91"
+    },
+    {
+      "path": "site/chapters/23.html",
+      "size_bytes": 12050,
+      "sha256": "44938d62da8d6926bc780fd4e8483a8de742fee8e9c23e74a4d507ad108cc391"
+    },
+    {
+      "path": "site/chapters/24.html",
+      "size_bytes": 14336,
+      "sha256": "85a65f2ca0f5befc9e322a4e521329635f0dbf3606ba01a53a2dc1c81572bcc8"
+    },
+    {
+      "path": "site/chapters/25.html",
+      "size_bytes": 13010,
+      "sha256": "d431d7a5dc33ebf7d1ba8da833bea210836fbc5b475fe0ed29ebc17b23a18f0b"
+    },
+    {
+      "path": "site/chapters/26.html",
+      "size_bytes": 13353,
+      "sha256": "5d0db9eee1b423170e9359cde07ac6598d75078d6982052d8baf5cc6c5aaecc2"
+    },
+    {
+      "path": "site/chapters/27.html",
+      "size_bytes": 8074,
+      "sha256": "23514ebd02eeb8f69b16964257f28f901a2a01a5a9753198724523e95a7ccce1"
+    },
+    {
+      "path": "site/chapters/28.html",
+      "size_bytes": 7420,
+      "sha256": "ac27a3265fd921606785c443b76e20e3ffc12cf04a2b99fe45e4d4bcf2b35fa0"
+    },
+    {
+      "path": "site/chapters/29.html",
+      "size_bytes": 6894,
+      "sha256": "c63633156ede3a8827592c609c46bd2ed5984f1906b1a4b4b96e135ee690cc99"
+    },
+    {
+      "path": "site/chapters/30.html",
+      "size_bytes": 7415,
+      "sha256": "ad82aba43245a3a31a192a920d976b6f4a6edf48a059c9b9c5b2139945e001db"
+    },
+    {
+      "path": "site/chapters/31.html",
+      "size_bytes": 5736,
+      "sha256": "70c8c58117874d6982e22349511ffa66a6c63e60df884b45a4cb163fe8516e77"
+    },
+    {
+      "path": "site/chapters/32.html",
+      "size_bytes": 6182,
+      "sha256": "7eade440133e3ca554104bed7cff523fe71dbfb8cc682bba6fd16d19e5376789"
+    },
+    {
+      "path": "site/chapters/33.html",
+      "size_bytes": 5819,
+      "sha256": "145d15baa70045b8e811b8392fc9427206e2bac9989219503c339a95af2b4106"
+    },
+    {
+      "path": "site/chapters/34.html",
+      "size_bytes": 10340,
+      "sha256": "c7b3d082404ac3c8a34e0e12b52b40440bcf2b546b36281b6381fe81d9310d4b"
+    },
+    {
+      "path": "site/chapters/35.html",
+      "size_bytes": 10936,
+      "sha256": "274e50502f75e3b3c0e06928e97c05ff7e9573a8398245823c3b0afae3e9f0e1"
+    },
+    {
+      "path": "site/chapters/36.html",
+      "size_bytes": 5806,
+      "sha256": "77de23e88a66276bc1f9db6b74216c522e84db79af6e64b6aae28896ccaad0f6"
+    },
+    {
+      "path": "site/chapters/37.html",
+      "size_bytes": 5932,
+      "sha256": "aad6b92f0795ffef814c0c90884eafd5bafed103e6dfca09bd2f4f09e72f3c2f"
+    },
+    {
+      "path": "site/chapters/38.html",
+      "size_bytes": 6970,
+      "sha256": "e595e518e3ed0ca62304bba269dbd2a8e470f390c6062a2825857d55b3f5fe25"
+    },
+    {
+      "path": "site/chapters/final.html",
+      "size_bytes": 6708,
+      "sha256": "b29f942a3b001adfc937bec96e3e4a877eb153efd7d54aef1f9f0564814efd3d"
+    },
+    {
+      "path": "site/complete-text-only.html",
+      "size_bytes": 334033,
+      "sha256": "42349f4573e2beb42f9af25afdc752c9740dbb252f020fcb8bcb5701d7568f4e"
+    },
+    {
+      "path": "site/complete.html",
+      "size_bytes": 437242,
+      "sha256": "8e6c553c5d29d2d0e65328001cbe4b284828828f6265f33864cb83b30da396a2"
+    },
+    {
+      "path": "site/hands-on.html",
+      "size_bytes": 30438,
+      "sha256": "6e62daf6b86e924025d2c64d33e67686c15da040505527d39b2d672424a51e4e"
+    },
+    {
+      "path": "site/image-pipeline.html",
+      "size_bytes": 8774,
+      "sha256": "7c94c130609e2a65d0c04c538e5c24d95c680b78077b6af3d9885305a12937a0"
+    },
+    {
+      "path": "site/images/.gitkeep",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "site/index.html",
+      "size_bytes": 2237,
+      "sha256": "70cb9c110eb7f2fa9b11d894c4d5e62b4d957750148a485984e13d09be46cddc"
+    },
+    {
+      "path": "slide_integration_manifest.json",
+      "size_bytes": 57241,
+      "sha256": "414168c3dfe2d0f80908ecff582eebadbbd02811acd154bc1474c412ee6e1c5d"
+    },
+    {
+      "path": "sources/executive-summary.md",
+      "size_bytes": 6048,
+      "sha256": "aed8e0a5bc9140f5d338b206152bef109d1c9a5da9e8ca7ce5bec4180f372699"
+    },
+    {
+      "path": "sources/original-textbook.md",
+      "size_bytes": 107099,
+      "sha256": "9fe6694575ec612da179002c8ad6ad516825e78fb5cc7305a089335c1a80d914"
+    },
+    {
+      "path": "sources/source-coverage-and-verification.md",
+      "size_bytes": 16052,
+      "sha256": "76aed3116b513c48606b61a6c91421ab8c029d2f30a8a627065ba0230b880da3"
+    },
+    {
+      "path": "sources/transcription-summary.md",
+      "size_bytes": 10343,
+      "sha256": "6d4eed1713af710297708b2784d003524845a50561d323b71643912c6b6406f5"
+    },
+    {
+      "path": "sources/trepro-harness-requirements.md",
+      "size_bytes": 10377,
+      "sha256": "93979442a9ef7fa5d96523e14fbe8f0a645d5e897e5ba08b5e8e9f0a37deceb7"
+    },
+    {
+      "path": "sources/youtube-transcripts-complete.md",
+      "size_bytes": 361542,
+      "sha256": "9ffd14ea4644e9cf012a2dcf2dee5999f7a7005783a16fd305b3d28e1a06f038"
+    },
+    {
+      "path": "trepro-textbook",
+      "size_bytes": 177,
+      "sha256": "5c26cc4db3bfcdafe4bc4e2b3834a58787d5ec90909dd4165d649fa7fa678e6c"
+    }
+  ]
+}

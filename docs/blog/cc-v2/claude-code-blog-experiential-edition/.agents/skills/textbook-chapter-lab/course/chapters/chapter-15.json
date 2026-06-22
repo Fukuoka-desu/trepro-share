@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "chapter_id": "15",
+  "label": "第15章",
+  "title": "MCP、Connectors、APIを安全につなぐ",
+  "outcome": "外部接続をRead/Write・Scope・Secretで分ける",
+  "estimated_minutes": 45,
+  "risk_level": "medium",
+  "prerequisites": [
+    "14"
+  ],
+  "workspace_dir": "learning-lab/chapter-15-mcp-mock",
+  "blog_anchor": "#chapter-15",
+  "slide_pages": [
+    67,
+    68,
+    69,
+    70
+  ],
+  "artifacts": [
+    "mcp-example.json",
+    "trust-boundary.md"
+  ],
+  "fixtures": [
+    "mock-mcp-data.json"
+  ],
+  "safety": [
+    "Lab directory only",
+    "No secrets or customer data",
+    "No external publish, send, push, charge, or destructive deletion"
+  ],
+  "steps": [
+    {
+      "step_id": "15-01",
+      "title": "概念を自分の言葉にする",
+      "objective": "外部接続をRead/Write・Scope・Secretで分ける",
+      "learner_action": "ブログの第15章とスライド [67, 68, 69, 70] を読み、重要点3つ・疑問1つ・完了証拠を `learning-lab/chapter-15-mcp-mock/concept-note.md` に書く。",
+      "runtime_variants": {
+        "cursor": "Cursor Agentに読み取りだけを依頼し、最後は自分の言葉で `learning-lab/chapter-15-mcp-mock/concept-note.md` を完成させる。",
+        "claude": "Claude Codeに読み取りだけを依頼し、最後は自分の言葉で `learning-lab/chapter-15-mcp-mock/concept-note.md` を完成させる。",
+        "codex": "Codexに読み取りだけを依頼し、最後は自分の言葉で `learning-lab/chapter-15-mcp-mock/concept-note.md` を完成させる。"
+      },
+      "expected_result": "章の目的と自分の作業が結び付いた短いメモ",
+      "evidence": {
+        "type": "file",
+        "description": "learning-lab/chapter-15-mcp-mock/concept-note.md"
+      }
+    },
+    {
+      "step_id": "15-02",
+      "title": "章の主成果物を作る",
+      "objective": "実API Keyを使わずMock接続とHuman Gateを設計する",
+      "learner_action": "Fixtureと章本文を使い、実API Keyを使わずMock接続とHuman Gateを設計する。主成果物 `mcp-example.json` を作成し、判断理由を本文内へ残してください。",
+      "runtime_variants": {
+        "cursor": "Cursor Agentで、Fixtureと章本文を使い、実API Keyを使わずMock接続とHuman Gateを設計する。主成果物 `mcp-example.json` を作成し、判断理由を本文内へ残してください。",
+        "claude": "Claude Codeで、Fixtureと章本文を使い、実API Keyを使わずMock接続とHuman Gateを設計する。主成果物 `mcp-example.json` を作成し、判断理由を本文内へ残してください。",
+        "codex": "Codexで、Fixtureと章本文を使い、実API Keyを使わずMock接続とHuman Gateを設計する。主成果物 `mcp-example.json` を作成し、判断理由を本文内へ残してください。"
+      },
+      "expected_result": "空でない `mcp-example.json` がLab内に存在する",
+      "evidence": {
+        "type": "file",
+        "description": "learning-lab/chapter-15-mcp-mock/mcp-example.json"
+      }
+    },
+    {
+      "step_id": "15-03",
+      "title": "証拠でVerifyする",
+      "objective": "作った本人の感想ではなく要件と証拠で確認する",
+      "learner_action": "成果物を開き、正しい点・不足・安全確認を `learning-lab/chapter-15-mcp-mock/verification.md` に記録する。コードがある場合はローカル実行結果も記録する。",
+      "runtime_variants": {
+        "cursor": "Cursor Agentには読み取りReviewだけを依頼し、指摘を確認して `learning-lab/chapter-15-mcp-mock/verification.md` を作る。",
+        "claude": "Claude Codeには読み取りReviewだけを依頼し、指摘を確認して `learning-lab/chapter-15-mcp-mock/verification.md` を作る。",
+        "codex": "Codexには読み取りReviewだけを依頼し、指摘を確認して `learning-lab/chapter-15-mcp-mock/verification.md` を作る。"
+      },
+      "expected_result": "合格条件・不足・次の修正が具体的に残る",
+      "evidence": {
+        "type": "file",
+        "description": "learning-lab/chapter-15-mcp-mock/verification.md"
+      }
+    },
+    {
+      "step_id": "15-04",
+      "title": "理解を説明し保存する",
+      "objective": "別の日・別Runtimeでも再現できる状態を作る",
+      "learner_action": "「外部接続をRead/Write・Scope・Secretで分けるとは何か」「この成果物で何を証明したか」を80文字以上で説明し、保存を実行する。",
+      "runtime_variants": {
+        "cursor": "Cursor Agentへ説明を返した後、『保存』と伝える。",
+        "claude": "Claude Codeへ説明を返した後、『保存』と伝える。",
+        "codex": "Codexへ説明を返した後、『保存』と伝える。"
+      },
+      "expected_result": "具体的な説明とRESUME.mdが残る",
+      "evidence": {
+        "type": "answer",
+        "description": "80文字以上の理解説明"
+      }
+    }
+  ]
+}

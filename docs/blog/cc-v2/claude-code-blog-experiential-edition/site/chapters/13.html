@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第13章　Subagents、Agent View、並列作業 — ブログ版</title><meta name="description" content="複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-13">Subagents、Agent View、並列作業</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-13">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-13">
+  <header class="chapter-head">
+    <div class="eyebrow">第13章</div>
+    <h1>Subagents、Agent View、並列作業</h1>
+  </header>
+  <section aria-labelledby="story-13">
+    <h2 id="story-13">物語の現在地</h2>
+    <div class="scene">自分で作った資料を自分でレビューすると、どうしても甘くなります。蓮は、実装を担当したセッションを閉じ、背景を知らないReviewer Agentへ成果物だけを渡しました。初めて見える欠点が、いくつも出てきます。</div>
+    <div class="story-essay"><p>Subagentは単なる並列化ではなく、文脈を分ける仕組みです。調査、実装、レビューなど役割を限定し、必要な入力と期待する出力を明示します。作成者と評価者を分けると、過去の会話に引きずられない評価ができます。</p><p>Agent Viewや並列実行は、互いに独立した仕事へ使います。同じファイルを複数Agentへ同時編集させるのではなく、調査観点やレビュー観点を分担させます。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-13">
+  <img src="../images/chapter-13-789a6e.webp" alt="第13章『Subagents、Agent View、並列作業』を表すteam editorial illustration" loading="lazy" decoding="async">
+  <figcaption>複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第13章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> team editorial illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: team editorial illustration.
+Scene and concept: A small expert team with separate researcher, builder, and independent reviewer desks coordinated by one project lead.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-13-s1">13.1 Subagentを使う理由</h2>
+<ol>
+<li>Contextを分離する。</li>
+<li>Toolと権限を限定する。</li>
+<li>作成者と評価者を分ける。</li>
+</ol>
+<h2 id="ch-13-s2">13.2 Reviewer Agent</h2>
+<p><code>.claude/agents/code-reviewer.md</code>：</p>
+<pre><code class="language-markdown">---
+name: code-reviewer
+description: Independently review changes for correctness, security, data loss, missing tests, and maintainability.
+tools: Read, Grep, Glob, Bash
+model: sonnet
+---
+
+You are an independent reviewer. Do not edit files.
+Read requirements, diff, and test evidence.
+Prioritize security, data loss, incorrect behavior, edge cases, missing tests,
+and operational risk. For each finding include severity, file, symbol or line,
+evidence, and minimal remediation. Separate blockers from suggestions.
+</code></pre>
+<p>Review AgentにWrite Toolを渡さない。</p>
+<h2 id="ch-13-s3">13.3 Research Agent</h2>
+<pre><code class="language-markdown">---
+name: primary-source-researcher
+description: Collect primary-source evidence for a narrowly defined research question and save structured claims.
+tools: WebSearch, WebFetch, Read, Write
+model: sonnet
+---
+
+Research only the assigned subquestion.
+Prefer official documentation, original papers, and first-party announcements.
+Record publication date, event date, retrieval date, exact supported claim,
+and uncertainty. Save findings to the requested file. Do not synthesize the final report.
+</code></pre>
+<h2 id="ch-13-s4">13.4 作成者と評価者</h2>
+<pre><code class="language-text">Main Agent: 要件と統合
+Research Agents: 独立範囲を調査
+Implementer: 変更
+Fresh Reviewer: 欠陥探索
+Main Agent: 人間承認後に修正
+</code></pre>
+<p>同じPromptとContextを全Agentへ配ると、同じBlind Spotを共有する。役割と入力を分ける。</p>
+<h2 id="ch-13-s5">13.5 Agent View</h2>
+<p>現行Versionで<code>claude agents</code>を確認する。複数Sessionを管理できるが、同一Fileの同時編集は避ける。</p>
+<p>安全な割当：</p>
+<pre><code class="language-text">A: Read-only調査
+B: tests/のみ
+C: src/のみ
+D: docs/のみ
+E: Read-only Review
+</code></pre>
+<h2 id="ch-13-s6">13.6 並列化に向く仕事</h2>
+<ul>
+<li>独立した情報源の調査。</li>
+<li>互いに依存しないTest追加。</li>
+<li>複数OptionのPrototype。</li>
+<li>Code、Security、UXの別Review。</li>
+</ul>
+<p>向かない：</p>
+<ul>
+<li>同じFileを頻繁に編集。</li>
+<li>仕様が固まっていない。</li>
+<li>外部Writeを伴う。</li>
+<li>1人で数分の小Task。</li>
+</ul>
+<h2 id="ch-13-s7">13.7 委任指示</h2>
+<pre><code class="language-text">Role
+Scope
+Allowed tools
+Inputs
+Deliverable path
+Done conditions
+Prohibited actions
+Budget/timeout
+</code></pre>
+<p>例：</p>
+<pre><code class="language-text">公式Documentだけを調べるResearch Agentとして動いてください。
+対象はDynamic Workflowsの提供条件と最低Versionだけ。
+出力は `research/dynamic-workflows-official.md`。
+SNS、Code変更、最終結論は禁止。15分で打ち切る。
+</code></pre>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の成果物を、新しいセッションまたはReviewer Agentへ渡し、要件充足・安全・保守性の三観点で評価させてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。</p></section>
+</article>
+<nav class="chapter-nav"><a href="12.html">← Skills設計</a><a href="14.html">HooksとPlugins →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

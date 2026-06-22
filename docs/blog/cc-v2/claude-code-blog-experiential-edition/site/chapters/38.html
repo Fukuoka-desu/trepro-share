@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第38章　Coverage Map — ブログ版</title><meta name="description" content="網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-38">Coverage Map</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-38">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-38">
+  <header class="chapter-head">
+    <div class="eyebrow">第38章</div>
+    <h1>Coverage Map</h1>
+  </header>
+  <section aria-labelledby="story-38">
+    <h2 id="story-38">物語の現在地</h2>
+    <div class="scene">最後の確認で、美咲は『読みやすくなったか』だけでなく、『素材のどの話題が、どこへ入ったか』を尋ねます。網羅性は印象ではなく、Coverage Mapで証明します。</div>
+    <div class="story-essay"><p>Coverage Mapは、各動画、公式補正、ハーネス要件を章へ対応付け、未収録と重複を見つける表です。すでに統合した話題も、出典とのつながりを残すことで、将来の改訂時に追跡できます。</p><p>章数が多いことを網羅性としません。各Source Topicが、説明、実習、Template、管理者運用のどこで扱われるかを確認します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-38">
+  <img src="../images/chapter-38-3e9330.webp" alt="第38章『Coverage Map』を表すinformation map illustration" loading="lazy" decoding="async">
+  <figcaption>網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第38章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> information map illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: information map illustration.
+Scene and concept: A comprehensive coverage map connecting source videos, official documentation, requirements, chapters, exercises, and templates without gaps.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-38-s1">38.1 動画別</h2>
+<table>
+<thead>
+<tr>
+<th>動画</th>
+<th>主内容</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v01 完全入門</td>
+<td>Agent、導入、権限、Context、CLAUDE.md、Skills、Subagents、MCP/API、安全</td>
+<td>1〜15、23〜28</td>
+</tr>
+<tr>
+<td>v02 Design進化</td>
+<td>Wireframe、Prototype、Edit、Export、Code、Deploy、Sync</td>
+<td>17、31</td>
+</tr>
+<tr>
+<td>v03 Design整理</td>
+<td>System/Project、Publish/Share/Export、Component Sync、Beta</td>
+<td>17</td>
+</tr>
+<tr>
+<td>v04 超基礎</td>
+<td>Chat→Cowork→Code、要件、会議、Plan/Auto、Model</td>
+<td>1、4、6〜8、28</td>
+</tr>
+<tr>
+<td>v05 非Engineer</td>
+<td>日本語、File、Connectors、Projects、会社注意</td>
+<td>1、2、15、18、28</td>
+</tr>
+<tr>
+<td>v06 完全入門</td>
+<td>CLI、Session、Plan、Git、Sandbox、Rewind、Rules、Thinking、Plugin、Hook、画像、割込</td>
+<td>3、6〜14、19</td>
+</tr>
+<tr>
+<td>v07 育てる</td>
+<td>JSONL、INTERESTS、Score、問題集、定期</td>
+<td>19、20、29</td>
+</tr>
+<tr>
+<td>v08 HTML</td>
+<td>CSV、Slide、Board、MCP Data、Token</td>
+<td>16、31</td>
+</tr>
+<tr>
+<td>v09 最新機能</td>
+<td>Fable、Workflow、Advisor、Agent View、Goal、Cost</td>
+<td>8、20〜22、37</td>
+</tr>
+<tr>
+<td>v10 Live Artifacts</td>
+<td>Project、Artifacts、Scheduled、Dispatch、Drive、Cache、Chat</td>
+<td>18、32</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-38-s2">38.2 Harness要件</h2>
+<table>
+<thead>
+<tr>
+<th>要件</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-1 配布</td>
+<td>23、24、27</td>
+</tr>
+<tr>
+<td>F-2 同期</td>
+<td>23、24</td>
+</tr>
+<tr>
+<td>F-3 Hook</td>
+<td>14、26</td>
+</tr>
+<tr>
+<td>F-4 Skill</td>
+<td>12、25</td>
+</tr>
+<tr>
+<td>F-5 Safety</td>
+<td>7、14、26</td>
+</tr>
+<tr>
+<td>信頼性/観測性</td>
+<td>24、26</td>
+</tr>
+<tr>
+<td>保守性</td>
+<td>23〜25</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>2、7、15、26</td>
+</tr>
+<tr>
+<td>KPI</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Onboarding</td>
+<td>27</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 新しく追加した素材を一つ選び、既存章への統合先、重複、追加すべき実習、更新日をCoverage Mapへ記録してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="37.html">← 素材と現行仕様の補正</a><a href="final.html">最強のまま保つ →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

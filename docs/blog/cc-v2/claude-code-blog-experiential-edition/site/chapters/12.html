@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第12章　Skills設計 — ブログ版</title><meta name="description" content="Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-12">Skills設計</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-12">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-12">
+  <header class="chapter-head">
+    <div class="eyebrow">第12章</div>
+    <h1>Skills設計</h1>
+  </header>
+  <section aria-labelledby="story-12">
+    <h2 id="story-12">物語の現在地</h2>
+    <div class="scene">会議アシスタントを三度改善したあと、遥は『この成功手順を名前付きで呼びたい』と考えます。ナビゲーターは会話ログを保存するのではなく、入力、手順、検証、失敗時対応をまとめたSkillへ変換します。</div>
+    <div class="story-essay"><p>Skillはプロンプトの短縮形ではなく、再現可能な業務パッケージです。名前、使う条件、入力、処理、出力、品質基準、参照資料を持ち、必要なときだけ読み込まれます。長い資料はreferencesへ分け、Progressive Disclosureを守ります。</p><p>最良の作り方は、先に仕事を成功させ、その過程を抽出し、別の入力で試し、独立した評価器で採点することです。Claude CodeとCodexで共通利用する場合は、正本名と配置を統一します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-12">
+  <img src="../images/chapter-12-49913b.webp" alt="第12章『Skills設計』を表すeditorial manual illustration" loading="lazy" decoding="async">
+  <figcaption>Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第12章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial manual illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial manual illustration.
+Scene and concept: A well-used work process being distilled into a reusable field manual with inputs, steps, outputs, quality checks, and references.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-12-s1">12.1 Skillとは</h2>
+<p>Skillは、特定Taskを実行するための知識、手順、出力契約、Reference、Script、Fixtureをまとめた再利用Packageである。</p>
+<p>Claude.mdが「この職場の基本方針」なら、Skillは「業務Manual」である。ただし、SkillもPrompt資産であり、Security強制はHook/Permissionへ置く。</p>
+<h2 id="ch-12-s2">12.2 Custom Commands</h2>
+<p>旧 <code>.claude/commands/</code> は互換目的で動く場合があるが、新規はSkillsへ統合する。Commands 13個を持つ現行Harnessは、次の順で移行する。</p>
+<ol>
+<li>呼び出し名と利用実績をInventory化。</li>
+<li>業務手順はSkillへ移す。</li>
+<li>UI操作だけの短いものは互換Wrapperを残す。</li>
+<li>90日後に旧CommandをDeprecate。</li>
+</ol>
+<h2 id="ch-12-s3">12.3 Canonical Name</h2>
+<p>Claude/Codex共通のAgent Skillsでは次を守る。</p>
+<pre><code class="language-text">- lowercase letters
+- digits
+- hyphens
+- directory name = frontmatter name
+</code></pre>
+<p>良い例：</p>
+<pre><code class="language-text">meeting-minutes
+source-grounded-research
+project-kickoff
+feedback-copy-review
+</code></pre>
+<p>避ける：</p>
+<pre><code class="language-text">S_report
+YouTubeリサーチ
+meeting_minutes
+</code></pre>
+<p>Legacy名はMetadataへ保存する。</p>
+<h2 id="ch-12-s4">12.4 標準Template</h2>
+<pre><code class="language-markdown">---
+name: source-grounded-report
+description: Research a current topic using primary sources, verify claims, and produce a cited decision-ready report. Use when the user asks for a current comparison, product update, or evidence-based recommendation.
+argument-hint: "&lt;question&gt;"
+disable-model-invocation: true
+---
+
+# Objective
+[成功状態]
+
+# Inputs
+- required:
+- optional:
+
+# Preconditions
+[権限、Tool、Data]
+
+# Workflow
+1. [step]
+2. [step]
+
+# Output contract
+- files:
+- schema:
+- formatting:
+
+# Safety
+- prohibited side effects:
+- sensitive data rules:
+
+# Quality checks
+- [machine checks]
+- [human checks]
+
+# Failure behavior
+[不足、Timeout、部分失敗]
+
+# References
+Read `references/...` only when [condition].
+</code></pre>
+<h2 id="ch-12-s5">12.5 Progressive Disclosure</h2>
+<pre><code class="language-text">SKILL.md: 発動条件、主要Workflow、契約、安全、参照条件
+references/: 長いAPI仕様、例、部門Rule
+scripts/: 決定的処理
+fixtures/: 入力と期待結果
+tests/: 回帰Test
+</code></pre>
+<p>Root <code>SKILL.md</code>は200行以内を目標にする。</p>
+<h2 id="ch-12-s6">12.6 Skillを作る最良の手順</h2>
+<pre><code class="language-text">1. 手動でTaskを完走
+2. 成功/失敗を記録
+3. 固有情報を除去
+4. 入力/出力/停止条件を抽象化
+5. Fixture化
+6. Fresh Evaluator
+7. Canary配布
+8. 利用実績で改善
+</code></pre>
+<p>会話中に「今の内容をそのままSkillにして」だけで全社配布しない。</p>
+<h2 id="ch-12-s7">12.7 4軸評価</h2>
+<table>
+<thead>
+<tr>
+<th>軸</th>
+<th>観点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>明確性</td>
+<td>発動、入力、出力、禁止が明確</td>
+</tr>
+<tr>
+<td>実用性</td>
+<td>現実Dataで完走、失敗を扱える</td>
+</tr>
+<tr>
+<td>保守性</td>
+<td>短い正本、Reference、Test、Owner</td>
+</tr>
+<tr>
+<td>整合性</td>
+<td>全社Rule、他Skill、標準と矛盾なし</td>
+</tr>
+</tbody>
+</table>
+<p>合格は総合85点以上、各軸18点以上、Critical 0件とする。</p>
+<h2 id="ch-12-s8">12.8 呼び出し</h2>
+<p>明示呼び出しと自然言語発動の両方がある。重要業務は明示呼び出しを推奨する。</p>
+<pre><code class="language-text">/meeting-minutes inputs/meeting.md
+</code></pre>
+<p>Descriptionは「何をするか」だけでなく「いつ使うか」を書く。</p>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch12-skill-anatomy">
+  <img src="../images/diagram-ch12-skill-anatomy.webp" alt="Skillを構成する入力、手順、出力、検証、参照資料" loading="lazy" decoding="async">
+  <figcaption>Skillは短い呪文ではなく、検証可能な業務パッケージです。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第12章12.4の直後。Skillの構成要素を示す。</p>
+    <p><strong>種類:</strong> anatomy diagram background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: anatomy diagram background.
+Scene and concept: A reusable skill manual opened to show input, trigger, steps, output, checks, failure handling, and references as distinct visual compartments, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 最近うまくいった作業を一つ選び、SKILL.mdへ入力・手順・出力・検証・失敗時対応を書き出してください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。</p></section>
+</article>
+<nav class="chapter-nav"><a href="11.html">← CLAUDE.md、Rules、Auto Memory</a><a href="13.html">Subagents、Agent View、並列作業 →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

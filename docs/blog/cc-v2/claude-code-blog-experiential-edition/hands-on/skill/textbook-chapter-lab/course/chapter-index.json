@@ -1,0 +1,773 @@
+{
+  "schema_version": "1.0",
+  "course_id": "claude-code-textbook-hands-on",
+  "version": "2026.06.22",
+  "chapter_count": 40,
+  "chapters": [
+    {
+      "chapter_id": "00",
+      "label": "第0章",
+      "title": "教科書を「実行システム」にする",
+      "estimated_minutes": 25,
+      "risk_level": "low",
+      "outcome": "学習を行動・成果物・証拠・再開地点へ分解する",
+      "workspace_dir": "learning-lab/chapter-00-learning-system",
+      "artifacts": [
+        "learning-contract.md",
+        "success-evidence.md"
+      ],
+      "slide_pages": [
+        4,
+        5
+      ]
+    },
+    {
+      "chapter_id": "01",
+      "label": "第1章",
+      "title": "Claude Codeは何が違うのか",
+      "estimated_minutes": 25,
+      "risk_level": "low",
+      "outcome": "チャットAIと作業型エージェントの違いを説明する",
+      "workspace_dir": "learning-lab/chapter-01-agent-basics",
+      "artifacts": [
+        "surface-map.md",
+        "agent-loop.md"
+      ],
+      "slide_pages": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "chapter_id": "02",
+      "label": "第2章",
+      "title": "安全を最初に設計する",
+      "estimated_minutes": 30,
+      "risk_level": "low",
+      "outcome": "最小権限・隔離・可逆性・検証を組み合わせる",
+      "workspace_dir": "learning-lab/chapter-02-safety",
+      "artifacts": [
+        "SAFETY.md",
+        "risk-matrix.md"
+      ],
+      "slide_pages": [
+        13,
+        14,
+        15,
+        16
+      ]
+    },
+    {
+      "chapter_id": "03",
+      "label": "第3章",
+      "title": "導入とProject Folder",
+      "estimated_minutes": 30,
+      "risk_level": "low",
+      "outcome": "安全なProject Folderと開発入口を準備する",
+      "workspace_dir": "learning-lab/chapter-03-project-folder",
+      "artifacts": [
+        "environment-report.md",
+        "project-tree.txt"
+      ],
+      "slide_pages": [
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    {
+      "chapter_id": "04",
+      "label": "第4章",
+      "title": "最初の90分実習：会議アシスタント",
+      "estimated_minutes": 60,
+      "risk_level": "low",
+      "outcome": "文字起こしから議事録・タスク・HTMLを作り検証する",
+      "workspace_dir": "learning-lab/chapter-04-meeting-assistant",
+      "artifacts": [
+        "minutes.md",
+        "tasks.json",
+        "report.html"
+      ],
+      "slide_pages": [
+        21,
+        22,
+        23,
+        24
+      ]
+    },
+    {
+      "chapter_id": "05",
+      "label": "第5章",
+      "title": "強い指示の書き方",
+      "estimated_minutes": 30,
+      "risk_level": "low",
+      "outcome": "曖昧な希望を検証可能な仕事の定義へ変える",
+      "workspace_dir": "learning-lab/chapter-05-strong-request",
+      "artifacts": [
+        "request.md",
+        "done-when.md"
+      ],
+      "slide_pages": [
+        25,
+        26,
+        27,
+        28
+      ]
+    },
+    {
+      "chapter_id": "06",
+      "label": "第6章",
+      "title": "Explore → Specify → Plan → Implement → Verify → Review → Commit",
+      "estimated_minutes": 45,
+      "risk_level": "low",
+      "outcome": "七段階の標準Loopを一周する",
+      "workspace_dir": "learning-lab/chapter-06-standard-loop",
+      "artifacts": [
+        "spec.md",
+        "plan.md",
+        "verification.md"
+      ],
+      "slide_pages": [
+        29,
+        30,
+        31,
+        32,
+        33
+      ]
+    },
+    {
+      "chapter_id": "07",
+      "label": "第7章",
+      "title": "Permission Mode、Sandbox、危険操作",
+      "estimated_minutes": 35,
+      "risk_level": "medium",
+      "outcome": "操作ごとに許可・拒否・確認を設計する",
+      "workspace_dir": "learning-lab/chapter-07-permissions",
+      "artifacts": [
+        "permission-matrix.md",
+        "deletion-dry-run.txt"
+      ],
+      "slide_pages": [
+        34,
+        35,
+        36,
+        37,
+        38
+      ]
+    },
+    {
+      "chapter_id": "08",
+      "label": "第8章",
+      "title": "ModelとEffort",
+      "estimated_minutes": 25,
+      "risk_level": "low",
+      "outcome": "ModelとEffortを仕事の役割で選ぶ",
+      "workspace_dir": "learning-lab/chapter-08-model-effort",
+      "artifacts": [
+        "model-effort-matrix.md"
+      ],
+      "slide_pages": [
+        39,
+        40,
+        41,
+        42
+      ]
+    },
+    {
+      "chapter_id": "09",
+      "label": "第9章",
+      "title": "SessionとContext",
+      "estimated_minutes": 30,
+      "risk_level": "low",
+      "outcome": "会話に依存せず状態を保存・再開する",
+      "workspace_dir": "learning-lab/chapter-09-session-context",
+      "artifacts": [
+        "RESUME.md",
+        "context-budget.md"
+      ],
+      "slide_pages": [
+        43,
+        44,
+        45,
+        46
+      ]
+    },
+    {
+      "chapter_id": "10",
+      "label": "第10章",
+      "title": "GitとCheckpoint",
+      "estimated_minutes": 45,
+      "risk_level": "medium",
+      "outcome": "CheckpointとGitを別の時間軸で使い分ける",
+      "workspace_dir": "learning-lab/chapter-10-git-checkpoint",
+      "artifacts": [
+        "git-evidence.md",
+        "change.txt"
+      ],
+      "slide_pages": [
+        47,
+        48,
+        49,
+        50
+      ]
+    },
+    {
+      "chapter_id": "11",
+      "label": "第11章",
+      "title": "CLAUDE.md、Rules、Auto Memory",
+      "estimated_minutes": 40,
+      "risk_level": "low",
+      "outcome": "方針・Path別Rule・個人Memoryを分離する",
+      "workspace_dir": "learning-lab/chapter-11-knowledge-layers",
+      "artifacts": [
+        "CLAUDE.md",
+        "rules/example.md",
+        "memory-note.md"
+      ],
+      "slide_pages": [
+        51,
+        52,
+        53,
+        54
+      ]
+    },
+    {
+      "chapter_id": "12",
+      "label": "第12章",
+      "title": "Skills設計",
+      "estimated_minutes": 50,
+      "risk_level": "low",
+      "outcome": "成功手順を再利用可能なSkillへ外部化する",
+      "workspace_dir": "learning-lab/chapter-12-skills",
+      "artifacts": [
+        "my-first-skill/SKILL.md",
+        "skill-evaluation.md"
+      ],
+      "slide_pages": [
+        55,
+        56,
+        57,
+        58
+      ]
+    },
+    {
+      "chapter_id": "13",
+      "label": "第13章",
+      "title": "Subagents、Agent View、並列作業",
+      "estimated_minutes": 45,
+      "risk_level": "low",
+      "outcome": "作成・調査・評価のContextを分ける",
+      "workspace_dir": "learning-lab/chapter-13-subagents",
+      "artifacts": [
+        "research.md",
+        "review.md",
+        "delegation-plan.md"
+      ],
+      "slide_pages": [
+        59,
+        60,
+        61,
+        62
+      ]
+    },
+    {
+      "chapter_id": "14",
+      "label": "第14章",
+      "title": "HooksとPlugins",
+      "estimated_minutes": 55,
+      "risk_level": "medium",
+      "outcome": "お願いではなく実行時のGuardで制約を強制する",
+      "workspace_dir": "learning-lab/chapter-14-hooks",
+      "artifacts": [
+        "hooks/pretool_guard.py",
+        "hook-test-report.md"
+      ],
+      "slide_pages": [
+        63,
+        64,
+        65,
+        66
+      ]
+    },
+    {
+      "chapter_id": "15",
+      "label": "第15章",
+      "title": "MCP、Connectors、APIを安全につなぐ",
+      "estimated_minutes": 45,
+      "risk_level": "medium",
+      "outcome": "外部接続をRead/Write・Scope・Secretで分ける",
+      "workspace_dir": "learning-lab/chapter-15-mcp-mock",
+      "artifacts": [
+        "mcp-example.json",
+        "trust-boundary.md"
+      ],
+      "slide_pages": [
+        67,
+        68,
+        69,
+        70
+      ]
+    },
+    {
+      "chapter_id": "16",
+      "label": "第16章",
+      "title": "MarkdownよりHTMLが向く仕事",
+      "estimated_minutes": 50,
+      "risk_level": "low",
+      "outcome": "Markdownを正本にし、伝達用HTMLへ変換する",
+      "workspace_dir": "learning-lab/chapter-16-html-report",
+      "artifacts": [
+        "report.md",
+        "report.html",
+        "quality-check.md"
+      ],
+      "slide_pages": [
+        71,
+        72,
+        73
+      ]
+    },
+    {
+      "chapter_id": "17",
+      "label": "第17章",
+      "title": "Claude Designから実装へ",
+      "estimated_minutes": 60,
+      "risk_level": "low",
+      "outcome": "情報・見た目・実装を段階的に決める",
+      "workspace_dir": "learning-lab/chapter-17-design-to-code",
+      "artifacts": [
+        "wireframe.html",
+        "design-system.md",
+        "sync-rule.md"
+      ],
+      "slide_pages": [
+        74,
+        75,
+        76
+      ]
+    },
+    {
+      "chapter_id": "18",
+      "label": "第18章",
+      "title": "CoworkとLive Artifacts",
+      "estimated_minutes": 60,
+      "risk_level": "low",
+      "outcome": "更新・失敗・Cacheを持つ業務Dashboardを作る",
+      "workspace_dir": "learning-lab/chapter-18-live-artifact",
+      "artifacts": [
+        "dashboard.html",
+        "meetings.json",
+        "acceptance.md"
+      ],
+      "slide_pages": [
+        77,
+        78,
+        79,
+        80
+      ]
+    },
+    {
+      "chapter_id": "19",
+      "label": "第19章",
+      "title": "Claude Codeを自分専用に育てる",
+      "estimated_minutes": 55,
+      "risk_level": "medium",
+      "outcome": "会話Logから必要なSignalだけを安全に抽出する",
+      "workspace_dir": "learning-lab/chapter-19-personalization",
+      "artifacts": [
+        "INTERESTS.md",
+        "privacy-notes.md"
+      ],
+      "slide_pages": [
+        81,
+        82,
+        83,
+        84,
+        85
+      ]
+    },
+    {
+      "chapter_id": "20",
+      "label": "第20章",
+      "title": "`/goal`、Headless、定期実行",
+      "estimated_minutes": 50,
+      "risk_level": "medium",
+      "outcome": "達成条件と停止条件を持つ自律実行を設計する",
+      "workspace_dir": "learning-lab/chapter-20-goal-runner",
+      "artifacts": [
+        "goal-spec.md",
+        "runner.sh",
+        "stop-conditions.md"
+      ],
+      "slide_pages": [
+        86,
+        87,
+        88,
+        89
+      ]
+    },
+    {
+      "chapter_id": "21",
+      "label": "第21章",
+      "title": "Dynamic Workflowsと複数Agent",
+      "estimated_minutes": 55,
+      "risk_level": "medium",
+      "outcome": "Research・Verify・Synthesizeを分離する",
+      "workspace_dir": "learning-lab/chapter-21-multi-agent",
+      "artifacts": [
+        "workflow.md",
+        "research.md",
+        "verification.md",
+        "synthesis.md"
+      ],
+      "slide_pages": [
+        90,
+        91,
+        92,
+        93
+      ]
+    },
+    {
+      "chapter_id": "22",
+      "label": "第22章",
+      "title": "信頼できる調査とレポート",
+      "estimated_minutes": 60,
+      "risk_level": "low",
+      "outcome": "主張と根拠を追跡可能にする",
+      "workspace_dir": "learning-lab/chapter-22-trusted-research",
+      "artifacts": [
+        "claim-ledger.csv",
+        "research-report.md"
+      ],
+      "slide_pages": [
+        94,
+        95,
+        96
+      ]
+    },
+    {
+      "chapter_id": "23",
+      "label": "第23章",
+      "title": "最適Architecture",
+      "estimated_minutes": 50,
+      "risk_level": "low",
+      "outcome": "正本・配布・強制・個人差分を分離する",
+      "workspace_dir": "learning-lab/chapter-23-architecture",
+      "artifacts": [
+        "architecture.md",
+        "layer-map.md",
+        "release-flow.md"
+      ],
+      "slide_pages": [
+        97,
+        98,
+        99,
+        100
+      ]
+    },
+    {
+      "chapter_id": "24",
+      "label": "第24章",
+      "title": "配布、同期、更新、Rollback",
+      "estimated_minutes": 70,
+      "risk_level": "medium",
+      "outcome": "冪等・収束的な配布とRollbackを実装する",
+      "workspace_dir": "learning-lab/chapter-24-sync-rollback",
+      "artifacts": [
+        "sync.sh",
+        "manifest.txt",
+        "rollback.md"
+      ],
+      "slide_pages": [
+        101,
+        102,
+        103,
+        104,
+        105
+      ]
+    },
+    {
+      "chapter_id": "25",
+      "label": "第25章",
+      "title": "Skill Governance",
+      "estimated_minutes": 55,
+      "risk_level": "low",
+      "outcome": "Skillを作成から廃止まで製品として管理する",
+      "workspace_dir": "learning-lab/chapter-25-skill-governance",
+      "artifacts": [
+        "skill-registry.csv",
+        "evaluation.md",
+        "deprecation-plan.md"
+      ],
+      "slide_pages": [
+        106,
+        107,
+        108,
+        109
+      ]
+    },
+    {
+      "chapter_id": "26",
+      "label": "第26章",
+      "title": "Managed Policy、Security、Observability",
+      "estimated_minutes": 60,
+      "risk_level": "medium",
+      "outcome": "Policy・観測・Incident対応を一体化する",
+      "workspace_dir": "learning-lab/chapter-26-managed-security",
+      "artifacts": [
+        "threat-model.md",
+        "policy-example.json",
+        "incident-runbook.md"
+      ],
+      "slide_pages": [
+        110,
+        111,
+        112,
+        113
+      ]
+    },
+    {
+      "chapter_id": "27",
+      "label": "第27章",
+      "title": "OnboardingとRunbook",
+      "estimated_minutes": 50,
+      "risk_level": "low",
+      "outcome": "新人が安全に一周できる導入体験を作る",
+      "workspace_dir": "learning-lab/chapter-27-onboarding",
+      "artifacts": [
+        "onboarding-30min.md",
+        "runbook.md",
+        "certification.md"
+      ],
+      "slide_pages": [
+        114,
+        115,
+        116,
+        117
+      ]
+    },
+    {
+      "chapter_id": "28",
+      "label": "第28章",
+      "title": "文書・ファイル・会議",
+      "estimated_minutes": 45,
+      "risk_level": "low",
+      "outcome": "文書・ファイル業務を原本保護とReview付きで処理する",
+      "workspace_dir": "learning-lab/chapter-28-office-workflows",
+      "artifacts": [
+        "inventory.csv",
+        "dry-run-plan.md",
+        "meeting-output.md"
+      ],
+      "slide_pages": [
+        118,
+        119,
+        120
+      ]
+    },
+    {
+      "chapter_id": "29",
+      "label": "第29章",
+      "title": "調査・Content・学習",
+      "estimated_minutes": 60,
+      "risk_level": "low",
+      "outcome": "動画・SNS素材を検証済み教材へ変える",
+      "workspace_dir": "learning-lab/chapter-29-content-learning",
+      "artifacts": [
+        "content-report.html",
+        "source-map.csv",
+        "quiz.md"
+      ],
+      "slide_pages": [
+        121,
+        122,
+        123
+      ]
+    },
+    {
+      "chapter_id": "30",
+      "label": "第30章",
+      "title": "Application開発",
+      "estimated_minutes": 75,
+      "risk_level": "medium",
+      "outcome": "Prototypeを作り、失敗・検証・Rollbackまで確認する",
+      "workspace_dir": "learning-lab/chapter-30-app-development",
+      "artifacts": [
+        "app/index.html",
+        "test-report.md",
+        "rollback-plan.md"
+      ],
+      "slide_pages": [
+        124,
+        125,
+        126
+      ]
+    },
+    {
+      "chapter_id": "31",
+      "label": "第31章",
+      "title": "Design・資料・公開",
+      "estimated_minutes": 55,
+      "risk_level": "medium",
+      "outcome": "生成と公開を別のQuality Gateにする",
+      "workspace_dir": "learning-lab/chapter-31-publish",
+      "artifacts": [
+        "preview/index.html",
+        "publish-checklist.md",
+        "rollback-plan.md"
+      ],
+      "slide_pages": [
+        127,
+        128,
+        129
+      ]
+    },
+    {
+      "chapter_id": "32",
+      "label": "第32章",
+      "title": "継続業務の自動化",
+      "estimated_minutes": 55,
+      "risk_level": "medium",
+      "outcome": "安定入力と安全な失敗経路を持つ仕事だけ自動化する",
+      "workspace_dir": "learning-lab/chapter-32-automation",
+      "artifacts": [
+        "automation-scorecard.md",
+        "schedule-plan.md",
+        "failure-alert.md"
+      ],
+      "slide_pages": [
+        130,
+        131,
+        132
+      ]
+    },
+    {
+      "chapter_id": "33",
+      "label": "第33章",
+      "title": "失敗Pattern",
+      "estimated_minutes": 40,
+      "risk_level": "low",
+      "outcome": "失敗をRoot CauseとGuardrailへ変える",
+      "workspace_dir": "learning-lab/chapter-33-failure-patterns",
+      "artifacts": [
+        "postmortem.md",
+        "prevention-map.md"
+      ],
+      "slide_pages": [
+        133,
+        134
+      ]
+    },
+    {
+      "chapter_id": "34",
+      "label": "第34章",
+      "title": "コピペ用標準テンプレート",
+      "estimated_minutes": 50,
+      "risk_level": "low",
+      "outcome": "依頼・計画・完了報告の抜けをTemplateで防ぐ",
+      "workspace_dir": "learning-lab/chapter-34-templates",
+      "artifacts": [
+        "requirements.md",
+        "implementation-plan.md",
+        "completion-report.md"
+      ],
+      "slide_pages": [
+        135,
+        136,
+        137,
+        138
+      ]
+    },
+    {
+      "chapter_id": "35",
+      "label": "第35章",
+      "title": "教科書アプリの情報設計",
+      "estimated_minutes": 60,
+      "risk_level": "low",
+      "outcome": "本文・状態・証拠・再開を分離した学習Appを設計する",
+      "workspace_dir": "learning-lab/chapter-35-learning-app",
+      "artifacts": [
+        "lesson.json",
+        "state.json",
+        "RESUME.md"
+      ],
+      "slide_pages": [
+        139,
+        140,
+        141
+      ]
+    },
+    {
+      "chapter_id": "36",
+      "label": "第36章",
+      "title": "30日導入計画",
+      "estimated_minutes": 45,
+      "risk_level": "low",
+      "outcome": "安全な実験から全社運用へ段階的に広げる",
+      "workspace_dir": "learning-lab/chapter-36-rollout",
+      "artifacts": [
+        "30-day-plan.md",
+        "weekly-gates.csv",
+        "kpi.md"
+      ],
+      "slide_pages": [
+        142,
+        143
+      ]
+    },
+    {
+      "chapter_id": "37",
+      "label": "第37章",
+      "title": "素材と現行仕様の補正",
+      "estimated_minutes": 40,
+      "risk_level": "low",
+      "outcome": "安定原則と変動仕様を別の更新周期で管理する",
+      "workspace_dir": "learning-lab/chapter-37-feature-registry",
+      "artifacts": [
+        "feature-registry.csv",
+        "correction-notes.md"
+      ],
+      "slide_pages": [
+        144
+      ]
+    },
+    {
+      "chapter_id": "38",
+      "label": "第38章",
+      "title": "Coverage Map",
+      "estimated_minutes": 45,
+      "risk_level": "low",
+      "outcome": "素材Topicの抜け・重複・配置先を証明する",
+      "workspace_dir": "learning-lab/chapter-38-coverage",
+      "artifacts": [
+        "coverage-map.csv",
+        "gap-report.md"
+      ],
+      "slide_pages": [
+        145
+      ]
+    },
+    {
+      "chapter_id": "final",
+      "label": "終章",
+      "title": "最強のまま保つ",
+      "estimated_minutes": 90,
+      "risk_level": "medium",
+      "outcome": "学習・実務・改善・配布の循環を一つの卒業制作へ統合する",
+      "workspace_dir": "learning-lab/chapter-final-capstone",
+      "artifacts": [
+        "release/README.md",
+        "release/quality-report.md",
+        "release/rollback.md"
+      ],
+      "slide_pages": [
+        146,
+        147
+      ]
+    }
+  ]
+}

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第23章　最適Architecture — ブログ版</title><meta name="description" content="全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-23">最適Architecture</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-23">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-23">
+  <header class="chapter-head">
+    <div class="eyebrow">第23章</div>
+    <h1>最適Architecture</h1>
+  </header>
+  <section aria-labelledby="story-23">
+    <h2 id="story-23">物語の現在地</h2>
+    <div class="scene">遥のSkillが好評になり、『全員へ配ろう』という話が出ます。美咲はZIPを送る代わりに、正本、配布先、個人差分、強制Policy、Release段階を図にします。個人の便利ツールが、組織のインフラへ変わる境目です。</div>
+    <div class="story-essay"><p>トレプロハーネスは、CLAUDE.md、Commands、Hooks、Skills、Codex資産をGitで一元管理し、各Macへ自動同期する基盤です。Guidance、Enforcement、Content、Deliveryを別の面として設計し、個人カスタマイズ層を保護します。</p><p>Repositoryでは正本と生成物を分け、PR、Test、Evaluator、Canary、Pilot、Stableの順で配布します。即時全社反映より、失敗を小さく発見できるRelease Flowを優先します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-23">
+  <img src="../images/chapter-23-96e03b.webp" alt="第23章『最適Architecture』を表すenterprise architecture illustration" loading="lazy" decoding="async">
+  <figcaption>全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第23章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> enterprise architecture illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: enterprise architecture illustration.
+Scene and concept: An enterprise harness architecture with four planes—guidance, enforcement, content, and delivery—feeding staged release rings across employee laptops.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-23-s1">23.1 Product定義</h2>
+<blockquote>
+<p>全社員のMacへ、同じClaude Codeの知識、手順、安全制御、外部連携方針を配布し、継続的に改善する社内AI実行基盤。</p>
+</blockquote>
+<p>現行目的：</p>
+<ul>
+<li>福岡個人の<code>~/.claude/</code>に滞留する知見をGitで全社員へ。</li>
+<li>CLAUDE.md、13 Commands、5 Hooks、46 Skillsを共通化。</li>
+<li>誤操作をPreToolUse等でBlock。</li>
+<li>新人を30分以内で稼働。</li>
+<li>Kandji/LaunchAgentで毎日更新。</li>
+</ul>
+<h2 id="ch-23-s2">23.2 現行資産</h2>
+<table>
+<thead>
+<tr>
+<th>領域</th>
+<th>資産</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Guidance</td>
+<td><code>global-config/CLAUDE.md</code></td>
+</tr>
+<tr>
+<td>手順</td>
+<td>Commands、Skills</td>
+</tr>
+<tr>
+<td>制御</td>
+<td>Hooks</td>
+</tr>
+<tr>
+<td>Protocol</td>
+<td><code>hub-PROTOCOL.md</code></td>
+</tr>
+<tr>
+<td>Reference</td>
+<td><code>ref-skills/</code></td>
+</tr>
+<tr>
+<td>Codex</td>
+<td><code>.agents/skills/</code></td>
+</tr>
+<tr>
+<td>配布</td>
+<td>install/bootstrap/update/sync</td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Kandji/LaunchAgent</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>verify.sh/test-hooks.py</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-23-s3">23.3 追加すべき4面</h2>
+<ol>
+<li><strong>Managed Policy</strong> — ユーザーが外せないPermission/Sandbox/MCP。</li>
+<li><strong>Canonical Skill Source</strong> — Claude/Codexの二重編集を廃止。</li>
+<li><strong>Release Channel</strong> — Canary → Pilot → Stable。</li>
+<li><strong>Telemetry/Audit</strong> — Version、Update、Block、Failure、Cost。</li>
+</ol>
+<p>macOS管理領域：</p>
+<pre><code class="language-text">/Library/Application Support/ClaudeCode/CLAUDE.md
+/Library/Application Support/ClaudeCode/managed-settings.json
+/Library/Application Support/ClaudeCode/managed-mcp.json
+</code></pre>
+<h2 id="ch-23-s4">23.4 推奨Repository</h2>
+<pre><code class="language-text">trepro-harness/
+├── VERSION
+├── CHANGELOG.md
+├── global-config/
+│   ├── CLAUDE.md
+│   ├── commands/
+│   ├── agents/
+│   ├── hooks/
+│   ├── skills/              # build output
+│   ├── rules/
+│   ├── hub-PROTOCOL.md
+│   └── ref-skills/
+├── skill-src/               # canonical source
+│   └── &lt;skill&gt;/
+│       ├── SKILL.md
+│       ├── references/
+│       ├── scripts/
+│       ├── fixtures/
+│       └── tests/
+├── .agents/skills/          # build output
+├── managed-config/
+│   ├── CLAUDE.md
+│   ├── managed-settings.json
+│   ├── managed-mcp.json
+│   └── managed-settings.d/
+├── plugins/trepro-core/
+├── deploy/
+│   ├── install.sh
+│   ├── bootstrap.sh
+│   ├── update.sh
+│   ├── verify.sh
+│   ├── lib/common.sh
+│   ├── kandji/
+│   └── launchagent/
+├── scripts/
+│   ├── build-skills.sh
+│   ├── validate-skills.py
+│   ├── create-release.sh
+│   └── rollback.sh
+├── tests/
+├── sync.sh
+└── test-hooks.py
+</code></pre>
+<p>生成先を直接編集しない。</p>
+<h2 id="ch-23-s5">23.5 Release Flow</h2>
+<pre><code class="language-text">PR → Static/Test/Evaluator → Canary Tag → 2〜3名 → 観測
+→ Pilot部署 → Stable Tag → 全社員Update → Metrics
+</code></pre>
+<p><code>main</code>最新を無条件配布せず、承認済みTagを配る。</p>
+<h2 id="ch-23-s6">23.6 Guidance/Enforcement Mapping</h2>
+<table>
+<thead>
+<tr>
+<th>要求</th>
+<th>実装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日本語</td>
+<td>CLAUDE.md</td>
+</tr>
+<tr>
+<td>Test必須</td>
+<td>CLAUDE.md + Hook/CI</td>
+</tr>
+<tr>
+<td><code>.env</code>禁止</td>
+<td>Managed deny</td>
+</tr>
+<tr>
+<td>Deploy承認</td>
+<td>ask + Hook</td>
+</tr>
+<tr>
+<td>危険DB名</td>
+<td>PreToolUse Hook</td>
+</tr>
+<tr>
+<td>TS編集後Check</td>
+<td>PostToolUse</td>
+</tr>
+<tr>
+<td>MCP制限</td>
+<td>managed-mcp/Allowlist</td>
+</tr>
+<tr>
+<td>Bypass禁止</td>
+<td>managed-settings</td>
+</tr>
+<tr>
+<td>顧客文脈</td>
+<td>SessionStart</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-23-s7">23.7 個人Layer</h2>
+<p><code>~/.claude/local/</code>を保護するだけでは自動発見されるとは限らない。運用を明文化する。</p>
+<pre><code class="language-text">~/.claude/local/
+├── CLAUDE.local.md
+├── skills/
+├── agents/
+└── apply-local-overlay.sh
+</code></pre>
+<p>中央Manifestは、自分が配ったPathだけを削除する。名前衝突は中央優先でLogへ出す。</p>
+<h2 id="ch-23-s8">23.8 完了条件</h2>
+<pre><code class="language-text">[ ] 30分導入
+[ ] 承認Release配布
+[ ] 全端末Version把握
+[ ] Managed Policy優先
+[ ] Bypass禁止
+[ ] MCP統制
+[ ] Skill正本1箇所
+[ ] Claude/Codex同Fixture
+[ ] 1 Command Rollback
+[ ] 個人Layer保持
+</code></pre>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch23-harness-architecture">
+  <img src="../images/diagram-ch23-harness-architecture.webp" alt="トレプロハーネスの正本、生成物、Policy、配布、個人Layer、監視" loading="lazy" decoding="async">
+  <figcaption>正本と生成物、共通層と個人層、GuidanceとEnforcementを分離します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第23章23.4の直後。推奨Repositoryと四つの面。</p>
+    <p><strong>種類:</strong> enterprise architecture background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: enterprise architecture background.
+Scene and concept: A repository-centered enterprise architecture background separating source assets, generated runtime packages, managed policy, distribution pipeline, personal local layer, and monitoring, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の共通資産をGuidance・Enforcement・Content・Deliveryの四面へ分類し、正本をどこに置くか決めてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="22.html">← 信頼できる調査とレポート</a><a href="24.html">配布、同期、更新、Rollback →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

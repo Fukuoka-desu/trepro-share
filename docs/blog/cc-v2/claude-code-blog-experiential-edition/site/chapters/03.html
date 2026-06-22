@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第3章　導入とProject Folder — ブログ版</title><meta name="description" content="Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-03">導入とProject Folder</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-03">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-03">
+  <header class="chapter-head">
+    <div class="eyebrow">第3章</div>
+    <h1>導入とProject Folder</h1>
+  </header>
+  <section aria-labelledby="story-03">
+    <h2 id="story-03">物語の現在地</h2>
+    <div class="scene">遥のデスクトップには、資料、画像、テスト用ファイルが混ざった『AI作業』フォルダがありました。蓮は新しい空のフォルダを作り、そこだけをCursorで開きます。作業場所を決めただけで、AIが見てよい範囲と人が確認すべき範囲がはっきりしました。</div>
+    <div class="story-essay"><p>Project Folderは単なる保存先ではなく、文脈と権限の境界です。無関係な仕事は別プロジェクトへ分け、同じ成果物へつながる仕事は共通ルートの下に整理します。ファイル構造が整うほど、AIは探索しやすく、人間は変更を追いやすくなります。</p><p>導入では、公式の方法でCLIやIDE連携を用意し、最初は基本コマンドだけを覚えます。分からない操作は、その場でエージェントへ質問し、確認用のメモとしてプロジェクト内へ保存させます。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-03">
+  <img src="../images/chapter-03-a2ef29.webp" alt="第3章『導入とProject Folder』を表すeditorial workspace illustration" loading="lazy" decoding="async">
+  <figcaption>Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第3章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> editorial workspace illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: editorial workspace illustration.
+Scene and concept: An organized digital workbench with a clearly bounded project folder, labeled zones for input, docs, output, tests, and terminal.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-03-s1">3.1 macOSへCLIを導入</h2>
+<p>公式Native Installerを使う。</p>
+<pre><code class="language-bash">curl -fsSL https://claude.ai/install.sh | bash
+claude --version
+claude doctor
+</code></pre>
+<p>会社環境では、Install URL、Hash、Proxy、許可Versionを管理者が固定する。</p>
+<h2 id="ch-03-s2">3.2 VS Code</h2>
+<ul>
+<li>公式Anthropic提供のClaude Code Extensionを確認して導入する。</li>
+<li>Project FolderをVS Codeで開く。</li>
+<li>Trustするのは自社または確認済みRepositoryだけ。</li>
+<li>CLIとIDEは同じProject Contextを使う。</li>
+</ul>
+<p>IDEは見やすいが、すべての機能・診断はTerminalで先に提供される場合がある。両方使えるようにする。</p>
+<h2 id="ch-03-s3">3.3 Project Folderの原則</h2>
+<h3 id="ch-03-s4">相関のない仕事</h3>
+<pre><code class="language-text">~/work/writing/
+~/work/accounting/
+</code></pre>
+<p>別Rootへ分ける。</p>
+<h3 id="ch-03-s5">相関する仕事</h3>
+<pre><code class="language-text">~/work/youtube/
+├── research/
+├── scripts/
+├── assets/
+└── reports/
+</code></pre>
+<p>共通Rootを開き、知識と成果物を共有する。</p>
+<h2 id="ch-03-s6">3.4 推奨Project構造</h2>
+<pre><code class="language-text">project/
+├── CLAUDE.md
+├── README.md
+├── docs/
+│   ├── requirements.md
+│   ├── architecture.md
+│   └── runbook.md
+├── inputs/
+├── output/
+├── src/
+├── tests/
+├── scripts/
+├── .claude/
+│   ├── rules/
+│   ├── skills/
+│   ├── agents/
+│   └── settings.json
+├── .gitignore
+└── package.json / pyproject.toml
+</code></pre>
+<h2 id="ch-03-s7">3.5 CLIの基本</h2>
+<pre><code class="language-bash">claude                         # 対話Session
+claude -p "依頼"              # 非対話の1回実行
+claude --continue             # 直前Sessionを継続
+claude --resume               # 保存Sessionを選んで再開
+</code></pre>
+<p>Session内の代表操作：</p>
+<pre><code class="language-text">/clear      別Topicへ切り替える前に履歴をクリア
+/compact    同じ目的のまま履歴を圧縮
+/context    Contextの内訳を確認
+/stats      利用状況を確認
+/rewind     会話・編集Checkpointへ戻る
+/memory     CLAUDE.mdとAuto Memoryを確認
+/permissions 権限Ruleの出所を確認
+/sandbox    Sandbox設定を確認
+/mcp        MCP接続を確認
+</code></pre>
+<p>利用中Versionの <code>/help</code> を最優先にする。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 空のlearning-labを作り、docs・input・output・testsの最小構造を用意してCursorでそのフォルダだけを開いてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。</p></section>
+</article>
+<nav class="chapter-nav"><a href="02.html">← 安全を最初に設計する</a><a href="04.html">最初の90分実習：会議アシスタント →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

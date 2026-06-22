@@ -1,0 +1,628 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import hashlib
+import html
+import json
+import re
+import shutil
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable
+
+import mistune
+from bs4 import BeautifulSoup
+from jinja2 import Template
+
+from content_meta import CHARACTERS, PART_META, CHAPTER_META, EXTRA_VISUALS
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / "sources" / "original-textbook.md"
+OUT_MD = ROOT / "claude-code-blog-complete.md"
+SITE = ROOT / "site"
+CHAPTER_DIR = SITE / "chapters"
+IMAGE_DIR = SITE / "images"
+ASSET_DIR = SITE / "assets"
+MANIFEST_PATH = ROOT / "image_manifest.json"
+COVERAGE_PATH = ROOT / "coverage-report.md"
+
+GLOBAL_ART_DIRECTION = (
+    "Sophisticated Japanese editorial technology illustration for a long-form educational blog. "
+    "Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; "
+    "fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, "
+    "credible Japanese office workers, professional and human rather than futuristic spectacle. "
+    "Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, "
+    "readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. "
+    "Leave intentional negative space for a heading and caption."
+)
+
+@dataclass
+class Part:
+    number: int
+    title: str
+
+@dataclass
+class Chapter:
+    key: str
+    title: str
+    raw_title: str
+    body: str
+    part: int
+
+
+def parse_source(text: str) -> tuple[str, list[Part], list[Chapter]]:
+    lines = text.splitlines()
+    preamble: list[str] = []
+    parts: list[Part] = []
+    chapters: list[Chapter] = []
+    current_part = 0
+    current_chapter: Chapter | None = None
+    body_lines: list[str] = []
+    seen_first_part = False
+
+    part_re = re.compile(r"^# 第(\d+)部[　 ]+(.+)$")
+    chapter_re = re.compile(r"^# 第(\d+)章[　 ]+(.+)$")
+
+    def flush() -> None:
+        nonlocal current_chapter, body_lines
+        if current_chapter is not None:
+            current_chapter.body = "\n".join(body_lines).strip() + "\n"
+            chapters.append(current_chapter)
+        current_chapter = None
+        body_lines = []
+
+    for line in lines:
+        pm = part_re.match(line)
+        cm = chapter_re.match(line)
+        if pm:
+            flush()
+            seen_first_part = True
+            current_part = int(pm.group(1))
+            parts.append(Part(current_part, pm.group(2).strip()))
+            continue
+        if cm:
+            flush()
+            number = int(cm.group(1))
+            key = f"{number:02d}"
+            title = cm.group(2).strip()
+            current_chapter = Chapter(key, title, line[2:].strip(), "", current_part)
+            continue
+        if line.startswith("# 終章"):
+            flush()
+            title = line.split("終章", 1)[1].lstrip("　 ")
+            current_chapter = Chapter("final", title, line[2:].strip(), "", 8)
+            continue
+        if current_chapter is not None:
+            body_lines.append(line)
+        elif not seen_first_part:
+            preamble.append(line)
+    flush()
+    return "\n".join(preamble).strip(), parts, chapters
+
+
+def strip_original_title(preamble: str) -> str:
+    lines = preamble.splitlines()
+    out: list[str] = []
+    skipped_title = False
+    for line in lines:
+        if not skipped_title and line.startswith("# "):
+            skipped_title = True
+            continue
+        out.append(line)
+    return "\n".join(out).strip()
+
+
+def image_filename(prefix: str, key: str, title: str) -> str:
+    digest = hashlib.sha1(title.encode("utf-8")).hexdigest()[:6]
+    return f"{prefix}-{key}-{digest}.webp"
+
+
+def build_prompt(concept: str, kind: str, composition: str = "Landscape 3:2 composition") -> str:
+    return (
+        f"{GLOBAL_ART_DIRECTION}\n\n"
+        f"Asset type: {kind}.\n"
+        f"Scene and concept: {concept}.\n"
+        f"Composition: {composition}. Use visual hierarchy and clear spatial relationships. "
+        "Keep the image meaningful without embedded words; reserve text for HTML overlays."
+    )
+
+
+def make_manifest(parts: list[Part], chapters: list[Chapter]) -> dict:
+    images: list[dict] = []
+    cover_concept = (
+        "Four collaborators—a non-engineer learner, a developer, an AI operations administrator, "
+        "and a conversational navigator—standing around a desk where a terminal, project files, "
+        "a safe workflow loop, reusable skills, and an enterprise distribution map connect into one journey"
+    )
+    images.append({
+        "id": "cover-main",
+        "tier": "core",
+        "placement": "ブログトップのタイトル直下。HTML見出しを画像の左上へ重ねる。",
+        "kind": "cinematic editorial cover illustration",
+        "filename": "cover-main.webp",
+        "size": "2048x1152",
+        "quality": "medium",
+        "output_format": "webp",
+        "alt": "学習者、開発者、管理者、ナビゲーターがClaude Codeの学習と全社運用を一つの旅として設計する表紙イラスト",
+        "caption": "使う、理解する、仕組みにする。その全行程を一つの物語として歩きます。",
+        "prompt": build_prompt(cover_concept, "cinematic editorial cover illustration", "Wide 16:9 cover with open space on the upper-left for the Japanese title"),
+    })
+    for part in parts:
+        meta = PART_META[part.number]
+        images.append({
+            "id": f"part-{part.number:02d}",
+            "tier": "core",
+            "placement": f"第{part.number}部の導入直後。部全体の空気を切り替える横長バナー。",
+            "kind": "editorial section banner",
+            "filename": image_filename("part", f"{part.number:02d}", part.title),
+            "size": "1536x1024",
+            "quality": "medium",
+            "output_format": "webp",
+            "alt": f"第{part.number}部『{part.title}』の概念イラスト",
+            "caption": meta["story"],
+            "prompt": build_prompt(meta["image_concept"], "editorial section banner", "Landscape 3:2 with generous horizontal negative space"),
+        })
+    for chapter in chapters:
+        meta = CHAPTER_META[chapter.key]
+        label = "終章" if chapter.key == "final" else f"第{int(chapter.key)}章"
+        images.append({
+            "id": f"chapter-{chapter.key}",
+            "tier": "chapter",
+            "placement": f"{label}の物語導入と技術解説の間。内容の感覚的な理解を助ける。",
+            "kind": meta["image_kind"],
+            "filename": image_filename("chapter", chapter.key, chapter.title),
+            "size": "1536x1024",
+            "quality": "medium",
+            "output_format": "webp",
+            "alt": f"{label}『{chapter.title}』を表す{meta['image_kind']}",
+            "caption": meta["takeaway"],
+            "prompt": build_prompt(meta["image_concept"], meta["image_kind"]),
+        })
+    for item in EXTRA_VISUALS:
+        images.append({
+            "id": item["id"],
+            "tier": item["tier"],
+            "placement": item["placement"],
+            "kind": item["kind"],
+            "filename": f"{item['id']}.webp",
+            "size": "1536x1024",
+            "quality": "medium",
+            "output_format": "webp",
+            "alt": item["alt"],
+            "caption": item["caption"],
+            "prompt": build_prompt(item["concept"], item["kind"]),
+        })
+    return {
+        "schema_version": "1.0",
+        "created_for": "Claude Code実践教科書・ブログ完全版",
+        "default_model": "gpt-image-2",
+        "snapshot_option": "gpt-image-2-2026-04-21",
+        "default_output_directory": "site/images",
+        "art_direction": GLOBAL_ART_DIRECTION,
+        "production_policy": {
+            "critical_information_in_images": False,
+            "reason": "画像がなくても本文、alt、captionだけで理解できる構造にする。",
+            "text_rendering": "重要な日本語ラベルは画像に焼き込まずHTML/CSSで重ねる。",
+            "draft_workflow": "low品質で構図確認後、採用画像だけmediumまたはhighで再生成する。",
+            "secret_handling": "OPENAI_API_KEYはサーバー側またはBuild時だけで使用し、HTMLへ埋め込まない。",
+        },
+        "images": images,
+    }
+
+
+def manifest_lookup(manifest: dict) -> dict[str, dict]:
+    return {i["id"]: i for i in manifest["images"]}
+
+
+def image_directive_md(item: dict) -> str:
+    prompt = item["prompt"].replace("\n", " ")
+    return (
+        f"> **画像制作指示：`{item['id']}`**  \n"
+        f"> **配置**: {item['placement']}  \n"
+        f"> **種類**: {item['kind']}  \n"
+        f"> **代替テキスト**: {item['alt']}  \n"
+        f"> **Caption**: {item['caption']}  \n"
+        f"> **推奨設定**: `{item['size']}` / `{item['quality']}` / `{item['output_format']}`  \n"
+        f"> **Image API Prompt**: {prompt}\n"
+    )
+
+
+def chapter_markdown(chapter: Chapter, image: dict, extras: list[dict]) -> str:
+    meta = CHAPTER_META[chapter.key]
+    heading = f"# 終章　{chapter.title}" if chapter.key == "final" else f"# 第{int(chapter.key)}章　{chapter.title}"
+    chunks = [
+        heading,
+        "",
+        "## 物語の現在地",
+        "",
+        meta["scene"],
+        "",
+        meta["essay"],
+        "",
+        image_directive_md(image),
+        "",
+        "## 実装リファレンス",
+        "",
+        "ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。",
+        "",
+        chapter.body.strip(),
+    ]
+    if extras:
+        chunks.extend(["", "## 補助図の制作指示", ""])
+        for extra in extras:
+            chunks.extend([image_directive_md(extra), ""])
+    chunks.extend([
+        "",
+        "## 体験ミッション",
+        "",
+        meta["mission"],
+        "",
+        "## ナビゲーターのひとこと",
+        "",
+        f"> {meta['takeaway']}",
+        "",
+    ])
+    return "\n".join(chunks)
+
+
+def build_markdown(preamble: str, parts: list[Part], chapters: list[Chapter], manifest: dict) -> str:
+    lookup = manifest_lookup(manifest)
+    extras_by_chapter: dict[str, list[dict]] = {}
+    for item in manifest["images"]:
+        if item["id"].startswith("diagram-"):
+            chapter = next((v["chapter"] for v in EXTRA_VISUALS if v["id"] == item["id"]), None)
+            if chapter:
+                extras_by_chapter.setdefault(chapter, []).append(item)
+
+    out = [
+        "# Claude Code実践教科書 — 物語で歩くブログ完全版",
+        "",
+        "> **版**: Blog Edition v1.0  ",
+        "> **基準日**: 2026-06-22  ",
+        "> **形式**: テキストだけでも完結する読み物 + 全実装リファレンス + 画像制作指示  ",
+        "> **対象**: 初心者、非エンジニア、開発者、AI推進、情シス、ハーネス管理者",
+        "",
+        "## はじまり — 『使えている』から『直せる・説明できる・配れる』へ",
+        "",
+        "営業企画の遥は、Cursorから既存のスライド生成Skillを呼び出せました。けれど、途中で止まったときに原因を追えず、出力が正しいかを証拠で説明できませんでした。開発者の蓮は再現性を、AI推進の美咲は安全と全社配布を気にしています。そこへナビゲーターが加わり、四人はClaude Codeを0から学び直す旅を始めます。",
+        "",
+        "このブログ版は、各章を『物語の現在地 → 技術の意味 → 実装リファレンス → 体験ミッション → 振り返り』の順で進めます。生成画像は理解を補助しますが、画像が一枚もなくても本文だけで完結します。",
+        "",
+        image_directive_md(lookup["cover-main"]),
+        "",
+        "## 登場人物",
+        "",
+        "| 人物 | 役割 | この旅で向き合うこと |",
+        "|---|---|---|",
+    ]
+    for c in CHARACTERS:
+        out.append(f"| {c['name']} | {c['role']} | {c['description']} |")
+    out.extend([
+        "",
+        "## 原典から引き継ぐ前提",
+        "",
+        strip_original_title(preamble),
+        "",
+    ])
+    chapters_by_part: dict[int, list[Chapter]] = {}
+    for ch in chapters:
+        chapters_by_part.setdefault(ch.part, []).append(ch)
+    for part in parts:
+        meta = PART_META[part.number]
+        out.extend([
+            f"# 第{part.number}部　{part.title}",
+            "",
+            meta["story"],
+            "",
+            image_directive_md(lookup[f"part-{part.number:02d}"]),
+            "",
+        ])
+        for ch in chapters_by_part.get(part.number, []):
+            out.append(chapter_markdown(ch, lookup[f"chapter-{ch.key}"], extras_by_chapter.get(ch.key, [])))
+    return "\n".join(out).strip() + "\n"
+
+
+CSS = r"""
+:root{
+  --ink:#172033;--muted:#5f6b7e;--paper:#fbf8f1;--panel:#ffffff;--navy:#14213d;
+  --blue:#2456d3;--amber:#d7891c;--line:#d9dee8;--soft:#eef3fb;--success:#176b55;
+  --shadow:0 18px 60px rgba(27,39,64,.11);--radius:20px;--max:920px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.9}
+a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0 auto 0;height:4px;background:transparent;z-index:100}.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--amber))}
+.site-header{background:linear-gradient(135deg,#101b33,#233961);color:white;padding:18px 24px;position:sticky;top:0;z-index:40;box-shadow:0 8px 28px rgba(0,0,0,.18)}.site-header .inner{max-width:1320px;margin:auto;display:flex;align-items:center;gap:18px}.brand{font-weight:800;letter-spacing:.02em;color:white;text-decoration:none}.site-header nav{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}.site-header nav a{color:#e7edff;text-decoration:none;font-size:.92rem}
+.hero{max-width:1320px;margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.13rem;color:var(--muted);max-width:64ch}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
+.layout{max-width:1320px;margin:auto;padding:20px 24px 80px;display:grid;grid-template-columns:280px minmax(0,1fr);gap:40px}.toc{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 116px);overflow:auto;background:rgba(255,255,255,.76);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:18px}.toc h2{font-size:.95rem;margin:0 0 12px}.toc a{display:block;padding:7px 8px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:.88rem;line-height:1.35}.toc a:hover{background:var(--soft);color:var(--ink)}.toc .part-link{font-weight:800;color:var(--navy);margin-top:8px}
+.content{min-width:0}.part{margin:56px 0 80px}.part-header{padding:42px;border-radius:var(--radius);background:linear-gradient(135deg,#13213e,#26406e);color:white;box-shadow:var(--shadow)}.part-header h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.2;margin:.2em 0}.part-header p{color:#dbe5ff;max-width:70ch}.chapter{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,5vw,56px);margin:34px 0;box-shadow:var(--shadow);scroll-margin-top:90px}.chapter-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}.chapter-head h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;letter-spacing:-.025em;margin:.2em 0}.scene{font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif;font-size:1.1rem;background:linear-gradient(135deg,#fff8e9,#f3f6ff);border-left:5px solid var(--amber);padding:22px 24px;border-radius:0 14px 14px 0;margin:24px 0}.story-essay{font-size:1.04rem}.story-essay p:first-child::first-letter{font-size:3.4em;float:left;line-height:.82;padding:.12em .12em 0 0;color:var(--blue);font-weight:800}
+.image-shell{margin:34px 0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#e9effa,#fff4df);min-height:260px;position:relative}.image-shell img{width:100%;height:auto;display:block;aspect-ratio:3/2;object-fit:cover}.image-shell.missing img{display:none}.image-shell.missing:before{content:"生成画像の差し込み位置";display:grid;place-items:center;min-height:320px;color:var(--muted);font-weight:800;letter-spacing:.08em}.image-shell figcaption{padding:14px 18px;background:white;color:var(--muted);font-size:.92rem}.image-brief{border-top:1px solid var(--line);background:#fafcff;padding:0 18px}.image-brief summary{cursor:pointer;padding:12px 0;font-weight:800;color:var(--blue)}.image-brief pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#111827;color:#e6edf7;border-radius:12px;padding:16px;font-size:.8rem}
+.reference{margin-top:38px}.reference>h2:first-child{margin-top:0}.reference h2{font-size:1.55rem;margin-top:2.2em;border-left:4px solid var(--blue);padding-left:12px}.reference h3{font-size:1.18rem;margin-top:1.8em}.reference p,.reference li{max-width:76ch}.reference table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:22px 0}.reference th,.reference td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;min-width:130px}.reference th{background:var(--soft);text-align:left}.reference blockquote{margin:20px 0;padding:12px 18px;border-left:4px solid var(--amber);background:#fff9ec;color:#4b5563}.reference code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#edf1f7;padding:.13em .35em;border-radius:5px;font-size:.9em}.code-wrap{position:relative;margin:22px 0}.code-wrap pre{overflow:auto;background:#101827;color:#e6edf7;padding:20px;border-radius:14px;line-height:1.65}.code-wrap code{background:transparent;color:inherit;padding:0}.copy-code{position:absolute;top:10px;right:10px;border:1px solid #52617c;border-radius:8px;background:#1e2a42;color:white;padding:6px 10px;cursor:pointer;font-size:.78rem}
+.mission,.takeaway{border-radius:16px;padding:22px 24px;margin:30px 0}.mission{background:#eef8f4;border:1px solid #b9dfd0}.takeaway{background:#f0f3ff;border:1px solid #c9d2f4}.mission h2,.takeaway h2{margin-top:0;font-size:1.2rem}.mission strong{color:var(--success)}
+.character-grid,.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 28px rgba(27,39,64,.06)}.card h3{margin:.1em 0}.card p{color:var(--muted)}.chapter-nav{display:flex;justify-content:space-between;gap:16px;margin-top:34px}.chapter-nav a{flex:1;background:white;border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none}.chapter-nav a:last-child{text-align:right}
+.site-footer{background:#111b31;color:#ced7ea;padding:36px 24px}.site-footer .inner{max-width:1200px;margin:auto}.source-note{font-size:.86rem;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;padding-top:20px}
+@media(max-width:980px){.hero-grid,.layout{grid-template-columns:1fr}.toc{position:relative;top:0;max-height:none}.hero-grid{gap:18px}.character-grid,.card-grid{grid-template-columns:1fr}.site-header nav{display:none}}
+@media print{.site-header,.toc,.progress,.copy-code,.image-brief,.hero-actions{display:none!important}.layout{display:block;padding:0}.chapter,.part-header{box-shadow:none;break-inside:avoid;border-color:#bbb}.image-shell{break-inside:avoid}body{background:white}.chapter{page-break-before:always}}
+"""
+
+JS = r"""
+(() => {
+  const bar = document.querySelector('.progress > span');
+  const update = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    if (bar) bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  };
+  document.addEventListener('scroll', update, {passive:true}); update();
+  document.querySelectorAll('.image-shell img').forEach(img => {
+    const markMissing = () => img.closest('.image-shell')?.classList.add('missing');
+    if (img.complete && img.naturalWidth === 0) markMissing();
+    img.addEventListener('error', markMissing);
+  });
+  document.querySelectorAll('pre code').forEach(code => {
+    const pre = code.parentElement;
+    if (!pre || pre.closest('.image-brief')) return;
+    const wrap = document.createElement('div'); wrap.className = 'code-wrap';
+    pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
+    const btn = document.createElement('button'); btn.className='copy-code'; btn.textContent='コピー';
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(code.textContent || ''); btn.textContent='コピー済み'; setTimeout(()=>btn.textContent='コピー',1200); }
+      catch { btn.textContent='失敗'; }
+    });
+    wrap.appendChild(btn);
+  });
+})();
+"""
+
+
+def md_renderer() -> mistune.Markdown:
+    return mistune.create_markdown(
+        renderer=mistune.HTMLRenderer(escape=False),
+        plugins=["table", "strikethrough", "task_lists", "url"],
+    )
+
+
+def add_heading_ids(fragment: str, prefix: str) -> str:
+    soup = BeautifulSoup(fragment, "html.parser")
+    used: set[str] = set()
+    for idx, heading in enumerate(soup.find_all(["h2", "h3", "h4"])):
+        base = f"{prefix}-s{idx+1}"
+        while base in used:
+            base += "x"
+        used.add(base)
+        heading["id"] = base
+    return str(soup)
+
+
+def image_figure(item: dict, image_path_prefix: str) -> str:
+    prompt = html.escape(item["prompt"])
+    return f"""
+<figure class="image-shell" data-image-id="{html.escape(item['id'])}">
+  <img src="{image_path_prefix}{html.escape(item['filename'])}" alt="{html.escape(item['alt'])}" loading="lazy" decoding="async">
+  <figcaption>{html.escape(item['caption'])}</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> {html.escape(item['placement'])}</p>
+    <p><strong>種類:</strong> {html.escape(item['kind'])}</p>
+    <p><strong>設定:</strong> {html.escape(item['size'])} / {html.escape(item['quality'])} / {html.escape(item['output_format'])}</p>
+    <pre>{prompt}</pre>
+  </details>
+</figure>
+"""
+
+
+def render_reference(body: str, prefix: str) -> str:
+    rendered = md_renderer()(body)
+    return add_heading_ids(rendered, prefix)
+
+
+def story_paragraphs(text: str) -> str:
+    return "".join(f"<p>{html.escape(p.strip())}</p>" for p in text.split("\n\n") if p.strip())
+
+
+def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extras: bool = True) -> str:
+    lookup = manifest_lookup(manifest)
+    meta = CHAPTER_META[ch.key]
+    label = "終章" if ch.key == "final" else f"第{int(ch.key)}章"
+    extras = []
+    if include_extras:
+        for x in EXTRA_VISUALS:
+            if x["chapter"] == ch.key:
+                extras.append(lookup[x["id"]])
+    extra_html = ""
+    if extras:
+        extra_html = '<section class="reference"><h2>補助図の制作指示</h2>' + "".join(image_figure(x, image_prefix) for x in extras) + "</section>"
+    return f"""
+<article class="chapter" id="chapter-{html.escape(ch.key)}">
+  <header class="chapter-head">
+    <div class="eyebrow">{label}</div>
+    <h1>{html.escape(ch.title)}</h1>
+  </header>
+  <section aria-labelledby="story-{html.escape(ch.key)}">
+    <h2 id="story-{html.escape(ch.key)}">物語の現在地</h2>
+    <div class="scene">{html.escape(meta['scene'])}</div>
+    <div class="story-essay">{story_paragraphs(meta['essay'])}</div>
+  </section>
+  {image_figure(lookup[f'chapter-{ch.key}'], image_prefix)}
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    {render_reference(ch.body, f'ch-{ch.key}')}
+  </section>
+  {extra_html}
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> {html.escape(meta['mission'])}</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>{html.escape(meta['takeaway'])}</p></section>
+</article>
+"""
+
+
+PAGE_TEMPLATE = Template(r"""<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ title }}</title><meta name="description" content="{{ description }}">
+{% if inline_assets %}<style>{{ css }}</style>{% else %}<link rel="stylesheet" href="{{ asset_prefix }}assets/styles.css">{% endif %}
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="{{ home_href }}">Claude Code 教科書・ブログ版</a><nav><a href="{{ home_href }}">目次</a><a href="{{ complete_href }}">全章一括</a><a href="{{ image_guide_href }}">画像実装</a></nav></div></header>
+{{ body }}
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+{% if inline_assets %}<script>{{ js }}</script>{% else %}<script src="{{ asset_prefix }}assets/app.js"></script>{% endif %}
+</body></html>""")
+
+
+def build_toc(parts: list[Part], chapters: list[Chapter], chapter_prefix: str | None = None) -> str:
+    """Build a TOC. chapter_prefix=None means anchors in the complete page.
+
+    On the home page, pass chapter_prefix="chapters/" so part links stay local
+    anchors while chapter links open their individual pages.
+    """
+    chapters_by_part: dict[int, list[Chapter]] = {}
+    for ch in chapters:
+        chapters_by_part.setdefault(ch.part, []).append(ch)
+    links: list[str] = ["<h2>目次</h2>"]
+    for part in parts:
+        links.append(f'<a class="part-link" href="#part-{part.number}">第{part.number}部 {html.escape(part.title)}</a>')
+        for ch in chapters_by_part.get(part.number, []):
+            label = "終章" if ch.key == "final" else f"第{int(ch.key)}章"
+            href = f"#chapter-{ch.key}" if chapter_prefix is None else f"{chapter_prefix}{ch.key}.html"
+            links.append(f'<a href="{href}">{label} {html.escape(ch.title)}</a>')
+    return "".join(links)
+
+
+def intro_html(preamble: str, manifest: dict, image_prefix: str) -> str:
+    lookup = manifest_lookup(manifest)
+    chars = "".join(
+        f'<article class="card"><div class="eyebrow">{html.escape(c["role"])}</div><h3>{html.escape(c["name"])}</h3><p>{html.escape(c["description"])}</p></article>'
+        for c in CHARACTERS
+    )
+    preamble_html = render_reference(strip_original_title(preamble), "preface")
+    return f"""
+<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Story-driven complete edition</div><h1>Claude Code実践教科書<br>物語で歩くブログ完全版</h1><p class="lede">『使えている』から、『直せる・説明できる・安全に配れる』へ。初心者の最初の一操作から、Skills、Hooks、MCP、HTML、全社ハーネスまでを一続きの物語として学びます。</p><div class="hero-actions"><a class="button primary" href="#part-0">物語を始める</a><a class="button" href="complete.html">全章を一括で読む</a></div></div>{image_figure(lookup['cover-main'], image_prefix)}</div></section>
+<section class="hero"><h2>登場人物</h2><div class="character-grid">{chars}</div></section>
+<section class="hero"><div class="chapter"><header class="chapter-head"><div class="eyebrow">Before you start</div><h1>原典から引き継ぐ前提</h1></header><div class="reference">{preamble_html}</div></div></section>
+"""
+
+
+def part_html(part: Part, chapters: list[Chapter], manifest: dict, image_prefix: str) -> str:
+    lookup = manifest_lookup(manifest)
+    meta = PART_META[part.number]
+    articles = "".join(chapter_article(ch, manifest, image_prefix) for ch in chapters)
+    return f"""
+<section class="part" id="part-{part.number}">
+  <header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2><p>{html.escape(meta['story'])}</p></header>
+  {image_figure(lookup[f'part-{part.number:02d}'], image_prefix)}
+  {articles}
+</section>
+"""
+
+
+def write_page(path: Path, title: str, description: str, body: str, *, asset_prefix: str, home_href: str, complete_href: str, image_guide_href: str, inline_assets: bool = False) -> None:
+    page = PAGE_TEMPLATE.render(
+        title=title,
+        description=description,
+        body=body,
+        asset_prefix=asset_prefix,
+        home_href=home_href,
+        complete_href=complete_href,
+        image_guide_href=image_guide_href,
+        inline_assets=inline_assets,
+        css=CSS,
+        js=JS,
+    )
+    path.write_text(page, encoding="utf-8")
+
+
+def build_site(preamble: str, parts: list[Part], chapters: list[Chapter], manifest: dict) -> None:
+    SITE.mkdir(parents=True, exist_ok=True)
+    CHAPTER_DIR.mkdir(parents=True, exist_ok=True)
+    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    ASSET_DIR.mkdir(parents=True, exist_ok=True)
+    (ASSET_DIR / "styles.css").write_text(CSS, encoding="utf-8")
+    (ASSET_DIR / "app.js").write_text(JS, encoding="utf-8")
+
+    chapters_by_part: dict[int, list[Chapter]] = {}
+    for ch in chapters:
+        chapters_by_part.setdefault(ch.part, []).append(ch)
+
+    home_main = intro_html(preamble, manifest, "images/")
+    home_main += '<div class="layout"><aside class="toc">' + build_toc(parts, chapters, "chapters/") + '</aside><main class="content">'
+    for part in parts:
+        meta = PART_META[part.number]
+        cards = []
+        for ch in chapters_by_part.get(part.number, []):
+            label = "終章" if ch.key == "final" else f"第{int(ch.key)}章"
+            cards.append(f'<a class="card" href="chapters/{ch.key}.html"><div class="eyebrow">{label}</div><h3>{html.escape(ch.title)}</h3><p>{html.escape(CHAPTER_META[ch.key]["takeaway"])}</p></a>')
+        home_main += f'<section class="part" id="part-{part.number}"><header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2><p>{html.escape(meta["story"])}</p></header>{image_figure(manifest_lookup(manifest)[f"part-{part.number:02d}"], "images/")}<div class="card-grid">{"".join(cards)}</div></section>'
+    home_main += '</main></div>'
+    write_page(SITE / "index.html", "Claude Code実践教科書 — ブログ完全版", "Claude Codeを物語と実装で学ぶ完全版ブログ", home_main, asset_prefix="", home_href="index.html", complete_href="complete.html", image_guide_href="image-pipeline.html")
+
+    complete_body = intro_html(preamble, manifest, "images/")
+    complete_body += '<div class="layout"><aside class="toc">' + build_toc(parts, chapters, None) + '</aside><main class="content">'
+    for part in parts:
+        complete_body += part_html(part, chapters_by_part.get(part.number, []), manifest, "images/")
+    complete_body += '<p class="source-note">本版は、元教科書の全章・全小見出し・コードブロックを保持し、その前後へ物語、体験ミッション、画像制作指示を追加しています。</p></main></div>'
+    write_page(SITE / "complete.html", "Claude Code実践教科書 — 全章一括", "物語と実装リファレンスを一つのHTMLで読む完全版", complete_body, asset_prefix="", home_href="index.html", complete_href="complete.html", image_guide_href="image-pipeline.html", inline_assets=True)
+
+    pipeline_md_path = ROOT / "IMAGE_PIPELINE.md"
+    if pipeline_md_path.exists():
+        pipeline_html = render_reference(pipeline_md_path.read_text(encoding="utf-8"), "image-pipeline")
+        pipeline_body = '<div class="layout"><aside class="toc"><h2>画像制作</h2><a href="#image-pipeline-s1">API上の名称</a><a href="index.html">全体目次</a></aside><main class="content"><article class="chapter"><header class="chapter-head"><div class="eyebrow">GPT Image 2</div><h1>画像制作・差し込みパイプライン</h1></header><div class="reference">' + pipeline_html + '</div></article></main></div>'
+        write_page(SITE / "image-pipeline.html", "GPT Image 2 画像制作パイプライン", "ブログ挿絵をGPT Image 2 APIで生成し差し込む手順", pipeline_body, asset_prefix="", home_href="index.html", complete_href="complete.html", image_guide_href="image-pipeline.html")
+
+    for idx, ch in enumerate(chapters):
+        prev_ch = chapters[idx - 1] if idx > 0 else None
+        next_ch = chapters[idx + 1] if idx + 1 < len(chapters) else None
+        nav = '<nav class="chapter-nav">'
+        nav += (f'<a href="{prev_ch.key}.html">← {html.escape(prev_ch.title)}</a>' if prev_ch else '<span></span>')
+        nav += (f'<a href="{next_ch.key}.html">{html.escape(next_ch.title)} →</a>' if next_ch else '<a href="../index.html">目次へ →</a>')
+        nav += '</nav>'
+        body = '<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-' + ch.key + '">' + html.escape(ch.title) + '</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-' + ch.key + '">一括版で開く</a></aside><main class="content">'
+        body += chapter_article(ch, manifest, "../images/") + nav + '</main></div>'
+        write_page(CHAPTER_DIR / f"{ch.key}.html", f"{ch.raw_title} — ブログ版", CHAPTER_META[ch.key]["takeaway"], body, asset_prefix="../", home_href="../index.html", complete_href="../complete.html", image_guide_href="../image-pipeline.html")
+
+
+def build_coverage(original_text: str, blog_md: str, chapters: list[Chapter], manifest: dict) -> str:
+    original_h2 = re.findall(r"^## .+$", original_text, flags=re.M)
+    missing_h2 = [h for h in original_h2 if h not in blog_md]
+    original_fences = original_text.count("```")
+    blog_fences = blog_md.count("```")
+    return f"""# Blog Edition Coverage Report
+
+- Original chapter count: {len(chapters)}
+- Blog chapter count: {len(re.findall(r'^# (?:第\d+章|終章)', blog_md, flags=re.M))}
+- Original subsection headings: {len(original_h2)}
+- Missing original subsection headings: {len(missing_h2)}
+- Original code-fence markers: {original_fences}
+- Blog code-fence markers: {blog_fences}
+- Image directives: {len(manifest['images'])}
+- Core image directives: {sum(1 for i in manifest['images'] if i['tier'] == 'core')}
+- Chapter image directives: {sum(1 for i in manifest['images'] if i['tier'] == 'chapter')}
+
+## Missing subsection headings
+
+{chr(10).join('- ' + h for h in missing_h2) if missing_h2 else 'None. All original subsection headings are retained.'}
+
+## Validation result
+
+{'PASS' if not missing_h2 and blog_fences >= original_fences else 'REVIEW REQUIRED'}
+"""
+
+
+def main() -> None:
+    original_text = SOURCE.read_text(encoding="utf-8")
+    preamble, parts, chapters = parse_source(original_text)
+    expected = set(CHAPTER_META)
+    actual = {c.key for c in chapters}
+    if expected != actual:
+        raise SystemExit(f"Chapter metadata mismatch: missing={actual-expected}, extra={expected-actual}")
+    manifest = make_manifest(parts, chapters)
+    MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    blog_md = build_markdown(preamble, parts, chapters, manifest)
+    OUT_MD.write_text(blog_md, encoding="utf-8")
+    build_site(preamble, parts, chapters, manifest)
+    COVERAGE_PATH.write_text(build_coverage(original_text, blog_md, chapters, manifest), encoding="utf-8")
+    print(json.dumps({
+        "markdown": str(OUT_MD),
+        "site": str(SITE),
+        "chapters": len(chapters),
+        "images": len(manifest["images"]),
+    }, ensure_ascii=False, indent=2))
+
+if __name__ == "__main__":
+    main()

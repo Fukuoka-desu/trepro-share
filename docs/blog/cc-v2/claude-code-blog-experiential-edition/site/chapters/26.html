@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第26章　Managed Policy、Security、Observability — ブログ版</title><meta name="description" content="組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-26">Managed Policy、Security、Observability</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-26">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-26">
+  <header class="chapter-head">
+    <div class="eyebrow">第26章</div>
+    <h1>Managed Policy、Security、Observability</h1>
+  </header>
+  <section aria-labelledby="story-26">
+    <h2 id="story-26">物語の現在地</h2>
+    <div class="scene">『CLAUDE.mdに削除禁止と書いたから安全』という説明に、美咲は首を振ります。攻撃や誤操作が起きたとき、文書を無視しても止まる仕組みが必要です。Managed Policyと観測性が、組織の最後の防波堤になります。</div>
+    <div class="story-essay"><p>Threat Modelでは、秘密漏えい、危険コマンド、Prompt Injection、誤配布、設定改変、Supply Chainを想定します。Managed SettingsとManaged MCPで組織Policyを固定し、HookのBlock Eventを構造化ログへ残します。</p><p>安全指標はBlock件数だけではありません。誤検知率、更新成功率、Skill失敗率、Incident、Cost、復旧時間を測ります。Retentionと権限を決め、Incident時の隔離、Rollback、通知、振り返りをRunbook化します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-26">
+  <img src="../images/chapter-26-4b1ba3.webp" alt="第26章『Managed Policy、Security、Observability』を表すsecurity operations illustration" loading="lazy" decoding="async">
+  <figcaption>組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第26章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> security operations illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: security operations illustration.
+Scene and concept: An enterprise security operations room with managed policy, guarded tool access, structured event logs, metrics, and incident rollback controls.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-26-s1">26.1 Threat Model</h2>
+<table>
+<thead>
+<tr>
+<th>脅威</th>
+<th>例</th>
+<th>対策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>誤操作</td>
+<td>rm/force push</td>
+<td>deny、Hook、Git、Sandbox</td>
+</tr>
+<tr>
+<td>Secret漏えい</td>
+<td>env読取/外部送信</td>
+<td>denyRead、Network制限、Scan</td>
+</tr>
+<tr>
+<td>Injection</td>
+<td>Web/Issue命令</td>
+<td>Untrusted扱い、Write分離</td>
+</tr>
+<tr>
+<td>Supply chain</td>
+<td>悪性Plugin/MCP</td>
+<td>Marketplace Allowlist、Review</td>
+</tr>
+<tr>
+<td>設定改変</td>
+<td>Safety解除</td>
+<td>Managed Settings、ConfigChange</td>
+</tr>
+<tr>
+<td>過剰自律</td>
+<td>Goal無限</td>
+<td>Budget、Timeout、Kill</td>
+</tr>
+<tr>
+<td>古い配布</td>
+<td>端末差</td>
+<td>Version Inventory</td>
+</tr>
+<tr>
+<td>過収集</td>
+<td>Log人物評価</td>
+<td>Opt-in、Minimize、Retention</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-26-s2">26.2 Managed Settings例</h2>
+<pre><code class="language-json">{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "plan",
+    "disableBypassPermissionsMode": "disable",
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(//Users/*/.ssh/**)",
+      "Read(//Users/*/.aws/**)",
+      "Bash(rm -rf *)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(gh pr merge *)",
+      "Bash(gcloud run deploy *)",
+      "Bash(terraform apply *)"
+    ],
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(npm run lint *)",
+      "Bash(npm run test *)",
+      "Bash(npm run typecheck *)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "autoAllowBashIfSandboxed": false,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyRead": ["~/.ssh", "~/.aws", "~/.config/gcloud", "~/.kube"],
+      "denyWrite": ["/etc", "/usr/local/bin"],
+      "allowManagedReadPathsOnly": true
+    },
+    "network": {
+      "allowedDomains": ["github.com", "api.github.com", "registry.npmjs.org", "claude.ai"],
+      "deniedDomains": [],
+      "allowManagedDomainsOnly": true
+    }
+  },
+  "allowManagedPermissionRulesOnly": true,
+  "allowManagedMcpServersOnly": true,
+  "allowedMcpServers": [
+    {"serverName": "github"},
+    {"serverName": "trepro-docs"}
+  ],
+  "deniedMcpServers": [
+    {"serverName": "filesystem-unrestricted"}
+  ],
+  "strictPluginOnlyCustomization": ["hooks", "mcp"],
+  "cleanupPeriodDays": 20,
+  "companyAnnouncements": [
+    "本番変更・外部送信・削除は必ず人間承認を取得してください。"
+  ]
+}
+</code></pre>
+<p>注意：</p>
+<ul>
+<li><code>allowManagedPermissionRulesOnly</code>はProject独自Ruleも止める。</li>
+<li>Hooks/MCPをStrictにするならManaged領域またはForce-enabled Pluginへ移す。</li>
+<li><code>allowManagedHooksOnly</code>は現行User配布Hookと両立しない。Plugin化後に有効化。</li>
+<li>Network DomainをCanaryで洗い出す。</li>
+</ul>
+<h2 id="ch-26-s3">26.3 Drop-in</h2>
+<pre><code class="language-text">/Library/Application Support/ClaudeCode/
+├── managed-settings.json
+├── managed-settings.d/
+│   ├── 10-security.json
+│   ├── 20-telemetry.json
+│   └── 30-department-mm.json
+└── managed-mcp.json
+</code></pre>
+<h2 id="ch-26-s4">26.4 Managed MCP</h2>
+<pre><code class="language-json">{
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "trepro-docs": {
+      "type": "stdio",
+      "command": "/usr/local/bin/trepro-docs-mcp",
+      "args": ["--mode", "read-only"],
+      "env": {"TREPRO_DOCS_TOKEN": "${TREPRO_DOCS_TOKEN}"}
+    }
+  }
+}
+</code></pre>
+<p>FileへSecret直書き禁止。MCP無効化：</p>
+<pre><code class="language-json">{"mcpServers": {}}
+</code></pre>
+<pre><code class="language-bash">claude mcp list
+claude mcp add --transport http test https://example.com/mcp
+</code></pre>
+<p>固定管理が有効なら追加は拒否される。</p>
+<h2 id="ch-26-s5">26.5 Hook Block Event</h2>
+<pre><code class="language-json">{
+  "timestamp": "2026-06-22T10:15:00+09:00",
+  "device_id": "hashed-device-id",
+  "harness_version": "1.8.2",
+  "hook": "pre-bash-guard",
+  "rule_id": "BLOCK_FORCE_PUSH",
+  "action": "blocked",
+  "command_hash": "sha256:...",
+  "project_class": "internal"
+}
+</code></pre>
+<p>Command全文や顧客名を中央へ送らない。</p>
+<h2 id="ch-26-s6">26.6 指標</h2>
+<ul>
+<li>Claude/Harness Version分布。</li>
+<li>Update成功率/遅延。</li>
+<li>Permission Prompt/Hook Block。</li>
+<li>Skill利用/失敗。</li>
+<li>MCP接続失敗。</li>
+<li>Goal/Workflow Timeout。</li>
+<li>Token/Cost概算。</li>
+</ul>
+<h2 id="ch-26-s7">26.7 Retention</h2>
+<pre><code class="language-text">Update Log 30日
+Hook Metadata 90日
+Command全文 原則収集なし
+Skill評価 Skill存続中+1年
+Incident 法務/Security Policy
+</code></pre>
+<h2 id="ch-26-s8">26.8 Incident</h2>
+<pre><code class="language-text">1 端末/Project/Version特定
+2 Update停止
+3 Layer切分け
+4 Credential失効
+5 外部副作用確認
+6 Rollback
+7 Canary修正
+8 Root Cause/再発防止
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SEV1</td>
+<td>Secret漏えい、本番破壊、全社停止</td>
+</tr>
+<tr>
+<td>SEV2</td>
+<td>複数端末阻害、誤配布</td>
+</tr>
+<tr>
+<td>SEV3</td>
+<td>Skill品質低下</td>
+</tr>
+<tr>
+<td>SEV4</td>
+<td>軽微文言/UI</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ch-26-s9">26.9 KPI</h2>
+<table>
+<thead>
+<tr>
+<th>区分</th>
+<th>指標</th>
+<th>目標例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配布</td>
+<td>Kit時間</td>
+<td>30分以内</td>
+</tr>
+<tr>
+<td>配布</td>
+<td>Stable反映</td>
+<td>24h以内</td>
+</tr>
+<tr>
+<td>信頼性</td>
+<td>Update成功</td>
+<td>99%+</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>Critical Incident</td>
+<td>0</td>
+</tr>
+<tr>
+<td>品質</td>
+<td>Stable Skill</td>
+<td>85+</td>
+</tr>
+<tr>
+<td>品質</td>
+<td>Skill失敗</td>
+<td>&lt;5%</td>
+</tr>
+<tr>
+<td>Adoption</td>
+<td>Active社員</td>
+<td>80%+</td>
+</tr>
+<tr>
+<td>効率</td>
+<td>業務時間削減</td>
+<td>業務別実測</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>1成果物Cost</td>
+<td>基準内</td>
+</tr>
+</tbody>
+</table>
+<p>Block件数だけでなく誤検知率を測る。</p>
+<hr/>
+
+  </section>
+  <section class="reference"><h2>補助図の制作指示</h2>
+<figure class="image-shell" data-image-id="diagram-ch26-threat-model">
+  <img src="../images/diagram-ch26-threat-model.webp" alt="主要Threatに対する予防、検知、復旧の三層" loading="lazy" decoding="async">
+  <figcaption>事故をゼロと仮定せず、予防・検知・復旧を重ねます。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第26章26.1の直後。Threatと予防・検知・復旧。</p>
+    <p><strong>種類:</strong> threat model background</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: threat model background.
+Scene and concept: A defensive architecture background showing threats entering from secrets, commands, external content, configuration changes, and supply chain, each met by prevention, detection, and recovery controls, no text.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+</section>
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 自組織のThreat Modelを五項目書き、各項目を予防・検知・復旧の三列へ割り当ててください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="25.html">← Skill Governance</a><a href="27.html">OnboardingとRunbook →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>

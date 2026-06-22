@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第14章　HooksとPlugins — ブログ版</title><meta name="description" content="絶対に守らせたいことは文章ではなく、HookとPolicyで実行時に強制します。">
+<link rel="stylesheet" href="../assets/styles.css">
+</head><body><div class="progress" aria-hidden="true"><span></span></div>
+<header class="site-header"><div class="inner"><a class="brand" href="../index.html">Claude Code 教科書・ブログ版</a><nav><a href="../index.html">目次</a><a href="../complete.html">全章一括</a><a href="../image-pipeline.html">画像実装</a></nav></div></header>
+<div class="layout"><aside class="toc"><h2>この章</h2><a href="#chapter-14">HooksとPlugins</a><a href="../index.html">全体目次</a><a href="../complete.html#chapter-14">一括版で開く</a></aside><main class="content">
+<article class="chapter" id="chapter-14">
+  <header class="chapter-head">
+    <div class="eyebrow">第14章</div>
+    <h1>HooksとPlugins</h1>
+  </header>
+  <section aria-labelledby="story-14">
+    <h2 id="story-14">物語の現在地</h2>
+    <div class="scene">安全ルールを文書に書いても、忙しい日に見落とされることがあります。美咲は、危険なコマンドの直前で止め、編集後に型チェックを走らせ、終了時に保存を促す仕組みを作ります。注意を、決定的な動作へ変える章です。</div>
+    <div class="story-essay"><p>HooksはAIへ『気をつけて』と頼む代わりに、特定イベントで必ず処理を実行します。PreToolUseで危険操作を拒否し、PostToolUseで検証し、SessionStartで必要な文脈を注入します。/goalの停止判定にもHookの考え方が使われます。</p><p>Hook自体もコードであり、入力検証、Timeout、ログ、失敗時の扱い、単体テストが必要です。PluginはSkillsやHooksなどの配布単位として扱い、導入範囲を管理します。</p></div>
+  </section>
+  
+<figure class="image-shell" data-image-id="chapter-14">
+  <img src="../images/chapter-14-122810.webp" alt="第14章『HooksとPlugins』を表すisometric quality-control illustration" loading="lazy" decoding="async">
+  <figcaption>絶対に守らせたいことは文章ではなく、HookとPolicyで実行時に強制します。</figcaption>
+  <details class="image-brief">
+    <summary>この画像の制作指示を見る</summary>
+    <p><strong>配置:</strong> 第14章の物語導入と技術解説の間。内容の感覚的な理解を助ける。</p>
+    <p><strong>種類:</strong> isometric quality-control illustration</p>
+    <p><strong>設定:</strong> 1536x1024 / medium / webp</p>
+    <pre>Sophisticated Japanese editorial technology illustration for a long-form educational blog. Visual language: midnight navy, warm ivory, cobalt blue, and restrained amber accents; fine paper grain, subtle depth, clean geometric composition, calm cinematic lighting, credible Japanese office workers, professional and human rather than futuristic spectacle. Do not include company logos, product logos, copyrighted characters, photorealistic screenshots, readable text, watermarks, or decorative gibberish. Important labels will be overlaid in HTML. Leave intentional negative space for a heading and caption.
+
+Asset type: isometric quality-control illustration.
+Scene and concept: A software factory with deterministic quality gates before commands, after edits, at session start, and at completion.
+Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial relationships. Keep the image meaningful without embedded words; reserve text for HTML overlays.</pre>
+  </details>
+</figure>
+
+  <section class="reference" aria-label="実装リファレンス">
+    <h2>実装リファレンス</h2>
+    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
+    <h2 id="ch-14-s1">14.1 Hookは決定的な制御</h2>
+<p>代表Event：</p>
+<pre><code class="language-text">SessionStart
+PreToolUse
+PostToolUse
+Stop
+SessionEnd
+ConfigChange
+</code></pre>
+<p>用途：</p>
+<ul>
+<li>危険Command拒否。</li>
+<li>Edit後のTypecheck。</li>
+<li>Session開始時の公開可能Context注入。</li>
+<li>Goal未達時の継続。</li>
+<li>設定改変の監査。</li>
+</ul>
+<h2 id="ch-14-s2">14.2 PreToolUse Guard</h2>
+<p><code>global-config/hooks/pre-bash-guard.sh</code>：</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+
+payload="$(cat)"
+command="$(printf '%s' "$payload" | jq -r '.tool_input.command // empty')"
+
+block() {
+  jq -n --arg reason "$1" '{
+    hookSpecificOutput: {
+      hookEventName: "PreToolUse",
+      permissionDecision: "deny",
+      permissionDecisionReason: $reason
+    }
+  }'
+  exit 0
+}
+
+[[ -n "$command" ]] || exit 0
+
+if [[ "$command" =~ (^|[[:space:];|&amp;])rm[[:space:]]+-rf([[:space:]]|$) ]]; then
+  block "Recursive force deletion is blocked. Produce a dry-run manifest and request approval."
+fi
+
+if [[ "$command" =~ git[[:space:]]+push.*(--force|-f)([[:space:]]|$) ]]; then
+  block "Force push is blocked by TrePro policy."
+fi
+
+if [[ "$command" =~ git[[:space:]]+reset[[:space:]]+--hard ]]; then
+  block "Hard reset is blocked. Use a reversible branch or request approval."
+fi
+
+exit 0
+</code></pre>
+<p>Hook Input SchemaはVersionで変わる可能性があるため、実機Fixtureで確認する。</p>
+<h2 id="ch-14-s3">14.3 PostToolUse Validation</h2>
+<p><code>global-config/hooks/post-edit-validate.sh</code>：</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+payload="$(cat)"
+file="$(printf '%s' "$payload" | jq -r '.tool_input.file_path // empty')"
+[[ -n "$file" ]] || exit 0
+
+root="${CLAUDE_PROJECT_DIR:-$PWD}"
+case "$file" in
+  *.ts|*.tsx)
+    if [[ -f "$root/package.json" ]]; then
+      cd "$root"
+      if npm run -s typecheck &gt;/tmp/trepro-typecheck.log 2&gt;&amp;1; then
+        exit 0
+      fi
+      summary="$(tail -n 30 /tmp/trepro-typecheck.log)"
+      jq -n --arg context "Typecheck failed after editing $file:\n$summary" '{
+        hookSpecificOutput: {
+          hookEventName: "PostToolUse",
+          additionalContext: $context
+        }
+      }'
+    fi
+    ;;
+esac
+</code></pre>
+<p>重いCheckを毎Editで実行しすぎない。Debounce、対象Path、Timeoutを入れる。</p>
+<h2 id="ch-14-s4">14.4 SessionStart</h2>
+<p>顧客Pathを判定し、公開可能なRunbookの場所だけを注入する。秘密値をHook出力へ埋め込まない。</p>
+<pre><code class="language-bash">case "$PWD" in
+  */clients/acme/*)
+    echo "Client context: ACME. Read docs/clients/acme/public-runbook.md. Never access production credentials."
+    ;;
+esac
+</code></pre>
+<h2 id="ch-14-s5">14.5 Stop Hookと<code>/goal</code></h2>
+<pre><code class="language-text">/goal 次を満たすまで継続。ただし最大20ターン:
+- npm test成功
+- npm run typecheck成功
+- npm run build成功
+- READMEに起動手順
+</code></pre>
+<p>上限と失敗Reportを必ず入れる。</p>
+<h2 id="ch-14-s6">14.6 Hook Security</h2>
+<pre><code class="language-text">- stdinを信頼しない
+- Shell変数をQuote
+- Path Traversalを拒否
+- 絶対PathまたはCLAUDE_PROJECT_DIR
+- Secrets/.gitを除外
+- Timeout
+- Safe failure
+- Fixture Test
+- 変更をReview/署名配布
+</code></pre>
+<h2 id="ch-14-s7">14.7 Hook Test</h2>
+<pre><code class="language-text">正常Command → 許可
+rm -rf → 拒否
+force push → 拒否
+文字列中の単なるrm → 誤検知しない
+空Input → Errorにしない
+壊れたJSON → 安全側
+</code></pre>
+<h2 id="ch-14-s8">14.8 Plugins</h2>
+<p>PluginはSkills、Agents、Hooks、MCP等を配布単位にまとめる。</p>
+<table>
+<thead>
+<tr>
+<th>状況</th>
+<th>選択</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Skillだけ</td>
+<td>Skill単体</td>
+</tr>
+<tr>
+<td>Skill + Agent + Hook</td>
+<td>Plugin</td>
+</tr>
+<tr>
+<td>全社標準</td>
+<td>管理Marketplace / Force-enabled Plugin</td>
+</tr>
+<tr>
+<td>顧客固有</td>
+<td>顧客別PluginまたはProject設定</td>
+</tr>
+</tbody>
+</table>
+<p>提供元、実行Code、MCP、更新方式、RollbackをReviewする。</p>
+<hr/>
+
+  </section>
+  
+  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 危険な削除コマンドを拒否する最小PreToolUse Hookを作り、安全な入力と危険な入力のFixtureでテストしてください。</p></section>
+  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>絶対に守らせたいことは文章ではなく、HookとPolicyで実行時に強制します。</p></section>
+</article>
+<nav class="chapter-nav"><a href="13.html">← Subagents、Agent View、並列作業</a><a href="15.html">MCP、Connectors、APIを安全につなぐ →</a></nav></main></div>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<script src="../assets/app.js"></script>
+</body></html>
