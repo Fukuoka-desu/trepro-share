@@ -51,7 +51,12 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .part-usecase .pu-item p{margin:0;font-size:.92rem;line-height:1.72}
 .character-grid,.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 28px rgba(27,39,64,.06)}.card h3{margin:.1em 0}.card p{color:var(--muted)}.chapter-nav{display:flex;justify-content:space-between;gap:16px;margin-top:34px}.chapter-nav a{flex:1;background:white;border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none}.chapter-nav a:last-child{text-align:right}
 .site-footer{background:#111b31;color:#ced7ea;padding:36px 24px}.site-footer .inner{max-width:1200px;margin:auto}.source-note{font-size:.86rem;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;padding-top:20px}
-@media(min-width:1281px){.layout{grid-template-columns:var(--toc-w) minmax(0,1fr)}}
+@media(min-width:1281px){
+  body{padding-left:calc(var(--toc-w) + 48px)}
+  .toc{position:fixed;top:78px;left:24px;width:var(--toc-w);max-height:calc(100vh - 100px);align-self:auto}
+  .layout{display:block;padding:20px 24px 80px;max-width:calc(var(--max) - var(--toc-w) - 48px)}
+  .site-header .inner,.hero,.site-footer .inner{max-width:calc(var(--max) - var(--toc-w) - 48px)}
+}
 @media(max-width:1280px) and (min-width:981px){.layout{grid-template-columns:260px minmax(0,1fr);gap:30px}}
 @media(max-width:980px){
   .hero-grid{grid-template-columns:1fr;gap:18px}
@@ -78,11 +83,11 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 </div></section>
 <section class="hero"><h2>登場人物</h2><div class="character-grid"><article class="card"><div class="eyebrow">営業企画・非エンジニア</div><h3>遥（はるか）</h3><p>Cursorで既存のスライド生成Skillは使えるものの、内部で何が起きているかを0から理解し直したい学習者。</p></article><article class="card"><div class="eyebrow">アプリケーション開発者</div><h3>蓮（れん）</h3><p>速く作ることより、再現性・テスト・Git・レビューを重視する実装担当。</p></article><article class="card"><div class="eyebrow">AI推進・情シス</div><h3>美咲（みさき）</h3><p>個人の成功を全社員へ安全に配布し、更新・監査・ロールバックまで運用する管理者。</p></article><article class="card"><div class="eyebrow">対話型学習アシスタント</div><h3>ナビゲーター</h3><p>答えだけを渡さず、次の一操作、確認すべき証拠、保存地点を示しながら伴走する。</p></article></div></section>
 <section class="hero"><div class="chapter"><header class="chapter-head"><div class="eyebrow">Before you start</div><h1>原典から引き継ぐ前提</h1></header><div class="reference"><blockquote>
-<p><strong>版</strong>: v1.0<br/>
+<p><strong>版</strong>: v1.0<br>
 <strong>基準日</strong>: 2026-06-22<br/>
 <strong>対象</strong>: 非エンジニア、開発者、AI推進担当、情シス、ハーネス管理者<br/>
 <strong>用途</strong>: 自習、社内研修、オンボーディング、実務リファレンス、将来の学習アプリ原稿<br/>
-<strong>編集方針</strong>: 10本の動画文字起こしを重複統合し、トレプロハーネス要件と現行の公式仕様で補正した実装中心の教科書</p>
+<strong>編集方針</strong>: 10本の動画文字起こしを重複統合し、トレプロハーネス要件と現行の公式仕様で補正した実装中心の教科書</br></p>
 </blockquote>
 <hr/>
 <h2 id="preface-s1">最初に読む結論</h2>
