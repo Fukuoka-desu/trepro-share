@@ -41,7 +41,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <pre><code class="language-text">要件 → Wireframe → Prototype → Design System → 実装 → 視覚/Accessibility検証
 </code></pre>
 <p>Wireframeでは装飾より、情報の順序とActionを決める。</p>
-<h2 id="ch-17-s2">17.2 Design SystemとProject</h2>
+<h2 id="ch-17-s2">17.2 Design SystemとProject</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。<br/><span class="feature-intro-io"><strong>入力:</strong> ブランドカラー、フォント、共通余白ルール　<strong>出力:</strong> 再利用可能なDesign System Projectと参照Path</span></p>
 <table>
 <thead>
 <tr>
@@ -76,7 +76,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 ├── assets/
 └── examples/
 </code></pre>
-<h2 id="ch-17-s4">17.4 標準Flow</h2>
+<h2 id="ch-17-s4">17.4 標準Flow</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。<br/><span class="feature-intro-io"><strong>入力:</strong> ラフ案、要件、対象ユーザー　<strong>出力:</strong> 段階別の決定記録と実装ドラフト</span></p>
 <ol>
 <li>Wireframe作成。</li>
 <li>情報の欠落・重複・順序Review。</li>
@@ -88,7 +88,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>汎用ComponentをDesign Systemへ戻す。</li>
 </ol>
 <p>現行の <code>/design</code> と <code>/design-sync</code> を <code>/help</code> と公式情報で確認する。</p>
-<h2 id="ch-17-s5">17.5 Codeへ渡すPrompt</h2>
+<h2 id="ch-17-s5">17.5 Codeへ渡すPrompt</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> Designでの確定事項、参照コンポーネント　<strong>出力:</strong> 実装プロンプトとSync用ルール</span></p>
 <pre><code class="language-text">Designを写経せず、まず次を含む実装計画を作る。
 - 画面/Component対応
 - Token/CSS変数
@@ -99,7 +99,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Acceptance Test
 承認前に変更しない。
 </code></pre>
-<h2 id="ch-17-s6">17.6 Sync Rule</h2>
+<h2 id="ch-17-s6">17.6 Sync Rule</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> Designでの確定事項、参照コンポーネント　<strong>出力:</strong> 実装プロンプトとSync用ルール</span></p>
 <ul>
 <li>Token/共通ComponentはGit側を正本。</li>
 <li>Designで探索し、採用変更だけCodeへ。</li>
@@ -107,7 +107,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Sync前後にDiff保存。</li>
 <li>Beta変換に備えGit Commit。</li>
 </ul>
-<h2 id="ch-17-s7">17.7 公開前</h2>
+<h2 id="ch-17-s7">17.7 公開前</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みページ、公開予定　<strong>出力:</strong> 5項目のチェック結果と公開可否判定</span></p>
 <pre><code class="language-text">[ ] 全遷移
 [ ] 未実装Buttonの明示
 [ ] Responsive

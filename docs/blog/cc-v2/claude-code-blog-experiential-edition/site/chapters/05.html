@@ -82,12 +82,12 @@ Evidence   何を証拠として出すか
 外部API、認証、DBは対象外。
 Sample Dataで起動し、Test/Build成功を完了条件とする。
 </code></pre>
-<h2 id="ch-05-s4">5.4 Claudeに質問させる</h2>
+<h2 id="ch-05-s4">5.4 Claudeに質問させる</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>未知の要件は実装前にAIから質問を引き出す指示パターン。沈黙のまま暴走させない安全弁。<br/><span class="feature-intro-io"><strong>入力:</strong> やや曖昧な依頼、判断に迷う設計分岐　<strong>出力:</strong> Claudeからの質問リストと、それへの回答記録</span></p>
 <pre><code class="language-text">実装前に、不足情報を最大5問まで質問してください。
 選択肢を提示し、各選択肢が工数・Riskへ与える影響を短く説明してください。
 </code></pre>
 <p>質問に答えられない場合は、仮定を明示して最小版を選ぶ。</p>
-<h2 id="ch-05-s5">5.5 完了報告の型</h2>
+<h2 id="ch-05-s5">5.5 完了報告の型</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>『完成しました』を変更したもの・検証したこと・残っているリスクの3区分に分けて確認可能な証拠に変える報告書式。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装が終わった作業、テスト結果　<strong>出力:</strong> 3区分で構造化された完了報告とリスクリスト</span></p>
 <pre><code class="language-text">1. 結果
 2. 変更File
 3. 実行したCheckとExit Status

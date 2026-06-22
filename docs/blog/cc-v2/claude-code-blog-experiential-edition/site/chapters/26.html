@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-26-s1">26.1 Threat Model</h2>
+    <h2 id="ch-26-s1">26.1 Threat Model</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>秘密漏えい・危険コマンド・Prompt Injection・誤配布・設定改変・Supply Chainを想定脅威として並べる出発点。<br/><span class="feature-intro-io"><strong>入力:</strong> 組織の運用構造、扱うデータ　<strong>出力:</strong> 6脅威それぞれの予防/検知/復旧マトリクス</span></p>
 <table>
 <thead>
 <tr>
@@ -167,7 +167,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 │   └── 30-department-mm.json
 └── managed-mcp.json
 </code></pre>
-<h2 id="ch-26-s4">26.4 Managed MCP</h2>
+<h2 id="ch-26-s4">26.4 Managed MCP</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>個人端末で改変できない組織Policyを固定し、文書ではなく実行時の強制で安全を成立させる仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 強制したい設定、許可するMCP　<strong>出力:</strong> Managed Settings/MCP定義ファイル</span></p>
 <pre><code class="language-json">{
   "mcpServers": {
     "github": {
@@ -190,7 +190,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 claude mcp add --transport http test https://example.com/mcp
 </code></pre>
 <p>固定管理が有効なら追加は拒否される。</p>
-<h2 id="ch-26-s5">26.5 Hook Block Event</h2>
+<h2 id="ch-26-s5">26.5 Hook Block Event</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>HookのBlock判定を構造化ログへ落とし、誰がいつ何を止めたかを追跡可能にする観測機構。<br/><span class="feature-intro-io"><strong>入力:</strong> Hookブロック発生、対象操作　<strong>出力:</strong> 構造化ログとブロック傾向の集計</span></p>
 <pre><code class="language-json">{
   "timestamp": "2026-06-22T10:15:00+09:00",
   "device_id": "hashed-device-id",
@@ -203,7 +203,7 @@ claude mcp add --transport http test https://example.com/mcp
 }
 </code></pre>
 <p>Command全文や顧客名を中央へ送らない。</p>
-<h2 id="ch-26-s6">26.6 指標</h2>
+<h2 id="ch-26-s6">26.6 指標</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Block件数だけでなく誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を測る安全KPI。<br/><span class="feature-intro-io"><strong>入力:</strong> 運用ログ群　<strong>出力:</strong> ダッシュボード化された安全指標</span></p>
 <ul>
 <li>Claude/Harness Version分布。</li>
 <li>Update成功率/遅延。</li>
@@ -213,14 +213,14 @@ claude mcp add --transport http test https://example.com/mcp
 <li>Goal/Workflow Timeout。</li>
 <li>Token/Cost概算。</li>
 </ul>
-<h2 id="ch-26-s7">26.7 Retention</h2>
+<h2 id="ch-26-s7">26.7 Retention</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>ログの保持期間と閲覧権限を決める方針。長すぎる保持と広すぎる閲覧の両方を避ける。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うログ種別、コンプラ要件　<strong>出力:</strong> 保持期間/閲覧権限マトリクス</span></p>
 <pre><code class="language-text">Update Log 30日
 Hook Metadata 90日
 Command全文 原則収集なし
 Skill評価 Skill存続中+1年
 Incident 法務/Security Policy
 </code></pre>
-<h2 id="ch-26-s8">26.8 Incident</h2>
+<h2 id="ch-26-s8">26.8 Incident</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>事故発生時の隔離・Rollback・通知・振り返りを標準化するRunbook。属人化させず素早く復旧する。<br/><span class="feature-intro-io"><strong>入力:</strong> 発生したインシデント、影響範囲　<strong>出力:</strong> Runbook手順、復旧ログ、振り返り記録</span></p>
 <pre><code class="language-text">1 端末/Project/Version特定
 2 Update停止
 3 Layer切分け
@@ -256,7 +256,7 @@ Incident 法務/Security Policy
 </tr>
 </tbody>
 </table>
-<h2 id="ch-26-s9">26.9 KPI</h2>
+<h2 id="ch-26-s9">26.9 KPI</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Block件数だけでなく誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を測る安全KPI。<br/><span class="feature-intro-io"><strong>入力:</strong> 運用ログ群　<strong>出力:</strong> ダッシュボード化された安全指標</span></p>
 <table>
 <thead>
 <tr>

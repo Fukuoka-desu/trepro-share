@@ -103,7 +103,7 @@ acquire_lock() {
 
 network_ok() { curl -fsSIL --max-time 10 https://github.com &gt;/dev/null 2&gt;&amp;1; }
 </code></pre>
-<h2 id="ch-24-s4">24.4 Convergent Sync</h2>
+<h2 id="ch-24-s4">24.4 Convergent Sync</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>前回Manifestと今回正本を比較し、追加・変更・削除を最終状態へ収束させる同期処理。<br/><span class="feature-intro-io"><strong>入力:</strong> Manifest差分、現端末状態　<strong>出力:</strong> 収束済み最新状態と差分ログ</span></p>
 <pre><code class="language-text">Current Manifest = 今回配るPath
 Previous Manifest = 前回配ったPath
 Delete = Previous - Current
@@ -166,14 +166,14 @@ if (( ! DRY_RUN )); then
 fi
 </code></pre>
 <p>Hookへ<code>0755</code>を設定し、<code>.agents/skills</code> Merge、Hash、Overlayを追加する。</p>
-<h2 id="ch-24-s5">24.5 Skill Merge</h2>
+<h2 id="ch-24-s5">24.5 Skill Merge</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。<br/><span class="feature-intro-io"><strong>入力:</strong> 更新対象Skill群、個人Layerパス　<strong>出力:</strong> 個人保護つき更新完了ログ</span></p>
 <p>移行中：</p>
 <pre><code class="language-text">.agents/skills → temp
 then global-config/skills overwrites
 → validate → Claude/Codexへ配布
 </code></pre>
 <p>長期は<code>skill-src</code>から両方生成。衝突を黙って上書きしない。</p>
-<h2 id="ch-24-s6">24.6 <code>update.sh</code></h2>
+<h2 id="ch-24-s6">24.6 <code>update.sh</code></h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。<br/><span class="feature-intro-io"><strong>入力:</strong> 更新対象Skill群、個人Layerパス　<strong>出力:</strong> 個人保護つき更新完了ログ</span></p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 ROOT="${HARNESS_ROOT:-$HOME/.local/share/trepro-harness}"
@@ -196,7 +196,7 @@ git checkout --detach "$ref"
 "$ROOT/deploy/verify.sh" --quiet
 </code></pre>
 <p>本番は署名Tag、許可Version、失敗Rollbackを追加。</p>
-<h2 id="ch-24-s7">24.7 Verify</h2>
+<h2 id="ch-24-s7">24.7 Verify</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>配布直後に存在・Version・Hook動作を構造化チェックし、配布の成功を客観的に確認する検証層。<br/><span class="feature-intro-io"><strong>入力:</strong> 配布対象、想定Version　<strong>出力:</strong> Verify結果レポートと不一致リスト</span></p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 failures=0
@@ -212,7 +212,7 @@ check "managed" test -f "/Library/Application Support/ClaudeCode/managed-setting
 (( failures == 0 ))
 </code></pre>
 <p>代表Skill認識、Hook Fixture、Token非混入、Local保持、Dry-run、Claude/Codex Hashも検査する。</p>
-<h2 id="ch-24-s8">24.8 Rollback</h2>
+<h2 id="ch-24-s8">24.8 Rollback</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>署名済みの以前のReleaseへ一操作で戻せる仕組み。事故時の復旧時間を分単位に短縮する。<br/><span class="feature-intro-io"><strong>入力:</strong> 現在版、戻り先Releaseタグ　<strong>出力:</strong> Rollback実行ログと復旧後Verify</span></p>
 <pre><code class="language-bash">git rev-parse HEAD &gt; "$HOME/.claude/.trepro-harness-previous-version"
 # rollback
 previous="$(cat "$HOME/.claude/.trepro-harness-previous-version")"

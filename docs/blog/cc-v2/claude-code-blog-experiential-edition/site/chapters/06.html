@@ -92,7 +92,7 @@ Commit     良い状態を保存
 </tr>
 </tbody>
 </table>
-<h2 id="ch-06-s4">6.4 Plan</h2>
+<h2 id="ch-06-s4">6.4 Plan</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 仕様、現状のコード/ファイル　<strong>出力:</strong> 影響範囲・差分予定・前提条件を含むPlan</span></p>
 <p>Planで確認する項目：</p>
 <pre><code class="language-text">- 変更Fileと理由
 - 既存設計との整合
@@ -114,7 +114,7 @@ Commit     良い状態を保存
 <li>長時間Taskは途中成果物をFileへ保存する。</li>
 <li>同じFileを複数Agentが同時編集しない。</li>
 </ul>
-<h2 id="ch-06-s6">6.6 Verify</h2>
+<h2 id="ch-06-s6">6.6 Verify</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
 <pre><code class="language-text">Static: format, lint, typecheck, schema, secret scan
 Behavior: unit, integration, E2E, replay
 Visual: screenshot, responsive, PDF/print
@@ -125,12 +125,12 @@ Operations: logs, retry, timeout, rollback
 <pre><code class="language-text">完了条件ごとに、実行したCommand、Exit Code、出力要約、Artifact Pathを表で示してください。
 未実行は未実行と書いてください。
 </code></pre>
-<h2 id="ch-06-s7">6.7 Review</h2>
+<h2 id="ch-06-s7">6.7 Review</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
 <p>作ったSessionは自分の判断へ引っ張られる。新しいSessionまたはFresh Reviewerを使う。</p>
 <pre><code class="language-text">このDiffを、要件、Security、Data loss、Edge case、Test不足の観点で独立Reviewしてください。
 実装者の説明を鵜呑みにせず、FileとLineを根拠にしてください。
 </code></pre>
-<h2 id="ch-06-s8">6.8 Commit</h2>
+<h2 id="ch-06-s8">6.8 Commit</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
 <p>Commit前：</p>
 <pre><code class="language-bash">git status --short
 git diff --check

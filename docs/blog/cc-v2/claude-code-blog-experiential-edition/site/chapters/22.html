@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-22-s1">22.1 Source優先度</h2>
+    <h2 id="ch-22-s1">22.1 Source優先度</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>情報源の重みを序列化し、変動情報には確認日を付ける調査品質の土台。SNSの勢いと事実を分ける。<br/><span class="feature-intro-io"><strong>入力:</strong> 集めた情報源、それぞれの種別　<strong>出力:</strong> 重み付き情報源リストと確認日メタ</span></p>
 <pre><code class="language-text">1. 公式Document/Changelog/原論文/法令/一次Data
 2. 開発者・当事者発表
 3. 信頼できる専門媒体
@@ -45,12 +45,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 5. SNS/掲示板/Comment
 </code></pre>
 <p>SNSは発見と反応に使い、仕様確定に使わない。</p>
-<h2 id="ch-22-s2">22.2 Claim Ledger</h2>
+<h2 id="ch-22-s2">22.2 Claim Ledger</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>主張・根拠・日付・確度・反証を1行ずつ記録する追跡可能な台帳。後で『この数字の出所は？』に即答できる。<br/><span class="feature-intro-io"><strong>入力:</strong> レポート上の主張、対応する出典　<strong>出力:</strong> 5列構造のClaim Ledger</span></p>
 <pre><code class="language-csv">claim_id,claim,status,source_type,source_title,source_url,published_at,retrieved_at,evidence,notes
 C001,"Dynamic Workflows is available on paid plans",verified,official,"Dynamic workflows",...,2026-06-...,2026-06-22,"...","Check minimum version"
 </code></pre>
 <p>Status：<code>verified</code>、<code>supported</code>、<code>disputed</code>、<code>unverified</code>、<code>obsolete</code>。</p>
-<h2 id="ch-22-s3">22.3 Research Skill</h2>
+<h2 id="ch-22-s3">22.3 Research Skill</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>対象・期間・除外条件・評価軸を内蔵した調査Skill。テーマを渡すと出典付き調査結果を返す。<br/><span class="feature-intro-io"><strong>入力:</strong> 調査テーマ、期間、除外条件　<strong>出力:</strong> Research Skillによる出典付きレポート</span></p>
 <pre><code class="language-markdown">---
 name: source-grounded-research
 description: Research a current topic using primary sources, build a claim ledger, verify dates, and produce a cited report.
@@ -79,11 +79,11 @@ argument-hint: "&lt;question&gt;"
 - research/sources.json
 - research/open-questions.md
 </code></pre>
-<h2 id="ch-22-s4">22.4 動画/SNS統合</h2>
+<h2 id="ch-22-s4">22.4 動画/SNS統合</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>同じ内容を重複カウントせず、発言と事実を区別して統合する処理。SNS発の話題を業務情報に変える。<br/><span class="feature-intro-io"><strong>入力:</strong> 動画・SNS投稿の集合　<strong>出力:</strong> 重複統合済みの発言/事実分離レポート</span></p>
 <pre><code class="language-text">収集 → 完全文字起こし → 動画別Topic → 重複Cluster → Claim分解
 → 公式検証 → 原則/手順/例/注意へ再構成 → Coverage Matrix
 </code></pre>
-<h2 id="ch-22-s5">22.5 完了条件</h2>
+<h2 id="ch-22-s5">22.5 完了条件</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>未確認事項と次に検証すべき点を明示してレポートを閉じる完了基準。隠れた不確実性を残さない。<br/><span class="feature-intro-io"><strong>入力:</strong> 調査ドラフト　<strong>出力:</strong> 未確認事項リストと次の検証アクション</span></p>
 <pre><code class="language-text">[ ] 質問へ直接回答
 [ ] 重要Claimに根拠
 [ ] 現在/過去を分離

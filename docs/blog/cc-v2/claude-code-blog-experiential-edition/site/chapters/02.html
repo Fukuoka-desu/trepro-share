@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-02-s1">2.1 安全の基本式</h2>
+    <h2 id="ch-02-s1">2.1 安全の基本式</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>最小権限・隔離・戻せる履歴・検証・監査の5要素を重ね、失敗しても被害を限定する安全設計の土台。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うデータ、許可したい操作、起きうる失敗　<strong>出力:</strong> 5要素ごとに何で守るかをマッピングした安全表</span></p>
 <pre><code class="language-text">安全性 = 最小権限 × 隔離 × 可逆性 × 検証 × 監査
 </code></pre>
 <p>Claude Codeは優秀だが、初日の新人と同じく、Projectの暗黙知を知らない。最初から本番権限を渡さない。</p>

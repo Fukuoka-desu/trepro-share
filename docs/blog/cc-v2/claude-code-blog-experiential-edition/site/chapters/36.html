@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-36-s1">Week 1</h2>
+    <h2 id="ch-36-s1">Week 1</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>現有資産の棚卸しとPolicy策定。動かす前に正本と禁止事項を決める1週目の作業塊。<br/><span class="feature-intro-io"><strong>入力:</strong> 現状のSkill群・Hook群・運用ルール　<strong>出力:</strong> Inventory表、初期Policyドラフト</span></p>
 <pre><code class="language-text">- 本書Review
 - 46 Skill Inventory
 - Naming Migration
@@ -45,21 +45,21 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Bypass/Secret/Sandbox検証
 - Release Policy
 </code></pre>
-<h2 id="ch-36-s2">Week 2</h2>
+<h2 id="ch-36-s2">Week 2</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>正本Buildと評価Fixture整備を行う2週目。Canaryへ流す前に品質基準を満たす土台作り。<br/><span class="feature-intro-io"><strong>入力:</strong> 正本ソース、Fixture　<strong>出力:</strong> Buildパイプラインと初期テスト通過状態</span></p>
 <pre><code class="language-text">- skill-src正本化
 - build/validate
 - Hook Fixture
 - sync Dry-run/Delete/Preserve Test
 - verify/Rollback
 </code></pre>
-<h2 id="ch-36-s3">Week 3</h2>
+<h2 id="ch-36-s3">Week 3</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>限定範囲のCanary配布と新人Bronze研修を並走させる3週目。小さく失敗を発見する段階。<br/><span class="feature-intro-io"><strong>入力:</strong> Canary対象、研修対象社員　<strong>出力:</strong> Canary実績ログとBronze認定者リスト</span></p>
 <pre><code class="language-text">- 管理者+開発者Canary
 - Bronze研修
 - Meeting Assistant
 - 誤検知/Sandbox/Skill観測
 - 教材修正
 </code></pre>
-<h2 id="ch-36-s4">Week 4</h2>
+<h2 id="ch-36-s4">Week 4</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Pilot範囲拡大とStable Releaseを行う4週目。Exit条件とRollback条件を持って全社展開へ進む。<br/><span class="feature-intro-io"><strong>入力:</strong> Canary通過状態、Pilot対象部署　<strong>出力:</strong> Stable Releaseと配布完了レポート</span></p>
 <pre><code class="language-text">- Pilot部署
 - Incident/Help Desk
 - Version Dashboard
@@ -67,7 +67,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - 全社員研修
 - 月次Review
 </code></pre>
-<h2 id="ch-36-s5">30日後</h2>
+<h2 id="ch-36-s5">30日後</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>導入時間・更新率・認定完了・Rollback Drill・Critical Gap・Skill二重編集を測る経営報告用指標群。<br/><span class="feature-intro-io"><strong>入力:</strong> 30日後の運用ログ　<strong>出力:</strong> KPIダッシュボードと経営報告書ドラフト</span></p>
 <pre><code class="language-text">[ ] 新人30分
 [ ] Bronze完了
 [ ] Stable 95%が24h内更新

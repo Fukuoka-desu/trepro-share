@@ -43,7 +43,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <pre><code class="language-text">ultracode
 /workflows
 </code></pre>
-<h2 id="ch-21-s2">21.2 Research → Verify → Synthesize</h2>
+<h2 id="ch-21-s2">21.2 Research → Verify → Synthesize</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>情報源を探す・主張を検証する・矛盾と重複を整理して統合する三役分業の代表構成。<br/><span class="feature-intro-io"><strong>入力:</strong> 調査依頼、複数情報源　<strong>出力:</strong> 出典付き検証済み統合レポート</span></p>
 <pre><code class="language-text">Research: 公式、一次Data、反対意見
 Verify: 出典、Date、数値、矛盾
 Synthesize: 結論、根拠、影響、不確定、Action
@@ -54,7 +54,7 @@ Claude Code直近30日の主要変更を調査。
 SNSは反応のみ。最大8 Agent、25分。
 出力は research/claude-code-update/。
 </code></pre>
-<h2 id="ch-21-s3">21.3 Cost Control</h2>
+<h2 id="ch-21-s3">21.3 Cost Control</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Agent数・検索範囲・最大トークン・再試行回数を制限し、料金暴走を構造的に防ぐ運用設定。<br/><span class="feature-intro-io"><strong>入力:</strong> 想定予算、現状のAgent構成　<strong>出力:</strong> 上限つきCost設定とアラート閾値</span></p>
 <pre><code class="language-text">総入力 ≒ 共通知識量 × Agent数 + 固有入力
 </code></pre>
 <ul>
@@ -67,7 +67,7 @@ SNSは反応のみ。最大8 Agent、25分。
 </ul>
 <h2 id="ch-21-s4">21.4 Dynamicを使わない</h2>
 <p>小修正、正解が明確、頻繁な低Cost処理、単純要約、Write権限作業はSingle Agent/Skill/Scriptがよい。</p>
-<h2 id="ch-21-s5">21.5 手動Workflow</h2>
+<h2 id="ch-21-s5">21.5 手動Workflow</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>単純な仕事ではDynamicを使わず、手動の小さなWorkflowで済ませる判断軸。複雑度とコストを天秤にかける。<br/><span class="feature-intro-io"><strong>入力:</strong> タスク内容、必要な分業度合い　<strong>出力:</strong> Dynamic採用/手動採用の判定理由</span></p>
 <pre><code class="language-text">1. 3 Research Agentが公式/実例/失敗を分担。
 2. raw結果を別Fileへ保存。
 3. Fresh Reviewerがclaims.csvを作る。
@@ -75,7 +75,7 @@ SNSは反応のみ。最大8 Agent、25分。
 5. 別Reviewerが欠落と過剰断定を確認。
 最大6 Agent。Code変更禁止。
 </code></pre>
-<h2 id="ch-21-s6">21.6 Acceptance</h2>
+<h2 id="ch-21-s6">21.6 Acceptance</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>各段階の中間成果物を保存し、最終出力だけで判断しない受け入れ基準。再現と監査を可能にする。<br/><span class="feature-intro-io"><strong>入力:</strong> Workflow実行ログ、中間成果物　<strong>出力:</strong> 段階別保存ファイルとAcceptance結果</span></p>
 <pre><code class="language-text">[ ] Single AgentよりWorkflowが必要
 [ ] Agent/時間上限
 [ ] 入出力追跡

@@ -57,7 +57,7 @@ due_date, subtotal, tax, total, currency, extraction_confidence, review_note
 [ ] 元File Link
 [ ] 経理Human Review
 </code></pre>
-<h2 id="ch-28-s2">28.2 Folder整理</h2>
+<h2 id="ch-28-s2">28.2 Folder整理</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>元データを残し、移動先を明示し、結果一覧を出す可逆的な整理手順。削除ではなく分類から始める。<br/><span class="feature-intro-io"><strong>入力:</strong> 整理対象フォルダ、分類ルール　<strong>出力:</strong> 分類後フォルダと整理結果レポート</span></p>
 <pre><code class="language-text">Explore → organization-plan.csv → Human Review → Move
 → quarantine/YYYY-MM-DD → Retention → Delete Approval
 </code></pre>
@@ -66,9 +66,9 @@ category, reason, duplicate_group, riskを持つPlanを作る。
 Hidden、Package、Symlink、1GB超は対象外。
 </code></pre>
 <p>実行時は上書き禁止、移動前後のPath/HashをResultへ保存。</p>
-<h2 id="ch-28-s3">28.3 契約書論点</h2>
+<h2 id="ch-28-s3">28.3 契約書論点</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>法的結論ではなく、契約書から論点を抽出して人の判断に渡すワークフロー。AIに最終判断をさせない型。<br/><span class="feature-intro-io"><strong>入力:</strong> 契約書PDF、確認したい観点　<strong>出力:</strong> 論点一覧と人が判断すべき箇所のハイライト</span></p>
 <p>AIへ有効/無効を断定させず、条項、平易な説明、義務、金額/期限、曖昧点、専門家への質問を作る。最終判断は法務へ。</p>
-<h2 id="ch-28-s4">28.4 会議Assistant本番化</h2>
+<h2 id="ch-28-s4">28.4 会議Assistant本番化</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>第4章で作った会議アシスタントを実業務で運用するための例外対応・テンプレ整備・配布手順。<br/><span class="feature-intro-io"><strong>入力:</strong> 本番議事録依頼、社内テンプレ　<strong>出力:</strong> 実業務で回る会議AssistantとSkill群</span></p>
 <ul>
 <li>Meeting IDで冪等。</li>
 <li>Participant表記統一。</li>
@@ -93,7 +93,7 @@ Hidden、Package、Symlink、1GB超は対象外。
   "needs_confirmation": false
 }
 </code></pre>
-<h2 id="ch-28-s5">28.5 週報</h2>
+<h2 id="ch-28-s5">28.5 週報</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>会議データを連結し、週報・タスク・連絡文へ展開する定期業務化。書く時間ではなく見る時間に変える。<br/><span class="feature-intro-io"><strong>入力:</strong> 週内の会議メモ、タスクログ　<strong>出力:</strong> 週報Markdown/HTMLと未対応タスクリスト</span></p>
 <p>過去3件から形式だけを抽出し、今週の議事録/Taskから実績、数字、進行、Blocker、来週、支援依頼をDraft化。誇張せず、送信しない。</p>
 <hr/>
 

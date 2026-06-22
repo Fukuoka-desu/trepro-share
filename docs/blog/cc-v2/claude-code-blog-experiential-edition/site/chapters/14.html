@@ -54,7 +54,7 @@ ConfigChange
 <li>Goal未達時の継続。</li>
 <li>設定改変の監査。</li>
 </ul>
-<h2 id="ch-14-s2">14.2 PreToolUse Guard</h2>
+<h2 id="ch-14-s2">14.2 PreToolUse Guard</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>rm -rfや本番DB操作など、文章のお願いでは止められない操作を実行直前に拒否するHook。<br/><span class="feature-intro-io"><strong>入力:</strong> 実行されようとしたコマンド、対象Path　<strong>出力:</strong> ブロック判定とログ、許可された操作のみの実行</span></p>
 <p><code>global-config/hooks/pre-bash-guard.sh</code>：</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
@@ -90,7 +90,7 @@ fi
 exit 0
 </code></pre>
 <p>Hook Input SchemaはVersionで変わる可能性があるため、実機Fixtureで確認する。</p>
-<h2 id="ch-14-s3">14.3 PostToolUse Validation</h2>
+<h2 id="ch-14-s3">14.3 PostToolUse Validation</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Edit/Write直後にtsc・lint・テスト等を自動実行し、編集の瞬間にエラーを検出する検証Hook。<br/><span class="feature-intro-io"><strong>入力:</strong> 編集したファイル、プロジェクトの検証コマンド　<strong>出力:</strong> 検証結果、エラー時のブロックと修正指示</span></p>
 <p><code>global-config/hooks/post-edit-validate.sh</code>：</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
@@ -118,7 +118,7 @@ case "$file" in
 esac
 </code></pre>
 <p>重いCheckを毎Editで実行しすぎない。Debounce、対象Path、Timeoutを入れる。</p>
-<h2 id="ch-14-s4">14.4 SessionStart</h2>
+<h2 id="ch-14-s4">14.4 SessionStart</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>セッション開始時に必要な前提・ルール・現在地ファイルを自動注入し、毎回ゼロから説明させない仕掛け。<br/><span class="feature-intro-io"><strong>入力:</strong> セッション起動イベント、注入したい文脈ファイル　<strong>出力:</strong> 起動時自動ロードされた前提情報</span></p>
 <p>顧客Pathを判定し、公開可能なRunbookの場所だけを注入する。秘密値をHook出力へ埋め込まない。</p>
 <pre><code class="language-bash">case "$PWD" in
   */clients/acme/*)
@@ -145,7 +145,7 @@ esac
 - Fixture Test
 - 変更をReview/署名配布
 </code></pre>
-<h2 id="ch-14-s7">14.7 Hook Test</h2>
+<h2 id="ch-14-s7">14.7 Hook Test</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>安全な入力と危険な入力のFixtureで、Hook自体の動作を単体テストする仕組み。Hookコードの品質を担保する。<br/><span class="feature-intro-io"><strong>入力:</strong> 安全/危険のFixture、想定動作　<strong>出力:</strong> Fixture通過/拒否の検証結果</span></p>
 <pre><code class="language-text">正常Command → 許可
 rm -rf → 拒否
 force push → 拒否
@@ -153,7 +153,7 @@ force push → 拒否
 空Input → Errorにしない
 壊れたJSON → 安全側
 </code></pre>
-<h2 id="ch-14-s8">14.8 Plugins</h2>
+<h2 id="ch-14-s8">14.8 Plugins</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Skills・Hooks・設定をまとめて配布する束ね単位。導入範囲と更新を組織的に管理する。<br/><span class="feature-intro-io"><strong>入力:</strong> 配布したいSkill群、Hook群　<strong>出力:</strong> インストール可能なPluginパッケージ</span></p>
 <p>PluginはSkills、Agents、Hooks、MCP等を配布単位にまとめる。</p>
 <table>
 <thead>

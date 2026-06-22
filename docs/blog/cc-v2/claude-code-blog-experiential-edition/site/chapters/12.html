@@ -40,7 +40,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
     <h2 id="ch-12-s1">12.1 Skillとは</h2>
 <p>Skillは、特定Taskを実行するための知識、手順、出力契約、Reference、Script、Fixtureをまとめた再利用Packageである。</p>
 <p>Claude.mdが「この職場の基本方針」なら、Skillは「業務Manual」である。ただし、SkillもPrompt資産であり、Security強制はHook/Permissionへ置く。</p>
-<h2 id="ch-12-s2">12.2 Custom Commands</h2>
+<h2 id="ch-12-s2">12.2 Custom Commands</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill名候補、所有者、利用シーン　<strong>出力:</strong> lowercase-hyphenのCanonical Nameと所有Owner</span></p>
 <p>旧 <code>.claude/commands/</code> は互換目的で動く場合があるが、新規はSkillsへ統合する。Commands 13個を持つ現行Harnessは、次の順で移行する。</p>
 <ol>
 <li>呼び出し名と利用実績をInventory化。</li>
@@ -48,7 +48,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>UI操作だけの短いものは互換Wrapperを残す。</li>
 <li>90日後に旧CommandをDeprecate。</li>
 </ol>
-<h2 id="ch-12-s3">12.3 Canonical Name</h2>
+<h2 id="ch-12-s3">12.3 Canonical Name</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill名候補、所有者、利用シーン　<strong>出力:</strong> lowercase-hyphenのCanonical Nameと所有Owner</span></p>
 <p>Claude/Codex共通のAgent Skillsでは次を守る。</p>
 <pre><code class="language-text">- lowercase letters
 - digits
@@ -108,7 +108,7 @@ disable-model-invocation: true
 # References
 Read `references/...` only when [condition].
 </code></pre>
-<h2 id="ch-12-s5">12.5 Progressive Disclosure</h2>
+<h2 id="ch-12-s5">12.5 Progressive Disclosure</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>長文・コード例・FAQはreferencesへ逃がし、SKILL.md本体を短く保つ設計原則。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill関連の長文素材、コード例　<strong>出力:</strong> 短いSKILL.mdとreferences/配下の補助資料</span></p>
 <pre><code class="language-text">SKILL.md: 発動条件、主要Workflow、契約、安全、参照条件
 references/: 長いAPI仕様、例、部門Rule
 scripts/: 決定的処理
@@ -127,7 +127,7 @@ tests/: 回帰Test
 8. 利用実績で改善
 </code></pre>
 <p>会話中に「今の内容をそのままSkillにして」だけで全社配布しない。</p>
-<h2 id="ch-12-s7">12.7 4軸評価</h2>
+<h2 id="ch-12-s7">12.7 4軸評価</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Skillを4観点で採点し、合格点未満は本番配布しない品質ゲート。Generator/Evaluator分離の前段で使う。<br/><span class="feature-intro-io"><strong>入力:</strong> 完成したSkill、評価Fixture　<strong>出力:</strong> 4軸スコアと改善優先度のレポート</span></p>
 <table>
 <thead>
 <tr>

@@ -37,18 +37,18 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-32-s1">32.1 毎朝Brief</h2>
+    <h2 id="ch-32-s1">32.1 毎朝Brief</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>朝一に予定・未返信・締切・重要連絡を1枚に圧縮し、今日の動き方を10秒で把握できるようにする補佐機能。<br/><span class="feature-intro-io"><strong>入力:</strong> Calendar・メール未返信・締切Task・Slack/メンション履歴　<strong>出力:</strong> 今日の予定リスト・準備が必要な会議・返信下書き・リスクメモ</span></p>
 <p>Calendar、未返信候補、締切Task、重要Mentionから、今日の予定、準備Meeting、返信Draft、Riskを作る。送信/予定変更/Task更新はしない。</p>
-<h2 id="ch-32-s2">32.2 会議→Task Board</h2>
+<h2 id="ch-32-s2">32.2 会議→Task Board</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>議事録からタスクを抽出してTask Boardへ流し込み、重複登録と担当者確認を持たせる橋渡し機能。<br/><span class="feature-intro-io"><strong>入力:</strong> 会議文字起こし、現Task Board　<strong>出力:</strong> 重複統合済みのTaskエントリと担当者割り当て</span></p>
 <pre><code class="language-text">Transcript → Meeting Skill → Human Review → Task JSON → Dashboard
 → 承認済みTaskだけ外部SystemへDraft登録
 </code></pre>
-<h2 id="ch-32-s3">32.3 Skill改善Loop</h2>
+<h2 id="ch-32-s3">32.3 Skill改善Loop</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>実行ログ・失敗Fixture・評価点を集めてSkillを更新し、Canary経由で再配布する継続改善ループ。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill実行ログ、失敗Fixture、評価スコア　<strong>出力:</strong> 改善されたSkillとCanary配布結果</span></p>
 <pre><code class="language-text">実行 → User評価 → 失敗Fixture → Generator → Fresh Evaluator
 → Canary → Metrics → Stable
 </code></pre>
 <p>会話中に即全社上書きしない。</p>
-<h2 id="ch-32-s4">32.4 成熟度</h2>
+<h2 id="ch-32-s4">32.4 成熟度</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>個人手作業→再利用→半自動→監視付き自動の4段で、業務ごとの自動化レベルを段階的に上げる尺度。<br/><span class="feature-intro-io"><strong>入力:</strong> 対象業務、入力安定性、副作用の有無　<strong>出力:</strong> 業務別の現在レベルと次のターゲット段階</span></p>
 <table>
 <thead>
 <tr>

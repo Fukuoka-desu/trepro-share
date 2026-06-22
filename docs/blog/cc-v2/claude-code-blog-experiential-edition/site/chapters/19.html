@@ -54,7 +54,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 ├── preferences.md
 └── quizzes/
 </code></pre>
-<h2 id="ch-19-s2">19.2 Privacy by Design</h2>
+<h2 id="ch-19-s2">19.2 Privacy by Design</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>秘密・個人情報・顧客データ・雑談を除外し、保存対象を関心・学習課題・好む形式に限定するパーソナライズ設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 会話ログ、扱う情報のセンシティビティ　<strong>出力:</strong> 保存対象/除外対象を分けた抽出ルール</span></p>
 <pre><code class="language-text">- 対象ProjectをAllowlist
 - 顧客案件はOpt-in
 - SecretをMask
@@ -208,7 +208,7 @@ if __name__ == "__main__":
 <pre><code class="language-bash">mkdir -p personalization tools
 python3 tools/extract_user_signals.py --allow-project my-workspace
 </code></pre>
-<h2 id="ch-19-s4">19.4 Interest Profile Skill</h2>
+<h2 id="ch-19-s4">19.4 Interest Profile Skill</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>未分析ログから関心・学習課題・好む形式だけを抽出してINTERESTS.mdへまとめるSkill。本人が編集可能。<br/><span class="feature-intro-io"><strong>入力:</strong> セッションログ、過去会話　<strong>出力:</strong> 編集可能なINTERESTS.mdプロファイル</span></p>
 <pre><code class="language-markdown">---
 name: interest-profile
 description: Analyze new user-authored interaction signals and update a concise privacy-safe interest and learning profile. Use when syncing interests, personalizing research, or creating review material.
@@ -239,7 +239,7 @@ recency, and whether the topic remains active.
 7. Update INTERESTS.md and LEARNING.md.
 8. Show the diff for user approval.
 </code></pre>
-<h2 id="ch-19-s5">19.5 Recency Score</h2>
+<h2 id="ch-19-s5">19.5 Recency Score</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>新しさと深掘り回数で重み付けし、現在の関心を反映するスコアリング。古い関心と現在を混ぜない。<br/><span class="feature-intro-io"><strong>入力:</strong> 抽出済み関心信号、時間軸　<strong>出力:</strong> 現在優先のスコア順関心リスト</span></p>
 <pre><code class="language-text">base = explicit_interest × 3
      + distinct_sessions × 2
      + follow_up_depth
@@ -247,7 +247,7 @@ recency, and whether the topic remains active.
 score = base × 0.5^(days_since_last / half_life_days)
 </code></pre>
 <p>数値は並べ替え補助であり、人間評価へ使わない。</p>
-<h2 id="ch-19-s6">19.6 学習問題</h2>
+<h2 id="ch-19-s6">19.6 学習問題</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Profileを元に調査テーマや復習問題を作る出力機能。学んだことを定着させるための再利用。<br/><span class="feature-intro-io"><strong>入力:</strong> INTERESTS.md、苦手分野　<strong>出力:</strong> 復習問題、深掘り調査テーマ</span></p>
 <pre><code class="language-text">`LEARNING.md`から想起学習用HTMLを作る。
 20問。定義、比較、原因、実装、Debugを混ぜる。
 答えを初期非表示にし、自信度と不正解再出題を持つ。

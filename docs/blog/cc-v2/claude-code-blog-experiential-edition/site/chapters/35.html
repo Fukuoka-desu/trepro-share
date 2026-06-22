@@ -51,7 +51,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Skill Catalog/Score。</li>
 <li>Admin Coverage Dashboard。</li>
 </ul>
-<h2 id="ch-35-s2">35.2 Content Model</h2>
+<h2 id="ch-35-s2">35.2 Content Model</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Role別Path・Lesson・前提・成果物・Check・Feature Registry・進捗・質問履歴を構造化した学習データモデル。<br/><span class="feature-intro-io"><strong>入力:</strong> 本文テキスト、章構成、進捗ステータス案　<strong>出力:</strong> Content Modelに沿ったJSONデータ</span></p>
 <pre><code class="language-json">{
   "course_id": "claude-code-ultimate",
   "version": "1.0.0",
@@ -81,7 +81,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   ]
 }
 </code></pre>
-<h2 id="ch-35-s3">35.3 Lesson JSON Schema</h2>
+<h2 id="ch-35-s3">35.3 Lesson JSON Schema</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>1Lessonの前提・成果物・チェック・所要時間・版情報を機械検証可能にするJSON Schema。<br/><span class="feature-intro-io"><strong>入力:</strong> Lesson原稿、検証ルール　<strong>出力:</strong> Schema検証通過済みLesson JSON</span></p>
 <pre><code class="language-json">{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trepro.example/schemas/lesson.schema.json",
@@ -124,7 +124,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   }
 }
 </code></pre>
-<h2 id="ch-35-s4">35.4 Feature Registry</h2>
+<h2 id="ch-35-s4">35.4 Feature Registry</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>変動するモデル名・コマンド・UIをLesson本文に埋め込まず、Registry参照で動的差し替えする仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 変動情報のキー、Registryデータ　<strong>出力:</strong> Registry参照で差し替えされたLesson表示</span></p>
 <pre><code class="language-json">{
   "feature_id": "dynamic-workflows",
   "status": "available",
@@ -136,7 +136,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 }
 </code></pre>
 <p>古い<code>verified_at</code>へWarningを出す。</p>
-<h2 id="ch-35-s5">35.5 Progress</h2>
+<h2 id="ch-35-s5">35.5 Progress</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>seen/practiced/verified/applied の4段階進捗を保存し、本人と管理者の両方から見える学習State。<br/><span class="feature-intro-io"><strong>入力:</strong> Lesson完了イベント、証拠提出　<strong>出力:</strong> 保存された進捗Stateと修了判定</span></p>
 <pre><code class="language-text">seen → practiced → verified → applied
 </code></pre>
 <p>認定は<code>verified</code>以上を数える。</p>

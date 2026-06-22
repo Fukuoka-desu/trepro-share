@@ -394,6 +394,10 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .feature-io dt{color:#5478a8;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.72rem;padding-top:2px}
 .feature-io dd{margin:0;color:#2c3e5c;line-height:1.65}
 @media(max-width:520px){.features-grid{grid-template-columns:1fr}}
+.feature-intro{margin:8px 0 18px;padding:14px 18px;background:linear-gradient(135deg,#f3f8ff,#fbfdff);border-left:4px solid #2456d3;border-radius:0 12px 12px 0;font-size:.95rem;line-height:1.78;color:#1f3457}
+.feature-intro-label{display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#2456d3;font-weight:800;margin-right:8px;padding:2px 8px;background:#e3ecfa;border-radius:6px;vertical-align:middle}
+.feature-intro-io{display:block;margin-top:8px;font-size:.85rem;color:#3b5070}
+.feature-intro-io strong{color:#1f3457;font-weight:700}
 .usecases{margin:32px 0;padding:28px;border-radius:18px;background:linear-gradient(140deg,var(--usecase-bg),#fffaf2);border:1px solid var(--usecase-border);box-shadow:0 10px 28px rgba(198,106,23,.08)}
 .usecases>h2{margin:0 0 6px;font-size:1.28rem;color:var(--usecase-accent);display:flex;align-items:center;gap:8px}
 .usecases>h2::before{content:"";display:inline-block;width:8px;height:24px;background:var(--usecase-accent);border-radius:3px}
@@ -572,6 +576,103 @@ def add_heading_ids(fragment: str, prefix: str) -> str:
     return str(soup)
 
 
+# Heading text patterns that are structural (章共通) and should never receive a feature intro.
+_FEATURE_INTRO_SKIP_KEYWORDS = (
+    "物語の現在地",
+    "実装リファレンス",
+    "補助図",
+    "体験ミッション",
+    "ナビゲーター",
+    "この章で扱う機能",
+    "こんな場面で使う",
+)
+
+
+def _normalize_heading_text(text: str) -> str:
+    """Strip section number prefix (e.g. '32.1 ') and surrounding whitespace from heading text."""
+    # Drop numeric prefixes like "32.1", "32.1.2", "32-1", "1." etc.
+    cleaned = re.sub(r"^[\s]*[\d０-９]+([\.\-－・][\d０-９]+)*[\s\.\-：:、　]*", "", text)
+    return cleaned.strip()
+
+
+def _match_feature(heading_body: str, features: list[dict]) -> dict | None:
+    """Find the best matching feature for a heading. Returns None if no good match."""
+    if not heading_body or not features:
+        return None
+    best: tuple[int, dict] | None = None
+    for feat in features:
+        name = (feat.get("name") or "").strip()
+        if not name:
+            continue
+        # Two-way containment check
+        if name in heading_body:
+            score = len(name)
+        elif heading_body in name:
+            score = len(heading_body)
+        else:
+            continue
+        if best is None or score > best[0]:
+            best = (score, feat)
+    return best[1] if best else None
+
+
+def inject_feature_intros(fragment: str, features: list[dict]) -> str:
+    """Inject a <p class="feature-intro"> right after each h2/h3 that matches a feature name."""
+    if not features:
+        return fragment
+    # Wrap to ensure consistent parsing
+    soup = BeautifulSoup(f"<div>{fragment}</div>", "html.parser")
+    root = soup.div if soup.div else soup
+    for heading in root.find_all(["h2", "h3"]):
+        heading_text = heading.get_text(strip=True)
+        if not heading_text:
+            continue
+        # Skip structural headings
+        if any(kw in heading_text for kw in _FEATURE_INTRO_SKIP_KEYWORDS):
+            continue
+        body = _normalize_heading_text(heading_text)
+        if not body:
+            continue
+        # Guard against double-insertion
+        nxt = heading.find_next_sibling()
+        if nxt is not None and nxt.name == "p" and "feature-intro" in (nxt.get("class") or []):
+            continue
+        match = _match_feature(body, features)
+        if not match:
+            continue
+        summary = (match.get("summary") or "").strip()
+        if not summary:
+            continue
+        input_text = (match.get("input") or "").strip()
+        output_text = (match.get("output") or "").strip()
+        p = soup.new_tag("p")
+        p["class"] = ["feature-intro"]
+        label = soup.new_tag("strong")
+        label["class"] = ["feature-intro-label"]
+        label.string = "この機能でできること"
+        p.append(label)
+        p.append(summary)
+        if input_text or output_text:
+            br = soup.new_tag("br")
+            p.append(br)
+            io_span = soup.new_tag("span")
+            io_span["class"] = ["feature-intro-io"]
+            if input_text:
+                io_in = soup.new_tag("strong")
+                io_in.string = "入力:"
+                io_span.append(io_in)
+                io_span.append(f" {input_text}　")
+            if output_text:
+                io_out = soup.new_tag("strong")
+                io_out.string = "出力:"
+                io_span.append(io_out)
+                io_span.append(f" {output_text}")
+            p.append(io_span)
+        heading.insert_after(p)
+    # Unwrap our wrapper div
+    return root.decode_contents() if root.name == "div" else str(soup)
+
+
 def image_figure(item: dict, image_path_prefix: str) -> str:
     prompt = html.escape(item["prompt"])
     return f"""
@@ -589,9 +690,12 @@ def image_figure(item: dict, image_path_prefix: str) -> str:
 """
 
 
-def render_reference(body: str, prefix: str) -> str:
+def render_reference(body: str, prefix: str, features: list[dict] | None = None) -> str:
     rendered = md_renderer()(body)
-    return add_heading_ids(rendered, prefix)
+    rendered = add_heading_ids(rendered, prefix)
+    if features:
+        rendered = inject_feature_intros(rendered, features)
+    return rendered
 
 
 def story_paragraphs(text: str) -> str:
@@ -673,7 +777,7 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    {render_reference(ch.body, f'ch-{ch.key}')}
+    {render_reference(ch.body, f'ch-{ch.key}', meta.get('features'))}
   </section>
   {extra_html}
   {usecases_html(meta)}

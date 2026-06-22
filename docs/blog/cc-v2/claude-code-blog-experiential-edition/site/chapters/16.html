@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-16-s1">16.1 形式選択</h2>
+    <h2 id="ch-16-s1">16.1 形式選択</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。<br/><span class="feature-intro-io"><strong>入力:</strong> 成果物の用途、読み手、共有経路　<strong>出力:</strong> 形式選択の根拠と最終出力フォーマット</span></p>
 <table>
 <thead>
 <tr>
@@ -80,7 +80,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - GraphとTableを併記
 - JS無効でも主要情報が読める
 </code></pre>
-<h2 id="ch-16-s3">16.3 CSV分析Prompt</h2>
+<h2 id="ch-16-s3">16.3 CSV分析Prompt</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。<br/><span class="feature-intro-io"><strong>入力:</strong> CSVデータ、注目したい軸　<strong>出力:</strong> 集計表・グラフ・要点カード入りHTML</span></p>
 <pre><code class="language-text">`data/survey.csv` を分析し、経営会議向け単一HTMLを作る。
 
 Analysis:
@@ -103,7 +103,7 @@ Rules:
 - JavaScript Errorなし
 - Screenshotを保存
 </code></pre>
-<h2 id="ch-16-s4">16.4 HTML Slide</h2>
+<h2 id="ch-16-s4">16.4 HTML Slide</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。<br/><span class="feature-intro-io"><strong>入力:</strong> 発表用骨子または議題リスト　<strong>出力:</strong> HTML Slide、Discussion Board</span></p>
 <pre><code class="language-text">1. 表紙
 2. 結論
 3. 背景
@@ -117,14 +117,14 @@ Rules:
 <pre><code class="language-text">`output/analysis.md`を16:9 HTML Slideにしてください。
 1 Slide 1 Message、本文最大6行。矢印Key/PageUp/PageDownで移動し、Print/PDF対応にしてください。
 </code></pre>
-<h2 id="ch-16-s5">16.5 Discussion Board</h2>
+<h2 id="ch-16-s5">16.5 Discussion Board</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。<br/><span class="feature-intro-io"><strong>入力:</strong> 発表用骨子または議題リスト　<strong>出力:</strong> HTML Slide、Discussion Board</span></p>
 <pre><code class="language-text">会議用の単一HTML Boardを作る。
 列は「今やる」「次」「調査」「見送り」。
 CardはDragでき、担当、期限、根拠、決定者を編集可能。
 Local Storageへ保存し、「決定事項をMarkdownでCopy」Buttonを付ける。
 </code></pre>
 <p>Local StorageへSecrets、原文、不要な個人情報を保存しない。</p>
-<h2 id="ch-16-s6">16.6 品質Check</h2>
+<h2 id="ch-16-s6">16.6 品質Check</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。<br/><span class="feature-intro-io"><strong>入力:</strong> 完成したHTML　<strong>出力:</strong> A11y/印刷/スマホでの動作確認結果</span></p>
 <pre><code class="language-text">[ ] 結論が最初にある
 [ ] 元Dataへ追跡可能
 [ ] 色だけで状態区別しない

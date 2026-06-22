@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-34-s1">34.1 全社共通CLAUDE.md</h2>
+    <h2 id="ch-34-s1">34.1 全社共通CLAUDE.md</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>通信・標準ワークフロー・安全・品質・Gitなどを揃えた、全プロジェクト共通の基盤Baseline。<br/><span class="feature-intro-io"><strong>入力:</strong> 組織共通方針、必須安全項目　<strong>出力:</strong> 全社共通CLAUDE.md Baselineテンプレ</span></p>
 <pre><code class="language-markdown"># TrePro Claude Code baseline
 
 ## Communication
@@ -75,7 +75,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Start a new session when the objective changes.
 </code></pre>
 <p>Guidanceだけでなく、Managed Settings/Hookを併用する。</p>
-<h2 id="ch-34-s2">34.2 Project CLAUDE.md</h2>
+<h2 id="ch-34-s2">34.2 Project CLAUDE.md</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Purpose・Architecture・Commands・Required workflow・Constraints・Do notを揃えた案件単位のテンプレ。<br/><span class="feature-intro-io"><strong>入力:</strong> 案件の目的、技術スタック、禁止事項　<strong>出力:</strong> 案件用CLAUDE.md初版</span></p>
 <pre><code class="language-markdown"># Project overview
 
 ## Purpose
@@ -140,7 +140,7 @@ npm run build
 ## Open questions
 ## Rollback plan
 </code></pre>
-<h2 id="ch-34-s4">34.4 Implementation Plan</h2>
+<h2 id="ch-34-s4">34.4 Implementation Plan</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>要件定義・実装計画・完了報告の3点セットを揃え、案件横断で抜けを減らす標準テンプレ群。<br/><span class="feature-intro-io"><strong>入力:</strong> 新案件、進行中のタスク　<strong>出力:</strong> 3テンプレに沿った各フェーズ成果物</span></p>
 <pre><code class="language-markdown"># Implementation plan
 
 ## Summary
@@ -156,7 +156,7 @@ npm run build
 ## Out of scope
 ## Questions requiring approval
 </code></pre>
-<h2 id="ch-34-s5">34.5 Completion Report</h2>
+<h2 id="ch-34-s5">34.5 Completion Report</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>要件定義・実装計画・完了報告の3点セットを揃え、案件横断で抜けを減らす標準テンプレ群。<br/><span class="feature-intro-io"><strong>入力:</strong> 新案件、進行中のタスク　<strong>出力:</strong> 3テンプレに沿った各フェーズ成果物</span></p>
 <pre><code class="language-markdown"># Completion report
 
 ## Result
@@ -169,7 +169,7 @@ npm run build
 ## Not changed
 ## Recommended next action
 </code></pre>
-<h2 id="ch-34-s6">34.6 Quality Gate Skill</h2>
+<h2 id="ch-34-s6">34.6 Quality Gate Skill</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>テンプレ通過を自動チェックし、空欄や曖昧な完了主張を弾く品質ゲートSkill。<br/><span class="feature-intro-io"><strong>入力:</strong> テンプレ提出物　<strong>出力:</strong> Gate判定とブロック理由レポート</span></p>
 <pre><code class="language-markdown">---
 name: quality-gate
 description: Run the project validation sequence, inspect the diff, and produce an evidence-based completion report before work is considered done.
@@ -202,7 +202,7 @@ argument-hint: "[scope]"
 - risks
 - next action
 </code></pre>
-<h2 id="ch-34-s7">34.7 Fresh Reviewer Agent</h2>
+<h2 id="ch-34-s7">34.7 Fresh Reviewer Agent</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>実装者と別文脈の独立Reviewer Agent。要件・安全・保守性で成果物を採点する。<br/><span class="feature-intro-io"><strong>入力:</strong> 完了報告、関連ファイル　<strong>出力:</strong> 独立コンテキストからの指摘リスト</span></p>
 <pre><code class="language-markdown">---
 name: fresh-reviewer
 description: Review a change independently for correctness, security, data loss, missing tests, and maintainability.
@@ -216,7 +216,7 @@ Prioritize security, data loss, behavior, tests, and operational risk.
 For each finding include severity, file, line/symbol, evidence, and remediation.
 Separate blockers from suggestions.
 </code></pre>
-<h2 id="ch-34-s8">34.8 Definition of Done</h2>
+<h2 id="ch-34-s8">34.8 Definition of Done</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>PJ開始時に合意し書面化する『完成』の共通定義。納品時の認識ズレを未然に防ぐカード。<br/><span class="feature-intro-io"><strong>入力:</strong> PJ目的、納品物、検証条件　<strong>出力:</strong> PJごとに合意されたDoD</span></p>
 <pre><code class="language-text">[ ] Goal/Non-goal
 [ ] Acceptance Criteria
 [ ] Lint/Typecheck/Test/Build

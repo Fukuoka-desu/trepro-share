@@ -50,7 +50,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>MeetingとTaskを閲覧するローカルHTML。</li>
 </ul>
 <p>外部API、認証、DB、AI APIは最初の版では使わない。</p>
-<h2 id="ch-04-s2">4.2 要件定義</h2>
+<h2 id="ch-04-s2">4.2 要件定義</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>実装前に目的・入力・出力・Task Schema・制約・完了条件を埋めて、迷いどころを事前に潰す要件シート。<br/><span class="feature-intro-io"><strong>入力:</strong> やりたいこと、扱うデータ、納品物のイメージ　<strong>出力:</strong> AIに渡せる構造化された要件定義文書</span></p>
 <p><code>docs/requirements.md</code>：</p>
 <pre><code class="language-markdown"># Meeting Assistant 要件定義
 
@@ -145,7 +145,7 @@ argument-hint: "&lt;transcript path&gt;"
 田中: 計測タグは公開前に確認が必要です。担当はまだ決めていません。
 山田: では公開日は7月1日で決定。タグ担当は明日決めましょう。
 </code></pre>
-<h2 id="ch-04-s6">4.6 Plan依頼</h2>
+<h2 id="ch-04-s6">4.6 Plan依頼</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>先に計画だけ出させてレビューし、合意できたら実装に進む2段階運用。手戻りを構造的に減らす依頼パターン。<br/><span class="feature-intro-io"><strong>入力:</strong> 要件定義、現在のコード/フォルダ状態　<strong>出力:</strong> 承認済みPlan、それに沿った最小diff実装</span></p>
 <pre><code class="language-text">`docs/requirements.md`、`CLAUDE.md`、Sample Inputを読んでください。
 まだ実装せず、次を含む計画を作ってください。
 
@@ -157,7 +157,7 @@ argument-hint: "&lt;transcript path&gt;"
 - 不確定事項
 - RiskとRollback
 </code></pre>
-<h2 id="ch-04-s7">4.7 実装依頼</h2>
+<h2 id="ch-04-s7">4.7 実装依頼</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>先に計画だけ出させてレビューし、合意できたら実装に進む2段階運用。手戻りを構造的に減らす依頼パターン。<br/><span class="feature-intro-io"><strong>入力:</strong> 要件定義、現在のコード/フォルダ状態　<strong>出力:</strong> 承認済みPlan、それに沿った最小diff実装</span></p>
 <pre><code class="language-text">承認した計画に従い、最小構成で実装してください。
 
 - 外部API/DB/認証は禁止

@@ -37,11 +37,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-31-s1">31.1 LP</h2>
+    <h2 id="ch-31-s1">31.1 LP</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Wireframe→Design System→Codeで作ったLPを、公開を見据えて整える章末仕上げの制作ライン。<br/><span class="feature-intro-io"><strong>入力:</strong> LP目的、Design System、コンテンツ素材　<strong>出力:</strong> 公開直前のLP実装と確認用Preview</span></p>
 <pre><code class="language-text">Audience/Action → Content Inventory → Wireframe → Copy Review
 → Prototype → Design System → Code → Analytics/SEO/A11y → Preview → Production
 </code></pre>
-<h2 id="ch-31-s2">31.2 Design System再利用</h2>
+<h2 id="ch-31-s2">31.2 Design System再利用</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>LP・スライド・レポートで同じDesign Systemを参照し、ブランド一貫性を維持する再利用ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> 既存Design System、新規制作物　<strong>出力:</strong> システム参照済みの新規制作物</span></p>
 <p>営業資料、LP、Dashboard、HTML Report、Slideで共通Token。成果物ごとに勝手な色/余白を増やさない。</p>
 <h2 id="ch-31-s3">31.3 PPT/PDF Export</h2>
 <pre><code class="language-text">[ ] Font置換
@@ -53,7 +53,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [ ] 選択可能Text
 [ ] 機密Metadata
 </code></pre>
-<h2 id="ch-31-s4">31.4 Deploy</h2>
+<h2 id="ch-31-s4">31.4 Deploy</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Deploy前にSecret・環境変数・公開範囲・Analytics・Rollbackを確認し、Previewレビューを通す公開ゲート。<br/><span class="feature-intro-io"><strong>入力:</strong> 公開予定ビルド、本番設定　<strong>出力:</strong> Preview承認ログと本番Deploy可否判定</span></p>
 <pre><code class="language-text">Preview → Functional → A11y/Security/Privacy → Owner Approval
 → Production → Smoke/Monitoring/Rollback
 </code></pre>
