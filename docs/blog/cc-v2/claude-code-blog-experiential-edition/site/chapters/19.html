@@ -11,14 +11,7 @@
     <div class="eyebrow">第19章</div>
     <h1>Claude Codeを自分専用に育てる</h1>
   </header>
-  <section aria-labelledby="story-19">
-    <h2 id="story-19">物語の現在地</h2>
-    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Privacy by Design（保存しないものを決める）</h3><p class="feature-summary">秘密・個人情報・顧客データ・雑談を除外し、保存対象を関心・学習課題・好む形式に限定するパーソナライズ設計。</p><dl class="feature-io"><dt>入力</dt><dd>会話ログ、扱う情報のセンシティビティ</dd><dt>出力</dt><dd>保存対象/除外対象を分けた抽出ルール</dd></dl></article><article class="feature-card"><h3>Interest Profile Skill</h3><p class="feature-summary">未分析ログから関心・学習課題・好む形式だけを抽出してINTERESTS.mdへまとめるSkill。本人が編集可能。</p><dl class="feature-io"><dt>入力</dt><dd>セッションログ、過去会話</dd><dt>出力</dt><dd>編集可能なINTERESTS.mdプロファイル</dd></dl></article><article class="feature-card"><h3>Recency Score（重み付け）</h3><p class="feature-summary">新しさと深掘り回数で重み付けし、現在の関心を反映するスコアリング。古い関心と現在を混ぜない。</p><dl class="feature-io"><dt>入力</dt><dd>抽出済み関心信号、時間軸</dd><dt>出力</dt><dd>現在優先のスコア順関心リスト</dd></dl></article><article class="feature-card"><h3>差分処理（処理済み位置の管理）</h3><p class="feature-summary">処理済み位置を保持し、毎回全ログを再走査しない実装パターン。処理時間と費用を構造的に抑える。</p><dl class="feature-io"><dt>入力</dt><dd>新規ログと前回処理位置</dd><dt>出力</dt><dd>差分のみ処理した抽出結果</dd></dl></article><article class="feature-card"><h3>学習問題生成</h3><p class="feature-summary">Profileを元に調査テーマや復習問題を作る出力機能。学んだことを定着させるための再利用。</p><dl class="feature-io"><dt>入力</dt><dd>INTERESTS.md、苦手分野</dd><dt>出力</dt><dd>復習問題、深掘り調査テーマ</dd></dl></article></div></section>
-    <div class="story-block">
-      <p class="story-lead">数週間使うと、遥の質問には興味や苦手分野が表れ始めました。ナビゲーターは会話を丸ごと記憶するのではなく、未分析ログから必要な信号だけを抽出し、INTERESTS.mdへまとめます。自分専用化を、プライバシーと一緒に設計します。</p>
-      <div class="story-essay"><p>パーソナライズでは、何を保存しないかが重要です。秘密、個人情報、顧客データ、単なる雑談を除外し、関心、学習課題、好む形式のような再利用価値のある信号だけを抽出します。処理済み位置を持ち、毎回全ログを読み直しません。</p><p>新しさと深掘り回数を重み付けすると、現在の関心を反映できます。そのProfileから調査テーマや復習問題を作り、学習者自身が編集・削除できるようにします。</p></div>
-    </div>
-  </section>
+  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Privacy by Design（保存しないものを決める）</h3><p class="feature-summary">秘密・個人情報・顧客データ・雑談を除外し、保存対象を関心・学習課題・好む形式に限定するパーソナライズ設計。</p><dl class="feature-io"><dt>入力</dt><dd>会話ログ、扱う情報のセンシティビティ</dd><dt>出力</dt><dd>保存対象/除外対象を分けた抽出ルール</dd></dl></article><article class="feature-card"><h3>Interest Profile Skill</h3><p class="feature-summary">未分析ログから関心・学習課題・好む形式だけを抽出してINTERESTS.mdへまとめるSkill。本人が編集可能。</p><dl class="feature-io"><dt>入力</dt><dd>セッションログ、過去会話</dd><dt>出力</dt><dd>編集可能なINTERESTS.mdプロファイル</dd></dl></article><article class="feature-card"><h3>Recency Score（重み付け）</h3><p class="feature-summary">新しさと深掘り回数で重み付けし、現在の関心を反映するスコアリング。古い関心と現在を混ぜない。</p><dl class="feature-io"><dt>入力</dt><dd>抽出済み関心信号、時間軸</dd><dt>出力</dt><dd>現在優先のスコア順関心リスト</dd></dl></article><article class="feature-card"><h3>差分処理（処理済み位置の管理）</h3><p class="feature-summary">処理済み位置を保持し、毎回全ログを再走査しない実装パターン。処理時間と費用を構造的に抑える。</p><dl class="feature-io"><dt>入力</dt><dd>新規ログと前回処理位置</dd><dt>出力</dt><dd>差分のみ処理した抽出結果</dd></dl></article><article class="feature-card"><h3>学習問題生成</h3><p class="feature-summary">Profileを元に調査テーマや復習問題を作る出力機能。学んだことを定着させるための再利用。</p><dl class="feature-io"><dt>入力</dt><dd>INTERESTS.md、苦手分野</dd><dt>出力</dt><dd>復習問題、深掘り調査テーマ</dd></dl></article></div></section>
   
 <figure class="image-shell" data-image-id="chapter-19">
   <img src="../images/chapter-19-b96750.webp" alt="第19章『Claude Codeを自分専用に育てる』を表すeditorial privacy illustration" loading="lazy" decoding="async">
@@ -38,7 +31,6 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     <h2 id="ch-19-s1">19.1 外部化する情報</h2>
 <ul>
 <li>最近の関心。</li>
@@ -264,13 +256,13 @@ Local Storageには回答状態だけを保存する。
 
   </section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 保存してよい学習信号と保存してはいけない情報を定義し、少量の会話ログからINTERESTS.mdの試作を作ってください。</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。</p></div>
   </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人ライター（架空）が、AIに『自分専用化したい』と全会話履歴を渡し、結果として顧客個人情報まで学習対象に紛れて怖くなった。</p><h3>こう使う</h3><p>保存対象を関心・学習課題・好む形式の三つに限定し、秘密情報・顧客データ・雑談は除外定義を書く。</p><h3>得られるもの</h3><p>個人化の便益は得つつ、プライバシーリスクが構造的にゼロへ近づく。</p></article><article class="usecase-card"><h3>場面</h3><p>学習担当（架空）が、社員ごとのスキルレベルを把握したいが、毎回全ログを再走査して処理時間が爆発している。</p><h3>こう使う</h3><p>処理済み位置と新しさ重みを持つINTERESTS.md抽出Skillを作る。</p><h3>得られるもの</h3><p>差分処理になり、関心の最新動向だけ追える。本人が編集・削除できる透明な仕組みになる。</p></article></div></section>
 </article>
 <nav class="chapter-nav"><a href="18.html">← CoworkとLive Artifacts</a><a href="20.html">`/goal`、Headless、定期実行 →</a></nav></main></div>
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
 </body></html>

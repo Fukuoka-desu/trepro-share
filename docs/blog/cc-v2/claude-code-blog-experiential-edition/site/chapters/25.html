@@ -11,14 +11,7 @@
     <div class="eyebrow">第25章</div>
     <h1>Skill Governance</h1>
   </header>
-  <section aria-labelledby="story-25">
-    <h2 id="story-25">物語の現在地</h2>
-    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>5 Prefix命名規約</h3><p class="feature-summary">Skillの分類prefixを揃え、用途と所有者をひと目で分かるようにする命名統一ルール。</p><dl class="feature-io"><dt>入力</dt><dd>既存Skill名群、分類カテゴリ</dd><dt>出力</dt><dd>5 Prefix適用後の正規Skill名一覧</dd></dl></article><article class="feature-card"><h3>Skill Lifecycle（提案→廃止）</h3><p class="feature-summary">提案・Source・Generator・Fixture・Evaluator・Canary・Stable・Deprecation・Archiveのライフサイクル管理。</p><dl class="feature-io"><dt>入力</dt><dd>Skill提案、評価結果</dd><dt>出力</dt><dd>段階情報を持つSkill台帳</dd></dl></article><article class="feature-card"><h3>Generator / Evaluator分離</h3><p class="feature-summary">Skillを作るスキルと採点するスキルを分け、自作自演バイアスを排除する設計。</p><dl class="feature-io"><dt>入力</dt><dd>新Skill仕様、評価Fixture</dd><dt>出力</dt><dd>Generator出力＋Evaluatorによる4軸スコア</dd></dl></article><article class="feature-card"><h3>Fixture-driven開発</h3><p class="feature-summary">正常・不足・巨大・危険・対象外の5ケースFixtureでSkillを開発し、評価器が機械的に判定する開発フロー。</p><dl class="feature-io"><dt>入力</dt><dd>Skill仕様、5ケースFixture</dd><dt>出力</dt><dd>Fixture通過率と改善ポイント</dd></dl></article><article class="feature-card"><h3>Build / Validator / 重複統合</h3><p class="feature-summary">skill-srcを正本としてClaude Code/Codex両方へBuild展開し、Validatorで構造検証、重複候補は統合提案する。</p><dl class="feature-io"><dt>入力</dt><dd>skill-src、複数Runtime対象</dd><dt>出力</dt><dd>両Runtime用ビルド成果と統合候補リスト</dd></dl></article><article class="feature-card"><h3>Deprecation（廃止予告と代替先）</h3><p class="feature-summary">古いSkillには代替先と終了日を示して安全に閉じる手順。利用者の移行コストを下げる。</p><dl class="feature-io"><dt>入力</dt><dd>廃止対象Skill、代替Skill</dd><dt>出力</dt><dd>Deprecation通知、移行ガイド、終了日</dd></dl></article></div></section>
-    <div class="story-block">
-      <p class="story-lead">Skillが増えると、似た名前、古い手順、評価されていない資産が混ざり始めます。美咲は数を成果にせず、提案、生成、評価、Canary、Stable、廃止というLifecycleを導入します。</p>
-      <div class="story-essay"><p>Skill Governanceでは、Canonical Name、Category、Owner、Version、対象Runtime、依存、Fixture、評価点を持たせます。GeneratorとEvaluatorを分離し、明確性、実用性、保守性、整合性の四軸で採点します。</p><p>同じSkillをClaude Code用とCodex用に手で二重編集せず、skill-srcを正本にしてBuildします。重複は統合し、非推奨には代替先と終了日を示します。</p></div>
-    </div>
-  </section>
+  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>5 Prefix命名規約</h3><p class="feature-summary">Skillの分類prefixを揃え、用途と所有者をひと目で分かるようにする命名統一ルール。</p><dl class="feature-io"><dt>入力</dt><dd>既存Skill名群、分類カテゴリ</dd><dt>出力</dt><dd>5 Prefix適用後の正規Skill名一覧</dd></dl></article><article class="feature-card"><h3>Skill Lifecycle（提案→廃止）</h3><p class="feature-summary">提案・Source・Generator・Fixture・Evaluator・Canary・Stable・Deprecation・Archiveのライフサイクル管理。</p><dl class="feature-io"><dt>入力</dt><dd>Skill提案、評価結果</dd><dt>出力</dt><dd>段階情報を持つSkill台帳</dd></dl></article><article class="feature-card"><h3>Generator / Evaluator分離</h3><p class="feature-summary">Skillを作るスキルと採点するスキルを分け、自作自演バイアスを排除する設計。</p><dl class="feature-io"><dt>入力</dt><dd>新Skill仕様、評価Fixture</dd><dt>出力</dt><dd>Generator出力＋Evaluatorによる4軸スコア</dd></dl></article><article class="feature-card"><h3>Fixture-driven開発</h3><p class="feature-summary">正常・不足・巨大・危険・対象外の5ケースFixtureでSkillを開発し、評価器が機械的に判定する開発フロー。</p><dl class="feature-io"><dt>入力</dt><dd>Skill仕様、5ケースFixture</dd><dt>出力</dt><dd>Fixture通過率と改善ポイント</dd></dl></article><article class="feature-card"><h3>Build / Validator / 重複統合</h3><p class="feature-summary">skill-srcを正本としてClaude Code/Codex両方へBuild展開し、Validatorで構造検証、重複候補は統合提案する。</p><dl class="feature-io"><dt>入力</dt><dd>skill-src、複数Runtime対象</dd><dt>出力</dt><dd>両Runtime用ビルド成果と統合候補リスト</dd></dl></article><article class="feature-card"><h3>Deprecation（廃止予告と代替先）</h3><p class="feature-summary">古いSkillには代替先と終了日を示して安全に閉じる手順。利用者の移行コストを下げる。</p><dl class="feature-io"><dt>入力</dt><dd>廃止対象Skill、代替Skill</dd><dt>出力</dt><dd>Deprecation通知、移行ガイド、終了日</dd></dl></article></div></section>
   
 <figure class="image-shell" data-image-id="chapter-25">
   <img src="../images/chapter-25-6d4035.webp" alt="第25章『Skill Governance』を表すlifecycle infographic illustration" loading="lazy" decoding="async">
@@ -38,7 +31,6 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     <h2 id="ch-25-s1">25.1 5 Prefixの移行</h2>
 <p>現行Prefixは <code>S_</code>、<code>mm-</code>、<code>sm-</code>、<code>project-</code>、<code>feedback-</code>。Agent SkillsのCanonical Nameは小文字英数字とHyphenへ統一する。</p>
 <table>
@@ -274,13 +266,13 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 既存Skillを三つ選び、Owner・Version・Fixture・評価点・重複候補を棚卸ししてください。</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>Skillの価値は数ではなく、再現性、責任者、評価、廃止まで追えることです。</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>Skillの価値は数ではなく、再現性、責任者、評価、廃止まで追えることです。</p></div>
   </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある制作会社（架空）が、200個のSkillが乱立し、似た名前と古い手順が混ざって誰も全体像を把握できなくなった。</p><h3>こう使う</h3><p>Canonical Name・Category・Owner・Version・Fixture・評価点を持たせ、4軸の評価器で採点する。</p><h3>得られるもの</h3><p>Skill群が製品台帳として管理でき、廃止予告も移行先付きで安全に出せる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある中規模IT会社（架空）が、Claude Code用とCodex用のSkillを二重管理して、片方だけ修正された結果、社員間で動作が違う事態が起きた。</p><h3>こう使う</h3><p>skill-srcを正本にしてBuildで両Runtimeへ展開する構造に変える。</p><h3>得られるもの</h3><p>二重編集の手間がなくなり、Runtime差での挙動ズレが消える。</p></article></div></section>
 </article>
 <nav class="chapter-nav"><a href="24.html">← 配布、同期、更新、Rollback</a><a href="26.html">Managed Policy、Security、Observability →</a></nav></main></div>
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
 </body></html>

@@ -11,14 +11,7 @@
     <div class="eyebrow">第5章</div>
     <h1>強い指示の書き方</h1>
   </header>
-  <section aria-labelledby="story-05">
-    <h2 id="story-05">物語の現在地</h2>
-    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>汎用依頼Template（6項目構造）</h3><p class="feature-summary">目的・文脈・制約・成果物・完了条件・証拠の6項目で曖昧な依頼を構造化し、AI判断のブレを抑える依頼フォーマット。</p><dl class="feature-io"><dt>入力</dt><dd>曖昧な業務依頼文、関連する背景情報</dd><dt>出力</dt><dd>AIに渡せる6項目テンプレ化された明確な依頼</dd></dl></article><article class="feature-card"><h3>Claudeに質問させる運用</h3><p class="feature-summary">未知の要件は実装前にAIから質問を引き出す指示パターン。沈黙のまま暴走させない安全弁。</p><dl class="feature-io"><dt>入力</dt><dd>やや曖昧な依頼、判断に迷う設計分岐</dd><dt>出力</dt><dd>Claudeからの質問リストと、それへの回答記録</dd></dl></article><article class="feature-card"><h3>完了報告の型（変更/検証/残リスク）</h3><p class="feature-summary">『完成しました』を変更したもの・検証したこと・残っているリスクの3区分に分けて確認可能な証拠に変える報告書式。</p><dl class="feature-io"><dt>入力</dt><dd>実装が終わった作業、テスト結果</dd><dt>出力</dt><dd>3区分で構造化された完了報告とリスクリスト</dd></dl></article></div></section>
-    <div class="story-block">
-      <p class="story-lead">遥は『いい感じのアプリを作って』と入力し、期待と違う画面を受け取りました。蓮はプロンプトの言い回しを直す代わりに、目的、利用者、制約、成果物、完了条件を一緒に書き出します。結果は、呪文より仕事の定義で変わりました。</p>
-      <div class="story-essay"><p>強い指示は長文である必要はありません。何のために、何を材料に、どこまで変え、何を作り、どうなれば終わりかが明確なら、AIは判断しやすくなります。未知の要件がある場合は、実装前に質問させます。</p><p>完了報告にも型が必要です。変更したもの、検証したこと、残っているリスクを分けると、『完成しました』という曖昧な宣言を、確認可能な証拠へ変えられます。</p></div>
-    </div>
-  </section>
+  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>汎用依頼Template（6項目構造）</h3><p class="feature-summary">目的・文脈・制約・成果物・完了条件・証拠の6項目で曖昧な依頼を構造化し、AI判断のブレを抑える依頼フォーマット。</p><dl class="feature-io"><dt>入力</dt><dd>曖昧な業務依頼文、関連する背景情報</dd><dt>出力</dt><dd>AIに渡せる6項目テンプレ化された明確な依頼</dd></dl></article><article class="feature-card"><h3>Claudeに質問させる運用</h3><p class="feature-summary">未知の要件は実装前にAIから質問を引き出す指示パターン。沈黙のまま暴走させない安全弁。</p><dl class="feature-io"><dt>入力</dt><dd>やや曖昧な依頼、判断に迷う設計分岐</dd><dt>出力</dt><dd>Claudeからの質問リストと、それへの回答記録</dd></dl></article><article class="feature-card"><h3>完了報告の型（変更/検証/残リスク）</h3><p class="feature-summary">『完成しました』を変更したもの・検証したこと・残っているリスクの3区分に分けて確認可能な証拠に変える報告書式。</p><dl class="feature-io"><dt>入力</dt><dd>実装が終わった作業、テスト結果</dd><dt>出力</dt><dd>3区分で構造化された完了報告とリスクリスト</dd></dl></article></div></section>
   
 <figure class="image-shell" data-image-id="chapter-05">
   <img src="../images/chapter-05-73a246.webp" alt="第5章『強い指示の書き方』を表すconceptual editorial illustration" loading="lazy" decoding="async">
@@ -38,7 +31,6 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     <h2 id="ch-05-s1">5.1 魔法のPromptより仕事の定義</h2>
 <pre><code class="language-text">Goal       何を達成するか
 Context    何を読めばよいか
@@ -102,13 +94,13 @@ Sample Dataで起動し、Test/Build成功を完了条件とする。
 
   </section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 曖昧な依頼を一つ選び、目的・文脈・制約・成果物・完了条件・証拠の六項目へ書き直してください。</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。</p></div>
   </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅メーカーのマーケ担当（架空）が、AIに『いい感じのLP作って』と頼み、期待と違う画面が出ては手戻りを繰り返している。</p><h3>こう使う</h3><p>目的・利用者・制約・成果物・完了条件・証拠の六項目テンプレートを使って依頼文を書き直す。</p><h3>得られるもの</h3><p>AIの判断材料が揃って一発で意図に近い出力になり、手戻り回数が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>PM経験ゼロの開発者（架空）が、上司から『この依頼を技術翻訳して』と毎回言われ、要件整理だけで一日を消費している。</p><h3>こう使う</h3><p>曖昧な依頼を完了報告テンプレ（変更/検証/残リスク）まで含めて構造化し、AIへ渡す前に人へ見せる。</p><h3>得られるもの</h3><p>上司確認も同じテンプレで進み、要件と完了の認識ズレが消える。</p></article></div></section>
 </article>
 <nav class="chapter-nav"><a href="04.html">← 最初の90分実習：会議アシスタント</a><a href="06.html">Explore → Specify → Plan → Implement → Verify → Review → Commit →</a></nav></main></div>
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
 </body></html>

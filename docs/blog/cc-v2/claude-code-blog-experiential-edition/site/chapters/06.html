@@ -11,14 +11,7 @@
     <div class="eyebrow">第6章</div>
     <h1>Explore → Specify → Plan → Implement → Verify → Review → Commit</h1>
   </header>
-  <section aria-labelledby="story-06">
-    <h2 id="story-06">物語の現在地</h2>
-    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>ESPIVRC標準ループ</h3><p class="feature-summary">Explore→Specify→Plan→Implement→Verify→Review→Commitの7段階を共通言語にし、業務種別を問わず同じ順で進める仕事の骨格。</p><dl class="feature-io"><dt>入力</dt><dd>新しい依頼、作業対象、関係者</dd><dt>出力</dt><dd>7段階ごとの成果物（探索メモ・仕様・計画・実装・検証・レビュー・コミット）</dd></dl></article><article class="feature-card"><h3>Plan段階の変更範囲宣言</h3><p class="feature-summary">実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。</p><dl class="feature-io"><dt>入力</dt><dd>仕様、現状のコード/ファイル</dd><dt>出力</dt><dd>影響範囲・差分予定・前提条件を含むPlan</dd></dl></article><article class="feature-card"><h3>Verify→Review→Commit分離</h3><p class="feature-summary">機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みの変更、テストケース、レビュー観点</dd><dt>出力</dt><dd>検証ログ、レビュー指摘、コミットメッセージ付き履歴</dd></dl></article></div></section>
-    <div class="story-block">
-      <p class="story-lead">会議アシスタントは動きました。しかし翌週、別の素材で試すと抜けが出ます。蓮は成功した一回を称賛する前に、七つのカードを机へ並べました。Explore、Specify、Plan、Implement、Verify、Review、Commit。</p>
-      <div class="story-essay"><p>この七段階は、アプリ開発だけの手順ではありません。資料作成、調査、ファイル整理、Skill改善にも使える仕事の骨格です。探索で事実を集め、仕様で成功条件を固定し、計画で変更範囲を絞り、実装後は証拠で検証します。</p><p>さらに、作成者とは別の文脈でレビューし、良い状態をGitへ保存します。各段階を飛ばさないことで、速さを落とすのではなく、やり直しを減らします。</p></div>
-    </div>
-  </section>
+  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>ESPIVRC標準ループ</h3><p class="feature-summary">Explore→Specify→Plan→Implement→Verify→Review→Commitの7段階を共通言語にし、業務種別を問わず同じ順で進める仕事の骨格。</p><dl class="feature-io"><dt>入力</dt><dd>新しい依頼、作業対象、関係者</dd><dt>出力</dt><dd>7段階ごとの成果物（探索メモ・仕様・計画・実装・検証・レビュー・コミット）</dd></dl></article><article class="feature-card"><h3>Plan段階の変更範囲宣言</h3><p class="feature-summary">実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。</p><dl class="feature-io"><dt>入力</dt><dd>仕様、現状のコード/ファイル</dd><dt>出力</dt><dd>影響範囲・差分予定・前提条件を含むPlan</dd></dl></article><article class="feature-card"><h3>Verify→Review→Commit分離</h3><p class="feature-summary">機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みの変更、テストケース、レビュー観点</dd><dt>出力</dt><dd>検証ログ、レビュー指摘、コミットメッセージ付き履歴</dd></dl></article></div></section>
   
 <figure class="image-shell" data-image-id="chapter-06">
   <img src="../images/chapter-06-3ebed7.webp" alt="第6章『Explore → Specify → Plan → Implement → Verify → Review → Commit』を表すworkflow illustration" loading="lazy" decoding="async">
@@ -38,7 +31,6 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     <h2 id="ch-06-s1">6.1 全業務を同じ型へ入れる</h2>
 <pre><code class="language-text">Explore    現状を読む
 Specify    目的と完了条件を固定
@@ -160,13 +152,13 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 次に行う作業を七段階の見出しで書き、各段階の成果物を一つずつ決めてください。</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</p></div>
   </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC物流の社内システム改修で、依頼→実装→『動いたっぽい』→本番→事故、という流れを毎月繰り返している。</p><h3>こう使う</h3><p>Explore→Specify→Plan→Implement→Verify→Review→Commitの七段階に依頼テンプレを揃え、各段階で証拠を残す。</p><h3>得られるもの</h3><p>本番事故の発生源を段階に切り分けて潰せるようになり、改修1本あたりの平均事故件数が減る。</p></article><article class="usecase-card"><h3>場面</h3><p>Webデザイナー（架空）が、AIに『修正お願い』と頼んだら関係ない部分まで書き換えられ、何が変わったか追えない。</p><h3>こう使う</h3><p>Plan段階で変更範囲をAIに宣言させ、Verifyで差分とテスト結果を見てからCommitする運用にする。</p><h3>得られるもの</h3><p>予期しない書き換えがPlanで弾かれ、レビュー時間が短く、巻き戻しも安全になる。</p></article></div></section>
 </article>
 <nav class="chapter-nav"><a href="05.html">← 強い指示の書き方</a><a href="07.html">Permission Mode、Sandbox、危険操作 →</a></nav></main></div>
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
 </body></html>

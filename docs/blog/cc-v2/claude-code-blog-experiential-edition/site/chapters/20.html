@@ -11,14 +11,7 @@
     <div class="eyebrow">第20章</div>
     <h1>`/goal`、Headless、定期実行</h1>
   </header>
-  <section aria-labelledby="story-20">
-    <h2 id="story-20">物語の現在地</h2>
-    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>/goal（成功条件と停止条件）</h3><p class="feature-summary">成功条件・最大ターン・Timeout・許可範囲・失敗時停止を仕様化し、自律実行が安全に終わるよう設計するコマンド。</p><dl class="feature-io"><dt>入力</dt><dd>自動化したい仕事、成功判定の機械条件</dd><dt>出力</dt><dd>完了 or 安全停止のどちらかで終わる自律実行</dd></dl></article><article class="feature-card"><h3>Headless実行</h3><p class="feature-summary">対話画面なしで定型タスクを走らせる実行形態。CI・夜間バッチ・サーバー常駐に組み込む。</p><dl class="feature-io"><dt>入力</dt><dd>実行内容、引数、許可範囲</dd><dt>出力</dt><dd>Headlessジョブの実行ログとExitステータス</dd></dl></article><article class="feature-card"><h3>安全なWrapper（重複防止・ロック・ログ）</h3><p class="feature-summary">/goalやHeadlessを実運用に乗せるための重複防止・ロック・ログ・通知・再試行を包んだラッパースクリプト。</p><dl class="feature-io"><dt>入力</dt><dd>ベース実行コマンド、運用要件</dd><dt>出力</dt><dd>Wrapperスクリプトと運用ログ</dd></dl></article><article class="feature-card"><h3>Scheduled必須要件</h3><p class="feature-summary">定期実行で必ず満たすべき重複防止・冪等性・通知の要件チェック。配信時刻のブレも管理する。</p><dl class="feature-io"><dt>入力</dt><dd>スケジュール対象ジョブ、頻度</dd><dt>出力</dt><dd>必須要件チェック通過記録</dd></dl></article><article class="feature-card"><h3>LaunchAgent例</h3><p class="feature-summary">macOS LaunchAgentによる定期実行設定の具体例。個人Mac〜開発機での自動化導入に使う。</p><dl class="feature-io"><dt>入力</dt><dd>実行コマンド、頻度、ログ出力先</dd><dt>出力</dt><dd>動作するLaunchAgent plist例</dd></dl></article><article class="feature-card"><h3>自動化しない領域の明示</h3><p class="feature-summary">公開・送信・課金・削除など、最後の一歩を必ず人間に残す領域を明確化するルール。</p><dl class="feature-io"><dt>入力</dt><dd>自動化候補リスト、副作用の有無</dd><dt>出力</dt><dd>自動化可/人間承認必須の振り分け表</dd></dl></article></div></section>
-    <div class="story-block">
-      <p class="story-lead">『テストが通るまで直して』は便利ですが、条件が曖昧だと永遠に動き続けます。蓮は、終了条件、最大回数、許可範囲、ログ、失敗時の停止を先に書きます。自律化は、始め方より止め方を設計する仕事でした。</p>
-      <div class="story-essay"><p>/goalやHeadless実行は、検証可能な条件がある仕事に向きます。成功条件を機械で確かめられ、最大ターンやTimeoutがあり、副作用が限定されていることが前提です。定期実行では重複防止、ロック、ログ、通知、再試行を持たせます。</p><p>人の承認が必要な公開、送信、課金、削除は完全自動化しません。自動化の境界を明示し、最後の一歩を人間へ残します。</p></div>
-    </div>
-  </section>
+  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>/goal（成功条件と停止条件）</h3><p class="feature-summary">成功条件・最大ターン・Timeout・許可範囲・失敗時停止を仕様化し、自律実行が安全に終わるよう設計するコマンド。</p><dl class="feature-io"><dt>入力</dt><dd>自動化したい仕事、成功判定の機械条件</dd><dt>出力</dt><dd>完了 or 安全停止のどちらかで終わる自律実行</dd></dl></article><article class="feature-card"><h3>Headless実行</h3><p class="feature-summary">対話画面なしで定型タスクを走らせる実行形態。CI・夜間バッチ・サーバー常駐に組み込む。</p><dl class="feature-io"><dt>入力</dt><dd>実行内容、引数、許可範囲</dd><dt>出力</dt><dd>Headlessジョブの実行ログとExitステータス</dd></dl></article><article class="feature-card"><h3>安全なWrapper（重複防止・ロック・ログ）</h3><p class="feature-summary">/goalやHeadlessを実運用に乗せるための重複防止・ロック・ログ・通知・再試行を包んだラッパースクリプト。</p><dl class="feature-io"><dt>入力</dt><dd>ベース実行コマンド、運用要件</dd><dt>出力</dt><dd>Wrapperスクリプトと運用ログ</dd></dl></article><article class="feature-card"><h3>Scheduled必須要件</h3><p class="feature-summary">定期実行で必ず満たすべき重複防止・冪等性・通知の要件チェック。配信時刻のブレも管理する。</p><dl class="feature-io"><dt>入力</dt><dd>スケジュール対象ジョブ、頻度</dd><dt>出力</dt><dd>必須要件チェック通過記録</dd></dl></article><article class="feature-card"><h3>LaunchAgent例</h3><p class="feature-summary">macOS LaunchAgentによる定期実行設定の具体例。個人Mac〜開発機での自動化導入に使う。</p><dl class="feature-io"><dt>入力</dt><dd>実行コマンド、頻度、ログ出力先</dd><dt>出力</dt><dd>動作するLaunchAgent plist例</dd></dl></article><article class="feature-card"><h3>自動化しない領域の明示</h3><p class="feature-summary">公開・送信・課金・削除など、最後の一歩を必ず人間に残す領域を明確化するルール。</p><dl class="feature-io"><dt>入力</dt><dd>自動化候補リスト、副作用の有無</dd><dt>出力</dt><dd>自動化可/人間承認必須の振り分け表</dd></dl></article></div></section>
   
 <figure class="image-shell" data-image-id="chapter-20">
   <img src="../images/chapter-20-25d3a1.webp" alt="第20章『`/goal`、Headless、定期実行』を表すautomation control illustration" loading="lazy" decoding="async">
@@ -38,7 +31,6 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     <h2 id="ch-20-s1">20.1 自律化の4要素</h2>
 <pre><code class="language-text">Goal      達成状態
 Verifier  判定方法
@@ -117,13 +109,13 @@ mv "$OUT.tmp" "$OUT"
 
   </section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自動化したい仕事を一つ選び、成功条件・最大回数・Timeout・禁止する副作用・人間の承認地点を書いてください。</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>良い自律化は、達成条件と停止条件の両方を検証可能にします。</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>良い自律化は、達成条件と停止条件の両方を検証可能にします。</p></div>
   </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、AIに『テストが通るまで直して』と頼み、無限ループで朝までCPUが回り続けて停止条件もなく止まれない。</p><h3>こう使う</h3><p>成功条件・最大ターン・Timeout・許可範囲・失敗時停止を/goal仕様として先に書き出す。</p><h3>得られるもの</h3><p>夜間自動実行が安全に走り、達成 or 安全停止の二状態で終わる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、毎日のレポート自動配信を構築したいが、誤送信時の責任の所在が決まらず承認が出ない。</p><h3>こう使う</h3><p>公開・送信・課金・削除は完全自動化せず、最後の一歩を人間承認に残す設計にする。</p><h3>得られるもの</h3><p>副作用のある操作だけ責任者が承認し、それ以外は自動で進む構造になり、承認が下りる。</p></article></div></section>
 </article>
 <nav class="chapter-nav"><a href="19.html">← Claude Codeを自分専用に育てる</a><a href="21.html">Dynamic Workflowsと複数Agent →</a></nav></main></div>
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
 </body></html>

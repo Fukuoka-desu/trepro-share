@@ -777,7 +777,7 @@ def features_html(meta: dict) -> str:
     return (
         '<section class="features" aria-label="この章の概観">'
         '<h2>この章の概観 ／ 何を扱い、何ができるか</h2>'
-        '<p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p>'
+        '<p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p>'
         f'<div class="features-grid">{"".join(cards)}</div>'
         '</section>'
     )
@@ -823,24 +823,16 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
     <div class="eyebrow">{label}</div>
     <h1>{html.escape(ch.title)}</h1>
   </header>
-  <section aria-labelledby="story-{html.escape(ch.key)}">
-    <h2 id="story-{html.escape(ch.key)}">物語の現在地</h2>
-    {features_html(meta)}
-    <div class="story-block">
-      <p class="story-lead">{html.escape(meta['scene'])}</p>
-      <div class="story-essay">{story_paragraphs(meta['essay'])}</div>
-    </div>
-  </section>
+  {features_html(meta)}
   {image_figure(lookup[f'chapter-{ch.key}'], image_prefix)}
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     {render_reference(ch.body, f'ch-{ch.key}', meta.get('features'))}
   </section>
   {extra_html}
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> {html.escape(meta['mission'])}</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>{html.escape(meta['takeaway'])}</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>{html.escape(meta['takeaway'])}</p></div>
   </section>
   {usecases_html(meta)}
 </article>
@@ -855,7 +847,7 @@ PAGE_TEMPLATE = Template(r"""<!doctype html>
 <header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="{{ home_href }}">Claude Code 教科書・ブログ版</a><nav><a href="{{ home_href }}">目次</a><a href="{{ complete_href }}">全章一括</a><a href="{{ image_guide_href }}">画像実装</a></nav></div></header>
 <div class="toc-overlay" aria-hidden="true"></div>
 {{ body }}
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 {% if inline_assets %}<script>{{ js }}</script>{% else %}<script src="{{ asset_prefix }}assets/app.js"></script>{% endif %}
 </body></html>""")
 
@@ -889,8 +881,7 @@ def intro_html(preamble: str, manifest: dict, image_prefix: str) -> str:
     )
     preamble_html = render_reference(strip_original_title(preamble), "preface")
     return f"""
-<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Story-driven complete edition</div><h1>Claude Code実践教科書<br>物語で歩くブログ完全版</h1><p class="lede">『使えている』から、『直せる・説明できる・安全に配れる』へ。初心者の最初の一操作から、Skills、Hooks、MCP、HTML、全社ハーネスまでを一続きの物語として学びます。</p><div class="hero-actions"><a class="button primary" href="#part-0">物語を始める</a><a class="button" href="complete.html">全章を一括で読む</a></div></div>{image_figure(lookup['cover-main'], image_prefix)}</div></section>
-<section class="hero"><h2>登場人物</h2><div class="character-grid">{chars}</div></section>
+<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Practical edition</div><h1>Claude Code実践教科書<br>ブログ完全版</h1><p class="lede">『使えている』から、『直せる・説明できる・安全に配れる』へ。最初の一操作から、Skills、Hooks、MCP、HTML、全社ハーネスまでを実装可能な粒度で扱います。</p><div class="hero-actions"><a class="button primary" href="#course-overview">14レッスンで始める</a><a class="button" href="#part-0">第0部から読む</a></div></div>{image_figure(lookup['cover-main'], image_prefix)}</div></section>
 <section class="hero"><div class="chapter"><header class="chapter-head"><div class="eyebrow">Before you start</div><h1>原典から引き継ぐ前提</h1></header><div class="reference">{preamble_html}</div></div></section>
 """
 
@@ -956,7 +947,7 @@ def part_html(part: Part, chapters: list[Chapter], manifest: dict, image_prefix:
     articles = "".join(chapter_article(ch, manifest, image_prefix) for ch in chapters)
     return f"""
 <section class="part" id="part-{part.number}">
-  <header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2><p>{html.escape(meta['story'])}</p></header>
+  <header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2></header>
   {part_usecase_html(meta)}
   {image_figure(lookup[f'part-{part.number:02d}'], image_prefix)}
   {articles}
@@ -1000,7 +991,7 @@ def build_site(preamble: str, parts: list[Part], chapters: list[Chapter], manife
         for ch in chapters_by_part.get(part.number, []):
             label = "終章" if ch.key == "final" else f"第{int(ch.key)}章"
             cards.append(f'<a class="card" href="chapters/{ch.key}.html"><div class="eyebrow">{label}</div><h3>{html.escape(ch.title)}</h3><p>{html.escape(CHAPTER_META[ch.key]["takeaway"])}</p></a>')
-        home_main += f'<section class="part" id="part-{part.number}"><header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2><p>{html.escape(meta["story"])}</p></header>{part_usecase_html(meta)}{image_figure(manifest_lookup(manifest)[f"part-{part.number:02d}"], "images/")}<div class="card-grid">{"".join(cards)}</div></section>'
+        home_main += f'<section class="part" id="part-{part.number}"><header class="part-header"><div class="eyebrow">Part {part.number}</div><h2>第{part.number}部　{html.escape(part.title)}</h2></header>{part_usecase_html(meta)}{image_figure(manifest_lookup(manifest)[f"part-{part.number:02d}"], "images/")}<div class="card-grid">{"".join(cards)}</div></section>'
     home_main += '</main></div>'
     write_page(SITE / "index.html", "Claude Code実践教科書 — ブログ完全版", "Claude Codeを物語と実装で学ぶ完全版ブログ", home_main, asset_prefix="", home_href="index.html", complete_href="complete.html", image_guide_href="image-pipeline.html")
 
@@ -1009,8 +1000,8 @@ def build_site(preamble: str, parts: list[Part], chapters: list[Chapter], manife
     complete_body += course_section_html("")
     for part in parts:
         complete_body += part_html(part, chapters_by_part.get(part.number, []), manifest, "images/")
-    complete_body += '<p class="source-note">本版は、元教科書の全章・全小見出し・コードブロックを保持し、その前後へ物語、体験ミッション、画像制作指示を追加しています。</p></main></div>'
-    write_page(SITE / "complete.html", "Claude Code実践教科書 — 全章一括", "物語と実装リファレンスを一つのHTMLで読む完全版", complete_body, asset_prefix="", home_href="index.html", complete_href="complete.html", image_guide_href="image-pipeline.html", inline_assets=True)
+    complete_body += '<p class="source-note">本版は、元教科書の全章・全小見出し・コードブロックを保持し、各章に機能概観・ユースケース・体験ミッションを追加しています。</p></main></div>'
+    write_page(SITE / "complete.html", "Claude Code実践教科書 — 全章一括", "機能と実装を一つのHTMLで読む完全版", complete_body, asset_prefix="", home_href="index.html", complete_href="complete.html", image_guide_href="image-pipeline.html", inline_assets=True)
 
     pipeline_md_path = ROOT / "IMAGE_PIPELINE.md"
     if pipeline_md_path.exists():

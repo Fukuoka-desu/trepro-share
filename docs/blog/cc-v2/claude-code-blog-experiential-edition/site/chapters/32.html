@@ -11,14 +11,7 @@
     <div class="eyebrow">第32章</div>
     <h1>継続業務の自動化</h1>
   </header>
-  <section aria-labelledby="story-32">
-    <h2 id="story-32">物語の現在地</h2>
-    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>毎朝Brief</h3><p class="feature-summary">朝一に予定・未返信・締切・重要連絡を1枚に圧縮し、今日の動き方を10秒で把握できるようにする補佐機能。</p><dl class="feature-io"><dt>入力</dt><dd>Calendar・メール未返信・締切Task・Slack/メンション履歴</dd><dt>出力</dt><dd>今日の予定リスト・準備が必要な会議・返信下書き・リスクメモ</dd></dl></article><article class="feature-card"><h3>会議→Task Board</h3><p class="feature-summary">議事録からタスクを抽出してTask Boardへ流し込み、重複登録と担当者確認を持たせる橋渡し機能。</p><dl class="feature-io"><dt>入力</dt><dd>会議文字起こし、現Task Board</dd><dt>出力</dt><dd>重複統合済みのTaskエントリと担当者割り当て</dd></dl></article><article class="feature-card"><h3>Skill改善Loop</h3><p class="feature-summary">実行ログ・失敗Fixture・評価点を集めてSkillを更新し、Canary経由で再配布する継続改善ループ。</p><dl class="feature-io"><dt>入力</dt><dd>Skill実行ログ、失敗Fixture、評価スコア</dd><dt>出力</dt><dd>改善されたSkillとCanary配布結果</dd></dl></article><article class="feature-card"><h3>自動化成熟度モデル</h3><p class="feature-summary">個人手作業→再利用→半自動→監視付き自動の4段で、業務ごとの自動化レベルを段階的に上げる尺度。</p><dl class="feature-io"><dt>入力</dt><dd>対象業務、入力安定性、副作用の有無</dd><dt>出力</dt><dd>業務別の現在レベルと次のターゲット段階</dd></dl></article></div></section>
-    <div class="story-block">
-      <p class="story-lead">毎朝のニュース、会議後のTask Board、月次のSkill評価。繰り返しが見えたとき、四人は人を速くするのではなく、仕組みへ移すことを考えます。</p>
-      <div class="story-essay"><p>継続業務は、入力が安定し、完了条件が検証でき、失敗時に人へ戻せるものから自動化します。毎朝Briefは情報源と更新時刻を固定し、会議からTask Boardへの流れは重複登録と担当者確認を持たせます。</p><p>Skill改善Loopでは、実行ログ、失敗Fixture、評価点を集め、Canaryで更新します。成熟度は、個人の手作業から再利用、半自動、監視付き自動へ段階的に上げます。</p></div>
-    </div>
-  </section>
+  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>毎朝Brief</h3><p class="feature-summary">朝一に予定・未返信・締切・重要連絡を1枚に圧縮し、今日の動き方を10秒で把握できるようにする補佐機能。</p><dl class="feature-io"><dt>入力</dt><dd>Calendar・メール未返信・締切Task・Slack/メンション履歴</dd><dt>出力</dt><dd>今日の予定リスト・準備が必要な会議・返信下書き・リスクメモ</dd></dl></article><article class="feature-card"><h3>会議→Task Board</h3><p class="feature-summary">議事録からタスクを抽出してTask Boardへ流し込み、重複登録と担当者確認を持たせる橋渡し機能。</p><dl class="feature-io"><dt>入力</dt><dd>会議文字起こし、現Task Board</dd><dt>出力</dt><dd>重複統合済みのTaskエントリと担当者割り当て</dd></dl></article><article class="feature-card"><h3>Skill改善Loop</h3><p class="feature-summary">実行ログ・失敗Fixture・評価点を集めてSkillを更新し、Canary経由で再配布する継続改善ループ。</p><dl class="feature-io"><dt>入力</dt><dd>Skill実行ログ、失敗Fixture、評価スコア</dd><dt>出力</dt><dd>改善されたSkillとCanary配布結果</dd></dl></article><article class="feature-card"><h3>自動化成熟度モデル</h3><p class="feature-summary">個人手作業→再利用→半自動→監視付き自動の4段で、業務ごとの自動化レベルを段階的に上げる尺度。</p><dl class="feature-io"><dt>入力</dt><dd>対象業務、入力安定性、副作用の有無</dd><dt>出力</dt><dd>業務別の現在レベルと次のターゲット段階</dd></dl></article></div></section>
   
 <figure class="image-shell" data-image-id="chapter-32">
   <img src="../images/chapter-32-1b77d9.webp" alt="第32章『継続業務の自動化』を表すoperations illustration" loading="lazy" decoding="async">
@@ -38,7 +31,6 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     <h2 id="ch-32-s1">32.1 毎朝Brief</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>朝一に予定・未返信・締切・重要連絡を1枚に圧縮し、今日の動き方を10秒で把握できるようにする補佐機能。<br/><span class="feature-intro-io"><strong>入力:</strong> Calendar・メール未返信・締切Task・Slack/メンション履歴　<strong>出力:</strong> 今日の予定リスト・準備が必要な会議・返信下書き・リスクメモ</span></p>
 <p>Calendar、未返信候補、締切Task、重要Mentionから、今日の予定、準備Meeting、返信Draft、Riskを作る。送信/予定変更/Task更新はしない。</p>
 <h2 id="ch-32-s2">32.2 会議→Task Board</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>議事録からタスクを抽出してTask Boardへ流し込み、重複登録と担当者確認を持たせる橋渡し機能。<br/><span class="feature-intro-io"><strong>入力:</strong> 会議文字起こし、現Task Board　<strong>出力:</strong> 重複統合済みのTaskエントリと担当者割り当て</span></p>
@@ -94,13 +86,13 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 週一回以上繰り返す仕事を一つ選び、入力の安定性・検証可能性・副作用・失敗時対応を採点してください。</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。</p></div>
   </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業企画（架空）が、毎日のニュースとTask Boardを手動更新しており、休む日は誰も状況を把握できない。</p><h3>こう使う</h3><p>情報源と更新時刻を固定したMorning Brief Skillを作り、毎朝Scheduledで配信する。</p><h3>得られるもの</h3><p>休んでも止まらない情報基盤になり、属人化と業務継続性のリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅人事（架空）が、毎月のSkill評価を手作業で集計し、月初の3日間を奪われている。</p><h3>こう使う</h3><p>実行ログ・失敗Fixture・評価点を集めるSkill改善LoopをCanary更新と組む。</p><h3>得られるもの</h3><p>評価が自動化され、人は問題のあるSkillだけ集中的に直せる。</p></article></div></section>
 </article>
 <nav class="chapter-nav"><a href="31.html">← Design・資料・公開</a><a href="33.html">失敗Pattern →</a></nav></main></div>
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
 </body></html>

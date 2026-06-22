@@ -11,14 +11,7 @@
     <div class="eyebrow">第35章</div>
     <h1>教科書アプリの情報設計</h1>
   </header>
-  <section aria-labelledby="story-35">
-    <h2 id="story-35">物語の現在地</h2>
-    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>教科書アプリ Content Model</h3><p class="feature-summary">Role別Path・Lesson・前提・成果物・Check・Feature Registry・進捗・質問履歴を構造化した学習データモデル。</p><dl class="feature-io"><dt>入力</dt><dd>本文テキスト、章構成、進捗ステータス案</dd><dt>出力</dt><dd>Content Modelに沿ったJSONデータ</dd></dl></article><article class="feature-card"><h3>Lesson JSON Schema</h3><p class="feature-summary">1Lessonの前提・成果物・チェック・所要時間・版情報を機械検証可能にするJSON Schema。</p><dl class="feature-io"><dt>入力</dt><dd>Lesson原稿、検証ルール</dd><dt>出力</dt><dd>Schema検証通過済みLesson JSON</dd></dl></article><article class="feature-card"><h3>Feature Registry連携</h3><p class="feature-summary">変動するモデル名・コマンド・UIをLesson本文に埋め込まず、Registry参照で動的差し替えする仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>変動情報のキー、Registryデータ</dd><dt>出力</dt><dd>Registry参照で差し替えされたLesson表示</dd></dl></article><article class="feature-card"><h3>Progress State</h3><p class="feature-summary">seen/practiced/verified/applied の4段階進捗を保存し、本人と管理者の両方から見える学習State。</p><dl class="feature-io"><dt>入力</dt><dd>Lesson完了イベント、証拠提出</dd><dt>出力</dt><dd>保存された進捗Stateと修了判定</dd></dl></article><article class="feature-card"><h3>Allowlist付き Local Companion</h3><p class="feature-summary">ブラウザから任意Shellを実行せず、Local Companionが許可コマンドだけ動かす安全な実行連携。</p><dl class="feature-io"><dt>入力</dt><dd>ブラウザからの実行要求、Allowlist定義</dd><dt>出力</dt><dd>許可コマンドの実行結果、拒否ログ</dd></dl></article></div></section>
-    <div class="story-block">
-      <p class="story-lead">教科書をHTMLへしただけでは、遥が途中で止まった場所も、何を実践したかも分かりません。そこで本文をLesson Dataへ分け、ナビゲーターが状態を読みながら次の一操作を案内する学習アプリを設計します。</p>
-      <div class="story-essay"><p>最適な教科書アプリはPDF Viewerではありません。Role別Path、Lesson、前提、成果物、Check、Feature Registry、進捗、質問履歴を構造化します。進捗はseen、practiced、verified、appliedの段階で持ちます。</p><p>ブラウザから任意Shellを直接実行せず、将来はAllowlist付きLocal Companionと連携します。画面は現在地、次の一操作、期待結果、証拠、保存・再開を中心に設計します。</p></div>
-    </div>
-  </section>
+  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>教科書アプリ Content Model</h3><p class="feature-summary">Role別Path・Lesson・前提・成果物・Check・Feature Registry・進捗・質問履歴を構造化した学習データモデル。</p><dl class="feature-io"><dt>入力</dt><dd>本文テキスト、章構成、進捗ステータス案</dd><dt>出力</dt><dd>Content Modelに沿ったJSONデータ</dd></dl></article><article class="feature-card"><h3>Lesson JSON Schema</h3><p class="feature-summary">1Lessonの前提・成果物・チェック・所要時間・版情報を機械検証可能にするJSON Schema。</p><dl class="feature-io"><dt>入力</dt><dd>Lesson原稿、検証ルール</dd><dt>出力</dt><dd>Schema検証通過済みLesson JSON</dd></dl></article><article class="feature-card"><h3>Feature Registry連携</h3><p class="feature-summary">変動するモデル名・コマンド・UIをLesson本文に埋め込まず、Registry参照で動的差し替えする仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>変動情報のキー、Registryデータ</dd><dt>出力</dt><dd>Registry参照で差し替えされたLesson表示</dd></dl></article><article class="feature-card"><h3>Progress State</h3><p class="feature-summary">seen/practiced/verified/applied の4段階進捗を保存し、本人と管理者の両方から見える学習State。</p><dl class="feature-io"><dt>入力</dt><dd>Lesson完了イベント、証拠提出</dd><dt>出力</dt><dd>保存された進捗Stateと修了判定</dd></dl></article><article class="feature-card"><h3>Allowlist付き Local Companion</h3><p class="feature-summary">ブラウザから任意Shellを実行せず、Local Companionが許可コマンドだけ動かす安全な実行連携。</p><dl class="feature-io"><dt>入力</dt><dd>ブラウザからの実行要求、Allowlist定義</dd><dt>出力</dt><dd>許可コマンドの実行結果、拒否ログ</dd></dl></article></div></section>
   
 <figure class="image-shell" data-image-id="chapter-35">
   <img src="../images/chapter-35-1dc9d6.webp" alt="第35章『教科書アプリの情報設計』を表すproduct concept illustration" loading="lazy" decoding="async">
@@ -38,7 +31,6 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     <h2 id="ch-35-s1">35.1 最適形</h2>
 <p>PDF Viewerではなく、次を持つ実行支援Learning Systemにする。</p>
 <ul>
@@ -184,13 +176,13 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一章をLesson JSONへ変換し、前提・成果物・チェック・所要時間・版情報をSchemaで検証してください。</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>学習アプリの中心は本文表示ではなく、行動・証拠・状態・再開です。</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>学習アプリの中心は本文表示ではなく、行動・証拠・状態・再開です。</p></div>
   </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教育担当（架空）が、HTML教材をPDFビューアで配り、受講者の進捗が分からず修了判定もできない状況に詰まっている。</p><h3>こう使う</h3><p>本文をLesson JSONへ分解し、前提・成果物・チェック・進捗（seen/practiced/verified/applied）をSchema検証する。</p><h3>得られるもの</h3><p>誰がどこまでできたかが本人にも管理者にも見え、修了判定が客観的にできる。</p></article><article class="usecase-card"><h3>場面</h3><p>オンラインスクール（架空）が、ブラウザから任意Shellを実行する設計で監査NGを受けた。</p><h3>こう使う</h3><p>ブラウザ実行はAllowlist付きLocal Companionへ任せ、画面側は次の一操作・期待結果・証拠提示に専念する。</p><h3>得られるもの</h3><p>監査要件を満たしつつ、学習者は手元で安全に実行できる設計に置き換わる。</p></article></div></section>
 </article>
 <nav class="chapter-nav"><a href="34.html">← コピペ用標準テンプレート</a><a href="36.html">30日導入計画 →</a></nav></main></div>
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
 </body></html>

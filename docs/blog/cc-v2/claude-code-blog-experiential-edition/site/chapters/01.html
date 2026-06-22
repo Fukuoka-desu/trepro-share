@@ -11,14 +11,7 @@
     <div class="eyebrow">第1章</div>
     <h1>Claude Codeは何が違うのか</h1>
   </header>
-  <section aria-labelledby="story-01">
-    <h2 id="story-01">物語の現在地</h2>
-    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>エージェント型Claude Code</h3><p class="feature-summary">目的を渡すとフォルダ探索・ファイル編集・コマンド実行・検証まで自走するAIコーディング基盤の全体像。</p><dl class="feature-io"><dt>入力</dt><dd>目的、対象フォルダ、許可してよい操作の範囲</dd><dt>出力</dt><dd>生成・編集されたファイル、実行ログ、検証結果</dd></dl></article><article class="feature-card"><h3>Chat / Cowork / Code / Design</h3><p class="feature-summary">用途別の入口を相談・業務処理・実装・情報設計に分けて、ひとつの仕事を無理なく前へ進める使い分け。</p><dl class="feature-io"><dt>入力</dt><dd>目下の作業、必要な成果物、関わるツールの選択肢</dd><dt>出力</dt><dd>どの入口で始め、どこへ渡すかの設計マップ</dd></dl></article><article class="feature-card"><h3>AIコーディング3世代モデル</h3><p class="feature-summary">コピペ時代→エディタ補完時代→エージェント時代という変遷を理解し、人間の役割を再定義する視座。</p><dl class="feature-io"><dt>入力</dt><dd>現在使っているAIの形式、自分が任せたいタスク</dd><dt>出力</dt><dd>次に投資すべき層（目的設計か、権限設計か、品質設計か）</dd></dl></article></div></section>
-    <div class="story-block">
-      <p class="story-lead">遥が『この資料をまとめて』と頼むと、チャットAIは文章を返しました。Claude Codeへ同じ目的を渡すと、フォルダを読み、ファイルを作り、コマンドを実行し、結果を確かめ始めます。画面の向こうにいるのは、回答者ではなく作業者でした。</p>
-      <div class="story-essay"><p>AIコーディングは、コードを受け取って人が実行する時代から、編集環境の横で補完する時代を経て、目的を渡すと探索から検証まで進める時代へ移りました。そこで人間の役割も、タイピングから目的・権限・品質の設計へ変わります。</p><p>Chat、Cowork、Code、Designは競合する入口ではありません。相談、業務処理、実装、情報設計を分担させることで、ひとつの仕事を無理なく前へ進められます。</p></div>
-    </div>
-  </section>
+  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>エージェント型Claude Code</h3><p class="feature-summary">目的を渡すとフォルダ探索・ファイル編集・コマンド実行・検証まで自走するAIコーディング基盤の全体像。</p><dl class="feature-io"><dt>入力</dt><dd>目的、対象フォルダ、許可してよい操作の範囲</dd><dt>出力</dt><dd>生成・編集されたファイル、実行ログ、検証結果</dd></dl></article><article class="feature-card"><h3>Chat / Cowork / Code / Design</h3><p class="feature-summary">用途別の入口を相談・業務処理・実装・情報設計に分けて、ひとつの仕事を無理なく前へ進める使い分け。</p><dl class="feature-io"><dt>入力</dt><dd>目下の作業、必要な成果物、関わるツールの選択肢</dd><dt>出力</dt><dd>どの入口で始め、どこへ渡すかの設計マップ</dd></dl></article><article class="feature-card"><h3>AIコーディング3世代モデル</h3><p class="feature-summary">コピペ時代→エディタ補完時代→エージェント時代という変遷を理解し、人間の役割を再定義する視座。</p><dl class="feature-io"><dt>入力</dt><dd>現在使っているAIの形式、自分が任せたいタスク</dd><dt>出力</dt><dd>次に投資すべき層（目的設計か、権限設計か、品質設計か）</dd></dl></article></div></section>
   
 <figure class="image-shell" data-image-id="chapter-01">
   <img src="../images/chapter-01-78dadc.webp" alt="第1章『Claude Codeは何が違うのか』を表すeditorial timeline illustration" loading="lazy" decoding="async">
@@ -38,7 +31,6 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
     <h2 id="ch-01-s1">1.1 チャットAIからエージェントへ</h2>
 <p>従来のチャットAIでは、人間がコードをコピーし、実行し、エラーを再度貼り付けていた。Claude Codeは同じ作業場所で次を行う。</p>
 <ol>
@@ -173,13 +165,13 @@ Codeで実装・検証・公開準備
 
   </section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> いま抱えている仕事を一つ選び、Chat・Cowork・Code・Designのどこで始め、どこへ渡すかを書き分けてください。</p></div>
-    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>Claude Codeの価値はコード生成ではなく、探索・編集・実行・検証を同じ場所で回せることにあります。</p></div>
+    <div class="mt-takeaway"><h3>このページのポイント</h3><p>Claude Codeの価値はコード生成ではなく、探索・編集・実行・検証を同じ場所で回せることにあります。</p></div>
   </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ広告のプランナー（架空）が、チャットAIに『議事録まとめて』と頼み、毎回手元のWordへコピペして整形に1時間かけている。</p><h3>こう使う</h3><p>Claude Codeに目的とフォルダを渡し、議事録ファイルとタスクJSONを同じ場所で生成・確認まで一気に走らせる。</p><h3>得られるもの</h3><p>コピペ往復が消え、成果物がフォルダに残る。次回からは同じ手順で5分の作業になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者の佐々木さん（架空）が、複数ファイルにまたがる修正をチャットAIで進めるたび、貼り付け漏れで動かなくなる。</p><h3>こう使う</h3><p>Claude Codeに編集権限とプロジェクトを渡し、探索→修正→テスト実行までを同じセッションで完結させる。</p><h3>得られるもの</h3><p>ファイルの一貫性が保たれ、貼り付け事故と再質問のループから抜けられる。</p></article></div></section>
 </article>
 <nav class="chapter-nav"><a href="00.html">← 教科書を「実行システム」にする</a><a href="02.html">安全を最初に設計する →</a></nav></main></div>
-<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
+<footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
 </body></html>
