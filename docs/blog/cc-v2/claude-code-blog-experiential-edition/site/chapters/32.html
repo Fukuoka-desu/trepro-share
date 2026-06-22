@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-32">
   <header class="chapter-head">
     <div class="eyebrow">第32章</div>
-    <h1>継続業務の自動化</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">朝起きたら、仕事が3つ終わっている</span>
+      <span class="chapter-name">継続業務の自動化</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『毎朝のニュース整理と、会議後のタスク登録と、月次のSkill評価』。
-全部、自分が手動でやってませんか。</p><p>ほとんどの人は、繰り返しが見えても『自分で頑張る』を選びます。
-でも、人を速くする努力には上限があります。仕組みへ移すのが正解。</p><p>この章で扱うのは、毎朝Brief（予定・未返信・締切を1枚に圧縮）、会議からTask Boardへ流し込む橋渡し、Skill改善Loop（実行ログ・失敗Fixture・評価点を集めてCanary更新）。
-そして自動化成熟度モデル（個人手作業→再利用→半自動→監視付き自動の4段）で、業務ごとに今どこにいるかを月次で記録する。</p><p>自動化は頻度だけで決めません。入力の安定性・検証可能性・失敗時の人への戻しやすさで選ぶ。
-休んでも止まらない情報基盤が、ここで生まれます。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『朝起きて最初にやる仕事を、AIに任せられたら』。
+これは贅沢な願いではなく、設計次第で実現できる現実です。</p><p>ほとんどの人は、AIを『その都度呼ぶもの』として使っています。
+ですが、定型業務に成功条件・最大回数・タイムアウト・承認地点を設けて自走させれば、AIは寝ている間にも動きます。</p><p>この章で扱うのは、継続業務を安全に自動化する設計です。
+失敗時の戻し方、人の承認地点、ログと通知の設計。便利さと事故半径を同じ机の上で並べます。</p><p>朝起きたら、仕事が 3 つ終わっている。そういう運用は、設計の品質次第で安定します。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-32-0-brief"><h3 id="feature-32-0-brief">毎朝Brief</h3><p class="feature-summary">朝一に予定・未返信・締切・重要連絡を1枚に圧縮し、今日の動き方を10秒で把握できるようにする補佐機能。</p><dl class="feature-io"><dt>入力</dt><dd>Calendar・メール未返信・締切Task・Slack/メンション履歴</dd><dt>出力</dt><dd>今日の予定リスト・準備が必要な会議・返信下書き・リスクメモ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-32-1-task-board"><h3 id="feature-32-1-task-board">会議→Task Board</h3><p class="feature-summary">議事録からタスクを抽出してTask Boardへ流し込み、重複登録と担当者確認を持たせる橋渡し機能。</p><dl class="feature-io"><dt>入力</dt><dd>会議文字起こし、現Task Board</dd><dt>出力</dt><dd>重複統合済みのTaskエントリと担当者割り当て</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-32-2-skill-loop"><h3 id="feature-32-2-skill-loop">Skill改善Loop</h3><p class="feature-summary">実行ログ・失敗Fixture・評価点を集めてSkillを更新し、Canary経由で再配布する継続改善ループ。</p><dl class="feature-io"><dt>入力</dt><dd>Skill実行ログ、失敗Fixture、評価スコア</dd><dt>出力</dt><dd>改善されたSkillとCanary配布結果</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-32-3-item"><h3 id="feature-32-3-item">自動化成熟度モデル</h3><p class="feature-summary">個人手作業→再利用→半自動→監視付き自動の4段で、業務ごとの自動化レベルを段階的に上げる尺度。</p><dl class="feature-io"><dt>入力</dt><dd>対象業務、入力安定性、副作用の有無</dd><dt>出力</dt><dd>業務別の現在レベルと次のターゲット段階</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-32">
@@ -92,12 +94,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>自動化候補の優先順位</dt><dd>週1回以上の頻度・入力フォーマットが安定・完了条件が機械検証できる・失敗しても人へ戻せる、の4条件を満たす業務だけを最初の自動化対象にします。条件を満たさない業務を強引にSkill化すると、最初の数週間は動いても運用フェーズで誤動作が出てきます。</dd><dt>Morning Brief の入力源を固定する</dt><dd>Calendar・メール・Slackメンション・締切Taskなど、毎朝の情報源を毎回違う方法で取りに行くと、ある日急に空欄になります。情報源と更新時刻を仕様として書き、対象が増えた時はSkillを直すのではなくRegistryへ追記する設計にします。</dd><dt>成熟度を測る尺度</dt><dd>個人手作業→再利用→半自動→監視付き自動の4段階で、対象業務がいまどこにいるかを月次で記録します。一気に最終段階を目指さず、半自動で1ヶ月動かしてから監視付き自動へ進めると、運用事故がほぼ起きません。</dd><dt>次の章への接続</dt><dd>自動化を増やすほど、過去の失敗を学習資産へ変換する次章のテーマが重要になります。動くものが増えるほど、止まったときの原因分析と再発防止の仕組みが品質を決めるからです。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 週一回以上繰り返す仕事を一つ選び、入力の安定性・検証可能性・副作用・失敗時対応を採点してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業企画（架空）が、毎日のニュースとTask Boardを手動更新しており、休む日は誰も状況を把握できない。</p><h3>こう使う</h3><p>情報源と更新時刻を固定したMorning Brief Skillを作り、毎朝Scheduledで配信する。</p><h3>得られるもの</h3><p>休んでも止まらない情報基盤になり、属人化と業務継続性のリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅人事（架空）が、毎月のSkill評価を手作業で集計し、月初の3日間を奪われている。</p><h3>こう使う</h3><p>実行ログ・失敗Fixture・評価点を集めるSkill改善LoopをCanary更新と組む。</p><h3>得られるもの</h3><p>評価が自動化され、人は問題のあるSkillだけ集中的に直せる。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="31.html">← Design・資料・公開</a><a href="33.html">失敗Pattern →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

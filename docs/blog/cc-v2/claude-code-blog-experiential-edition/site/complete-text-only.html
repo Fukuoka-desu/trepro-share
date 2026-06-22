@@ -18,7 +18,9 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .site-header{background:linear-gradient(135deg,#101b33,#233961);color:white;padding:14px 24px;position:sticky;top:0;z-index:40;box-shadow:0 8px 28px rgba(0,0,0,.18)}.site-header .inner{max-width:var(--max);margin:auto;display:flex;align-items:center;gap:18px}.brand{font-weight:800;letter-spacing:.02em;color:white;text-decoration:none}.site-header nav{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}.site-header nav a{color:#e7edff;text-decoration:none;font-size:.92rem}
 .toc-toggle{display:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:white;border-radius:10px;padding:6px 12px;font-size:.86rem;font-weight:700;cursor:pointer}
 .toc-toggle:hover{background:rgba(255,255,255,.22)}
-.hero{max-width:var(--max);margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.16rem;color:var(--muted);max-width:64ch}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
+.hero{max-width:var(--max);margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.16rem;color:var(--muted);max-width:64ch}.lede strong{display:block;font-size:1.4rem;color:var(--ink);line-height:1.5;letter-spacing:.005em}
+.lede-sub{font-size:1.02rem;color:var(--muted);max-width:60ch;margin-top:8px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
 .layout{max-width:var(--max);margin:auto;padding:20px 24px 80px;display:grid;grid-template-columns:var(--toc-w) minmax(0,1fr);gap:40px}
 .toc{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:18px;transition:transform .25s ease,box-shadow .25s ease}
 .toc h2{font-size:.95rem;margin:0 0 12px}
@@ -32,6 +34,10 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .content{min-width:0}.part{margin:56px 0 80px}.part-header{padding:42px;border-radius:var(--radius);background:linear-gradient(135deg,#13213e,#26406e);color:white;box-shadow:var(--shadow);scroll-margin-top:80px}.part-header h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.2;margin:.2em 0}.part-header p{color:#dbe5ff;max-width:70ch}
 .chapter{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,5vw,56px);margin:34px 0;box-shadow:var(--shadow);scroll-margin-top:80px}
 .chapter-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}.chapter-head h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;letter-spacing:-.025em;margin:.2em 0}
+.chapter-title{margin:.2em 0;line-height:1.25}
+.chapter-hook{display:block;font-size:clamp(1.6rem,3.6vw,2.5rem);color:var(--ink);letter-spacing:-.02em;font-weight:800;line-height:1.3}
+.chapter-name{display:block;font-size:clamp(1rem,1.8vw,1.2rem);color:var(--muted);margin-top:8px;font-weight:600;letter-spacing:.02em}
+.chapter-name::before{content:"──";margin-right:.5em;color:var(--ref-accent)}
 .intro-human{margin:24px 0 32px;padding:26px 30px;border-radius:18px;background:linear-gradient(135deg,#fffdf6,#fff);border-left:5px solid var(--action-accent);box-shadow:0 6px 18px rgba(122,74,16,.06)}
 .intro-human p{margin:0 0 .9em;font-size:1.06rem;line-height:1.95;color:var(--story-ink)}
 .intro-human p:last-child{margin-bottom:0}
@@ -88,6 +94,10 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .usecase-card h3{margin:0 0 4px;font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ref-accent);font-weight:800}
 .usecase-card p{margin:0 0 10px;font-size:.94rem;line-height:1.75;color:var(--story-ink)}
 .usecase-card p:last-child{margin-bottom:0}
+.epilogue-letter{margin:60px 0 40px;padding:48px clamp(28px,5vw,64px);border-radius:24px;background:linear-gradient(180deg,#fffaf0,#fefdf8);border:1px solid var(--action-border);box-shadow:0 12px 40px rgba(122,74,16,.08)}
+.epilogue-letter>h2{margin:0 0 24px;font-size:clamp(1.4rem,2.6vw,1.9rem);color:var(--action-accent);font-family:ui-serif,"Yu Mincho",serif;letter-spacing:.02em}
+.epilogue-body p{margin:0 0 1.2em;font-size:1.06rem;line-height:2.0;color:var(--story-ink);font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif}
+.epilogue-body p:last-child{margin:1.8em 0 0;text-align:right;color:var(--muted);font-size:1rem}
 .part-usecase{margin:22px 0 0;padding:22px 24px;border-radius:16px;background:var(--ref-bg);border:1px solid var(--ref-border);color:var(--story-ink);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .part-usecase h3{grid-column:1/-1;margin:0;font-size:.92rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ref-accent)}
 .part-usecase .pu-item h4{margin:0 0 4px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ref-accent)}
@@ -154,7 +164,7 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 <header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="index.html">Claude Code 教科書・ブログ版</a><nav><a href="index.html">目次</a><a href="complete.html">全章一括</a><a href="image-pipeline.html">画像実装</a></nav></div></header>
 <div class="toc-overlay" aria-hidden="true"></div>
 
-<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Practical edition</div><h1>Claude Code実践教科書<br>ブログ完全版</h1><p class="lede">『使えている』から、『直せる・説明できる・安全に配れる』へ。最初の一操作から、Skills、Hooks、MCP、HTML、全社ハーネスまでを実装可能な粒度で扱います。</p><div class="hero-actions"><a class="button primary" href="#course-overview">14レッスンで始める</a><a class="button" href="#part-0">第0部から読む</a></div></div>
+<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Practical edition</div><h1>Claude Code実践教科書<br>ブログ完全版</h1><p class="lede"><strong>AI研修を受けたのに、自席で再現できない人へ。</strong></p><p class="lede-sub">Claude Codeを、明日から会社で配れる人になる。40章＋14レッスンの実践教科書。</p><div class="hero-actions"><a class="button primary" href="#course-overview">14レッスンで始める</a><a class="button" href="#part-0">第0部から読む</a></div></div>
 <figure class="image-shell" data-image-id="cover-main">
   <img src="images/cover-main.webp" alt="学習者、開発者、管理者、ナビゲーターがClaude Codeの学習と全社運用を一つの旅として設計する表紙イラスト" loading="lazy" decoding="async">
   <figcaption>使う、理解する、仕組みにする。その全行程を一つの物語として歩きます。</figcaption>
@@ -217,7 +227,7 @@ Composition: Wide 16:9 cover with open space on the upper-left for the Japanese 
 </ul>
 <hr/>
 </div></div></section>
-<div class="layout"><aside class="toc" id="site-toc"><button class="toc-drawer-close" type="button" aria-label="目次を閉じる">×</button><h2>目次</h2><a class="part-link course-link" href="#course-overview">14レッスン体験コース</a><a class="part-link" href="#part-0">第0部 最適な教科書の設計</a><a href="#chapter-00">第0章 教科書を「実行システム」にする</a><a class="part-link" href="#part-1">第1部 Claude Codeの全体像と最初の成果物</a><a href="#chapter-01">第1章 Claude Codeは何が違うのか</a><a href="#chapter-02">第2章 安全を最初に設計する</a><a href="#chapter-03">第3章 導入とProject Folder</a><a href="#chapter-04">第4章 最初の90分実習：会議アシスタント</a><a href="#chapter-05">第5章 強い指示の書き方</a><a class="part-link" href="#part-2">第2部 標準作業ループ</a><a href="#chapter-06">第6章 Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="#chapter-07">第7章 Permission Mode、Sandbox、危険操作</a><a href="#chapter-08">第8章 ModelとEffort</a><a href="#chapter-09">第9章 SessionとContext</a><a href="#chapter-10">第10章 GitとCheckpoint</a><a class="part-link" href="#part-3">第3部 Claude Codeを育てる拡張レイヤー</a><a href="#chapter-11">第11章 CLAUDE.md、Rules、Auto Memory</a><a href="#chapter-12">第12章 Skills設計</a><a href="#chapter-13">第13章 Subagents、Agent View、並列作業</a><a href="#chapter-14">第14章 HooksとPlugins</a><a class="part-link" href="#part-4">第4部 外部連携と伝わる成果物</a><a href="#chapter-15">第15章 MCP、Connectors、APIを安全につなぐ</a><a href="#chapter-16">第16章 MarkdownよりHTMLが向く仕事</a><a href="#chapter-17">第17章 Claude Designから実装へ</a><a href="#chapter-18">第18章 CoworkとLive Artifacts</a><a class="part-link" href="#part-5">第5部 パーソナライズと自律化</a><a href="#chapter-19">第19章 Claude Codeを自分専用に育てる</a><a href="#chapter-20">第20章 `/goal`、Headless、定期実行</a><a href="#chapter-21">第21章 Dynamic Workflowsと複数Agent</a><a href="#chapter-22">第22章 信頼できる調査とレポート</a><a class="part-link" href="#part-6">第6部 トレプロハーネスの全社実装</a><a href="#chapter-23">第23章 最適Architecture</a><a href="#chapter-24">第24章 配布、同期、更新、Rollback</a><a href="#chapter-25">第25章 Skill Governance</a><a href="#chapter-26">第26章 Managed Policy、Security、Observability</a><a href="#chapter-27">第27章 OnboardingとRunbook</a><a class="part-link" href="#part-7">第7部 実務ユースケース集</a><a href="#chapter-28">第28章 文書・ファイル・会議</a><a href="#chapter-29">第29章 調査・Content・学習</a><a href="#chapter-30">第30章 Application開発</a><a href="#chapter-31">第31章 Design・資料・公開</a><a href="#chapter-32">第32章 継続業務の自動化</a><a href="#chapter-33">第33章 失敗Pattern</a><a class="part-link" href="#part-8">第8部 テンプレートとアプリ化</a><a href="#chapter-34">第34章 コピペ用標準テンプレート</a><a href="#chapter-35">第35章 教科書アプリの情報設計</a><a href="#chapter-36">第36章 30日導入計画</a><a href="#chapter-37">第37章 素材と現行仕様の補正</a><a href="#chapter-38">第38章 Coverage Map</a><a href="#chapter-final">終章 最強のまま保つ</a></aside><main class="content"><section class="course-overview" id="course-overview"><div class="course-head"><div class="eyebrow">体験コース／14レッスン</div><h2>0から順番に手を動かす学習ルート</h2><p class="course-lede">Claude Codeを使ったことが無い人が、F00から順番に14レッスンで「直せる・説明できる・安全に配れる」までを体験するコース設計です。各レッスンに対応する本書の章へジャンプできます。</p><p class="course-lede course-trigger">スキル<code>claude-code-handson-navigator</code>と連動。Claude Code（または Cursor／Codex）で「Claude Codeを0から学びたい」と話しかけると、このコース順に1ターン1操作で伴走します。</p></div><div class="course-grid"><article class="course-card"><div class="course-card-head"><span class="course-id">F00</span><span class="course-min">約10分</span></div><h3>体験学習を開始する</h3><p class="course-objective">学習専用ワークスペースと保存可能な学習状態を作り、操作方法を理解する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-00">第0章</a> <a class="course-chip" href="#chapter-01">第1章</a></div><p class="course-note">教科書の使い方／Claude Code は何が違うのか</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F01</span><span class="course-min">約20分</span></div><h3>安全を最初に設計する</h3><p class="course-objective">プロジェクト、作業範囲、承認、最小権限の意味を体験する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-02">第2章</a> <a class="course-chip" href="#chapter-03">第3章</a></div><p class="course-note">Sandbox・Project Folder の作り方</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F02</span><span class="course-min">約20分</span></div><h3>最初の90分実習：会議アシスタント</h3><p class="course-objective">Explorer・Editor・Agent・Terminalの役割を区別し、ファイルを自分で編集する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-04">第4章</a></div><p class="course-note">ハンズオン入門・名物章</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F03</span><span class="course-min">約30分</span></div><h3>強い指示の書き方</h3><p class="course-objective">目的・背景・入力・出力・制約・完了条件で曖昧でない依頼を作る。</p><div class="course-chapters"><a class="course-chip" href="#chapter-05">第5章</a></div><p class="course-note">依頼の構造化</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F04</span><span class="course-min">約25分</span></div><h3>ESPIVRC の型</h3><p class="course-objective">AIの変更を承認前に読み、意図しない変更を戻せる。</p><div class="course-chapters"><a class="course-chip" href="#chapter-06">第6章</a></div><p class="course-note">Explore→Specify→Plan→Implement→Verify→Review→Commit</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F05</span><span class="course-min">約25分</span></div><h3>Permission Mode と危険操作</h3><p class="course-objective">現在地確認・一覧・ファイル内容確認という安全な読み取りを使いこなす。</p><div class="course-chapters"><a class="course-chip" href="#chapter-07">第7章</a></div><p class="course-note">権限境界と Sandbox</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F06</span><span class="course-min">約30分</span></div><h3>Model と Effort、Session と Context</h3><p class="course-objective">小さな制作課題を計画だけさせ、人がレビューしてから実装へ進める。</p><div class="course-chapters"><a class="course-chip" href="#chapter-08">第8章</a> <a class="course-chip" href="#chapter-09">第9章</a></div><p class="course-note">深さと文脈の管理</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F07</span><span class="course-min">約45分</span></div><h3>Git と Checkpoint で戻れる安心</h3><p class="course-objective">承認済みPlanからHTML成果物を実装し、目視とファイルで検証する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-10">第10章</a></div><p class="course-note">戻る勇気</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F08</span><span class="course-min">約30分</span></div><h3>CLAUDE.md・Rules・Auto Memory</h3><p class="course-objective">同じworkspaceを異なるエージェントで開き、状態を失わず使い分ける。</p><div class="course-chapters"><a class="course-chip" href="#chapter-11">第11章</a></div><p class="course-note">Claude Code の覚えさせ方</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F09</span><span class="course-min">約45分</span></div><h3>Skills 設計（自分専用 Skill）</h3><p class="course-objective">既存Skillを魔法として使うのではなく、入力・骨子・生成・検証に分解する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-12">第12章</a> <a class="course-chip" href="#chapter-13">第13章</a></div><p class="course-note">Skill 設計と Subagent 活用</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F10</span><span class="course-min">約45分</span></div><h3>Hooks・Plugins・MCP</h3><p class="course-objective">小さな成功手順を標準準拠のSkillへ変換する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-14">第14章</a> <a class="course-chip" href="#chapter-15">第15章</a></div><p class="course-note">拡張機構と外部接続</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F11</span><span class="course-min">約45分</span></div><h3>HTMLレポート／Claude Design／成果物制作</h3><p class="course-objective">発火と出力品質を分け、正常・不足・巨大・危険・対象外の5ケースで評価する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-16">第16章</a> <a class="course-chip" href="#chapter-17">第17章</a> <a class="course-chip" href="#chapter-18">第18章</a></div><p class="course-note">ライブ成果物・Cowork</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F12</span><span class="course-min">約15分</span></div><h3>自分専用に育てる ／ /goal・Headless・定期実行</h3><p class="course-objective">意図的にセッションを切り、新しいチャットで同じ地点から復帰する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-19">第19章</a> <a class="course-chip" href="#chapter-20">第20章</a></div><p class="course-note">発展編</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F13</span><span class="course-min">約90分</span></div><h3>0→1卒業制作（応用＋終章）</h3><p class="course-objective">実務に近い小成果物を、要件・Plan・実装・検証・Skill候補化まで自走する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-21">第21章</a> <a class="course-chip" href="#chapter-22">第22章</a> <a class="course-chip" href="#chapter-23">第23章</a> <a class="course-chip" href="#chapter-24">第24章</a> <a class="course-chip" href="#chapter-25">第25章</a> <a class="course-chip" href="#chapter-26">第26章</a><span class="course-chip more">＋13章</span></div><p class="course-note">終章までの全章を自分の課題で適用する</p></article></div></section>
+<div class="layout"><aside class="toc" id="site-toc"><button class="toc-drawer-close" type="button" aria-label="目次を閉じる">×</button><h2>目次</h2><a class="part-link course-link" href="#course-overview">14レッスン体験コース</a><a class="part-link" href="#part-0">第0部 最適な教科書の設計</a><a href="#chapter-00">第0章 読むだけの学習を、卒業する</a><a class="part-link" href="#part-1">第1部 Claude Codeの全体像と最初の成果物</a><a href="#chapter-01">第1章 チャットで止まる人と、走り出す人の差</a><a href="#chapter-02">第2章 便利と事故は、同じスイッチで繋がっている</a><a href="#chapter-03">第3章 AIに、見せていい範囲を線で引く</a><a href="#chapter-04">第4章 90分で、動く成果物を1つ持って帰る</a><a href="#chapter-05">第5章 『いい感じに』で頼んで、いい感じに失敗する</a><a class="part-link" href="#part-2">第2部 標準作業ループ</a><a href="#chapter-06">第6章 速いチームは、工程を省かない</a><a href="#chapter-07">第7章 うっかり rm -rf を、5秒手前で止める</a><a href="#chapter-08">第8章 最上位モデルを常用して、月初に上限を吹き飛ばす</a><a href="#chapter-09">第9章 1日繋ぎっぱなしのチャットが、判断を曇らせる</a><a href="#chapter-10">第10章 間違えても、1分前に戻れる仕事場</a><a class="part-link" href="#part-3">第3部 Claude Codeを育てる拡張レイヤー</a><a href="#chapter-11">第11章 同じ説明を、二度と書かない</a><a href="#chapter-12">第12章 うまくいった一回を、毎回呼べる形にする</a><a href="#chapter-13">第13章 一人で同時に、3つの調査を走らせる</a><a href="#chapter-14">第14章 守らせたいルールは、お願いでは守られない</a><a class="part-link" href="#part-4">第4部 外部連携と伝わる成果物</a><a href="#chapter-15">第15章 外部サービスを、鍵を渡さず使い倒す</a><a href="#chapter-16">第16章 正しいだけで、読まれない資料を卒業する</a><a href="#chapter-17">第17章 デザインカンプを、その場で動くUIに変える</a><a href="#chapter-18">第18章 AIと2人で、同じ画面を編集する</a><a class="part-link" href="#part-5">第5部 パーソナライズと自律化</a><a href="#chapter-19">第19章 自分の口癖を、AIに覚えさせる</a><a href="#chapter-20">第20章 AIが、寝てる間に走る</a><a href="#chapter-21">第21章 1つの目的を、複数のAIに分担させる</a><a href="#chapter-22">第22章 AIに調べさせて、嘘ごと信じる事故をやめる</a><a class="part-link" href="#part-6">第6部 トレプロハーネスの全社実装</a><a href="#chapter-23">第23章 1台の成功を、全社の標準に翻訳する</a><a href="#chapter-24">第24章 配って、戻せる。それが配布の正解</a><a href="#chapter-25">第25章 誰が作って、誰が承認したか、説明できますか</a><a href="#chapter-26">第26章 AIの暴走は、ログから見える</a><a href="#chapter-27">第27章 新人の初日が、1人で完結する</a><a class="part-link" href="#part-7">第7部 実務ユースケース集</a><a href="#chapter-28">第28章 毎日の雑務を、AIに渡せる単位に切る</a><a href="#chapter-29">第29章 調べて、書いて、学ぶを、1つの机で回す</a><a href="#chapter-30">第30章 プロトタイプを、ひと晩で動くアプリにする</a><a href="#chapter-31">第31章 1枚に詰め込む、を諦める</a><a href="#chapter-32">第32章 朝起きたら、仕事が3つ終わっている</a><a href="#chapter-33">第33章 事故ったAI現場が、いつも踏んでいる轍</a><a class="part-link" href="#part-8">第8部 テンプレートとアプリ化</a><a href="#chapter-34">第34章 ゼロから書かない。揃った型から始める</a><a href="#chapter-35">第35章 読む本を、操作するアプリに昇格させる</a><a href="#chapter-36">第36章 30日後、AIを使える組織になっている</a><a href="#chapter-37">第37章 AIの古い情報を、自分の手で正す</a><a href="#chapter-38">第38章 学び残しが、地図で一目でわかる</a><a href="#chapter-final">終章 強いハーネスを、強いまま運用し続ける</a></aside><main class="content"><section class="course-overview" id="course-overview"><div class="course-head"><div class="eyebrow">体験コース／14レッスン</div><h2>0から順番に手を動かす学習ルート</h2><p class="course-lede">Claude Codeを使ったことが無い人が、F00から順番に14レッスンで「直せる・説明できる・安全に配れる」までを体験するコース設計です。各レッスンに対応する本書の章へジャンプできます。</p><p class="course-lede course-trigger">スキル<code>claude-code-handson-navigator</code>と連動。Claude Code（または Cursor／Codex）で「Claude Codeを0から学びたい」と話しかけると、このコース順に1ターン1操作で伴走します。</p></div><div class="course-grid"><article class="course-card"><div class="course-card-head"><span class="course-id">F00</span><span class="course-min">約10分</span></div><h3>体験学習を開始する</h3><p class="course-objective">学習専用ワークスペースと保存可能な学習状態を作り、操作方法を理解する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-00">第0章</a> <a class="course-chip" href="#chapter-01">第1章</a></div><p class="course-note">教科書の使い方／Claude Code は何が違うのか</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F01</span><span class="course-min">約20分</span></div><h3>安全を最初に設計する</h3><p class="course-objective">プロジェクト、作業範囲、承認、最小権限の意味を体験する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-02">第2章</a> <a class="course-chip" href="#chapter-03">第3章</a></div><p class="course-note">Sandbox・Project Folder の作り方</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F02</span><span class="course-min">約20分</span></div><h3>最初の90分実習：会議アシスタント</h3><p class="course-objective">Explorer・Editor・Agent・Terminalの役割を区別し、ファイルを自分で編集する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-04">第4章</a></div><p class="course-note">ハンズオン入門・名物章</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F03</span><span class="course-min">約30分</span></div><h3>強い指示の書き方</h3><p class="course-objective">目的・背景・入力・出力・制約・完了条件で曖昧でない依頼を作る。</p><div class="course-chapters"><a class="course-chip" href="#chapter-05">第5章</a></div><p class="course-note">依頼の構造化</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F04</span><span class="course-min">約25分</span></div><h3>ESPIVRC の型</h3><p class="course-objective">AIの変更を承認前に読み、意図しない変更を戻せる。</p><div class="course-chapters"><a class="course-chip" href="#chapter-06">第6章</a></div><p class="course-note">Explore→Specify→Plan→Implement→Verify→Review→Commit</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F05</span><span class="course-min">約25分</span></div><h3>Permission Mode と危険操作</h3><p class="course-objective">現在地確認・一覧・ファイル内容確認という安全な読み取りを使いこなす。</p><div class="course-chapters"><a class="course-chip" href="#chapter-07">第7章</a></div><p class="course-note">権限境界と Sandbox</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F06</span><span class="course-min">約30分</span></div><h3>Model と Effort、Session と Context</h3><p class="course-objective">小さな制作課題を計画だけさせ、人がレビューしてから実装へ進める。</p><div class="course-chapters"><a class="course-chip" href="#chapter-08">第8章</a> <a class="course-chip" href="#chapter-09">第9章</a></div><p class="course-note">深さと文脈の管理</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F07</span><span class="course-min">約45分</span></div><h3>Git と Checkpoint で戻れる安心</h3><p class="course-objective">承認済みPlanからHTML成果物を実装し、目視とファイルで検証する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-10">第10章</a></div><p class="course-note">戻る勇気</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F08</span><span class="course-min">約30分</span></div><h3>CLAUDE.md・Rules・Auto Memory</h3><p class="course-objective">同じworkspaceを異なるエージェントで開き、状態を失わず使い分ける。</p><div class="course-chapters"><a class="course-chip" href="#chapter-11">第11章</a></div><p class="course-note">Claude Code の覚えさせ方</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F09</span><span class="course-min">約45分</span></div><h3>Skills 設計（自分専用 Skill）</h3><p class="course-objective">既存Skillを魔法として使うのではなく、入力・骨子・生成・検証に分解する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-12">第12章</a> <a class="course-chip" href="#chapter-13">第13章</a></div><p class="course-note">Skill 設計と Subagent 活用</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F10</span><span class="course-min">約45分</span></div><h3>Hooks・Plugins・MCP</h3><p class="course-objective">小さな成功手順を標準準拠のSkillへ変換する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-14">第14章</a> <a class="course-chip" href="#chapter-15">第15章</a></div><p class="course-note">拡張機構と外部接続</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F11</span><span class="course-min">約45分</span></div><h3>HTMLレポート／Claude Design／成果物制作</h3><p class="course-objective">発火と出力品質を分け、正常・不足・巨大・危険・対象外の5ケースで評価する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-16">第16章</a> <a class="course-chip" href="#chapter-17">第17章</a> <a class="course-chip" href="#chapter-18">第18章</a></div><p class="course-note">ライブ成果物・Cowork</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F12</span><span class="course-min">約15分</span></div><h3>自分専用に育てる ／ /goal・Headless・定期実行</h3><p class="course-objective">意図的にセッションを切り、新しいチャットで同じ地点から復帰する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-19">第19章</a> <a class="course-chip" href="#chapter-20">第20章</a></div><p class="course-note">発展編</p></article><article class="course-card"><div class="course-card-head"><span class="course-id">F13</span><span class="course-min">約90分</span></div><h3>0→1卒業制作（応用＋終章）</h3><p class="course-objective">実務に近い小成果物を、要件・Plan・実装・検証・Skill候補化まで自走する。</p><div class="course-chapters"><a class="course-chip" href="#chapter-21">第21章</a> <a class="course-chip" href="#chapter-22">第22章</a> <a class="course-chip" href="#chapter-23">第23章</a> <a class="course-chip" href="#chapter-24">第24章</a> <a class="course-chip" href="#chapter-25">第25章</a> <a class="course-chip" href="#chapter-26">第26章</a><span class="course-chip more">＋13章</span></div><p class="course-note">終章までの全章を自分の課題で適用する</p></article></div></section>
 <section class="part" id="part-0">
   <header class="part-header"><div class="eyebrow">Part 0</div><h2>第0部　最適な教科書の設計</h2></header>
   <section class="part-usecase" aria-label="この部で得られる場面"><h3>この部で得られる場面</h3><div class="pu-item"><h4>場面</h4><p>ABC商事の社内勉強会で、AIツール本を回し読みしても誰も再現できない状況が続いている。</p></div><div class="pu-item"><h4>こう使う</h4><p>本ではなく、章ごとに前提・成果物・検証を持つLesson単位の実行教科書として再設計する。</p></div><div class="pu-item"><h4>得られるもの</h4><p>読んだ／使った／検証したの段階で進捗が記録でき、勉強会後も全員が同じLevelへ到達できる。</p></div></section>
@@ -242,7 +252,10 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-00">
   <header class="chapter-head">
     <div class="eyebrow">第0章</div>
-    <h1>教科書を「実行システム」にする</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">読むだけの学習を、卒業する</span>
+      <span class="chapter-name">教科書を「実行システム」にする</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『AI研修、受けたのに、自席で再現できない』。
 これ、ほとんどの人が一度は通る挫折ポイントです。
@@ -342,12 +355,9 @@ source_topics:
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自分が非エンジニア、開発者、管理者のどのルートから始めるかを決め、最初に作る成果物と合格証拠を一行で書いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>教科書の単位はページではなく、実行・検証・保存できるLessonです。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の新人エンジニア（架空）が、社内AI研修テキストを最後まで読んだのに、自席で同じ手順を再現できず止まっている。</p><h3>こう使う</h3><p>テキストを章ごとのLessonへ分解し、各章で『何を作り、どの証拠で完成と判断するか』を一行で書かせる。</p><h3>得られるもの</h3><p>読書ではなく実行が単位になり、本人が次の一操作を自分で決められるようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>教育担当の田中さん（架空）が、研修動画を見せても受講者が独自に応用できず、毎回個別指導に時間が消えている。</p><h3>こう使う</h3><p>動画ではなくLesson単位のテキスト＋成果物テンプレートを配り、進捗をseen/practiced/verified/appliedで管理する。</p><h3>得られるもの</h3><p>個別指導の量が減り、受講者は自分のペースで進めて、講師は詰まった人だけを救援できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス担当（架空）が、AIガイドラインをWiki化したが、誰も読まずに同じ事故が繰り返し発生する。</p><h3>こう使う</h3><p>ガイドラインを実行可能なLessonと体験ミッションに書き換え、ミッション達成を読了の証拠にする。</p><h3>得られるもの</h3><p>『読んだ』のあいまいさが消え、ミッション結果という証拠で運用状況を可視化できる。</p></article></div></section>
+  
 </article>
+
 
 </section>
 
@@ -375,7 +385,10 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-01">
   <header class="chapter-head">
     <div class="eyebrow">第1章</div>
-    <h1>Claude Codeは何が違うのか</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">チャットで止まる人と、走り出す人の差</span>
+      <span class="chapter-name">Claude Codeは何が違うのか</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『この資料、まとめて』とAIに頼んで、文章だけ返ってきて止まる。
 これ、AIの限界じゃありません。使ってる入口を間違えてるだけです。</p><p>ほとんどの人は、AIを『チャット画面で会話する相手』だと思ってます。
@@ -536,17 +549,17 @@ Codeで実装・検証・公開準備
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> いま抱えている仕事を一つ選び、Chat・Cowork・Code・Designのどこで始め、どこへ渡すかを書き分けてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>Claude Codeの価値はコード生成ではなく、探索・編集・実行・検証を同じ場所で回せることにあります。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ広告のプランナー（架空）が、チャットAIに『議事録まとめて』と頼み、毎回手元のWordへコピペして整形に1時間かけている。</p><h3>こう使う</h3><p>Claude Codeに目的とフォルダを渡し、議事録ファイルとタスクJSONを同じ場所で生成・確認まで一気に走らせる。</p><h3>得られるもの</h3><p>コピペ往復が消え、成果物がフォルダに残る。次回からは同じ手順で5分の作業になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者の佐々木さん（架空）が、複数ファイルにまたがる修正をチャットAIで進めるたび、貼り付け漏れで動かなくなる。</p><h3>こう使う</h3><p>Claude Codeに編集権限とプロジェクトを渡し、探索→修正→テスト実行までを同じセッションで完結させる。</p><h3>得られるもの</h3><p>ファイルの一貫性が保たれ、貼り付け事故と再質問のループから抜けられる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-02">
   <header class="chapter-head">
     <div class="eyebrow">第2章</div>
-    <h1>安全を最初に設計する</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">便利と事故は、同じスイッチで繋がっている</span>
+      <span class="chapter-name">安全を最初に設計する</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『rm -rf』をAIにうっかり打たせて、心臓が止まる。
 『大丈夫だろう』で本番フォルダを触らせて、戻し方が分からない。
@@ -650,17 +663,17 @@ claude
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 学習用フォルダを作り、『削除しない』『外部公開しない』『秘密情報を貼らない』の三つをプロジェクトルールへ書いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>安全はAIへのお願いではなく、権限・隔離・証拠で設計します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の経理担当（架空）が、AIに『不要ファイルを整理して』と頼み、稟議添付のExcelを誤って削除する事故が起きた。</p><h3>こう使う</h3><p>作業用フォルダだけを学習Labとして切り出し、削除禁止・外部公開禁止・本番フォルダ参照禁止をProject Ruleに書く。</p><h3>得られるもの</h3><p>事故が起きてもLab内で完結し、本番資料は手付かず。原状復帰がCheckpointで一発でできる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス課長（架空）が、社員のAI利用を許可したいが『何をどこまで触らせるか』を説明できず承認が止まっている。</p><h3>こう使う</h3><p>Read許可・Write許可・実行許可・ネットワーク権限を分けたPermission表をプロジェクトごとに作る。</p><h3>得られるもの</h3><p>稟議で『どの範囲なら安全か』を説明でき、AI導入の承認が下りる。</p></article><article class="usecase-card"><h3>場面</h3><p>副業エンジニア（架空）が、APIキーをチャットへ貼ったまま動画キャプチャを共有し、課金を悪用される事故を経験した。</p><h3>こう使う</h3><p>秘密情報は環境変数と専用ファイルのみに置き、Gitとチャットから除外する三つのルールをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>鍵の露出が物理的に起こらず、共有・録画のたびに気を張り続ける必要がなくなる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-03">
   <header class="chapter-head">
     <div class="eyebrow">第3章</div>
-    <h1>導入とProject Folder</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">AIに、見せていい範囲を線で引く</span>
+      <span class="chapter-name">導入とProject Folder</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『デスクトップにAI作業フォルダひとつ』で全案件を回してませんか。
 そこに顧客A・顧客B・自分の実験が全部入ってる。</p><p>これ、AIから見ると地獄です。
@@ -759,17 +772,17 @@ claude --resume               # 保存Sessionを選んで再開
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 空のlearning-labを作り、docs・input・output・testsの最小構造を用意してCursorでそのフォルダだけを開いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業担当（架空）が、デスクトップに『AI作業』フォルダひとつへ複数案件を放り込み、どのSkillがどの顧客のものか分からなくなっている。</p><h3>こう使う</h3><p>顧客ごとに専用Project Folderを作り、docs/input/output/testsの最小構造に分けて開く。</p><h3>得られるもの</h3><p>AIが見るべき範囲が顧客単位に閉じ、案件の取り違えと情報漏えいリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中小企業の総務（架空）が、AI導入を始めたいが『どこから手を付けるか』分からず、毎週違うフォルダで実験して挫折している。</p><h3>こう使う</h3><p>learning-labという練習専用フォルダを切り、その中だけで実験→検証→Skill化の小さなサイクルを回す。</p><h3>得られるもの</h3><p>練習と本番が物理的に分かれ、失敗を恐れず実験できる。成功したものだけを本番Projectへ移せる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-04">
   <header class="chapter-head">
     <div class="eyebrow">第4章</div>
-    <h1>最初の90分実習：会議アシスタント</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">90分で、動く成果物を1つ持って帰る</span>
+      <span class="chapter-name">最初の90分実習：会議アシスタント</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『AIで何か作って』と言われて、3週間止まってる人、結構います。
 題材が大きすぎて、どこから始めればいいか分からないんです。</p><p>この章で扱うのは、最初の90分で『動いた』を体験するための題材。会議の文字起こしを入れたら、議事録・タスク一覧・HTMLレポートの3点セットが出てくる、小さくて完結する成果物です。</p><p>ポイントは派手さじゃありません。要件定義→計画だけ承認→実装→検証→次回呼び出せるSkill化、までを一周することです。
@@ -960,17 +973,17 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> サンプル文字起こしからminutes.md、tasks.json、report.htmlを作り、JSONの構造とHTMLの表示を自分の目で確認してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>最初の成果物は、作る・確かめる・再利用するまでを一周できるものが最適です。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ商社の営業企画（架空）が、週5本の商談記録から議事録・タスク・送付メールを手動で2時間かけて作っている。</p><h3>こう使う</h3><p>サンプル文字起こしからminutes.md、tasks.json、report.htmlを作る90分実習を一周し、自分のSkillへ昇格させる。</p><h3>得られるもの</h3><p>次回からは同じテンプレで5分。文字起こしを入れる→3点セットが出る、を仕事の型として固定できる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある総務リーダー（架空）が、AI活用の第一歩として何を作ればよいか分からず、3週間プロジェクトが止まっている。</p><h3>こう使う</h3><p>入力・出力・検証が全部入った最小の題材として会議アシスタントを選び、90分の体験ミッションを完走する。</p><h3>得られるもの</h3><p>『動いた』体験で全員のスタート地点が揃い、その後の応用先（請求書・週報など）に展開しやすくなる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-05">
   <header class="chapter-head">
     <div class="eyebrow">第5章</div>
-    <h1>強い指示の書き方</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">『いい感じに』で頼んで、いい感じに失敗する</span>
+      <span class="chapter-name">強い指示の書き方</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『いい感じにして』『なるべく早く』『よしなに』。
 こういう曖昧な指示でAIに頼んで、期待と違う結果に毎回ガッカリしてませんか。</p><p>これ、AIの理解力じゃなく、依頼の解像度の問題です。
@@ -1059,12 +1072,9 @@ Sample Dataで起動し、Test/Build成功を完了条件とする。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 曖昧な依頼を一つ選び、目的・文脈・制約・成果物・完了条件・証拠の六項目へ書き直してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅メーカーのマーケ担当（架空）が、AIに『いい感じのLP作って』と頼み、期待と違う画面が出ては手戻りを繰り返している。</p><h3>こう使う</h3><p>目的・利用者・制約・成果物・完了条件・証拠の六項目テンプレートを使って依頼文を書き直す。</p><h3>得られるもの</h3><p>AIの判断材料が揃って一発で意図に近い出力になり、手戻り回数が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>PM経験ゼロの開発者（架空）が、上司から『この依頼を技術翻訳して』と毎回言われ、要件整理だけで一日を消費している。</p><h3>こう使う</h3><p>曖昧な依頼を完了報告テンプレ（変更/検証/残リスク）まで含めて構造化し、AIへ渡す前に人へ見せる。</p><h3>得られるもの</h3><p>上司確認も同じテンプレで進み、要件と完了の認識ズレが消える。</p></article></div></section>
+  
 </article>
+
 
 </section>
 
@@ -1092,13 +1102,15 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-06">
   <header class="chapter-head">
     <div class="eyebrow">第6章</div>
-    <h1>Explore → Specify → Plan → Implement → Verify → Review → Commit</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">速いチームは、工程を省かない</span>
+      <span class="chapter-name">Explore → Specify → Plan → Implement → Verify → Review → Commit</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『一回うまくいったプロンプト』を、翌週も使えてますか。
-ほとんどの人は、また最初から書き直してます。
-そして、また違う結果が出る。</p><p>これ、運じゃありません。仕事の順序が決まってないからです。
-速いチームは、毎回同じ7つの段階を回してます。探す→仕様を決める→計画→実装→検証→レビュー→保存（Explore/Specify/Plan/Implement/Verify/Review/Commit、頭文字でESPIVRC）。</p><p>この章を読むと、アプリ開発だけじゃなく、資料作成・調査・ファイル整理・Skill改善まで、同じ順序で進められるようになります。
-速いチームは工程を省くんじゃなく、同じ工程を小さく明確に回してる。それがこの章のオチです。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『一度うまくいったプロンプトを、翌週も使えていますか』。
+ほとんどの人は、また最初から書き直しています。
+そして、また違う結果が返ってきます。</p><p>これは運の問題ではなく、仕事の順序が決まっていないことが原因です。
+速いチームは、毎回同じ7つの段階を回しています。探す→仕様を決める→計画→実装→検証→レビュー→保存（Explore/Specify/Plan/Implement/Verify/Review/Commit、頭文字でESPIVRC）。</p><p>この章を読み終わる頃には、アプリ開発だけでなく、資料作成・調査・ファイル整理・Skill改善まで、同じ順序で進められるようになります。速いチームは工程を省いているのではなく、同じ工程を小さく明確に回している。それがこの章の核心です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-06-0-espivrc"><h3 id="feature-06-0-espivrc">ESPIVRC標準ループ</h3><p class="feature-summary">Explore→Specify→Plan→Implement→Verify→Review→Commitの7段階を共通言語にし、業務種別を問わず同じ順で進める仕事の骨格。</p><dl class="feature-io"><dt>入力</dt><dd>新しい依頼、作業対象、関係者</dd><dt>出力</dt><dd>7段階ごとの成果物（探索メモ・仕様・計画・実装・検証・レビュー・コミット）</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-06-1-plan"><h3 id="feature-06-1-plan">Plan段階の変更範囲宣言</h3><p class="feature-summary">実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。</p><dl class="feature-io"><dt>入力</dt><dd>仕様、現状のコード/ファイル</dd><dt>出力</dt><dd>影響範囲・差分予定・前提条件を含むPlan</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-06-2-verify-review-commit"><h3 id="feature-06-2-verify-review-commit">Verify→Review→Commit分離</h3><p class="feature-summary">機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みの変更、テストケース、レビュー観点</dd><dt>出力</dt><dd>検証ログ、レビュー指摘、コミットメッセージ付き履歴</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-06">
@@ -1241,23 +1253,23 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 次に行う作業を七段階の見出しで書き、各段階の成果物を一つずつ決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC物流の社内システム改修で、依頼→実装→『動いたっぽい』→本番→事故、という流れを毎月繰り返している。</p><h3>こう使う</h3><p>Explore→Specify→Plan→Implement→Verify→Review→Commitの七段階に依頼テンプレを揃え、各段階で証拠を残す。</p><h3>得られるもの</h3><p>本番事故の発生源を段階に切り分けて潰せるようになり、改修1本あたりの平均事故件数が減る。</p></article><article class="usecase-card"><h3>場面</h3><p>Webデザイナー（架空）が、AIに『修正お願い』と頼んだら関係ない部分まで書き換えられ、何が変わったか追えない。</p><h3>こう使う</h3><p>Plan段階で変更範囲をAIに宣言させ、Verifyで差分とテスト結果を見てからCommitする運用にする。</p><h3>得られるもの</h3><p>予期しない書き換えがPlanで弾かれ、レビュー時間が短く、巻き戻しも安全になる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-07">
   <header class="chapter-head">
     <div class="eyebrow">第7章</div>
-    <h1>Permission Mode、Sandbox、危険操作</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">うっかり rm -rf を、5秒手前で止める</span>
+      <span class="chapter-name">Permission Mode、Sandbox、危険操作</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『うっかり rm -rf』『git push で main を上書き』。
-AIに作業を任せる時、こういう取り返しのつかない事故は、油断した5秒に起きます。</p><p>ほとんどの人は、AIに『全部許可』のまま動かしてます。
-便利だから。確認が面倒だから。
-でも、その『便利』と『事故』は同じスイッチで繋がってます。</p><p>Permission Modeは、操作ごとに『許可・拒否・確認』を3段階で切り替える仕組みです。
-読み取りは自動で許可、書き換えは確認、削除と外部送信は必ず止める。それだけで、暴走の99%が手前で止まります。</p><p>この章を読み終わる頃には、自分が安心して任せられる範囲が、自分で決められるようになります。</p></section>
+AIに作業を任せたとき、こうした取り返しのつかない事故は、油断した数秒に起きます。</p><p>ほとんどの人は、AIに『全部許可』のまま動かしています。
+便利だから、確認が面倒だから。
+ですが、その『便利』と『事故』は同じスイッチで繋がっています。</p><p>Permission Mode は、操作ごとに『許可・拒否・確認』を切り替える仕組みです。
+読み取りは自動で許可、書き換えは確認、削除と外部送信は必ず止める。それだけで、暴走の大半が手前で止まります。</p><p>この章を読み終わる頃には、自分が安心して任せられる範囲を、自分で決められるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-07-0-permission-mode-permission-rule"><h3 id="feature-07-0-permission-mode-permission-rule">Permission Mode と Permission Rule</h3><p class="feature-summary">読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。</p><dl class="feature-io"><dt>入力</dt><dd>扱うProject、許可してよい操作と確認したい操作</dd><dt>出力</dt><dd>Project単位の許可ポリシー表とPermission Rule定義</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-1-sandbox-bypass"><h3 id="feature-07-1-sandbox-bypass">Sandbox と Bypass運用</h3><p class="feature-summary">Bypassは隔離された使い捨て環境のみ、本番Projectは確認モード固定とする運用ルール。便利さと事故半径を分離する。</p><dl class="feature-io"><dt>入力</dt><dd>実験用ワークスペース、本番Projectの一覧</dd><dt>出力</dt><dd>Bypass許可Pathと禁止Pathを明示したCLAUDE.mdルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-2-secrets"><h3 id="feature-07-2-secrets">Secrets管理ルール</h3><p class="feature-summary">APIキー・トークンをチャットに貼らず、環境変数や専用ファイルへ置きGitから除外する3点ルール。</p><dl class="feature-io"><dt>入力</dt><dd>使う外部サービス、必要な鍵・トークン</dd><dt>出力</dt><dd>Secret保存場所、.gitignore更新、CLAUDE.md記載</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-3-item"><h3 id="feature-07-3-item">削除の標準手順</h3><p class="feature-summary">対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の6段で、削除事故をワンクリックで起こさない手順化。</p><dl class="feature-io"><dt>入力</dt><dd>整理したいフォルダ、削除候補ファイル</dd><dt>出力</dt><dd>削除Dry-run結果、バックアップ、削除完了レポート</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-07">
@@ -1393,22 +1405,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在のプロジェクトで許可してよい操作と、毎回確認すべき操作を二列に分けて書いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、毎回出る権限確認を面倒に思いBypassを常用した結果、検証中の本番DBへ誤更新コマンドを流してしまった。</p><h3>こう使う</h3><p>Bypassは隔離した使い捨て環境のみ・本番Projectは確認モード固定、というRuleをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>便利さと事故半径のトレードオフが明示され、危険操作が必ず人の目を通るようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、AIに全権を与えるか禁止するかの二択しか出来ず、安全と業務スピードの両立に悩んでいる。</p><h3>こう使う</h3><p>操作を読む・編集する・実行する・ネットワーク・削除の五分類に分け、それぞれ許可ポリシーを別に設計する。</p><h3>得られるもの</h3><p>全権でも全禁止でもなく、業務に必要な範囲だけを許可でき、稟議が通る具体度になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、AIに『古いファイルを掃除して』と頼み、契約PDFまで巻き込まれて削除されかけた。</p><h3>こう使う</h3><p>削除は対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の標準手順をSkill化する。</p><h3>得られるもの</h3><p>削除がワンクリックで進まなくなり、最悪でも実行前のリストで止められる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-08">
   <header class="chapter-head">
     <div class="eyebrow">第8章</div>
-    <h1>ModelとEffort</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">最上位モデルを常用して、月初に上限を吹き飛ばす</span>
+      <span class="chapter-name">ModelとEffort</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『常に最上位モデルを選んでおけば安心』。
-これ、月初に利用上限を吹き飛ばす一番のパターンです。</p><p>ほとんどの人は、AIのモデルを『強さで選ぶ』と思ってます。
-でも実は、計画・実装・整理・評価という役割で選ぶのが正解。簡単な整理は軽量モデル、重要レビューだけ深く考えさせる（高Effort）。
-このスイッチを身につけると、月の利用上限が来なくなる上に、難所の品質も上がります。</p><p>ついでに、モデル名や料金は変わりやすいので、本文に書かず Feature Registry に分離しておく。これで教科書本体は古びません。</p><p>設定は15分。コスト効率と品質、両方が同時に上がります。</p></section>
+これが、月初に利用上限を吹き飛ばす最もよくあるパターンです。</p><p>ほとんどの人は、AIのモデルを『強さで選ぶ』と考えています。
+ですが実際には、計画・実装・整理・評価という役割で選ぶのが正解です。簡単な整理は軽量モデル、重要なレビューだけ深く考えさせる（高Effort）。
+このスイッチを身につけると、月の利用上限が来なくなる上に、難所の品質も上がります。</p><p>加えて、モデル名や料金は変わりやすいので、本文に書かず Feature Registry に分離しておきます。これで教科書本体は古びません。</p><p>設定は15分。コスト効率と品質、両方が同時に上がります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-08-0-model"><h3 id="feature-08-0-model">Model選択（役割で使い分け）</h3><p class="feature-summary">計画・実装・軽い整理・評価という役割でモデルを選び、常に最上位を使わない使い分けの考え方。</p><dl class="feature-io"><dt>入力</dt><dd>業務の難易度、失敗コスト、必要なスピード</dd><dt>出力</dt><dd>業務カテゴリ別のモデル割り当て表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-1-effort"><h3 id="feature-08-1-effort">Effort（思考量の調整）</h3><p class="feature-summary">深く考える価値がある仕事だけEffortを上げ、定型変換は最小Effortで回すコスト最適化の設定軸。</p><dl class="feature-io"><dt>入力</dt><dd>対象タスクの判断重要度</dd><dt>出力</dt><dd>タスク別Effort設定とコスト見積</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-2-advisor-ultrathink"><h3 id="feature-08-2-advisor-ultrathink">Advisor と ultrathink</h3><p class="feature-summary">難しい判断にだけ高Effort思考を呼び出し、相談役として併走させる使い方。常用ではなく要所投入のパターン。</p><dl class="feature-io"><dt>入力</dt><dd>設計分岐、複雑な原因分析、重要レビュー</dd><dt>出力</dt><dd>Advisorからの追加観点、判断根拠の補強</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-3-feature-registry"><h3 id="feature-08-3-feature-registry">Feature Registry（変動情報の分離）</h3><p class="feature-summary">変動するモデル名・利用条件は本文ではなくRegistryへ外出しし、教科書原則を特定モデル依存から切り離す仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>現行モデル名・料金・利用上限</dd><dt>出力</dt><dd>Feature Registry更新エントリ（確認日付き）</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-08">
@@ -1485,22 +1497,22 @@ high: 複数File、分析、重要文書
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自分の典型業務を、軽量処理・標準処理・高難度判断の三つへ分類し、どこでEffortを上げるか決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>モデルは強さではなく役割で選び、変動情報は本文から切り離します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、すべての作業を最上位モデル＋最大Effortで回した結果、月初に利用上限に達して残り3週間を低性能モデルで耐えている。</p><h3>こう使う</h3><p>業務を軽量処理・標準処理・高難度判断の三つに分類し、Effortを上げるのは判断系のみにする。</p><h3>得られるもの</h3><p>利用上限の発火が遅れ、難所だけに高性能を集中投下できる。コスト効率が大きく改善する。</p></article><article class="usecase-card"><h3>場面</h3><p>ABC SIerのテックリード（架空）が、レビュー指摘の質に悩み、レビュー専用モデルを高Effortで分けたいが手順が決まっていない。</p><h3>こう使う</h3><p>Plan/Implement/Reviewそれぞれにモデル設定を分け、変動するモデル名はFeature Registryへ外出しする。</p><h3>得られるもの</h3><p>重要レビューだけ深く考えさせる構造になり、後でモデル名が変わってもRegistry更新で済む。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-09">
   <header class="chapter-head">
     <div class="eyebrow">第9章</div>
-    <h1>SessionとContext</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">1日繋ぎっぱなしのチャットが、判断を曇らせる</span>
+      <span class="chapter-name">SessionとContext</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『朝から続けてるこのチャット、AIが急に変なこと言い出した』。
-これ、AIの故障じゃありません。古い前提を引きずってるだけです。</p><p>ほとんどの人は、AIとのセッションを『途切れたら不便だから』と1日繋ぎっぱなしにしてます。
-午前は予算検討、午後はSlack文面、夕方はバグ修正。机に資料を積み続けたら、そりゃ混乱します。</p><p>この章で扱うのは、仕事の単位でセッションを切る運用と、再開に必要な状態をRESUME.mdというファイルへ外に出しておく仕掛け。
-会話履歴に頼らず、ファイルだけで翌日続けられる状態を作ります。</p><p>セッションを切ることは、忘れることじゃなく、必要なものだけを次に渡すことです。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『朝から続けているこのチャット、AIが急に変なことを言い出した』。
+これは AI の故障ではなく、古い前提を引きずっているだけです。</p><p>ほとんどの人は、AIとのセッションを『途切れたら不便だから』と1日繋ぎっぱなしにしています。
+午前は予算検討、午後は Slack 文面、夕方はバグ修正。机に資料を積み続けたら、AIも混乱します。</p><p>この章で扱うのは、仕事の単位でセッションを切る運用と、再開に必要な状態を RESUME.md というファイルへ外に出しておく仕掛けです。
+会話履歴に頼らず、ファイルだけで翌日続けられる状態を作ります。</p><p>セッションを切ることは、忘れることではなく、必要なものだけを次へ渡すことです。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-09-0-session"><h3 id="feature-09-0-session">Session分離（仕事単位で切る）</h3><p class="feature-summary">目的が変わるたびに新しいセッションを開き、古い前提を引きずらせない運用。文脈混入の事故を構造的に防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>現在の作業内容、次に着手する別タスク</dd><dt>出力</dt><dd>目的別に分かれたセッション、引き継ぎファイル</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-09-1-clear-compact-context"><h3 id="feature-09-1-clear-compact-context">/clear・/compact・/context</h3><p class="feature-summary">会話履歴の圧縮・全消去・状態確認のコマンド群。文脈節約と再開のための日常操作。</p><dl class="feature-io"><dt>入力</dt><dd>肥大化した会話、進行中のタスク状態</dd><dt>出力</dt><dd>圧縮済みコンテキスト、または新しい起点</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-09-2-resume-md"><h3 id="feature-09-2-resume-md">RESUME.md（状態の外部化）</h3><p class="feature-summary">再開に必要な現在地・決定・次の一操作をファイルへ書き出し、会話履歴に依存せず復帰できるようにする。</p><dl class="feature-io"><dt>入力</dt><dd>進行中の判断、未完了タスク、TODO</dd><dt>出力</dt><dd>再開可能なRESUME.mdと参照Path一覧</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-09-3-resume"><h3 id="feature-09-3-resume">Resume運用と履歴を残さない実行</h3><p class="feature-summary">Resumeは作業再開の補助、独立Stateを正本にする運用方針。画像入力・割り込みも文脈を保つ範囲で扱う。</p><dl class="feature-io"><dt>入力</dt><dd>中断中のセッション、機密性のある作業</dd><dt>出力</dt><dd>正本としての作業State、必要に応じた履歴非保持実行</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-09">
@@ -1571,22 +1583,23 @@ claude --resume
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> いまの作業について、次回再開時に必要な状態をRESUME.mdへ書き、会話を閉じても続けられるか確認してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>会話履歴に依存せず、再開に必要な状態をファイルへ外部化します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、午前は予算検討・午後はSlack文面・夕方はバグ修正を全部同じセッションで進め、AIが古い前提を引きずって変な提案を出している。</p><h3>こう使う</h3><p>仕事の単位ごとにセッションを切り直し、RESUME.mdへ現在地・決定・次の一操作を残す。</p><h3>得られるもの</h3><p>AIの回答が現状に合うようになり、翌日の再開も会話履歴ではなくファイルだけで成立する。</p></article><article class="usecase-card"><h3>場面</h3><p>兼業ライター（架空）が、長時間セッションで記事執筆→AIが急に話題を取り違える→/compactしても直らない、を繰り返している。</p><h3>こう使う</h3><p>話題切替時は新セッションを開き、必要な状態をresumeメモへ外部化する運用に変える。</p><h3>得られるもの</h3><p>AIの混乱が消え、文脈の引き継ぎが意図したファイルのみに限定される。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-10">
   <header class="chapter-head">
     <div class="eyebrow">第10章</div>
-    <h1>GitとCheckpoint</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">間違えても、1分前に戻れる仕事場</span>
+      <span class="chapter-name">GitとCheckpoint</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『さっきの状態に戻して』ができないと、AIに大胆な編集を頼めません。
-だから多くの人は、小さく安全な指示しか出せず、伸びしろを自分で潰してます。</p><p>実は、戻り道は2種類用意できます。
-ひとつは『会話の中で素早く巻き戻す』Checkpoint。もうひとつは『セッションや人をまたいで残る正式な履歴』であるGit。
-このふたつは競合しません。役割が違うだけ。</p><p>この章では、CheckpointとGitの最小運用、AIにコミットメッセージを書かせるルール、それから複数機能を同時に試したい時にファイル衝突を防ぐ Worktree という並列作業の仕組みまでまとめます。</p><p>戻れる安心が手に入ると、AIに任せる勇気が一段階上がります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIに修正を任せたら、なぜか動かなくなった』。
+原因を辿りたいのに、どこから何が変わったか分からない。これは記憶の問題ではなく、保存設計の問題です。</p><p>ほとんどの人は、AIの出力をそのままファイルへ上書きしています。
+便利ですが、壊れた瞬間に戻る場所を失います。</p><p>この章で扱うのは、Gitと Checkpoint を使った『戻れる仕事場』の作り方です。
+意味のある単位で保存し、壊れたら 1 分前に戻り、誰が何のために変えたかを履歴に残す。
+それだけで、AI と作業する不安の大半は消えます。</p><p>不可逆な操作ほど、可逆な仕掛けで包む。Git は AI 時代の安全網です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-10-0-checkpoint"><h3 id="feature-10-0-checkpoint">Checkpoint（会話中の素早い巻き戻し）</h3><p class="feature-summary">セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。</p><dl class="feature-io"><dt>入力</dt><dd>AIに任せる大胆な変更、実験的な編集</dd><dt>出力</dt><dd>巻き戻し可能なCheckpoint、戻したあとの状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-1-git"><h3 id="feature-10-1-git">最小Git運用</h3><p class="feature-summary">意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。</p><dl class="feature-io"><dt>入力</dt><dd>完了した小さな変更、検証結果</dd><dt>出力</dt><dd>意味あるCommitメッセージとレビュー可能なdiff</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-2-claude-commit-rule"><h3 id="feature-10-2-claude-commit-rule">ClaudeへCommitさせるRule</h3><p class="feature-summary">AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。</p><dl class="feature-io"><dt>入力</dt><dd>完了した変更、検証ログ</dd><dt>出力</dt><dd>Rule準拠のCommit、PR説明文</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-3-worktree"><h3 id="feature-10-3-worktree">Worktreeによる並列作業</h3><p class="feature-summary">別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>並行して進めたい複数機能</dd><dt>出力</dt><dd>機能別Worktreeディレクトリと衝突なしの差分</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-10">
@@ -1665,12 +1678,9 @@ git worktree add ../project-agent-docs -b agent/docs
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の良い状態をCommitし、その後に小さな変更を加えてDiffを確認し、元へ戻せることを試してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>可逆性は勇気ではなく、CheckpointとGitで設計する能力です。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小Webサイト運営者（架空）が、AIに『大胆に作り直して』を依頼するたび、戻したい時に戻せず古い版を失っている。</p><h3>こう使う</h3><p>毎回の作業開始前に良い状態をCommitし、Checkpoint＋Gitの二重保存で『戻れる』を物理的に作る。</p><h3>得られるもの</h3><p>AIへ強気に試行させても、いつでも前に戻れる安心が手に入る。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人開発（架空）が、複数機能を同時に試したくて同じファイルを並列編集し、お互いの変更を上書きして混乱した。</p><h3>こう使う</h3><p>Worktreeで作業ツリーを物理的に分け、機能ごとに別ディレクトリで並列に動かす。</p><h3>得られるもの</h3><p>AIに並列実装させても衝突が起きず、後でCherry-pickで良い変更だけを統合できる。</p></article></div></section>
 </article>
+
 
 </section>
 
@@ -1698,13 +1708,15 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-11">
   <header class="chapter-head">
     <div class="eyebrow">第11章</div>
-    <h1>CLAUDE.md、Rules、Auto Memory</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">同じ説明を、二度と書かない</span>
+      <span class="chapter-name">CLAUDE.md、Rules、Auto Memory</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>毎回、AIに同じ説明を書いてませんか。
-『うちは TypeScript で、コメントは英語で、テストは vitest で…』
-朝のチャット、昼のチャット、夜のチャット、全部に同じ前置き。
-それ、書く必要、もう無いです。</p><p>この章で扱うのは、プロジェクトの前提を一箇所に書いておく『常時読まれる案内板』（CLAUDE.md）と、特定フォルダだけに効かせる Rules、AIが見つけた短い事実を自動保存する Auto Memory の使い分けです。
-全部CLAUDE.mdに詰め込むと逆に重くなるので、知識には『置き場所』があるという話を体感します。</p><p>ここを整えると、AIは『汎用の何でも屋』から、『あなたのプロジェクトを知ってる同僚』に変わります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『うちのプロジェクト、AIに毎回ゼロから説明している』。
+これは時間の問題だけでなく、再現性の問題でもあります。</p><p>ほとんどの人は、AIに毎回同じ前提を打ち込んでいます。
+TypeScript を使っている、コメントは英語で書いている、テストは vitest で実行する──毎日10回、同じ説明をしている計算です。</p><p>CLAUDE.md は、プロジェクトの前提を一か所にまとめておくファイルです。AI は作業を始める前に必ずそこを読みます。
+これだけで、毎回の前置きが消えます。</p><p>この章を読み終わる頃には、自分のプロジェクトに『専属の同僚』を一人配置している感覚を得られます。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-11-0-claude-md"><h3 id="feature-11-0-claude-md">CLAUDE.md（プロジェクトの案内板）</h3><p class="feature-summary">常時読まれる短い案内板。プロジェクトの目的・前提・最低限のルールだけを簡潔に置く。</p><dl class="feature-io"><dt>入力</dt><dd>プロジェクトの目的、必ず守らせたい最低限ルール</dd><dt>出力</dt><dd>簡潔で肥大化しないCLAUDE.md</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-1-rules-path"><h3 id="feature-11-1-rules-path">Rules（Path固有の指示）</h3><p class="feature-summary">ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>特定フォルダ・拡張子に限定したいルール</dd><dt>出力</dt><dd>対象Path下でだけ自動適用されるRule</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-2-init"><h3 id="feature-11-2-init">/init による初稿生成</h3><p class="feature-summary">プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。</p><dl class="feature-io"><dt>入力</dt><dd>既存プロジェクト構造、目的の概略</dd><dt>出力</dt><dd>CLAUDE.md初稿（編集して短くする出発点）</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-3-auto-memory"><h3 id="feature-11-3-auto-memory">Auto Memory（短い事実の自動保存）</h3><p class="feature-summary">AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。</p><dl class="feature-io"><dt>入力</dt><dd>会話中の決定事項、繰り返される好み</dd><dt>出力</dt><dd>短い形に圧縮された自動メモ</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-11">
@@ -1883,22 +1895,21 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> CLAUDE.mdの各行を『毎回必要か』で見直し、手順はSkillへ、Path固有事項はRulesへ移してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>知識は量ではなく、適切なScopeへ置くことで効きます。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサル（架空）のCLAUDE.mdが3,000行を超え、毎回読み込みに時間がかかり、AIが本来の指示を見落とすようになっている。</p><h3>こう使う</h3><p>CLAUDE.mdは『常に読みたい短い案内板』だけ残し、Path固有事項はRules、業務手順はSkillsへ移す。</p><h3>得られるもの</h3><p>起動が軽くなり、AIが本当に必要な指示を確実に拾うようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、Project AとProject Bで日本語化ルールが毎回ぶつかり、混乱した出力を受け取り続けている。</p><h3>こう使う</h3><p>全社共通ルールはGlobal CLAUDE.mdへ、Project個別はProject CLAUDE.mdへ、Path別はRulesへと役割を分ける。</p><h3>得られるもの</h3><p>ルール衝突が物理的に起きず、どこを直せばどこへ効くかが明確になる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-12">
   <header class="chapter-head">
     <div class="eyebrow">第12章</div>
-    <h1>Skills設計</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">うまくいった一回を、毎回呼べる形にする</span>
+      <span class="chapter-name">Skills設計</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『あの時のうまくいったプロンプト、どこ行った？』
-チャット履歴を漁る30分、もう何回繰り返しましたか。</p><p>ほとんどの人は、成功した会話をブックマークやコピペで残してます。
-でも、別の入力で試したら再現できない。これは『プロンプトの保存』であって『業務手順の保存』じゃないからです。</p><p>Skill は、入力・処理・出力・品質基準・失敗時の対応をひと塊にした、再現可能な業務パッケージです。
-名前を付けて、次回からは『あのSkillで』のひと言で同品質の成果物が出る。長文の例やコード例は references に逃がして、本体は短く保つ（Progressive Disclosure）。</p><p>この章を読み終わると、自分の最初のSkillを、人に渡せる形まで持っていけるようになります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『うまくいった一回のプロンプトを、また呼び出せない』。
+これは記憶力の問題ではなく、Skill 化していないだけです。</p><p>ほとんどの人は、成功した手順を頭の中、あるいは古いチャット履歴にしまっています。
+翌週、似た仕事が来たときに、同じ品質では再現できません。</p><p>Skill は、成功したやり方を再利用可能な部品にまとめる仕組みです。名前・前提・手順・成果物・検証の5点を1ファイルへ閉じ込め、呼ぶたびに同じ品質で走らせます。</p><p>この章を読み終わる頃には、自分の仕事の中から最も使い回す3つを、Skill 化する目で見られるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-12-0-skill"><h3 id="feature-12-0-skill">Skill（再現可能な業務パッケージ）</h3><p class="feature-summary">名前・条件・入力・処理・出力・品質基準・参照資料を持つ、必要時だけ読み込まれる再利用単位。</p><dl class="feature-io"><dt>入力</dt><dd>成功した業務手順、入力例、合格基準</dd><dt>出力</dt><dd>次回から呼び出せるSKILL.mdと参照資料</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-12-1-custom-commands-canonical-name"><h3 id="feature-12-1-custom-commands-canonical-name">Custom Commands と Canonical Name</h3><p class="feature-summary">SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。</p><dl class="feature-io"><dt>入力</dt><dd>Skill名候補、所有者、利用シーン</dd><dt>出力</dt><dd>lowercase-hyphenのCanonical Nameと所有Owner</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-12-2-progressive-disclosure-references"><h3 id="feature-12-2-progressive-disclosure-references">Progressive Disclosure（references分離）</h3><p class="feature-summary">長文・コード例・FAQはreferencesへ逃がし、SKILL.md本体を短く保つ設計原則。</p><dl class="feature-io"><dt>入力</dt><dd>Skill関連の長文素材、コード例</dd><dt>出力</dt><dd>短いSKILL.mdとreferences/配下の補助資料</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-12-3-4"><h3 id="feature-12-3-4">4軸評価（明確性/実用性/保守性/整合性）</h3><p class="feature-summary">Skillを4観点で採点し、合格点未満は本番配布しない品質ゲート。Generator/Evaluator分離の前段で使う。</p><dl class="feature-io"><dt>入力</dt><dd>完成したSkill、評価Fixture</dd><dt>出力</dt><dd>4軸スコアと改善優先度のレポート</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-12">
@@ -2063,23 +2074,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 最近うまくいった作業を一つ選び、SKILL.mdへ入力・手順・出力・検証・失敗時対応を書き出してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ広告のプランナー（架空）が、毎週類似のレポート依頼に対して毎回プロンプトを書き直し、品質も毎回ぶれている。</p><h3>こう使う</h3><p>成功した会話を入力・処理・出力・品質基準・失敗時対応の形式へ整理し、Skill化する。</p><h3>得られるもの</h3><p>次週からは『あのSkillで』の一言で同品質の成果物が出る。教育コストもSkill共有で済む。</p></article><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、複数メンバーで同じSkillを書き散らし、似て非なるSkillが乱立して使い分けに迷っている。</p><h3>こう使う</h3><p>正本名・Owner・参照資料を持つSKILL.mdテンプレートを揃え、referencesに長文を逃がすProgressive Disclosureを徹底する。</p><h3>得られるもの</h3><p>Skillの重複が抑えられ、新規メンバーも『どれを使えばよいか』を迷わず選べる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-13">
   <header class="chapter-head">
     <div class="eyebrow">第13章</div>
-    <h1>Subagents、Agent View、並列作業</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">一人で同時に、3つの調査を走らせる</span>
+      <span class="chapter-name">Subagents、Agent View、並列作業</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『自分のコードを自分でレビュー』、何回も穴をすり抜けてきましたよね。
-これ、AIにも同じことが起きます。実装した本人の文脈が残ってると、レビューが甘くなる（迎合バイアス）。</p><p>ほとんどの人は、AIを『1人の万能アシスタント』として使ってます。
-でも、調査・実装・レビューを別の文脈で動かす（複数のSubagent）と、見落としが激減します。
-実装セッションを閉じて、背景を知らないReviewer Agentに成果物だけ渡す。それだけで、要件・安全・保守性の3観点で本当の指摘が返ってきます。</p><p>複数Agentの価値は、人数じゃありません。独立した文脈と役割分担です。
-この章で、レビューの質が一段階深くなります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『調査・実装・レビューを一人で順番にやる』。
+これでは、いくらAIを使っても作業のシリアル化が解けません。</p><p>ほとんどの人は、AIを『一対一の相棒』として使っています。
+ですが、別々の目的を別々のサブエージェントに分担させると、3つの調査が同時に進みます。</p><p>Subagents と Agent View は、独立した文脈で並列に作業させる仕掛けです。
+親文脈を汚さずに、調査担当・実装担当・レビュー担当を別々に走らせ、結果だけを束ねます。</p><p>この章を読み終わる頃には、『1人で同時に3つ』を当たり前にする発想が手に入ります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-13-0-subagent"><h3 id="feature-13-0-subagent">Subagent（文脈を分ける仕組み）</h3><p class="feature-summary">役割ごとに別Agentを立てて文脈を分離し、過去会話に引きずられない調査・実装・レビューを可能にする機構。</p><dl class="feature-io"><dt>入力</dt><dd>親セッションの作業、役割ごとの責務</dd><dt>出力</dt><dd>Subagentの完了報告、独立した中間成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-1-reviewer-agent"><h3 id="feature-13-1-reviewer-agent">Reviewer Agent（独立コンテキストの評価者）</h3><p class="feature-summary">成果物だけを渡して評価させ、迎合バイアスを排した指摘を得るための専任エージェント。</p><dl class="feature-io"><dt>入力</dt><dd>成果物、評価観点（要件/安全/保守性）</dd><dt>出力</dt><dd>独立コンテキストからの指摘リストと優先度</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-2-research-agent"><h3 id="feature-13-2-research-agent">Research Agent</h3><p class="feature-summary">調査専任で出典・確度・反証を分けて整理するエージェント。実装者と分離して情報収集の質を確保する。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、検索範囲、評価軸</dd><dt>出力</dt><dd>出典付き調査結果と未確認項目リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-3-agent-view"><h3 id="feature-13-3-agent-view">Agent View と並列実行</h3><p class="feature-summary">複数Agentの動きを俯瞰し、独立した仕事へ分担させる運用画面。同じファイルへの同時編集は避ける指針付き。</p><dl class="feature-io"><dt>入力</dt><dd>並列化したいタスク群、各Agent責務</dd><dt>出力</dt><dd>Agent View上の並列実行ログと統合結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-13">
@@ -2187,23 +2197,22 @@ SNS、Code変更、最終結論は禁止。15分で打ち切る。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の成果物を、新しいセッションまたはReviewer Agentへ渡し、要件充足・安全・保守性の三観点で評価させてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、自分のコードを自分でレビューさせるとAIが甘く採点し、毎回バグを見落としている。</p><h3>こう使う</h3><p>実装セッションを閉じ、背景を知らない独立コンテキストのReviewer Agentへ成果物だけ渡す。</p><h3>得られるもの</h3><p>迎合バイアスが消え、要件・安全・保守性の三観点で本当の指摘が返ってくる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅企業のリサーチチーム（架空）が、調査・検証・統合を一人のAIに任せ、結論が初期仮説に引きずられる傾向が抜けない。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeを別Agentに分け、各役割の入力と期待出力を明示する。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、反証も合わせて統合できる。結論の信頼度が説明可能になる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-14">
   <header class="chapter-head">
     <div class="eyebrow">第14章</div>
-    <h1>HooksとPlugins</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">守らせたいルールは、お願いでは守られない</span>
+      <span class="chapter-name">HooksとPlugins</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『rm -rf 禁止』とCLAUDE.mdに書いても、繁忙期に事故は起きます。
-人が読み飛ばすことを、AIも引きずる。文章のお願いには限界があります。</p><p>そこで出てくるのが、特定イベントで必ず動く強制装置（Hooks）。
-危険コマンドの実行直前で物理的に止める（PreToolUse）。編集直後にtsc型チェックを自動で走らせる（PostToolUse）。セッション開始時に必要な前提を勝手にロードする（SessionStart）。
-3つだけで、暴走と見落としが激減します。</p><p>ついでに、SkillとHookをまとめて配るための『Plugin』という束ね方も学びます。
-この章を読み終わる頃には、『気をつけて』を『気をつけなくても止まる』に書き換えられるようになります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIに守らせたいルールを CLAUDE.md に書いたのに、守られない』。
+これはAIの怠惰ではなく、お願いと強制を混同しているだけです。</p><p>ほとんどの人は、安全ルールを文章のお願い（Guidance）で済ませています。
+ですが、本当に止めたい操作は、文章では止まりません。物理的な仕組み（Enforcement）が要ります。</p><p>Hooks と Plugins は、操作の前後に自前のチェックを差し込む仕掛けです。
+危険コマンドは事前に止め、編集後に型チェックを走らせ、コミット時にテストを通す。お願いを強制へ昇格させる装置です。</p><p>この章を読み終わる頃には、『お願い』と『強制』の境界が、自分の言葉で説明できるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-14-0-pretooluse-guard"><h3 id="feature-14-0-pretooluse-guard">PreToolUse Guard（危険操作の物理拒否）</h3><p class="feature-summary">rm -rfや本番DB操作など、文章のお願いでは止められない操作を実行直前に拒否するHook。</p><dl class="feature-io"><dt>入力</dt><dd>実行されようとしたコマンド、対象Path</dd><dt>出力</dt><dd>ブロック判定とログ、許可された操作のみの実行</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-1-posttooluse-validation"><h3 id="feature-14-1-posttooluse-validation">PostToolUse Validation</h3><p class="feature-summary">Edit/Write直後にtsc・lint・テスト等を自動実行し、編集の瞬間にエラーを検出する検証Hook。</p><dl class="feature-io"><dt>入力</dt><dd>編集したファイル、プロジェクトの検証コマンド</dd><dt>出力</dt><dd>検証結果、エラー時のブロックと修正指示</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-2-sessionstart-hook"><h3 id="feature-14-2-sessionstart-hook">SessionStart Hook</h3><p class="feature-summary">セッション開始時に必要な前提・ルール・現在地ファイルを自動注入し、毎回ゼロから説明させない仕掛け。</p><dl class="feature-io"><dt>入力</dt><dd>セッション起動イベント、注入したい文脈ファイル</dd><dt>出力</dt><dd>起動時自動ロードされた前提情報</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-3-plugins"><h3 id="feature-14-3-plugins">Plugins（配布単位）</h3><p class="feature-summary">Skills・Hooks・設定をまとめて配布する束ね単位。導入範囲と更新を組織的に管理する。</p><dl class="feature-io"><dt>入力</dt><dd>配布したいSkill群、Hook群</dd><dt>出力</dt><dd>インストール可能なPluginパッケージ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-4-hook-test-fixture"><h3 id="feature-14-4-hook-test-fixture">Hook Test（Fixture検証）</h3><p class="feature-summary">安全な入力と危険な入力のFixtureで、Hook自体の動作を単体テストする仕組み。Hookコードの品質を担保する。</p><dl class="feature-io"><dt>入力</dt><dd>安全/危険のFixture、想定動作</dd><dt>出力</dt><dd>Fixture通過/拒否の検証結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-14">
@@ -2374,12 +2383,9 @@ force push → 拒否
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 危険な削除コマンドを拒否する最小PreToolUse Hookを作り、安全な入力と危険な入力のFixtureでテストしてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>絶対に守らせたいことは文章ではなく、HookとPolicyで実行時に強制します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、CLAUDE.mdに『rm -rf禁止』と書いても、繁忙期にAIが破壊的コマンドを生成して事故が起きる。</p><h3>こう使う</h3><p>PreToolUseでrm -rf・本番DB操作・外部送信を物理的に拒否するHookを書き、Fixtureテストを通す。</p><h3>得られるもの</h3><p>AIがどんなに賢くてもHookで止まる。文章のお願いから決定論的な強制へ昇格できる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、編集後のTypeScript型エラーを翌朝まで気づかず、毎週の月曜に手戻りが発生している。</p><h3>こう使う</h3><p>PostToolUseでEdit/Write後にtsc --noEmitを自動実行するHookを入れる。</p><h3>得られるもの</h3><p>型エラーが編集の瞬間に検出され、月曜の手戻り会議が消える。</p></article></div></section>
 </article>
+
 
 </section>
 
@@ -2407,11 +2413,15 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-15">
   <header class="chapter-head">
     <div class="eyebrow">第15章</div>
-    <h1>MCP、Connectors、APIを安全につなぐ</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">外部サービスを、鍵を渡さず使い倒す</span>
+      <span class="chapter-name">MCP、Connectors、APIを安全につなぐ</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『APIキー、チャットに貼っちゃえ』。
-これ、世界中の人が今日もやってる、最も危険な10秒です。動画キャプチャ・スクショ・他人への画面共有、どこかで漏れます。</p><p>ほとんどの人は、外部サービス連携を『繋げば便利』としか見てません。
-でも、繋ぐ瞬間に信頼境界も広がります。読める範囲（Read）・書ける範囲（Write）・鍵の置き場所、この3つは必ず先に決めてから繋ぐ。</p><p>この章では、用意済みのサービス連携（Connector）・標準規格で接続するMCP・自由実装のAPIという3方式の使い分けと、外部から取得した文書をうっかり命令として実行させない対策（Prompt Injection対策）まで揃えます。</p><p>外部連携は、能力を増やす前に、境界を引くことから始まります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIに Slack を読ませたいが、トークンを渡すのが怖い』。
+これは正しい怖さです。鍵を渡せば、AIの便利さと一緒に事故も増えます。</p><p>ほとんどの人は、外部サービスを使うときに API キーをチャットへ貼っています。
+便利ですが、画面共有・録画・誤転送のたびに鍵が漏れる距離にいます。</p><p>MCP（Model Context Protocol）は、外部サービスを安全に AI に繋ぐ標準的な接続口です。
+鍵は環境変数に閉じ込め、AIはサーバ越しに必要な操作だけを呼びます。</p><p>この章を読み終わる頃には、外部サービスを『鍵を渡さず使い倒す』設計が、当たり前になります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-15-0-connector-mcp-api-3"><h3 id="feature-15-0-connector-mcp-api-3">Connector / MCP / API（3方式）</h3><p class="feature-summary">用意されたサービス連携、標準化された接続規格、自由実装のAPIという3つの外部接続方式の使い分け。</p><dl class="feature-io"><dt>入力</dt><dd>繋ぎたい外部サービス、必要な操作</dd><dt>出力</dt><dd>方式別の接続設定と権限境界</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-15-1-mcp-json-scope"><h3 id="feature-15-1-mcp-json-scope">.mcp.json 雛形と Scope設計</h3><p class="feature-summary">MCPサーバー定義ファイルにScopeを絞り、Read権限とWrite権限を分離して書く標準テンプレート。</p><dl class="feature-io"><dt>入力</dt><dd>外部サービス、必要なScope一覧</dd><dt>出力</dt><dd>最小権限の.mcp.json設定</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-15-2-read-write-human-gate"><h3 id="feature-15-2-read-write-human-gate">Read/Write分離 と Human Gate</h3><p class="feature-summary">情報取得は自動でよいが、書き込みは明示承認を介する設計。書き込み事故を構造的に防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>業務フロー、Write操作の頻度と重要度</dd><dt>出力</dt><dd>Read自動・Write承認のフロー設計</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-15-3-prompt-injection"><h3 id="feature-15-3-prompt-injection">Prompt Injection対策</h3><p class="feature-summary">取得した外部文書を命令として実行せずデータとして扱うルール。Web/Doc経由の攻撃を無効化する。</p><dl class="feature-io"><dt>入力</dt><dd>外部から取得する文書、Webコンテンツ</dd><dt>出力</dt><dd>データ扱い徹底ルール、書き込みの明示承認設計</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-15-4-secrets-check"><h3 id="feature-15-4-secrets-check">Secrets保存と導入Check</h3><p class="feature-summary">鍵をチャットや会話履歴に露出させず、環境変数・専用ファイル・SecretManagerへ置く導入手順チェックリスト。</p><dl class="feature-io"><dt>入力</dt><dd>必要なAPIキー、トークン</dd><dt>出力</dt><dd>Secret保存場所と導入時チェックリスト</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-15">
@@ -2583,23 +2593,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 使いたい外部サービスを一つ選び、必要なRead権限と不要なWrite権限を分け、Secretの保存場所を決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>外部連携では、できることより先に、読める範囲・書ける範囲・鍵の置き場所を決めます。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の総務（架空）が、Drive連携Skillで毎日のレポート取得を自動化したいが、AIに書き込み権限まで渡すのが怖くて導入が止まっている。</p><h3>こう使う</h3><p>MCP/Connectorの権限をRead Only Scopeに絞り、書き込みはHuman Gateを介する設計にする。</p><h3>得られるもの</h3><p>情報収集の自動化は走り、書き込み事故は構造的に起きない安全な業務基盤になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人ライター（架空）が、外部記事を要約させたら本文に紛れ込んだ命令でAIが意図しない動作をした（Prompt Injection）。</p><h3>こう使う</h3><p>取得文書はデータとして扱い実行しないルール＋書き込みは明示承認のみ、というRuleを書く。</p><h3>得られるもの</h3><p>外部データに混入した悪意ある命令が動作にならず、調査用途として安全に使い続けられる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-16">
   <header class="chapter-head">
     <div class="eyebrow">第16章</div>
-    <h1>MarkdownよりHTMLが向く仕事</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">正しいだけで、読まれない資料を卒業する</span>
+      <span class="chapter-name">MarkdownよりHTMLが向く仕事</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『長い報告書、また読まれてないな』。
-資料を作る側からすると、これが一番虚しい瞬間です。</p><p>ほとんどの人は、報告は『Markdown か Word で長文を書くもの』と思ってます。
-でも、結論到達時間はフォーマットで2倍変わります。同じ内容でも、カード・グラフ・強調された結論が並ぶ単一HTMLにすると、会議の冒頭で『見ました』前提で議論が始まる。</p><p>この章で扱うのは、Markdownと単一HTMLの使い分け、CSVを1ページHTMLに変える標準プロンプト、それから印刷・スマホ・アクセシビリティの公開前チェック。
-外部CSSに頼らず、1ファイルだけで開けるHTMLを正本にする運用です。</p><p>HTMLを選ぶ理由は『見栄え』じゃなく『理解の速度』。
-これが分かると、報告の通り方が変わります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『正しいことを長く書いたのに、読まれない』。
+これは内容ではなく、出力形式の問題です。</p><p>ほとんどの人は、AIに『レポートを書いて』と頼んで、長文の Markdown を受け取って終わりにしています。
+ですが、受け取った相手は、それを読み切る時間も読む構造も持っていません。</p><p>HTML は、見出し・図・色・前後関係を視覚で伝えられる出力形式です。
+同じ情報を 1 枚に整え、結論を上に、根拠を下に、補足は折りたたみへ。読み手の意思決定速度が変わります。</p><p>この章を読み終わる頃には、『長く書く』ではなく『短く伝える』の方向で、AIに頼めるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-16-0-markdown-vs-html"><h3 id="feature-16-0-markdown-vs-html">形式選択（Markdown vs 単一HTML）</h3><p class="feature-summary">執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。</p><dl class="feature-io"><dt>入力</dt><dd>成果物の用途、読み手、共有経路</dd><dt>出力</dt><dd>形式選択の根拠と最終出力フォーマット</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-1-html"><h3 id="feature-16-1-html">単一HTML標準（自己完結レポート）</h3><p class="feature-summary">外部CSS/JSに依存せず、1ファイルだけで開ける標準フォーマット。共有・印刷・スマホ表示も担保する。</p><dl class="feature-io"><dt>入力</dt><dd>Markdown原稿、データ、画像</dd><dt>出力</dt><dd>外部依存なし1ファイルHTMLレポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-2-csv-prompt"><h3 id="feature-16-2-csv-prompt">CSV分析Prompt</h3><p class="feature-summary">CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。</p><dl class="feature-io"><dt>入力</dt><dd>CSVデータ、注目したい軸</dd><dt>出力</dt><dd>集計表・グラフ・要点カード入りHTML</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-3-html-slide-discussion-board"><h3 id="feature-16-3-html-slide-discussion-board">HTML Slide / Discussion Board</h3><p class="feature-summary">Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。</p><dl class="feature-io"><dt>入力</dt><dd>発表用骨子または議題リスト</dd><dt>出力</dt><dd>HTML Slide、Discussion Board</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-4-check-a11y"><h3 id="feature-16-4-check-a11y">品質Check（A11y/印刷/スマホ）</h3><p class="feature-summary">公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。</p><dl class="feature-io"><dt>入力</dt><dd>完成したHTML</dd><dt>出力</dt><dd>A11y/印刷/スマホでの動作確認結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-16">
@@ -2738,22 +2747,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 同じ小さなレポートをMarkdownと単一HTMLで作り、読み手が結論へ到達する時間を比べてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、毎月の予実報告をMarkdownで提出するが、役員が目を通さず会議で同じ説明を繰り返している。</p><h3>こう使う</h3><p>同内容を単一HTMLレポートへ変換し、結論カード・グラフ・強調点を1ページに集約する。</p><h3>得られるもの</h3><p>結論到達時間が短くなり、会議の冒頭で『見ました』前提で議論が始まる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅メーカーの開発者（架空）が、テストレポートをスクリーンショットで貼り、後日参照しても何が壊れていたか追えない。</p><h3>こう使う</h3><p>テスト結果を単一HTMLで保存し、印刷・スマホ・Alt textで読める形式に揃える。</p><h3>得られるもの</h3><p>障害後の振り返り会議で誰でも開けて確認でき、Markdown原本との二重管理にしなくて済む。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-17">
   <header class="chapter-head">
     <div class="eyebrow">第17章</div>
-    <h1>Claude Designから実装へ</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">デザインカンプを、その場で動くUIに変える</span>
+      <span class="chapter-name">Claude Designから実装へ</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AIに「LP作って」って頼んだら、毎回ゼロからやり直し』。
-これ、AIが悪いんじゃありません。情報設計・見た目・実装を同時に決めようとしてるからです。</p><p>ほとんどの人は、いきなりコードから作り始めます。
-プロは違います。まず白黒のワイヤーフレーム（Wireframe）で情報の順序を固定し、色・フォント・余白の共通ルール（Design System）を当て、動きを確認するプロトタイプ、最後に実装。
-段階を分けると、修正コストがその段階内で閉じます。</p><p>この章を読み終わる頃には、ブランド資産として再利用できるDesign Systemを別プロジェクトに持っておき、複数LPで一貫性を保つ運用が組めるようになります。</p><p>情報・見た目・動作を分けて決める。これが生成AIの速度を、手戻りに変えない秘訣です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『デザインカンプを受け取ったのに、コードに起こすのに 3 日かかる』。
+これは技術力の問題ではなく、橋渡しの仕組みが無いだけです。</p><p>ほとんどの人は、Figma のキャンプを手で読み、HTML/CSS を書き、JS をつなぎ、確認に何往復もしています。
+ですが、Claude Design からそのまま実装へ渡せば、その往復は半分に圧縮できます。</p><p>この章で扱うのは、デザインのレイヤー・トークン・コンポーネントを、AIが解釈できる形で渡すための型です。
+カンプを情報として渡せば、AI はそれを生きた UI へ翻訳します。</p><p>この章を読み終わる頃には、『デザインから実装』の距離が、1日へ縮まります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-17-0-wireframe-design-system-prototype-code"><h3 id="feature-17-0-wireframe-design-system-prototype-code">Wireframe / Design System / Prototype / Code 分離</h3><p class="feature-summary">情報・見た目・動作・実装を別段階で確定する4分離設計。修正コストを段階で閉じ込める。</p><dl class="feature-io"><dt>入力</dt><dd>作りたい画面の目的と利用者</dd><dt>出力</dt><dd>段階ごとに確定した情報設計・スタイル・プロトタイプ・コード</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-1-design-system-project"><h3 id="feature-17-1-design-system-project">Design SystemとProject分離</h3><p class="feature-summary">色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。</p><dl class="feature-io"><dt>入力</dt><dd>ブランドカラー、フォント、共通余白ルール</dd><dt>出力</dt><dd>再利用可能なDesign System Projectと参照Path</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-2-claude-design-flow"><h3 id="feature-17-2-claude-design-flow">Claude Design 標準Flow</h3><p class="feature-summary">白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。</p><dl class="feature-io"><dt>入力</dt><dd>ラフ案、要件、対象ユーザー</dd><dt>出力</dt><dd>段階別の決定記録と実装ドラフト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-3-code-prompt-sync-rule"><h3 id="feature-17-3-code-prompt-sync-rule">Codeへ渡すPromptとSync Rule</h3><p class="feature-summary">Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。</p><dl class="feature-io"><dt>入力</dt><dd>Designでの確定事項、参照コンポーネント</dd><dt>出力</dt><dd>実装プロンプトとSync用ルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-4-item"><h3 id="feature-17-4-item">公開前チェック</h3><p class="feature-summary">レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みページ、公開予定</dd><dt>出力</dt><dd>5項目のチェック結果と公開可否判定</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-17">
@@ -2875,23 +2884,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つのページを、情報だけのWireframe、Design System適用版、実装版の三段階で作り、各段階の決定事項を記録してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中小Web会社（架空）が、AIに『LPを作って』と頼むたびに情報構造とビジュアルが同時に揺れて、毎回ゼロからやり直している。</p><h3>こう使う</h3><p>白黒Wireframe→Design System適用→実装の三段階に分け、各段階の決定事項を記録する。</p><h3>得られるもの</h3><p>情報・見た目・動作の修正コストが分離され、出戻りが特定段階だけで済む。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、複数LPで色・フォント・余白がバラバラになり、ブランドの一貫性が失われている。</p><h3>こう使う</h3><p>Design Systemを別Projectとして固定し、各LPはそれを参照する形に揃える。</p><h3>得られるもの</h3><p>1箇所直せば全LPに反映され、ブランド資産として再利用できる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-18">
   <header class="chapter-head">
     <div class="eyebrow">第18章</div>
-    <h1>CoworkとLive Artifacts</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">AIと2人で、同じ画面を編集する</span>
+      <span class="chapter-name">CoworkとLive Artifacts</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>週報、毎週ゼロから書いてませんか。
-あれ、本当は『書く資料』じゃなくて『開いたら最新になってる画面』が正解です。</p><p>ほとんどの人は、レポートを『静的な成果物』として作ります。
-でも、開くたびにDriveの会議ファイルを読み込んで・要約して・キャッシュする仕組み（Live Artifact）にすると、書く時間がゼロになります。
-データ取得・整形・表示・AI要約・キャッシュの5層に分けて設計するのがコツ。毎回高価な処理を繰り返さず、更新時刻と出典を画面に出して、失敗時は『古いデータ』と明示する。</p><p>書く資料から、更新される業務画面へ。
-この章で、AI活用の発想が一段階ジャンプします。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIと一緒に作業しているはずなのに、結局画面を行き来している』。
+これは慣れの問題ではなく、共有空間が無いだけです。</p><p>ほとんどの人は、AIの出力をコピーし、エディタへ貼り、戻ってきて指示し直しています。
+そのたびに、文脈の半分が抜け落ちます。</p><p>Cowork と Live Artifacts は、AIと人が同じファイルを同時に編集できる場所です。
+AI が直したところがそのまま反映され、人が直したところを AI が拾います。</p><p>この章を読み終わる頃には、『AI に頼む』から『AI と並んで書く』へ、距離感が変わります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-18-0-cowork"><h3 id="feature-18-0-cowork">Cowork（非開発業務の複数ステップ）</h3><p class="feature-summary">Projectで文脈を固定し、複数ステップの業務処理を継続実行する作業形態。Codeとは別の入口として扱う。</p><dl class="feature-io"><dt>入力</dt><dd>繰り返し発生する業務、参照する文脈ファイル</dd><dt>出力</dt><dd>継続実行可能なCowork Project</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-1-live-artifact-5"><h3 id="feature-18-1-live-artifact-5">Live Artifact 5層構造</h3><p class="feature-summary">データ取得・整形・表示・AI要約・キャッシュの5層に分けて設計する、開くたびに最新化する業務インターフェース。</p><dl class="feature-io"><dt>入力</dt><dd>対象データソース、表示したい指標</dd><dt>出力</dt><dd>5層分離されたLive Artifact実装</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-2-dashboard-prompt"><h3 id="feature-18-2-dashboard-prompt">会議Dashboard Prompt</h3><p class="feature-summary">Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするダッシュボード用プロンプトのテンプレ。</p><dl class="feature-io"><dt>入力</dt><dd>Drive上の会議ファイル群、要約観点</dd><dt>出力</dt><dd>リロード時に最新化される会議Dashboard</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-3-scheduled"><h3 id="feature-18-3-scheduled">Scheduled設計</h3><p class="feature-summary">定期実行で重複防止・ロック・ログ・通知・再試行を持たせる業務スケジュール設計。</p><dl class="feature-io"><dt>入力</dt><dd>実行頻度、失敗時の挙動、通知先</dd><dt>出力</dt><dd>Scheduledジョブ設定と運用ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-4-acceptance"><h3 id="feature-18-4-acceptance">Acceptance（更新/キャッシュ/出典）</h3><p class="feature-summary">Live Artifactの完成判定。更新時刻・キャッシュ振る舞い・出典表示の3点をAcceptance基準にする。</p><dl class="feature-io"><dt>入力</dt><dd>完成したArtifact、運用シナリオ</dd><dt>出力</dt><dd>3点Acceptance通過記録、Stale時の挙動確認</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-18">
@@ -3022,12 +3030,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> ローカルの会議データを表示する小さなDashboardを作り、更新・キャッシュ・出典表示の三点を確認してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業マネージャー（架空）が、週報を毎週手動更新しており、開くたびに最新化されないため週末まで状況が見えない。</p><h3>こう使う</h3><p>Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするLive Artifact Dashboardを作る。</p><h3>得られるもの</h3><p>開いた瞬間に最新の進捗が見え、週次更新作業そのものが不要になる。</p></article><article class="usecase-card"><h3>場面</h3><p>中小オペレーター（架空）が、外部APIを毎リロードで叩く実装にして請求金額がはねた。</p><h3>こう使う</h3><p>Cache・更新時刻・出典・失敗時のStale表示を分離して設計する。</p><h3>得られるもの</h3><p>コストとUXのバランスが取れ、データ取得失敗時にも古い情報と明示できる。</p></article></div></section>
 </article>
+
 
 </section>
 
@@ -3055,11 +3060,15 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-19">
   <header class="chapter-head">
     <div class="eyebrow">第19章</div>
-    <h1>Claude Codeを自分専用に育てる</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">自分の口癖を、AIに覚えさせる</span>
+      <span class="chapter-name">Claude Codeを自分専用に育てる</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AIに全会話履歴を渡せば、自分専用になる』。
-これ、便利そうに見えて、顧客の個人情報まで学習素材に紛れ込ませる地雷です。</p><p>ほとんどの人は、パーソナライズを『大量に覚えさせること』だと思ってます。
-正解は逆。『何を保存しないか』を最初に決めることです。秘密・個人情報・顧客データ・雑談は除外し、関心・学習課題・好む形式の3つだけ抽出して INTERESTS.md に書く。本人がいつでも編集・削除できる状態を保つ。</p><p>新しさと深掘り回数で重み付け（Recency Score）して『現在の関心』を反映する、毎回全ログ読まずに差分処理する、そのProfileから復習問題まで作る、というところまでこの章で組みます。</p><p>自分専用化は、大量記憶じゃなく、信号の選別と本人の制御で作ります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『他人の Skill をコピーしてきたけれど、自分の仕事には合わない』。
+これは品質の問題ではなく、自分の口癖を AI に教えていないだけです。</p><p>ほとんどの人は、AIを『汎用ツール』として使っています。
+ですが、AIは、何を好み・何を避け・どこを丁寧に確認したいかという、あなた固有の癖を覚えることもできます。</p><p>Auto Memory・User Rules・個人用 Skill は、自分の作業様式を AI に学習させる仕掛けです。
+毎回の手直しが減り、最初から自分の文体・形式で返ってくるようになります。</p><p>この章を読み終わる頃には、AI が『自分のために働く道具』として馴染んできます。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-19-0-privacy-by-design"><h3 id="feature-19-0-privacy-by-design">Privacy by Design（保存しないものを決める）</h3><p class="feature-summary">秘密・個人情報・顧客データ・雑談を除外し、保存対象を関心・学習課題・好む形式に限定するパーソナライズ設計。</p><dl class="feature-io"><dt>入力</dt><dd>会話ログ、扱う情報のセンシティビティ</dd><dt>出力</dt><dd>保存対象/除外対象を分けた抽出ルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-19-1-interest-profile-skill"><h3 id="feature-19-1-interest-profile-skill">Interest Profile Skill</h3><p class="feature-summary">未分析ログから関心・学習課題・好む形式だけを抽出してINTERESTS.mdへまとめるSkill。本人が編集可能。</p><dl class="feature-io"><dt>入力</dt><dd>セッションログ、過去会話</dd><dt>出力</dt><dd>編集可能なINTERESTS.mdプロファイル</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-19-2-recency-score"><h3 id="feature-19-2-recency-score">Recency Score（重み付け）</h3><p class="feature-summary">新しさと深掘り回数で重み付けし、現在の関心を反映するスコアリング。古い関心と現在を混ぜない。</p><dl class="feature-io"><dt>入力</dt><dd>抽出済み関心信号、時間軸</dd><dt>出力</dt><dd>現在優先のスコア順関心リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-19-3-item"><h3 id="feature-19-3-item">差分処理（処理済み位置の管理）</h3><p class="feature-summary">処理済み位置を保持し、毎回全ログを再走査しない実装パターン。処理時間と費用を構造的に抑える。</p><dl class="feature-io"><dt>入力</dt><dd>新規ログと前回処理位置</dd><dt>出力</dt><dd>差分のみ処理した抽出結果</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-19-4-item"><h3 id="feature-19-4-item">学習問題生成</h3><p class="feature-summary">Profileを元に調査テーマや復習問題を作る出力機能。学んだことを定着させるための再利用。</p><dl class="feature-io"><dt>入力</dt><dd>INTERESTS.md、苦手分野</dd><dt>出力</dt><dd>復習問題、深掘り調査テーマ</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-19">
@@ -3306,22 +3315,22 @@ Local Storageには回答状態だけを保存する。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 保存してよい学習信号と保存してはいけない情報を定義し、少量の会話ログからINTERESTS.mdの試作を作ってください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人ライター（架空）が、AIに『自分専用化したい』と全会話履歴を渡し、結果として顧客個人情報まで学習対象に紛れて怖くなった。</p><h3>こう使う</h3><p>保存対象を関心・学習課題・好む形式の三つに限定し、秘密情報・顧客データ・雑談は除外定義を書く。</p><h3>得られるもの</h3><p>個人化の便益は得つつ、プライバシーリスクが構造的にゼロへ近づく。</p></article><article class="usecase-card"><h3>場面</h3><p>学習担当（架空）が、社員ごとのスキルレベルを把握したいが、毎回全ログを再走査して処理時間が爆発している。</p><h3>こう使う</h3><p>処理済み位置と新しさ重みを持つINTERESTS.md抽出Skillを作る。</p><h3>得られるもの</h3><p>差分処理になり、関心の最新動向だけ追える。本人が編集・削除できる透明な仕組みになる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-20">
   <header class="chapter-head">
     <div class="eyebrow">第20章</div>
-    <h1>`/goal`、Headless、定期実行</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">AIが、寝てる間に走る</span>
+      <span class="chapter-name">`/goal`、Headless、定期実行</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>朝起きたら、もう昨日の続きが終わってる。
-これ、ちょっとズルしてる気分になります。</p><p>ほとんどの人は、AIを『チャット欄を開いて話しかける』対象だと思ってます。
-でも実はAIには、自分で動く方法が3つあります。
-ゴールを渡して走らせる（/goal）。画面を開かずに動かす（Headless）。決まった時間に勝手に動かす（定期実行）。</p><p>ただし、自律化の本当の難所は『始め方』じゃなく『止め方』です。成功条件・最大ターン・Timeout・許可範囲・失敗時停止を仕様にしてから走らせる。公開・送信・課金・削除は完全自動化せず、最後の一歩は人間承認に残す。</p><p>設定は10分。一度入れたら、コーヒーを淹れる前にレポートが手元にある生活が普通になります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『朝の調査を、毎朝自分でやっている』。
+これは AI の手抜きではなく、自律実行の設計をしていないだけです。</p><p>ほとんどの人は、AIを『呼んだら動くもの』として使っています。
+ですが、明確なゴールを渡せば、AIは寝ている間にも走れます。</p><p>`/goal` と Headless 実行、定期実行は、AIに目的だけを渡し、停止条件と最大回数を決めて自走させる仕掛けです。
+朝起きたら、調査・要約・草案の3つが机の上に揃っている──そういう状態を作ります。</p><p>ただし、無条件で走らせれば事故も無条件です。成功条件・タイムアウト・人の承認地点を必ず併せて設計します。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-20-0-goal"><h3 id="feature-20-0-goal">/goal（成功条件と停止条件）</h3><p class="feature-summary">成功条件・最大ターン・Timeout・許可範囲・失敗時停止を仕様化し、自律実行が安全に終わるよう設計するコマンド。</p><dl class="feature-io"><dt>入力</dt><dd>自動化したい仕事、成功判定の機械条件</dd><dt>出力</dt><dd>完了 or 安全停止のどちらかで終わる自律実行</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-1-headless"><h3 id="feature-20-1-headless">Headless実行</h3><p class="feature-summary">対話画面なしで定型タスクを走らせる実行形態。CI・夜間バッチ・サーバー常駐に組み込む。</p><dl class="feature-io"><dt>入力</dt><dd>実行内容、引数、許可範囲</dd><dt>出力</dt><dd>Headlessジョブの実行ログとExitステータス</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-2-wrapper"><h3 id="feature-20-2-wrapper">安全なWrapper（重複防止・ロック・ログ）</h3><p class="feature-summary">/goalやHeadlessを実運用に乗せるための重複防止・ロック・ログ・通知・再試行を包んだラッパースクリプト。</p><dl class="feature-io"><dt>入力</dt><dd>ベース実行コマンド、運用要件</dd><dt>出力</dt><dd>Wrapperスクリプトと運用ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-3-scheduled"><h3 id="feature-20-3-scheduled">Scheduled必須要件</h3><p class="feature-summary">定期実行で必ず満たすべき重複防止・冪等性・通知の要件チェック。配信時刻のブレも管理する。</p><dl class="feature-io"><dt>入力</dt><dd>スケジュール対象ジョブ、頻度</dd><dt>出力</dt><dd>必須要件チェック通過記録</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-4-launchagent"><h3 id="feature-20-4-launchagent">LaunchAgent例</h3><p class="feature-summary">macOS LaunchAgentによる定期実行設定の具体例。個人Mac〜開発機での自動化導入に使う。</p><dl class="feature-io"><dt>入力</dt><dd>実行コマンド、頻度、ログ出力先</dd><dt>出力</dt><dd>動作するLaunchAgent plist例</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-5-item"><h3 id="feature-20-5-item">自動化しない領域の明示</h3><p class="feature-summary">公開・送信・課金・削除など、最後の一歩を必ず人間に残す領域を明確化するルール。</p><dl class="feature-io"><dt>入力</dt><dd>自動化候補リスト、副作用の有無</dd><dt>出力</dt><dd>自動化可/人間承認必須の振り分け表</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-20">
@@ -3421,21 +3430,22 @@ mv "$OUT.tmp" "$OUT"
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自動化したい仕事を一つ選び、成功条件・最大回数・Timeout・禁止する副作用・人間の承認地点を書いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>良い自律化は、達成条件と停止条件の両方を検証可能にします。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、AIに『テストが通るまで直して』と頼み、無限ループで朝までCPUが回り続けて停止条件もなく止まれない。</p><h3>こう使う</h3><p>成功条件・最大ターン・Timeout・許可範囲・失敗時停止を/goal仕様として先に書き出す。</p><h3>得られるもの</h3><p>夜間自動実行が安全に走り、達成 or 安全停止の二状態で終わる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、毎日のレポート自動配信を構築したいが、誤送信時の責任の所在が決まらず承認が出ない。</p><h3>こう使う</h3><p>公開・送信・課金・削除は完全自動化せず、最後の一歩を人間承認に残す設計にする。</p><h3>得られるもの</h3><p>副作用のある操作だけ責任者が承認し、それ以外は自動で進む構造になり、承認が下りる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-21">
   <header class="chapter-head">
     <div class="eyebrow">第21章</div>
-    <h1>Dynamic Workflowsと複数Agent</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">1つの目的を、複数のAIに分担させる</span>
+      <span class="chapter-name">Dynamic Workflowsと複数Agent</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『調査・検証・統合をひとりのAIに任せたら、最初の仮説に最後まで引きずられた』。
-これ、結構ありがちな失敗です。</p><p>ほとんどの人は、AIを増やせば品質が上がると思ってます。
-でも複数Agentの本質は、人数じゃなく『仮説バイアスの分離』。情報源を探す（Research）・主張を検証する（Verify）・矛盾と重複を整理して統合する（Synthesize）の3役を別の文脈で動かすと、初期仮説の磁場から抜けられます。</p><p>ただし、Agentを増やせば検索量と料金も急増します。Agent数・最大トークン・再試行回数の上限を必ず設ける。単純な仕事では Dynamic を使わず、手動Workflowで済ませる判断軸もこの章で学びます。</p><p>複数Agentは、品質を自動保証する魔法じゃありません。難しい仕事を分解する道具です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AI を 1 体だけ使って、複雑な仕事を進めている』。
+これは限界の問題ではなく、編成の問題です。</p><p>ほとんどの人は、AIをチームではなく、ひとりの賢い人として扱っています。
+ですが、複数の AI に役割を割り振り、互いに結果を渡し合う設計をすると、こなせる仕事の量が一段変わります。</p><p>Dynamic Workflows は、目的に応じて複数の AI が動的に役割を分担する仕掛けです。
+調査担当が結果を出し、設計担当が計画に直し、実装担当が手を動かし、レビュー担当が読み返す。</p><p>この章を読み終わる頃には、AI を 1 つの道具ではなく、1 つのチームとして見られるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-21-0-dynamic-workflows"><h3 id="feature-21-0-dynamic-workflows">Dynamic Workflows</h3><p class="feature-summary">入力に応じて複数Agentの流れを組み替える可変Workflow。仮説バイアスを分離した調査・統合に向く。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、必要な情報源、品質基準</dd><dt>出力</dt><dd>Agent構成と各Agentの中間成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-1-research-verify-synthesize"><h3 id="feature-21-1-research-verify-synthesize">Research → Verify → Synthesize</h3><p class="feature-summary">情報源を探す・主張を検証する・矛盾と重複を整理して統合する三役分業の代表構成。</p><dl class="feature-io"><dt>入力</dt><dd>調査依頼、複数情報源</dd><dt>出力</dt><dd>出典付き検証済み統合レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-2-cost-control-agent"><h3 id="feature-21-2-cost-control-agent">Cost Control（Agent数/トークン/再試行）</h3><p class="feature-summary">Agent数・検索範囲・最大トークン・再試行回数を制限し、料金暴走を構造的に防ぐ運用設定。</p><dl class="feature-io"><dt>入力</dt><dd>想定予算、現状のAgent構成</dd><dt>出力</dt><dd>上限つきCost設定とアラート閾値</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-3-workflow-dynamic"><h3 id="feature-21-3-workflow-dynamic">手動Workflow（Dynamic不要の判定）</h3><p class="feature-summary">単純な仕事ではDynamicを使わず、手動の小さなWorkflowで済ませる判断軸。複雑度とコストを天秤にかける。</p><dl class="feature-io"><dt>入力</dt><dd>タスク内容、必要な分業度合い</dd><dt>出力</dt><dd>Dynamic採用/手動採用の判定理由</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-4-acceptance"><h3 id="feature-21-4-acceptance">Acceptance（中間成果物の保存）</h3><p class="feature-summary">各段階の中間成果物を保存し、最終出力だけで判断しない受け入れ基準。再現と監査を可能にする。</p><dl class="feature-io"><dt>入力</dt><dd>Workflow実行ログ、中間成果物</dd><dt>出力</dt><dd>段階別保存ファイルとAcceptance結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-21">
@@ -3510,23 +3520,22 @@ SNSは反応のみ。最大8 Agent、25分。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つの調査テーマをResearch・Verify・Synthesizeへ分け、各担当へ渡す入力と受け取る出力を定義してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中堅リサーチ会社（架空）が、新市場調査をひとりのAIに任せたら初期仮説に引きずられて、後で重大な事実を見逃したと判明した。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeの三役を独立Agentに分け、Cost上限と再試行回数も決める。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、結論への反証も統合される。意思決定の質が説明可能になる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人投資家（架空）が、複数Agent構成にしたら検索量が爆発し、月のAPI料金が想定の5倍になった。</p><h3>こう使う</h3><p>Agent数・検索範囲・最大トークンを段階的に制限し、各段階の中間成果物を保存する。</p><h3>得られるもの</h3><p>暴走しないCost構造になり、シンプルな調査は手動Workflowへ戻す判断もできる。</p></article></div></section>
 </article>
+
 
 <article class="chapter" id="chapter-22">
   <header class="chapter-head">
     <div class="eyebrow">第22章</div>
-    <h1>信頼できる調査とレポート</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">AIに調べさせて、嘘ごと信じる事故をやめる</span>
+      <span class="chapter-name">信頼できる調査とレポート</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『この数字、どこから持ってきたの？』
-役員プレゼンで詰められて、答えられず黙る。
-これ、AIに調査させた時の代表的な事故です。</p><p>ほとんどの人は、AIの調査結果を『そのまま貼って終わり』にしてます。
-だから根拠不明の数字・古い情報・SNSの噂が混ざっていても気づけない。</p><p>この章で導入するのは、主張・根拠・日付・確度・反証を1行ずつ記録する『Claim Ledger』という台帳。情報源の重みは公式→一次→実測→解説→SNSの順で固定し、変動情報には確認日を付ける。
-ついでに、動画やSNSから情報を取る時の重複統合と、発言と事実の区別もここで仕込みます。</p><p>調査品質は、文章の滑らかさじゃなく、主張と証拠の追跡可能性で決まります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AI に調べさせて、嘘ごと信じる』。
+これは AI の不誠実ではなく、検証を仕組み化していないだけです。</p><p>ほとんどの人は、AIの調査結果をそのまま使っています。
+ですが、出典の確認・複数経路の確認・反証の確認をしないままでは、AIの便利さは事故率を上げてしまいます。</p><p>この章で扱うのは、調査と検証を別の AI、別の文脈で走らせる仕掛けです。
+情報源の独立性・反証の明示・確信度の段階を、毎回の調査に組み込みます。</p><p>この章を読み終わる頃には、AI の調査結果に対して、安心して『信じる』『保留する』を分けられるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-22-0-source-sns"><h3 id="feature-22-0-source-sns">Source優先度（公式→一次→実測→解説→SNS）</h3><p class="feature-summary">情報源の重みを序列化し、変動情報には確認日を付ける調査品質の土台。SNSの勢いと事実を分ける。</p><dl class="feature-io"><dt>入力</dt><dd>集めた情報源、それぞれの種別</dd><dt>出力</dt><dd>重み付き情報源リストと確認日メタ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-22-1-claim-ledger"><h3 id="feature-22-1-claim-ledger">Claim Ledger</h3><p class="feature-summary">主張・根拠・日付・確度・反証を1行ずつ記録する追跡可能な台帳。後で『この数字の出所は？』に即答できる。</p><dl class="feature-io"><dt>入力</dt><dd>レポート上の主張、対応する出典</dd><dt>出力</dt><dd>5列構造のClaim Ledger</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-22-2-research-skill"><h3 id="feature-22-2-research-skill">Research Skill</h3><p class="feature-summary">対象・期間・除外条件・評価軸を内蔵した調査Skill。テーマを渡すと出典付き調査結果を返す。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、期間、除外条件</dd><dt>出力</dt><dd>Research Skillによる出典付きレポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-22-3-sns"><h3 id="feature-22-3-sns">動画/SNS統合（発言と事実の区別）</h3><p class="feature-summary">同じ内容を重複カウントせず、発言と事実を区別して統合する処理。SNS発の話題を業務情報に変える。</p><dl class="feature-io"><dt>入力</dt><dd>動画・SNS投稿の集合</dd><dt>出力</dt><dd>重複統合済みの発言/事実分離レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-22-4-item"><h3 id="feature-22-4-item">完了条件（未確認事項の明示）</h3><p class="feature-summary">未確認事項と次に検証すべき点を明示してレポートを閉じる完了基準。隠れた不確実性を残さない。</p><dl class="feature-io"><dt>入力</dt><dd>調査ドラフト</dd><dt>出力</dt><dd>未確認事項リストと次の検証アクション</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-22">
@@ -3610,12 +3619,9 @@ argument-hint: "&lt;question&gt;"
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つの最新機能について三つの主張を選び、Claim Ledgerへ一次情報・確認日・確度・反証を書いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>調査品質は文章の滑らかさではなく、主張と証拠の追跡可能性で判断します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>経営企画（架空）が、AIに業界レポートを作らせたが、根拠不明の数字や古い情報が混じり、役員プレゼンで矛盾を指摘された。</p><h3>こう使う</h3><p>Claim Ledgerに主張・根拠・日付・確度・反証を必須項目で記録するSkillを作る。</p><h3>得られるもの</h3><p>プレゼン前に根拠を逆引きでき、『この数字の出所は？』に即答できる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人ブロガー（架空）が、最新機能の解説を書こうとして、SNSの噂と公式情報が混在し、結果として誤情報を発信して訂正に追われた。</p><h3>こう使う</h3><p>出典の優先度を公式→一次→解説→SNSの順で重み付けし、変動情報には確認日を付ける。</p><h3>得られるもの</h3><p>発信前にSNS情報を切り分けでき、訂正リスクが大幅に減る。</p></article></div></section>
 </article>
+
 
 </section>
 
@@ -3643,12 +3649,15 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-23">
   <header class="chapter-head">
     <div class="eyebrow">第23章</div>
-    <h1>最適Architecture</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">1台の成功を、全社の標準に翻訳する</span>
+      <span class="chapter-name">最適Architecture</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『自分のMacで動くSkill、ZIPで全社に配布したら阿鼻叫喚』。
-配布の失敗、ほとんどがこのパターンです。</p><p>ほとんどの人は、便利なファイルを配ることを『全社化』だと思ってます。
-でも、個人の便利ツールが組織のインフラに変わる境目では、正本・配布先・個人差分・強制Policy・Release段階を別物として設計する必要があります。</p><p>この章で扱うのが、ハーネスの4面構造（Guidance＝お願い／Enforcement＝強制／Content＝中身／Delivery＝配布）。
-正本（skill-src）と生成物を分離し、Claude Code とCodex両方へ同じ正本から展開する。配布は段階的（Canary→Pilot→Stable）。個人カスタマイズは ~/.claude/local/ で保護する。</p><p>全社化は『コピーして送る』じゃなく、製品として設計する仕事です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『自分の Mac では完璧に動く Skill が、隣の人の Mac では動かない』。
+これは個人の運用ではなく、組織の標準が無いことが原因です。</p><p>ほとんどの人は、AIの活用を個人の工夫として済ませています。
+ですが、その工夫を社内で再現可能にするには、Architecture（どう配置し、どう同期し、どう更新するか）が要ります。</p><p>この章で扱うのは、トレプロハーネスの設計思想を借りて、自社用の Architecture を描く方法です。
+正本・配布・強制・個人差分を分離し、Canary→Pilot→Stable で段階展開します。</p><p>この章を読み終わる頃には、『一人の成功』を『全社の標準』へ翻訳する目線が手に入ります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-23-0-4-guidance-enforcement-content-delivery"><h3 id="feature-23-0-4-guidance-enforcement-content-delivery">ハーネス4面（Guidance/Enforcement/Content/Delivery）</h3><p class="feature-summary">全社配布基盤を案内・強制・コンテンツ・配布の4面に分け、各面の正本と更新方法を設計する全体図。</p><dl class="feature-io"><dt>入力</dt><dd>現在の共通資産、配布手段</dd><dt>出力</dt><dd>4面に分類された正本と更新フロー</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-23-1-repository"><h3 id="feature-23-1-repository">推奨Repository（正本と生成物の分離）</h3><p class="feature-summary">skill-srcを正本、配布用パッケージを生成物として分離し、Claude/Codex両Runtimeへ同じ正本から展開する構造。</p><dl class="feature-io"><dt>入力</dt><dd>Skill群、Hook群、Plugin群</dd><dt>出力</dt><dd>正本と生成物が分かれたGit Repository</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-23-2-release-flow-canary-pilot-stable"><h3 id="feature-23-2-release-flow-canary-pilot-stable">Release Flow（Canary→Pilot→Stable）</h3><p class="feature-summary">PR→Test→Evaluator→Canary→Pilot→Stableの順で段階配布し、失敗を小さく発見できるリリース設計。</p><dl class="feature-io"><dt>入力</dt><dd>配布候補の更新セット</dd><dt>出力</dt><dd>段階通過ごとのリリースタグと配布対象</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-23-3-guidance-enforcement-mapping"><h3 id="feature-23-3-guidance-enforcement-mapping">Guidance/Enforcement Mapping</h3><p class="feature-summary">どのルールが文章のお願いで、どれがHookやPolicyで物理強制かを表に揃えるマッピング作業。</p><dl class="feature-io"><dt>入力</dt><dd>現状の全ルール一覧</dd><dt>出力</dt><dd>Guidance/Enforcement分類表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-23-4-layer"><h3 id="feature-23-4-layer">個人Layer（私物設定の保護）</h3><p class="feature-summary">~/.claude/local/ など、配布で上書きされない個人カスタマイズ層を分離し、私物設定を守る仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>個人カスタマイズ、私物Skill</dd><dt>出力</dt><dd>上書き保護されたLocal Layer</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-23">
@@ -3879,21 +3888,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の共通資産をGuidance・Enforcement・Content・Deliveryの四面へ分類し、正本をどこに置くか決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅企業（架空）が、AIで成果を出した社員のSkill群をZIPで全社配布した結果、人によって設定が壊れ、サポートが回らなくなった。</p><h3>こう使う</h3><p>Guidance・Enforcement・Content・Deliveryの四面に分け、各面の正本と更新方法を定義する。</p><h3>得られるもの</h3><p>個別調整がDelivery層で吸収され、共通層は壊れない。サポート問い合わせの種類が分類できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、全社一斉配布したSkillにバグが見つかった時、誰がどこから戻せるのか分からず深夜対応になった。</p><h3>こう使う</h3><p>Canary→Pilot→StableのRelease Flowを設け、各段階のExit Criteriaを書く。</p><h3>得られるもの</h3><p>事故は小さい範囲で止まり、Stable到達前にロールバックできる構造になる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-24">
   <header class="chapter-head">
     <div class="eyebrow">第24章</div>
-    <h1>配布、同期、更新、Rollback</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">配って、戻せる。それが配布の正解</span>
+      <span class="chapter-name">配布、同期、更新、Rollback</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『毎朝の自動更新が、ネット不安定な端末で半端な状態で止まった』。
-これ、配布基盤の本当の品質が試される瞬間です。</p><p>ほとんどの人は、自動更新を『コピーすればOK』と思ってます。
-でも本番では、何度実行しても壊れない（冪等な）Bootstrap、追加・変更・削除まで追従する同期（Convergent Sync）、配布直後のVerify、事故時に一手で戻せるRollbackまでがセットでないと、ある朝突然崩壊します。</p><p>この章では、個人カスタマイズLayerに触れずに共通Skillだけ更新する update.sh、Manifest比較で差分を計算する仕組み、署名済みの旧版へ即座に戻すRollback運用までを設計します。</p><p>配布の完成条件は『コピー成功』じゃなく、収束・検証・復旧が繰り返し成立することです。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AI の設定を全社に配ったら、半数が壊れた』。
+これは配布の事故ではなく、配布の設計が無いだけです。</p><p>ほとんどの人は、設定の更新を『コピーして送る』で済ませています。
+ですが、更新が壊れた場合に戻せなければ、配布のたびに恐怖が増えます。</p><p>この章で扱うのは、配布・同期・更新・Rollback を一連の仕掛けにする設計です。
+段階展開（Canary→Pilot→Stable）、自動同期、失敗検知、戻し手順。攻めと守りを同じ仕組みに含めます。</p><p>配って、戻せる。これが配布の正解です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-24-0-bootstrap"><h3 id="feature-24-0-bootstrap">Bootstrap（冪等な初回セットアップ）</h3><p class="feature-summary">何度実行しても壊れない初回セットアップ。ネット障害時に安全に持ち越し、同時実行をロックで防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>新規端末、認証情報、対象Repository</dd><dt>出力</dt><dd>冪等に走るBootstrap実行ログと最終状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-24-1-convergent-sync"><h3 id="feature-24-1-convergent-sync">Convergent Sync（追加/変更/削除追従）</h3><p class="feature-summary">前回Manifestと今回正本を比較し、追加・変更・削除を最終状態へ収束させる同期処理。</p><dl class="feature-io"><dt>入力</dt><dd>Manifest差分、現端末状態</dd><dt>出力</dt><dd>収束済み最新状態と差分ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-24-2-skill-merge-update-sh"><h3 id="feature-24-2-skill-merge-update-sh">Skill Merge と update.sh</h3><p class="feature-summary">個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。</p><dl class="feature-io"><dt>入力</dt><dd>更新対象Skill群、個人Layerパス</dd><dt>出力</dt><dd>個人保護つき更新完了ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-24-3-verify-version-hook"><h3 id="feature-24-3-verify-version-hook">Verify（存在/Version/Hook動作）</h3><p class="feature-summary">配布直後に存在・Version・Hook動作を構造化チェックし、配布の成功を客観的に確認する検証層。</p><dl class="feature-io"><dt>入力</dt><dd>配布対象、想定Version</dd><dt>出力</dt><dd>Verify結果レポートと不一致リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-24-4-rollback-release"><h3 id="feature-24-4-rollback-release">Rollback（既知Releaseへ一手戻し）</h3><p class="feature-summary">署名済みの以前のReleaseへ一操作で戻せる仕組み。事故時の復旧時間を分単位に短縮する。</p><dl class="feature-io"><dt>入力</dt><dd>現在版、戻り先Releaseタグ</dd><dt>出力</dt><dd>Rollback実行ログと復旧後Verify</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-24">
@@ -4148,23 +4158,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 小さなサンプル構成でdry-run、同期、削除追従、個人フォルダ保護、Rollbackを順にテストしてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>配布の完成条件はコピー成功ではなく、収束・検証・復旧が繰り返し成立することです。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、毎朝の自動更新スクリプトがネット不安定の社員端末で半端な状態で止まり、AIの動作が日替わりで変わる現象に悩んでいる。</p><h3>こう使う</h3><p>Bootstrap・Updateを冪等に作り直し、Manifest比較で追加・変更・削除を最終状態へ収束させる。</p><h3>得られるもの</h3><p>ネットワーク失敗時も次回で復旧でき、端末ごとの設定差が物理的に解消する。</p></article><article class="usecase-card"><h3>場面</h3><p>ある中堅IT部門（架空）が、配布事故の際に『誰の端末がどの版か』を集計できず、対応に半日かかった。</p><h3>こう使う</h3><p>配布後Verify＋端末Inventoryを構造化ログで持ち、Rollbackは署名済み旧版へ一操作で戻せるようにする。</p><h3>得られるもの</h3><p>事故時の影響範囲が即座に見え、復旧が分単位になる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-25">
   <header class="chapter-head">
     <div class="eyebrow">第25章</div>
-    <h1>Skill Governance</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">誰が作って、誰が承認したか、説明できますか</span>
+      <span class="chapter-name">Skill Governance</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『気づいたら社内にSkillが200個』。
-似た名前・古い手順・誰が責任者か分からない資産が混ざる。
-これ、Skill運用の中盤で必ず起きる詰まりです。</p><p>ほとんどの人は、Skill運用を『数を増やすこと』と勘違いします。
-本当に効くのは、提案→生成→評価→Canary→Stable→廃止までの一生（Lifecycle）を全部のSkillに付けること。Canonical Name・Category・Owner・Version・Fixture・評価点を持たせ、Generator（作る）とEvaluator（採点する）を分けて自作自演バイアスをなくす。</p><p>正常・不足・巨大・危険・対象外の5ケースFixtureで機械的に判定し、合格点未満は本番配布しない。
-Skillの価値は数じゃなく、再現性・責任者・評価・廃止まで追えること。製品台帳として運用する章です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『Skill を誰が作って、誰が承認したのか分からない』。
+これは管理不足ではなく、Governance を設計していないだけです。</p><p>ほとんどの人は、AIの Skill を増やすことに集中し、誰が責任を持つかを後回しにしています。
+ですが、Skill の数が増えると、品質の悪い 1 本が全社の事故を生むことがあります。</p><p>この章で扱うのは、提案・レビュー・承認・配布・廃止という Skill のライフサイクルを管理する仕掛けです。
+誰が作り、誰が責任を持ち、いつ捨てるかを台帳で見える化します。</p><p>この章を読み終わる頃には、Skill を『増やす』だけでなく『健全に管理する』視点が手に入ります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-25-0-5-prefix"><h3 id="feature-25-0-5-prefix">5 Prefix命名規約</h3><p class="feature-summary">Skillの分類prefixを揃え、用途と所有者をひと目で分かるようにする命名統一ルール。</p><dl class="feature-io"><dt>入力</dt><dd>既存Skill名群、分類カテゴリ</dd><dt>出力</dt><dd>5 Prefix適用後の正規Skill名一覧</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-25-1-skill-lifecycle"><h3 id="feature-25-1-skill-lifecycle">Skill Lifecycle（提案→廃止）</h3><p class="feature-summary">提案・Source・Generator・Fixture・Evaluator・Canary・Stable・Deprecation・Archiveのライフサイクル管理。</p><dl class="feature-io"><dt>入力</dt><dd>Skill提案、評価結果</dd><dt>出力</dt><dd>段階情報を持つSkill台帳</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-25-2-generator-evaluator"><h3 id="feature-25-2-generator-evaluator">Generator / Evaluator分離</h3><p class="feature-summary">Skillを作るスキルと採点するスキルを分け、自作自演バイアスを排除する設計。</p><dl class="feature-io"><dt>入力</dt><dd>新Skill仕様、評価Fixture</dd><dt>出力</dt><dd>Generator出力＋Evaluatorによる4軸スコア</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-25-3-fixture-driven"><h3 id="feature-25-3-fixture-driven">Fixture-driven開発</h3><p class="feature-summary">正常・不足・巨大・危険・対象外の5ケースFixtureでSkillを開発し、評価器が機械的に判定する開発フロー。</p><dl class="feature-io"><dt>入力</dt><dd>Skill仕様、5ケースFixture</dd><dt>出力</dt><dd>Fixture通過率と改善ポイント</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-25-4-build-validator"><h3 id="feature-25-4-build-validator">Build / Validator / 重複統合</h3><p class="feature-summary">skill-srcを正本としてClaude Code/Codex両方へBuild展開し、Validatorで構造検証、重複候補は統合提案する。</p><dl class="feature-io"><dt>入力</dt><dd>skill-src、複数Runtime対象</dd><dt>出力</dt><dd>両Runtime用ビルド成果と統合候補リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-25-5-deprecation"><h3 id="feature-25-5-deprecation">Deprecation（廃止予告と代替先）</h3><p class="feature-summary">古いSkillには代替先と終了日を示して安全に閉じる手順。利用者の移行コストを下げる。</p><dl class="feature-io"><dt>入力</dt><dd>廃止対象Skill、代替Skill</dd><dt>出力</dt><dd>Deprecation通知、移行ガイド、終了日</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-25">
@@ -4421,23 +4430,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 既存Skillを三つ選び、Owner・Version・Fixture・評価点・重複候補を棚卸ししてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>Skillの価値は数ではなく、再現性、責任者、評価、廃止まで追えることです。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある制作会社（架空）が、200個のSkillが乱立し、似た名前と古い手順が混ざって誰も全体像を把握できなくなった。</p><h3>こう使う</h3><p>Canonical Name・Category・Owner・Version・Fixture・評価点を持たせ、4軸の評価器で採点する。</p><h3>得られるもの</h3><p>Skill群が製品台帳として管理でき、廃止予告も移行先付きで安全に出せる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある中規模IT会社（架空）が、Claude Code用とCodex用のSkillを二重管理して、片方だけ修正された結果、社員間で動作が違う事態が起きた。</p><h3>こう使う</h3><p>skill-srcを正本にしてBuildで両Runtimeへ展開する構造に変える。</p><h3>得られるもの</h3><p>二重編集の手間がなくなり、Runtime差での挙動ズレが消える。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-26">
   <header class="chapter-head">
     <div class="eyebrow">第26章</div>
-    <h1>Managed Policy、Security、Observability</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">AIの暴走は、ログから見える</span>
+      <span class="chapter-name">Managed Policy、Security、Observability</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『CLAUDE.mdに削除禁止って書いたから安全』。
-これ、攻撃や誤操作の前では1秒で破れる紙の盾です。</p><p>ほとんどの組織は、安全策を『文章で書けば守れる』と思ってます。
-でも、外部社員の端末では文書が書き換えられる。Bypassは便利だから常用される。CLAUDE.mdは読み飛ばされる。
-だから、強制したいことは Managed Settings / Managed MCP で個人端末から触れない場所に置き、HookのBlock Eventを構造化ログに残す。文書ではなく実行時の強制で安全を成立させる。</p><p>想定脅威は6つ（秘密漏えい・危険コマンド・Prompt Injection・誤配布・設定改変・Supply Chain）。それぞれを予防・検知・復旧の3列で守る。
-KPIはBlock件数だけじゃなく誤検知率・更新成功率・復旧時間まで測る。</p><p>『守りすぎ』も『緩すぎ』も数字で見えるようにする章です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AI が裏で何をしたか、誰も把握していない』。
+これは便利すぎる時に起きる、組織にとって最も静かな事故です。</p><p>ほとんどの人は、AIの動きをログとして残していません。
+ですが、暴走・誤操作・情報持ち出しは、ログがなければ後追いできません。</p><p>この章で扱うのは、Managed Policy・Security・Observability の3点で AI の動きを観測可能にする設計です。
+誰が・何を・いつ・どこで実行したかを、後から辿れる形で残します。</p><p>AI の暴走は、ログから見える。可視化は、信頼を裏付ける土台です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-26-0-threat-model-6"><h3 id="feature-26-0-threat-model-6">Threat Model（6想定脅威）</h3><p class="feature-summary">秘密漏えい・危険コマンド・Prompt Injection・誤配布・設定改変・Supply Chainを想定脅威として並べる出発点。</p><dl class="feature-io"><dt>入力</dt><dd>組織の運用構造、扱うデータ</dd><dt>出力</dt><dd>6脅威それぞれの予防/検知/復旧マトリクス</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-1-managed-settings-managed-mcp"><h3 id="feature-26-1-managed-settings-managed-mcp">Managed Settings / Managed MCP</h3><p class="feature-summary">個人端末で改変できない組織Policyを固定し、文書ではなく実行時の強制で安全を成立させる仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>強制したい設定、許可するMCP</dd><dt>出力</dt><dd>Managed Settings/MCP定義ファイル</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-2-hook-block-event"><h3 id="feature-26-2-hook-block-event">Hook Block Event のログ化</h3><p class="feature-summary">HookのBlock判定を構造化ログへ落とし、誰がいつ何を止めたかを追跡可能にする観測機構。</p><dl class="feature-io"><dt>入力</dt><dd>Hookブロック発生、対象操作</dd><dt>出力</dt><dd>構造化ログとブロック傾向の集計</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-3-kpi"><h3 id="feature-26-3-kpi">KPI / 指標群</h3><p class="feature-summary">Block件数だけでなく誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を測る安全KPI。</p><dl class="feature-io"><dt>入力</dt><dd>運用ログ群</dd><dt>出力</dt><dd>ダッシュボード化された安全指標</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-4-incident-runbook"><h3 id="feature-26-4-incident-runbook">Incident運用とRunbook</h3><p class="feature-summary">事故発生時の隔離・Rollback・通知・振り返りを標準化するRunbook。属人化させず素早く復旧する。</p><dl class="feature-io"><dt>入力</dt><dd>発生したインシデント、影響範囲</dd><dt>出力</dt><dd>Runbook手順、復旧ログ、振り返り記録</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-5-retention"><h3 id="feature-26-5-retention">Retention（ログ保持と権限）</h3><p class="feature-summary">ログの保持期間と閲覧権限を決める方針。長すぎる保持と広すぎる閲覧の両方を避ける。</p><dl class="feature-io"><dt>入力</dt><dd>扱うログ種別、コンプラ要件</dd><dt>出力</dt><dd>保持期間/閲覧権限マトリクス</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-26">
@@ -4756,23 +4764,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自組織のThreat Modelを五項目書き、各項目を予防・検知・復旧の三列へ割り当ててください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある金融系IT部門（架空）が、AI導入の安全策をCLAUDE.mdで案内したが、外部社員の端末で簡単に書き換えられて事故が起きた。</p><h3>こう使う</h3><p>Managed SettingsとManaged MCPで組織Policyを固定し、HookのBlock Eventを構造化ログへ残す。</p><h3>得られるもの</h3><p>文書ではなく実行時の強制で安全が成立し、誰の端末でも改変できない。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、Block件数だけ報告しているが、誤検知が多すぎて社員から信頼を失っている。</p><h3>こう使う</h3><p>誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を含む指標を一緒に測る。</p><h3>得られるもの</h3><p>数字で『守りすぎ』『緩すぎ』のバランスが見え、Policy調整に根拠が持てる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-27">
   <header class="chapter-head">
     <div class="eyebrow">第27章</div>
-    <h1>OnboardingとRunbook</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">新人の初日が、1人で完結する</span>
+      <span class="chapter-name">OnboardingとRunbook</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>新人にAI研修動画を渡しても、初日のセットアップでつまずいて消える。
-これ、定着率が伸びない一番の原因です。</p><p>ほとんどの組織は、新人向けに『大量の資料』を渡します。
-でも、知識量で勝負しても定着しません。初日に『安全なLabで・実際に成果物を作って・証拠を示して・翌日もそこから再開できる』状態まで持っていくのが正解。</p><p>この章は、それを30分で終える導入フロー（環境診断→Lab作成→成果物→証拠→再開）の設計図です。
-初日Safety、Plan/Verify/Git/Skill化を実演させるBronze認定、つまずきポイントを切り分ける障害表まで揃えます。
-運用開始後も、月次診断・更新確認・Incident演習を続けて知識の劣化を防ぐ。</p><p>Onboardingのゴールは『入った』じゃなく『安全に一人で一周できた』です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『新人にAI環境を整えるのに、毎回1日かかっている』。
+これは新人の問題ではなく、Onboarding の手順が型化されていないだけです。</p><p>ほとんどの人は、新人の初日を口頭の説明で進めています。
+ですが、口頭は再現性が低く、後から困った時に戻る場所がありません。</p><p>この章で扱うのは、Onboarding を Runbook（手順書）として書き、新人が 1 人で初日を完走できる状態を作る方法です。
+セットアップ・最小実習・確認チェック・困った時の連絡先まで、すべて文書で残します。</p><p>新人の初日が、1 人で完結する。そこまで作って、ようやく組織として AI を扱えるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-27-0-30-onboarding-flow"><h3 id="feature-27-0-30-onboarding-flow">30分Onboarding Flow</h3><p class="feature-summary">環境診断→Lab作成→成果物→証拠→再開の5段で、新人が30分でBronze相当の最初の一周を終える導入フロー。</p><dl class="feature-io"><dt>入力</dt><dd>新人の端末、所属ロール</dd><dt>出力</dt><dd>初日成果物と再開可能State</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-27-1-safety"><h3 id="feature-27-1-safety">初日Safety</h3><p class="feature-summary">初日に必ず適用する権限・削除禁止・本番遮断のセットアップ。事故ゼロでスタートさせるための最小防御。</p><dl class="feature-io"><dt>入力</dt><dd>新人Project、本番資源の所在</dd><dt>出力</dt><dd>初日Safetyが効いたLab環境</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-27-2-bronze"><h3 id="feature-27-2-bronze">Bronze認定</h3><p class="feature-summary">Plan/Verify/Git/Skill化を実演させて合否判定する、知識クイズではなく実演ベースの初期認定。</p><dl class="feature-io"><dt>入力</dt><dd>実演課題、観察観点</dd><dt>出力</dt><dd>Bronze合否判定と次のレベル課題</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-27-3-cadence"><h3 id="feature-27-3-cadence">運用Cadence（月次診断/演習）</h3><p class="feature-summary">Onboarding後も月次診断・更新確認・Incident演習を続け、知識と環境の劣化を防ぐ運用サイクル。</p><dl class="feature-io"><dt>入力</dt><dd>現職社員、運用カレンダー</dd><dt>出力</dt><dd>月次診断結果、演習レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-27-4-diagnostics"><h3 id="feature-27-4-diagnostics">障害表 / Diagnostics</h3><p class="feature-summary">認証・権限・Path・Versionなどつまずきやすい箇所を切り分け診断するチェック表とスクリプト。</p><dl class="feature-io"><dt>入力</dt><dd>詰まり報告、エラー内容</dd><dt>出力</dt><dd>症状→対応の対照表と自動診断ログ</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-27">
@@ -4921,12 +4928,9 @@ Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 新人が30分で終える導入手順を、環境診断・Lab作成・成果物・証拠・再開の五段階で書いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>Onboardingのゴールは『入った』ではなく、『安全に一人で一周できた』です。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC人事（架空）が、新人配属時にAIガイドを渡しても初日のセットアップで詰まり、本人のやる気が消える事例が続いている。</p><h3>こう使う</h3><p>30分の導入Flow（環境診断→Lab→成果物→証拠→再開）を作り、つまずきポイントを切り分け診断する。</p><h3>得られるもの</h3><p>初日にBronze相当の成果物が完成し、本人のAI導入感が一気に立ち上がる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、新人サポート問い合わせが配属直後に集中し、月初の業務が回らない。</p><h3>こう使う</h3><p>Runbookで認証・権限・Path・Versionの障害分類と対応手順を整える。</p><h3>得られるもの</h3><p>新人が自分でRunbookを引いて解決でき、情シスの負荷が分散する。</p></article></div></section>
+  
 </article>
+
 
 </section>
 
@@ -4954,14 +4958,15 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-28">
   <header class="chapter-head">
     <div class="eyebrow">第28章</div>
-    <h1>文書・ファイル・会議</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">毎日の雑務を、AIに渡せる単位に切る</span>
+      <span class="chapter-name">文書・ファイル・会議</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>請求書・契約書・会議メモ・整理されてない『なんとなくフォルダ』。
-派手じゃないけど、毎日の時間を一番奪うのはここです。</p><p>ほとんどの人は、こういう文書業務を『いきなりAIに加工させて』失敗します。
-件数も例外も把握せず実行した結果、稟議添付のExcelが消える事故が起きる。</p><p>この章で扱うのは、文書業務の正しい順序。
-まずRead-onlyで一覧と分類案を作る。次に抽出項目と例外パターンを定義する。それからDry-runで件数を確認してから本番に進む。
-契約書は『法的結論』ではなく『論点整理』としてAIに任せ、最終判断は人。</p><p>整理・削除は元データを残し、移動先を明示し、結果一覧を出す可逆的な手順で。
-派手じゃないけど、ここから自動化できる業務が一気に広がります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『議事録・タスク管理・ファイル整理を、毎日手作業でやっている』。
+これは仕事量の問題ではなく、AIに渡せる単位に切り出していないだけです。</p><p>ほとんどの人は、雑務を『自分でやる前提』で考えています。
+ですが、文書・ファイル・会議の処理は、AIが最も得意とする領域のひとつです。</p><p>この章で扱うのは、毎日発生する雑務を、AIに渡せる単位に分けるための型です。
+取り込み・分類・整形・保存・通知を、それぞれ独立した Skill として組み立てます。</p><p>毎日の雑務を、AI に渡せる単位に切る。それが、自分の時間を取り戻す最初の一歩です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-28-0-folder"><h3 id="feature-28-0-folder">請求書Folder棚卸し</h3><p class="feature-summary">Read-onlyで請求書フォルダを一覧化し、抽出項目と例外パターンを定義してから自動化に進む業務型。</p><dl class="feature-io"><dt>入力</dt><dd>請求書PDF/画像フォルダ、台帳の現状</dd><dt>出力</dt><dd>抽出項目定義、例外一覧、Dry-run結果</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-1-folder"><h3 id="feature-28-1-folder">Folder整理（可逆な分類）</h3><p class="feature-summary">元データを残し、移動先を明示し、結果一覧を出す可逆的な整理手順。削除ではなく分類から始める。</p><dl class="feature-io"><dt>入力</dt><dd>整理対象フォルダ、分類ルール</dd><dt>出力</dt><dd>分類後フォルダと整理結果レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-2-item"><h3 id="feature-28-2-item">契約書論点整理</h3><p class="feature-summary">法的結論ではなく、契約書から論点を抽出して人の判断に渡すワークフロー。AIに最終判断をさせない型。</p><dl class="feature-io"><dt>入力</dt><dd>契約書PDF、確認したい観点</dd><dt>出力</dt><dd>論点一覧と人が判断すべき箇所のハイライト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-3-assistant"><h3 id="feature-28-3-assistant">会議Assistant本番化</h3><p class="feature-summary">第4章で作った会議アシスタントを実業務で運用するための例外対応・テンプレ整備・配布手順。</p><dl class="feature-io"><dt>入力</dt><dd>本番議事録依頼、社内テンプレ</dd><dt>出力</dt><dd>実業務で回る会議AssistantとSkill群</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-4-item"><h3 id="feature-28-4-item">週報生成</h3><p class="feature-summary">会議データを連結し、週報・タスク・連絡文へ展開する定期業務化。書く時間ではなく見る時間に変える。</p><dl class="feature-io"><dt>入力</dt><dd>週内の会議メモ、タスクログ</dd><dt>出力</dt><dd>週報Markdown/HTMLと未対応タスクリスト</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-28">
@@ -5045,23 +5050,22 @@ Hidden、Package、Symlink、1GB超は対象外。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つの実務フォルダをRead-onlyで棚卸しし、変更せずに分類案と例外一覧を作ってください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の経理（架空）が、毎月100枚の請求書PDFを手動で台帳入力し、毎月末に残業4時間を発生させている。</p><h3>こう使う</h3><p>Read-onlyで請求書フォルダの一覧と分類案を作り、抽出項目・例外を定義してから自動化する。</p><h3>得られるもの</h3><p>例外検出を残しつつ標準項目は自動入力でき、残業時間が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>中小法務（架空）が、契約書PDFをAIに『この契約問題ない？』と聞き、誤った法的結論を得て社内へ展開しかけた。</p><h3>こう使う</h3><p>契約書は法的結論ではなく論点整理として扱い、最終判断は人が行う運用ルールを書く。</p><h3>得られるもの</h3><p>AIは負荷の高い論点抽出を担い、人は判断に集中できる。誤断のリスクが消える。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-29">
   <header class="chapter-head">
     <div class="eyebrow">第29章</div>
-    <h1>調査・Content・学習</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">調べて、書いて、学ぶを、1つの机で回す</span>
+      <span class="chapter-name">調査・Content・学習</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『毎週末、YouTubeとSNS見て終わる』。
-情報収集だけで時間が消えて、教材や記事が作れない。</p><p>ほとんどの人は、調査を『集める量』で評価します。
-でも本当に効くのは『目的に沿った選別』。一般的な人気じゃなく、自分の番組コンセプトや学習目的にとっての価値で素材を選ぶ仕組みを作ります。</p><p>この章で組むのは、対象・期間・除外条件・評価軸を内蔵した動画調査Skill。番組Profileを参照して『その人にとっての価値』だけ残す。発言と事実を区別し、重複は統合する。
-最後は News Dashboard で、更新時刻・出典・未確認情報を表示する1ページHTMLに変換する。</p><p>良い調査は情報量じゃなく、選別と出典の透明性で決まります。
-情報収集が10分に収まる生活がここから始まります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『調査・記事執筆・学習を、別々のツールで往復している』。
+これは効率の問題ではなく、机が分かれているだけです。</p><p>ほとんどの人は、調査用 AI と執筆用エディタと学習用ノートを別々に開いています。
+ですが、Claude Code を中心に置くと、これらは同じ机の上で繋がります。</p><p>この章で扱うのは、調査結果を保存し、書きかけの原稿に接続し、学んだことをノート化するまでを 1 つの流れにする設計です。
+情報源・草案・学習メモが、同じフォルダで同居します。</p><p>調べて、書いて、学ぶを、1 つの机で回す。情報の流れが滑らかになると、思考の質も変わります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-29-0-youtube-research-skill"><h3 id="feature-29-0-youtube-research-skill">YouTube Research Skill</h3><p class="feature-summary">対象・期間・除外条件・評価軸を持つ動画調査Skill。検索→転記→分析→要約を一連で回す。</p><dl class="feature-io"><dt>入力</dt><dd>テーマ、対象期間、除外したい動画種別</dd><dt>出力</dt><dd>出典付き動画要約と評価軸スコア</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-29-1-profile"><h3 id="feature-29-1-profile">番組Profile</h3><p class="feature-summary">自分の番組・学習目的を定義したProfile。一般的な人気ではなく自分にとっての価値で素材を選ぶための基準。</p><dl class="feature-io"><dt>入力</dt><dd>番組コンセプト、視聴者像、避けたい話題</dd><dt>出力</dt><dd>Profileファイルと選別基準</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-29-2-sns"><h3 id="feature-29-2-sns">SNS/動画から教材化</h3><p class="feature-summary">発言を重複統合し、事実確認が必要な箇所を分離して教材に組み立てる加工パイプ。</p><dl class="feature-io"><dt>入力</dt><dd>SNS投稿・動画文字起こし</dd><dt>出力</dt><dd>重複統合済み教材ドラフトと要検証リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-29-3-loop"><h3 id="feature-29-3-loop">個人学習Loop</h3><p class="feature-summary">INTERESTS.mdと連動し、個人の苦手・関心に沿って復習問題・調査テーマを生成する学習ループ。</p><dl class="feature-io"><dt>入力</dt><dd>個人Profile、最近のログ</dd><dt>出力</dt><dd>復習問題、調査テーマ、進捗状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-29-4-news-dashboard"><h3 id="feature-29-4-news-dashboard">News Dashboard</h3><p class="feature-summary">更新時刻・出典・未確認情報を表示する1ページHTMLニュースダッシュボード。重複統合で巡回時間を短縮。</p><dl class="feature-io"><dt>入力</dt><dd>RSS/API/Web情報源、更新間隔</dd><dt>出力</dt><dd>単一HTMLのNews Dashboard</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-29">
@@ -5144,23 +5148,22 @@ argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つの調査テーマで、公式情報・解説・SNSを分けて集め、重複を統合した一ページのHTMLレポートを作ってください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>良い調査は情報量ではなく、目的に沿った選別と出典の透明性で決まります。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教育系YouTuber（架空）が、教材作成のために動画とSNSを大量視聴し、毎週末が情報収集だけで終わっている。</p><h3>こう使う</h3><p>Skillに対象・期間・一次情報・除外条件・評価軸を持たせ、INTERESTS.mdを参照させる。</p><h3>得られるもの</h3><p>自分にとって価値のある素材だけが残り、教材作成の時間が情報整理から本質的な構成へ移る。</p></article><article class="usecase-card"><h3>場面</h3><p>個人投資家（架空）が、毎朝のニュースサイトを巡回しているが、重複情報で時間を浪費している。</p><h3>こう使う</h3><p>News Dashboardで更新時刻・出典・未確認情報を表示する単一HTMLを作る。</p><h3>得られるもの</h3><p>重複が統合され、未確認情報だけが目立つ。情報収集が10分に収まる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-30">
   <header class="chapter-head">
     <div class="eyebrow">第30章</div>
-    <h1>Application開発</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">プロトタイプを、ひと晩で動くアプリにする</span>
+      <span class="chapter-name">Application開発</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AIで作ったアプリ、動いたから公開した』。
-1日後、エッジケースで毎日エラーが出てユーザーが離脱。
-これ、ほとんどの個人開発で起きてる事故です。</p><p>ほとんどの人は、『画面が出たら完成』だと思ってます。
-でも、デモと製品の間には品質の橋が必要です。エラー時の挙動、データ保存、テスト、変更履歴、戻し方。最低でもこれが揃わないと、他人に渡せません。</p><p>この章では、Localで価値を確かめる最小アプリの作り方、Bug修正は必ず再現テストから始める運用、大規模Migrationは段階移行＋Rollback条件、独立コンテキストで最終チェックするFresh Reviewまで扱います。
-健康・投資のような高リスク領域では、意思決定を自動化せず情報整理に限定する設計指針も。</p><p>アプリの完成は『画面が出ること』じゃなく、失敗を再現し検証し戻せること。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『プロトタイプを作ったのに、形にする時間が無くて放置している』。
+これはアイデア不足ではなく、AIと並走する手順を知らないだけです。</p><p>ほとんどの人は、Application 開発を『大きな構え』として捉えています。
+ですが、要件・スキャフォルド・実装・検証・配布までを、AIと組んで1日に圧縮することは現実的になりました。</p><p>この章で扱うのは、プロトタイプを動くアプリへ仕上げるための小さな反復の作り方です。
+仕様メモ→足場→実装→検証→ローカル配布までを、AIと並走で進めます。</p><p>プロトタイプを、ひと晩で動くアプリにする。アイデアと配布の距離は、もう昔ほどありません。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-30-0-local-task-manager"><h3 id="feature-30-0-local-task-manager">Local Task Manager（最小アプリ）</h3><p class="feature-summary">Localで価値を確かめ、要件・データ境界・Test・Schemaを揃える最小Webアプリの作り方。</p><dl class="feature-io"><dt>入力</dt><dd>タスク管理の要件、データスキーマ</dd><dt>出力</dt><dd>Local起動するTask Managerと検証ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-30-1-bug"><h3 id="feature-30-1-bug">Bug修正（再現手順から）</h3><p class="feature-summary">Bug報告を必ず再現手順から扱い、修正前に再現テストを書く品質運用。直したつもりを防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>Bug報告、現状の挙動</dd><dt>出力</dt><dd>再現テストと修正Patch、Diff</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-30-2-migration"><h3 id="feature-30-2-migration">大規模Migration</h3><p class="feature-summary">調査・段階移行・互換性・Rollbackを持たせる大規模移行の運用設計。一気に切り替えない。</p><dl class="feature-io"><dt>入力</dt><dd>旧仕様、新仕様、影響範囲</dd><dt>出力</dt><dd>段階移行計画とRollback条件</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-30-3-fresh-review"><h3 id="feature-30-3-fresh-review">Fresh Review</h3><p class="feature-summary">実装と切り離した独立コンテキストで成果物を見直す最終チェック。迎合バイアスのない指摘を得る。</p><dl class="feature-io"><dt>入力</dt><dd>実装済み機能、レビュー観点</dd><dt>出力</dt><dd>独立レビュー指摘と修正アクション</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-30-4-diet-app-app-dashboard"><h3 id="feature-30-4-diet-app-app-dashboard">Diet App / 投資支援App / 世界Dashboard</h3><p class="feature-summary">健康・投資・グローバル情報のような高リスク領域で、意思決定を自動化せず情報整理と注意喚起に機能を限定する設計例。</p><dl class="feature-io"><dt>入力</dt><dd>扱うリスク領域、ユーザー像</dd><dt>出力</dt><dd>意思決定支援に限定した安全アプリ仕様</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-30">
@@ -5242,24 +5245,22 @@ Loss limit/Kill switch
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 小さなLocal Appへ一つ機能を追加し、再現テスト、正常系、異常系、Diff、Rollbackを記録してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>アプリの完成は画面が出ることではなく、失敗を再現し、検証し、戻せることです。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、AIで作ったタスク管理アプリが『動いた』と思って公開したら、エッジケースで毎日エラーが出てユーザー離脱が始まった。</p><h3>こう使う</h3><p>再現テスト・正常系・異常系・Diff・Rollback手順を実装と同時に作る運用に変える。</p><h3>得られるもの</h3><p>公開後の事故時も再現と巻き戻しが両方できる。ユーザー信頼が壊れない。</p></article><article class="usecase-card"><h3>場面</h3><p>中小ヘルスケア事業者（架空）が、健康Dashboardに自動アドバイス機能を入れたら誤情報のリスクで弁護士からNGが出た。</p><h3>こう使う</h3><p>意思決定を自動化せず、情報整理と注意喚起へ機能を限定する。出典・更新失敗・誤差は明示する。</p><h3>得られるもの</h3><p>法的リスクが下がり、機能を成立させながら世に出せる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-31">
   <header class="chapter-head">
     <div class="eyebrow">第31章</div>
-    <h1>Design・資料・公開</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">1枚に詰め込む、を諦める</span>
+      <span class="chapter-name">Design・資料・公開</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AIで作ったLP、そのまま本番に出した』。
-あとから見たら、テスト用Analytics IDと本番APIキーがソースに残ってた。
-これ、毎週どこかの組織で起きてます。</p><p>ほとんどの人は、公開を『最後のボタンを押す作業』だと思ってます。
-でも公開は、情報・ブランド・権限・リンク・戻し方を確認する別の工程です。
-Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを通す。</p><p>この章では、LP・スライド・レポートで同じDesign Systemを再利用する運用、HTMLを正本にしてPPT/PDFをExportする標準手順、フォント崩れの直し方の順序まで揃えます。</p><p>公開は生成の続きじゃなく、独立した品質・安全ゲート。
-事故をなくす一番効くスイッチが、ここに入ります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『1 枚に詰め込み過ぎて、結局誰にも伝わらない』。
+これは情報量の問題ではなく、設計の問題です。</p><p>ほとんどの人は、資料を作るときに『漏れなく書く』ことを優先しています。
+ですが、伝わる資料は、書いた情報の量ではなく、捨てた情報の量で決まります。</p><p>この章で扱うのは、Design・資料・公開の3つを、AIと一緒に整える流れです。
+1ページに収まる粒度を決め、補足はリンク先へ逃がし、公開先の媒体に合わせて翻訳します。</p><p>1 枚に詰め込む、を諦める。それが、読まれる資料の出発点です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-31-0-lp-flow"><h3 id="feature-31-0-lp-flow">LP制作Flow</h3><p class="feature-summary">Wireframe→Design System→Codeで作ったLPを、公開を見据えて整える章末仕上げの制作ライン。</p><dl class="feature-io"><dt>入力</dt><dd>LP目的、Design System、コンテンツ素材</dd><dt>出力</dt><dd>公開直前のLP実装と確認用Preview</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-1-design-system"><h3 id="feature-31-1-design-system">Design System再利用</h3><p class="feature-summary">LP・スライド・レポートで同じDesign Systemを参照し、ブランド一貫性を維持する再利用ルール。</p><dl class="feature-io"><dt>入力</dt><dd>既存Design System、新規制作物</dd><dt>出力</dt><dd>システム参照済みの新規制作物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-2-ppt-pdf-export"><h3 id="feature-31-2-ppt-pdf-export">PPT / PDF Export</h3><p class="feature-summary">HTML正本からPPT/PDFへExportする標準手順。フォント崩れ・ページ分割を事前にチェックする。</p><dl class="feature-io"><dt>入力</dt><dd>HTML正本、Export設定</dd><dt>出力</dt><dd>崩れ確認済みのPPTX/PDF</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-3-deploy-preview-gate"><h3 id="feature-31-3-deploy-preview-gate">Deploy / Preview Gate</h3><p class="feature-summary">Deploy前にSecret・環境変数・公開範囲・Analytics・Rollbackを確認し、Previewレビューを通す公開ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>公開予定ビルド、本番設定</dd><dt>出力</dt><dd>Preview承認ログと本番Deploy可否判定</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-31">
@@ -5306,23 +5307,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>公開前に最低限揃えるもの</dt><dd>Preview URL、スマホ表示確認、内部リンクと外部リンクの到達確認、Analytics・APIキー等の秘密情報の有無、Rollback手順の5点を1枚の事前チェックに固定します。ここを言語化していない組織では、毎回担当者の記憶頼みで公開され、必ずいつか事故が起きます。</dd><dt>Export崩れの直し方の順序</dt><dd>PPT/PDFへExportして崩れた時、HTML側を直すかExport設定を直すかで悩む前に、まず正本はHTMLだと宣言します。崩れの再現箇所を1ページだけ抜き出して原因を見極め、フォント置換・ページ分割・余白の3観点で順に潰すと最短で安定します。</dd><dt>測ると効く指標</dt><dd>公開回数、公開前事故件数、Rollback回数、Export修正に費やした時間を月単位で記録します。事故ゼロを目指すのではなく、Rollback回数が一定範囲内に収まっているかを健全性の指標にすると、過剰な慎重さで止まらなくなります。</dd><dt>次の章への接続</dt><dd>公開Gateの感覚が掴めると、次章の毎日業務の自動化でも『失敗時の戻し方』を最初に決められるようになります。公開とは独立した品質ゲートだという意識が、自動化全体の安全装置として効いてきます。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 既存HTMLをPreview公開し、スマホ表示・リンク・秘密情報・Rollback手順を確認してから、本番可否を判断してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>公開は生成の続きではなく、独立した品質・安全Gateです。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小マーケ会社（架空）が、AIで作ったLPを即本番公開した結果、テスト用Analytics IDや本番用APIキーが残ったまま外に出てしまった。</p><h3>こう使う</h3><p>Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを設ける。</p><h3>得られるもの</h3><p>公開前事故が体系的に防げ、本番公開を安心して進められる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある提案チーム（架空）が、HTMLからPPT/PDFをExportするたびにフォントが崩れ、毎回手動修正に数時間を奪われている。</p><h3>こう使う</h3><p>Export時にレイアウト・フォント・ページ分割を確認する標準Checkを書く。</p><h3>得られるもの</h3><p>崩れ箇所だけを集中修正でき、Export成果物の品質が安定する。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-32">
   <header class="chapter-head">
     <div class="eyebrow">第32章</div>
-    <h1>継続業務の自動化</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">朝起きたら、仕事が3つ終わっている</span>
+      <span class="chapter-name">継続業務の自動化</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『毎朝のニュース整理と、会議後のタスク登録と、月次のSkill評価』。
-全部、自分が手動でやってませんか。</p><p>ほとんどの人は、繰り返しが見えても『自分で頑張る』を選びます。
-でも、人を速くする努力には上限があります。仕組みへ移すのが正解。</p><p>この章で扱うのは、毎朝Brief（予定・未返信・締切を1枚に圧縮）、会議からTask Boardへ流し込む橋渡し、Skill改善Loop（実行ログ・失敗Fixture・評価点を集めてCanary更新）。
-そして自動化成熟度モデル（個人手作業→再利用→半自動→監視付き自動の4段）で、業務ごとに今どこにいるかを月次で記録する。</p><p>自動化は頻度だけで決めません。入力の安定性・検証可能性・失敗時の人への戻しやすさで選ぶ。
-休んでも止まらない情報基盤が、ここで生まれます。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『朝起きて最初にやる仕事を、AIに任せられたら』。
+これは贅沢な願いではなく、設計次第で実現できる現実です。</p><p>ほとんどの人は、AIを『その都度呼ぶもの』として使っています。
+ですが、定型業務に成功条件・最大回数・タイムアウト・承認地点を設けて自走させれば、AIは寝ている間にも動きます。</p><p>この章で扱うのは、継続業務を安全に自動化する設計です。
+失敗時の戻し方、人の承認地点、ログと通知の設計。便利さと事故半径を同じ机の上で並べます。</p><p>朝起きたら、仕事が 3 つ終わっている。そういう運用は、設計の品質次第で安定します。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-32-0-brief"><h3 id="feature-32-0-brief">毎朝Brief</h3><p class="feature-summary">朝一に予定・未返信・締切・重要連絡を1枚に圧縮し、今日の動き方を10秒で把握できるようにする補佐機能。</p><dl class="feature-io"><dt>入力</dt><dd>Calendar・メール未返信・締切Task・Slack/メンション履歴</dd><dt>出力</dt><dd>今日の予定リスト・準備が必要な会議・返信下書き・リスクメモ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-32-1-task-board"><h3 id="feature-32-1-task-board">会議→Task Board</h3><p class="feature-summary">議事録からタスクを抽出してTask Boardへ流し込み、重複登録と担当者確認を持たせる橋渡し機能。</p><dl class="feature-io"><dt>入力</dt><dd>会議文字起こし、現Task Board</dd><dt>出力</dt><dd>重複統合済みのTaskエントリと担当者割り当て</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-32-2-skill-loop"><h3 id="feature-32-2-skill-loop">Skill改善Loop</h3><p class="feature-summary">実行ログ・失敗Fixture・評価点を集めてSkillを更新し、Canary経由で再配布する継続改善ループ。</p><dl class="feature-io"><dt>入力</dt><dd>Skill実行ログ、失敗Fixture、評価スコア</dd><dt>出力</dt><dd>改善されたSkillとCanary配布結果</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-32-3-item"><h3 id="feature-32-3-item">自動化成熟度モデル</h3><p class="feature-summary">個人手作業→再利用→半自動→監視付き自動の4段で、業務ごとの自動化レベルを段階的に上げる尺度。</p><dl class="feature-io"><dt>入力</dt><dd>対象業務、入力安定性、副作用の有無</dd><dt>出力</dt><dd>業務別の現在レベルと次のターゲット段階</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-32">
@@ -5399,23 +5399,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>自動化候補の優先順位</dt><dd>週1回以上の頻度・入力フォーマットが安定・完了条件が機械検証できる・失敗しても人へ戻せる、の4条件を満たす業務だけを最初の自動化対象にします。条件を満たさない業務を強引にSkill化すると、最初の数週間は動いても運用フェーズで誤動作が出てきます。</dd><dt>Morning Brief の入力源を固定する</dt><dd>Calendar・メール・Slackメンション・締切Taskなど、毎朝の情報源を毎回違う方法で取りに行くと、ある日急に空欄になります。情報源と更新時刻を仕様として書き、対象が増えた時はSkillを直すのではなくRegistryへ追記する設計にします。</dd><dt>成熟度を測る尺度</dt><dd>個人手作業→再利用→半自動→監視付き自動の4段階で、対象業務がいまどこにいるかを月次で記録します。一気に最終段階を目指さず、半自動で1ヶ月動かしてから監視付き自動へ進めると、運用事故がほぼ起きません。</dd><dt>次の章への接続</dt><dd>自動化を増やすほど、過去の失敗を学習資産へ変換する次章のテーマが重要になります。動くものが増えるほど、止まったときの原因分析と再発防止の仕組みが品質を決めるからです。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 週一回以上繰り返す仕事を一つ選び、入力の安定性・検証可能性・副作用・失敗時対応を採点してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>自動化は頻度だけで決めず、安定した入力と安全な失敗経路がある仕事から始めます。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業企画（架空）が、毎日のニュースとTask Boardを手動更新しており、休む日は誰も状況を把握できない。</p><h3>こう使う</h3><p>情報源と更新時刻を固定したMorning Brief Skillを作り、毎朝Scheduledで配信する。</p><h3>得られるもの</h3><p>休んでも止まらない情報基盤になり、属人化と業務継続性のリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅人事（架空）が、毎月のSkill評価を手作業で集計し、月初の3日間を奪われている。</p><h3>こう使う</h3><p>実行ログ・失敗Fixture・評価点を集めるSkill改善LoopをCanary更新と組む。</p><h3>得られるもの</h3><p>評価が自動化され、人は問題のあるSkillだけ集中的に直せる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-33">
   <header class="chapter-head">
     <div class="eyebrow">第33章</div>
-    <h1>失敗Pattern</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">事故ったAI現場が、いつも踏んでいる轍</span>
+      <span class="chapter-name">失敗Pattern</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『同じ事故、また起きた』。
-振り返りメモを書いて満足して、半年後また同じパターンで詰まる。
-これ、ほとんどの組織で延々と繰り返されてます。</p><p>ほとんどの人は、失敗を『反省で終わらせて』ます。
-でも反省は、人の記憶に依存する仕組み。次に同じ条件が来た時、誰も覚えてません。
-正解は、失敗をRule・Skill・Hook・Runbookのどれかに必ず変換して、二度と人の注意力に頼らないこと。</p><p>この章で扱うのは、巨大CLAUDE.md・無検証完了・Bypass常用・全社即時配布など、繰り返し起きる失敗を表にする台帳。人・手順・権限・検証・配布の5観点で根を分け、対策の置き場所を1つに絞る判断軸。</p><p>失敗は記録するだけじゃ意味がない。次回のRule・Skill・Hookへ変換して初めて学習資産になります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIを真面目に運用しているはずなのに、何度も同じ事故が起きる』。
+これは個別の油断ではなく、現場が踏みがちな轍が存在しているからです。</p><p>ほとんどの人は、自分の現場の事故を『うちだけの問題』として処理しています。
+ですが、AI現場の事故には共通のパターンがあります。Bypass の常用、秘密情報の露出、承認の形骸化、ログの欠落、評価指標の歪み。</p><p>この章で扱うのは、よく踏まれる失敗パターンを目録化し、自社の運用と照らし合わせる方法です。
+事故が起きる前に、轍を地図として持っておきます。</p><p>事故ったAI現場が、いつも踏んでいる轍を、自分は踏まずに済むようにする章です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-33-0-pattern"><h3 id="feature-33-0-pattern">失敗Pattern台帳</h3><p class="feature-summary">巨大CLAUDE.md・無検証完了・Bypass常用・全社即時配布など、繰り返し起きる失敗を表にして再発防止へ変換する一覧。</p><dl class="feature-io"><dt>入力</dt><dd>発生したトラブル、関係者の証言</dd><dt>出力</dt><dd>失敗→対策が対になった共有可能なPattern表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-33-1-5"><h3 id="feature-33-1-5">失敗の5観点分解</h3><p class="feature-summary">人・手順・権限・検証・配布の5軸で失敗の根を分け、どこに防御を置くかを決める分析フレーム。</p><dl class="feature-io"><dt>入力</dt><dd>発生インシデント、状況メモ</dd><dt>出力</dt><dd>5観点で分解した原因と対策設置先</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-33-2-rule-skill-hook-runbook"><h3 id="feature-33-2-rule-skill-hook-runbook">Rule/Skill/Hook/Runbookへの落とし込み</h3><p class="feature-summary">失敗を反省で終わらせず、Rule・Skill・Hook・Runbookのどれに変換するかを必ず決める運用ルール。</p><dl class="feature-io"><dt>入力</dt><dd>5観点分解結果</dd><dt>出力</dt><dd>再発防止のための新規ルール/スキル/フック/Runbook</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-33">
@@ -5491,12 +5490,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>失敗台帳を続けるための仕組み</dt><dd>失敗Patternは『書こうと思った時に書く』運用では絶対に続きません。インシデント発生時に必ず1行残すRunbookと、月末に台帳を読み返す15分の枠を予定として固定します。書く労力をゼロに近づけることが、最大の継続要因です。</dd><dt>5観点分解の使い方</dt><dd>人・手順・権限・検証・配布のうち、対策を置く場所は必ず1つに絞ります。複数に分散すると責任の所在がぼやけ、結局どれも実装されません。最も影響の大きい1観点へ置き、他観点は『今回は対象外』と明示することで、対策の実装率が劇的に上がります。</dd><dt>対策の落とし先の選び方</dt><dd>Rule（CLAUDE.md）は読み返さないと効きません。Skillは呼ばれて初めて動きます。Hookは無条件に動きます。Runbookは事故時に開きます。失敗の性質を見て『無条件に止めるべきか／その瞬間だけ呼べばいいか』を分けると、過剰防御も穴も出にくくなります。</dd><dt>次の章への接続</dt><dd>失敗をHook/Skill/Rule/Runbookへ変換する設計が身につくと、次の組織展開フェーズで『全社員に同じ防御を物理配布する』思想がそのまま使えます。失敗対策は個人の記憶ではなく配布物として育てる、というのが組織展開の核心です。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 最近の失敗を一つ選び、原因を人・手順・権限・検証・配布の観点で分解し、再発防止の置き場所を決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>失敗を記録するだけでなく、次回のRule・Skill・Hookへ変換して初めて学習になります。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、AIが古い情報のまま動く事故を毎月起こすが、振り返りメモを書くだけで終わって再発を防げていない。</p><h3>こう使う</h3><p>失敗を人・手順・権限・検証・配布で分解し、Rule/Skill/Hook/Runbookのどこへ落とすか決める。</p><h3>得られるもの</h3><p>失敗が組織の改善資産となり、同じ条件が来たら自動で気づける仕組みへ変換できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、社員がBypass常用したことによる事故をたびたび経験し、注意喚起では止まらないと判明した。</p><h3>こう使う</h3><p>BypassをHookで物理ブロックし、Runbookで例外申請の手順を書く。</p><h3>得られるもの</h3><p>便利さの誘惑が物理的に断たれ、必要時だけ手続きを経て解除できる。</p></article></div></section>
+  
 </article>
+
 
 </section>
 
@@ -5524,13 +5520,15 @@ Composition: Landscape 3:2 with generous horizontal negative space. Use visual h
 <article class="chapter" id="chapter-34">
   <header class="chapter-head">
     <div class="eyebrow">第34章</div>
-    <h1>コピペ用標準テンプレート</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">ゼロから書かない。揃った型から始める</span>
+      <span class="chapter-name">コピペ用標準テンプレート</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『要件定義、毎回項目を思い出しながら書いてる』。
-そして毎回、何かが抜けてクライアント手戻り。</p><p>ほとんどの人は、テンプレートを『手抜きの道具』だと誤解してます。
-本当のテンプレートは、思考を省くためじゃなく、抜けを減らし会話の前提を揃えるための道具です。</p><p>この章では、全社共通の基盤Baseline・案件用のProject CLAUDE.md・Requirements/Implementation Plan/Completion Reportの3点セット・Quality Gate Skill・Fresh Reviewer Agent・Definition of Doneを揃えます。
-正本とVersionを持たせ、古いコピーが残らない配布方法とセットで運用。</p><p>テンプレートは答えじゃなく、考えるべき問いを再現可能にする道具。
-これが揃うと、新しい案件でも『最初の30分』で前提が揃います。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『新しい仕事のたびに、ゼロから資料・Skill・手順を書き起こしている』。
+これは熱心さではなく、テンプレートの不在です。</p><p>ほとんどの人は、揃った型を持たずに毎回作り直しています。
+ですが、Plan・Spec・Skill・Hooks・Runbook には、すぐコピーして使える標準形があります。</p><p>この章で扱うのは、コピーして自分の現場へ持ち帰るためのテンプレート集です。
+書式・命名・章立てを揃え、自分の言葉で埋めるだけで完成する形にしています。</p><p>ゼロから書かない。揃った型から始める。それだけで、立ち上がりの速度が変わります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-34-0-claude-md-baseline"><h3 id="feature-34-0-claude-md-baseline">全社共通CLAUDE.md（Baseline）</h3><p class="feature-summary">通信・標準ワークフロー・安全・品質・Gitなどを揃えた、全プロジェクト共通の基盤Baseline。</p><dl class="feature-io"><dt>入力</dt><dd>組織共通方針、必須安全項目</dd><dt>出力</dt><dd>全社共通CLAUDE.md Baselineテンプレ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-1-project-claude-md"><h3 id="feature-34-1-project-claude-md">Project CLAUDE.md テンプレ</h3><p class="feature-summary">Purpose・Architecture・Commands・Required workflow・Constraints・Do notを揃えた案件単位のテンプレ。</p><dl class="feature-io"><dt>入力</dt><dd>案件の目的、技術スタック、禁止事項</dd><dt>出力</dt><dd>案件用CLAUDE.md初版</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-2-requirements-implementation-plan-completion-report"><h3 id="feature-34-2-requirements-implementation-plan-completion-report">Requirements / Implementation Plan / Completion Report</h3><p class="feature-summary">要件定義・実装計画・完了報告の3点セットを揃え、案件横断で抜けを減らす標準テンプレ群。</p><dl class="feature-io"><dt>入力</dt><dd>新案件、進行中のタスク</dd><dt>出力</dt><dd>3テンプレに沿った各フェーズ成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-3-quality-gate-skill"><h3 id="feature-34-3-quality-gate-skill">Quality Gate Skill</h3><p class="feature-summary">テンプレ通過を自動チェックし、空欄や曖昧な完了主張を弾く品質ゲートSkill。</p><dl class="feature-io"><dt>入力</dt><dd>テンプレ提出物</dd><dt>出力</dt><dd>Gate判定とブロック理由レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-4-fresh-reviewer-agent"><h3 id="feature-34-4-fresh-reviewer-agent">Fresh Reviewer Agent</h3><p class="feature-summary">実装者と別文脈の独立Reviewer Agent。要件・安全・保守性で成果物を採点する。</p><dl class="feature-io"><dt>入力</dt><dd>完了報告、関連ファイル</dd><dt>出力</dt><dd>独立コンテキストからの指摘リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-5-definition-of-done"><h3 id="feature-34-5-definition-of-done">Definition of Done</h3><p class="feature-summary">PJ開始時に合意し書面化する『完成』の共通定義。納品時の認識ズレを未然に防ぐカード。</p><dl class="feature-io"><dt>入力</dt><dd>PJ目的、納品物、検証条件</dd><dt>出力</dt><dd>PJごとに合意されたDoD</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-34">
@@ -5749,24 +5747,22 @@ Separate blockers from suggestions.
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> Requirements TemplateとCompletion Reportを自分の案件へコピーし、実際の内容で一度完成させてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>テンプレートは答えではなく、考えるべき問いを再現可能にする道具です。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサルのプロジェクトマネージャ（架空）が、要件定義のたびに項目を思い出しながら書き、毎回抜けが出てクライアント手戻りが発生している。</p><h3>こう使う</h3><p>Requirements・Implementation Plan・Completion Reportのテンプレを揃え、案件ごとにコピーして埋める。</p><h3>得られるもの</h3><p>考えるべき項目が抜けなくなり、レビュー時の追加質問が減って初稿の合格率が上がる。</p></article><article class="usecase-card"><h3>場面</h3><p>新人マネージャ（架空）が、Definition of Doneを定義できず、毎回『完成』の認識ズレで揉めている。</p><h3>こう使う</h3><p>Definition of Doneカードをテンプレ化し、PJ開始時に必ず合意して書面化する。</p><h3>得られるもの</h3><p>『完成』の定義が共通化され、納品時の認識ズレが激減する。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-35">
   <header class="chapter-head">
     <div class="eyebrow">第35章</div>
-    <h1>教科書アプリの情報設計</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">読む本を、操作するアプリに昇格させる</span>
+      <span class="chapter-name">教科書アプリの情報設計</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『教材をHTMLにしたから完成』。
-でも受講者がどこで止まったか、何を実践したかは分からないまま。
-これ、社内研修の8割が抱える詰まりです。</p><p>ほとんどの組織は、教材を『PDFやHTMLで配るだけ』で終わってます。
-でも本当に必要なのは、本人の現在地・次の一操作・期待結果・証拠・再開地点が常に見える学習アプリ。
-本文をLesson JSONに分解し、進捗をseen/practiced/verified/appliedの4段階で持つ。変動するモデル名やUIはFeature Registryで動的差し替え。ブラウザから任意Shellを実行させず、許可コマンドだけ動かすLocal Companionで連携する。</p><p>学習アプリの中心は本文表示じゃありません。行動・証拠・状態・再開です。
-ここを設計すると、修了判定が客観的になります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『教科書を読み終わったのに、自分の進捗が分からない』。
+これは読書の限界ではなく、本という形式の限界です。</p><p>ほとんどの人は、教科書を『最後まで読んだら終わり』だと考えています。
+ですが、教科書は本来、操作・証拠・保存・再開を含む実行アプリへ昇格させるべきものです。</p><p>この章で扱うのは、Lesson の JSON 化、進捗状態の保存、章番号での再開を含む、教科書アプリの情報設計です。
+学習者は自分の現在地と次の一操作を、いつでも取り出せます。</p><p>読む本を、操作するアプリに昇格させる。これは本書全体の到達点でもあります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-35-0-content-model"><h3 id="feature-35-0-content-model">教科書アプリ Content Model</h3><p class="feature-summary">Role別Path・Lesson・前提・成果物・Check・Feature Registry・進捗・質問履歴を構造化した学習データモデル。</p><dl class="feature-io"><dt>入力</dt><dd>本文テキスト、章構成、進捗ステータス案</dd><dt>出力</dt><dd>Content Modelに沿ったJSONデータ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-35-1-lesson-json-schema"><h3 id="feature-35-1-lesson-json-schema">Lesson JSON Schema</h3><p class="feature-summary">1Lessonの前提・成果物・チェック・所要時間・版情報を機械検証可能にするJSON Schema。</p><dl class="feature-io"><dt>入力</dt><dd>Lesson原稿、検証ルール</dd><dt>出力</dt><dd>Schema検証通過済みLesson JSON</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-35-2-feature-registry"><h3 id="feature-35-2-feature-registry">Feature Registry連携</h3><p class="feature-summary">変動するモデル名・コマンド・UIをLesson本文に埋め込まず、Registry参照で動的差し替えする仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>変動情報のキー、Registryデータ</dd><dt>出力</dt><dd>Registry参照で差し替えされたLesson表示</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-35-3-progress-state"><h3 id="feature-35-3-progress-state">Progress State</h3><p class="feature-summary">seen/practiced/verified/applied の4段階進捗を保存し、本人と管理者の両方から見える学習State。</p><dl class="feature-io"><dt>入力</dt><dd>Lesson完了イベント、証拠提出</dd><dt>出力</dt><dd>保存された進捗Stateと修了判定</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-35-4-allowlist-local-companion"><h3 id="feature-35-4-allowlist-local-companion">Allowlist付き Local Companion</h3><p class="feature-summary">ブラウザから任意Shellを実行せず、Local Companionが許可コマンドだけ動かす安全な実行連携。</p><dl class="feature-io"><dt>入力</dt><dd>ブラウザからの実行要求、Allowlist定義</dd><dt>出力</dt><dd>許可コマンドの実行結果、拒否ログ</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-35">
@@ -5933,23 +5929,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一章をLesson JSONへ変換し、前提・成果物・チェック・所要時間・版情報をSchemaで検証してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>学習アプリの中心は本文表示ではなく、行動・証拠・状態・再開です。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教育担当（架空）が、HTML教材をPDFビューアで配り、受講者の進捗が分からず修了判定もできない状況に詰まっている。</p><h3>こう使う</h3><p>本文をLesson JSONへ分解し、前提・成果物・チェック・進捗（seen/practiced/verified/applied）をSchema検証する。</p><h3>得られるもの</h3><p>誰がどこまでできたかが本人にも管理者にも見え、修了判定が客観的にできる。</p></article><article class="usecase-card"><h3>場面</h3><p>オンラインスクール（架空）が、ブラウザから任意Shellを実行する設計で監査NGを受けた。</p><h3>こう使う</h3><p>ブラウザ実行はAllowlist付きLocal Companionへ任せ、画面側は次の一操作・期待結果・証拠提示に専念する。</p><h3>得られるもの</h3><p>監査要件を満たしつつ、学習者は手元で安全に実行できる設計に置き換わる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-36">
   <header class="chapter-head">
     <div class="eyebrow">第36章</div>
-    <h1>30日導入計画</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">30日後、AIを使える組織になっている</span>
+      <span class="chapter-name">30日導入計画</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AI全社展開、半年計画でスタートしたら3ヶ月目で停滞』。
-これ、大きな構想を一気に動かそうとした時の典型パターンです。</p><p>ほとんどの組織は、AI導入を『プロジェクト』として組みます。
-でも、検証可能な一週間の積み重ねで進めないと、必ず途中で疲弊します。</p><p>この章で扱うのは、最初の30日を4週間に割る具体ロードマップ。
-1週目はInventoryとPolicy（動かさない作業）、2週目はBuildとTest、3週目はCanary配布とBronze研修を並走、4週目はPilot拡大とStable Release。各週にExit条件とRollback地点を置く。
-30日後は、導入時間・更新率・認定完了・Rollback Drill・Critical Gap・Skill二重編集を経営報告用に測る。</p><p>変革は『大きな完成図』じゃなく、検証可能な一週間の積み重ねで進めます。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIを社内に導入したいが、何から始めれば 30 日で形になるのか分からない』。
+これは戦略の不足ではなく、計画の粒度の問題です。</p><p>ほとんどの人は、AI導入を『年単位の構想』として描いてしまいます。
+ですが、本書の範囲なら、30 日で組織の地肩を上げることは十分にできます。</p><p>この章で扱うのは、Week1〜Week4 の具体的なアクションを並べた 30 日計画です。
+誰が・何を・どの順序で・どこまで実行すれば、組織が AI を扱える状態になるかを、現実的な粒度で並べます。</p><p>30 日後、AI を使える組織になっている。これは過剰な約束ではなく、計画と実行の話です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-36-0-week-1-inventory-policy"><h3 id="feature-36-0-week-1-inventory-policy">Week 1: Inventory &amp; Policy</h3><p class="feature-summary">現有資産の棚卸しとPolicy策定。動かす前に正本と禁止事項を決める1週目の作業塊。</p><dl class="feature-io"><dt>入力</dt><dd>現状のSkill群・Hook群・運用ルール</dd><dt>出力</dt><dd>Inventory表、初期Policyドラフト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-36-1-week-2-build-test"><h3 id="feature-36-1-week-2-build-test">Week 2: Build &amp; Test</h3><p class="feature-summary">正本Buildと評価Fixture整備を行う2週目。Canaryへ流す前に品質基準を満たす土台作り。</p><dl class="feature-io"><dt>入力</dt><dd>正本ソース、Fixture</dd><dt>出力</dt><dd>Buildパイプラインと初期テスト通過状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-36-2-week-3-canary-bronze"><h3 id="feature-36-2-week-3-canary-bronze">Week 3: Canary &amp; Bronze研修</h3><p class="feature-summary">限定範囲のCanary配布と新人Bronze研修を並走させる3週目。小さく失敗を発見する段階。</p><dl class="feature-io"><dt>入力</dt><dd>Canary対象、研修対象社員</dd><dt>出力</dt><dd>Canary実績ログとBronze認定者リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-36-3-week-4-pilot-stable-release"><h3 id="feature-36-3-week-4-pilot-stable-release">Week 4: Pilot &amp; Stable Release</h3><p class="feature-summary">Pilot範囲拡大とStable Releaseを行う4週目。Exit条件とRollback条件を持って全社展開へ進む。</p><dl class="feature-io"><dt>入力</dt><dd>Canary通過状態、Pilot対象部署</dd><dt>出力</dt><dd>Stable Releaseと配布完了レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-36-4-30"><h3 id="feature-36-4-30">30日後指標</h3><p class="feature-summary">導入時間・更新率・認定完了・Rollback Drill・Critical Gap・Skill二重編集を測る経営報告用指標群。</p><dl class="feature-io"><dt>入力</dt><dd>30日後の運用ログ</dd><dt>出力</dt><dd>KPIダッシュボードと経営報告書ドラフト</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-36">
@@ -6015,23 +6010,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>4週間で詰めすぎないコツ</dt><dd>1週目のInventoryは最低でも3営業日、Policyドラフトに2営業日確保しないと、後半のCanaryで必ず差し戻しが発生します。最初の週は『動かさない作業しかしない』ことを宣言し、その分2週目以降のテンポを上げる設計にすると失敗が減ります。</dd><dt>Canary対象の選び方</dt><dd>Canary対象は『AI習熟度が高い人』ではなく、『業務頻度が高く、失敗を口頭で言ってくれる人』を3〜5名選びます。習熟度の高い人は自分で迂回路を作ってしまうため、設計上の問題が検出されにくくなります。</dd><dt>30日後指標の運用</dt><dd>指標は5〜7個に絞り、毎週月曜にダッシュボードへ自動転記します。指標を10個以上並べると誰も見なくなり、結果として導入の費用対効果がCEOに伝わりません。指標を絞り切る判断が、組織展開の成否を分けます。</dd><dt>次の章への接続</dt><dd>4週間ロードマップが回り始めると、次章のFeature/原則分離が真価を発揮します。配布物が増えれば増えるほど、長く使える原則と頻繁に変わる製品情報を別々の更新周期で管理する必要が高まるからです。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自組織向けに四週間の導入表を作り、各週のOwner、成果物、合格条件、Rollback条件を記入してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>変革は大きな完成図ではなく、検証可能な一週間の積み重ねで進めます。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅企業（架空）の経営者が、半年計画でAI全社展開を始めたが、3ヶ月目で社内疲れて停滞している。</p><h3>こう使う</h3><p>1週目Inventory/Policy→2週目Build/Test→3週目Canary/Bronze研修→4週目Pilot/Stableに分け、各週Exit条件を置く。</p><h3>得られるもの</h3><p>一気に動かさず、検証単位で前進するため疲弊せず、未完成基盤の全社展開も防げる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、AI導入のKPIをCEOから求められたが、何を測ればよいか答えられない。</p><h3>こう使う</h3><p>導入時間・更新率・認定完了・Rollback Drill・Critical Gapを30日後測定指標として宣言する。</p><h3>得られるもの</h3><p>経営報告に使える数字が揃い、AI推進の費用対効果を定量で説明できる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-37">
   <header class="chapter-head">
     <div class="eyebrow">第37章</div>
-    <h1>素材と現行仕様の補正</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">AIの古い情報を、自分の手で正す</span>
+      <span class="chapter-name">素材と現行仕様の補正</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『半年前のテキスト、モデル名が違って総ツッコミ』。
-これ、教材を作る人なら必ず通る恥ずかしい瞬間です。</p><p>ほとんどの人は、教科書本文に『現行のモデル名・料金・UI』をそのまま書きます。
-でもAI製品の機能は数週間で変わる。本文に書いた瞬間、その教科書は腐り始めます。</p><p>正解は、長く使える原則と、頻繁に変わるFeatureを別レイヤーで管理すること。
-Plan/Verifyの重要性は何年も使えるけど、モデル名・料金・利用上限・UI・Beta状態は確認日と公式Sourceを持つFeature Registryへ。素材の動画にモデル名が出てきても本文を書き換えず、補正表で『現行ではこう扱う』と上書きする。</p><p>長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理する。
-これが、配布物を時間経過で腐らせない核心です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『本書に書かれた手順が、半年後にはもう古い』。
+これは著者の怠慢ではなく、AI 領域全体の性質です。</p><p>ほとんどの人は、教科書の情報を『そのまま信じる』前提で読みます。
+ですが、本書はあえて、変動しやすい情報を本文の外（Feature Registry）へ逃がす設計にしています。</p><p>この章で扱うのは、素材と現行仕様のズレを補正する方法です。
+古くなった部分を自分の手で正し、Registry を更新し、原則と詳細を切り分けて扱う作法を身につけます。</p><p>AI の古い情報を、自分の手で正す。それができる読者だけが、変化に強い実装者になります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-37-0-feature"><h3 id="feature-37-0-feature">原則とFeatureの分離</h3><p class="feature-summary">長く使える原則と、モデル名・料金・UIなど頻繁に変わるFeatureを別レイヤーで扱う設計方針。</p><dl class="feature-io"><dt>入力</dt><dd>教材本文、変動情報の候補</dd><dt>出力</dt><dd>原則本文とRegistry分離後の構成</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-37-1-feature-registry"><h3 id="feature-37-1-feature-registry">Feature Registry更新</h3><p class="feature-summary">名前・状態・確認日・公式Source・代替手順をRegistryへ書き、本文を直さずに新仕様へ追随できる仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>現行Featureの最新情報、公式Source</dd><dt>出力</dt><dd>Registryに追加された確認日付きエントリ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-37-2-suspended-deprecated"><h3 id="feature-37-2-suspended-deprecated">Suspended / Deprecated 表示</h3><p class="feature-summary">停止・非推奨を明示し、古い手順から新仕様への移行ガイドを必ず添えるバージョン管理。</p><dl class="feature-io"><dt>入力</dt><dd>停止対象、代替Feature</dd><dt>出力</dt><dd>Suspended/Deprecatedラベルと移行ガイド</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-37-3-item"><h3 id="feature-37-3-item">素材→現行仕様補正表</h3><p class="feature-summary">動画・記事など素材上の主張と、本書での現行扱いを対応付ける補正表。素材を否定せず使い続ける運用。</p><dl class="feature-io"><dt>入力</dt><dd>素材の主張、現行仕様</dd><dt>出力</dt><dd>素材→現行扱いの対照表</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-37">
@@ -6107,24 +6101,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>Registryに最低限書くべき項目</dt><dd>名前・状態（Active/Suspended/Deprecated）・確認日・公式Sourceの4項目は必須です。代替手順は任意ですが、Deprecated項目には必ず入れます。確認日のない項目はRegistryに置く意味がないため、新規追加時の必須欄として強制する仕組みにします。</dd><dt>本文とRegistryの境界線</dt><dd>『3ヶ月以内に変わりそうか』を判断基準にすると、本文へ書くか、Registryへ書くかが迷わず決まります。モデル名・料金・利用上限・UI・Beta状態はほぼ全てRegistry側です。本文に書いてよいのは、変わっても古びない設計思想と原則のみと割り切ります。</dd><dt>確認日の運用</dt><dd>確認日は『前回見たから動くと推定する有効期限』であり、過ぎたら必ず再確認します。3ヶ月を上限とし、過ぎたものはダッシュボードに赤で出します。確認日が形骸化したRegistryは、ない方がマシです。</dd><dt>終章への接続</dt><dd>原則とFeatureを分けて運用すると、配布物が時間経過で腐らなくなります。次の終章では、ここまでの全章を通じて作ってきた配布物群を、長く続くハーネスとして組み立て直す視点が問われます。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 本文にある変動情報を三つ見つけ、Feature Registryへ名前・状態・確認日・公式Source・代替手順として移してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内研修担当（架空）が、半年前のテキストでモデル名・料金・UIが現行と違い、受講者から『間違っている』と総ツッコミを受けた。</p><h3>こう使う</h3><p>変動情報をFeature Registryへ抜き出し、確認日・公式Source・代替手順を持たせる。</p><h3>得られるもの</h3><p>テキスト本体は更新せずRegistryだけ差し替えればよくなり、改訂コストが下がる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人技術ブロガー（架空）が、過去記事のモデル仕様が古くなり、SEO的にも信頼を失っている。</p><h3>こう使う</h3><p>原則とFeatureを分離して書き、Featureには確認日とDeprecated移行案内を入れる。</p><h3>得られるもの</h3><p>原則は長く使え、Featureだけ更新すれば記事全体の信頼が保てる。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-38">
   <header class="chapter-head">
     <div class="eyebrow">第38章</div>
-    <h1>Coverage Map</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">学び残しが、地図で一目でわかる</span>
+      <span class="chapter-name">Coverage Map</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『全部の機能、解説したつもり』。
-でもレビューに出したら重要トピックの抜けが大量発見。
-これ、章数を増やしただけで網羅性を作った気になるとよく起きる事故です。</p><p>ほとんどの人は、網羅性を『印象』で判断します。
-でも本当に必要なのは、各動画・公式補正・ハーネス要件を章へ対応付けた『Coverage Map』。
-1つのSource Topicが、説明・実習・Template・管理者運用のどこで扱われているかを表で証明する。</p><p>この章で組むのは、動画別Coverage Map、Harness要件Coverage Map、Source Topic追跡軸の3つ。
-すでに統合した話題も、出典とのつながりを残すことで将来の改訂時に追跡できる。</p><p>網羅性は『全部入れたつもり』じゃなく、Sourceと章の対応関係で証明します。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『本書のどこを、自分はまだ読めていないのか』。
+これは記憶の問題ではなく、地図の問題です。</p><p>ほとんどの人は、教科書を読み終えた後で『学び残し』を感覚で扱っています。
+ですが、章ごとの Coverage を地図として持てば、未到達の箇所は一目で分かります。</p><p>この章で扱うのは、本書 40 章＋14 レッスンの Coverage Map です。
+seen / practiced / verified / applied の 4 段階で、自分の現在地を可視化します。</p><p>学び残しが、地図で一目でわかる。次に何へ手を伸ばすべきかが、迷わず決まります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-38-0-coverage-map"><h3 id="feature-38-0-coverage-map">動画別 Coverage Map</h3><p class="feature-summary">各動画の主内容と本書のどの章に配置したかを対応付ける表。素材ベースの抜け漏れ検出に使う。</p><dl class="feature-io"><dt>入力</dt><dd>素材動画群、章構成</dd><dt>出力</dt><dd>動画→章 配置マッピング表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-38-1-harness-coverage-map"><h3 id="feature-38-1-harness-coverage-map">Harness要件 Coverage Map</h3><p class="feature-summary">配布・同期・Hook・Skill・Safety・観測性などの要件が、どの章で扱われているかを確認する要件側マップ。</p><dl class="feature-io"><dt>入力</dt><dd>ハーネス要件一覧</dd><dt>出力</dt><dd>要件→章 マッピング表と未充足要件</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-38-2-source-topic"><h3 id="feature-38-2-source-topic">Source Topic追跡</h3><p class="feature-summary">各Source Topicが説明・実習・Template・管理者運用のどこで扱われたかを確認する追跡軸。網羅性の証明手段。</p><dl class="feature-io"><dt>入力</dt><dd>Source Topic一覧、章別取扱い</dd><dt>出力</dt><dd>Topic×取扱い種別のマトリクス</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-38">
@@ -6263,24 +6255,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 新しく追加した素材を一つ選び、既存章への統合先、重複、追加すべき実習、更新日をCoverage Mapへ記録してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教科書編集者（架空）が、『全部の機能を解説した』と思って入稿したら、レビューで重要トピックの抜けが多数発見され大改修になった。</p><h3>こう使う</h3><p>Coverage Mapで各Source Topicが説明・実習・Template・運用のどこで扱われるかを表にする。</p><h3>得られるもの</h3><p>抜けと重複が事前に検出でき、レビュー時に『どの章に入っているか』を即答できる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅IT企業（架空）が、AI研修テキストの追加教材を入れるたびに既存章と矛盾し、整合性チェックに毎回数日かかる。</p><h3>こう使う</h3><p>追加素材を統合する際に既存章への対応・重複・追加実習をCoverage Mapへ記録する。</p><h3>得られるもの</h3><p>整合性チェックが表の更新で済み、改訂サイクルが大幅に短縮される。</p></article></div></section>
+  
 </article>
+
 
 <article class="chapter" id="chapter-final">
   <header class="chapter-head">
     <div class="eyebrow">終章</div>
-    <h1>最強のまま保つ</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">強いハーネスを、強いまま運用し続ける</span>
+      <span class="chapter-name">最強のまま保つ</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『一度完成させた環境、半年後に劣化してたことに気づかなかった』。
-これ、AI推進担当が一番怖い瞬間です。</p><p>ほとんどの人は、最強の環境を『一度完成させて固定するもの』だと思ってます。
-でも実は、最強の条件は『更新し続けられること』。
-変化を観測し、小さく試し、独立した文脈で評価し、安全に配布し、必要なら戻す。このLoopが続く限り、教科書も組織も古びません。</p><p>この終章でまとめるのは、個人の学びと組織のハーネスを同じLoopで成長させる設計。
-原則と変動情報は別の更新周期で管理する。月次で1つLesson/Skillを選んで改善する。個人の成功手順は組織のハーネスに昇格させ、組織の更新は個人の学習に戻す。</p><p>完成より、検証可能に更新し続けられること。
-それが『最強』の条件です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『本書を最後まで読んだ』。
+これは到達点ではなく、運用の出発点です。</p><p>ほとんどの人は、教科書を読み終わると、そのまま閉じてしまいます。
+ですが、AI の領域では、最強の状態を維持することそのものに継続的な手入れが必要です。</p><p>この終章で扱うのは、強いハーネスを強いまま運用し続けるための原則です。
+人が変わる、組織が変わる、AI が変わる──それでも崩れない設計の見直し方を持っておきます。</p><p>読み終わったその日から、本書は『更新し続ける起点』として動き始めます。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-final-0-loop"><h3 id="feature-final-0-loop">更新Loop（観測→試行→評価→配布→復旧）</h3><p class="feature-summary">変化を観測し、小さく試し、独立評価し、安全に配布し、必要なら戻すサイクル。完成形ではなく更新可能性を最強の条件にする運用骨格。</p><dl class="feature-io"><dt>入力</dt><dd>現在の運用状態、改善候補</dd><dt>出力</dt><dd>1サイクル分の更新ログとRollback地点</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-final-1-lesson-skill"><h3 id="feature-final-1-lesson-skill">Lesson/Skill 月次改善</h3><p class="feature-summary">Owner・Fixture・評価日・Release段階を持つLessonまたはSkillを月次で1つ選び改善する継続活動。</p><dl class="feature-io"><dt>入力</dt><dd>現Lesson/Skill台帳、評価スコア</dd><dt>出力</dt><dd>改善対象1件と次月の改善ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-final-2-item"><h3 id="feature-final-2-item">原則と変動情報の継続分離</h3><p class="feature-summary">長く使える原則と、頻繁に変わるFeatureを別更新周期で管理し続ける運用習慣。教材と現実のズレを構造的に防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>本文の表現、現行仕様の変化</dd><dt>出力</dt><dd>原則本文の安定維持とRegistryの定期更新</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-final-3-item"><h3 id="feature-final-3-item">個人学習 × 組織ハーネス同期</h3><p class="feature-summary">個人が成功した手順を組織のハーネスへ昇格させ、組織の更新を個人の学習に戻す双方向の連結機構。</p><dl class="feature-io"><dt>入力</dt><dd>個人の成功事例、ハーネスの最新版</dd><dt>出力</dt><dd>ハーネス側Skill追加と個人環境の更新</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-final">
@@ -6341,12 +6331,18 @@ migration_note
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 次の30日で改善するLessonまたはSkillを一つ選び、Owner、Fixture、評価日、Release段階を決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>完成よりも、検証可能に更新し続けられることが『最強』の条件です。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC社のAI推進リーダー（架空）が、AI環境を一度完成させたあと、半年後に劣化したことに気づかず競合に追い抜かれた。</p><h3>こう使う</h3><p>Owner・Fixture・評価日・Release段階を持つLessonまたはSkillを月次で改善し続ける。</p><h3>得られるもの</h3><p>完成形ではなく更新可能性が組織能力となり、競合変化に追随できる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、最初に作ったSkillを使い回し続けて陳腐化に気づかず、ある日突然動かなくなった。</p><h3>こう使う</h3><p>30日ごとに次に改善するLessonまたはSkillを選び、検証可能なRelease段階で更新する。</p><h3>得られるもの</h3><p>個人レベルでも更新Loopが回り、陳腐化や急停止のリスクが低くなる。</p></article></div></section>
+  
 </article>
+<section class="epilogue-letter" aria-label="おわりに"><h2>おわりに ── 読者へ</h2><div class="epilogue-body"><p>ここまでお読みいただき、ありがとうございました。</p><p>40章を一気に通読された方も、14レッスンを順に進めながらここに辿り着いた方も、
+読み終えた瞬間に共通して持つ感覚があるはずです。
+『これは、続きを書く本だ』ということ。</p><p>Claude Code は、本書を執筆している間にも進化しました。
+Skills のメニュー配置が変わり、Permission Mode の名称が変わり、MCP の対応サービスが増えました。
+だから本書は『完成版』ではなく、『あなたの仕事に合わせて更新する起点』として書かれています。</p><p>最後に、3つだけお願いがあります。</p><p>ひとつ、第4章の90分実習は必ず手を動かしてください。
+読むだけでは、本書の85%は身につきません。</p><p>ふたつ、CLAUDE.md と Skills は、自分の言葉で書き直してください。
+本書のテンプレをコピペするのではなく、あなたの仕事のリズムに合わせて書いた一文だけが、
+半年後も生き残ります。</p><p>みっつ、もし本書を会社で配るのであれば、配って終わりにしないでください。
+3か月後に、配った相手と一緒に振り返る場を持つこと。それだけで、組織の AI 活用は明らかに変わります。</p><p>本書は読み終わるための本ではなく、読み始めるための本です。
+あなたの仕事に合わせて、ここから書き換えていってください。</p><p>著者一同</p></div></section>
 
 </section>
 <p class="source-note">本版は、元教科書の全章・全小見出し・コードブロックを保持し、各章に機能概観・ユースケース・体験ミッションを追加しています。</p></main></div>

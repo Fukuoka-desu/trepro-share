@@ -9,13 +9,16 @@
 <article class="chapter" id="chapter-07">
   <header class="chapter-head">
     <div class="eyebrow">第7章</div>
-    <h1>Permission Mode、Sandbox、危険操作</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">うっかり rm -rf を、5秒手前で止める</span>
+      <span class="chapter-name">Permission Mode、Sandbox、危険操作</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『うっかり rm -rf』『git push で main を上書き』。
-AIに作業を任せる時、こういう取り返しのつかない事故は、油断した5秒に起きます。</p><p>ほとんどの人は、AIに『全部許可』のまま動かしてます。
-便利だから。確認が面倒だから。
-でも、その『便利』と『事故』は同じスイッチで繋がってます。</p><p>Permission Modeは、操作ごとに『許可・拒否・確認』を3段階で切り替える仕組みです。
-読み取りは自動で許可、書き換えは確認、削除と外部送信は必ず止める。それだけで、暴走の99%が手前で止まります。</p><p>この章を読み終わる頃には、自分が安心して任せられる範囲が、自分で決められるようになります。</p></section>
+AIに作業を任せたとき、こうした取り返しのつかない事故は、油断した数秒に起きます。</p><p>ほとんどの人は、AIに『全部許可』のまま動かしています。
+便利だから、確認が面倒だから。
+ですが、その『便利』と『事故』は同じスイッチで繋がっています。</p><p>Permission Mode は、操作ごとに『許可・拒否・確認』を切り替える仕組みです。
+読み取りは自動で許可、書き換えは確認、削除と外部送信は必ず止める。それだけで、暴走の大半が手前で止まります。</p><p>この章を読み終わる頃には、自分が安心して任せられる範囲を、自分で決められるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-07-0-permission-mode-permission-rule"><h3 id="feature-07-0-permission-mode-permission-rule">Permission Mode と Permission Rule</h3><p class="feature-summary">読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。</p><dl class="feature-io"><dt>入力</dt><dd>扱うProject、許可してよい操作と確認したい操作</dd><dt>出力</dt><dd>Project単位の許可ポリシー表とPermission Rule定義</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-1-sandbox-bypass"><h3 id="feature-07-1-sandbox-bypass">Sandbox と Bypass運用</h3><p class="feature-summary">Bypassは隔離された使い捨て環境のみ、本番Projectは確認モード固定とする運用ルール。便利さと事故半径を分離する。</p><dl class="feature-io"><dt>入力</dt><dd>実験用ワークスペース、本番Projectの一覧</dd><dt>出力</dt><dd>Bypass許可Pathと禁止Pathを明示したCLAUDE.mdルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-2-secrets"><h3 id="feature-07-2-secrets">Secrets管理ルール</h3><p class="feature-summary">APIキー・トークンをチャットに貼らず、環境変数や専用ファイルへ置きGitから除外する3点ルール。</p><dl class="feature-io"><dt>入力</dt><dd>使う外部サービス、必要な鍵・トークン</dd><dt>出力</dt><dd>Secret保存場所、.gitignore更新、CLAUDE.md記載</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-3-item"><h3 id="feature-07-3-item">削除の標準手順</h3><p class="feature-summary">対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の6段で、削除事故をワンクリックで起こさない手順化。</p><dl class="feature-io"><dt>入力</dt><dd>整理したいフォルダ、削除候補ファイル</dd><dt>出力</dt><dd>削除Dry-run結果、バックアップ、削除完了レポート</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-07">
@@ -151,12 +154,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在のプロジェクトで許可してよい操作と、毎回確認すべき操作を二列に分けて書いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、毎回出る権限確認を面倒に思いBypassを常用した結果、検証中の本番DBへ誤更新コマンドを流してしまった。</p><h3>こう使う</h3><p>Bypassは隔離した使い捨て環境のみ・本番Projectは確認モード固定、というRuleをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>便利さと事故半径のトレードオフが明示され、危険操作が必ず人の目を通るようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、AIに全権を与えるか禁止するかの二択しか出来ず、安全と業務スピードの両立に悩んでいる。</p><h3>こう使う</h3><p>操作を読む・編集する・実行する・ネットワーク・削除の五分類に分け、それぞれ許可ポリシーを別に設計する。</p><h3>得られるもの</h3><p>全権でも全禁止でもなく、業務に必要な範囲だけを許可でき、稟議が通る具体度になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、AIに『古いファイルを掃除して』と頼み、契約PDFまで巻き込まれて削除されかけた。</p><h3>こう使う</h3><p>削除は対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の標準手順をSkill化する。</p><h3>得られるもの</h3><p>削除がワンクリックで進まなくなり、最悪でも実行前のリストで止められる。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="06.html">← Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="08.html">ModelとEffort →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

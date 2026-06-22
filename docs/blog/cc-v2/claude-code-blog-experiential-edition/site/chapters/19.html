@@ -9,11 +9,15 @@
 <article class="chapter" id="chapter-19">
   <header class="chapter-head">
     <div class="eyebrow">第19章</div>
-    <h1>Claude Codeを自分専用に育てる</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">自分の口癖を、AIに覚えさせる</span>
+      <span class="chapter-name">Claude Codeを自分専用に育てる</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AIに全会話履歴を渡せば、自分専用になる』。
-これ、便利そうに見えて、顧客の個人情報まで学習素材に紛れ込ませる地雷です。</p><p>ほとんどの人は、パーソナライズを『大量に覚えさせること』だと思ってます。
-正解は逆。『何を保存しないか』を最初に決めることです。秘密・個人情報・顧客データ・雑談は除外し、関心・学習課題・好む形式の3つだけ抽出して INTERESTS.md に書く。本人がいつでも編集・削除できる状態を保つ。</p><p>新しさと深掘り回数で重み付け（Recency Score）して『現在の関心』を反映する、毎回全ログ読まずに差分処理する、そのProfileから復習問題まで作る、というところまでこの章で組みます。</p><p>自分専用化は、大量記憶じゃなく、信号の選別と本人の制御で作ります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『他人の Skill をコピーしてきたけれど、自分の仕事には合わない』。
+これは品質の問題ではなく、自分の口癖を AI に教えていないだけです。</p><p>ほとんどの人は、AIを『汎用ツール』として使っています。
+ですが、AIは、何を好み・何を避け・どこを丁寧に確認したいかという、あなた固有の癖を覚えることもできます。</p><p>Auto Memory・User Rules・個人用 Skill は、自分の作業様式を AI に学習させる仕掛けです。
+毎回の手直しが減り、最初から自分の文体・形式で返ってくるようになります。</p><p>この章を読み終わる頃には、AI が『自分のために働く道具』として馴染んできます。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-19-0-privacy-by-design"><h3 id="feature-19-0-privacy-by-design">Privacy by Design（保存しないものを決める）</h3><p class="feature-summary">秘密・個人情報・顧客データ・雑談を除外し、保存対象を関心・学習課題・好む形式に限定するパーソナライズ設計。</p><dl class="feature-io"><dt>入力</dt><dd>会話ログ、扱う情報のセンシティビティ</dd><dt>出力</dt><dd>保存対象/除外対象を分けた抽出ルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-19-1-interest-profile-skill"><h3 id="feature-19-1-interest-profile-skill">Interest Profile Skill</h3><p class="feature-summary">未分析ログから関心・学習課題・好む形式だけを抽出してINTERESTS.mdへまとめるSkill。本人が編集可能。</p><dl class="feature-io"><dt>入力</dt><dd>セッションログ、過去会話</dd><dt>出力</dt><dd>編集可能なINTERESTS.mdプロファイル</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-19-2-recency-score"><h3 id="feature-19-2-recency-score">Recency Score（重み付け）</h3><p class="feature-summary">新しさと深掘り回数で重み付けし、現在の関心を反映するスコアリング。古い関心と現在を混ぜない。</p><dl class="feature-io"><dt>入力</dt><dd>抽出済み関心信号、時間軸</dd><dt>出力</dt><dd>現在優先のスコア順関心リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-19-3-item"><h3 id="feature-19-3-item">差分処理（処理済み位置の管理）</h3><p class="feature-summary">処理済み位置を保持し、毎回全ログを再走査しない実装パターン。処理時間と費用を構造的に抑える。</p><dl class="feature-io"><dt>入力</dt><dd>新規ログと前回処理位置</dd><dt>出力</dt><dd>差分のみ処理した抽出結果</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-19-4-item"><h3 id="feature-19-4-item">学習問題生成</h3><p class="feature-summary">Profileを元に調査テーマや復習問題を作る出力機能。学んだことを定着させるための再利用。</p><dl class="feature-io"><dt>入力</dt><dd>INTERESTS.md、苦手分野</dd><dt>出力</dt><dd>復習問題、深掘り調査テーマ</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-19">
@@ -260,12 +264,9 @@ Local Storageには回答状態だけを保存する。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 保存してよい学習信号と保存してはいけない情報を定義し、少量の会話ログからINTERESTS.mdの試作を作ってください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>自分専用化は大量記憶ではなく、目的を限定した信号抽出と本人の制御で作ります。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人ライター（架空）が、AIに『自分専用化したい』と全会話履歴を渡し、結果として顧客個人情報まで学習対象に紛れて怖くなった。</p><h3>こう使う</h3><p>保存対象を関心・学習課題・好む形式の三つに限定し、秘密情報・顧客データ・雑談は除外定義を書く。</p><h3>得られるもの</h3><p>個人化の便益は得つつ、プライバシーリスクが構造的にゼロへ近づく。</p></article><article class="usecase-card"><h3>場面</h3><p>学習担当（架空）が、社員ごとのスキルレベルを把握したいが、毎回全ログを再走査して処理時間が爆発している。</p><h3>こう使う</h3><p>処理済み位置と新しさ重みを持つINTERESTS.md抽出Skillを作る。</p><h3>得られるもの</h3><p>差分処理になり、関心の最新動向だけ追える。本人が編集・削除できる透明な仕組みになる。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="18.html">← CoworkとLive Artifacts</a><a href="20.html">`/goal`、Headless、定期実行 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

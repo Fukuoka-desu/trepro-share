@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-26">
   <header class="chapter-head">
     <div class="eyebrow">第26章</div>
-    <h1>Managed Policy、Security、Observability</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">AIの暴走は、ログから見える</span>
+      <span class="chapter-name">Managed Policy、Security、Observability</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『CLAUDE.mdに削除禁止って書いたから安全』。
-これ、攻撃や誤操作の前では1秒で破れる紙の盾です。</p><p>ほとんどの組織は、安全策を『文章で書けば守れる』と思ってます。
-でも、外部社員の端末では文書が書き換えられる。Bypassは便利だから常用される。CLAUDE.mdは読み飛ばされる。
-だから、強制したいことは Managed Settings / Managed MCP で個人端末から触れない場所に置き、HookのBlock Eventを構造化ログに残す。文書ではなく実行時の強制で安全を成立させる。</p><p>想定脅威は6つ（秘密漏えい・危険コマンド・Prompt Injection・誤配布・設定改変・Supply Chain）。それぞれを予防・検知・復旧の3列で守る。
-KPIはBlock件数だけじゃなく誤検知率・更新成功率・復旧時間まで測る。</p><p>『守りすぎ』も『緩すぎ』も数字で見えるようにする章です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AI が裏で何をしたか、誰も把握していない』。
+これは便利すぎる時に起きる、組織にとって最も静かな事故です。</p><p>ほとんどの人は、AIの動きをログとして残していません。
+ですが、暴走・誤操作・情報持ち出しは、ログがなければ後追いできません。</p><p>この章で扱うのは、Managed Policy・Security・Observability の3点で AI の動きを観測可能にする設計です。
+誰が・何を・いつ・どこで実行したかを、後から辿れる形で残します。</p><p>AI の暴走は、ログから見える。可視化は、信頼を裏付ける土台です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-26-0-threat-model-6"><h3 id="feature-26-0-threat-model-6">Threat Model（6想定脅威）</h3><p class="feature-summary">秘密漏えい・危険コマンド・Prompt Injection・誤配布・設定改変・Supply Chainを想定脅威として並べる出発点。</p><dl class="feature-io"><dt>入力</dt><dd>組織の運用構造、扱うデータ</dd><dt>出力</dt><dd>6脅威それぞれの予防/検知/復旧マトリクス</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-1-managed-settings-managed-mcp"><h3 id="feature-26-1-managed-settings-managed-mcp">Managed Settings / Managed MCP</h3><p class="feature-summary">個人端末で改変できない組織Policyを固定し、文書ではなく実行時の強制で安全を成立させる仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>強制したい設定、許可するMCP</dd><dt>出力</dt><dd>Managed Settings/MCP定義ファイル</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-2-hook-block-event"><h3 id="feature-26-2-hook-block-event">Hook Block Event のログ化</h3><p class="feature-summary">HookのBlock判定を構造化ログへ落とし、誰がいつ何を止めたかを追跡可能にする観測機構。</p><dl class="feature-io"><dt>入力</dt><dd>Hookブロック発生、対象操作</dd><dt>出力</dt><dd>構造化ログとブロック傾向の集計</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-3-kpi"><h3 id="feature-26-3-kpi">KPI / 指標群</h3><p class="feature-summary">Block件数だけでなく誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を測る安全KPI。</p><dl class="feature-io"><dt>入力</dt><dd>運用ログ群</dd><dt>出力</dt><dd>ダッシュボード化された安全指標</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-4-incident-runbook"><h3 id="feature-26-4-incident-runbook">Incident運用とRunbook</h3><p class="feature-summary">事故発生時の隔離・Rollback・通知・振り返りを標準化するRunbook。属人化させず素早く復旧する。</p><dl class="feature-io"><dt>入力</dt><dd>発生したインシデント、影響範囲</dd><dt>出力</dt><dd>Runbook手順、復旧ログ、振り返り記録</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-26-5-retention"><h3 id="feature-26-5-retention">Retention（ログ保持と権限）</h3><p class="feature-summary">ログの保持期間と閲覧権限を決める方針。長すぎる保持と広すぎる閲覧の両方を避ける。</p><dl class="feature-io"><dt>入力</dt><dd>扱うログ種別、コンプラ要件</dd><dt>出力</dt><dd>保持期間/閲覧権限マトリクス</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-26">
@@ -334,12 +336,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自組織のThreat Modelを五項目書き、各項目を予防・検知・復旧の三列へ割り当ててください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>組織の安全は、強制Policy、観測、Incident対応が一体になって初めて成立します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある金融系IT部門（架空）が、AI導入の安全策をCLAUDE.mdで案内したが、外部社員の端末で簡単に書き換えられて事故が起きた。</p><h3>こう使う</h3><p>Managed SettingsとManaged MCPで組織Policyを固定し、HookのBlock Eventを構造化ログへ残す。</p><h3>得られるもの</h3><p>文書ではなく実行時の強制で安全が成立し、誰の端末でも改変できない。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、Block件数だけ報告しているが、誤検知が多すぎて社員から信頼を失っている。</p><h3>こう使う</h3><p>誤検知率・更新成功率・Skill失敗率・Cost・復旧時間を含む指標を一緒に測る。</p><h3>得られるもの</h3><p>数字で『守りすぎ』『緩すぎ』のバランスが見え、Policy調整に根拠が持てる。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="25.html">← Skill Governance</a><a href="27.html">OnboardingとRunbook →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-33">
   <header class="chapter-head">
     <div class="eyebrow">第33章</div>
-    <h1>失敗Pattern</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">事故ったAI現場が、いつも踏んでいる轍</span>
+      <span class="chapter-name">失敗Pattern</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『同じ事故、また起きた』。
-振り返りメモを書いて満足して、半年後また同じパターンで詰まる。
-これ、ほとんどの組織で延々と繰り返されてます。</p><p>ほとんどの人は、失敗を『反省で終わらせて』ます。
-でも反省は、人の記憶に依存する仕組み。次に同じ条件が来た時、誰も覚えてません。
-正解は、失敗をRule・Skill・Hook・Runbookのどれかに必ず変換して、二度と人の注意力に頼らないこと。</p><p>この章で扱うのは、巨大CLAUDE.md・無検証完了・Bypass常用・全社即時配布など、繰り返し起きる失敗を表にする台帳。人・手順・権限・検証・配布の5観点で根を分け、対策の置き場所を1つに絞る判断軸。</p><p>失敗は記録するだけじゃ意味がない。次回のRule・Skill・Hookへ変換して初めて学習資産になります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIを真面目に運用しているはずなのに、何度も同じ事故が起きる』。
+これは個別の油断ではなく、現場が踏みがちな轍が存在しているからです。</p><p>ほとんどの人は、自分の現場の事故を『うちだけの問題』として処理しています。
+ですが、AI現場の事故には共通のパターンがあります。Bypass の常用、秘密情報の露出、承認の形骸化、ログの欠落、評価指標の歪み。</p><p>この章で扱うのは、よく踏まれる失敗パターンを目録化し、自社の運用と照らし合わせる方法です。
+事故が起きる前に、轍を地図として持っておきます。</p><p>事故ったAI現場が、いつも踏んでいる轍を、自分は踏まずに済むようにする章です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-33-0-pattern"><h3 id="feature-33-0-pattern">失敗Pattern台帳</h3><p class="feature-summary">巨大CLAUDE.md・無検証完了・Bypass常用・全社即時配布など、繰り返し起きる失敗を表にして再発防止へ変換する一覧。</p><dl class="feature-io"><dt>入力</dt><dd>発生したトラブル、関係者の証言</dd><dt>出力</dt><dd>失敗→対策が対になった共有可能なPattern表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-33-1-5"><h3 id="feature-33-1-5">失敗の5観点分解</h3><p class="feature-summary">人・手順・権限・検証・配布の5軸で失敗の根を分け、どこに防御を置くかを決める分析フレーム。</p><dl class="feature-io"><dt>入力</dt><dd>発生インシデント、状況メモ</dd><dt>出力</dt><dd>5観点で分解した原因と対策設置先</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-33-2-rule-skill-hook-runbook"><h3 id="feature-33-2-rule-skill-hook-runbook">Rule/Skill/Hook/Runbookへの落とし込み</h3><p class="feature-summary">失敗を反省で終わらせず、Rule・Skill・Hook・Runbookのどれに変換するかを必ず決める運用ルール。</p><dl class="feature-io"><dt>入力</dt><dd>5観点分解結果</dd><dt>出力</dt><dd>再発防止のための新規ルール/スキル/フック/Runbook</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-33">
@@ -91,12 +93,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>失敗台帳を続けるための仕組み</dt><dd>失敗Patternは『書こうと思った時に書く』運用では絶対に続きません。インシデント発生時に必ず1行残すRunbookと、月末に台帳を読み返す15分の枠を予定として固定します。書く労力をゼロに近づけることが、最大の継続要因です。</dd><dt>5観点分解の使い方</dt><dd>人・手順・権限・検証・配布のうち、対策を置く場所は必ず1つに絞ります。複数に分散すると責任の所在がぼやけ、結局どれも実装されません。最も影響の大きい1観点へ置き、他観点は『今回は対象外』と明示することで、対策の実装率が劇的に上がります。</dd><dt>対策の落とし先の選び方</dt><dd>Rule（CLAUDE.md）は読み返さないと効きません。Skillは呼ばれて初めて動きます。Hookは無条件に動きます。Runbookは事故時に開きます。失敗の性質を見て『無条件に止めるべきか／その瞬間だけ呼べばいいか』を分けると、過剰防御も穴も出にくくなります。</dd><dt>次の章への接続</dt><dd>失敗をHook/Skill/Rule/Runbookへ変換する設計が身につくと、次の組織展開フェーズで『全社員に同じ防御を物理配布する』思想がそのまま使えます。失敗対策は個人の記憶ではなく配布物として育てる、というのが組織展開の核心です。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 最近の失敗を一つ選び、原因を人・手順・権限・検証・配布の観点で分解し、再発防止の置き場所を決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>失敗を記録するだけでなく、次回のRule・Skill・Hookへ変換して初めて学習になります。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、AIが古い情報のまま動く事故を毎月起こすが、振り返りメモを書くだけで終わって再発を防げていない。</p><h3>こう使う</h3><p>失敗を人・手順・権限・検証・配布で分解し、Rule/Skill/Hook/Runbookのどこへ落とすか決める。</p><h3>得られるもの</h3><p>失敗が組織の改善資産となり、同じ条件が来たら自動で気づける仕組みへ変換できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、社員がBypass常用したことによる事故をたびたび経験し、注意喚起では止まらないと判明した。</p><h3>こう使う</h3><p>BypassをHookで物理ブロックし、Runbookで例外申請の手順を書く。</p><h3>得られるもの</h3><p>便利さの誘惑が物理的に断たれ、必要時だけ手続きを経て解除できる。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="32.html">← 継続業務の自動化</a><a href="34.html">コピペ用標準テンプレート →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

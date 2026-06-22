@@ -239,7 +239,10 @@ def expected_target_label(soup: BeautifulSoup, target_type: str, target: str) ->
     if not node: return target
     if target_type == 'chapter-cover':
         h = node.select_one('.chapter-head h1')
-        return f"{label_for(chapter_id_from_target(target) or 'final')} {h.get_text(' ',strip=True) if h else ''}".strip()
+        # Prefer the .chapter-name (機能名) for slide captions; fall back to whole h1.
+        name = h.select_one('.chapter-name') if h else None
+        text = name.get_text(' ', strip=True) if name else (h.get_text(' ', strip=True) if h else '')
+        return f"{label_for(chapter_id_from_target(target) or 'final')} {text}".strip()
     if target_type == 'part':
         h = node.select_one('.part-header h2')
         return h.get_text(' ',strip=True) if h else target

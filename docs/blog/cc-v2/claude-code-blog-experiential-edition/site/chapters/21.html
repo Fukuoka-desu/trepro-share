@@ -9,11 +9,15 @@
 <article class="chapter" id="chapter-21">
   <header class="chapter-head">
     <div class="eyebrow">第21章</div>
-    <h1>Dynamic Workflowsと複数Agent</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">1つの目的を、複数のAIに分担させる</span>
+      <span class="chapter-name">Dynamic Workflowsと複数Agent</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『調査・検証・統合をひとりのAIに任せたら、最初の仮説に最後まで引きずられた』。
-これ、結構ありがちな失敗です。</p><p>ほとんどの人は、AIを増やせば品質が上がると思ってます。
-でも複数Agentの本質は、人数じゃなく『仮説バイアスの分離』。情報源を探す（Research）・主張を検証する（Verify）・矛盾と重複を整理して統合する（Synthesize）の3役を別の文脈で動かすと、初期仮説の磁場から抜けられます。</p><p>ただし、Agentを増やせば検索量と料金も急増します。Agent数・最大トークン・再試行回数の上限を必ず設ける。単純な仕事では Dynamic を使わず、手動Workflowで済ませる判断軸もこの章で学びます。</p><p>複数Agentは、品質を自動保証する魔法じゃありません。難しい仕事を分解する道具です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AI を 1 体だけ使って、複雑な仕事を進めている』。
+これは限界の問題ではなく、編成の問題です。</p><p>ほとんどの人は、AIをチームではなく、ひとりの賢い人として扱っています。
+ですが、複数の AI に役割を割り振り、互いに結果を渡し合う設計をすると、こなせる仕事の量が一段変わります。</p><p>Dynamic Workflows は、目的に応じて複数の AI が動的に役割を分担する仕掛けです。
+調査担当が結果を出し、設計担当が計画に直し、実装担当が手を動かし、レビュー担当が読み返す。</p><p>この章を読み終わる頃には、AI を 1 つの道具ではなく、1 つのチームとして見られるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-21-0-dynamic-workflows"><h3 id="feature-21-0-dynamic-workflows">Dynamic Workflows</h3><p class="feature-summary">入力に応じて複数Agentの流れを組み替える可変Workflow。仮説バイアスを分離した調査・統合に向く。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、必要な情報源、品質基準</dd><dt>出力</dt><dd>Agent構成と各Agentの中間成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-1-research-verify-synthesize"><h3 id="feature-21-1-research-verify-synthesize">Research → Verify → Synthesize</h3><p class="feature-summary">情報源を探す・主張を検証する・矛盾と重複を整理して統合する三役分業の代表構成。</p><dl class="feature-io"><dt>入力</dt><dd>調査依頼、複数情報源</dd><dt>出力</dt><dd>出典付き検証済み統合レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-2-cost-control-agent"><h3 id="feature-21-2-cost-control-agent">Cost Control（Agent数/トークン/再試行）</h3><p class="feature-summary">Agent数・検索範囲・最大トークン・再試行回数を制限し、料金暴走を構造的に防ぐ運用設定。</p><dl class="feature-io"><dt>入力</dt><dd>想定予算、現状のAgent構成</dd><dt>出力</dt><dd>上限つきCost設定とアラート閾値</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-3-workflow-dynamic"><h3 id="feature-21-3-workflow-dynamic">手動Workflow（Dynamic不要の判定）</h3><p class="feature-summary">単純な仕事ではDynamicを使わず、手動の小さなWorkflowで済ませる判断軸。複雑度とコストを天秤にかける。</p><dl class="feature-io"><dt>入力</dt><dd>タスク内容、必要な分業度合い</dd><dt>出力</dt><dd>Dynamic採用/手動採用の判定理由</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-4-acceptance"><h3 id="feature-21-4-acceptance">Acceptance（中間成果物の保存）</h3><p class="feature-summary">各段階の中間成果物を保存し、最終出力だけで判断しない受け入れ基準。再現と監査を可能にする。</p><dl class="feature-io"><dt>入力</dt><dd>Workflow実行ログ、中間成果物</dd><dt>出力</dt><dd>段階別保存ファイルとAcceptance結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-21">
@@ -88,12 +92,9 @@ SNSは反応のみ。最大8 Agent、25分。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つの調査テーマをResearch・Verify・Synthesizeへ分け、各担当へ渡す入力と受け取る出力を定義してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>複数Agentは難しい仕事を分解する手段であり、品質を自動保証するものではありません。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中堅リサーチ会社（架空）が、新市場調査をひとりのAIに任せたら初期仮説に引きずられて、後で重大な事実を見逃したと判明した。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeの三役を独立Agentに分け、Cost上限と再試行回数も決める。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、結論への反証も統合される。意思決定の質が説明可能になる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人投資家（架空）が、複数Agent構成にしたら検索量が爆発し、月のAPI料金が想定の5倍になった。</p><h3>こう使う</h3><p>Agent数・検索範囲・最大トークンを段階的に制限し、各段階の中間成果物を保存する。</p><h3>得られるもの</h3><p>暴走しないCost構造になり、シンプルな調査は手動Workflowへ戻す判断もできる。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="20.html">← `/goal`、Headless、定期実行</a><a href="22.html">信頼できる調査とレポート →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

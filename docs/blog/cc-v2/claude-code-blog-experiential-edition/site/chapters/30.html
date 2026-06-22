@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-30">
   <header class="chapter-head">
     <div class="eyebrow">第30章</div>
-    <h1>Application開発</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">プロトタイプを、ひと晩で動くアプリにする</span>
+      <span class="chapter-name">Application開発</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AIで作ったアプリ、動いたから公開した』。
-1日後、エッジケースで毎日エラーが出てユーザーが離脱。
-これ、ほとんどの個人開発で起きてる事故です。</p><p>ほとんどの人は、『画面が出たら完成』だと思ってます。
-でも、デモと製品の間には品質の橋が必要です。エラー時の挙動、データ保存、テスト、変更履歴、戻し方。最低でもこれが揃わないと、他人に渡せません。</p><p>この章では、Localで価値を確かめる最小アプリの作り方、Bug修正は必ず再現テストから始める運用、大規模Migrationは段階移行＋Rollback条件、独立コンテキストで最終チェックするFresh Reviewまで扱います。
-健康・投資のような高リスク領域では、意思決定を自動化せず情報整理に限定する設計指針も。</p><p>アプリの完成は『画面が出ること』じゃなく、失敗を再現し検証し戻せること。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『プロトタイプを作ったのに、形にする時間が無くて放置している』。
+これはアイデア不足ではなく、AIと並走する手順を知らないだけです。</p><p>ほとんどの人は、Application 開発を『大きな構え』として捉えています。
+ですが、要件・スキャフォルド・実装・検証・配布までを、AIと組んで1日に圧縮することは現実的になりました。</p><p>この章で扱うのは、プロトタイプを動くアプリへ仕上げるための小さな反復の作り方です。
+仕様メモ→足場→実装→検証→ローカル配布までを、AIと並走で進めます。</p><p>プロトタイプを、ひと晩で動くアプリにする。アイデアと配布の距離は、もう昔ほどありません。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-30-0-local-task-manager"><h3 id="feature-30-0-local-task-manager">Local Task Manager（最小アプリ）</h3><p class="feature-summary">Localで価値を確かめ、要件・データ境界・Test・Schemaを揃える最小Webアプリの作り方。</p><dl class="feature-io"><dt>入力</dt><dd>タスク管理の要件、データスキーマ</dd><dt>出力</dt><dd>Local起動するTask Managerと検証ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-30-1-bug"><h3 id="feature-30-1-bug">Bug修正（再現手順から）</h3><p class="feature-summary">Bug報告を必ず再現手順から扱い、修正前に再現テストを書く品質運用。直したつもりを防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>Bug報告、現状の挙動</dd><dt>出力</dt><dd>再現テストと修正Patch、Diff</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-30-2-migration"><h3 id="feature-30-2-migration">大規模Migration</h3><p class="feature-summary">調査・段階移行・互換性・Rollbackを持たせる大規模移行の運用設計。一気に切り替えない。</p><dl class="feature-io"><dt>入力</dt><dd>旧仕様、新仕様、影響範囲</dd><dt>出力</dt><dd>段階移行計画とRollback条件</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-30-3-fresh-review"><h3 id="feature-30-3-fresh-review">Fresh Review</h3><p class="feature-summary">実装と切り離した独立コンテキストで成果物を見直す最終チェック。迎合バイアスのない指摘を得る。</p><dl class="feature-io"><dt>入力</dt><dd>実装済み機能、レビュー観点</dd><dt>出力</dt><dd>独立レビュー指摘と修正アクション</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-30-4-diet-app-app-dashboard"><h3 id="feature-30-4-diet-app-app-dashboard">Diet App / 投資支援App / 世界Dashboard</h3><p class="feature-summary">健康・投資・グローバル情報のような高リスク領域で、意思決定を自動化せず情報整理と注意喚起に機能を限定する設計例。</p><dl class="feature-io"><dt>入力</dt><dd>扱うリスク領域、ユーザー像</dd><dt>出力</dt><dd>意思決定支援に限定した安全アプリ仕様</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-30">
@@ -97,12 +99,9 @@ Loss limit/Kill switch
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 小さなLocal Appへ一つ機能を追加し、再現テスト、正常系、異常系、Diff、Rollbackを記録してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>アプリの完成は画面が出ることではなく、失敗を再現し、検証し、戻せることです。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、AIで作ったタスク管理アプリが『動いた』と思って公開したら、エッジケースで毎日エラーが出てユーザー離脱が始まった。</p><h3>こう使う</h3><p>再現テスト・正常系・異常系・Diff・Rollback手順を実装と同時に作る運用に変える。</p><h3>得られるもの</h3><p>公開後の事故時も再現と巻き戻しが両方できる。ユーザー信頼が壊れない。</p></article><article class="usecase-card"><h3>場面</h3><p>中小ヘルスケア事業者（架空）が、健康Dashboardに自動アドバイス機能を入れたら誤情報のリスクで弁護士からNGが出た。</p><h3>こう使う</h3><p>意思決定を自動化せず、情報整理と注意喚起へ機能を限定する。出典・更新失敗・誤差は明示する。</p><h3>得られるもの</h3><p>法的リスクが下がり、機能を成立させながら世に出せる。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="29.html">← 調査・Content・学習</a><a href="31.html">Design・資料・公開 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

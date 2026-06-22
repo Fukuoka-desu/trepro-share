@@ -9,7 +9,10 @@
 <article class="chapter" id="chapter-02">
   <header class="chapter-head">
     <div class="eyebrow">第2章</div>
-    <h1>安全を最初に設計する</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">便利と事故は、同じスイッチで繋がっている</span>
+      <span class="chapter-name">安全を最初に設計する</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『rm -rf』をAIにうっかり打たせて、心臓が止まる。
 『大丈夫だろう』で本番フォルダを触らせて、戻し方が分からない。
@@ -113,12 +116,9 @@ claude
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 学習用フォルダを作り、『削除しない』『外部公開しない』『秘密情報を貼らない』の三つをプロジェクトルールへ書いてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>安全はAIへのお願いではなく、権限・隔離・証拠で設計します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の経理担当（架空）が、AIに『不要ファイルを整理して』と頼み、稟議添付のExcelを誤って削除する事故が起きた。</p><h3>こう使う</h3><p>作業用フォルダだけを学習Labとして切り出し、削除禁止・外部公開禁止・本番フォルダ参照禁止をProject Ruleに書く。</p><h3>得られるもの</h3><p>事故が起きてもLab内で完結し、本番資料は手付かず。原状復帰がCheckpointで一発でできる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス課長（架空）が、社員のAI利用を許可したいが『何をどこまで触らせるか』を説明できず承認が止まっている。</p><h3>こう使う</h3><p>Read許可・Write許可・実行許可・ネットワーク権限を分けたPermission表をプロジェクトごとに作る。</p><h3>得られるもの</h3><p>稟議で『どの範囲なら安全か』を説明でき、AI導入の承認が下りる。</p></article><article class="usecase-card"><h3>場面</h3><p>副業エンジニア（架空）が、APIキーをチャットへ貼ったまま動画キャプチャを共有し、課金を悪用される事故を経験した。</p><h3>こう使う</h3><p>秘密情報は環境変数と専用ファイルのみに置き、Gitとチャットから除外する三つのルールをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>鍵の露出が物理的に起こらず、共有・録画のたびに気を張り続ける必要がなくなる。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="01.html">← Claude Codeは何が違うのか</a><a href="03.html">導入とProject Folder →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

@@ -9,12 +9,15 @@
 <article class="chapter" id="chapter-08">
   <header class="chapter-head">
     <div class="eyebrow">第8章</div>
-    <h1>ModelとEffort</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">最上位モデルを常用して、月初に上限を吹き飛ばす</span>
+      <span class="chapter-name">ModelとEffort</span>
+    </h1>
   </header>
   <section class="intro-human" aria-label="この章のリード"><p>『常に最上位モデルを選んでおけば安心』。
-これ、月初に利用上限を吹き飛ばす一番のパターンです。</p><p>ほとんどの人は、AIのモデルを『強さで選ぶ』と思ってます。
-でも実は、計画・実装・整理・評価という役割で選ぶのが正解。簡単な整理は軽量モデル、重要レビューだけ深く考えさせる（高Effort）。
-このスイッチを身につけると、月の利用上限が来なくなる上に、難所の品質も上がります。</p><p>ついでに、モデル名や料金は変わりやすいので、本文に書かず Feature Registry に分離しておく。これで教科書本体は古びません。</p><p>設定は15分。コスト効率と品質、両方が同時に上がります。</p></section>
+これが、月初に利用上限を吹き飛ばす最もよくあるパターンです。</p><p>ほとんどの人は、AIのモデルを『強さで選ぶ』と考えています。
+ですが実際には、計画・実装・整理・評価という役割で選ぶのが正解です。簡単な整理は軽量モデル、重要なレビューだけ深く考えさせる（高Effort）。
+このスイッチを身につけると、月の利用上限が来なくなる上に、難所の品質も上がります。</p><p>加えて、モデル名や料金は変わりやすいので、本文に書かず Feature Registry に分離しておきます。これで教科書本体は古びません。</p><p>設定は15分。コスト効率と品質、両方が同時に上がります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-08-0-model"><h3 id="feature-08-0-model">Model選択（役割で使い分け）</h3><p class="feature-summary">計画・実装・軽い整理・評価という役割でモデルを選び、常に最上位を使わない使い分けの考え方。</p><dl class="feature-io"><dt>入力</dt><dd>業務の難易度、失敗コスト、必要なスピード</dd><dt>出力</dt><dd>業務カテゴリ別のモデル割り当て表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-1-effort"><h3 id="feature-08-1-effort">Effort（思考量の調整）</h3><p class="feature-summary">深く考える価値がある仕事だけEffortを上げ、定型変換は最小Effortで回すコスト最適化の設定軸。</p><dl class="feature-io"><dt>入力</dt><dd>対象タスクの判断重要度</dd><dt>出力</dt><dd>タスク別Effort設定とコスト見積</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-2-advisor-ultrathink"><h3 id="feature-08-2-advisor-ultrathink">Advisor と ultrathink</h3><p class="feature-summary">難しい判断にだけ高Effort思考を呼び出し、相談役として併走させる使い方。常用ではなく要所投入のパターン。</p><dl class="feature-io"><dt>入力</dt><dd>設計分岐、複雑な原因分析、重要レビュー</dd><dt>出力</dt><dd>Advisorからの追加観点、判断根拠の補強</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-3-feature-registry"><h3 id="feature-08-3-feature-registry">Feature Registry（変動情報の分離）</h3><p class="feature-summary">変動するモデル名・利用条件は本文ではなくRegistryへ外出しし、教科書原則を特定モデル依存から切り離す仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>現行モデル名・料金・利用上限</dd><dt>出力</dt><dd>Feature Registry更新エントリ（確認日付き）</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-08">
@@ -91,12 +94,9 @@ high: 複数File、分析、重要文書
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自分の典型業務を、軽量処理・標準処理・高難度判断の三つへ分類し、どこでEffortを上げるか決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>モデルは強さではなく役割で選び、変動情報は本文から切り離します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、すべての作業を最上位モデル＋最大Effortで回した結果、月初に利用上限に達して残り3週間を低性能モデルで耐えている。</p><h3>こう使う</h3><p>業務を軽量処理・標準処理・高難度判断の三つに分類し、Effortを上げるのは判断系のみにする。</p><h3>得られるもの</h3><p>利用上限の発火が遅れ、難所だけに高性能を集中投下できる。コスト効率が大きく改善する。</p></article><article class="usecase-card"><h3>場面</h3><p>ABC SIerのテックリード（架空）が、レビュー指摘の質に悩み、レビュー専用モデルを高Effortで分けたいが手順が決まっていない。</p><h3>こう使う</h3><p>Plan/Implement/Reviewそれぞれにモデル設定を分け、変動するモデル名はFeature Registryへ外出しする。</p><h3>得られるもの</h3><p>重要レビューだけ深く考えさせる構造になり、後でモデル名が変わってもRegistry更新で済む。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="07.html">← Permission Mode、Sandbox、危険操作</a><a href="09.html">SessionとContext →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

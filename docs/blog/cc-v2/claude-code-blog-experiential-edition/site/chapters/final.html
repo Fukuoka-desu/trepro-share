@@ -9,14 +9,15 @@
 <article class="chapter" id="chapter-final">
   <header class="chapter-head">
     <div class="eyebrow">終章</div>
-    <h1>最強のまま保つ</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">強いハーネスを、強いまま運用し続ける</span>
+      <span class="chapter-name">最強のまま保つ</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『一度完成させた環境、半年後に劣化してたことに気づかなかった』。
-これ、AI推進担当が一番怖い瞬間です。</p><p>ほとんどの人は、最強の環境を『一度完成させて固定するもの』だと思ってます。
-でも実は、最強の条件は『更新し続けられること』。
-変化を観測し、小さく試し、独立した文脈で評価し、安全に配布し、必要なら戻す。このLoopが続く限り、教科書も組織も古びません。</p><p>この終章でまとめるのは、個人の学びと組織のハーネスを同じLoopで成長させる設計。
-原則と変動情報は別の更新周期で管理する。月次で1つLesson/Skillを選んで改善する。個人の成功手順は組織のハーネスに昇格させ、組織の更新は個人の学習に戻す。</p><p>完成より、検証可能に更新し続けられること。
-それが『最強』の条件です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『本書を最後まで読んだ』。
+これは到達点ではなく、運用の出発点です。</p><p>ほとんどの人は、教科書を読み終わると、そのまま閉じてしまいます。
+ですが、AI の領域では、最強の状態を維持することそのものに継続的な手入れが必要です。</p><p>この終章で扱うのは、強いハーネスを強いまま運用し続けるための原則です。
+人が変わる、組織が変わる、AI が変わる──それでも崩れない設計の見直し方を持っておきます。</p><p>読み終わったその日から、本書は『更新し続ける起点』として動き始めます。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-final-0-loop"><h3 id="feature-final-0-loop">更新Loop（観測→試行→評価→配布→復旧）</h3><p class="feature-summary">変化を観測し、小さく試し、独立評価し、安全に配布し、必要なら戻すサイクル。完成形ではなく更新可能性を最強の条件にする運用骨格。</p><dl class="feature-io"><dt>入力</dt><dd>現在の運用状態、改善候補</dd><dt>出力</dt><dd>1サイクル分の更新ログとRollback地点</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-final-1-lesson-skill"><h3 id="feature-final-1-lesson-skill">Lesson/Skill 月次改善</h3><p class="feature-summary">Owner・Fixture・評価日・Release段階を持つLessonまたはSkillを月次で1つ選び改善する継続活動。</p><dl class="feature-io"><dt>入力</dt><dd>現Lesson/Skill台帳、評価スコア</dd><dt>出力</dt><dd>改善対象1件と次月の改善ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-final-2-item"><h3 id="feature-final-2-item">原則と変動情報の継続分離</h3><p class="feature-summary">長く使える原則と、頻繁に変わるFeatureを別更新周期で管理し続ける運用習慣。教材と現実のズレを構造的に防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>本文の表現、現行仕様の変化</dd><dt>出力</dt><dd>原則本文の安定維持とRegistryの定期更新</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-final-3-item"><h3 id="feature-final-3-item">個人学習 × 組織ハーネス同期</h3><p class="feature-summary">個人が成功した手順を組織のハーネスへ昇格させ、組織の更新を個人の学習に戻す双方向の連結機構。</p><dl class="feature-io"><dt>入力</dt><dd>個人の成功事例、ハーネスの最新版</dd><dt>出力</dt><dd>ハーネス側Skill追加と個人環境の更新</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-final">
@@ -77,12 +78,18 @@ migration_note
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 次の30日で改善するLessonまたはSkillを一つ選び、Owner、Fixture、評価日、Release段階を決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>完成よりも、検証可能に更新し続けられることが『最強』の条件です。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC社のAI推進リーダー（架空）が、AI環境を一度完成させたあと、半年後に劣化したことに気づかず競合に追い抜かれた。</p><h3>こう使う</h3><p>Owner・Fixture・評価日・Release段階を持つLessonまたはSkillを月次で改善し続ける。</p><h3>得られるもの</h3><p>完成形ではなく更新可能性が組織能力となり、競合変化に追随できる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、最初に作ったSkillを使い回し続けて陳腐化に気づかず、ある日突然動かなくなった。</p><h3>こう使う</h3><p>30日ごとに次に改善するLessonまたはSkillを選び、検証可能なRelease段階で更新する。</p><h3>得られるもの</h3><p>個人レベルでも更新Loopが回り、陳腐化や急停止のリスクが低くなる。</p></article></div></section>
+  
 </article>
+<section class="epilogue-letter" aria-label="おわりに"><h2>おわりに ── 読者へ</h2><div class="epilogue-body"><p>ここまでお読みいただき、ありがとうございました。</p><p>40章を一気に通読された方も、14レッスンを順に進めながらここに辿り着いた方も、
+読み終えた瞬間に共通して持つ感覚があるはずです。
+『これは、続きを書く本だ』ということ。</p><p>Claude Code は、本書を執筆している間にも進化しました。
+Skills のメニュー配置が変わり、Permission Mode の名称が変わり、MCP の対応サービスが増えました。
+だから本書は『完成版』ではなく、『あなたの仕事に合わせて更新する起点』として書かれています。</p><p>最後に、3つだけお願いがあります。</p><p>ひとつ、第4章の90分実習は必ず手を動かしてください。
+読むだけでは、本書の85%は身につきません。</p><p>ふたつ、CLAUDE.md と Skills は、自分の言葉で書き直してください。
+本書のテンプレをコピペするのではなく、あなたの仕事のリズムに合わせて書いた一文だけが、
+半年後も生き残ります。</p><p>みっつ、もし本書を会社で配るのであれば、配って終わりにしないでください。
+3か月後に、配った相手と一緒に振り返る場を持つこと。それだけで、組織の AI 活用は明らかに変わります。</p><p>本書は読み終わるための本ではなく、読み始めるための本です。
+あなたの仕事に合わせて、ここから書き換えていってください。</p><p>著者一同</p></div></section>
 <nav class="chapter-nav"><a href="38.html">← Coverage Map</a><a href="../index.html">目次へ →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

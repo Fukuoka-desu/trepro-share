@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-16">
   <header class="chapter-head">
     <div class="eyebrow">第16章</div>
-    <h1>MarkdownよりHTMLが向く仕事</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">正しいだけで、読まれない資料を卒業する</span>
+      <span class="chapter-name">MarkdownよりHTMLが向く仕事</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『長い報告書、また読まれてないな』。
-資料を作る側からすると、これが一番虚しい瞬間です。</p><p>ほとんどの人は、報告は『Markdown か Word で長文を書くもの』と思ってます。
-でも、結論到達時間はフォーマットで2倍変わります。同じ内容でも、カード・グラフ・強調された結論が並ぶ単一HTMLにすると、会議の冒頭で『見ました』前提で議論が始まる。</p><p>この章で扱うのは、Markdownと単一HTMLの使い分け、CSVを1ページHTMLに変える標準プロンプト、それから印刷・スマホ・アクセシビリティの公開前チェック。
-外部CSSに頼らず、1ファイルだけで開けるHTMLを正本にする運用です。</p><p>HTMLを選ぶ理由は『見栄え』じゃなく『理解の速度』。
-これが分かると、報告の通り方が変わります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『正しいことを長く書いたのに、読まれない』。
+これは内容ではなく、出力形式の問題です。</p><p>ほとんどの人は、AIに『レポートを書いて』と頼んで、長文の Markdown を受け取って終わりにしています。
+ですが、受け取った相手は、それを読み切る時間も読む構造も持っていません。</p><p>HTML は、見出し・図・色・前後関係を視覚で伝えられる出力形式です。
+同じ情報を 1 枚に整え、結論を上に、根拠を下に、補足は折りたたみへ。読み手の意思決定速度が変わります。</p><p>この章を読み終わる頃には、『長く書く』ではなく『短く伝える』の方向で、AIに頼めるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-16-0-markdown-vs-html"><h3 id="feature-16-0-markdown-vs-html">形式選択（Markdown vs 単一HTML）</h3><p class="feature-summary">執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。</p><dl class="feature-io"><dt>入力</dt><dd>成果物の用途、読み手、共有経路</dd><dt>出力</dt><dd>形式選択の根拠と最終出力フォーマット</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-1-html"><h3 id="feature-16-1-html">単一HTML標準（自己完結レポート）</h3><p class="feature-summary">外部CSS/JSに依存せず、1ファイルだけで開ける標準フォーマット。共有・印刷・スマホ表示も担保する。</p><dl class="feature-io"><dt>入力</dt><dd>Markdown原稿、データ、画像</dd><dt>出力</dt><dd>外部依存なし1ファイルHTMLレポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-2-csv-prompt"><h3 id="feature-16-2-csv-prompt">CSV分析Prompt</h3><p class="feature-summary">CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。</p><dl class="feature-io"><dt>入力</dt><dd>CSVデータ、注目したい軸</dd><dt>出力</dt><dd>集計表・グラフ・要点カード入りHTML</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-3-html-slide-discussion-board"><h3 id="feature-16-3-html-slide-discussion-board">HTML Slide / Discussion Board</h3><p class="feature-summary">Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。</p><dl class="feature-io"><dt>入力</dt><dd>発表用骨子または議題リスト</dd><dt>出力</dt><dd>HTML Slide、Discussion Board</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-4-check-a11y"><h3 id="feature-16-4-check-a11y">品質Check（A11y/印刷/スマホ）</h3><p class="feature-summary">公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。</p><dl class="feature-io"><dt>入力</dt><dd>完成したHTML</dd><dt>出力</dt><dd>A11y/印刷/スマホでの動作確認結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-16">
@@ -154,12 +156,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 同じ小さなレポートをMarkdownと単一HTMLで作り、読み手が結論へ到達する時間を比べてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、毎月の予実報告をMarkdownで提出するが、役員が目を通さず会議で同じ説明を繰り返している。</p><h3>こう使う</h3><p>同内容を単一HTMLレポートへ変換し、結論カード・グラフ・強調点を1ページに集約する。</p><h3>得られるもの</h3><p>結論到達時間が短くなり、会議の冒頭で『見ました』前提で議論が始まる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅メーカーの開発者（架空）が、テストレポートをスクリーンショットで貼り、後日参照しても何が壊れていたか追えない。</p><h3>こう使う</h3><p>テスト結果を単一HTMLで保存し、印刷・スマホ・Alt textで読める形式に揃える。</p><h3>得られるもの</h3><p>障害後の振り返り会議で誰でも開けて確認でき、Markdown原本との二重管理にしなくて済む。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="15.html">← MCP、Connectors、APIを安全につなぐ</a><a href="17.html">Claude Designから実装へ →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

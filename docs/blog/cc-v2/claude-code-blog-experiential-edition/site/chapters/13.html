@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-13">
   <header class="chapter-head">
     <div class="eyebrow">第13章</div>
-    <h1>Subagents、Agent View、並列作業</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">一人で同時に、3つの調査を走らせる</span>
+      <span class="chapter-name">Subagents、Agent View、並列作業</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『自分のコードを自分でレビュー』、何回も穴をすり抜けてきましたよね。
-これ、AIにも同じことが起きます。実装した本人の文脈が残ってると、レビューが甘くなる（迎合バイアス）。</p><p>ほとんどの人は、AIを『1人の万能アシスタント』として使ってます。
-でも、調査・実装・レビューを別の文脈で動かす（複数のSubagent）と、見落としが激減します。
-実装セッションを閉じて、背景を知らないReviewer Agentに成果物だけ渡す。それだけで、要件・安全・保守性の3観点で本当の指摘が返ってきます。</p><p>複数Agentの価値は、人数じゃありません。独立した文脈と役割分担です。
-この章で、レビューの質が一段階深くなります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『調査・実装・レビューを一人で順番にやる』。
+これでは、いくらAIを使っても作業のシリアル化が解けません。</p><p>ほとんどの人は、AIを『一対一の相棒』として使っています。
+ですが、別々の目的を別々のサブエージェントに分担させると、3つの調査が同時に進みます。</p><p>Subagents と Agent View は、独立した文脈で並列に作業させる仕掛けです。
+親文脈を汚さずに、調査担当・実装担当・レビュー担当を別々に走らせ、結果だけを束ねます。</p><p>この章を読み終わる頃には、『1人で同時に3つ』を当たり前にする発想が手に入ります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-13-0-subagent"><h3 id="feature-13-0-subagent">Subagent（文脈を分ける仕組み）</h3><p class="feature-summary">役割ごとに別Agentを立てて文脈を分離し、過去会話に引きずられない調査・実装・レビューを可能にする機構。</p><dl class="feature-io"><dt>入力</dt><dd>親セッションの作業、役割ごとの責務</dd><dt>出力</dt><dd>Subagentの完了報告、独立した中間成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-1-reviewer-agent"><h3 id="feature-13-1-reviewer-agent">Reviewer Agent（独立コンテキストの評価者）</h3><p class="feature-summary">成果物だけを渡して評価させ、迎合バイアスを排した指摘を得るための専任エージェント。</p><dl class="feature-io"><dt>入力</dt><dd>成果物、評価観点（要件/安全/保守性）</dd><dt>出力</dt><dd>独立コンテキストからの指摘リストと優先度</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-2-research-agent"><h3 id="feature-13-2-research-agent">Research Agent</h3><p class="feature-summary">調査専任で出典・確度・反証を分けて整理するエージェント。実装者と分離して情報収集の質を確保する。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、検索範囲、評価軸</dd><dt>出力</dt><dd>出典付き調査結果と未確認項目リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-3-agent-view"><h3 id="feature-13-3-agent-view">Agent View と並列実行</h3><p class="feature-summary">複数Agentの動きを俯瞰し、独立した仕事へ分担させる運用画面。同じファイルへの同時編集は避ける指針付き。</p><dl class="feature-io"><dt>入力</dt><dd>並列化したいタスク群、各Agent責務</dd><dt>出力</dt><dd>Agent View上の並列実行ログと統合結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-13">
@@ -123,12 +125,9 @@ SNS、Code変更、最終結論は禁止。15分で打ち切る。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の成果物を、新しいセッションまたはReviewer Agentへ渡し、要件充足・安全・保守性の三観点で評価させてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、自分のコードを自分でレビューさせるとAIが甘く採点し、毎回バグを見落としている。</p><h3>こう使う</h3><p>実装セッションを閉じ、背景を知らない独立コンテキストのReviewer Agentへ成果物だけ渡す。</p><h3>得られるもの</h3><p>迎合バイアスが消え、要件・安全・保守性の三観点で本当の指摘が返ってくる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅企業のリサーチチーム（架空）が、調査・検証・統合を一人のAIに任せ、結論が初期仮説に引きずられる傾向が抜けない。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeを別Agentに分け、各役割の入力と期待出力を明示する。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、反証も合わせて統合できる。結論の信頼度が説明可能になる。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="12.html">← Skills設計</a><a href="14.html">HooksとPlugins →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

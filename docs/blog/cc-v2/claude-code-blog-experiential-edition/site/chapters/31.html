@@ -9,14 +9,15 @@
 <article class="chapter" id="chapter-31">
   <header class="chapter-head">
     <div class="eyebrow">第31章</div>
-    <h1>Design・資料・公開</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">1枚に詰め込む、を諦める</span>
+      <span class="chapter-name">Design・資料・公開</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AIで作ったLP、そのまま本番に出した』。
-あとから見たら、テスト用Analytics IDと本番APIキーがソースに残ってた。
-これ、毎週どこかの組織で起きてます。</p><p>ほとんどの人は、公開を『最後のボタンを押す作業』だと思ってます。
-でも公開は、情報・ブランド・権限・リンク・戻し方を確認する別の工程です。
-Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを通す。</p><p>この章では、LP・スライド・レポートで同じDesign Systemを再利用する運用、HTMLを正本にしてPPT/PDFをExportする標準手順、フォント崩れの直し方の順序まで揃えます。</p><p>公開は生成の続きじゃなく、独立した品質・安全ゲート。
-事故をなくす一番効くスイッチが、ここに入ります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『1 枚に詰め込み過ぎて、結局誰にも伝わらない』。
+これは情報量の問題ではなく、設計の問題です。</p><p>ほとんどの人は、資料を作るときに『漏れなく書く』ことを優先しています。
+ですが、伝わる資料は、書いた情報の量ではなく、捨てた情報の量で決まります。</p><p>この章で扱うのは、Design・資料・公開の3つを、AIと一緒に整える流れです。
+1ページに収まる粒度を決め、補足はリンク先へ逃がし、公開先の媒体に合わせて翻訳します。</p><p>1 枚に詰め込む、を諦める。それが、読まれる資料の出発点です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-31-0-lp-flow"><h3 id="feature-31-0-lp-flow">LP制作Flow</h3><p class="feature-summary">Wireframe→Design System→Codeで作ったLPを、公開を見据えて整える章末仕上げの制作ライン。</p><dl class="feature-io"><dt>入力</dt><dd>LP目的、Design System、コンテンツ素材</dd><dt>出力</dt><dd>公開直前のLP実装と確認用Preview</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-1-design-system"><h3 id="feature-31-1-design-system">Design System再利用</h3><p class="feature-summary">LP・スライド・レポートで同じDesign Systemを参照し、ブランド一貫性を維持する再利用ルール。</p><dl class="feature-io"><dt>入力</dt><dd>既存Design System、新規制作物</dd><dt>出力</dt><dd>システム参照済みの新規制作物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-2-ppt-pdf-export"><h3 id="feature-31-2-ppt-pdf-export">PPT / PDF Export</h3><p class="feature-summary">HTML正本からPPT/PDFへExportする標準手順。フォント崩れ・ページ分割を事前にチェックする。</p><dl class="feature-io"><dt>入力</dt><dd>HTML正本、Export設定</dd><dt>出力</dt><dd>崩れ確認済みのPPTX/PDF</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-3-deploy-preview-gate"><h3 id="feature-31-3-deploy-preview-gate">Deploy / Preview Gate</h3><p class="feature-summary">Deploy前にSecret・環境変数・公開範囲・Analytics・Rollbackを確認し、Previewレビューを通す公開ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>公開予定ビルド、本番設定</dd><dt>出力</dt><dd>Preview承認ログと本番Deploy可否判定</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-31">
@@ -63,12 +64,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>公開前に最低限揃えるもの</dt><dd>Preview URL、スマホ表示確認、内部リンクと外部リンクの到達確認、Analytics・APIキー等の秘密情報の有無、Rollback手順の5点を1枚の事前チェックに固定します。ここを言語化していない組織では、毎回担当者の記憶頼みで公開され、必ずいつか事故が起きます。</dd><dt>Export崩れの直し方の順序</dt><dd>PPT/PDFへExportして崩れた時、HTML側を直すかExport設定を直すかで悩む前に、まず正本はHTMLだと宣言します。崩れの再現箇所を1ページだけ抜き出して原因を見極め、フォント置換・ページ分割・余白の3観点で順に潰すと最短で安定します。</dd><dt>測ると効く指標</dt><dd>公開回数、公開前事故件数、Rollback回数、Export修正に費やした時間を月単位で記録します。事故ゼロを目指すのではなく、Rollback回数が一定範囲内に収まっているかを健全性の指標にすると、過剰な慎重さで止まらなくなります。</dd><dt>次の章への接続</dt><dd>公開Gateの感覚が掴めると、次章の毎日業務の自動化でも『失敗時の戻し方』を最初に決められるようになります。公開とは独立した品質ゲートだという意識が、自動化全体の安全装置として効いてきます。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 既存HTMLをPreview公開し、スマホ表示・リンク・秘密情報・Rollback手順を確認してから、本番可否を判断してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>公開は生成の続きではなく、独立した品質・安全Gateです。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小マーケ会社（架空）が、AIで作ったLPを即本番公開した結果、テスト用Analytics IDや本番用APIキーが残ったまま外に出てしまった。</p><h3>こう使う</h3><p>Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを設ける。</p><h3>得られるもの</h3><p>公開前事故が体系的に防げ、本番公開を安心して進められる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある提案チーム（架空）が、HTMLからPPT/PDFをExportするたびにフォントが崩れ、毎回手動修正に数時間を奪われている。</p><h3>こう使う</h3><p>Export時にレイアウト・フォント・ページ分割を確認する標準Checkを書く。</p><h3>得られるもの</h3><p>崩れ箇所だけを集中修正でき、Export成果物の品質が安定する。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="30.html">← Application開発</a><a href="32.html">継続業務の自動化 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

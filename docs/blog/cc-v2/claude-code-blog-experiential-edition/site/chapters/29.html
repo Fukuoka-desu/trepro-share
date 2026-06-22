@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-29">
   <header class="chapter-head">
     <div class="eyebrow">第29章</div>
-    <h1>調査・Content・学習</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">調べて、書いて、学ぶを、1つの机で回す</span>
+      <span class="chapter-name">調査・Content・学習</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『毎週末、YouTubeとSNS見て終わる』。
-情報収集だけで時間が消えて、教材や記事が作れない。</p><p>ほとんどの人は、調査を『集める量』で評価します。
-でも本当に効くのは『目的に沿った選別』。一般的な人気じゃなく、自分の番組コンセプトや学習目的にとっての価値で素材を選ぶ仕組みを作ります。</p><p>この章で組むのは、対象・期間・除外条件・評価軸を内蔵した動画調査Skill。番組Profileを参照して『その人にとっての価値』だけ残す。発言と事実を区別し、重複は統合する。
-最後は News Dashboard で、更新時刻・出典・未確認情報を表示する1ページHTMLに変換する。</p><p>良い調査は情報量じゃなく、選別と出典の透明性で決まります。
-情報収集が10分に収まる生活がここから始まります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『調査・記事執筆・学習を、別々のツールで往復している』。
+これは効率の問題ではなく、机が分かれているだけです。</p><p>ほとんどの人は、調査用 AI と執筆用エディタと学習用ノートを別々に開いています。
+ですが、Claude Code を中心に置くと、これらは同じ机の上で繋がります。</p><p>この章で扱うのは、調査結果を保存し、書きかけの原稿に接続し、学んだことをノート化するまでを 1 つの流れにする設計です。
+情報源・草案・学習メモが、同じフォルダで同居します。</p><p>調べて、書いて、学ぶを、1 つの机で回す。情報の流れが滑らかになると、思考の質も変わります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-29-0-youtube-research-skill"><h3 id="feature-29-0-youtube-research-skill">YouTube Research Skill</h3><p class="feature-summary">対象・期間・除外条件・評価軸を持つ動画調査Skill。検索→転記→分析→要約を一連で回す。</p><dl class="feature-io"><dt>入力</dt><dd>テーマ、対象期間、除外したい動画種別</dd><dt>出力</dt><dd>出典付き動画要約と評価軸スコア</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-29-1-profile"><h3 id="feature-29-1-profile">番組Profile</h3><p class="feature-summary">自分の番組・学習目的を定義したProfile。一般的な人気ではなく自分にとっての価値で素材を選ぶための基準。</p><dl class="feature-io"><dt>入力</dt><dd>番組コンセプト、視聴者像、避けたい話題</dd><dt>出力</dt><dd>Profileファイルと選別基準</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-29-2-sns"><h3 id="feature-29-2-sns">SNS/動画から教材化</h3><p class="feature-summary">発言を重複統合し、事実確認が必要な箇所を分離して教材に組み立てる加工パイプ。</p><dl class="feature-io"><dt>入力</dt><dd>SNS投稿・動画文字起こし</dd><dt>出力</dt><dd>重複統合済み教材ドラフトと要検証リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-29-3-loop"><h3 id="feature-29-3-loop">個人学習Loop</h3><p class="feature-summary">INTERESTS.mdと連動し、個人の苦手・関心に沿って復習問題・調査テーマを生成する学習ループ。</p><dl class="feature-io"><dt>入力</dt><dd>個人Profile、最近のログ</dd><dt>出力</dt><dd>復習問題、調査テーマ、進捗状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-29-4-news-dashboard"><h3 id="feature-29-4-news-dashboard">News Dashboard</h3><p class="feature-summary">更新時刻・出典・未確認情報を表示する1ページHTMLニュースダッシュボード。重複統合で巡回時間を短縮。</p><dl class="feature-io"><dt>入力</dt><dd>RSS/API/Web情報源、更新間隔</dd><dt>出力</dt><dd>単一HTMLのNews Dashboard</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-29">
@@ -98,12 +100,9 @@ argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つの調査テーマで、公式情報・解説・SNSを分けて集め、重複を統合した一ページのHTMLレポートを作ってください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>良い調査は情報量ではなく、目的に沿った選別と出典の透明性で決まります。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教育系YouTuber（架空）が、教材作成のために動画とSNSを大量視聴し、毎週末が情報収集だけで終わっている。</p><h3>こう使う</h3><p>Skillに対象・期間・一次情報・除外条件・評価軸を持たせ、INTERESTS.mdを参照させる。</p><h3>得られるもの</h3><p>自分にとって価値のある素材だけが残り、教材作成の時間が情報整理から本質的な構成へ移る。</p></article><article class="usecase-card"><h3>場面</h3><p>個人投資家（架空）が、毎朝のニュースサイトを巡回しているが、重複情報で時間を浪費している。</p><h3>こう使う</h3><p>News Dashboardで更新時刻・出典・未確認情報を表示する単一HTMLを作る。</p><h3>得られるもの</h3><p>重複が統合され、未確認情報だけが目立つ。情報収集が10分に収まる。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="28.html">← 文書・ファイル・会議</a><a href="30.html">Application開発 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

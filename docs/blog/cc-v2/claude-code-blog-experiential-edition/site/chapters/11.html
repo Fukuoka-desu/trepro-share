@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-11">
   <header class="chapter-head">
     <div class="eyebrow">第11章</div>
-    <h1>CLAUDE.md、Rules、Auto Memory</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">同じ説明を、二度と書かない</span>
+      <span class="chapter-name">CLAUDE.md、Rules、Auto Memory</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>毎回、AIに同じ説明を書いてませんか。
-『うちは TypeScript で、コメントは英語で、テストは vitest で…』
-朝のチャット、昼のチャット、夜のチャット、全部に同じ前置き。
-それ、書く必要、もう無いです。</p><p>この章で扱うのは、プロジェクトの前提を一箇所に書いておく『常時読まれる案内板』（CLAUDE.md）と、特定フォルダだけに効かせる Rules、AIが見つけた短い事実を自動保存する Auto Memory の使い分けです。
-全部CLAUDE.mdに詰め込むと逆に重くなるので、知識には『置き場所』があるという話を体感します。</p><p>ここを整えると、AIは『汎用の何でも屋』から、『あなたのプロジェクトを知ってる同僚』に変わります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『うちのプロジェクト、AIに毎回ゼロから説明している』。
+これは時間の問題だけでなく、再現性の問題でもあります。</p><p>ほとんどの人は、AIに毎回同じ前提を打ち込んでいます。
+TypeScript を使っている、コメントは英語で書いている、テストは vitest で実行する──毎日10回、同じ説明をしている計算です。</p><p>CLAUDE.md は、プロジェクトの前提を一か所にまとめておくファイルです。AI は作業を始める前に必ずそこを読みます。
+これだけで、毎回の前置きが消えます。</p><p>この章を読み終わる頃には、自分のプロジェクトに『専属の同僚』を一人配置している感覚を得られます。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-11-0-claude-md"><h3 id="feature-11-0-claude-md">CLAUDE.md（プロジェクトの案内板）</h3><p class="feature-summary">常時読まれる短い案内板。プロジェクトの目的・前提・最低限のルールだけを簡潔に置く。</p><dl class="feature-io"><dt>入力</dt><dd>プロジェクトの目的、必ず守らせたい最低限ルール</dd><dt>出力</dt><dd>簡潔で肥大化しないCLAUDE.md</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-1-rules-path"><h3 id="feature-11-1-rules-path">Rules（Path固有の指示）</h3><p class="feature-summary">ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>特定フォルダ・拡張子に限定したいルール</dd><dt>出力</dt><dd>対象Path下でだけ自動適用されるRule</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-2-init"><h3 id="feature-11-2-init">/init による初稿生成</h3><p class="feature-summary">プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。</p><dl class="feature-io"><dt>入力</dt><dd>既存プロジェクト構造、目的の概略</dd><dt>出力</dt><dd>CLAUDE.md初稿（編集して短くする出発点）</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-3-auto-memory"><h3 id="feature-11-3-auto-memory">Auto Memory（短い事実の自動保存）</h3><p class="feature-summary">AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。</p><dl class="feature-io"><dt>入力</dt><dd>会話中の決定事項、繰り返される好み</dd><dt>出力</dt><dd>短い形に圧縮された自動メモ</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-11">
@@ -194,12 +196,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> CLAUDE.mdの各行を『毎回必要か』で見直し、手順はSkillへ、Path固有事項はRulesへ移してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>知識は量ではなく、適切なScopeへ置くことで効きます。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサル（架空）のCLAUDE.mdが3,000行を超え、毎回読み込みに時間がかかり、AIが本来の指示を見落とすようになっている。</p><h3>こう使う</h3><p>CLAUDE.mdは『常に読みたい短い案内板』だけ残し、Path固有事項はRules、業務手順はSkillsへ移す。</p><h3>得られるもの</h3><p>起動が軽くなり、AIが本当に必要な指示を確実に拾うようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、Project AとProject Bで日本語化ルールが毎回ぶつかり、混乱した出力を受け取り続けている。</p><h3>こう使う</h3><p>全社共通ルールはGlobal CLAUDE.mdへ、Project個別はProject CLAUDE.mdへ、Path別はRulesへと役割を分ける。</p><h3>得られるもの</h3><p>ルール衝突が物理的に起きず、どこを直せばどこへ効くかが明確になる。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="10.html">← GitとCheckpoint</a><a href="12.html">Skills設計 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

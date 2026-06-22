@@ -14,7 +14,7 @@ import mistune
 from bs4 import BeautifulSoup
 from jinja2 import Template
 
-from content_meta import CHARACTERS, PART_META, CHAPTER_META, EXTRA_VISUALS, LESSON_COURSE
+from content_meta import CHARACTERS, PART_META, CHAPTER_META, EXTRA_VISUALS, LESSON_COURSE, EPILOGUE_LETTER
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "sources" / "original-textbook.md"
@@ -364,7 +364,9 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .site-header{background:linear-gradient(135deg,#101b33,#233961);color:white;padding:14px 24px;position:sticky;top:0;z-index:40;box-shadow:0 8px 28px rgba(0,0,0,.18)}.site-header .inner{max-width:var(--max);margin:auto;display:flex;align-items:center;gap:18px}.brand{font-weight:800;letter-spacing:.02em;color:white;text-decoration:none}.site-header nav{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}.site-header nav a{color:#e7edff;text-decoration:none;font-size:.92rem}
 .toc-toggle{display:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:white;border-radius:10px;padding:6px 12px;font-size:.86rem;font-weight:700;cursor:pointer}
 .toc-toggle:hover{background:rgba(255,255,255,.22)}
-.hero{max-width:var(--max);margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.16rem;color:var(--muted);max-width:64ch}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
+.hero{max-width:var(--max);margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.16rem;color:var(--muted);max-width:64ch}.lede strong{display:block;font-size:1.4rem;color:var(--ink);line-height:1.5;letter-spacing:.005em}
+.lede-sub{font-size:1.02rem;color:var(--muted);max-width:60ch;margin-top:8px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
 .layout{max-width:var(--max);margin:auto;padding:20px 24px 80px;display:grid;grid-template-columns:var(--toc-w) minmax(0,1fr);gap:40px}
 .toc{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:18px;transition:transform .25s ease,box-shadow .25s ease}
 .toc h2{font-size:.95rem;margin:0 0 12px}
@@ -378,6 +380,10 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .content{min-width:0}.part{margin:56px 0 80px}.part-header{padding:42px;border-radius:var(--radius);background:linear-gradient(135deg,#13213e,#26406e);color:white;box-shadow:var(--shadow);scroll-margin-top:80px}.part-header h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.2;margin:.2em 0}.part-header p{color:#dbe5ff;max-width:70ch}
 .chapter{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,5vw,56px);margin:34px 0;box-shadow:var(--shadow);scroll-margin-top:80px}
 .chapter-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}.chapter-head h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;letter-spacing:-.025em;margin:.2em 0}
+.chapter-title{margin:.2em 0;line-height:1.25}
+.chapter-hook{display:block;font-size:clamp(1.6rem,3.6vw,2.5rem);color:var(--ink);letter-spacing:-.02em;font-weight:800;line-height:1.3}
+.chapter-name{display:block;font-size:clamp(1rem,1.8vw,1.2rem);color:var(--muted);margin-top:8px;font-weight:600;letter-spacing:.02em}
+.chapter-name::before{content:"──";margin-right:.5em;color:var(--ref-accent)}
 .intro-human{margin:24px 0 32px;padding:26px 30px;border-radius:18px;background:linear-gradient(135deg,#fffdf6,#fff);border-left:5px solid var(--action-accent);box-shadow:0 6px 18px rgba(122,74,16,.06)}
 .intro-human p{margin:0 0 .9em;font-size:1.06rem;line-height:1.95;color:var(--story-ink)}
 .intro-human p:last-child{margin-bottom:0}
@@ -434,6 +440,10 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .usecase-card h3{margin:0 0 4px;font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ref-accent);font-weight:800}
 .usecase-card p{margin:0 0 10px;font-size:.94rem;line-height:1.75;color:var(--story-ink)}
 .usecase-card p:last-child{margin-bottom:0}
+.epilogue-letter{margin:60px 0 40px;padding:48px clamp(28px,5vw,64px);border-radius:24px;background:linear-gradient(180deg,#fffaf0,#fefdf8);border:1px solid var(--action-border);box-shadow:0 12px 40px rgba(122,74,16,.08)}
+.epilogue-letter>h2{margin:0 0 24px;font-size:clamp(1.4rem,2.6vw,1.9rem);color:var(--action-accent);font-family:ui-serif,"Yu Mincho",serif;letter-spacing:.02em}
+.epilogue-body p{margin:0 0 1.2em;font-size:1.06rem;line-height:2.0;color:var(--story-ink);font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif}
+.epilogue-body p:last-child{margin:1.8em 0 0;text-align:right;color:var(--muted);font-size:1rem}
 .part-usecase{margin:22px 0 0;padding:22px 24px;border-radius:16px;background:var(--ref-bg);border:1px solid var(--ref-border);color:var(--story-ink);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .part-usecase h3{grid-column:1/-1;margin:0;font-size:.92rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ref-accent)}
 .part-usecase .pu-item h4{margin:0 0 4px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ref-accent)}
@@ -805,6 +815,21 @@ def usecases_html(meta: dict) -> str:
     )
 
 
+def epilogue_letter_html() -> str:
+    """終章の後に挿入する『おわりに』レター。"""
+    body_paragraphs = "".join(
+        f"<p>{html.escape(p.strip())}</p>"
+        for p in EPILOGUE_LETTER["body"].split("\n\n")
+        if p.strip()
+    )
+    return (
+        '<section class="epilogue-letter" aria-label="おわりに">'
+        f'<h2>{html.escape(EPILOGUE_LETTER["title"])}</h2>'
+        f'<div class="epilogue-body">{body_paragraphs}</div>'
+        '</section>'
+    )
+
+
 def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extras: bool = True) -> str:
     lookup = manifest_lookup(manifest)
     meta = CHAPTER_META[ch.key]
@@ -817,11 +842,19 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
     extra_html = ""
     if extras:
         extra_html = '<section class="reference"><h2>補助図の制作指示</h2>' + "".join(image_figure(x, image_prefix) for x in extras) + "</section>"
+    title_hook = meta.get("title_hook", "").strip() or html.escape(ch.title)
+    # Usecasesは中盤章（第2部〜第5部）のみ表示
+    usecases_section = usecases_html(meta) if 2 <= ch.part <= 5 else ""
+    # 終章の後に「おわりに」レター
+    epilogue_section = epilogue_letter_html() if ch.key == "final" else ""
     return f"""
 <article class="chapter" id="chapter-{html.escape(ch.key)}">
   <header class="chapter-head">
     <div class="eyebrow">{label}</div>
-    <h1>{html.escape(ch.title)}</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">{html.escape(title_hook)}</span>
+      <span class="chapter-name">{html.escape(ch.title)}</span>
+    </h1>
   </header>
   {intro_human_html(meta)}
   {features_html(meta, ch.key)}
@@ -832,12 +865,9 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
   </section>
   {expansion_html(meta)}
   {extra_html}
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> {html.escape(meta['mission'])}</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>{html.escape(meta['takeaway'])}</p></div>
-  </section>
-  {usecases_html(meta)}
+  {usecases_section}
 </article>
+{epilogue_section}
 """
 
 
@@ -871,7 +901,10 @@ def build_toc(parts: list[Part], chapters: list[Chapter], chapter_prefix: str | 
         for ch in chapters_by_part.get(part.number, []):
             label = "終章" if ch.key == "final" else f"第{int(ch.key)}章"
             href = f"#chapter-{ch.key}" if chapter_prefix is None else f"{chapter_prefix}{ch.key}.html"
-            links.append(f'<a href="{href}">{label} {html.escape(ch.title)}</a>')
+            meta = CHAPTER_META.get(ch.key, {})
+            hook = (meta.get("title_hook") or "").strip()
+            chapter_label = f"{label} {hook}" if hook else f"{label} {ch.title}"
+            links.append(f'<a href="{href}">{html.escape(chapter_label)}</a>')
     return "".join(links)
 
 
@@ -883,7 +916,7 @@ def intro_html(preamble: str, manifest: dict, image_prefix: str) -> str:
     )
     preamble_html = render_reference(strip_original_title(preamble), "preface")
     return f"""
-<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Practical edition</div><h1>Claude Code実践教科書<br>ブログ完全版</h1><p class="lede">『使えている』から、『直せる・説明できる・安全に配れる』へ。最初の一操作から、Skills、Hooks、MCP、HTML、全社ハーネスまでを実装可能な粒度で扱います。</p><div class="hero-actions"><a class="button primary" href="#course-overview">14レッスンで始める</a><a class="button" href="#part-0">第0部から読む</a></div></div>{image_figure(lookup['cover-main'], image_prefix)}</div></section>
+<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Practical edition</div><h1>Claude Code実践教科書<br>ブログ完全版</h1><p class="lede"><strong>AI研修を受けたのに、自席で再現できない人へ。</strong></p><p class="lede-sub">Claude Codeを、明日から会社で配れる人になる。40章＋14レッスンの実践教科書。</p><div class="hero-actions"><a class="button primary" href="#course-overview">14レッスンで始める</a><a class="button" href="#part-0">第0部から読む</a></div></div>{image_figure(lookup['cover-main'], image_prefix)}</div></section>
 <section class="hero"><div class="chapter"><header class="chapter-head"><div class="eyebrow">Before you start</div><h1>原典から引き継ぐ前提</h1></header><div class="reference">{preamble_html}</div></div></section>
 """
 

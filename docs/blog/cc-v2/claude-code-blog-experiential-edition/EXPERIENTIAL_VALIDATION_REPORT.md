@@ -1,6 +1,6 @@
 # Experiential Edition Validation Report
 
-- Status: **PASS**
+- Status: **FAIL**
 
 ## Checks
 
@@ -24,4 +24,4 @@
 
 ## Failures
 
-- None
+- Broken anchor site/index.html -> #course-overview

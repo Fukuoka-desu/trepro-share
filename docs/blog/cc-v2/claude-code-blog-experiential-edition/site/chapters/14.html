@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-14">
   <header class="chapter-head">
     <div class="eyebrow">第14章</div>
-    <h1>HooksとPlugins</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">守らせたいルールは、お願いでは守られない</span>
+      <span class="chapter-name">HooksとPlugins</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『rm -rf 禁止』とCLAUDE.mdに書いても、繁忙期に事故は起きます。
-人が読み飛ばすことを、AIも引きずる。文章のお願いには限界があります。</p><p>そこで出てくるのが、特定イベントで必ず動く強制装置（Hooks）。
-危険コマンドの実行直前で物理的に止める（PreToolUse）。編集直後にtsc型チェックを自動で走らせる（PostToolUse）。セッション開始時に必要な前提を勝手にロードする（SessionStart）。
-3つだけで、暴走と見落としが激減します。</p><p>ついでに、SkillとHookをまとめて配るための『Plugin』という束ね方も学びます。
-この章を読み終わる頃には、『気をつけて』を『気をつけなくても止まる』に書き換えられるようになります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIに守らせたいルールを CLAUDE.md に書いたのに、守られない』。
+これはAIの怠惰ではなく、お願いと強制を混同しているだけです。</p><p>ほとんどの人は、安全ルールを文章のお願い（Guidance）で済ませています。
+ですが、本当に止めたい操作は、文章では止まりません。物理的な仕組み（Enforcement）が要ります。</p><p>Hooks と Plugins は、操作の前後に自前のチェックを差し込む仕掛けです。
+危険コマンドは事前に止め、編集後に型チェックを走らせ、コミット時にテストを通す。お願いを強制へ昇格させる装置です。</p><p>この章を読み終わる頃には、『お願い』と『強制』の境界が、自分の言葉で説明できるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-14-0-pretooluse-guard"><h3 id="feature-14-0-pretooluse-guard">PreToolUse Guard（危険操作の物理拒否）</h3><p class="feature-summary">rm -rfや本番DB操作など、文章のお願いでは止められない操作を実行直前に拒否するHook。</p><dl class="feature-io"><dt>入力</dt><dd>実行されようとしたコマンド、対象Path</dd><dt>出力</dt><dd>ブロック判定とログ、許可された操作のみの実行</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-1-posttooluse-validation"><h3 id="feature-14-1-posttooluse-validation">PostToolUse Validation</h3><p class="feature-summary">Edit/Write直後にtsc・lint・テスト等を自動実行し、編集の瞬間にエラーを検出する検証Hook。</p><dl class="feature-io"><dt>入力</dt><dd>編集したファイル、プロジェクトの検証コマンド</dd><dt>出力</dt><dd>検証結果、エラー時のブロックと修正指示</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-2-sessionstart-hook"><h3 id="feature-14-2-sessionstart-hook">SessionStart Hook</h3><p class="feature-summary">セッション開始時に必要な前提・ルール・現在地ファイルを自動注入し、毎回ゼロから説明させない仕掛け。</p><dl class="feature-io"><dt>入力</dt><dd>セッション起動イベント、注入したい文脈ファイル</dd><dt>出力</dt><dd>起動時自動ロードされた前提情報</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-3-plugins"><h3 id="feature-14-3-plugins">Plugins（配布単位）</h3><p class="feature-summary">Skills・Hooks・設定をまとめて配布する束ね単位。導入範囲と更新を組織的に管理する。</p><dl class="feature-io"><dt>入力</dt><dd>配布したいSkill群、Hook群</dd><dt>出力</dt><dd>インストール可能なPluginパッケージ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-4-hook-test-fixture"><h3 id="feature-14-4-hook-test-fixture">Hook Test（Fixture検証）</h3><p class="feature-summary">安全な入力と危険な入力のFixtureで、Hook自体の動作を単体テストする仕組み。Hookコードの品質を担保する。</p><dl class="feature-io"><dt>入力</dt><dd>安全/危険のFixture、想定動作</dd><dt>出力</dt><dd>Fixture通過/拒否の検証結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-14">
@@ -186,12 +188,9 @@ force push → 拒否
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 危険な削除コマンドを拒否する最小PreToolUse Hookを作り、安全な入力と危険な入力のFixtureでテストしてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>絶対に守らせたいことは文章ではなく、HookとPolicyで実行時に強制します。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、CLAUDE.mdに『rm -rf禁止』と書いても、繁忙期にAIが破壊的コマンドを生成して事故が起きる。</p><h3>こう使う</h3><p>PreToolUseでrm -rf・本番DB操作・外部送信を物理的に拒否するHookを書き、Fixtureテストを通す。</p><h3>得られるもの</h3><p>AIがどんなに賢くてもHookで止まる。文章のお願いから決定論的な強制へ昇格できる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、編集後のTypeScript型エラーを翌朝まで気づかず、毎週の月曜に手戻りが発生している。</p><h3>こう使う</h3><p>PostToolUseでEdit/Write後にtsc --noEmitを自動実行するHookを入れる。</p><h3>得られるもの</h3><p>型エラーが編集の瞬間に検出され、月曜の手戻り会議が消える。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="13.html">← Subagents、Agent View、並列作業</a><a href="15.html">MCP、Connectors、APIを安全につなぐ →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

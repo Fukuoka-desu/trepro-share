@@ -9,11 +9,15 @@
 <article class="chapter" id="chapter-15">
   <header class="chapter-head">
     <div class="eyebrow">第15章</div>
-    <h1>MCP、Connectors、APIを安全につなぐ</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">外部サービスを、鍵を渡さず使い倒す</span>
+      <span class="chapter-name">MCP、Connectors、APIを安全につなぐ</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『APIキー、チャットに貼っちゃえ』。
-これ、世界中の人が今日もやってる、最も危険な10秒です。動画キャプチャ・スクショ・他人への画面共有、どこかで漏れます。</p><p>ほとんどの人は、外部サービス連携を『繋げば便利』としか見てません。
-でも、繋ぐ瞬間に信頼境界も広がります。読める範囲（Read）・書ける範囲（Write）・鍵の置き場所、この3つは必ず先に決めてから繋ぐ。</p><p>この章では、用意済みのサービス連携（Connector）・標準規格で接続するMCP・自由実装のAPIという3方式の使い分けと、外部から取得した文書をうっかり命令として実行させない対策（Prompt Injection対策）まで揃えます。</p><p>外部連携は、能力を増やす前に、境界を引くことから始まります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIに Slack を読ませたいが、トークンを渡すのが怖い』。
+これは正しい怖さです。鍵を渡せば、AIの便利さと一緒に事故も増えます。</p><p>ほとんどの人は、外部サービスを使うときに API キーをチャットへ貼っています。
+便利ですが、画面共有・録画・誤転送のたびに鍵が漏れる距離にいます。</p><p>MCP（Model Context Protocol）は、外部サービスを安全に AI に繋ぐ標準的な接続口です。
+鍵は環境変数に閉じ込め、AIはサーバ越しに必要な操作だけを呼びます。</p><p>この章を読み終わる頃には、外部サービスを『鍵を渡さず使い倒す』設計が、当たり前になります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-15-0-connector-mcp-api-3"><h3 id="feature-15-0-connector-mcp-api-3">Connector / MCP / API（3方式）</h3><p class="feature-summary">用意されたサービス連携、標準化された接続規格、自由実装のAPIという3つの外部接続方式の使い分け。</p><dl class="feature-io"><dt>入力</dt><dd>繋ぎたい外部サービス、必要な操作</dd><dt>出力</dt><dd>方式別の接続設定と権限境界</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-15-1-mcp-json-scope"><h3 id="feature-15-1-mcp-json-scope">.mcp.json 雛形と Scope設計</h3><p class="feature-summary">MCPサーバー定義ファイルにScopeを絞り、Read権限とWrite権限を分離して書く標準テンプレート。</p><dl class="feature-io"><dt>入力</dt><dd>外部サービス、必要なScope一覧</dd><dt>出力</dt><dd>最小権限の.mcp.json設定</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-15-2-read-write-human-gate"><h3 id="feature-15-2-read-write-human-gate">Read/Write分離 と Human Gate</h3><p class="feature-summary">情報取得は自動でよいが、書き込みは明示承認を介する設計。書き込み事故を構造的に防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>業務フロー、Write操作の頻度と重要度</dd><dt>出力</dt><dd>Read自動・Write承認のフロー設計</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-15-3-prompt-injection"><h3 id="feature-15-3-prompt-injection">Prompt Injection対策</h3><p class="feature-summary">取得した外部文書を命令として実行せずデータとして扱うルール。Web/Doc経由の攻撃を無効化する。</p><dl class="feature-io"><dt>入力</dt><dd>外部から取得する文書、Webコンテンツ</dd><dt>出力</dt><dd>データ扱い徹底ルール、書き込みの明示承認設計</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-15-4-secrets-check"><h3 id="feature-15-4-secrets-check">Secrets保存と導入Check</h3><p class="feature-summary">鍵をチャットや会話履歴に露出させず、環境変数・専用ファイル・SecretManagerへ置く導入手順チェックリスト。</p><dl class="feature-io"><dt>入力</dt><dd>必要なAPIキー、トークン</dd><dt>出力</dt><dd>Secret保存場所と導入時チェックリスト</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-15">
@@ -185,12 +189,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 使いたい外部サービスを一つ選び、必要なRead権限と不要なWrite権限を分け、Secretの保存場所を決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>外部連携では、できることより先に、読める範囲・書ける範囲・鍵の置き場所を決めます。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の総務（架空）が、Drive連携Skillで毎日のレポート取得を自動化したいが、AIに書き込み権限まで渡すのが怖くて導入が止まっている。</p><h3>こう使う</h3><p>MCP/Connectorの権限をRead Only Scopeに絞り、書き込みはHuman Gateを介する設計にする。</p><h3>得られるもの</h3><p>情報収集の自動化は走り、書き込み事故は構造的に起きない安全な業務基盤になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人ライター（架空）が、外部記事を要約させたら本文に紛れ込んだ命令でAIが意図しない動作をした（Prompt Injection）。</p><h3>こう使う</h3><p>取得文書はデータとして扱い実行しないルール＋書き込みは明示承認のみ、というRuleを書く。</p><h3>得られるもの</h3><p>外部データに混入した悪意ある命令が動作にならず、調査用途として安全に使い続けられる。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="14.html">← HooksとPlugins</a><a href="16.html">MarkdownよりHTMLが向く仕事 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

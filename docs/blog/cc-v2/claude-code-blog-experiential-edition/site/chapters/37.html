@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-37">
   <header class="chapter-head">
     <div class="eyebrow">第37章</div>
-    <h1>素材と現行仕様の補正</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">AIの古い情報を、自分の手で正す</span>
+      <span class="chapter-name">素材と現行仕様の補正</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『半年前のテキスト、モデル名が違って総ツッコミ』。
-これ、教材を作る人なら必ず通る恥ずかしい瞬間です。</p><p>ほとんどの人は、教科書本文に『現行のモデル名・料金・UI』をそのまま書きます。
-でもAI製品の機能は数週間で変わる。本文に書いた瞬間、その教科書は腐り始めます。</p><p>正解は、長く使える原則と、頻繁に変わるFeatureを別レイヤーで管理すること。
-Plan/Verifyの重要性は何年も使えるけど、モデル名・料金・利用上限・UI・Beta状態は確認日と公式Sourceを持つFeature Registryへ。素材の動画にモデル名が出てきても本文を書き換えず、補正表で『現行ではこう扱う』と上書きする。</p><p>長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理する。
-これが、配布物を時間経過で腐らせない核心です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『本書に書かれた手順が、半年後にはもう古い』。
+これは著者の怠慢ではなく、AI 領域全体の性質です。</p><p>ほとんどの人は、教科書の情報を『そのまま信じる』前提で読みます。
+ですが、本書はあえて、変動しやすい情報を本文の外（Feature Registry）へ逃がす設計にしています。</p><p>この章で扱うのは、素材と現行仕様のズレを補正する方法です。
+古くなった部分を自分の手で正し、Registry を更新し、原則と詳細を切り分けて扱う作法を身につけます。</p><p>AI の古い情報を、自分の手で正す。それができる読者だけが、変化に強い実装者になります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-37-0-feature"><h3 id="feature-37-0-feature">原則とFeatureの分離</h3><p class="feature-summary">長く使える原則と、モデル名・料金・UIなど頻繁に変わるFeatureを別レイヤーで扱う設計方針。</p><dl class="feature-io"><dt>入力</dt><dd>教材本文、変動情報の候補</dd><dt>出力</dt><dd>原則本文とRegistry分離後の構成</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-37-1-feature-registry"><h3 id="feature-37-1-feature-registry">Feature Registry更新</h3><p class="feature-summary">名前・状態・確認日・公式Source・代替手順をRegistryへ書き、本文を直さずに新仕様へ追随できる仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>現行Featureの最新情報、公式Source</dd><dt>出力</dt><dd>Registryに追加された確認日付きエントリ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-37-2-suspended-deprecated"><h3 id="feature-37-2-suspended-deprecated">Suspended / Deprecated 表示</h3><p class="feature-summary">停止・非推奨を明示し、古い手順から新仕様への移行ガイドを必ず添えるバージョン管理。</p><dl class="feature-io"><dt>入力</dt><dd>停止対象、代替Feature</dd><dt>出力</dt><dd>Suspended/Deprecatedラベルと移行ガイド</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-37-3-item"><h3 id="feature-37-3-item">素材→現行仕様補正表</h3><p class="feature-summary">動画・記事など素材上の主張と、本書での現行扱いを対応付ける補正表。素材を否定せず使い続ける運用。</p><dl class="feature-io"><dt>入力</dt><dd>素材の主張、現行仕様</dd><dt>出力</dt><dd>素材→現行扱いの対照表</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-37">
@@ -91,12 +93,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </section>
   <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>Registryに最低限書くべき項目</dt><dd>名前・状態（Active/Suspended/Deprecated）・確認日・公式Sourceの4項目は必須です。代替手順は任意ですが、Deprecated項目には必ず入れます。確認日のない項目はRegistryに置く意味がないため、新規追加時の必須欄として強制する仕組みにします。</dd><dt>本文とRegistryの境界線</dt><dd>『3ヶ月以内に変わりそうか』を判断基準にすると、本文へ書くか、Registryへ書くかが迷わず決まります。モデル名・料金・利用上限・UI・Beta状態はほぼ全てRegistry側です。本文に書いてよいのは、変わっても古びない設計思想と原則のみと割り切ります。</dd><dt>確認日の運用</dt><dd>確認日は『前回見たから動くと推定する有効期限』であり、過ぎたら必ず再確認します。3ヶ月を上限とし、過ぎたものはダッシュボードに赤で出します。確認日が形骸化したRegistryは、ない方がマシです。</dd><dt>終章への接続</dt><dd>原則とFeatureを分けて運用すると、配布物が時間経過で腐らなくなります。次の終章では、ここまでの全章を通じて作ってきた配布物群を、長く続くハーネスとして組み立て直す視点が問われます。</dd></dl></section>
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 本文にある変動情報を三つ見つけ、Feature Registryへ名前・状態・確認日・公式Source・代替手順として移してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>長く使える原則と、頻繁に変わる製品情報を別の更新周期で管理します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内研修担当（架空）が、半年前のテキストでモデル名・料金・UIが現行と違い、受講者から『間違っている』と総ツッコミを受けた。</p><h3>こう使う</h3><p>変動情報をFeature Registryへ抜き出し、確認日・公式Source・代替手順を持たせる。</p><h3>得られるもの</h3><p>テキスト本体は更新せずRegistryだけ差し替えればよくなり、改訂コストが下がる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人技術ブロガー（架空）が、過去記事のモデル仕様が古くなり、SEO的にも信頼を失っている。</p><h3>こう使う</h3><p>原則とFeatureを分離して書き、Featureには確認日とDeprecated移行案内を入れる。</p><h3>得られるもの</h3><p>原則は長く使え、Featureだけ更新すれば記事全体の信頼が保てる。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="36.html">← 30日導入計画</a><a href="38.html">Coverage Map →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

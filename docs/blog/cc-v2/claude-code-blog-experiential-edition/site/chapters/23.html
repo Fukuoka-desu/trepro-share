@@ -9,12 +9,15 @@
 <article class="chapter" id="chapter-23">
   <header class="chapter-head">
     <div class="eyebrow">第23章</div>
-    <h1>最適Architecture</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">1台の成功を、全社の標準に翻訳する</span>
+      <span class="chapter-name">最適Architecture</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『自分のMacで動くSkill、ZIPで全社に配布したら阿鼻叫喚』。
-配布の失敗、ほとんどがこのパターンです。</p><p>ほとんどの人は、便利なファイルを配ることを『全社化』だと思ってます。
-でも、個人の便利ツールが組織のインフラに変わる境目では、正本・配布先・個人差分・強制Policy・Release段階を別物として設計する必要があります。</p><p>この章で扱うのが、ハーネスの4面構造（Guidance＝お願い／Enforcement＝強制／Content＝中身／Delivery＝配布）。
-正本（skill-src）と生成物を分離し、Claude Code とCodex両方へ同じ正本から展開する。配布は段階的（Canary→Pilot→Stable）。個人カスタマイズは ~/.claude/local/ で保護する。</p><p>全社化は『コピーして送る』じゃなく、製品として設計する仕事です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『自分の Mac では完璧に動く Skill が、隣の人の Mac では動かない』。
+これは個人の運用ではなく、組織の標準が無いことが原因です。</p><p>ほとんどの人は、AIの活用を個人の工夫として済ませています。
+ですが、その工夫を社内で再現可能にするには、Architecture（どう配置し、どう同期し、どう更新するか）が要ります。</p><p>この章で扱うのは、トレプロハーネスの設計思想を借りて、自社用の Architecture を描く方法です。
+正本・配布・強制・個人差分を分離し、Canary→Pilot→Stable で段階展開します。</p><p>この章を読み終わる頃には、『一人の成功』を『全社の標準』へ翻訳する目線が手に入ります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-23-0-4-guidance-enforcement-content-delivery"><h3 id="feature-23-0-4-guidance-enforcement-content-delivery">ハーネス4面（Guidance/Enforcement/Content/Delivery）</h3><p class="feature-summary">全社配布基盤を案内・強制・コンテンツ・配布の4面に分け、各面の正本と更新方法を設計する全体図。</p><dl class="feature-io"><dt>入力</dt><dd>現在の共通資産、配布手段</dd><dt>出力</dt><dd>4面に分類された正本と更新フロー</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-23-1-repository"><h3 id="feature-23-1-repository">推奨Repository（正本と生成物の分離）</h3><p class="feature-summary">skill-srcを正本、配布用パッケージを生成物として分離し、Claude/Codex両Runtimeへ同じ正本から展開する構造。</p><dl class="feature-io"><dt>入力</dt><dd>Skill群、Hook群、Plugin群</dd><dt>出力</dt><dd>正本と生成物が分かれたGit Repository</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-23-2-release-flow-canary-pilot-stable"><h3 id="feature-23-2-release-flow-canary-pilot-stable">Release Flow（Canary→Pilot→Stable）</h3><p class="feature-summary">PR→Test→Evaluator→Canary→Pilot→Stableの順で段階配布し、失敗を小さく発見できるリリース設計。</p><dl class="feature-io"><dt>入力</dt><dd>配布候補の更新セット</dd><dt>出力</dt><dd>段階通過ごとのリリースタグと配布対象</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-23-3-guidance-enforcement-mapping"><h3 id="feature-23-3-guidance-enforcement-mapping">Guidance/Enforcement Mapping</h3><p class="feature-summary">どのルールが文章のお願いで、どれがHookやPolicyで物理強制かを表に揃えるマッピング作業。</p><dl class="feature-io"><dt>入力</dt><dd>現状の全ルール一覧</dd><dt>出力</dt><dd>Guidance/Enforcement分類表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-23-4-layer"><h3 id="feature-23-4-layer">個人Layer（私物設定の保護）</h3><p class="feature-summary">~/.claude/local/ など、配布で上書きされない個人カスタマイズ層を分離し、私物設定を守る仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>個人カスタマイズ、私物Skill</dd><dt>出力</dt><dd>上書き保護されたLocal Layer</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-23">
@@ -245,12 +248,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の共通資産をGuidance・Enforcement・Content・Deliveryの四面へ分類し、正本をどこに置くか決めてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅企業（架空）が、AIで成果を出した社員のSkill群をZIPで全社配布した結果、人によって設定が壊れ、サポートが回らなくなった。</p><h3>こう使う</h3><p>Guidance・Enforcement・Content・Deliveryの四面に分け、各面の正本と更新方法を定義する。</p><h3>得られるもの</h3><p>個別調整がDelivery層で吸収され、共通層は壊れない。サポート問い合わせの種類が分類できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、全社一斉配布したSkillにバグが見つかった時、誰がどこから戻せるのか分からず深夜対応になった。</p><h3>こう使う</h3><p>Canary→Pilot→StableのRelease Flowを設け、各段階のExit Criteriaを書く。</p><h3>得られるもの</h3><p>事故は小さい範囲で止まり、Stable到達前にロールバックできる構造になる。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="22.html">← 信頼できる調査とレポート</a><a href="24.html">配布、同期、更新、Rollback →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

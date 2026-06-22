@@ -9,14 +9,15 @@
 <article class="chapter" id="chapter-28">
   <header class="chapter-head">
     <div class="eyebrow">第28章</div>
-    <h1>文書・ファイル・会議</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">毎日の雑務を、AIに渡せる単位に切る</span>
+      <span class="chapter-name">文書・ファイル・会議</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>請求書・契約書・会議メモ・整理されてない『なんとなくフォルダ』。
-派手じゃないけど、毎日の時間を一番奪うのはここです。</p><p>ほとんどの人は、こういう文書業務を『いきなりAIに加工させて』失敗します。
-件数も例外も把握せず実行した結果、稟議添付のExcelが消える事故が起きる。</p><p>この章で扱うのは、文書業務の正しい順序。
-まずRead-onlyで一覧と分類案を作る。次に抽出項目と例外パターンを定義する。それからDry-runで件数を確認してから本番に進む。
-契約書は『法的結論』ではなく『論点整理』としてAIに任せ、最終判断は人。</p><p>整理・削除は元データを残し、移動先を明示し、結果一覧を出す可逆的な手順で。
-派手じゃないけど、ここから自動化できる業務が一気に広がります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『議事録・タスク管理・ファイル整理を、毎日手作業でやっている』。
+これは仕事量の問題ではなく、AIに渡せる単位に切り出していないだけです。</p><p>ほとんどの人は、雑務を『自分でやる前提』で考えています。
+ですが、文書・ファイル・会議の処理は、AIが最も得意とする領域のひとつです。</p><p>この章で扱うのは、毎日発生する雑務を、AIに渡せる単位に分けるための型です。
+取り込み・分類・整形・保存・通知を、それぞれ独立した Skill として組み立てます。</p><p>毎日の雑務を、AI に渡せる単位に切る。それが、自分の時間を取り戻す最初の一歩です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-28-0-folder"><h3 id="feature-28-0-folder">請求書Folder棚卸し</h3><p class="feature-summary">Read-onlyで請求書フォルダを一覧化し、抽出項目と例外パターンを定義してから自動化に進む業務型。</p><dl class="feature-io"><dt>入力</dt><dd>請求書PDF/画像フォルダ、台帳の現状</dd><dt>出力</dt><dd>抽出項目定義、例外一覧、Dry-run結果</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-1-folder"><h3 id="feature-28-1-folder">Folder整理（可逆な分類）</h3><p class="feature-summary">元データを残し、移動先を明示し、結果一覧を出す可逆的な整理手順。削除ではなく分類から始める。</p><dl class="feature-io"><dt>入力</dt><dd>整理対象フォルダ、分類ルール</dd><dt>出力</dt><dd>分類後フォルダと整理結果レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-2-item"><h3 id="feature-28-2-item">契約書論点整理</h3><p class="feature-summary">法的結論ではなく、契約書から論点を抽出して人の判断に渡すワークフロー。AIに最終判断をさせない型。</p><dl class="feature-io"><dt>入力</dt><dd>契約書PDF、確認したい観点</dd><dt>出力</dt><dd>論点一覧と人が判断すべき箇所のハイライト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-3-assistant"><h3 id="feature-28-3-assistant">会議Assistant本番化</h3><p class="feature-summary">第4章で作った会議アシスタントを実業務で運用するための例外対応・テンプレ整備・配布手順。</p><dl class="feature-io"><dt>入力</dt><dd>本番議事録依頼、社内テンプレ</dd><dt>出力</dt><dd>実業務で回る会議AssistantとSkill群</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-4-item"><h3 id="feature-28-4-item">週報生成</h3><p class="feature-summary">会議データを連結し、週報・タスク・連絡文へ展開する定期業務化。書く時間ではなく見る時間に変える。</p><dl class="feature-io"><dt>入力</dt><dd>週内の会議メモ、タスクログ</dd><dt>出力</dt><dd>週報Markdown/HTMLと未対応タスクリスト</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-28">
@@ -100,12 +101,9 @@ Hidden、Package、Symlink、1GB超は対象外。
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つの実務フォルダをRead-onlyで棚卸しし、変更せずに分類案と例外一覧を作ってください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>文書業務は、いきなり加工せず、抽出項目・例外・可逆性を先に決めます。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC商事の経理（架空）が、毎月100枚の請求書PDFを手動で台帳入力し、毎月末に残業4時間を発生させている。</p><h3>こう使う</h3><p>Read-onlyで請求書フォルダの一覧と分類案を作り、抽出項目・例外を定義してから自動化する。</p><h3>得られるもの</h3><p>例外検出を残しつつ標準項目は自動入力でき、残業時間が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>中小法務（架空）が、契約書PDFをAIに『この契約問題ない？』と聞き、誤った法的結論を得て社内へ展開しかけた。</p><h3>こう使う</h3><p>契約書は法的結論ではなく論点整理として扱い、最終判断は人が行う運用ルールを書く。</p><h3>得られるもの</h3><p>AIは負荷の高い論点抽出を担い、人は判断に集中できる。誤断のリスクが消える。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="27.html">← OnboardingとRunbook</a><a href="29.html">調査・Content・学習 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

@@ -9,12 +9,16 @@
 <article class="chapter" id="chapter-10">
   <header class="chapter-head">
     <div class="eyebrow">第10章</div>
-    <h1>GitとCheckpoint</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">間違えても、1分前に戻れる仕事場</span>
+      <span class="chapter-name">GitとCheckpoint</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『さっきの状態に戻して』ができないと、AIに大胆な編集を頼めません。
-だから多くの人は、小さく安全な指示しか出せず、伸びしろを自分で潰してます。</p><p>実は、戻り道は2種類用意できます。
-ひとつは『会話の中で素早く巻き戻す』Checkpoint。もうひとつは『セッションや人をまたいで残る正式な履歴』であるGit。
-このふたつは競合しません。役割が違うだけ。</p><p>この章では、CheckpointとGitの最小運用、AIにコミットメッセージを書かせるルール、それから複数機能を同時に試したい時にファイル衝突を防ぐ Worktree という並列作業の仕組みまでまとめます。</p><p>戻れる安心が手に入ると、AIに任せる勇気が一段階上がります。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIに修正を任せたら、なぜか動かなくなった』。
+原因を辿りたいのに、どこから何が変わったか分からない。これは記憶の問題ではなく、保存設計の問題です。</p><p>ほとんどの人は、AIの出力をそのままファイルへ上書きしています。
+便利ですが、壊れた瞬間に戻る場所を失います。</p><p>この章で扱うのは、Gitと Checkpoint を使った『戻れる仕事場』の作り方です。
+意味のある単位で保存し、壊れたら 1 分前に戻り、誰が何のために変えたかを履歴に残す。
+それだけで、AI と作業する不安の大半は消えます。</p><p>不可逆な操作ほど、可逆な仕掛けで包む。Git は AI 時代の安全網です。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-10-0-checkpoint"><h3 id="feature-10-0-checkpoint">Checkpoint（会話中の素早い巻き戻し）</h3><p class="feature-summary">セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。</p><dl class="feature-io"><dt>入力</dt><dd>AIに任せる大胆な変更、実験的な編集</dd><dt>出力</dt><dd>巻き戻し可能なCheckpoint、戻したあとの状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-1-git"><h3 id="feature-10-1-git">最小Git運用</h3><p class="feature-summary">意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。</p><dl class="feature-io"><dt>入力</dt><dd>完了した小さな変更、検証結果</dd><dt>出力</dt><dd>意味あるCommitメッセージとレビュー可能なdiff</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-2-claude-commit-rule"><h3 id="feature-10-2-claude-commit-rule">ClaudeへCommitさせるRule</h3><p class="feature-summary">AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。</p><dl class="feature-io"><dt>入力</dt><dd>完了した変更、検証ログ</dd><dt>出力</dt><dd>Rule準拠のCommit、PR説明文</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-3-worktree"><h3 id="feature-10-3-worktree">Worktreeによる並列作業</h3><p class="feature-summary">別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>並行して進めたい複数機能</dd><dt>出力</dt><dd>機能別Worktreeディレクトリと衝突なしの差分</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-10">
@@ -93,12 +97,9 @@ git worktree add ../project-agent-docs -b agent/docs
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の良い状態をCommitし、その後に小さな変更を加えてDiffを確認し、元へ戻せることを試してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>可逆性は勇気ではなく、CheckpointとGitで設計する能力です。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小Webサイト運営者（架空）が、AIに『大胆に作り直して』を依頼するたび、戻したい時に戻せず古い版を失っている。</p><h3>こう使う</h3><p>毎回の作業開始前に良い状態をCommitし、Checkpoint＋Gitの二重保存で『戻れる』を物理的に作る。</p><h3>得られるもの</h3><p>AIへ強気に試行させても、いつでも前に戻れる安心が手に入る。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人開発（架空）が、複数機能を同時に試したくて同じファイルを並列編集し、お互いの変更を上書きして混乱した。</p><h3>こう使う</h3><p>Worktreeで作業ツリーを物理的に分け、機能ごとに別ディレクトリで並列に動かす。</p><h3>得られるもの</h3><p>AIに並列実装させても衝突が起きず、後でCherry-pickで良い変更だけを統合できる。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="09.html">← SessionとContext</a><a href="11.html">CLAUDE.md、Rules、Auto Memory →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

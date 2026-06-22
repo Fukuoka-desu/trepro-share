@@ -9,12 +9,15 @@
 <article class="chapter" id="chapter-17">
   <header class="chapter-head">
     <div class="eyebrow">第17章</div>
-    <h1>Claude Designから実装へ</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">デザインカンプを、その場で動くUIに変える</span>
+      <span class="chapter-name">Claude Designから実装へ</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『AIに「LP作って」って頼んだら、毎回ゼロからやり直し』。
-これ、AIが悪いんじゃありません。情報設計・見た目・実装を同時に決めようとしてるからです。</p><p>ほとんどの人は、いきなりコードから作り始めます。
-プロは違います。まず白黒のワイヤーフレーム（Wireframe）で情報の順序を固定し、色・フォント・余白の共通ルール（Design System）を当て、動きを確認するプロトタイプ、最後に実装。
-段階を分けると、修正コストがその段階内で閉じます。</p><p>この章を読み終わる頃には、ブランド資産として再利用できるDesign Systemを別プロジェクトに持っておき、複数LPで一貫性を保つ運用が組めるようになります。</p><p>情報・見た目・動作を分けて決める。これが生成AIの速度を、手戻りに変えない秘訣です。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『デザインカンプを受け取ったのに、コードに起こすのに 3 日かかる』。
+これは技術力の問題ではなく、橋渡しの仕組みが無いだけです。</p><p>ほとんどの人は、Figma のキャンプを手で読み、HTML/CSS を書き、JS をつなぎ、確認に何往復もしています。
+ですが、Claude Design からそのまま実装へ渡せば、その往復は半分に圧縮できます。</p><p>この章で扱うのは、デザインのレイヤー・トークン・コンポーネントを、AIが解釈できる形で渡すための型です。
+カンプを情報として渡せば、AI はそれを生きた UI へ翻訳します。</p><p>この章を読み終わる頃には、『デザインから実装』の距離が、1日へ縮まります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-17-0-wireframe-design-system-prototype-code"><h3 id="feature-17-0-wireframe-design-system-prototype-code">Wireframe / Design System / Prototype / Code 分離</h3><p class="feature-summary">情報・見た目・動作・実装を別段階で確定する4分離設計。修正コストを段階で閉じ込める。</p><dl class="feature-io"><dt>入力</dt><dd>作りたい画面の目的と利用者</dd><dt>出力</dt><dd>段階ごとに確定した情報設計・スタイル・プロトタイプ・コード</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-1-design-system-project"><h3 id="feature-17-1-design-system-project">Design SystemとProject分離</h3><p class="feature-summary">色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。</p><dl class="feature-io"><dt>入力</dt><dd>ブランドカラー、フォント、共通余白ルール</dd><dt>出力</dt><dd>再利用可能なDesign System Projectと参照Path</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-2-claude-design-flow"><h3 id="feature-17-2-claude-design-flow">Claude Design 標準Flow</h3><p class="feature-summary">白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。</p><dl class="feature-io"><dt>入力</dt><dd>ラフ案、要件、対象ユーザー</dd><dt>出力</dt><dd>段階別の決定記録と実装ドラフト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-3-code-prompt-sync-rule"><h3 id="feature-17-3-code-prompt-sync-rule">Codeへ渡すPromptとSync Rule</h3><p class="feature-summary">Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。</p><dl class="feature-io"><dt>入力</dt><dd>Designでの確定事項、参照コンポーネント</dd><dt>出力</dt><dd>実装プロンプトとSync用ルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-4-item"><h3 id="feature-17-4-item">公開前チェック</h3><p class="feature-summary">レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みページ、公開予定</dd><dt>出力</dt><dd>5項目のチェック結果と公開可否判定</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-17">
@@ -136,12 +139,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つのページを、情報だけのWireframe、Design System適用版、実装版の三段階で作り、各段階の決定事項を記録してください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。</p></div>
-  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中小Web会社（架空）が、AIに『LPを作って』と頼むたびに情報構造とビジュアルが同時に揺れて、毎回ゼロからやり直している。</p><h3>こう使う</h3><p>白黒Wireframe→Design System適用→実装の三段階に分け、各段階の決定事項を記録する。</p><h3>得られるもの</h3><p>情報・見た目・動作の修正コストが分離され、出戻りが特定段階だけで済む。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、複数LPで色・フォント・余白がバラバラになり、ブランドの一貫性が失われている。</p><h3>こう使う</h3><p>Design Systemを別Projectとして固定し、各LPはそれを参照する形に揃える。</p><h3>得られるもの</h3><p>1箇所直せば全LPに反映され、ブランド資産として再利用できる。</p></article></div></section>
 </article>
+
 <nav class="chapter-nav"><a href="16.html">← MarkdownよりHTMLが向く仕事</a><a href="18.html">CoworkとLive Artifacts →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>

@@ -9,13 +9,15 @@
 <article class="chapter" id="chapter-34">
   <header class="chapter-head">
     <div class="eyebrow">第34章</div>
-    <h1>コピペ用標準テンプレート</h1>
+    <h1 class="chapter-title">
+      <span class="chapter-hook">ゼロから書かない。揃った型から始める</span>
+      <span class="chapter-name">コピペ用標準テンプレート</span>
+    </h1>
   </header>
-  <section class="intro-human" aria-label="この章のリード"><p>『要件定義、毎回項目を思い出しながら書いてる』。
-そして毎回、何かが抜けてクライアント手戻り。</p><p>ほとんどの人は、テンプレートを『手抜きの道具』だと誤解してます。
-本当のテンプレートは、思考を省くためじゃなく、抜けを減らし会話の前提を揃えるための道具です。</p><p>この章では、全社共通の基盤Baseline・案件用のProject CLAUDE.md・Requirements/Implementation Plan/Completion Reportの3点セット・Quality Gate Skill・Fresh Reviewer Agent・Definition of Doneを揃えます。
-正本とVersionを持たせ、古いコピーが残らない配布方法とセットで運用。</p><p>テンプレートは答えじゃなく、考えるべき問いを再現可能にする道具。
-これが揃うと、新しい案件でも『最初の30分』で前提が揃います。</p></section>
+  <section class="intro-human" aria-label="この章のリード"><p>『新しい仕事のたびに、ゼロから資料・Skill・手順を書き起こしている』。
+これは熱心さではなく、テンプレートの不在です。</p><p>ほとんどの人は、揃った型を持たずに毎回作り直しています。
+ですが、Plan・Spec・Skill・Hooks・Runbook には、すぐコピーして使える標準形があります。</p><p>この章で扱うのは、コピーして自分の現場へ持ち帰るためのテンプレート集です。
+書式・命名・章立てを揃え、自分の言葉で埋めるだけで完成する形にしています。</p><p>ゼロから書かない。揃った型から始める。それだけで、立ち上がりの速度が変わります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-34-0-claude-md-baseline"><h3 id="feature-34-0-claude-md-baseline">全社共通CLAUDE.md（Baseline）</h3><p class="feature-summary">通信・標準ワークフロー・安全・品質・Gitなどを揃えた、全プロジェクト共通の基盤Baseline。</p><dl class="feature-io"><dt>入力</dt><dd>組織共通方針、必須安全項目</dd><dt>出力</dt><dd>全社共通CLAUDE.md Baselineテンプレ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-1-project-claude-md"><h3 id="feature-34-1-project-claude-md">Project CLAUDE.md テンプレ</h3><p class="feature-summary">Purpose・Architecture・Commands・Required workflow・Constraints・Do notを揃えた案件単位のテンプレ。</p><dl class="feature-io"><dt>入力</dt><dd>案件の目的、技術スタック、禁止事項</dd><dt>出力</dt><dd>案件用CLAUDE.md初版</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-2-requirements-implementation-plan-completion-report"><h3 id="feature-34-2-requirements-implementation-plan-completion-report">Requirements / Implementation Plan / Completion Report</h3><p class="feature-summary">要件定義・実装計画・完了報告の3点セットを揃え、案件横断で抜けを減らす標準テンプレ群。</p><dl class="feature-io"><dt>入力</dt><dd>新案件、進行中のタスク</dd><dt>出力</dt><dd>3テンプレに沿った各フェーズ成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-3-quality-gate-skill"><h3 id="feature-34-3-quality-gate-skill">Quality Gate Skill</h3><p class="feature-summary">テンプレ通過を自動チェックし、空欄や曖昧な完了主張を弾く品質ゲートSkill。</p><dl class="feature-io"><dt>入力</dt><dd>テンプレ提出物</dd><dt>出力</dt><dd>Gate判定とブロック理由レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-4-fresh-reviewer-agent"><h3 id="feature-34-4-fresh-reviewer-agent">Fresh Reviewer Agent</h3><p class="feature-summary">実装者と別文脈の独立Reviewer Agent。要件・安全・保守性で成果物を採点する。</p><dl class="feature-io"><dt>入力</dt><dd>完了報告、関連ファイル</dd><dt>出力</dt><dd>独立コンテキストからの指摘リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-34-5-definition-of-done"><h3 id="feature-34-5-definition-of-done">Definition of Done</h3><p class="feature-summary">PJ開始時に合意し書面化する『完成』の共通定義。納品時の認識ズレを未然に防ぐカード。</p><dl class="feature-io"><dt>入力</dt><dd>PJ目的、納品物、検証条件</dd><dt>出力</dt><dd>PJごとに合意されたDoD</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-34">
@@ -234,12 +236,9 @@ Separate blockers from suggestions.
   </section>
   
   
-  <section class="mission-takeaway" aria-label="体験ミッションとポイント">
-    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> Requirements TemplateとCompletion Reportを自分の案件へコピーし、実際の内容で一度完成させてください。</p></div>
-    <div class="mt-takeaway"><h3>このページのポイント</h3><p>テンプレートは答えではなく、考えるべき問いを再現可能にする道具です。</p></div>
-  </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサルのプロジェクトマネージャ（架空）が、要件定義のたびに項目を思い出しながら書き、毎回抜けが出てクライアント手戻りが発生している。</p><h3>こう使う</h3><p>Requirements・Implementation Plan・Completion Reportのテンプレを揃え、案件ごとにコピーして埋める。</p><h3>得られるもの</h3><p>考えるべき項目が抜けなくなり、レビュー時の追加質問が減って初稿の合格率が上がる。</p></article><article class="usecase-card"><h3>場面</h3><p>新人マネージャ（架空）が、Definition of Doneを定義できず、毎回『完成』の認識ズレで揉めている。</p><h3>こう使う</h3><p>Definition of Doneカードをテンプレ化し、PJ開始時に必ず合意して書面化する。</p><h3>得られるもの</h3><p>『完成』の定義が共通化され、納品時の認識ズレが激減する。</p></article></div></section>
+  
 </article>
+
 <nav class="chapter-nav"><a href="33.html">← 失敗Pattern</a><a href="35.html">教科書アプリの情報設計 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
 <script src="../assets/app.js"></script>
