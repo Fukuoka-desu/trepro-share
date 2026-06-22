@@ -308,9 +308,12 @@ def make_beginner_section(key: str, spec: dict[str, Any]) -> Tag:
 
 def hands_on_panel(key: str, spec: dict[str, Any]) -> Tag:
     s=BeautifulSoup('', 'html.parser')
-    sec=s.new_tag('section',attrs={'class':'hands-on-launcher','id':f'hands-on-{key}','data-chapter-lab':key})
-    e=s.new_tag('div',attrs={'class':'eyebrow'});e.string='Chapter Hands-on Skill';sec.append(e)
-    h=s.new_tag('h2');h.string='この章を実際に操作する';sec.append(h)
+    sec=s.new_tag('details',attrs={'class':'hands-on-launcher','id':f'hands-on-{key}','data-chapter-lab':key})
+    summary=s.new_tag('summary',attrs={'class':'hands-on-summary'})
+    e=s.new_tag('div',attrs={'class':'eyebrow'});e.string='Chapter Hands-on Skill';summary.append(e)
+    h=s.new_tag('h2');h.string='この章を実際に操作する';summary.append(h)
+    hint=s.new_tag('span',attrs={'class':'hands-on-toggle-hint'});hint.string='クリックして開く ▾';summary.append(hint)
+    sec.append(summary)
     p=s.new_tag('p');p.string=f"章番号を伝えると、{spec['focus']}Labをすぐ開始します。進捗はProject内へ保存され、Cursor・Claude Code・Codex間で再開できます。";sec.append(p)
     start=f"{label_for(key)}を開始"
     u=s.new_tag('p',attrs={'class':'hands-on-universal'});st=s.new_tag('strong');st.string='共通の開始文: ';u.append(st);code=s.new_tag('code');code.string=start;u.append(code);btn=s.new_tag('button',attrs={'class':'copy-lab','data-copy-lab':start});btn.string='コピー';u.append(' ');u.append(btn);sec.append(u)
@@ -350,9 +353,20 @@ EXTRA_CSS = r'''
 .beginner-note{padding:15px 17px;border-radius:13px;background:var(--action-bg);border:1px solid var(--action-border);color:var(--action-ink)}
 .mini-check{margin-top:16px;padding:12px 16px;border:1px solid var(--ref-border);border-radius:13px;background:#fff}
 .mini-check summary{cursor:pointer;font-weight:800;color:var(--ref-accent)}
-.hands-on-launcher{margin:30px 0 38px;padding:24px;border:2px solid var(--action-border);border-radius:20px;background:var(--action-bg);box-shadow:0 10px 26px rgba(122,74,16,.08)}
+.hands-on-launcher{margin:30px 0 38px;padding:0;border:2px solid var(--action-border);border-radius:20px;background:var(--action-bg);box-shadow:0 10px 26px rgba(122,74,16,.08);overflow:hidden}
+.hands-on-launcher>*:not(summary){padding-left:24px;padding-right:24px}
+.hands-on-launcher>*:not(summary):first-of-type{padding-top:18px}
+.hands-on-launcher>*:last-child{padding-bottom:24px}
 .hands-on-launcher .eyebrow{font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--action-accent);font-weight:900}
 .hands-on-launcher h2{margin:.25rem 0 .5rem;color:var(--action-ink)}
+.hands-on-summary{list-style:none;cursor:pointer;padding:18px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,#fff8ec,var(--action-bg));transition:background .15s}
+.hands-on-summary::-webkit-details-marker{display:none}
+.hands-on-summary:hover{background:#fff3dc}
+.hands-on-summary h2{margin:0;font-size:1.1rem}
+.hands-on-summary .eyebrow{margin:0}
+.hands-on-toggle-hint{margin-left:auto;font-size:.82rem;color:var(--action-accent);font-weight:700;letter-spacing:.04em;transition:transform .2s}
+.hands-on-launcher[open] .hands-on-toggle-hint{transform:rotate(180deg) translateY(-2px)}
+.hands-on-launcher[open] .hands-on-summary{border-bottom:1px solid var(--action-border)}
 .hands-on-meta{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
 .hands-on-pill{background:white;border:1px solid var(--action-border);border-radius:999px;padding:5px 10px;font-size:.82rem;color:var(--action-ink)}
 .hands-on-command-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
