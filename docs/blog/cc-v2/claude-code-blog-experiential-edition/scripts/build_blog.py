@@ -14,7 +14,7 @@ import mistune
 from bs4 import BeautifulSoup
 from jinja2 import Template
 
-from content_meta import CHARACTERS, PART_META, CHAPTER_META, EXTRA_VISUALS
+from content_meta import CHARACTERS, PART_META, CHAPTER_META, EXTRA_VISUALS, LESSON_COURSE
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "sources" / "original-textbook.md"
@@ -395,6 +395,28 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .part-usecase h3{grid-column:1/-1;margin:0;font-size:.92rem;letter-spacing:.1em;text-transform:uppercase;color:var(--usecase-accent)}
 .part-usecase .pu-item h4{margin:0 0 4px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--usecase-accent)}
 .part-usecase .pu-item p{margin:0;font-size:.92rem;line-height:1.72}
+.course-overview{margin:18px 0 44px;padding:34px clamp(20px,3vw,40px);border-radius:24px;background:linear-gradient(135deg,#0e1a35 0%,#1d3563 55%,#2a4d8a 100%);color:#f4f7ff;box-shadow:0 22px 60px rgba(12,28,60,.28);scroll-margin-top:90px}
+.course-overview .course-head{max-width:760px;margin-bottom:22px}
+.course-overview .eyebrow{color:#ffd58a}
+.course-overview h2{margin:.2em 0 .4em;font-size:clamp(1.7rem,3.4vw,2.4rem);line-height:1.2;color:white}
+.course-lede{margin:0 0 .6em;color:#cdd9f3;line-height:1.85;font-size:1rem}
+.course-trigger{color:#ffe9c2}
+.course-trigger code{background:rgba(255,255,255,.13);color:#fff;border-radius:6px;padding:.08em .42em}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.course-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:18px 19px;backdrop-filter:blur(8px);transition:transform .18s ease,background .18s ease,border-color .18s ease}
+.course-card:hover{transform:translateY(-2px);background:rgba(255,255,255,.13);border-color:rgba(255,213,138,.5)}
+.course-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.course-id{font-weight:800;letter-spacing:.06em;color:#ffd58a;font-size:.92rem;background:rgba(255,213,138,.12);padding:3px 9px;border-radius:999px}
+.course-min{font-size:.78rem;color:#a8b9d8;letter-spacing:.04em}
+.course-card h3{margin:.15em 0 .35em;font-size:1.04rem;line-height:1.45;color:white}
+.course-objective{margin:0 0 10px;font-size:.9rem;line-height:1.7;color:#dde6f8}
+.course-chapters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.course-chip{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;text-decoration:none;font-size:.76rem;border:1px solid rgba(255,255,255,.18);transition:background .15s,border-color .15s}
+.course-chip:hover{background:rgba(255,213,138,.25);border-color:rgba(255,213,138,.55);color:#fff}
+.course-chip.more{background:transparent;border-style:dashed;color:#a8b9d8;cursor:default}
+.course-note{margin:0;font-size:.78rem;color:#a8b9d8;letter-spacing:.02em}
+.toc .course-link{color:#b85a18;background:#fff6ec;border-left-color:#d7891c;font-weight:800;font-size:.92rem}
+.toc .course-link.active{background:#ffe8c8;color:#9a4a12;border-left-color:#c66a17}
 .character-grid,.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 28px rgba(27,39,64,.06)}.card h3{margin:.1em 0}.card p{color:var(--muted)}.chapter-nav{display:flex;justify-content:space-between;gap:16px;margin-top:34px}.chapter-nav a{flex:1;background:white;border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none}.chapter-nav a:last-child{text-align:right}
 .site-footer{background:#111b31;color:#ced7ea;padding:36px 24px}.site-footer .inner{max-width:1200px;margin:auto}.source-note{font-size:.86rem;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;padding-top:20px}
 @media(min-width:1281px){
@@ -645,6 +667,8 @@ def build_toc(parts: list[Part], chapters: list[Chapter], chapter_prefix: str | 
     for ch in chapters:
         chapters_by_part.setdefault(ch.part, []).append(ch)
     links: list[str] = ['<button class="toc-drawer-close" type="button" aria-label="目次を閉じる">×</button>', "<h2>目次</h2>"]
+    if chapter_prefix is None:
+        links.append('<a class="part-link course-link" href="#course-overview">14レッスン体験コース</a>')
     for part in parts:
         links.append(f'<a class="part-link" href="#part-{part.number}">第{part.number}部 {html.escape(part.title)}</a>')
         for ch in chapters_by_part.get(part.number, []):
@@ -666,6 +690,47 @@ def intro_html(preamble: str, manifest: dict, image_prefix: str) -> str:
 <section class="hero"><h2>登場人物</h2><div class="character-grid">{chars}</div></section>
 <section class="hero"><div class="chapter"><header class="chapter-head"><div class="eyebrow">Before you start</div><h1>原典から引き継ぐ前提</h1></header><div class="reference">{preamble_html}</div></div></section>
 """
+
+
+def course_section_html(chapter_prefix: str = "") -> str:
+    """14レッスン体験コース overview. chapter_prefix='' for complete.html, 'chapters/' for index."""
+    def chap_anchor(c) -> str:
+        if c == "final":
+            return f'{chapter_prefix}final.html' if chapter_prefix else "#chapter-final"
+        key = f"{int(c):02d}"
+        return f'{chapter_prefix}{key}.html' if chapter_prefix else f"#chapter-{key}"
+
+    def chap_label(c) -> str:
+        return "終章" if c == "final" else f"第{int(c)}章"
+
+    cards = []
+    for lesson in LESSON_COURSE:
+        chip_links = " ".join(
+            f'<a class="course-chip" href="{chap_anchor(c)}">{chap_label(c)}</a>'
+            for c in lesson["chapters"][:6]
+        )
+        more = "" if len(lesson["chapters"]) <= 6 else f'<span class="course-chip more">＋{len(lesson["chapters"]) - 6}章</span>'
+        cards.append(
+            f'<article class="course-card">'
+            f'<div class="course-card-head"><span class="course-id">{html.escape(lesson["id"])}</span>'
+            f'<span class="course-min">約{lesson["minutes"]}分</span></div>'
+            f'<h3>{html.escape(lesson["title"])}</h3>'
+            f'<p class="course-objective">{html.escape(lesson["objective"])}</p>'
+            f'<div class="course-chapters">{chip_links}{more}</div>'
+            f'<p class="course-note">{html.escape(lesson["note"])}</p>'
+            f'</article>'
+        )
+    return (
+        '<section class="course-overview" id="course-overview">'
+        '<div class="course-head">'
+        '<div class="eyebrow">体験コース／14レッスン</div>'
+        '<h2>0から順番に手を動かす学習ルート</h2>'
+        '<p class="course-lede">Claude Codeを使ったことが無い人が、F00から順番に14レッスンで「直せる・説明できる・安全に配れる」までを体験するコース設計です。各レッスンに対応する本書の章へジャンプできます。</p>'
+        '<p class="course-lede course-trigger">スキル<code>claude-code-handson-navigator</code>と連動。Claude Code（または Cursor／Codex）で「Claude Codeを0から学びたい」と話しかけると、このコース順に1ターン1操作で伴走します。</p>'
+        '</div>'
+        f'<div class="course-grid">{"".join(cards)}</div>'
+        '</section>'
+    )
 
 
 def part_usecase_html(meta: dict) -> str:
@@ -738,6 +803,7 @@ def build_site(preamble: str, parts: list[Part], chapters: list[Chapter], manife
 
     complete_body = intro_html(preamble, manifest, "images/")
     complete_body += '<div class="layout"><aside class="toc" id="site-toc">' + build_toc(parts, chapters, None) + '</aside><main class="content">'
+    complete_body += course_section_html("")
     for part in parts:
         complete_body += part_html(part, chapters_by_part.get(part.number, []), manifest, "images/")
     complete_body += '<p class="source-note">本版は、元教科書の全章・全小見出し・コードブロックを保持し、その前後へ物語、体験ミッション、画像制作指示を追加しています。</p></main></div>'
