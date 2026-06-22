@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-11">
     <h2 id="story-11">物語の現在地</h2>
-    <div class="scene">毎回『日本語で』『このプロジェクトは何をするか』を説明するのに疲れた遥は、すべてをCLAUDE.mdへ詰め込みました。翌日、どの仕事でも長い指示が読み込まれ、かえって動きが鈍くなります。知識には置き場所があると分かる失敗でした。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>CLAUDE.md（プロジェクトの案内板）</h3><p class="feature-summary">常時読まれる短い案内板。プロジェクトの目的・前提・最低限のルールだけを簡潔に置く。</p><dl class="feature-io"><dt>入力</dt><dd>プロジェクトの目的、必ず守らせたい最低限ルール</dd><dt>出力</dt><dd>簡潔で肥大化しないCLAUDE.md</dd></dl></article><article class="feature-card"><h3>Rules（Path固有の指示）</h3><p class="feature-summary">ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>特定フォルダ・拡張子に限定したいルール</dd><dt>出力</dt><dd>対象Path下でだけ自動適用されるRule</dd></dl></article><article class="feature-card"><h3>/init による初稿生成</h3><p class="feature-summary">プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。</p><dl class="feature-io"><dt>入力</dt><dd>既存プロジェクト構造、目的の概略</dd><dt>出力</dt><dd>CLAUDE.md初稿（編集して短くする出発点）</dd></dl></article><article class="feature-card"><h3>Auto Memory（短い事実の自動保存）</h3><p class="feature-summary">AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。</p><dl class="feature-io"><dt>入力</dt><dd>会話中の決定事項、繰り返される好み</dd><dt>出力</dt><dd>短い形に圧縮された自動メモ</dd></dl></article></div></section>
-    <div class="story-essay"><p>CLAUDE.mdはプロジェクトの短い案内板です。Path固有のルールはRulesへ、繰り返す業務手順はSkillsへ、AIが見つけた短い事実はAuto Memoryへ分けます。常に読み込む情報ほど短く、安定した内容にします。</p><p>/initは初稿を作る助けになりますが、生成された説明をそのまま肥大化させないことが重要です。実際の失敗から、必要な最小ルールだけを追加します。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>CLAUDE.md（プロジェクトの案内板）</h3><p class="feature-summary">常時読まれる短い案内板。プロジェクトの目的・前提・最低限のルールだけを簡潔に置く。</p><dl class="feature-io"><dt>入力</dt><dd>プロジェクトの目的、必ず守らせたい最低限ルール</dd><dt>出力</dt><dd>簡潔で肥大化しないCLAUDE.md</dd></dl></article><article class="feature-card"><h3>Rules（Path固有の指示）</h3><p class="feature-summary">ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>特定フォルダ・拡張子に限定したいルール</dd><dt>出力</dt><dd>対象Path下でだけ自動適用されるRule</dd></dl></article><article class="feature-card"><h3>/init による初稿生成</h3><p class="feature-summary">プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。</p><dl class="feature-io"><dt>入力</dt><dd>既存プロジェクト構造、目的の概略</dd><dt>出力</dt><dd>CLAUDE.md初稿（編集して短くする出発点）</dd></dl></article><article class="feature-card"><h3>Auto Memory（短い事実の自動保存）</h3><p class="feature-summary">AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。</p><dl class="feature-io"><dt>入力</dt><dd>会話中の決定事項、繰り返される好み</dd><dt>出力</dt><dd>短い形に圧縮された自動メモ</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">毎回『日本語で』『このプロジェクトは何をするか』を説明するのに疲れた遥は、すべてをCLAUDE.mdへ詰め込みました。翌日、どの仕事でも長い指示が読み込まれ、かえって動きが鈍くなります。知識には置き場所があると分かる失敗でした。</p>
+      <div class="story-essay"><p>CLAUDE.mdはプロジェクトの短い案内板です。Path固有のルールはRulesへ、繰り返す業務手順はSkillsへ、AIが見つけた短い事実はAuto Memoryへ分けます。常に読み込む情報ほど短く、安定した内容にします。</p><p>/initは初稿を作る助けになりますが、生成された説明をそのまま肥大化させないことが重要です。実際の失敗から、必要な最小ルールだけを追加します。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-11">
@@ -117,7 +119,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [Config弱体化、本番接続、生成物直接編集]
 </code></pre>
 <p>短く、具体的、重複なし。200行未満を目安にする。</p>
-<h2 id="ch-11-s4">11.4 <code>/init</code></h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。<br/><span class="feature-intro-io"><strong>入力:</strong> 既存プロジェクト構造、目的の概略　<strong>出力:</strong> CLAUDE.md初稿（編集して短くする出発点）</span></p>
+<h2 id="ch-11-s4">11.4 <code>/init</code></h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。<br/><span class="feature-intro-io"><strong>入力:</strong> 既存プロジェクト構造、目的の概略　<strong>出力:</strong> CLAUDE.md初稿（編集して短くする出発点）</span></p>
 <p>Projectを読み、初期CLAUDE.mdを作る起点にできる。ただし生成物をそのまま採用しない。</p>
 <p>Review項目：</p>
 <ul>
@@ -127,7 +129,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Security RuleをSettings/Hookへ移す。</li>
 <li>長い手順をSkillへ移す。</li>
 </ul>
-<h2 id="ch-11-s5">11.5 Rules</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 特定フォルダ・拡張子に限定したいルール　<strong>出力:</strong> 対象Path下でだけ自動適用されるRule</span></p>
+<h2 id="ch-11-s5">11.5 Rules</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 特定フォルダ・拡張子に限定したいルール　<strong>出力:</strong> 対象Path下でだけ自動適用されるRule</span></p>
 <p><code>.claude/rules/</code>へ領域別Ruleを分ける。</p>
 <pre><code class="language-text">.claude/rules/
 ├── frontend.md
@@ -153,7 +155,7 @@ paths:
 <li>同じ文章を二重編集しない。</li>
 <li>Build Scriptで共通Sectionを生成するか、Canonical Docを参照する。</li>
 </ul>
-<h2 id="ch-11-s7">11.7 Auto Memory</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。<br/><span class="feature-intro-io"><strong>入力:</strong> 会話中の決定事項、繰り返される好み　<strong>出力:</strong> 短い形に圧縮された自動メモ</span></p>
+<h2 id="ch-11-s7">11.7 Auto Memory</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。<br/><span class="feature-intro-io"><strong>入力:</strong> 会話中の決定事項、繰り返される好み　<strong>出力:</strong> 短い形に圧縮された自動メモ</span></p>
 <p>ClaudeがBuild Command、Debug Insight、Architecture Note等を保存する。便利だが、次を定期確認する。</p>
 <pre><code class="language-text">/memory
 </code></pre>
@@ -194,9 +196,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> CLAUDE.mdの各行を『毎回必要か』で見直し、手順はSkillへ、Path固有事項はRulesへ移してください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>知識は量ではなく、適切なScopeへ置くことで効きます。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサル（架空）のCLAUDE.mdが3,000行を超え、毎回読み込みに時間がかかり、AIが本来の指示を見落とすようになっている。</p><h3>こう使う</h3><p>CLAUDE.mdは『常に読みたい短い案内板』だけ残し、Path固有事項はRules、業務手順はSkillsへ移す。</p><h3>得られるもの</h3><p>起動が軽くなり、AIが本当に必要な指示を確実に拾うようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、Project AとProject Bで日本語化ルールが毎回ぶつかり、混乱した出力を受け取り続けている。</p><h3>こう使う</h3><p>全社共通ルールはGlobal CLAUDE.mdへ、Project個別はProject CLAUDE.mdへ、Path別はRulesへと役割を分ける。</p><h3>得られるもの</h3><p>ルール衝突が物理的に起きず、どこを直せばどこへ効くかが明確になる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> CLAUDE.mdの各行を『毎回必要か』で見直し、手順はSkillへ、Path固有事項はRulesへ移してください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>知識は量ではなく、適切なScopeへ置くことで効きます。</p></section>
 </article>
 <nav class="chapter-nav"><a href="10.html">← GitとCheckpoint</a><a href="12.html">Skills設計 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

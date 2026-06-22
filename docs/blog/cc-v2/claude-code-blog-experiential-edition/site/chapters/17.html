@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-17">
     <h2 id="story-17">物語の現在地</h2>
-    <div class="scene">いきなりコードからLPを作ると、情報構造と見た目と実装が同時に揺れました。遥はClaude Designで白黒のワイヤーフレームを作り、内容の順序を固めてから、Design Systemを適用してCodeへ渡します。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Wireframe / Design System / Prototype / Code 分離</h3><p class="feature-summary">情報・見た目・動作・実装を別段階で確定する4分離設計。修正コストを段階で閉じ込める。</p><dl class="feature-io"><dt>入力</dt><dd>作りたい画面の目的と利用者</dd><dt>出力</dt><dd>段階ごとに確定した情報設計・スタイル・プロトタイプ・コード</dd></dl></article><article class="feature-card"><h3>Design SystemとProject分離</h3><p class="feature-summary">色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。</p><dl class="feature-io"><dt>入力</dt><dd>ブランドカラー、フォント、共通余白ルール</dd><dt>出力</dt><dd>再利用可能なDesign System Projectと参照Path</dd></dl></article><article class="feature-card"><h3>Claude Design 標準Flow</h3><p class="feature-summary">白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。</p><dl class="feature-io"><dt>入力</dt><dd>ラフ案、要件、対象ユーザー</dd><dt>出力</dt><dd>段階別の決定記録と実装ドラフト</dd></dl></article><article class="feature-card"><h3>Codeへ渡すPromptとSync Rule</h3><p class="feature-summary">Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。</p><dl class="feature-io"><dt>入力</dt><dd>Designでの確定事項、参照コンポーネント</dd><dt>出力</dt><dd>実装プロンプトとSync用ルール</dd></dl></article><article class="feature-card"><h3>公開前チェック</h3><p class="feature-summary">レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みページ、公開予定</dd><dt>出力</dt><dd>5項目のチェック結果と公開可否判定</dd></dl></article></div></section>
-    <div class="story-essay"><p>Designでは、情報構造を決めるWireframe、見た目のルールを持つDesign System、動作を確かめるPrototype、実装を担うCodeを分けます。各段階で何を確定したかが分かると、修正コストが下がります。</p><p>同期機能やUI名は変化しやすいため、公式の現行入口を確認しながら使います。公開前にはレスポンシブ、アクセシビリティ、リンク、秘密情報、ブランド整合性をCode側で再検証します。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Wireframe / Design System / Prototype / Code 分離</h3><p class="feature-summary">情報・見た目・動作・実装を別段階で確定する4分離設計。修正コストを段階で閉じ込める。</p><dl class="feature-io"><dt>入力</dt><dd>作りたい画面の目的と利用者</dd><dt>出力</dt><dd>段階ごとに確定した情報設計・スタイル・プロトタイプ・コード</dd></dl></article><article class="feature-card"><h3>Design SystemとProject分離</h3><p class="feature-summary">色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。</p><dl class="feature-io"><dt>入力</dt><dd>ブランドカラー、フォント、共通余白ルール</dd><dt>出力</dt><dd>再利用可能なDesign System Projectと参照Path</dd></dl></article><article class="feature-card"><h3>Claude Design 標準Flow</h3><p class="feature-summary">白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。</p><dl class="feature-io"><dt>入力</dt><dd>ラフ案、要件、対象ユーザー</dd><dt>出力</dt><dd>段階別の決定記録と実装ドラフト</dd></dl></article><article class="feature-card"><h3>Codeへ渡すPromptとSync Rule</h3><p class="feature-summary">Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。</p><dl class="feature-io"><dt>入力</dt><dd>Designでの確定事項、参照コンポーネント</dd><dt>出力</dt><dd>実装プロンプトとSync用ルール</dd></dl></article><article class="feature-card"><h3>公開前チェック</h3><p class="feature-summary">レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みページ、公開予定</dd><dt>出力</dt><dd>5項目のチェック結果と公開可否判定</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">いきなりコードからLPを作ると、情報構造と見た目と実装が同時に揺れました。遥はClaude Designで白黒のワイヤーフレームを作り、内容の順序を固めてから、Design Systemを適用してCodeへ渡します。</p>
+      <div class="story-essay"><p>Designでは、情報構造を決めるWireframe、見た目のルールを持つDesign System、動作を確かめるPrototype、実装を担うCodeを分けます。各段階で何を確定したかが分かると、修正コストが下がります。</p><p>同期機能やUI名は変化しやすいため、公式の現行入口を確認しながら使います。公開前にはレスポンシブ、アクセシビリティ、リンク、秘密情報、ブランド整合性をCode側で再検証します。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-17">
@@ -41,7 +43,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <pre><code class="language-text">要件 → Wireframe → Prototype → Design System → 実装 → 視覚/Accessibility検証
 </code></pre>
 <p>Wireframeでは装飾より、情報の順序とActionを決める。</p>
-<h2 id="ch-17-s2">17.2 Design SystemとProject</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。<br/><span class="feature-intro-io"><strong>入力:</strong> ブランドカラー、フォント、共通余白ルール　<strong>出力:</strong> 再利用可能なDesign System Projectと参照Path</span></p>
+<h2 id="ch-17-s2">17.2 Design SystemとProject</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。<br/><span class="feature-intro-io"><strong>入力:</strong> ブランドカラー、フォント、共通余白ルール　<strong>出力:</strong> 再利用可能なDesign System Projectと参照Path</span></p>
 <table>
 <thead>
 <tr>
@@ -76,7 +78,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 ├── assets/
 └── examples/
 </code></pre>
-<h2 id="ch-17-s4">17.4 標準Flow</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。<br/><span class="feature-intro-io"><strong>入力:</strong> ラフ案、要件、対象ユーザー　<strong>出力:</strong> 段階別の決定記録と実装ドラフト</span></p>
+<h2 id="ch-17-s4">17.4 標準Flow</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。<br/><span class="feature-intro-io"><strong>入力:</strong> ラフ案、要件、対象ユーザー　<strong>出力:</strong> 段階別の決定記録と実装ドラフト</span></p>
 <ol>
 <li>Wireframe作成。</li>
 <li>情報の欠落・重複・順序Review。</li>
@@ -88,7 +90,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>汎用ComponentをDesign Systemへ戻す。</li>
 </ol>
 <p>現行の <code>/design</code> と <code>/design-sync</code> を <code>/help</code> と公式情報で確認する。</p>
-<h2 id="ch-17-s5">17.5 Codeへ渡すPrompt</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> Designでの確定事項、参照コンポーネント　<strong>出力:</strong> 実装プロンプトとSync用ルール</span></p>
+<h2 id="ch-17-s5">17.5 Codeへ渡すPrompt</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> Designでの確定事項、参照コンポーネント　<strong>出力:</strong> 実装プロンプトとSync用ルール</span></p>
 <pre><code class="language-text">Designを写経せず、まず次を含む実装計画を作る。
 - 画面/Component対応
 - Token/CSS変数
@@ -99,7 +101,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Acceptance Test
 承認前に変更しない。
 </code></pre>
-<h2 id="ch-17-s6">17.6 Sync Rule</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> Designでの確定事項、参照コンポーネント　<strong>出力:</strong> 実装プロンプトとSync用ルール</span></p>
+<h2 id="ch-17-s6">17.6 Sync Rule</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> Designでの確定事項、参照コンポーネント　<strong>出力:</strong> 実装プロンプトとSync用ルール</span></p>
 <ul>
 <li>Token/共通ComponentはGit側を正本。</li>
 <li>Designで探索し、採用変更だけCodeへ。</li>
@@ -107,7 +109,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Sync前後にDiff保存。</li>
 <li>Beta変換に備えGit Commit。</li>
 </ul>
-<h2 id="ch-17-s7">17.7 公開前</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みページ、公開予定　<strong>出力:</strong> 5項目のチェック結果と公開可否判定</span></p>
+<h2 id="ch-17-s7">17.7 公開前</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みページ、公開予定　<strong>出力:</strong> 5項目のチェック結果と公開可否判定</span></p>
 <pre><code class="language-text">[ ] 全遷移
 [ ] 未実装Buttonの明示
 [ ] Responsive
@@ -137,9 +139,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 一つのページを、情報だけのWireframe、Design System適用版、実装版の三段階で作り、各段階の決定事項を記録してください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中小Web会社（架空）が、AIに『LPを作って』と頼むたびに情報構造とビジュアルが同時に揺れて、毎回ゼロからやり直している。</p><h3>こう使う</h3><p>白黒Wireframe→Design System適用→実装の三段階に分け、各段階の決定事項を記録する。</p><h3>得られるもの</h3><p>情報・見た目・動作の修正コストが分離され、出戻りが特定段階だけで済む。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、複数LPで色・フォント・余白がバラバラになり、ブランドの一貫性が失われている。</p><h3>こう使う</h3><p>Design Systemを別Projectとして固定し、各LPはそれを参照する形に揃える。</p><h3>得られるもの</h3><p>1箇所直せば全LPに反映され、ブランド資産として再利用できる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 一つのページを、情報だけのWireframe、Design System適用版、実装版の三段階で作り、各段階の決定事項を記録してください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>情報、見た目、動作を分けて決めると、生成AIの速度を手戻りに変えずに済みます。</p></section>
 </article>
 <nav class="chapter-nav"><a href="16.html">← MarkdownよりHTMLが向く仕事</a><a href="18.html">CoworkとLive Artifacts →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

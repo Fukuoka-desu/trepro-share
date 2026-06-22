@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-06">
     <h2 id="story-06">物語の現在地</h2>
-    <div class="scene">会議アシスタントは動きました。しかし翌週、別の素材で試すと抜けが出ます。蓮は成功した一回を称賛する前に、七つのカードを机へ並べました。Explore、Specify、Plan、Implement、Verify、Review、Commit。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>ESPIVRC標準ループ</h3><p class="feature-summary">Explore→Specify→Plan→Implement→Verify→Review→Commitの7段階を共通言語にし、業務種別を問わず同じ順で進める仕事の骨格。</p><dl class="feature-io"><dt>入力</dt><dd>新しい依頼、作業対象、関係者</dd><dt>出力</dt><dd>7段階ごとの成果物（探索メモ・仕様・計画・実装・検証・レビュー・コミット）</dd></dl></article><article class="feature-card"><h3>Plan段階の変更範囲宣言</h3><p class="feature-summary">実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。</p><dl class="feature-io"><dt>入力</dt><dd>仕様、現状のコード/ファイル</dd><dt>出力</dt><dd>影響範囲・差分予定・前提条件を含むPlan</dd></dl></article><article class="feature-card"><h3>Verify→Review→Commit分離</h3><p class="feature-summary">機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みの変更、テストケース、レビュー観点</dd><dt>出力</dt><dd>検証ログ、レビュー指摘、コミットメッセージ付き履歴</dd></dl></article></div></section>
-    <div class="story-essay"><p>この七段階は、アプリ開発だけの手順ではありません。資料作成、調査、ファイル整理、Skill改善にも使える仕事の骨格です。探索で事実を集め、仕様で成功条件を固定し、計画で変更範囲を絞り、実装後は証拠で検証します。</p><p>さらに、作成者とは別の文脈でレビューし、良い状態をGitへ保存します。各段階を飛ばさないことで、速さを落とすのではなく、やり直しを減らします。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>ESPIVRC標準ループ</h3><p class="feature-summary">Explore→Specify→Plan→Implement→Verify→Review→Commitの7段階を共通言語にし、業務種別を問わず同じ順で進める仕事の骨格。</p><dl class="feature-io"><dt>入力</dt><dd>新しい依頼、作業対象、関係者</dd><dt>出力</dt><dd>7段階ごとの成果物（探索メモ・仕様・計画・実装・検証・レビュー・コミット）</dd></dl></article><article class="feature-card"><h3>Plan段階の変更範囲宣言</h3><p class="feature-summary">実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。</p><dl class="feature-io"><dt>入力</dt><dd>仕様、現状のコード/ファイル</dd><dt>出力</dt><dd>影響範囲・差分予定・前提条件を含むPlan</dd></dl></article><article class="feature-card"><h3>Verify→Review→Commit分離</h3><p class="feature-summary">機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みの変更、テストケース、レビュー観点</dd><dt>出力</dt><dd>検証ログ、レビュー指摘、コミットメッセージ付き履歴</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">会議アシスタントは動きました。しかし翌週、別の素材で試すと抜けが出ます。蓮は成功した一回を称賛する前に、七つのカードを机へ並べました。Explore、Specify、Plan、Implement、Verify、Review、Commit。</p>
+      <div class="story-essay"><p>この七段階は、アプリ開発だけの手順ではありません。資料作成、調査、ファイル整理、Skill改善にも使える仕事の骨格です。探索で事実を集め、仕様で成功条件を固定し、計画で変更範囲を絞り、実装後は証拠で検証します。</p><p>さらに、作成者とは別の文脈でレビューし、良い状態をGitへ保存します。各段階を飛ばさないことで、速さを落とすのではなく、やり直しを減らします。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-06">
@@ -92,7 +94,7 @@ Commit     良い状態を保存
 </tr>
 </tbody>
 </table>
-<h2 id="ch-06-s4">6.4 Plan</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 仕様、現状のコード/ファイル　<strong>出力:</strong> 影響範囲・差分予定・前提条件を含むPlan</span></p>
+<h2 id="ch-06-s4">6.4 Plan</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 仕様、現状のコード/ファイル　<strong>出力:</strong> 影響範囲・差分予定・前提条件を含むPlan</span></p>
 <p>Planで確認する項目：</p>
 <pre><code class="language-text">- 変更Fileと理由
 - 既存設計との整合
@@ -114,7 +116,7 @@ Commit     良い状態を保存
 <li>長時間Taskは途中成果物をFileへ保存する。</li>
 <li>同じFileを複数Agentが同時編集しない。</li>
 </ul>
-<h2 id="ch-06-s6">6.6 Verify</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
+<h2 id="ch-06-s6">6.6 Verify</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
 <pre><code class="language-text">Static: format, lint, typecheck, schema, secret scan
 Behavior: unit, integration, E2E, replay
 Visual: screenshot, responsive, PDF/print
@@ -125,12 +127,12 @@ Operations: logs, retry, timeout, rollback
 <pre><code class="language-text">完了条件ごとに、実行したCommand、Exit Code、出力要約、Artifact Pathを表で示してください。
 未実行は未実行と書いてください。
 </code></pre>
-<h2 id="ch-06-s7">6.7 Review</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
+<h2 id="ch-06-s7">6.7 Review</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
 <p>作ったSessionは自分の判断へ引っ張られる。新しいSessionまたはFresh Reviewerを使う。</p>
 <pre><code class="language-text">このDiffを、要件、Security、Data loss、Edge case、Test不足の観点で独立Reviewしてください。
 実装者の説明を鵜呑みにせず、FileとLineを根拠にしてください。
 </code></pre>
-<h2 id="ch-06-s8">6.8 Commit</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
+<h2 id="ch-06-s8">6.8 Commit</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済みの変更、テストケース、レビュー観点　<strong>出力:</strong> 検証ログ、レビュー指摘、コミットメッセージ付き履歴</span></p>
 <p>Commit前：</p>
 <pre><code class="language-bash">git status --short
 git diff --check
@@ -158,9 +160,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 次に行う作業を七段階の見出しで書き、各段階の成果物を一つずつ決めてください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC物流の社内システム改修で、依頼→実装→『動いたっぽい』→本番→事故、という流れを毎月繰り返している。</p><h3>こう使う</h3><p>Explore→Specify→Plan→Implement→Verify→Review→Commitの七段階に依頼テンプレを揃え、各段階で証拠を残す。</p><h3>得られるもの</h3><p>本番事故の発生源を段階に切り分けて潰せるようになり、改修1本あたりの平均事故件数が減る。</p></article><article class="usecase-card"><h3>場面</h3><p>Webデザイナー（架空）が、AIに『修正お願い』と頼んだら関係ない部分まで書き換えられ、何が変わったか追えない。</p><h3>こう使う</h3><p>Plan段階で変更範囲をAIに宣言させ、Verifyで差分とテスト結果を見てからCommitする運用にする。</p><h3>得られるもの</h3><p>予期しない書き換えがPlanで弾かれ、レビュー時間が短く、巻き戻しも安全になる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 次に行う作業を七段階の見出しで書き、各段階の成果物を一つずつ決めてください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>速いチームは工程を省くのではなく、同じ工程を小さく、明確に回します。</p></section>
 </article>
 <nav class="chapter-nav"><a href="05.html">← 強い指示の書き方</a><a href="07.html">Permission Mode、Sandbox、危険操作 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

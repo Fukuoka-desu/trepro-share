@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-38">
     <h2 id="story-38">物語の現在地</h2>
-    <div class="scene">最後の確認で、美咲は『読みやすくなったか』だけでなく、『素材のどの話題が、どこへ入ったか』を尋ねます。網羅性は印象ではなく、Coverage Mapで証明します。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>動画別 Coverage Map</h3><p class="feature-summary">各動画の主内容と本書のどの章に配置したかを対応付ける表。素材ベースの抜け漏れ検出に使う。</p><dl class="feature-io"><dt>入力</dt><dd>素材動画群、章構成</dd><dt>出力</dt><dd>動画→章 配置マッピング表</dd></dl></article><article class="feature-card"><h3>Harness要件 Coverage Map</h3><p class="feature-summary">配布・同期・Hook・Skill・Safety・観測性などの要件が、どの章で扱われているかを確認する要件側マップ。</p><dl class="feature-io"><dt>入力</dt><dd>ハーネス要件一覧</dd><dt>出力</dt><dd>要件→章 マッピング表と未充足要件</dd></dl></article><article class="feature-card"><h3>Source Topic追跡</h3><p class="feature-summary">各Source Topicが説明・実習・Template・管理者運用のどこで扱われたかを確認する追跡軸。網羅性の証明手段。</p><dl class="feature-io"><dt>入力</dt><dd>Source Topic一覧、章別取扱い</dd><dt>出力</dt><dd>Topic×取扱い種別のマトリクス</dd></dl></article></div></section>
-    <div class="story-essay"><p>Coverage Mapは、各動画、公式補正、ハーネス要件を章へ対応付け、未収録と重複を見つける表です。すでに統合した話題も、出典とのつながりを残すことで、将来の改訂時に追跡できます。</p><p>章数が多いことを網羅性としません。各Source Topicが、説明、実習、Template、管理者運用のどこで扱われるかを確認します。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>動画別 Coverage Map</h3><p class="feature-summary">各動画の主内容と本書のどの章に配置したかを対応付ける表。素材ベースの抜け漏れ検出に使う。</p><dl class="feature-io"><dt>入力</dt><dd>素材動画群、章構成</dd><dt>出力</dt><dd>動画→章 配置マッピング表</dd></dl></article><article class="feature-card"><h3>Harness要件 Coverage Map</h3><p class="feature-summary">配布・同期・Hook・Skill・Safety・観測性などの要件が、どの章で扱われているかを確認する要件側マップ。</p><dl class="feature-io"><dt>入力</dt><dd>ハーネス要件一覧</dd><dt>出力</dt><dd>要件→章 マッピング表と未充足要件</dd></dl></article><article class="feature-card"><h3>Source Topic追跡</h3><p class="feature-summary">各Source Topicが説明・実習・Template・管理者運用のどこで扱われたかを確認する追跡軸。網羅性の証明手段。</p><dl class="feature-io"><dt>入力</dt><dd>Source Topic一覧、章別取扱い</dd><dt>出力</dt><dd>Topic×取扱い種別のマトリクス</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">最後の確認で、美咲は『読みやすくなったか』だけでなく、『素材のどの話題が、どこへ入ったか』を尋ねます。網羅性は印象ではなく、Coverage Mapで証明します。</p>
+      <div class="story-essay"><p>Coverage Mapは、各動画、公式補正、ハーネス要件を章へ対応付け、未収録と重複を見つける表です。すでに統合した話題も、出典とのつながりを残すことで、将来の改訂時に追跡できます。</p><p>章数が多いことを網羅性としません。各Source Topicが、説明、実習、Template、管理者運用のどこで扱われるかを確認します。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-38">
@@ -37,7 +39,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-38-s1">38.1 動画別</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>各動画の主内容と本書のどの章に配置したかを対応付ける表。素材ベースの抜け漏れ検出に使う。<br/><span class="feature-intro-io"><strong>入力:</strong> 素材動画群、章構成　<strong>出力:</strong> 動画→章 配置マッピング表</span></p>
+    <h2 id="ch-38-s1">38.1 動画別</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>各動画の主内容と本書のどの章に配置したかを対応付ける表。素材ベースの抜け漏れ検出に使う。<br/><span class="feature-intro-io"><strong>入力:</strong> 素材動画群、章構成　<strong>出力:</strong> 動画→章 配置マッピング表</span></p>
 <table>
 <thead>
 <tr>
@@ -99,7 +101,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-38-s2">38.2 Harness要件</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>配布・同期・Hook・Skill・Safety・観測性などの要件が、どの章で扱われているかを確認する要件側マップ。<br/><span class="feature-intro-io"><strong>入力:</strong> ハーネス要件一覧　<strong>出力:</strong> 要件→章 マッピング表と未充足要件</span></p>
+<h2 id="ch-38-s2">38.2 Harness要件</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>配布・同期・Hook・Skill・Safety・観測性などの要件が、どの章で扱われているかを確認する要件側マップ。<br/><span class="feature-intro-io"><strong>入力:</strong> ハーネス要件一覧　<strong>出力:</strong> 要件→章 マッピング表と未充足要件</span></p>
 <table>
 <thead>
 <tr>
@@ -154,9 +156,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 新しく追加した素材を一つ選び、既存章への統合先、重複、追加すべき実習、更新日をCoverage Mapへ記録してください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある教科書編集者（架空）が、『全部の機能を解説した』と思って入稿したら、レビューで重要トピックの抜けが多数発見され大改修になった。</p><h3>こう使う</h3><p>Coverage Mapで各Source Topicが説明・実習・Template・運用のどこで扱われるかを表にする。</p><h3>得られるもの</h3><p>抜けと重複が事前に検出でき、レビュー時に『どの章に入っているか』を即答できる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅IT企業（架空）が、AI研修テキストの追加教材を入れるたびに既存章と矛盾し、整合性チェックに毎回数日かかる。</p><h3>こう使う</h3><p>追加素材を統合する際に既存章への対応・重複・追加実習をCoverage Mapへ記録する。</p><h3>得られるもの</h3><p>整合性チェックが表の更新で済み、改訂サイクルが大幅に短縮される。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 新しく追加した素材を一つ選び、既存章への統合先、重複、追加すべき実習、更新日をCoverage Mapへ記録してください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>網羅性は『全部入れたつもり』ではなく、Sourceと章の対応関係で証明します。</p></section>
 </article>
 <nav class="chapter-nav"><a href="37.html">← 素材と現行仕様の補正</a><a href="final.html">最強のまま保つ →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

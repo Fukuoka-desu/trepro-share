@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-10">
     <h2 id="story-10">物語の現在地</h2>
-    <div class="scene">修正後の画面が崩れ、遥は『ひとつ前へ戻して』と頼みます。Checkpointで戻せる変更もありましたが、セッションをまたいだ手編集までは戻りません。蓮はGitを開き、『戻る』を偶然ではなく履歴にしようと説明します。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Checkpoint（会話中の素早い巻き戻し）</h3><p class="feature-summary">セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。</p><dl class="feature-io"><dt>入力</dt><dd>AIに任せる大胆な変更、実験的な編集</dd><dt>出力</dt><dd>巻き戻し可能なCheckpoint、戻したあとの状態</dd></dl></article><article class="feature-card"><h3>最小Git運用</h3><p class="feature-summary">意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。</p><dl class="feature-io"><dt>入力</dt><dd>完了した小さな変更、検証結果</dd><dt>出力</dt><dd>意味あるCommitメッセージとレビュー可能なdiff</dd></dl></article><article class="feature-card"><h3>ClaudeへCommitさせるRule</h3><p class="feature-summary">AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。</p><dl class="feature-io"><dt>入力</dt><dd>完了した変更、検証ログ</dd><dt>出力</dt><dd>Rule準拠のCommit、PR説明文</dd></dl></article><article class="feature-card"><h3>Worktreeによる並列作業</h3><p class="feature-summary">別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>並行して進めたい複数機能</dd><dt>出力</dt><dd>機能別Worktreeディレクトリと衝突なしの差分</dd></dl></article></div></section>
-    <div class="story-essay"><p>CheckpointとGitは競合しません。Checkpointは会話中の素早い巻き戻し、Gitはセッションや人をまたぐ正式な履歴です。意味のある単位でCommitし、変更理由と検証結果を残します。</p><p>並列作業ではWorktreeを使い、別の作業が同じファイルを奪い合わないようにします。保存地点を先に作ると、AIへ大胆な試行を許可しやすくなります。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Checkpoint（会話中の素早い巻き戻し）</h3><p class="feature-summary">セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。</p><dl class="feature-io"><dt>入力</dt><dd>AIに任せる大胆な変更、実験的な編集</dd><dt>出力</dt><dd>巻き戻し可能なCheckpoint、戻したあとの状態</dd></dl></article><article class="feature-card"><h3>最小Git運用</h3><p class="feature-summary">意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。</p><dl class="feature-io"><dt>入力</dt><dd>完了した小さな変更、検証結果</dd><dt>出力</dt><dd>意味あるCommitメッセージとレビュー可能なdiff</dd></dl></article><article class="feature-card"><h3>ClaudeへCommitさせるRule</h3><p class="feature-summary">AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。</p><dl class="feature-io"><dt>入力</dt><dd>完了した変更、検証ログ</dd><dt>出力</dt><dd>Rule準拠のCommit、PR説明文</dd></dl></article><article class="feature-card"><h3>Worktreeによる並列作業</h3><p class="feature-summary">別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>並行して進めたい複数機能</dd><dt>出力</dt><dd>機能別Worktreeディレクトリと衝突なしの差分</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">修正後の画面が崩れ、遥は『ひとつ前へ戻して』と頼みます。Checkpointで戻せる変更もありましたが、セッションをまたいだ手編集までは戻りません。蓮はGitを開き、『戻る』を偶然ではなく履歴にしようと説明します。</p>
+      <div class="story-essay"><p>CheckpointとGitは競合しません。Checkpointは会話中の素早い巻き戻し、Gitはセッションや人をまたぐ正式な履歴です。意味のある単位でCommitし、変更理由と検証結果を残します。</p><p>並列作業ではWorktreeを使い、別の作業が同じファイルを奪い合わないようにします。保存地点を先に作ると、AIへ大胆な試行を許可しやすくなります。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-10">
@@ -59,12 +61,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-10-s2">10.2 Checkpoint</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。<br/><span class="feature-intro-io"><strong>入力:</strong> AIに任せる大胆な変更、実験的な編集　<strong>出力:</strong> 巻き戻し可能なCheckpoint、戻したあとの状態</span></p>
+<h2 id="ch-10-s2">10.2 Checkpoint</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。<br/><span class="feature-intro-io"><strong>入力:</strong> AIに任せる大胆な変更、実験的な編集　<strong>出力:</strong> 巻き戻し可能なCheckpoint、戻したあとの状態</span></p>
 <pre><code class="language-text">/rewind
 </code></pre>
 <p>またはEscを2回押して履歴選択へ入れる場合がある。CodeとConversationのどちらを戻すか確認する。</p>
 <p>CheckpointはGitの代わりではない。</p>
-<h2 id="ch-10-s3">10.3 最小Git運用</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。<br/><span class="feature-intro-io"><strong>入力:</strong> 完了した小さな変更、検証結果　<strong>出力:</strong> 意味あるCommitメッセージとレビュー可能なdiff</span></p>
+<h2 id="ch-10-s3">10.3 最小Git運用</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。<br/><span class="feature-intro-io"><strong>入力:</strong> 完了した小さな変更、検証結果　<strong>出力:</strong> 意味あるCommitメッセージとレビュー可能なdiff</span></p>
 <pre><code class="language-bash">git init
 git add .
 git commit -m 'chore: baseline before agent changes'
@@ -75,7 +77,7 @@ git diff
 git add &lt;intentional-files&gt;
 git commit -m 'feat: add meeting task extraction'
 </code></pre>
-<h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。<br/><span class="feature-intro-io"><strong>入力:</strong> 完了した変更、検証ログ　<strong>出力:</strong> Rule準拠のCommit、PR説明文</span></p>
+<h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。<br/><span class="feature-intro-io"><strong>入力:</strong> 完了した変更、検証ログ　<strong>出力:</strong> Rule準拠のCommit、PR説明文</span></p>
 <pre><code class="language-text">- Commit前にDiffを見せる
 - 変更目的を1つにする
 - Secrets Scan
@@ -84,7 +86,7 @@ git commit -m 'feat: add meeting task extraction'
 - Force Pushしない
 - Commit Messageへ事実だけを書く
 </code></pre>
-<h2 id="ch-10-s5">10.5 Worktree</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 並行して進めたい複数機能　<strong>出力:</strong> 機能別Worktreeディレクトリと衝突なしの差分</span></p>
+<h2 id="ch-10-s5">10.5 Worktree</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 並行して進めたい複数機能　<strong>出力:</strong> 機能別Worktreeディレクトリと衝突なしの差分</span></p>
 <p>Agentを並列化する時は、同じWorking Treeを共有しない。</p>
 <pre><code class="language-bash">git worktree add ../project-agent-tests -b agent/tests
 git worktree add ../project-agent-docs -b agent/docs
@@ -94,9 +96,11 @@ git worktree add ../project-agent-docs -b agent/docs
 
   </section>
   
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の良い状態をCommitし、その後に小さな変更を加えてDiffを確認し、元へ戻せることを試してください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>可逆性は勇気ではなく、CheckpointとGitで設計する能力です。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小Webサイト運営者（架空）が、AIに『大胆に作り直して』を依頼するたび、戻したい時に戻せず古い版を失っている。</p><h3>こう使う</h3><p>毎回の作業開始前に良い状態をCommitし、Checkpoint＋Gitの二重保存で『戻れる』を物理的に作る。</p><h3>得られるもの</h3><p>AIへ強気に試行させても、いつでも前に戻れる安心が手に入る。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人開発（架空）が、複数機能を同時に試したくて同じファイルを並列編集し、お互いの変更を上書きして混乱した。</p><h3>こう使う</h3><p>Worktreeで作業ツリーを物理的に分け、機能ごとに別ディレクトリで並列に動かす。</p><h3>得られるもの</h3><p>AIに並列実装させても衝突が起きず、後でCherry-pickで良い変更だけを統合できる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の良い状態をCommitし、その後に小さな変更を加えてDiffを確認し、元へ戻せることを試してください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>可逆性は勇気ではなく、CheckpointとGitで設計する能力です。</p></section>
 </article>
 <nav class="chapter-nav"><a href="09.html">← SessionとContext</a><a href="11.html">CLAUDE.md、Rules、Auto Memory →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

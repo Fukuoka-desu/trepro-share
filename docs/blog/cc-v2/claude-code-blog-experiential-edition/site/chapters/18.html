@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-18">
     <h2 id="story-18">物語の現在地</h2>
-    <div class="scene">週報を毎回作るのではなく、開くたびに最新のDrive情報を読み込むDashboardにできないか。遥の問いから、CoworkとLive Artifactsの実験が始まりました。作る資料から、更新される業務画面へ発想が変わります。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Cowork（非開発業務の複数ステップ）</h3><p class="feature-summary">Projectで文脈を固定し、複数ステップの業務処理を継続実行する作業形態。Codeとは別の入口として扱う。</p><dl class="feature-io"><dt>入力</dt><dd>繰り返し発生する業務、参照する文脈ファイル</dd><dt>出力</dt><dd>継続実行可能なCowork Project</dd></dl></article><article class="feature-card"><h3>Live Artifact 5層構造</h3><p class="feature-summary">データ取得・整形・表示・AI要約・キャッシュの5層に分けて設計する、開くたびに最新化する業務インターフェース。</p><dl class="feature-io"><dt>入力</dt><dd>対象データソース、表示したい指標</dd><dt>出力</dt><dd>5層分離されたLive Artifact実装</dd></dl></article><article class="feature-card"><h3>会議Dashboard Prompt</h3><p class="feature-summary">Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするダッシュボード用プロンプトのテンプレ。</p><dl class="feature-io"><dt>入力</dt><dd>Drive上の会議ファイル群、要約観点</dd><dt>出力</dt><dd>リロード時に最新化される会議Dashboard</dd></dl></article><article class="feature-card"><h3>Scheduled設計</h3><p class="feature-summary">定期実行で重複防止・ロック・ログ・通知・再試行を持たせる業務スケジュール設計。</p><dl class="feature-io"><dt>入力</dt><dd>実行頻度、失敗時の挙動、通知先</dd><dt>出力</dt><dd>Scheduledジョブ設定と運用ログ</dd></dl></article><article class="feature-card"><h3>Acceptance（更新/キャッシュ/出典）</h3><p class="feature-summary">Live Artifactの完成判定。更新時刻・キャッシュ振る舞い・出典表示の3点をAcceptance基準にする。</p><dl class="feature-io"><dt>入力</dt><dd>完成したArtifact、運用シナリオ</dd><dt>出力</dt><dd>3点Acceptance通過記録、Stale時の挙動確認</dd></dl></article></div></section>
-    <div class="story-essay"><p>Coworkは非開発業務の複数ステップに向きます。Projectで文脈を固定し、Scheduledで定期実行し、Artifactsで結果を操作可能な画面へし、ConnectorやMCPから最新情報を取り込みます。</p><p>Live Artifactでは、データ取得、整形、表示、AI要約、キャッシュを分けて設計します。読み込みのたびに高価な処理を繰り返さず、更新時刻と出典を表示し、失敗時には古いデータであることを明示します。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Cowork（非開発業務の複数ステップ）</h3><p class="feature-summary">Projectで文脈を固定し、複数ステップの業務処理を継続実行する作業形態。Codeとは別の入口として扱う。</p><dl class="feature-io"><dt>入力</dt><dd>繰り返し発生する業務、参照する文脈ファイル</dd><dt>出力</dt><dd>継続実行可能なCowork Project</dd></dl></article><article class="feature-card"><h3>Live Artifact 5層構造</h3><p class="feature-summary">データ取得・整形・表示・AI要約・キャッシュの5層に分けて設計する、開くたびに最新化する業務インターフェース。</p><dl class="feature-io"><dt>入力</dt><dd>対象データソース、表示したい指標</dd><dt>出力</dt><dd>5層分離されたLive Artifact実装</dd></dl></article><article class="feature-card"><h3>会議Dashboard Prompt</h3><p class="feature-summary">Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするダッシュボード用プロンプトのテンプレ。</p><dl class="feature-io"><dt>入力</dt><dd>Drive上の会議ファイル群、要約観点</dd><dt>出力</dt><dd>リロード時に最新化される会議Dashboard</dd></dl></article><article class="feature-card"><h3>Scheduled設計</h3><p class="feature-summary">定期実行で重複防止・ロック・ログ・通知・再試行を持たせる業務スケジュール設計。</p><dl class="feature-io"><dt>入力</dt><dd>実行頻度、失敗時の挙動、通知先</dd><dt>出力</dt><dd>Scheduledジョブ設定と運用ログ</dd></dl></article><article class="feature-card"><h3>Acceptance（更新/キャッシュ/出典）</h3><p class="feature-summary">Live Artifactの完成判定。更新時刻・キャッシュ振る舞い・出典表示の3点をAcceptance基準にする。</p><dl class="feature-io"><dt>入力</dt><dd>完成したArtifact、運用シナリオ</dd><dt>出力</dt><dd>3点Acceptance通過記録、Stale時の挙動確認</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">週報を毎回作るのではなく、開くたびに最新のDrive情報を読み込むDashboardにできないか。遥の問いから、CoworkとLive Artifactsの実験が始まりました。作る資料から、更新される業務画面へ発想が変わります。</p>
+      <div class="story-essay"><p>Coworkは非開発業務の複数ステップに向きます。Projectで文脈を固定し、Scheduledで定期実行し、Artifactsで結果を操作可能な画面へし、ConnectorやMCPから最新情報を取り込みます。</p><p>Live Artifactでは、データ取得、整形、表示、AI要約、キャッシュを分けて設計します。読み込みのたびに高価な処理を繰り返さず、更新時刻と出典を表示し、失敗時には古いデータであることを明示します。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-18">
@@ -82,7 +84,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <pre><code class="language-text">Source → Fetch → Transform → Cache → View
 Drive     MCP     Parse/Summary  Hash    Filter/Search/Ask
 </code></pre>
-<h2 id="ch-18-s4">18.4 会議Dashboard Prompt</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするダッシュボード用プロンプトのテンプレ。<br/><span class="feature-intro-io"><strong>入力:</strong> Drive上の会議ファイル群、要約観点　<strong>出力:</strong> リロード時に最新化される会議Dashboard</span></p>
+<h2 id="ch-18-s4">18.4 会議Dashboard Prompt</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするダッシュボード用プロンプトのテンプレ。<br/><span class="feature-intro-io"><strong>入力:</strong> Drive上の会議ファイル群、要約観点　<strong>出力:</strong> リロード時に最新化される会議Dashboard</span></p>
 <pre><code class="language-text">Google Driveの「全社会議文字起こし」を参照するLive Artifactを作る。
 
 - 最新File一覧
@@ -104,7 +106,7 @@ Safety:
 - 原文全文/個人情報をLocal Storageへ保存しない
 </code></pre>
 <p>動画で紹介されたArtifact内API名はBetaで変化し得る。作成時の公式Helpを正とする。</p>
-<h2 id="ch-18-s5">18.5 Scheduled設計</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>定期実行で重複防止・ロック・ログ・通知・再試行を持たせる業務スケジュール設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 実行頻度、失敗時の挙動、通知先　<strong>出力:</strong> Scheduledジョブ設定と運用ログ</span></p>
+<h2 id="ch-18-s5">18.5 Scheduled設計</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>定期実行で重複防止・ロック・ログ・通知・再試行を持たせる業務スケジュール設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 実行頻度、失敗時の挙動、通知先　<strong>出力:</strong> Scheduledジョブ設定と運用ログ</span></p>
 <pre><code class="language-text">- 対象期間
 - 既処理判定
 - Timezone
@@ -114,7 +116,7 @@ Safety:
 - 保存先
 - 0件時の挙動
 </code></pre>
-<h2 id="ch-18-s6">18.6 Acceptance</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Live Artifactの完成判定。更新時刻・キャッシュ振る舞い・出典表示の3点をAcceptance基準にする。<br/><span class="feature-intro-io"><strong>入力:</strong> 完成したArtifact、運用シナリオ　<strong>出力:</strong> 3点Acceptance通過記録、Stale時の挙動確認</span></p>
+<h2 id="ch-18-s6">18.6 Acceptance</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Live Artifactの完成判定。更新時刻・キャッシュ振る舞い・出典表示の3点をAcceptance基準にする。<br/><span class="feature-intro-io"><strong>入力:</strong> 完成したArtifact、運用シナリオ　<strong>出力:</strong> 3点Acceptance通過記録、Stale時の挙動確認</span></p>
 <pre><code class="language-text">[ ] Add/Deleteで更新
 [ ] 未変更Dataを再処理しない
 [ ] 権限不足説明
@@ -146,9 +148,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> ローカルの会議データを表示する小さなDashboardを作り、更新・キャッシュ・出典表示の三点を確認してください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業マネージャー（架空）が、週報を毎週手動更新しており、開くたびに最新化されないため週末まで状況が見えない。</p><h3>こう使う</h3><p>Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするLive Artifact Dashboardを作る。</p><h3>得られるもの</h3><p>開いた瞬間に最新の進捗が見え、週次更新作業そのものが不要になる。</p></article><article class="usecase-card"><h3>場面</h3><p>中小オペレーター（架空）が、外部APIを毎リロードで叩く実装にして請求金額がはねた。</p><h3>こう使う</h3><p>Cache・更新時刻・出典・失敗時のStale表示を分離して設計する。</p><h3>得られるもの</h3><p>コストとUXのバランスが取れ、データ取得失敗時にも古い情報と明示できる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> ローカルの会議データを表示する小さなDashboardを作り、更新・キャッシュ・出典表示の三点を確認してください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Artifactsは静的な成果物ではなく、データ更新とAI処理を持つ業務インターフェースです。</p></section>
 </article>
 <nav class="chapter-nav"><a href="17.html">← Claude Designから実装へ</a><a href="19.html">Claude Codeを自分専用に育てる →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-05">
     <h2 id="story-05">物語の現在地</h2>
-    <div class="scene">遥は『いい感じのアプリを作って』と入力し、期待と違う画面を受け取りました。蓮はプロンプトの言い回しを直す代わりに、目的、利用者、制約、成果物、完了条件を一緒に書き出します。結果は、呪文より仕事の定義で変わりました。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>汎用依頼Template（6項目構造）</h3><p class="feature-summary">目的・文脈・制約・成果物・完了条件・証拠の6項目で曖昧な依頼を構造化し、AI判断のブレを抑える依頼フォーマット。</p><dl class="feature-io"><dt>入力</dt><dd>曖昧な業務依頼文、関連する背景情報</dd><dt>出力</dt><dd>AIに渡せる6項目テンプレ化された明確な依頼</dd></dl></article><article class="feature-card"><h3>Claudeに質問させる運用</h3><p class="feature-summary">未知の要件は実装前にAIから質問を引き出す指示パターン。沈黙のまま暴走させない安全弁。</p><dl class="feature-io"><dt>入力</dt><dd>やや曖昧な依頼、判断に迷う設計分岐</dd><dt>出力</dt><dd>Claudeからの質問リストと、それへの回答記録</dd></dl></article><article class="feature-card"><h3>完了報告の型（変更/検証/残リスク）</h3><p class="feature-summary">『完成しました』を変更したもの・検証したこと・残っているリスクの3区分に分けて確認可能な証拠に変える報告書式。</p><dl class="feature-io"><dt>入力</dt><dd>実装が終わった作業、テスト結果</dd><dt>出力</dt><dd>3区分で構造化された完了報告とリスクリスト</dd></dl></article></div></section>
-    <div class="story-essay"><p>強い指示は長文である必要はありません。何のために、何を材料に、どこまで変え、何を作り、どうなれば終わりかが明確なら、AIは判断しやすくなります。未知の要件がある場合は、実装前に質問させます。</p><p>完了報告にも型が必要です。変更したもの、検証したこと、残っているリスクを分けると、『完成しました』という曖昧な宣言を、確認可能な証拠へ変えられます。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>汎用依頼Template（6項目構造）</h3><p class="feature-summary">目的・文脈・制約・成果物・完了条件・証拠の6項目で曖昧な依頼を構造化し、AI判断のブレを抑える依頼フォーマット。</p><dl class="feature-io"><dt>入力</dt><dd>曖昧な業務依頼文、関連する背景情報</dd><dt>出力</dt><dd>AIに渡せる6項目テンプレ化された明確な依頼</dd></dl></article><article class="feature-card"><h3>Claudeに質問させる運用</h3><p class="feature-summary">未知の要件は実装前にAIから質問を引き出す指示パターン。沈黙のまま暴走させない安全弁。</p><dl class="feature-io"><dt>入力</dt><dd>やや曖昧な依頼、判断に迷う設計分岐</dd><dt>出力</dt><dd>Claudeからの質問リストと、それへの回答記録</dd></dl></article><article class="feature-card"><h3>完了報告の型（変更/検証/残リスク）</h3><p class="feature-summary">『完成しました』を変更したもの・検証したこと・残っているリスクの3区分に分けて確認可能な証拠に変える報告書式。</p><dl class="feature-io"><dt>入力</dt><dd>実装が終わった作業、テスト結果</dd><dt>出力</dt><dd>3区分で構造化された完了報告とリスクリスト</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">遥は『いい感じのアプリを作って』と入力し、期待と違う画面を受け取りました。蓮はプロンプトの言い回しを直す代わりに、目的、利用者、制約、成果物、完了条件を一緒に書き出します。結果は、呪文より仕事の定義で変わりました。</p>
+      <div class="story-essay"><p>強い指示は長文である必要はありません。何のために、何を材料に、どこまで変え、何を作り、どうなれば終わりかが明確なら、AIは判断しやすくなります。未知の要件がある場合は、実装前に質問させます。</p><p>完了報告にも型が必要です。変更したもの、検証したこと、残っているリスクを分けると、『完成しました』という曖昧な宣言を、確認可能な証拠へ変えられます。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-05">
@@ -82,12 +84,12 @@ Evidence   何を証拠として出すか
 外部API、認証、DBは対象外。
 Sample Dataで起動し、Test/Build成功を完了条件とする。
 </code></pre>
-<h2 id="ch-05-s4">5.4 Claudeに質問させる</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>未知の要件は実装前にAIから質問を引き出す指示パターン。沈黙のまま暴走させない安全弁。<br/><span class="feature-intro-io"><strong>入力:</strong> やや曖昧な依頼、判断に迷う設計分岐　<strong>出力:</strong> Claudeからの質問リストと、それへの回答記録</span></p>
+<h2 id="ch-05-s4">5.4 Claudeに質問させる</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>未知の要件は実装前にAIから質問を引き出す指示パターン。沈黙のまま暴走させない安全弁。<br/><span class="feature-intro-io"><strong>入力:</strong> やや曖昧な依頼、判断に迷う設計分岐　<strong>出力:</strong> Claudeからの質問リストと、それへの回答記録</span></p>
 <pre><code class="language-text">実装前に、不足情報を最大5問まで質問してください。
 選択肢を提示し、各選択肢が工数・Riskへ与える影響を短く説明してください。
 </code></pre>
 <p>質問に答えられない場合は、仮定を明示して最小版を選ぶ。</p>
-<h2 id="ch-05-s5">5.5 完了報告の型</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>『完成しました』を変更したもの・検証したこと・残っているリスクの3区分に分けて確認可能な証拠に変える報告書式。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装が終わった作業、テスト結果　<strong>出力:</strong> 3区分で構造化された完了報告とリスクリスト</span></p>
+<h2 id="ch-05-s5">5.5 完了報告の型</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>『完成しました』を変更したもの・検証したこと・残っているリスクの3区分に分けて確認可能な証拠に変える報告書式。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装が終わった作業、テスト結果　<strong>出力:</strong> 3区分で構造化された完了報告とリスクリスト</span></p>
 <pre><code class="language-text">1. 結果
 2. 変更File
 3. 実行したCheckとExit Status
@@ -100,9 +102,11 @@ Sample Dataで起動し、Test/Build成功を完了条件とする。
 
   </section>
   
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 曖昧な依頼を一つ選び、目的・文脈・制約・成果物・完了条件・証拠の六項目へ書き直してください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅メーカーのマーケ担当（架空）が、AIに『いい感じのLP作って』と頼み、期待と違う画面が出ては手戻りを繰り返している。</p><h3>こう使う</h3><p>目的・利用者・制約・成果物・完了条件・証拠の六項目テンプレートを使って依頼文を書き直す。</p><h3>得られるもの</h3><p>AIの判断材料が揃って一発で意図に近い出力になり、手戻り回数が大幅に減る。</p></article><article class="usecase-card"><h3>場面</h3><p>PM経験ゼロの開発者（架空）が、上司から『この依頼を技術翻訳して』と毎回言われ、要件整理だけで一日を消費している。</p><h3>こう使う</h3><p>曖昧な依頼を完了報告テンプレ（変更/検証/残リスク）まで含めて構造化し、AIへ渡す前に人へ見せる。</p><h3>得られるもの</h3><p>上司確認も同じテンプレで進み、要件と完了の認識ズレが消える。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 曖昧な依頼を一つ選び、目的・文脈・制約・成果物・完了条件・証拠の六項目へ書き直してください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>プロンプト技術の中心は、AI向けの言葉選びではなく、仕事の定義です。</p></section>
 </article>
 <nav class="chapter-nav"><a href="04.html">← 最初の90分実習：会議アシスタント</a><a href="06.html">Explore → Specify → Plan → Implement → Verify → Review → Commit →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

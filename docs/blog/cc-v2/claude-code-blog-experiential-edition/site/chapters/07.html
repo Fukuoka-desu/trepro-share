@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-07">
     <h2 id="story-07">物語の現在地</h2>
-    <div class="scene">実装中、許可確認が何度も現れ、遥は『全部自動にできないの？』と尋ねます。美咲は、自動化の速度ではなく、事故が起きたときの半径を見せました。自由度を上げる前に、どこまで壊れてもよいかを決める必要があります。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Permission Mode と Permission Rule</h3><p class="feature-summary">読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。</p><dl class="feature-io"><dt>入力</dt><dd>扱うProject、許可してよい操作と確認したい操作</dd><dt>出力</dt><dd>Project単位の許可ポリシー表とPermission Rule定義</dd></dl></article><article class="feature-card"><h3>Sandbox と Bypass運用</h3><p class="feature-summary">Bypassは隔離された使い捨て環境のみ、本番Projectは確認モード固定とする運用ルール。便利さと事故半径を分離する。</p><dl class="feature-io"><dt>入力</dt><dd>実験用ワークスペース、本番Projectの一覧</dd><dt>出力</dt><dd>Bypass許可Pathと禁止Pathを明示したCLAUDE.mdルール</dd></dl></article><article class="feature-card"><h3>Secrets管理ルール</h3><p class="feature-summary">APIキー・トークンをチャットに貼らず、環境変数や専用ファイルへ置きGitから除外する3点ルール。</p><dl class="feature-io"><dt>入力</dt><dd>使う外部サービス、必要な鍵・トークン</dd><dt>出力</dt><dd>Secret保存場所、.gitignore更新、CLAUDE.md記載</dd></dl></article><article class="feature-card"><h3>削除の標準手順</h3><p class="feature-summary">対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の6段で、削除事故をワンクリックで起こさない手順化。</p><dl class="feature-io"><dt>入力</dt><dd>整理したいフォルダ、削除候補ファイル</dd><dt>出力</dt><dd>削除Dry-run結果、バックアップ、削除完了レポート</dd></dl></article></div></section>
-    <div class="story-essay"><p>Permission Modeは快適さの設定ではなく、責任の境界です。読む、編集する、コマンドを実行する、ネットワークへ出る、削除するという操作を分け、必要なものだけ許可します。Bypassは隔離された使い捨て環境に限定します。</p><p>Secretsはチャットへ貼らず、環境変数や専用ファイルへ保存し、Gitから除外します。削除は対象一覧、件数、バックアップ、実行後確認を通す標準手順にします。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Permission Mode と Permission Rule</h3><p class="feature-summary">読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。</p><dl class="feature-io"><dt>入力</dt><dd>扱うProject、許可してよい操作と確認したい操作</dd><dt>出力</dt><dd>Project単位の許可ポリシー表とPermission Rule定義</dd></dl></article><article class="feature-card"><h3>Sandbox と Bypass運用</h3><p class="feature-summary">Bypassは隔離された使い捨て環境のみ、本番Projectは確認モード固定とする運用ルール。便利さと事故半径を分離する。</p><dl class="feature-io"><dt>入力</dt><dd>実験用ワークスペース、本番Projectの一覧</dd><dt>出力</dt><dd>Bypass許可Pathと禁止Pathを明示したCLAUDE.mdルール</dd></dl></article><article class="feature-card"><h3>Secrets管理ルール</h3><p class="feature-summary">APIキー・トークンをチャットに貼らず、環境変数や専用ファイルへ置きGitから除外する3点ルール。</p><dl class="feature-io"><dt>入力</dt><dd>使う外部サービス、必要な鍵・トークン</dd><dt>出力</dt><dd>Secret保存場所、.gitignore更新、CLAUDE.md記載</dd></dl></article><article class="feature-card"><h3>削除の標準手順</h3><p class="feature-summary">対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の6段で、削除事故をワンクリックで起こさない手順化。</p><dl class="feature-io"><dt>入力</dt><dd>整理したいフォルダ、削除候補ファイル</dd><dt>出力</dt><dd>削除Dry-run結果、バックアップ、削除完了レポート</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">実装中、許可確認が何度も現れ、遥は『全部自動にできないの？』と尋ねます。美咲は、自動化の速度ではなく、事故が起きたときの半径を見せました。自由度を上げる前に、どこまで壊れてもよいかを決める必要があります。</p>
+      <div class="story-essay"><p>Permission Modeは快適さの設定ではなく、責任の境界です。読む、編集する、コマンドを実行する、ネットワークへ出る、削除するという操作を分け、必要なものだけ許可します。Bypassは隔離された使い捨て環境に限定します。</p><p>Secretsはチャットへ貼らず、環境変数や専用ファイルへ保存し、Gitから除外します。削除は対象一覧、件数、バックアップ、実行後確認を通す標準手順にします。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-07">
@@ -37,7 +39,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-07-s1">7.1 Permission Mode</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うProject、許可してよい操作と確認したい操作　<strong>出力:</strong> Project単位の許可ポリシー表とPermission Rule定義</span></p>
+    <h2 id="ch-07-s1">7.1 Permission Mode</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うProject、許可してよい操作と確認したい操作　<strong>出力:</strong> Project単位の許可ポリシー表とPermission Rule定義</span></p>
 <table>
 <thead>
 <tr>
@@ -80,7 +82,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <p>Mode名と提供範囲はVersionで変わり得る。<code>/permissions</code>と現行公式情報を確認する。</p>
-<h2 id="ch-07-s2">7.2 Permission Rule</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うProject、許可してよい操作と確認したい操作　<strong>出力:</strong> Project単位の許可ポリシー表とPermission Rule定義</span></p>
+<h2 id="ch-07-s2">7.2 Permission Rule</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うProject、許可してよい操作と確認したい操作　<strong>出力:</strong> Project単位の許可ポリシー表とPermission Rule定義</span></p>
 <p>Ruleの評価は、基本的に <code>deny → ask → allow</code> の順である。広いdenyに狭いallowを重ねても例外にはならない。</p>
 <pre><code class="language-json">{
   "permissions": {
@@ -114,7 +116,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [ ] Side Effectなし
 </code></pre>
 <p>全社MacではManaged Settingsで無効化する。</p>
-<h2 id="ch-07-s4">7.4 Sandbox</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Bypassは隔離された使い捨て環境のみ、本番Projectは確認モード固定とする運用ルール。便利さと事故半径を分離する。<br/><span class="feature-intro-io"><strong>入力:</strong> 実験用ワークスペース、本番Projectの一覧　<strong>出力:</strong> Bypass許可Pathと禁止Pathを明示したCLAUDE.mdルール</span></p>
+<h2 id="ch-07-s4">7.4 Sandbox</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Bypassは隔離された使い捨て環境のみ、本番Projectは確認モード固定とする運用ルール。便利さと事故半径を分離する。<br/><span class="feature-intro-io"><strong>入力:</strong> 実験用ワークスペース、本番Projectの一覧　<strong>出力:</strong> Bypass許可Pathと禁止Pathを明示したCLAUDE.mdルール</span></p>
 <p>Session内で：</p>
 <pre><code class="language-text">/sandbox
 </code></pre>
@@ -132,7 +134,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 }
 </code></pre>
 <p>SandboxはPermission Modeとは別物である。Permissionは「実行してよいか」、Sandboxは「実行後に何へ触れられるか」を制御する。</p>
-<h2 id="ch-07-s5">7.5 Secrets</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>APIキー・トークンをチャットに貼らず、環境変数や専用ファイルへ置きGitから除外する3点ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> 使う外部サービス、必要な鍵・トークン　<strong>出力:</strong> Secret保存場所、.gitignore更新、CLAUDE.md記載</span></p>
+<h2 id="ch-07-s5">7.5 Secrets</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>APIキー・トークンをチャットに貼らず、環境変数や専用ファイルへ置きGitから除外する3点ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> 使う外部サービス、必要な鍵・トークン　<strong>出力:</strong> Secret保存場所、.gitignore更新、CLAUDE.md記載</span></p>
 <pre><code class="language-text">- Chatへ貼らない
 - `.env`を読ませない
 - Keychain/Secret Manager/CI Secretを使う
@@ -143,7 +145,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <p>Prompt：</p>
 <pre><code class="language-text">認証情報は環境変数 INTERNAL_API_TOKEN から読み、値を表示・保存・Test Fixtureへ含めない実装にしてください。
 </code></pre>
-<h2 id="ch-07-s6">7.6 削除の標準手順</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の6段で、削除事故をワンクリックで起こさない手順化。<br/><span class="feature-intro-io"><strong>入力:</strong> 整理したいフォルダ、削除候補ファイル　<strong>出力:</strong> 削除Dry-run結果、バックアップ、削除完了レポート</span></p>
+<h2 id="ch-07-s6">7.6 削除の標準手順</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の6段で、削除事故をワンクリックで起こさない手順化。<br/><span class="feature-intro-io"><strong>入力:</strong> 整理したいフォルダ、削除候補ファイル　<strong>出力:</strong> 削除Dry-run結果、バックアップ、削除完了レポート</span></p>
 <pre><code class="language-text">List → Dry-run → Human Review → Quarantine → Retention → Delete Approval
 </code></pre>
 <p>50 File以上、顧客Data、DB、Cloud Resourceは専用Safety Railを通す。</p>
@@ -151,9 +153,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在のプロジェクトで許可してよい操作と、毎回確認すべき操作を二列に分けて書いてください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、毎回出る権限確認を面倒に思いBypassを常用した結果、検証中の本番DBへ誤更新コマンドを流してしまった。</p><h3>こう使う</h3><p>Bypassは隔離した使い捨て環境のみ・本番Projectは確認モード固定、というRuleをCLAUDE.mdへ書く。</p><h3>得られるもの</h3><p>便利さと事故半径のトレードオフが明示され、危険操作が必ず人の目を通るようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、AIに全権を与えるか禁止するかの二択しか出来ず、安全と業務スピードの両立に悩んでいる。</p><h3>こう使う</h3><p>操作を読む・編集する・実行する・ネットワーク・削除の五分類に分け、それぞれ許可ポリシーを別に設計する。</p><h3>得られるもの</h3><p>全権でも全禁止でもなく、業務に必要な範囲だけを許可でき、稟議が通る具体度になる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、AIに『古いファイルを掃除して』と頼み、契約PDFまで巻き込まれて削除されかけた。</p><h3>こう使う</h3><p>削除は対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の標準手順をSkill化する。</p><h3>得られるもの</h3><p>削除がワンクリックで進まなくなり、最悪でも実行前のリストで止められる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在のプロジェクトで許可してよい操作と、毎回確認すべき操作を二列に分けて書いてください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>権限は便利さに合わせて広げるのではなく、被害を説明できる範囲に限定します。</p></section>
 </article>
 <nav class="chapter-nav"><a href="06.html">← Explore → Specify → Plan → Implement → Verify → Review → Commit</a><a href="08.html">ModelとEffort →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

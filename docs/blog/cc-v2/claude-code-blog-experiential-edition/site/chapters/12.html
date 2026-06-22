@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-12">
     <h2 id="story-12">物語の現在地</h2>
-    <div class="scene">会議アシスタントを三度改善したあと、遥は『この成功手順を名前付きで呼びたい』と考えます。ナビゲーターは会話ログを保存するのではなく、入力、手順、検証、失敗時対応をまとめたSkillへ変換します。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Skill（再現可能な業務パッケージ）</h3><p class="feature-summary">名前・条件・入力・処理・出力・品質基準・参照資料を持つ、必要時だけ読み込まれる再利用単位。</p><dl class="feature-io"><dt>入力</dt><dd>成功した業務手順、入力例、合格基準</dd><dt>出力</dt><dd>次回から呼び出せるSKILL.mdと参照資料</dd></dl></article><article class="feature-card"><h3>Custom Commands と Canonical Name</h3><p class="feature-summary">SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。</p><dl class="feature-io"><dt>入力</dt><dd>Skill名候補、所有者、利用シーン</dd><dt>出力</dt><dd>lowercase-hyphenのCanonical Nameと所有Owner</dd></dl></article><article class="feature-card"><h3>Progressive Disclosure（references分離）</h3><p class="feature-summary">長文・コード例・FAQはreferencesへ逃がし、SKILL.md本体を短く保つ設計原則。</p><dl class="feature-io"><dt>入力</dt><dd>Skill関連の長文素材、コード例</dd><dt>出力</dt><dd>短いSKILL.mdとreferences/配下の補助資料</dd></dl></article><article class="feature-card"><h3>4軸評価（明確性/実用性/保守性/整合性）</h3><p class="feature-summary">Skillを4観点で採点し、合格点未満は本番配布しない品質ゲート。Generator/Evaluator分離の前段で使う。</p><dl class="feature-io"><dt>入力</dt><dd>完成したSkill、評価Fixture</dd><dt>出力</dt><dd>4軸スコアと改善優先度のレポート</dd></dl></article></div></section>
-    <div class="story-essay"><p>Skillはプロンプトの短縮形ではなく、再現可能な業務パッケージです。名前、使う条件、入力、処理、出力、品質基準、参照資料を持ち、必要なときだけ読み込まれます。長い資料はreferencesへ分け、Progressive Disclosureを守ります。</p><p>最良の作り方は、先に仕事を成功させ、その過程を抽出し、別の入力で試し、独立した評価器で採点することです。Claude CodeとCodexで共通利用する場合は、正本名と配置を統一します。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Skill（再現可能な業務パッケージ）</h3><p class="feature-summary">名前・条件・入力・処理・出力・品質基準・参照資料を持つ、必要時だけ読み込まれる再利用単位。</p><dl class="feature-io"><dt>入力</dt><dd>成功した業務手順、入力例、合格基準</dd><dt>出力</dt><dd>次回から呼び出せるSKILL.mdと参照資料</dd></dl></article><article class="feature-card"><h3>Custom Commands と Canonical Name</h3><p class="feature-summary">SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。</p><dl class="feature-io"><dt>入力</dt><dd>Skill名候補、所有者、利用シーン</dd><dt>出力</dt><dd>lowercase-hyphenのCanonical Nameと所有Owner</dd></dl></article><article class="feature-card"><h3>Progressive Disclosure（references分離）</h3><p class="feature-summary">長文・コード例・FAQはreferencesへ逃がし、SKILL.md本体を短く保つ設計原則。</p><dl class="feature-io"><dt>入力</dt><dd>Skill関連の長文素材、コード例</dd><dt>出力</dt><dd>短いSKILL.mdとreferences/配下の補助資料</dd></dl></article><article class="feature-card"><h3>4軸評価（明確性/実用性/保守性/整合性）</h3><p class="feature-summary">Skillを4観点で採点し、合格点未満は本番配布しない品質ゲート。Generator/Evaluator分離の前段で使う。</p><dl class="feature-io"><dt>入力</dt><dd>完成したSkill、評価Fixture</dd><dt>出力</dt><dd>4軸スコアと改善優先度のレポート</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">会議アシスタントを三度改善したあと、遥は『この成功手順を名前付きで呼びたい』と考えます。ナビゲーターは会話ログを保存するのではなく、入力、手順、検証、失敗時対応をまとめたSkillへ変換します。</p>
+      <div class="story-essay"><p>Skillはプロンプトの短縮形ではなく、再現可能な業務パッケージです。名前、使う条件、入力、処理、出力、品質基準、参照資料を持ち、必要なときだけ読み込まれます。長い資料はreferencesへ分け、Progressive Disclosureを守ります。</p><p>最良の作り方は、先に仕事を成功させ、その過程を抽出し、別の入力で試し、独立した評価器で採点することです。Claude CodeとCodexで共通利用する場合は、正本名と配置を統一します。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-12">
@@ -40,7 +42,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
     <h2 id="ch-12-s1">12.1 Skillとは</h2>
 <p>Skillは、特定Taskを実行するための知識、手順、出力契約、Reference、Script、Fixtureをまとめた再利用Packageである。</p>
 <p>Claude.mdが「この職場の基本方針」なら、Skillは「業務Manual」である。ただし、SkillもPrompt資産であり、Security強制はHook/Permissionへ置く。</p>
-<h2 id="ch-12-s2">12.2 Custom Commands</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill名候補、所有者、利用シーン　<strong>出力:</strong> lowercase-hyphenのCanonical Nameと所有Owner</span></p>
+<h2 id="ch-12-s2">12.2 Custom Commands</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill名候補、所有者、利用シーン　<strong>出力:</strong> lowercase-hyphenのCanonical Nameと所有Owner</span></p>
 <p>旧 <code>.claude/commands/</code> は互換目的で動く場合があるが、新規はSkillsへ統合する。Commands 13個を持つ現行Harnessは、次の順で移行する。</p>
 <ol>
 <li>呼び出し名と利用実績をInventory化。</li>
@@ -48,7 +50,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>UI操作だけの短いものは互換Wrapperを残す。</li>
 <li>90日後に旧CommandをDeprecate。</li>
 </ol>
-<h2 id="ch-12-s3">12.3 Canonical Name</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill名候補、所有者、利用シーン　<strong>出力:</strong> lowercase-hyphenのCanonical Nameと所有Owner</span></p>
+<h2 id="ch-12-s3">12.3 Canonical Name</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>SkillsへCommandsを統合する正本命名規約。/コマンドで呼び出せる名前と所有者を定義する。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill名候補、所有者、利用シーン　<strong>出力:</strong> lowercase-hyphenのCanonical Nameと所有Owner</span></p>
 <p>Claude/Codex共通のAgent Skillsでは次を守る。</p>
 <pre><code class="language-text">- lowercase letters
 - digits
@@ -108,7 +110,7 @@ disable-model-invocation: true
 # References
 Read `references/...` only when [condition].
 </code></pre>
-<h2 id="ch-12-s5">12.5 Progressive Disclosure</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>長文・コード例・FAQはreferencesへ逃がし、SKILL.md本体を短く保つ設計原則。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill関連の長文素材、コード例　<strong>出力:</strong> 短いSKILL.mdとreferences/配下の補助資料</span></p>
+<h2 id="ch-12-s5">12.5 Progressive Disclosure</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>長文・コード例・FAQはreferencesへ逃がし、SKILL.md本体を短く保つ設計原則。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill関連の長文素材、コード例　<strong>出力:</strong> 短いSKILL.mdとreferences/配下の補助資料</span></p>
 <pre><code class="language-text">SKILL.md: 発動条件、主要Workflow、契約、安全、参照条件
 references/: 長いAPI仕様、例、部門Rule
 scripts/: 決定的処理
@@ -127,7 +129,7 @@ tests/: 回帰Test
 8. 利用実績で改善
 </code></pre>
 <p>会話中に「今の内容をそのままSkillにして」だけで全社配布しない。</p>
-<h2 id="ch-12-s7">12.7 4軸評価</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Skillを4観点で採点し、合格点未満は本番配布しない品質ゲート。Generator/Evaluator分離の前段で使う。<br/><span class="feature-intro-io"><strong>入力:</strong> 完成したSkill、評価Fixture　<strong>出力:</strong> 4軸スコアと改善優先度のレポート</span></p>
+<h2 id="ch-12-s7">12.7 4軸評価</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Skillを4観点で採点し、合格点未満は本番配布しない品質ゲート。Generator/Evaluator分離の前段で使う。<br/><span class="feature-intro-io"><strong>入力:</strong> 完成したSkill、評価Fixture　<strong>出力:</strong> 4軸スコアと改善優先度のレポート</span></p>
 <table>
 <thead>
 <tr>
@@ -180,9 +182,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 最近うまくいった作業を一つ選び、SKILL.mdへ入力・手順・出力・検証・失敗時対応を書き出してください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>XYZ広告のプランナー（架空）が、毎週類似のレポート依頼に対して毎回プロンプトを書き直し、品質も毎回ぶれている。</p><h3>こう使う</h3><p>成功した会話を入力・処理・出力・品質基準・失敗時対応の形式へ整理し、Skill化する。</p><h3>得られるもの</h3><p>次週からは『あのSkillで』の一言で同品質の成果物が出る。教育コストもSkill共有で済む。</p></article><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、複数メンバーで同じSkillを書き散らし、似て非なるSkillが乱立して使い分けに迷っている。</p><h3>こう使う</h3><p>正本名・Owner・参照資料を持つSKILL.mdテンプレートを揃え、referencesに長文を逃がすProgressive Disclosureを徹底する。</p><h3>得られるもの</h3><p>Skillの重複が抑えられ、新規メンバーも『どれを使えばよいか』を迷わず選べる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 最近うまくいった作業を一つ選び、SKILL.mdへ入力・手順・出力・検証・失敗時対応を書き出してください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Skillは成功した会話ではなく、別の入力でも再現できる業務手順です。</p></section>
 </article>
 <nav class="chapter-nav"><a href="11.html">← CLAUDE.md、Rules、Auto Memory</a><a href="13.html">Subagents、Agent View、並列作業 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

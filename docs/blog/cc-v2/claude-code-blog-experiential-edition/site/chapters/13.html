@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-13">
     <h2 id="story-13">物語の現在地</h2>
-    <div class="scene">自分で作った資料を自分でレビューすると、どうしても甘くなります。蓮は、実装を担当したセッションを閉じ、背景を知らないReviewer Agentへ成果物だけを渡しました。初めて見える欠点が、いくつも出てきます。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Subagent（文脈を分ける仕組み）</h3><p class="feature-summary">役割ごとに別Agentを立てて文脈を分離し、過去会話に引きずられない調査・実装・レビューを可能にする機構。</p><dl class="feature-io"><dt>入力</dt><dd>親セッションの作業、役割ごとの責務</dd><dt>出力</dt><dd>Subagentの完了報告、独立した中間成果物</dd></dl></article><article class="feature-card"><h3>Reviewer Agent（独立コンテキストの評価者）</h3><p class="feature-summary">成果物だけを渡して評価させ、迎合バイアスを排した指摘を得るための専任エージェント。</p><dl class="feature-io"><dt>入力</dt><dd>成果物、評価観点（要件/安全/保守性）</dd><dt>出力</dt><dd>独立コンテキストからの指摘リストと優先度</dd></dl></article><article class="feature-card"><h3>Research Agent</h3><p class="feature-summary">調査専任で出典・確度・反証を分けて整理するエージェント。実装者と分離して情報収集の質を確保する。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、検索範囲、評価軸</dd><dt>出力</dt><dd>出典付き調査結果と未確認項目リスト</dd></dl></article><article class="feature-card"><h3>Agent View と並列実行</h3><p class="feature-summary">複数Agentの動きを俯瞰し、独立した仕事へ分担させる運用画面。同じファイルへの同時編集は避ける指針付き。</p><dl class="feature-io"><dt>入力</dt><dd>並列化したいタスク群、各Agent責務</dd><dt>出力</dt><dd>Agent View上の並列実行ログと統合結果</dd></dl></article></div></section>
-    <div class="story-essay"><p>Subagentは単なる並列化ではなく、文脈を分ける仕組みです。調査、実装、レビューなど役割を限定し、必要な入力と期待する出力を明示します。作成者と評価者を分けると、過去の会話に引きずられない評価ができます。</p><p>Agent Viewや並列実行は、互いに独立した仕事へ使います。同じファイルを複数Agentへ同時編集させるのではなく、調査観点やレビュー観点を分担させます。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Subagent（文脈を分ける仕組み）</h3><p class="feature-summary">役割ごとに別Agentを立てて文脈を分離し、過去会話に引きずられない調査・実装・レビューを可能にする機構。</p><dl class="feature-io"><dt>入力</dt><dd>親セッションの作業、役割ごとの責務</dd><dt>出力</dt><dd>Subagentの完了報告、独立した中間成果物</dd></dl></article><article class="feature-card"><h3>Reviewer Agent（独立コンテキストの評価者）</h3><p class="feature-summary">成果物だけを渡して評価させ、迎合バイアスを排した指摘を得るための専任エージェント。</p><dl class="feature-io"><dt>入力</dt><dd>成果物、評価観点（要件/安全/保守性）</dd><dt>出力</dt><dd>独立コンテキストからの指摘リストと優先度</dd></dl></article><article class="feature-card"><h3>Research Agent</h3><p class="feature-summary">調査専任で出典・確度・反証を分けて整理するエージェント。実装者と分離して情報収集の質を確保する。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、検索範囲、評価軸</dd><dt>出力</dt><dd>出典付き調査結果と未確認項目リスト</dd></dl></article><article class="feature-card"><h3>Agent View と並列実行</h3><p class="feature-summary">複数Agentの動きを俯瞰し、独立した仕事へ分担させる運用画面。同じファイルへの同時編集は避ける指針付き。</p><dl class="feature-io"><dt>入力</dt><dd>並列化したいタスク群、各Agent責務</dd><dt>出力</dt><dd>Agent View上の並列実行ログと統合結果</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">自分で作った資料を自分でレビューすると、どうしても甘くなります。蓮は、実装を担当したセッションを閉じ、背景を知らないReviewer Agentへ成果物だけを渡しました。初めて見える欠点が、いくつも出てきます。</p>
+      <div class="story-essay"><p>Subagentは単なる並列化ではなく、文脈を分ける仕組みです。調査、実装、レビューなど役割を限定し、必要な入力と期待する出力を明示します。作成者と評価者を分けると、過去の会話に引きずられない評価ができます。</p><p>Agent Viewや並列実行は、互いに独立した仕事へ使います。同じファイルを複数Agentへ同時編集させるのではなく、調査観点やレビュー観点を分担させます。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-13">
@@ -43,7 +45,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Toolと権限を限定する。</li>
 <li>作成者と評価者を分ける。</li>
 </ol>
-<h2 id="ch-13-s2">13.2 Reviewer Agent</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>成果物だけを渡して評価させ、迎合バイアスを排した指摘を得るための専任エージェント。<br/><span class="feature-intro-io"><strong>入力:</strong> 成果物、評価観点（要件/安全/保守性）　<strong>出力:</strong> 独立コンテキストからの指摘リストと優先度</span></p>
+<h2 id="ch-13-s2">13.2 Reviewer Agent</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>成果物だけを渡して評価させ、迎合バイアスを排した指摘を得るための専任エージェント。<br/><span class="feature-intro-io"><strong>入力:</strong> 成果物、評価観点（要件/安全/保守性）　<strong>出力:</strong> 独立コンテキストからの指摘リストと優先度</span></p>
 <p><code>.claude/agents/code-reviewer.md</code>：</p>
 <pre><code class="language-markdown">---
 name: code-reviewer
@@ -59,7 +61,7 @@ and operational risk. For each finding include severity, file, symbol or line,
 evidence, and minimal remediation. Separate blockers from suggestions.
 </code></pre>
 <p>Review AgentにWrite Toolを渡さない。</p>
-<h2 id="ch-13-s3">13.3 Research Agent</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>調査専任で出典・確度・反証を分けて整理するエージェント。実装者と分離して情報収集の質を確保する。<br/><span class="feature-intro-io"><strong>入力:</strong> 調査テーマ、検索範囲、評価軸　<strong>出力:</strong> 出典付き調査結果と未確認項目リスト</span></p>
+<h2 id="ch-13-s3">13.3 Research Agent</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>調査専任で出典・確度・反証を分けて整理するエージェント。実装者と分離して情報収集の質を確保する。<br/><span class="feature-intro-io"><strong>入力:</strong> 調査テーマ、検索範囲、評価軸　<strong>出力:</strong> 出典付き調査結果と未確認項目リスト</span></p>
 <pre><code class="language-markdown">---
 name: primary-source-researcher
 description: Collect primary-source evidence for a narrowly defined research question and save structured claims.
@@ -80,7 +82,7 @@ Fresh Reviewer: 欠陥探索
 Main Agent: 人間承認後に修正
 </code></pre>
 <p>同じPromptとContextを全Agentへ配ると、同じBlind Spotを共有する。役割と入力を分ける。</p>
-<h2 id="ch-13-s5">13.5 Agent View</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>複数Agentの動きを俯瞰し、独立した仕事へ分担させる運用画面。同じファイルへの同時編集は避ける指針付き。<br/><span class="feature-intro-io"><strong>入力:</strong> 並列化したいタスク群、各Agent責務　<strong>出力:</strong> Agent View上の並列実行ログと統合結果</span></p>
+<h2 id="ch-13-s5">13.5 Agent View</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>複数Agentの動きを俯瞰し、独立した仕事へ分担させる運用画面。同じファイルへの同時編集は避ける指針付き。<br/><span class="feature-intro-io"><strong>入力:</strong> 並列化したいタスク群、各Agent責務　<strong>出力:</strong> Agent View上の並列実行ログと統合結果</span></p>
 <p>現行Versionで<code>claude agents</code>を確認する。複数Sessionを管理できるが、同一Fileの同時編集は避ける。</p>
 <p>安全な割当：</p>
 <pre><code class="language-text">A: Read-only調査
@@ -123,9 +125,11 @@ SNS、Code変更、最終結論は禁止。15分で打ち切る。
 
   </section>
   
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の成果物を、新しいセッションまたはReviewer Agentへ渡し、要件充足・安全・保守性の三観点で評価させてください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある個人開発者（架空）が、自分のコードを自分でレビューさせるとAIが甘く採点し、毎回バグを見落としている。</p><h3>こう使う</h3><p>実装セッションを閉じ、背景を知らない独立コンテキストのReviewer Agentへ成果物だけ渡す。</p><h3>得られるもの</h3><p>迎合バイアスが消え、要件・安全・保守性の三観点で本当の指摘が返ってくる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅企業のリサーチチーム（架空）が、調査・検証・統合を一人のAIに任せ、結論が初期仮説に引きずられる傾向が抜けない。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeを別Agentに分け、各役割の入力と期待出力を明示する。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、反証も合わせて統合できる。結論の信頼度が説明可能になる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の成果物を、新しいセッションまたはReviewer Agentへ渡し、要件充足・安全・保守性の三観点で評価させてください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>複数Agentの最大の価値は人数ではなく、独立した文脈と役割分担です。</p></section>
 </article>
 <nav class="chapter-nav"><a href="12.html">← Skills設計</a><a href="14.html">HooksとPlugins →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

@@ -75,6 +75,27 @@
       targets.forEach(t => io.observe(t));
     }
 
+    // Slide carousel (90+ pass): scroll-snap with dots/buttons
+    document.querySelectorAll('.slide-carousel').forEach(car => {
+      const track = car.querySelector('.slide-carousel-track');
+      if (!track) return;
+      const slides = track.querySelectorAll('.lesson-slide');
+      const dotsWrap = car.querySelector('.slide-carousel-dots');
+      const prev = car.querySelector('.slide-nav.prev');
+      const next = car.querySelector('.slide-nav.next');
+      if (slides.length < 2) return;
+      const updateDots = () => {
+        if (!dotsWrap) return;
+        const w = track.clientWidth || 1;
+        const i = Math.round(track.scrollLeft / w);
+        dotsWrap.querySelectorAll('.dot').forEach((d, j) => d.classList.toggle('active', i === j));
+      };
+      track.addEventListener('scroll', () => requestAnimationFrame(updateDots), {passive: true});
+      prev && prev.addEventListener('click', () => track.scrollBy({left: -track.clientWidth, behavior: 'smooth'}));
+      next && next.addEventListener('click', () => track.scrollBy({left:  track.clientWidth, behavior: 'smooth'}));
+      updateDots();
+    });
+
     // Drawer toggle for mobile
     const toggle = document.querySelector('.toc-toggle');
     const overlay = document.querySelector('.toc-overlay');

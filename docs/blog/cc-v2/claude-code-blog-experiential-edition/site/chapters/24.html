@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-24">
     <h2 id="story-24">物語の現在地</h2>
-    <div class="scene">翌朝の自動更新で一部端末だけ失敗したとき、配布基盤の本当の品質が試されます。美咲は、何度実行しても壊れないBootstrap、削除まで追従するSync、検証、Rollbackを一つの流れにします。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Bootstrap（冪等な初回セットアップ）</h3><p class="feature-summary">何度実行しても壊れない初回セットアップ。ネット障害時に安全に持ち越し、同時実行をロックで防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>新規端末、認証情報、対象Repository</dd><dt>出力</dt><dd>冪等に走るBootstrap実行ログと最終状態</dd></dl></article><article class="feature-card"><h3>Convergent Sync（追加/変更/削除追従）</h3><p class="feature-summary">前回Manifestと今回正本を比較し、追加・変更・削除を最終状態へ収束させる同期処理。</p><dl class="feature-io"><dt>入力</dt><dd>Manifest差分、現端末状態</dd><dt>出力</dt><dd>収束済み最新状態と差分ログ</dd></dl></article><article class="feature-card"><h3>Skill Merge と update.sh</h3><p class="feature-summary">個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。</p><dl class="feature-io"><dt>入力</dt><dd>更新対象Skill群、個人Layerパス</dd><dt>出力</dt><dd>個人保護つき更新完了ログ</dd></dl></article><article class="feature-card"><h3>Verify（存在/Version/Hook動作）</h3><p class="feature-summary">配布直後に存在・Version・Hook動作を構造化チェックし、配布の成功を客観的に確認する検証層。</p><dl class="feature-io"><dt>入力</dt><dd>配布対象、想定Version</dd><dt>出力</dt><dd>Verify結果レポートと不一致リスト</dd></dl></article><article class="feature-card"><h3>Rollback（既知Releaseへ一手戻し）</h3><p class="feature-summary">署名済みの以前のReleaseへ一操作で戻せる仕組み。事故時の復旧時間を分単位に短縮する。</p><dl class="feature-io"><dt>入力</dt><dd>現在版、戻り先Releaseタグ</dd><dt>出力</dt><dd>Rollback実行ログと復旧後Verify</dd></dl></article></div></section>
-    <div class="story-essay"><p>BootstrapとUpdateは冪等で、ネットワーク障害時には安全に次回へ持ち越し、同時実行をロックで防ぎます。Syncは前回Manifestと今回の正本を比較し、追加・変更・削除へ収束させながら、個人Layerへ触れません。</p><p>配布後はVerifyで存在、Version、Hook動作を確認し、問題があれば署名済みの以前のReleaseへ一操作で戻します。ログと端末Inventoryがなければ、配布の成功は判断できません。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Bootstrap（冪等な初回セットアップ）</h3><p class="feature-summary">何度実行しても壊れない初回セットアップ。ネット障害時に安全に持ち越し、同時実行をロックで防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>新規端末、認証情報、対象Repository</dd><dt>出力</dt><dd>冪等に走るBootstrap実行ログと最終状態</dd></dl></article><article class="feature-card"><h3>Convergent Sync（追加/変更/削除追従）</h3><p class="feature-summary">前回Manifestと今回正本を比較し、追加・変更・削除を最終状態へ収束させる同期処理。</p><dl class="feature-io"><dt>入力</dt><dd>Manifest差分、現端末状態</dd><dt>出力</dt><dd>収束済み最新状態と差分ログ</dd></dl></article><article class="feature-card"><h3>Skill Merge と update.sh</h3><p class="feature-summary">個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。</p><dl class="feature-io"><dt>入力</dt><dd>更新対象Skill群、個人Layerパス</dd><dt>出力</dt><dd>個人保護つき更新完了ログ</dd></dl></article><article class="feature-card"><h3>Verify（存在/Version/Hook動作）</h3><p class="feature-summary">配布直後に存在・Version・Hook動作を構造化チェックし、配布の成功を客観的に確認する検証層。</p><dl class="feature-io"><dt>入力</dt><dd>配布対象、想定Version</dd><dt>出力</dt><dd>Verify結果レポートと不一致リスト</dd></dl></article><article class="feature-card"><h3>Rollback（既知Releaseへ一手戻し）</h3><p class="feature-summary">署名済みの以前のReleaseへ一操作で戻せる仕組み。事故時の復旧時間を分単位に短縮する。</p><dl class="feature-io"><dt>入力</dt><dd>現在版、戻り先Releaseタグ</dd><dt>出力</dt><dd>Rollback実行ログと復旧後Verify</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">翌朝の自動更新で一部端末だけ失敗したとき、配布基盤の本当の品質が試されます。美咲は、何度実行しても壊れないBootstrap、削除まで追従するSync、検証、Rollbackを一つの流れにします。</p>
+      <div class="story-essay"><p>BootstrapとUpdateは冪等で、ネットワーク障害時には安全に次回へ持ち越し、同時実行をロックで防ぎます。Syncは前回Manifestと今回の正本を比較し、追加・変更・削除へ収束させながら、個人Layerへ触れません。</p><p>配布後はVerifyで存在、Version、Hook動作を確認し、問題があれば署名済みの以前のReleaseへ一操作で戻します。ログと端末Inventoryがなければ、配布の成功は判断できません。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-24">
@@ -103,7 +105,7 @@ acquire_lock() {
 
 network_ok() { curl -fsSIL --max-time 10 https://github.com &gt;/dev/null 2&gt;&amp;1; }
 </code></pre>
-<h2 id="ch-24-s4">24.4 Convergent Sync</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>前回Manifestと今回正本を比較し、追加・変更・削除を最終状態へ収束させる同期処理。<br/><span class="feature-intro-io"><strong>入力:</strong> Manifest差分、現端末状態　<strong>出力:</strong> 収束済み最新状態と差分ログ</span></p>
+<h2 id="ch-24-s4">24.4 Convergent Sync</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>前回Manifestと今回正本を比較し、追加・変更・削除を最終状態へ収束させる同期処理。<br/><span class="feature-intro-io"><strong>入力:</strong> Manifest差分、現端末状態　<strong>出力:</strong> 収束済み最新状態と差分ログ</span></p>
 <pre><code class="language-text">Current Manifest = 今回配るPath
 Previous Manifest = 前回配ったPath
 Delete = Previous - Current
@@ -166,14 +168,14 @@ if (( ! DRY_RUN )); then
 fi
 </code></pre>
 <p>Hookへ<code>0755</code>を設定し、<code>.agents/skills</code> Merge、Hash、Overlayを追加する。</p>
-<h2 id="ch-24-s5">24.5 Skill Merge</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。<br/><span class="feature-intro-io"><strong>入力:</strong> 更新対象Skill群、個人Layerパス　<strong>出力:</strong> 個人保護つき更新完了ログ</span></p>
+<h2 id="ch-24-s5">24.5 Skill Merge</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。<br/><span class="feature-intro-io"><strong>入力:</strong> 更新対象Skill群、個人Layerパス　<strong>出力:</strong> 個人保護つき更新完了ログ</span></p>
 <p>移行中：</p>
 <pre><code class="language-text">.agents/skills → temp
 then global-config/skills overwrites
 → validate → Claude/Codexへ配布
 </code></pre>
 <p>長期は<code>skill-src</code>から両方生成。衝突を黙って上書きしない。</p>
-<h2 id="ch-24-s6">24.6 <code>update.sh</code></h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。<br/><span class="feature-intro-io"><strong>入力:</strong> 更新対象Skill群、個人Layerパス　<strong>出力:</strong> 個人保護つき更新完了ログ</span></p>
+<h2 id="ch-24-s6">24.6 <code>update.sh</code></h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。<br/><span class="feature-intro-io"><strong>入力:</strong> 更新対象Skill群、個人Layerパス　<strong>出力:</strong> 個人保護つき更新完了ログ</span></p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 ROOT="${HARNESS_ROOT:-$HOME/.local/share/trepro-harness}"
@@ -196,7 +198,7 @@ git checkout --detach "$ref"
 "$ROOT/deploy/verify.sh" --quiet
 </code></pre>
 <p>本番は署名Tag、許可Version、失敗Rollbackを追加。</p>
-<h2 id="ch-24-s7">24.7 Verify</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>配布直後に存在・Version・Hook動作を構造化チェックし、配布の成功を客観的に確認する検証層。<br/><span class="feature-intro-io"><strong>入力:</strong> 配布対象、想定Version　<strong>出力:</strong> Verify結果レポートと不一致リスト</span></p>
+<h2 id="ch-24-s7">24.7 Verify</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>配布直後に存在・Version・Hook動作を構造化チェックし、配布の成功を客観的に確認する検証層。<br/><span class="feature-intro-io"><strong>入力:</strong> 配布対象、想定Version　<strong>出力:</strong> Verify結果レポートと不一致リスト</span></p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 failures=0
@@ -212,7 +214,7 @@ check "managed" test -f "/Library/Application Support/ClaudeCode/managed-setting
 (( failures == 0 ))
 </code></pre>
 <p>代表Skill認識、Hook Fixture、Token非混入、Local保持、Dry-run、Claude/Codex Hashも検査する。</p>
-<h2 id="ch-24-s8">24.8 Rollback</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>署名済みの以前のReleaseへ一操作で戻せる仕組み。事故時の復旧時間を分単位に短縮する。<br/><span class="feature-intro-io"><strong>入力:</strong> 現在版、戻り先Releaseタグ　<strong>出力:</strong> Rollback実行ログと復旧後Verify</span></p>
+<h2 id="ch-24-s8">24.8 Rollback</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>署名済みの以前のReleaseへ一操作で戻せる仕組み。事故時の復旧時間を分単位に短縮する。<br/><span class="feature-intro-io"><strong>入力:</strong> 現在版、戻り先Releaseタグ　<strong>出力:</strong> Rollback実行ログと復旧後Verify</span></p>
 <pre><code class="language-bash">git rev-parse HEAD &gt; "$HOME/.claude/.trepro-harness-previous-version"
 # rollback
 previous="$(cat "$HOME/.claude/.trepro-harness-previous-version")"
@@ -270,9 +272,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 小さなサンプル構成でdry-run、同期、削除追従、個人フォルダ保護、Rollbackを順にテストしてください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>配布の完成条件はコピー成功ではなく、収束・検証・復旧が繰り返し成立することです。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、毎朝の自動更新スクリプトがネット不安定の社員端末で半端な状態で止まり、AIの動作が日替わりで変わる現象に悩んでいる。</p><h3>こう使う</h3><p>Bootstrap・Updateを冪等に作り直し、Manifest比較で追加・変更・削除を最終状態へ収束させる。</p><h3>得られるもの</h3><p>ネットワーク失敗時も次回で復旧でき、端末ごとの設定差が物理的に解消する。</p></article><article class="usecase-card"><h3>場面</h3><p>ある中堅IT部門（架空）が、配布事故の際に『誰の端末がどの版か』を集計できず、対応に半日かかった。</p><h3>こう使う</h3><p>配布後Verify＋端末Inventoryを構造化ログで持ち、Rollbackは署名済み旧版へ一操作で戻せるようにする。</p><h3>得られるもの</h3><p>事故時の影響範囲が即座に見え、復旧が分単位になる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 小さなサンプル構成でdry-run、同期、削除追従、個人フォルダ保護、Rollbackを順にテストしてください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>配布の完成条件はコピー成功ではなく、収束・検証・復旧が繰り返し成立することです。</p></section>
 </article>
 <nav class="chapter-nav"><a href="23.html">← 最適Architecture</a><a href="25.html">Skill Governance →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-23">
     <h2 id="story-23">物語の現在地</h2>
-    <div class="scene">遥のSkillが好評になり、『全員へ配ろう』という話が出ます。美咲はZIPを送る代わりに、正本、配布先、個人差分、強制Policy、Release段階を図にします。個人の便利ツールが、組織のインフラへ変わる境目です。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>ハーネス4面（Guidance/Enforcement/Content/Delivery）</h3><p class="feature-summary">全社配布基盤を案内・強制・コンテンツ・配布の4面に分け、各面の正本と更新方法を設計する全体図。</p><dl class="feature-io"><dt>入力</dt><dd>現在の共通資産、配布手段</dd><dt>出力</dt><dd>4面に分類された正本と更新フロー</dd></dl></article><article class="feature-card"><h3>推奨Repository（正本と生成物の分離）</h3><p class="feature-summary">skill-srcを正本、配布用パッケージを生成物として分離し、Claude/Codex両Runtimeへ同じ正本から展開する構造。</p><dl class="feature-io"><dt>入力</dt><dd>Skill群、Hook群、Plugin群</dd><dt>出力</dt><dd>正本と生成物が分かれたGit Repository</dd></dl></article><article class="feature-card"><h3>Release Flow（Canary→Pilot→Stable）</h3><p class="feature-summary">PR→Test→Evaluator→Canary→Pilot→Stableの順で段階配布し、失敗を小さく発見できるリリース設計。</p><dl class="feature-io"><dt>入力</dt><dd>配布候補の更新セット</dd><dt>出力</dt><dd>段階通過ごとのリリースタグと配布対象</dd></dl></article><article class="feature-card"><h3>Guidance/Enforcement Mapping</h3><p class="feature-summary">どのルールが文章のお願いで、どれがHookやPolicyで物理強制かを表に揃えるマッピング作業。</p><dl class="feature-io"><dt>入力</dt><dd>現状の全ルール一覧</dd><dt>出力</dt><dd>Guidance/Enforcement分類表</dd></dl></article><article class="feature-card"><h3>個人Layer（私物設定の保護）</h3><p class="feature-summary">~/.claude/local/ など、配布で上書きされない個人カスタマイズ層を分離し、私物設定を守る仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>個人カスタマイズ、私物Skill</dd><dt>出力</dt><dd>上書き保護されたLocal Layer</dd></dl></article></div></section>
-    <div class="story-essay"><p>トレプロハーネスは、CLAUDE.md、Commands、Hooks、Skills、Codex資産をGitで一元管理し、各Macへ自動同期する基盤です。Guidance、Enforcement、Content、Deliveryを別の面として設計し、個人カスタマイズ層を保護します。</p><p>Repositoryでは正本と生成物を分け、PR、Test、Evaluator、Canary、Pilot、Stableの順で配布します。即時全社反映より、失敗を小さく発見できるRelease Flowを優先します。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>ハーネス4面（Guidance/Enforcement/Content/Delivery）</h3><p class="feature-summary">全社配布基盤を案内・強制・コンテンツ・配布の4面に分け、各面の正本と更新方法を設計する全体図。</p><dl class="feature-io"><dt>入力</dt><dd>現在の共通資産、配布手段</dd><dt>出力</dt><dd>4面に分類された正本と更新フロー</dd></dl></article><article class="feature-card"><h3>推奨Repository（正本と生成物の分離）</h3><p class="feature-summary">skill-srcを正本、配布用パッケージを生成物として分離し、Claude/Codex両Runtimeへ同じ正本から展開する構造。</p><dl class="feature-io"><dt>入力</dt><dd>Skill群、Hook群、Plugin群</dd><dt>出力</dt><dd>正本と生成物が分かれたGit Repository</dd></dl></article><article class="feature-card"><h3>Release Flow（Canary→Pilot→Stable）</h3><p class="feature-summary">PR→Test→Evaluator→Canary→Pilot→Stableの順で段階配布し、失敗を小さく発見できるリリース設計。</p><dl class="feature-io"><dt>入力</dt><dd>配布候補の更新セット</dd><dt>出力</dt><dd>段階通過ごとのリリースタグと配布対象</dd></dl></article><article class="feature-card"><h3>Guidance/Enforcement Mapping</h3><p class="feature-summary">どのルールが文章のお願いで、どれがHookやPolicyで物理強制かを表に揃えるマッピング作業。</p><dl class="feature-io"><dt>入力</dt><dd>現状の全ルール一覧</dd><dt>出力</dt><dd>Guidance/Enforcement分類表</dd></dl></article><article class="feature-card"><h3>個人Layer（私物設定の保護）</h3><p class="feature-summary">~/.claude/local/ など、配布で上書きされない個人カスタマイズ層を分離し、私物設定を守る仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>個人カスタマイズ、私物Skill</dd><dt>出力</dt><dd>上書き保護されたLocal Layer</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">遥のSkillが好評になり、『全員へ配ろう』という話が出ます。美咲はZIPを送る代わりに、正本、配布先、個人差分、強制Policy、Release段階を図にします。個人の便利ツールが、組織のインフラへ変わる境目です。</p>
+      <div class="story-essay"><p>トレプロハーネスは、CLAUDE.md、Commands、Hooks、Skills、Codex資産をGitで一元管理し、各Macへ自動同期する基盤です。Guidance、Enforcement、Content、Deliveryを別の面として設計し、個人カスタマイズ層を保護します。</p><p>Repositoryでは正本と生成物を分け、PR、Test、Evaluator、Canary、Pilot、Stableの順で配布します。即時全社反映より、失敗を小さく発見できるRelease Flowを優先します。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-23">
@@ -108,7 +110,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 /Library/Application Support/ClaudeCode/managed-settings.json
 /Library/Application Support/ClaudeCode/managed-mcp.json
 </code></pre>
-<h2 id="ch-23-s4">23.4 推奨Repository</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>skill-srcを正本、配布用パッケージを生成物として分離し、Claude/Codex両Runtimeへ同じ正本から展開する構造。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill群、Hook群、Plugin群　<strong>出力:</strong> 正本と生成物が分かれたGit Repository</span></p>
+<h2 id="ch-23-s4">23.4 推奨Repository</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>skill-srcを正本、配布用パッケージを生成物として分離し、Claude/Codex両Runtimeへ同じ正本から展開する構造。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill群、Hook群、Plugin群　<strong>出力:</strong> 正本と生成物が分かれたGit Repository</span></p>
 <pre><code class="language-text">trepro-harness/
 ├── VERSION
 ├── CHANGELOG.md
@@ -153,12 +155,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 └── test-hooks.py
 </code></pre>
 <p>生成先を直接編集しない。</p>
-<h2 id="ch-23-s5">23.5 Release Flow</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>PR→Test→Evaluator→Canary→Pilot→Stableの順で段階配布し、失敗を小さく発見できるリリース設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 配布候補の更新セット　<strong>出力:</strong> 段階通過ごとのリリースタグと配布対象</span></p>
+<h2 id="ch-23-s5">23.5 Release Flow</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>PR→Test→Evaluator→Canary→Pilot→Stableの順で段階配布し、失敗を小さく発見できるリリース設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 配布候補の更新セット　<strong>出力:</strong> 段階通過ごとのリリースタグと配布対象</span></p>
 <pre><code class="language-text">PR → Static/Test/Evaluator → Canary Tag → 2〜3名 → 観測
 → Pilot部署 → Stable Tag → 全社員Update → Metrics
 </code></pre>
 <p><code>main</code>最新を無条件配布せず、承認済みTagを配る。</p>
-<h2 id="ch-23-s6">23.6 Guidance/Enforcement Mapping</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>どのルールが文章のお願いで、どれがHookやPolicyで物理強制かを表に揃えるマッピング作業。<br/><span class="feature-intro-io"><strong>入力:</strong> 現状の全ルール一覧　<strong>出力:</strong> Guidance/Enforcement分類表</span></p>
+<h2 id="ch-23-s6">23.6 Guidance/Enforcement Mapping</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>どのルールが文章のお願いで、どれがHookやPolicyで物理強制かを表に揃えるマッピング作業。<br/><span class="feature-intro-io"><strong>入力:</strong> 現状の全ルール一覧　<strong>出力:</strong> Guidance/Enforcement分類表</span></p>
 <table>
 <thead>
 <tr>
@@ -205,7 +207,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-23-s7">23.7 個人Layer</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>~/.claude/local/ など、配布で上書きされない個人カスタマイズ層を分離し、私物設定を守る仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 個人カスタマイズ、私物Skill　<strong>出力:</strong> 上書き保護されたLocal Layer</span></p>
+<h2 id="ch-23-s7">23.7 個人Layer</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>~/.claude/local/ など、配布で上書きされない個人カスタマイズ層を分離し、私物設定を守る仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 個人カスタマイズ、私物Skill　<strong>出力:</strong> 上書き保護されたLocal Layer</span></p>
 <p><code>~/.claude/local/</code>を保護するだけでは自動発見されるとは限らない。運用を明文化する。</p>
 <pre><code class="language-text">~/.claude/local/
 ├── CLAUDE.local.md
@@ -246,9 +248,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の共通資産をGuidance・Enforcement・Content・Deliveryの四面へ分類し、正本をどこに置くか決めてください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中堅企業（架空）が、AIで成果を出した社員のSkill群をZIPで全社配布した結果、人によって設定が壊れ、サポートが回らなくなった。</p><h3>こう使う</h3><p>Guidance・Enforcement・Content・Deliveryの四面に分け、各面の正本と更新方法を定義する。</p><h3>得られるもの</h3><p>個別調整がDelivery層で吸収され、共通層は壊れない。サポート問い合わせの種類が分類できる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、全社一斉配布したSkillにバグが見つかった時、誰がどこから戻せるのか分からず深夜対応になった。</p><h3>こう使う</h3><p>Canary→Pilot→StableのRelease Flowを設け、各段階のExit Criteriaを書く。</p><h3>得られるもの</h3><p>事故は小さい範囲で止まり、Stable到達前にロールバックできる構造になる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 現在の共通資産をGuidance・Enforcement・Content・Deliveryの四面へ分類し、正本をどこに置くか決めてください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>全社化では、便利なファイルを配るのではなく、正本・強制・配布・復旧を一つの製品として設計します。</p></section>
 </article>
 <nav class="chapter-nav"><a href="22.html">← 信頼できる調査とレポート</a><a href="24.html">配布、同期、更新、Rollback →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-31">
     <h2 id="story-31">物語の現在地</h2>
-    <div class="scene">資料やLPが完成すると、次に『共有したい』『公開したい』という欲求が生まれます。公開は最後のボタンではなく、情報、ブランド、権限、リンク、戻し方を確認する別の工程です。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>LP制作Flow</h3><p class="feature-summary">Wireframe→Design System→Codeで作ったLPを、公開を見据えて整える章末仕上げの制作ライン。</p><dl class="feature-io"><dt>入力</dt><dd>LP目的、Design System、コンテンツ素材</dd><dt>出力</dt><dd>公開直前のLP実装と確認用Preview</dd></dl></article><article class="feature-card"><h3>Design System再利用</h3><p class="feature-summary">LP・スライド・レポートで同じDesign Systemを参照し、ブランド一貫性を維持する再利用ルール。</p><dl class="feature-io"><dt>入力</dt><dd>既存Design System、新規制作物</dd><dt>出力</dt><dd>システム参照済みの新規制作物</dd></dl></article><article class="feature-card"><h3>PPT / PDF Export</h3><p class="feature-summary">HTML正本からPPT/PDFへExportする標準手順。フォント崩れ・ページ分割を事前にチェックする。</p><dl class="feature-io"><dt>入力</dt><dd>HTML正本、Export設定</dd><dt>出力</dt><dd>崩れ確認済みのPPTX/PDF</dd></dl></article><article class="feature-card"><h3>Deploy / Preview Gate</h3><p class="feature-summary">Deploy前にSecret・環境変数・公開範囲・Analytics・Rollbackを確認し、Previewレビューを通す公開ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>公開予定ビルド、本番設定</dd><dt>出力</dt><dd>Preview承認ログと本番Deploy可否判定</dd></dl></article></div></section>
-    <div class="story-essay"><p>Design Systemを再利用すると、LP、スライド、レポートに一貫性が出ます。PPTやPDFへExportする場合も、元のHTMLを正本にし、崩れ、フォント、ページ分割を確認します。</p><p>Deploy前にはSecret、環境変数、公開範囲、Analytics、Rollbackを確認し、Previewでレビューしてから本番へ進めます。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>LP制作Flow</h3><p class="feature-summary">Wireframe→Design System→Codeで作ったLPを、公開を見据えて整える章末仕上げの制作ライン。</p><dl class="feature-io"><dt>入力</dt><dd>LP目的、Design System、コンテンツ素材</dd><dt>出力</dt><dd>公開直前のLP実装と確認用Preview</dd></dl></article><article class="feature-card"><h3>Design System再利用</h3><p class="feature-summary">LP・スライド・レポートで同じDesign Systemを参照し、ブランド一貫性を維持する再利用ルール。</p><dl class="feature-io"><dt>入力</dt><dd>既存Design System、新規制作物</dd><dt>出力</dt><dd>システム参照済みの新規制作物</dd></dl></article><article class="feature-card"><h3>PPT / PDF Export</h3><p class="feature-summary">HTML正本からPPT/PDFへExportする標準手順。フォント崩れ・ページ分割を事前にチェックする。</p><dl class="feature-io"><dt>入力</dt><dd>HTML正本、Export設定</dd><dt>出力</dt><dd>崩れ確認済みのPPTX/PDF</dd></dl></article><article class="feature-card"><h3>Deploy / Preview Gate</h3><p class="feature-summary">Deploy前にSecret・環境変数・公開範囲・Analytics・Rollbackを確認し、Previewレビューを通す公開ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>公開予定ビルド、本番設定</dd><dt>出力</dt><dd>Preview承認ログと本番Deploy可否判定</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">資料やLPが完成すると、次に『共有したい』『公開したい』という欲求が生まれます。公開は最後のボタンではなく、情報、ブランド、権限、リンク、戻し方を確認する別の工程です。</p>
+      <div class="story-essay"><p>Design Systemを再利用すると、LP、スライド、レポートに一貫性が出ます。PPTやPDFへExportする場合も、元のHTMLを正本にし、崩れ、フォント、ページ分割を確認します。</p><p>Deploy前にはSecret、環境変数、公開範囲、Analytics、Rollbackを確認し、Previewでレビューしてから本番へ進めます。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-31">
@@ -37,11 +39,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-31-s1">31.1 LP</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Wireframe→Design System→Codeで作ったLPを、公開を見据えて整える章末仕上げの制作ライン。<br/><span class="feature-intro-io"><strong>入力:</strong> LP目的、Design System、コンテンツ素材　<strong>出力:</strong> 公開直前のLP実装と確認用Preview</span></p>
+    <h2 id="ch-31-s1">31.1 LP</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Wireframe→Design System→Codeで作ったLPを、公開を見据えて整える章末仕上げの制作ライン。<br/><span class="feature-intro-io"><strong>入力:</strong> LP目的、Design System、コンテンツ素材　<strong>出力:</strong> 公開直前のLP実装と確認用Preview</span></p>
 <pre><code class="language-text">Audience/Action → Content Inventory → Wireframe → Copy Review
 → Prototype → Design System → Code → Analytics/SEO/A11y → Preview → Production
 </code></pre>
-<h2 id="ch-31-s2">31.2 Design System再利用</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>LP・スライド・レポートで同じDesign Systemを参照し、ブランド一貫性を維持する再利用ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> 既存Design System、新規制作物　<strong>出力:</strong> システム参照済みの新規制作物</span></p>
+<h2 id="ch-31-s2">31.2 Design System再利用</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>LP・スライド・レポートで同じDesign Systemを参照し、ブランド一貫性を維持する再利用ルール。<br/><span class="feature-intro-io"><strong>入力:</strong> 既存Design System、新規制作物　<strong>出力:</strong> システム参照済みの新規制作物</span></p>
 <p>営業資料、LP、Dashboard、HTML Report、Slideで共通Token。成果物ごとに勝手な色/余白を増やさない。</p>
 <h2 id="ch-31-s3">31.3 PPT/PDF Export</h2>
 <pre><code class="language-text">[ ] Font置換
@@ -53,7 +55,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [ ] 選択可能Text
 [ ] 機密Metadata
 </code></pre>
-<h2 id="ch-31-s4">31.4 Deploy</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Deploy前にSecret・環境変数・公開範囲・Analytics・Rollbackを確認し、Previewレビューを通す公開ゲート。<br/><span class="feature-intro-io"><strong>入力:</strong> 公開予定ビルド、本番設定　<strong>出力:</strong> Preview承認ログと本番Deploy可否判定</span></p>
+<h2 id="ch-31-s4">31.4 Deploy</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Deploy前にSecret・環境変数・公開範囲・Analytics・Rollbackを確認し、Previewレビューを通す公開ゲート。<br/><span class="feature-intro-io"><strong>入力:</strong> 公開予定ビルド、本番設定　<strong>出力:</strong> Preview承認ログと本番Deploy可否判定</span></p>
 <pre><code class="language-text">Preview → Functional → A11y/Security/Privacy → Owner Approval
 → Production → Smoke/Monitoring/Rollback
 </code></pre>
@@ -62,9 +64,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   </section>
   
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 既存HTMLをPreview公開し、スマホ表示・リンク・秘密情報・Rollback手順を確認してから、本番可否を判断してください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>公開は生成の続きではなく、独立した品質・安全Gateです。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小マーケ会社（架空）が、AIで作ったLPを即本番公開した結果、テスト用Analytics IDや本番用APIキーが残ったまま外に出てしまった。</p><h3>こう使う</h3><p>Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを設ける。</p><h3>得られるもの</h3><p>公開前事故が体系的に防げ、本番公開を安心して進められる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある提案チーム（架空）が、HTMLからPPT/PDFをExportするたびにフォントが崩れ、毎回手動修正に数時間を奪われている。</p><h3>こう使う</h3><p>Export時にレイアウト・フォント・ページ分割を確認する標準Checkを書く。</p><h3>得られるもの</h3><p>崩れ箇所だけを集中修正でき、Export成果物の品質が安定する。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 既存HTMLをPreview公開し、スマホ表示・リンク・秘密情報・Rollback手順を確認してから、本番可否を判断してください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>公開は生成の続きではなく、独立した品質・安全Gateです。</p></section>
 </article>
 <nav class="chapter-nav"><a href="30.html">← Application開発</a><a href="32.html">継続業務の自動化 →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

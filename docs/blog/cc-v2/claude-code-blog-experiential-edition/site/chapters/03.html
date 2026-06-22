@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-03">
     <h2 id="story-03">物語の現在地</h2>
-    <div class="scene">遥のデスクトップには、資料、画像、テスト用ファイルが混ざった『AI作業』フォルダがありました。蓮は新しい空のフォルダを作り、そこだけをCursorで開きます。作業場所を決めただけで、AIが見てよい範囲と人が確認すべき範囲がはっきりしました。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Project Folder（文脈と権限の境界）</h3><p class="feature-summary">AIに見せる範囲を明示的に切り、無関係な仕事を別Projectに分離するフォルダ設計。</p><dl class="feature-io"><dt>入力</dt><dd>扱う案件・顧客・テーマ、関連するファイル群</dd><dt>出力</dt><dd>案件単位で閉じた専用フォルダと参照可能Path</dd></dl></article><article class="feature-card"><h3>推奨Project構造（docs/input/output/tests）</h3><p class="feature-summary">ドキュメント・入力素材・生成物・検証データを役割で分けて配置し、AIも人も迷わない最小ディレクトリ構成。</p><dl class="feature-io"><dt>入力</dt><dd>実験・本番作業で扱うファイルの種類</dd><dt>出力</dt><dd>docs/input/output/tests を持つ標準ディレクトリ</dd></dl></article><article class="feature-card"><h3>CLI / IDE連携と基本コマンド</h3><p class="feature-summary">公式手順でCLI・VS Code・Cursorを接続し、まず覚える最小コマンドだけで動く状態を作る導入手順。</p><dl class="feature-io"><dt>入力</dt><dd>macOS環境、Node・gh等の前提パッケージ</dd><dt>出力</dt><dd>Claude Code CLIとIDE接続、基本コマンドの実行確認</dd></dl></article></div></section>
-    <div class="story-essay"><p>Project Folderは単なる保存先ではなく、文脈と権限の境界です。無関係な仕事は別プロジェクトへ分け、同じ成果物へつながる仕事は共通ルートの下に整理します。ファイル構造が整うほど、AIは探索しやすく、人間は変更を追いやすくなります。</p><p>導入では、公式の方法でCLIやIDE連携を用意し、最初は基本コマンドだけを覚えます。分からない操作は、その場でエージェントへ質問し、確認用のメモとしてプロジェクト内へ保存させます。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>Project Folder（文脈と権限の境界）</h3><p class="feature-summary">AIに見せる範囲を明示的に切り、無関係な仕事を別Projectに分離するフォルダ設計。</p><dl class="feature-io"><dt>入力</dt><dd>扱う案件・顧客・テーマ、関連するファイル群</dd><dt>出力</dt><dd>案件単位で閉じた専用フォルダと参照可能Path</dd></dl></article><article class="feature-card"><h3>推奨Project構造（docs/input/output/tests）</h3><p class="feature-summary">ドキュメント・入力素材・生成物・検証データを役割で分けて配置し、AIも人も迷わない最小ディレクトリ構成。</p><dl class="feature-io"><dt>入力</dt><dd>実験・本番作業で扱うファイルの種類</dd><dt>出力</dt><dd>docs/input/output/tests を持つ標準ディレクトリ</dd></dl></article><article class="feature-card"><h3>CLI / IDE連携と基本コマンド</h3><p class="feature-summary">公式手順でCLI・VS Code・Cursorを接続し、まず覚える最小コマンドだけで動く状態を作る導入手順。</p><dl class="feature-io"><dt>入力</dt><dd>macOS環境、Node・gh等の前提パッケージ</dd><dt>出力</dt><dd>Claude Code CLIとIDE接続、基本コマンドの実行確認</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">遥のデスクトップには、資料、画像、テスト用ファイルが混ざった『AI作業』フォルダがありました。蓮は新しい空のフォルダを作り、そこだけをCursorで開きます。作業場所を決めただけで、AIが見てよい範囲と人が確認すべき範囲がはっきりしました。</p>
+      <div class="story-essay"><p>Project Folderは単なる保存先ではなく、文脈と権限の境界です。無関係な仕事は別プロジェクトへ分け、同じ成果物へつながる仕事は共通ルートの下に整理します。ファイル構造が整うほど、AIは探索しやすく、人間は変更を追いやすくなります。</p><p>導入では、公式の方法でCLIやIDE連携を用意し、最初は基本コマンドだけを覚えます。分からない操作は、その場でエージェントへ質問し、確認用のメモとしてプロジェクト内へ保存させます。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-03">
@@ -66,7 +68,7 @@ claude doctor
 └── reports/
 </code></pre>
 <p>共通Rootを開き、知識と成果物を共有する。</p>
-<h2 id="ch-03-s6">3.4 推奨Project構造</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>ドキュメント・入力素材・生成物・検証データを役割で分けて配置し、AIも人も迷わない最小ディレクトリ構成。<br/><span class="feature-intro-io"><strong>入力:</strong> 実験・本番作業で扱うファイルの種類　<strong>出力:</strong> docs/input/output/tests を持つ標準ディレクトリ</span></p>
+<h2 id="ch-03-s6">3.4 推奨Project構造</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>ドキュメント・入力素材・生成物・検証データを役割で分けて配置し、AIも人も迷わない最小ディレクトリ構成。<br/><span class="feature-intro-io"><strong>入力:</strong> 実験・本番作業で扱うファイルの種類　<strong>出力:</strong> docs/input/output/tests を持つ標準ディレクトリ</span></p>
 <pre><code class="language-text">project/
 ├── CLAUDE.md
 ├── README.md
@@ -109,9 +111,11 @@ claude --resume               # 保存Sessionを選んで再開
 
   </section>
   
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 空のlearning-labを作り、docs・input・output・testsの最小構造を用意してCursorでそのフォルダだけを開いてください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業担当（架空）が、デスクトップに『AI作業』フォルダひとつへ複数案件を放り込み、どのSkillがどの顧客のものか分からなくなっている。</p><h3>こう使う</h3><p>顧客ごとに専用Project Folderを作り、docs/input/output/testsの最小構造に分けて開く。</p><h3>得られるもの</h3><p>AIが見るべき範囲が顧客単位に閉じ、案件の取り違えと情報漏えいリスクが消える。</p></article><article class="usecase-card"><h3>場面</h3><p>中小企業の総務（架空）が、AI導入を始めたいが『どこから手を付けるか』分からず、毎週違うフォルダで実験して挫折している。</p><h3>こう使う</h3><p>learning-labという練習専用フォルダを切り、その中だけで実験→検証→Skill化の小さなサイクルを回す。</p><h3>得られるもの</h3><p>練習と本番が物理的に分かれ、失敗を恐れず実験できる。成功したものだけを本番Projectへ移せる。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 空のlearning-labを作り、docs・input・output・testsの最小構造を用意してCursorでそのフォルダだけを開いてください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>Project Folderを正しく切ると、文脈・安全・再開性が同時に整います。</p></section>
 </article>
 <nav class="chapter-nav"><a href="02.html">← 安全を最初に設計する</a><a href="04.html">最初の90分実習：会議アシスタント →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

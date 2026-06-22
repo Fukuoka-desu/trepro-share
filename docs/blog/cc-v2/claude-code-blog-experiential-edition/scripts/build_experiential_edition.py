@@ -331,8 +331,47 @@ def hands_on_panel(key: str, spec: dict[str, Any]) -> Tag:
 
 
 EXTRA_CSS = r'''
-/* Experiential edition */
-.lesson-slide{max-width:920px;margin:28px 0 42px;border:1px solid #ead4b9;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 16px 45px rgba(85,48,18,.12)}.lesson-slide a{display:block}.lesson-slide img{width:100%;height:auto;display:block;aspect-ratio:120/67;object-fit:cover}.lesson-slide figcaption{padding:12px 17px;color:#5c5148;font-size:.9rem;background:#fffaf3}.lesson-slide.is-cover{margin-top:8px}.beginner-foundation{background:linear-gradient(145deg,#eff8f5,#fffaf0);border-top:1px solid #d7e7e2;border-bottom:1px solid #eadfca}.beginner-foundation-body{max-width:1050px;margin:0 auto}.beginner-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0}.beginner-primer{margin:30px 0 38px;padding:28px;border:1px solid #bcd8ce;border-radius:22px;background:linear-gradient(145deg,#f2fbf7,#fffdf7);box-shadow:0 12px 34px rgba(23,54,48,.08)}.beginner-primer .beginner-eyebrow{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#24665a;margin-bottom:8px}.beginner-primer h2{margin-top:0;color:#173d37}.beginner-primer h3{font-size:1.06rem;margin:18px 0 8px;color:#244b45}.beginner-lead{font-size:1.08rem;line-height:1.9}.primer-card{padding:18px;border:1px solid #d7e7e2;border-radius:16px;background:rgba(255,255,255,.86)}.beginner-basics{margin:0;padding-left:1.35rem}.beginner-basics li{margin:.55rem 0}.beginner-analogy{border-left:5px solid #e6a75a;background:#fff6e8;padding:16px 18px;border-radius:0 14px 14px 0}.beginner-terms{display:grid;grid-template-columns:minmax(120px,.35fr) 1fr;border:1px solid #d7e7e2;border-radius:14px;overflow:hidden;margin:10px 0 18px}.beginner-terms dt,.beginner-terms dd{padding:11px 14px;margin:0;border-bottom:1px solid #e3eee9}.beginner-terms dt{font-weight:800;background:#eef7f3}.beginner-terms dd{background:#fff}.beginner-note{padding:15px 17px;border-radius:13px;background:#edf4ff;border:1px solid #cbdcf5}.mini-check{margin-top:16px;padding:12px 16px;border:1px solid #d9e5df;border-radius:13px;background:#fff}.mini-check summary{cursor:pointer;font-weight:800;color:#245c52}.hands-on-launcher{margin:30px 0 38px;padding:24px;border:2px solid #f2b36d;border-radius:20px;background:linear-gradient(135deg,#fff8ec,#f4f8ff);box-shadow:0 14px 36px rgba(78,49,20,.08)}.hands-on-launcher .eyebrow{font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:#d64a15;font-weight:900}.hands-on-launcher h2{margin:.25rem 0 .5rem}.hands-on-meta{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.hands-on-pill{background:white;border:1px solid #ead7bd;border-radius:999px;padding:5px 10px;font-size:.82rem}.hands-on-command-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}.hands-on-command{border:1px solid #d8c6ac;border-radius:13px;background:white;padding:13px;text-align:left}.hands-on-command strong{display:block;margin-bottom:6px}.hands-on-command code{display:block;overflow-wrap:anywhere;white-space:normal}.copy-lab{margin-top:9px;border:0;border-radius:999px;background:#e85019;color:white;padding:7px 11px;font-weight:800;cursor:pointer}.hands-on-universal{border-left:5px solid #2669d8;background:#edf4ff;padding:13px 15px;border-radius:0 12px 12px 0}.chapter-quickstart{margin:22px 0;padding:18px;border:1px solid #f0cfaa;border-radius:16px;background:#fffaf2}.chapter-quickstart-row{display:flex;gap:9px;flex-wrap:wrap}.chapter-quickstart input{min-width:180px;flex:1;padding:11px 13px;border:1px solid #cdbca5;border-radius:10px;font-size:1rem}.chapter-quickstart button{border:0;border-radius:10px;padding:11px 15px;background:#e85019;color:white;font-weight:800;cursor:pointer}.copy-toast{position:fixed;right:18px;bottom:18px;background:#1d2d28;color:white;padding:11px 16px;border-radius:12px;opacity:0;transform:translateY(8px);transition:.2s;z-index:9999}.copy-toast.show{opacity:1;transform:none}.dark .beginner-primer,.dark .hands-on-launcher,.dark .chapter-quickstart{background:#241d17;border-color:#6c4b2d}.dark .hands-on-command,.dark .primer-card,.dark .mini-check{background:#181818;border-color:#555}.dark .hands-on-universal{background:#17243a}@media(max-width:820px){.hands-on-command-grid,.beginner-grid{grid-template-columns:1fr}.beginner-primer{padding:20px}.beginner-terms{grid-template-columns:1fr}}@media print{.copy-lab,.chapter-quickstart{display:none}.hands-on-launcher,.beginner-primer,.lesson-slide{box-shadow:none;break-inside:avoid}}
+/* Experiential edition (90+ pass: 3-token palette) */
+.lesson-slide{max-width:920px;margin:28px 0 42px;border:1px solid var(--ref-border);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(20,50,100,.08)}.lesson-slide a{display:block}.lesson-slide img{width:100%;height:auto;display:block;aspect-ratio:120/67;object-fit:cover}.lesson-slide figcaption{padding:12px 17px;color:var(--ref-ink);font-size:.9rem;background:var(--ref-bg)}.lesson-slide.is-cover{margin-top:8px}
+.beginner-foundation{background:var(--ref-bg);border-top:1px solid var(--ref-border);border-bottom:1px solid var(--ref-border)}.beginner-foundation-body{max-width:1050px;margin:0 auto}
+.beginner-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0}
+.beginner-primer{margin:30px 0 38px;padding:28px;border:1px solid var(--ref-border);border-radius:22px;background:var(--ref-bg);box-shadow:0 6px 18px rgba(20,50,100,.05)}
+.beginner-primer .beginner-eyebrow{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--ref-accent);margin-bottom:8px}
+.beginner-primer h2{margin-top:0;color:var(--ref-ink)}
+.beginner-primer h3{font-size:1.06rem;margin:18px 0 8px;color:var(--ref-ink)}
+.beginner-lead{font-size:1.08rem;line-height:1.9;color:var(--story-ink)}
+.primer-card{padding:18px;border:1px solid var(--ref-border);border-radius:16px;background:#fff}
+.beginner-basics{margin:0;padding-left:1.35rem}.beginner-basics li{margin:.55rem 0}
+.beginner-analogy{border-left:4px solid var(--action-accent);background:var(--action-bg);padding:16px 18px;border-radius:0 14px 14px 0;color:var(--action-ink)}
+.beginner-terms{display:grid;grid-template-columns:minmax(120px,.35fr) 1fr;border:1px solid var(--ref-border);border-radius:14px;overflow:hidden;margin:10px 0 18px}
+.beginner-terms dt,.beginner-terms dd{padding:11px 14px;margin:0;border-bottom:1px solid var(--ref-border)}
+.beginner-terms dt{font-weight:800;background:#e8f0fa;color:var(--ref-ink)}
+.beginner-terms dd{background:#fff;color:var(--story-ink)}
+.beginner-note{padding:15px 17px;border-radius:13px;background:var(--action-bg);border:1px solid var(--action-border);color:var(--action-ink)}
+.mini-check{margin-top:16px;padding:12px 16px;border:1px solid var(--ref-border);border-radius:13px;background:#fff}
+.mini-check summary{cursor:pointer;font-weight:800;color:var(--ref-accent)}
+.hands-on-launcher{margin:30px 0 38px;padding:24px;border:2px solid var(--action-border);border-radius:20px;background:var(--action-bg);box-shadow:0 10px 26px rgba(122,74,16,.08)}
+.hands-on-launcher .eyebrow{font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--action-accent);font-weight:900}
+.hands-on-launcher h2{margin:.25rem 0 .5rem;color:var(--action-ink)}
+.hands-on-meta{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+.hands-on-pill{background:white;border:1px solid var(--action-border);border-radius:999px;padding:5px 10px;font-size:.82rem;color:var(--action-ink)}
+.hands-on-command-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
+.hands-on-command{border:1px solid var(--action-border);border-radius:13px;background:white;padding:13px;text-align:left}
+.hands-on-command strong{display:block;margin-bottom:6px;color:var(--action-ink)}
+.hands-on-command code{display:block;overflow-wrap:anywhere;white-space:normal}
+.copy-lab{margin-top:9px;border:0;border-radius:999px;background:var(--action-accent);color:white;padding:7px 11px;font-weight:800;cursor:pointer}
+.hands-on-universal{border-left:4px solid var(--action-accent);background:#fff;padding:13px 15px;border-radius:0 12px 12px 0;color:var(--action-ink)}
+.chapter-quickstart{margin:22px 0;padding:18px;border:1px solid var(--action-border);border-radius:16px;background:var(--action-bg)}
+.chapter-quickstart-row{display:flex;gap:9px;flex-wrap:wrap}
+.chapter-quickstart input{min-width:180px;flex:1;padding:11px 13px;border:1px solid var(--action-border);border-radius:10px;font-size:1rem}
+.chapter-quickstart button{border:0;border-radius:10px;padding:11px 15px;background:var(--action-accent);color:white;font-weight:800;cursor:pointer}
+.copy-toast{position:fixed;right:18px;bottom:18px;background:#1d2d28;color:white;padding:11px 16px;border-radius:12px;opacity:0;transform:translateY(8px);transition:.2s;z-index:9999}
+.copy-toast.show{opacity:1;transform:none}
+.dark .beginner-primer,.dark .hands-on-launcher,.dark .chapter-quickstart{background:#241d17;border-color:#6c4b2d}
+.dark .hands-on-command,.dark .primer-card,.dark .mini-check{background:#181818;border-color:#555}
+.dark .hands-on-universal{background:#17243a}
+@media(max-width:820px){.hands-on-command-grid,.beginner-grid{grid-template-columns:1fr}.beginner-primer{padding:20px}.beginner-terms{grid-template-columns:1fr}}
+@media print{.copy-lab,.chapter-quickstart{display:none}.hands-on-launcher,.beginner-primer,.lesson-slide{box-shadow:none;break-inside:avoid}}
 '''
 
 EXTRA_JS = r'''
@@ -346,6 +385,39 @@ EXTRA_JS = r'''
   document.getElementById('chapter-quick-copy')?.addEventListener('click',()=>{const k=norm();if(!k)return alert('0〜38、または終章を入力してください');copy(k==='final'?'終章を開始':`第${Number(k)}章を開始`)});
 })();
 '''
+
+
+def wrap_slide_carousels(soup: BeautifulSoup) -> None:
+    """For each chapter article, gather non-cover lesson-slides into a single .slide-carousel.
+
+    The cover slide (`.lesson-slide.is-cover`) stays in place. If a chapter has
+    two or more non-cover slides, collect them into a carousel placed where the
+    first non-cover slide was. If only one non-cover slide exists, leave it as-is.
+    """
+    for article in soup.select('article.chapter'):
+        non_cover = [fig for fig in article.select('figure.lesson-slide') if 'is-cover' not in (fig.get('class') or [])]
+        if len(non_cover) < 2:
+            continue
+        first = non_cover[0]
+        carousel = soup.new_tag('div', attrs={'class': 'slide-carousel', 'role': 'region', 'aria-label': 'この章の図解'})
+        track = soup.new_tag('div', attrs={'class': 'slide-carousel-track'})
+        carousel.append(track)
+        # Insert the carousel at the first non-cover slide's location, then move all into the track.
+        first.insert_before(carousel)
+        for fig in non_cover:
+            fig.extract()
+            track.append(fig)
+        dots = soup.new_tag('div', attrs={'class': 'slide-carousel-dots', 'aria-hidden': 'true'})
+        for i in range(len(non_cover)):
+            dot = soup.new_tag('span', attrs={'class': 'dot active' if i == 0 else 'dot'})
+            dots.append(dot)
+        carousel.append(dots)
+        prev_btn = soup.new_tag('button', attrs={'class': 'slide-nav prev', 'type': 'button', 'aria-label': '前のスライド'})
+        prev_btn.string = '‹'
+        next_btn = soup.new_tag('button', attrs={'class': 'slide-nav next', 'type': 'button', 'aria-label': '次のスライド'})
+        next_btn.string = '›'
+        carousel.append(prev_btn)
+        carousel.append(next_btn)
 
 
 def build_html(manifest: list[dict[str, Any]]) -> None:
@@ -399,6 +471,8 @@ def build_html(manifest: list[dict[str, Any]]) -> None:
         current=insert_after
         for item in items:
             fig=slide_figure_html(item,prefix='../');current.insert_after(fig);current=fig
+    # Slide carousel wrapping (90+ pass): group non-cover lesson-slides within each chapter into a carousel.
+    wrap_slide_carousels(soup)
     # CSS and JS.
     style=soup.find('style')
     if style: style.append(EXTRA_CSS)

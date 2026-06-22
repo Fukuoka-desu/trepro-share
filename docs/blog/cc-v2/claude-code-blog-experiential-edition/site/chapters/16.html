@@ -13,9 +13,11 @@
   </header>
   <section aria-labelledby="story-16">
     <h2 id="story-16">物語の現在地</h2>
-    <div class="scene">同じ分析結果をMarkdownとHTMLで見せると、会議室の反応が変わりました。長い文章では見落とされた傾向が、カード、グラフ、強調された結論によって一目で伝わります。HTMLは装飾ではなく、理解の速度を設計する形式でした。</div>
-    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>形式選択（Markdown vs 単一HTML）</h3><p class="feature-summary">執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。</p><dl class="feature-io"><dt>入力</dt><dd>成果物の用途、読み手、共有経路</dd><dt>出力</dt><dd>形式選択の根拠と最終出力フォーマット</dd></dl></article><article class="feature-card"><h3>単一HTML標準（自己完結レポート）</h3><p class="feature-summary">外部CSS/JSに依存せず、1ファイルだけで開ける標準フォーマット。共有・印刷・スマホ表示も担保する。</p><dl class="feature-io"><dt>入力</dt><dd>Markdown原稿、データ、画像</dd><dt>出力</dt><dd>外部依存なし1ファイルHTMLレポート</dd></dl></article><article class="feature-card"><h3>CSV分析Prompt</h3><p class="feature-summary">CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。</p><dl class="feature-io"><dt>入力</dt><dd>CSVデータ、注目したい軸</dd><dt>出力</dt><dd>集計表・グラフ・要点カード入りHTML</dd></dl></article><article class="feature-card"><h3>HTML Slide / Discussion Board</h3><p class="feature-summary">Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。</p><dl class="feature-io"><dt>入力</dt><dd>発表用骨子または議題リスト</dd><dt>出力</dt><dd>HTML Slide、Discussion Board</dd></dl></article><article class="feature-card"><h3>品質Check（A11y/印刷/スマホ）</h3><p class="feature-summary">公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。</p><dl class="feature-io"><dt>入力</dt><dd>完成したHTML</dd><dt>出力</dt><dd>A11y/印刷/スマホでの動作確認結果</dd></dl></article></div></section>
-    <div class="story-essay"><p>Markdownは執筆と差分管理に強く、HTMLは情報密度、視認性、操作性、共有性に強みがあります。CSV分析、スライド風資料、ディスカッションボードのように、見る人が比較・操作する仕事ではHTMLが向きます。</p><p>ただし生成画像や派手な装飾に重要情報を閉じ込めません。本文、Alt、Captionだけでも意味が通り、単一HTMLで開け、印刷・スマホ・アクセシビリティを確認します。</p></div>
+    <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。物語と実装の前に、全体像をここでつかみます。</p><div class="features-grid"><article class="feature-card"><h3>形式選択（Markdown vs 単一HTML）</h3><p class="feature-summary">執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。</p><dl class="feature-io"><dt>入力</dt><dd>成果物の用途、読み手、共有経路</dd><dt>出力</dt><dd>形式選択の根拠と最終出力フォーマット</dd></dl></article><article class="feature-card"><h3>単一HTML標準（自己完結レポート）</h3><p class="feature-summary">外部CSS/JSに依存せず、1ファイルだけで開ける標準フォーマット。共有・印刷・スマホ表示も担保する。</p><dl class="feature-io"><dt>入力</dt><dd>Markdown原稿、データ、画像</dd><dt>出力</dt><dd>外部依存なし1ファイルHTMLレポート</dd></dl></article><article class="feature-card"><h3>CSV分析Prompt</h3><p class="feature-summary">CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。</p><dl class="feature-io"><dt>入力</dt><dd>CSVデータ、注目したい軸</dd><dt>出力</dt><dd>集計表・グラフ・要点カード入りHTML</dd></dl></article><article class="feature-card"><h3>HTML Slide / Discussion Board</h3><p class="feature-summary">Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。</p><dl class="feature-io"><dt>入力</dt><dd>発表用骨子または議題リスト</dd><dt>出力</dt><dd>HTML Slide、Discussion Board</dd></dl></article><article class="feature-card"><h3>品質Check（A11y/印刷/スマホ）</h3><p class="feature-summary">公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。</p><dl class="feature-io"><dt>入力</dt><dd>完成したHTML</dd><dt>出力</dt><dd>A11y/印刷/スマホでの動作確認結果</dd></dl></article></div></section>
+    <div class="story-block">
+      <p class="story-lead">同じ分析結果をMarkdownとHTMLで見せると、会議室の反応が変わりました。長い文章では見落とされた傾向が、カード、グラフ、強調された結論によって一目で伝わります。HTMLは装飾ではなく、理解の速度を設計する形式でした。</p>
+      <div class="story-essay"><p>Markdownは執筆と差分管理に強く、HTMLは情報密度、視認性、操作性、共有性に強みがあります。CSV分析、スライド風資料、ディスカッションボードのように、見る人が比較・操作する仕事ではHTMLが向きます。</p><p>ただし生成画像や派手な装飾に重要情報を閉じ込めません。本文、Alt、Captionだけでも意味が通り、単一HTMLで開け、印刷・スマホ・アクセシビリティを確認します。</p></div>
+    </div>
   </section>
   
 <figure class="image-shell" data-image-id="chapter-16">
@@ -37,7 +39,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <p>ここからは、物語でつかんだ考え方を、そのまま実装へ落とせる粒度で確認します。コード、設定、検証条件は省略せず残しています。</p>
-    <h2 id="ch-16-s1">16.1 形式選択</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。<br/><span class="feature-intro-io"><strong>入力:</strong> 成果物の用途、読み手、共有経路　<strong>出力:</strong> 形式選択の根拠と最終出力フォーマット</span></p>
+    <h2 id="ch-16-s1">16.1 形式選択</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。<br/><span class="feature-intro-io"><strong>入力:</strong> 成果物の用途、読み手、共有経路　<strong>出力:</strong> 形式選択の根拠と最終出力フォーマット</span></p>
 <table>
 <thead>
 <tr>
@@ -80,7 +82,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - GraphとTableを併記
 - JS無効でも主要情報が読める
 </code></pre>
-<h2 id="ch-16-s3">16.3 CSV分析Prompt</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。<br/><span class="feature-intro-io"><strong>入力:</strong> CSVデータ、注目したい軸　<strong>出力:</strong> 集計表・グラフ・要点カード入りHTML</span></p>
+<h2 id="ch-16-s3">16.3 CSV分析Prompt</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。<br/><span class="feature-intro-io"><strong>入力:</strong> CSVデータ、注目したい軸　<strong>出力:</strong> 集計表・グラフ・要点カード入りHTML</span></p>
 <pre><code class="language-text">`data/survey.csv` を分析し、経営会議向け単一HTMLを作る。
 
 Analysis:
@@ -103,7 +105,7 @@ Rules:
 - JavaScript Errorなし
 - Screenshotを保存
 </code></pre>
-<h2 id="ch-16-s4">16.4 HTML Slide</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。<br/><span class="feature-intro-io"><strong>入力:</strong> 発表用骨子または議題リスト　<strong>出力:</strong> HTML Slide、Discussion Board</span></p>
+<h2 id="ch-16-s4">16.4 HTML Slide</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。<br/><span class="feature-intro-io"><strong>入力:</strong> 発表用骨子または議題リスト　<strong>出力:</strong> HTML Slide、Discussion Board</span></p>
 <pre><code class="language-text">1. 表紙
 2. 結論
 3. 背景
@@ -117,14 +119,14 @@ Rules:
 <pre><code class="language-text">`output/analysis.md`を16:9 HTML Slideにしてください。
 1 Slide 1 Message、本文最大6行。矢印Key/PageUp/PageDownで移動し、Print/PDF対応にしてください。
 </code></pre>
-<h2 id="ch-16-s5">16.5 Discussion Board</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。<br/><span class="feature-intro-io"><strong>入力:</strong> 発表用骨子または議題リスト　<strong>出力:</strong> HTML Slide、Discussion Board</span></p>
+<h2 id="ch-16-s5">16.5 Discussion Board</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。<br/><span class="feature-intro-io"><strong>入力:</strong> 発表用骨子または議題リスト　<strong>出力:</strong> HTML Slide、Discussion Board</span></p>
 <pre><code class="language-text">会議用の単一HTML Boardを作る。
 列は「今やる」「次」「調査」「見送り」。
 CardはDragでき、担当、期限、根拠、決定者を編集可能。
 Local Storageへ保存し、「決定事項をMarkdownでCopy」Buttonを付ける。
 </code></pre>
 <p>Local StorageへSecrets、原文、不要な個人情報を保存しない。</p>
-<h2 id="ch-16-s6">16.6 品質Check</h2><p class="feature-intro"><strong class="feature-intro-label">この機能でできること</strong>公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。<br/><span class="feature-intro-io"><strong>入力:</strong> 完成したHTML　<strong>出力:</strong> A11y/印刷/スマホでの動作確認結果</span></p>
+<h2 id="ch-16-s6">16.6 品質Check</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。<br/><span class="feature-intro-io"><strong>入力:</strong> 完成したHTML　<strong>出力:</strong> A11y/印刷/スマホでの動作確認結果</span></p>
 <pre><code class="language-text">[ ] 結論が最初にある
 [ ] 元Dataへ追跡可能
 [ ] 色だけで状態区別しない
@@ -154,9 +156,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
+  <section class="mission-takeaway" aria-label="体験ミッションとナビゲーターのひとこと">
+    <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 同じ小さなレポートをMarkdownと単一HTMLで作り、読み手が結論へ到達する時間を比べてください。</p></div>
+    <div class="mt-takeaway"><h3>ナビゲーターのひとこと</h3><p>HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。</p></div>
+  </section>
   <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、毎月の予実報告をMarkdownで提出するが、役員が目を通さず会議で同じ説明を繰り返している。</p><h3>こう使う</h3><p>同内容を単一HTMLレポートへ変換し、結論カード・グラフ・強調点を1ページに集約する。</p><h3>得られるもの</h3><p>結論到達時間が短くなり、会議の冒頭で『見ました』前提で議論が始まる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅メーカーの開発者（架空）が、テストレポートをスクリーンショットで貼り、後日参照しても何が壊れていたか追えない。</p><h3>こう使う</h3><p>テスト結果を単一HTMLで保存し、印刷・スマホ・Alt textで読める形式に揃える。</p><h3>得られるもの</h3><p>障害後の振り返り会議で誰でも開けて確認でき、Markdown原本との二重管理にしなくて済む。</p></article></div></section>
-  <section class="mission"><h2>体験ミッション</h2><p><strong>次の一操作:</strong> 同じ小さなレポートをMarkdownと単一HTMLで作り、読み手が結論へ到達する時間を比べてください。</p></section>
-  <section class="takeaway"><h2>ナビゲーターのひとこと</h2><p>HTMLを選ぶ理由は見栄えではなく、理解・比較・操作を助けることです。</p></section>
 </article>
 <nav class="chapter-nav"><a href="15.html">← MCP、Connectors、APIを安全につなぐ</a><a href="17.html">Claude Designから実装へ →</a></nav></main></div>
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — 物語で歩くブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>
