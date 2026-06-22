@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>継続契約 8月末まで判定対象 インパクト試算 v2 完全版（2026-06-22）</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --card:#ffffff; --ink:#1f2937; --sub:#6b7280; --line:#e5e7eb;
+    --warn:#dc2626; --warn-bg:#fef2f2; --ok:#059669; --neutral:#3b82f6;
+    --mute:#9ca3af; --soft:#fafafa;
+    --bar-stay:#059669; --bar-loss:#dc2626; --bar-neutral:#3b82f6;
+    --bar-b:#0ea5e9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.6;font-size:14px}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 80px}
+  h1{font-size:22px;margin:0 0 4px;font-weight:600}
+  h2{font-size:17px;margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line);font-weight:600}
+  h3{font-size:14px;margin:18px 0 8px;font-weight:600;color:var(--sub)}
+  .meta{color:var(--sub);font-size:12px;margin-bottom:24px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;margin-right:6px}
+  .badge.warn{background:var(--warn-bg);color:var(--warn)}
+  .badge.ok{background:#ecfdf5;color:var(--ok)}
+  .badge.neutral{background:#eff6ff;color:var(--neutral)}
+  .badge.b{background:#e0f2fe;color:#0369a1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 20px}
+  .lede{background:var(--card);border-left:4px solid var(--warn);border-radius:8px;padding:20px 22px;margin-bottom:20px}
+  .lede .big{font-size:30px;font-weight:600;color:var(--warn);letter-spacing:-0.5px;font-variant-numeric:tabular-nums}
+  .lede .delta{font-size:14px;color:var(--sub);margin-top:6px}
+  .lede .delta strong{color:var(--warn)}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+  .grid4 .card,.grid3 .card{padding:14px}
+  .kpi-label{color:var(--sub);font-size:12px}
+  .kpi-val{font-size:20px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums}
+  .kpi-sub{font-size:11px;color:var(--mute);margin-top:2px}
+  .kpi-val.warn{color:var(--warn)}
+  .kpi-val.b{color:#0369a1}
+  .kpi-val.ok{color:var(--ok)}
+  table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+  th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;white-space:nowrap}
+  th{background:var(--soft);font-weight:600;color:var(--sub);font-size:12px}
+  td.num,th.num{text-align:right}
+  td.warn{color:var(--warn);font-weight:600}
+  td.ok{color:var(--ok);font-weight:600}
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  .scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .sc{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px}
+  .sc .name{font-size:12px;color:var(--sub);font-weight:600}
+  .sc .total{font-size:18px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums}
+  .sc-bar{height:22px;border-radius:4px;overflow:hidden;display:flex;margin-top:12px;background:var(--line)}
+  .sc-bar .stay{background:var(--bar-stay)}
+  .sc-bar .loss{background:var(--bar-loss)}
+  .sc-legend{font-size:11px;color:var(--sub);margin-top:8px;display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+  .sc-legend .stay{color:var(--ok)}
+  .sc-legend .loss{color:var(--warn)}
+  .source-stack{display:flex;height:38px;border-radius:6px;overflow:hidden;margin:10px 0 4px}
+  .source-stack .a{background:var(--neutral)}
+  .source-stack .b{background:var(--bar-b)}
+  .source-legend{display:flex;gap:18px;font-size:12px;color:var(--sub);margin-top:6px;flex-wrap:wrap}
+  .source-legend .dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+  .mdist{display:grid;grid-template-columns:repeat(19,1fr);gap:3px;align-items:end;height:160px;margin-top:8px}
+  .mdist .col{display:flex;flex-direction:column;align-items:center;gap:1px;height:100%}
+  .mdist .bars{display:flex;flex-direction:column;justify-content:flex-end;width:100%;flex:1;gap:1px}
+  .mdist .bar-a{width:100%;background:var(--neutral);border-radius:2px 2px 0 0;min-height:1px}
+  .mdist .bar-b{width:100%;background:var(--bar-b);min-height:1px;border-radius:0}
+  .mdist .lab{font-size:8px;color:var(--sub);transform:rotate(-45deg);transform-origin:center top;white-space:nowrap;margin-top:8px;height:30px}
+  details{margin:10px 0}
+  details summary{cursor:pointer;font-size:13px;color:var(--neutral);padding:6px 0}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 14px;font-size:12px;color:#92400e;margin:10px 0}
+  .note strong{color:#92400e}
+  .note.warn{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+  .note.warn strong{color:#991b1b}
+  .note.info{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
+  .note.info strong{color:#1e3a8a}
+  ol li,ul li{margin:4px 0}
+  .footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--mute)}
+  code{background:var(--soft);padding:1px 6px;border-radius:3px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+  @media (max-width:780px){
+    .grid4{grid-template-columns:repeat(2,1fr)}
+    .grid3{grid-template-columns:1fr}
+    .scenarios{grid-template-columns:1fr}
+    .mdist{grid-template-columns:repeat(19,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>継続契約 8月末まで判定対象 インパクト試算 <span class="badge b">v2 完全版</span></h1>
+<div class="meta">2026-06-22 / continuation_entries + 契約書ベースシート + 入金確認シート 3者統合（DB read-only）</div>
+
+<div class="lede">
+  <div style="font-size:12px;color:var(--sub);font-weight:600;margin-bottom:6px">真の判定対象 月額（A: DB正規 + B: DB欠落 + C: NULL群導出）</div>
+  <div class="big">¥152,335,819 <span style="font-size:14px;color:var(--sub);font-weight:500">/ 207社</span></div>
+  <div class="delta">v1 (¥89.2M / 83社) に対して <strong>+¥63.2M / +124社 (+70.8%)</strong> の漏れを併記した完全版</div>
+</div>
+
+<h2>0. 真の総額 サマリー（3ソース統合）</h2>
+
+<div class="grid4">
+  <div class="card">
+    <div class="kpi-label">A. continuation_entries 正規</div>
+    <div class="kpi-val">85社</div>
+    <div class="kpi-sub">¥93,855,358（税込×1.1）</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">B. DB欠落（AB-）≤2026-08</div>
+    <div class="kpi-val b">122社</div>
+    <div class="kpi-sub">¥58,480,461（契約書ベース、税抜疑い）</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">C. renewal_month NULL 導出</div>
+    <div class="kpi-val ok">0社</div>
+    <div class="kpi-sub">本日時点で対象ゼロ（タスク2空振り）</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">真の判定対象 合計</div>
+    <div class="kpi-val warn">207社</div>
+    <div class="kpi-sub">¥152,335,819 / 月</div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="font-size:12px;color:var(--sub);font-weight:600">ソース別構成比（月額）</div>
+  <div class="source-stack">
+    <div class="a" style="width:61.6%"></div>
+    <div class="b" style="width:38.4%"></div>
+  </div>
+  <div class="source-legend">
+    <span><span class="dot" style="background:var(--neutral)"></span>A: continuation_entries 正規 ¥93,855,358（61.6%）</span>
+    <span><span class="dot" style="background:var(--bar-b)"></span>B: DB欠落 ¥58,480,461（38.4%）</span>
+  </div>
+</div>
+
+<div class="note warn">
+  <strong>判定対象の約4割（金額ベース）が現行ダッシュボードから漏れていた。</strong>
+  契約書と入金実績は揃っているのに <code>continuation_entries</code> に登録されていない案件（AB-）が 8月以前で 122社存在。
+  即時の手当て（手動登録 or 月初突合バッチへ編入）が必要。
+</div>
+
+<h2>1. v1 (¥89.2M) からの差分内訳</h2>
+
+<div class="scroll"><table>
+<thead><tr><th>区分</th><th class="num">月額</th><th>内訳</th></tr></thead>
+<tbody>
+<tr><td>v1 公開値（2026-06-22 朝）</td><td class="num">¥89,180,358</td><td>83社</td></tr>
+<tr><td>A. v2 同条件で再計算（本日 14:30）</td><td class="num">¥93,855,358</td><td>+¥4,675,000 / +2社（2023-02 ¥550K, 2024-09 ¥4,125K の追加）</td></tr>
+<tr><td>B. DB欠落 ≤2026-08</td><td class="num warn">+¥58,480,461</td><td>+122社（漏れていた額）</td></tr>
+<tr><td>C. renewal_month NULL 導出</td><td class="num">+¥0</td><td>+0社（対象ゼロ）</td></tr>
+<tr style="background:var(--warn-bg)"><td><strong>真の総額</strong></td><td class="num warn"><strong>¥152,335,819</strong></td><td><strong>v1比 +¥63,155,461 / +124社 (+70.8%)</strong></td></tr>
+</tbody>
+</table></div>
+
+<div class="note">
+  <strong>税込/税抜ノイズ注意</strong>: A は <code>monthly_amount</code>（運用は税込×1.1が大宗）、B は契約書シートの月額（税抜の可能性大）。
+  直接合算は約9%の不確実性を含む。会計判断時は B に ×1.1 換算するか A を ÷1.1 で揃える。
+</div>
+
+<h2>2. 3シナリオ再計算（荷重継続率 44.7% を真の総額に適用）</h2>
+
+<div class="scenarios">
+  <div class="sc">
+    <div class="name">全継続（100%）</div>
+    <div class="total" style="color:var(--ok)">¥152,335,819</div>
+    <div class="sc-bar"><div class="stay" style="width:100%"></div></div>
+    <div class="sc-legend">
+      <span class="stay">残存 ¥152,335,819</span>
+      <span class="loss">喪失 ¥0</span>
+    </div>
+  </div>
+  <div class="sc">
+    <div class="name">荷重期待値（44.7%）— 過去実績ベース</div>
+    <div class="total" style="color:var(--warn)">¥68,094,111</div>
+    <div class="sc-bar">
+      <div class="stay" style="width:44.7%"></div>
+      <div class="loss" style="width:55.3%"></div>
+    </div>
+    <div class="sc-legend">
+      <span class="stay">残存 ¥68,094,111</span>
+      <span class="loss">喪失 ¥84,241,708</span>
+    </div>
+  </div>
+  <div class="sc">
+    <div class="name">全解約（0%）</div>
+    <div class="total" style="color:var(--warn)">¥0</div>
+    <div class="sc-bar"><div class="loss" style="width:100%"></div></div>
+    <div class="sc-legend">
+      <span class="stay">残存 ¥0</span>
+      <span class="loss">喪失 ¥152,335,819</span>
+    </div>
+  </div>
+</div>
+
+<div class="note info">
+  <strong>荷重期待値ベースで月次 ¥84.2M / 年換算 ¥1,010.9M の喪失リスク</strong> が 8月末までの判定で確定する可能性。
+  v1（¥49.3M月次喪失）から <strong>+¥34.9M / 月</strong> の上振れ。
+</div>
+
+<h2>3. 月別 ソース別 内訳（A+B）</h2>
+
+<div class="card">
+  <div style="font-size:12px;color:var(--sub);font-weight:600;margin-bottom:4px">月別件数（積み上げ: A=青 / B=水色）</div>
+  <div class="mdist" id="mdist">
+    <!-- 2023-02..2026-08 各月 -->
+  </div>
+  <div class="source-legend">
+    <span><span class="dot" style="background:var(--neutral)"></span>A: continuation_entries 正規</span>
+    <span><span class="dot" style="background:var(--bar-b)"></span>B: DB欠落（AB-）</span>
+  </div>
+</div>
+
+<div class="scroll" style="margin-top:14px"><table>
+<thead><tr><th>更新月</th><th class="num">A 件数</th><th class="num">A 月額</th><th class="num">B 件数</th><th class="num">B 月額</th><th class="num">合計件数</th><th class="num">合計月額</th></tr></thead>
+<tbody>
+<tr><td>2023-02</td><td class="num">1</td><td class="num">¥550,000</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">¥550,000</td></tr>
+<tr><td>2024-09</td><td class="num">1</td><td class="num">¥4,125,000</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">¥4,125,000</td></tr>
+<tr><td>2024-12</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">¥500,000</td><td class="num">1</td><td class="num">¥500,000</td></tr>
+<tr><td>2025-01</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">¥350,000</td><td class="num">1</td><td class="num">¥350,000</td></tr>
+<tr><td>2025-02</td><td class="num">1</td><td class="num">¥5,500,000</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">¥5,500,000</td></tr>
+<tr><td>2025-03</td><td class="num">1</td><td class="num">¥4,125,000</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">¥4,125,000</td></tr>
+<tr><td>2025-04</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">¥454,546</td><td class="num">1</td><td class="num">¥454,546</td></tr>
+<tr><td>2025-05</td><td class="num">—</td><td class="num">—</td><td class="num">3</td><td class="num">¥2,318,184</td><td class="num">3</td><td class="num">¥2,318,184</td></tr>
+<tr><td>2025-06</td><td class="num">—</td><td class="num">—</td><td class="num">5</td><td class="num">¥2,254,546</td><td class="num">5</td><td class="num">¥2,254,546</td></tr>
+<tr><td>2025-07</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td class="num">¥500,000</td><td class="num">1</td><td class="num">¥500,000</td></tr>
+<tr><td>2025-08</td><td class="num">1</td><td class="num">¥500,000</td><td class="num">1</td><td class="num">¥500,000</td><td class="num">2</td><td class="num">¥1,000,000</td></tr>
+<tr><td>2025-09</td><td class="num">2</td><td class="num">¥3,575,000</td><td class="num">5</td><td class="num">¥2,100,000</td><td class="num">7</td><td class="num">¥5,675,000</td></tr>
+<tr><td>2025-10</td><td class="num">4</td><td class="num">¥11,220,000</td><td class="num">8</td><td class="num">¥2,400,000</td><td class="num">12</td><td class="num">¥13,620,000</td></tr>
+<tr><td>2025-11</td><td class="num">1</td><td class="num">¥550,000</td><td class="num">8</td><td class="num">¥3,450,000</td><td class="num">9</td><td class="num">¥4,000,000</td></tr>
+<tr><td>2025-12</td><td class="num">2</td><td class="num">¥935,000</td><td class="num">4</td><td class="num">¥2,000,000</td><td class="num">6</td><td class="num">¥2,935,000</td></tr>
+<tr><td>2026-01</td><td class="num">2</td><td class="num">¥605,000</td><td class="num">10</td><td class="num">¥5,065,910</td><td class="num">12</td><td class="num">¥5,670,910</td></tr>
+<tr><td>2026-02</td><td class="num">5</td><td class="num">¥2,420,000</td><td class="num">5</td><td class="num">¥2,500,000</td><td class="num">10</td><td class="num">¥4,920,000</td></tr>
+<tr><td>2026-03</td><td class="num">3</td><td class="num">¥1,540,000</td><td class="num">12</td><td class="num">¥5,845,457</td><td class="num">15</td><td class="num">¥7,385,457</td></tr>
+<tr><td>2026-04</td><td class="num">2</td><td class="num">¥3,850,000</td><td class="num">12</td><td class="num">¥5,804,546</td><td class="num">14</td><td class="num">¥9,654,546</td></tr>
+<tr><td>2026-05</td><td class="num">14</td><td class="num">¥7,552,858</td><td class="num">12</td><td class="num">¥5,035,000</td><td class="num">26</td><td class="num">¥12,587,858</td></tr>
+<tr><td>2026-06</td><td class="num">8</td><td class="num">¥11,827,500</td><td class="num">12</td><td class="num">¥6,102,272</td><td class="num">20</td><td class="num">¥17,929,772</td></tr>
+<tr><td>2026-07</td><td class="num">24</td><td class="num">¥21,670,000</td><td class="num">16</td><td class="num">¥7,800,000</td><td class="num">40</td><td class="num">¥29,470,000</td></tr>
+<tr><td>2026-08</td><td class="num">13</td><td class="num">¥13,310,000</td><td class="num">5</td><td class="num">¥3,500,000</td><td class="num">18</td><td class="num">¥16,810,000</td></tr>
+<tr style="background:var(--soft);font-weight:600"><td>合計</td><td class="num">85</td><td class="num">¥93,855,358</td><td class="num">122</td><td class="num">¥58,480,461</td><td class="num">207</td><td class="num">¥152,335,819</td></tr>
+</tbody>
+</table></div>
+
+<h2>4. ソース B 上位30社（DB欠落 / 月額降順 / 契約書ファクト軸）</h2>
+
+<div class="scroll"><table>
+<thead><tr><th>更新月</th><th>cid</th><th>社名</th><th class="num">月額(契約書)</th><th class="num">期間</th><th>契約開始</th><th>CS</th><th>CC</th></tr></thead>
+<tbody>
+<tr><td>2026-08</td><td>362</td><td>株式会社プラスバイプラス</td><td class="num">¥1,000,000</td><td class="num">12</td><td>2025-08-31</td><td>橋口</td><td>尾池</td></tr>
+<tr><td>2026-08</td><td>194</td><td>dTosh</td><td class="num">¥1,000,000</td><td class="num">6</td><td>2026-02-05</td><td>橋口</td><td>福岡</td></tr>
+<tr><td>2026-06</td><td>307</td><td>有限会社ウィステリア・キョウコ（YouTube）</td><td class="num">¥800,000</td><td class="num">6</td><td>2025-01-10</td><td>山中</td><td>福岡</td></tr>
+<tr><td>2025-05</td><td>304</td><td>株式会社RIVER/GIORGIO</td><td class="num">¥772,728</td><td class="num">6</td><td>2024-11-19</td><td>山中</td><td>井原</td></tr>
+<tr><td>2025-05</td><td>9</td><td>株式会社RIVER/GIORGIO（YouTube）</td><td class="num">¥772,728</td><td class="num">6</td><td>2024-11-19</td><td>山中</td><td>井原</td></tr>
+<tr><td>2025-05</td><td>305</td><td>株式会社RIVER/GIORGIO（YouTube）#2</td><td class="num">¥772,728</td><td class="num">6</td><td>2024-11-19</td><td>山中</td><td>井原</td></tr>
+<tr><td>2026-07</td><td>281</td><td>株式会社アイ・ティ・ブリッジ</td><td class="num">¥750,000</td><td class="num">12</td><td>2025-07-31</td><td>橋口</td><td>渡邉果梨</td></tr>
+<tr><td>2026-07</td><td>330</td><td>株式会社名西工業</td><td class="num">¥750,000</td><td class="num">12</td><td>2025-07-31</td><td>山中</td><td>藤野</td></tr>
+<tr><td>2026-07</td><td>355</td><td>白石 慶次/株式会社OnLine</td><td class="num">¥750,000</td><td class="num">12</td><td>2025-07-31</td><td>橋口</td><td>佐藤</td></tr>
+<tr><td>2025-09</td><td>318</td><td>医療法人社団 凰佳会 / ノア歯科</td><td class="num">¥700,000</td><td class="num">6</td><td>2025-03-31</td><td>三並</td><td>岡</td></tr>
+<tr><td>2025-12</td><td>398</td><td>株式会社Joint Tech</td><td class="num">¥700,000</td><td class="num">6</td><td>2025-06-02</td><td>山中</td><td>浦本</td></tr>
+<tr><td>2026-03</td><td>368</td><td>さくらフォレスト株式会社</td><td class="num">¥681,819</td><td class="num">12</td><td>2025-03-31</td><td>橋口</td><td>福岡</td></tr>
+<tr><td>2026-06</td><td>314</td><td>株式会社カネマン</td><td class="num">¥675,000</td><td class="num">24</td><td>2024-06-25</td><td>山中</td><td>浦本</td></tr>
+<tr><td>2026-04</td><td>389</td><td>株式会社ZOUTO</td><td class="num">¥550,000</td><td class="num">6</td><td>2025-10-21</td><td>橋口</td><td>井原</td></tr>
+<tr><td>2026-01</td><td>301</td><td>株式会社カイザーエンタープライズ / 華小町</td><td class="num">¥521,970</td><td class="num">12</td><td>2025-01-25</td><td>山中</td><td>尾池</td></tr>
+<tr><td>2026-01</td><td>302</td><td>株式会社カイザーエンタープライズ / バロンレックス</td><td class="num">¥521,970</td><td class="num">12</td><td>2025-01-25</td><td>山中</td><td>尾池</td></tr>
+<tr><td>2026-01</td><td>303</td><td>株式会社カイザーエンタープライズ / バロン</td><td class="num">¥521,970</td><td class="num">12</td><td>2025-01-25</td><td>山中</td><td>尾池</td></tr>
+<tr><td>2025-06</td><td>411</td><td>株式会社砂建</td><td class="num">¥500,000</td><td class="num">6</td><td>2024-12-05</td><td>橋口</td><td>佐藤</td></tr>
+<tr><td>2026-01</td><td>385</td><td>中城建設株式会社</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-07-01</td><td>山中</td><td>塚原</td></tr>
+<tr><td>2025-07</td><td>255</td><td>株式会社アルテフィーチェ</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-02-01</td><td>橋口</td><td>井原</td></tr>
+<tr><td>2025-10</td><td>256</td><td>有限会社ウィステリア・キョウコ/パワーストーンカウンセラー協会</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-04-01</td><td>山中</td><td>井原</td></tr>
+<tr><td>2024-12</td><td>348</td><td>株式会社優計コンサルタント</td><td class="num">¥500,000</td><td class="num">6</td><td>2024-06-15</td><td>橋口</td><td>佐藤</td></tr>
+<tr><td>2026-05</td><td>375</td><td>株式会社ENERGIZE</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-11-28</td><td>橋口</td><td>渡邊友梨</td></tr>
+<tr><td>2025-10</td><td>358</td><td>株式会社幡野ファーム</td><td class="num">¥500,000</td><td class="num">12</td><td>2024-10-31</td><td>橋口</td><td>井原</td></tr>
+<tr><td>2026-03</td><td>338</td><td>有限会社ヤマト重機</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-09-21</td><td>山中</td><td>中野</td></tr>
+<tr><td>2025-12</td><td>387</td><td>株式会社笹山・板金</td><td class="num">¥500,000</td><td class="num">12</td><td>2025-01-01</td><td>橋口</td><td>志水</td></tr>
+<tr><td>2025-06</td><td>270</td><td>B-first株式会社 / Agu.</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-01-01</td><td>山中</td><td>嶋田</td></tr>
+<tr><td>2025-08</td><td>367</td><td>税理士法人イデアコンサルティング</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-02-17</td><td>山中</td><td>渡邊友梨</td></tr>
+<tr><td>2025-09</td><td>400</td><td>青晃架設株式会社</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-03-31</td><td>山中</td><td>大友</td></tr>
+<tr><td>2025-09</td><td>287</td><td>株式会社ウーヴルコンサルティング</td><td class="num">¥500,000</td><td class="num">6</td><td>2025-03-31</td><td>橋口</td><td>小堺</td></tr>
+</tbody>
+</table></div>
+
+<div class="note warn">
+  <strong>⚠ 重複登録疑い</strong>:
+  株式会社RIVER/GIORGIO（cid 304/9/305）は同一契約が3レコード= <strong>¥2,318,184 が重複計上</strong> の可能性。
+  株式会社カイザーエンタープライズ（cid 301/302/303）は店舗別契約3レコードのため要確認。
+  これらを除外すると B の真の月額は <strong>¥58.5M → 約 ¥55.5M〜¥56.2M</strong> に縮む。
+</div>
+
+<details>
+  <summary>B 残り92社（全件は JSON で再現可）</summary>
+  <div style="font-size:12px;color:var(--sub);padding:8px 0">
+    全 122社は <code>/Users/fukuokayuuki/trepro-ai-v4/scripts/_query_ab137_aug_filter.mjs</code> の再実行で取得。
+    JSON 出力: <code>/tmp/ab_aug.json</code>。月別件数の集計は本ファイル「3. 月別内訳」を参照。
+  </div>
+</details>
+
+<h2>5. ソース A 85社 v1からの増分</h2>
+
+<div class="scroll"><table>
+<thead><tr><th>更新月</th><th class="num">件数</th><th class="num">月額合計</th><th>v1からの差分</th></tr></thead>
+<tbody>
+<tr style="background:#fef2f2"><td>2023-02</td><td class="num">1</td><td class="num">¥550,000</td><td class="warn">新規（神姫バス系の旧契約）</td></tr>
+<tr style="background:#fef2f2"><td>2024-09</td><td class="num">1</td><td class="num">¥4,125,000</td><td class="warn">新規（RIENS系）</td></tr>
+<tr><td>2025-02〜2025-08</td><td class="num">3</td><td class="num">¥10,125,000</td><td>変動なし</td></tr>
+<tr><td>2025-09〜2026-08</td><td class="num">80</td><td class="num">¥79,055,358</td><td>v1（81件¥79,055,358）から 1件減 …※実体は同一範囲</td></tr>
+<tr style="background:var(--soft);font-weight:600"><td>合計</td><td class="num">85</td><td class="num">¥93,855,358</td><td>v1比 +2社 / +¥4,675,000</td></tr>
+</tbody>
+</table></div>
+
+<div class="note">
+  v1 公開リスト（83社）は本v2と同じ <code>renewal_month ≤ 2026-08</code> 条件で <strong>2026-06-22 朝の DB 状態</strong> を反映。
+  本v2再計算（同日 14:30）で +2件 = 過去更新月 2件が新たに active+未判定 として現れた。
+</div>
+
+<h2>6. ソース C: renewal_month NULL 群</h2>
+
+<div class="grid3">
+  <div class="card">
+    <div class="kpi-label">active × 未判定 全体</div>
+    <div class="kpi-val">129</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">うち renewal_month IS NULL</div>
+    <div class="kpi-val ok">0</div>
+    <div class="kpi-sub">本日時点でゼロ</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">occurred_at+期間で導出可能</div>
+    <div class="kpi-val ok">0</div>
+    <div class="kpi-sub">タスク2は空振り</div>
+  </div>
+</div>
+
+<div class="note info">
+  <strong>結論: タスク2は本日時点で対象ゼロ。</strong> runtime 上では <code>renewal_month</code> は 100% 埋まっている。
+  ただし埋まっている値の <strong>正確性</strong> は別問題（2026-06-06 監査で意味論ズレ147件あり）。
+</div>
+
+<h2>7. 漏れ拾い上げの限界（まだ取り切れない範囲）</h2>
+
+<ol>
+  <li><strong>DBのみ存在の 217件（-/-/C 片足）</strong>: 2026-06-06 監査でDBのみ存在=217件。renewal_month は埋まっているはずなので A に紛れているが、架空/重複の可能性は残る。</li>
+  <li><strong>税抜/税込ノイズ</strong>: A=税込×1.1、B=契約書ベース（税抜疑い）。直接合算に約9%の不確実性。</li>
+  <li><strong>clientId 重複の二重計上</strong>: RIVER/GIORGIO 3レコードのような同名+別cid が他にも潜む可能性。</li>
+  <li><strong>契約書シート未登録の口頭契約・SPOT</strong>: 契約書ベース（gid=2078323097）に乗らない売上は 3者突合で永久に検出できない。freee入金からの逆突合経路が別途必要。</li>
+  <li><strong>renewal_month のセマンティック誤入力</strong>: A の中で renewal_month が ±6/12ヶ月ズレた意味論ズレ147件（2026-06-06監査） → 実際の判定期限が本表より早い/遅い可能性。</li>
+  <li><strong>過去更新月の未判定残骸</strong>: 2023-02 / 2024-09 など過去月の active+未判定 = 4件。すでに判定すべきタイミングを過ぎたレガシー。</li>
+  <li><strong>8月以降の前倒し判定</strong>: renewal_month=2026-09 以降だが、契約解約予告期間（通常3ヶ月前）が 8月中に来る案件は本v2でも捕捉できていない。decision_deadline 軸の再集計が必要。</li>
+</ol>
+
+<h2>8. 推奨アクション（CEO 判断材料）</h2>
+
+<ul>
+  <li><strong>即時</strong>: B の 122社（¥58.5M月額）を「DB未登録だが判定要対象」として、<code>continuation_entries</code> に手動登録 or 月初突合バッチに編入。</li>
+  <li><strong>8月末まで</strong>: A+B 計 207社 × 月額 ¥152M の判定実行体制を組む。荷重期待値で<strong>月次 ¥84.2M / 年 ¥1,011M</strong> が喪失リスク。</li>
+  <li><strong>品質</strong>: 重複cid 整理（RIVER/GIORGIO 等）と税込/税抜統一を 7月中に完了させて v3 で再集計。</li>
+</ul>
+
+<h2>9. 生成物・再現コマンド</h2>
+
+<div class="scroll"><table>
+<thead><tr><th>用途</th><th>パス</th></tr></thead>
+<tbody>
+<tr><td>MD（フル版）</td><td><code>/Users/fukuokayuuki/trepro-harness/mdoutput/2026-06-22_continuation_aug_impact_v2_complete.md</code></td></tr>
+<tr><td>HTML（本ファイル）</td><td><code>/Users/fukuokayuuki/trepro-harness/mdoutput/2026-06-22_continuation_aug_impact_v2_complete.html</code></td></tr>
+<tr><td>ソースA 抽出</td><td><code>~/trepro-ai-v4/scripts/_query_aug_diff.mjs</code></td></tr>
+<tr><td>ソースB 抽出（AB-絞り込み）</td><td><code>~/trepro-ai-v4/scripts/_query_ab137_aug_filter.mjs</code></td></tr>
+<tr><td>ソースC（NULL群）</td><td><code>~/trepro-ai-v4/scripts/_query_null_renewal.mjs</code></td></tr>
+<tr><td>v1（元レポート）</td><td><code>~/trepro-harness/mdoutput/2026-06-22_continuation_aug_impact.md</code></td></tr>
+</tbody>
+</table></div>
+
+<div class="footer">
+  生成: 2026-06-22 / DB read-only / continuation_entries + 契約書ベース(gid=2078323097) + トレプロ入金確認(gid=1058269466) 3者統合<br>
+  税込/税抜の扱いに約9%のノイズあり / 重複cid 3件特定済 / NULL群はタスク本日時点でゼロ
+</div>
+
+</div>
+
+<script>
+// 月別積み上げ棒グラフを月別テーブルから描画（SVG不使用、純粋なdiv）
+(() => {
+  const data = [
+    {m:"2023-02", a:550000, b:0},
+    {m:"2024-09", a:4125000, b:0},
+    {m:"2024-12", a:0, b:500000},
+    {m:"2025-01", a:0, b:350000},
+    {m:"2025-02", a:5500000, b:0},
+    {m:"2025-03", a:4125000, b:0},
+    {m:"2025-04", a:0, b:454546},
+    {m:"2025-05", a:0, b:2318184},
+    {m:"2025-06", a:0, b:2254546},
+    {m:"2025-07", a:0, b:500000},
+    {m:"2025-08", a:500000, b:500000},
+    {m:"2025-09", a:3575000, b:2100000},
+    {m:"2025-10", a:11220000, b:2400000},
+    {m:"2025-11", a:550000, b:3450000},
+    {m:"2025-12", a:935000, b:2000000},
+    {m:"2026-01", a:605000, b:5065910},
+    {m:"2026-02", a:2420000, b:2500000},
+    {m:"2026-03", a:1540000, b:5845457},
+    {m:"2026-04", a:3850000, b:5804546},
+    {m:"2026-05", a:7552858, b:5035000},
+    {m:"2026-06", a:11827500, b:6102272},
+    {m:"2026-07", a:21670000, b:7800000},
+    {m:"2026-08", a:13310000, b:3500000},
+  ];
+  const maxV = Math.max(...data.map(d => d.a + d.b));
+  const root = document.getElementById("mdist");
+  if (!root) return;
+  root.style.gridTemplateColumns = `repeat(${data.length},1fr)`;
+  for (const d of data) {
+    const col = document.createElement("div");
+    col.className = "col";
+    const bars = document.createElement("div");
+    bars.className = "bars";
+    const ah = (d.a / maxV) * 100;
+    const bh = (d.b / maxV) * 100;
+    if (d.b > 0) {
+      const bb = document.createElement("div");
+      bb.className = "bar-b";
+      bb.style.height = bh + "%";
+      bb.title = `${d.m} B: ¥${d.b.toLocaleString()}`;
+      bars.appendChild(bb);
+    }
+    if (d.a > 0) {
+      const ab = document.createElement("div");
+      ab.className = "bar-a";
+      ab.style.height = ah + "%";
+      ab.title = `${d.m} A: ¥${d.a.toLocaleString()}`;
+      bars.appendChild(ab);
+    }
+    const lab = document.createElement("div");
+    lab.className = "lab";
+    lab.textContent = d.m;
+    col.appendChild(bars);
+    col.appendChild(lab);
+    root.appendChild(col);
+  }
+})();
+</script>
+
+</body>
+</html>
