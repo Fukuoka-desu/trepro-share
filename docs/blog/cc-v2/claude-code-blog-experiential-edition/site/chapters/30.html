@@ -31,31 +31,31 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-30-s1">30.1 Local Task Manager</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Localで価値を確かめ、要件・データ境界・Test・Schemaを揃える最小Webアプリの作り方。<br/><span class="feature-intro-io"><strong>入力:</strong> タスク管理の要件、データスキーマ　<strong>出力:</strong> Local起動するTask Managerと検証ログ</span></p>
+    <h2 id="ch-30-s1">30.1 Local Task Manager</h2>
 <p>初心者版：外部API、認証、決済、DBなし。Local JSON/Storage、1 Command起動、Sample、Test、README。</p>
 <pre><code class="language-text">会議Task JSONを読むLocal Web App。
 会議一覧、Task Board、Owner/Status/Due Filter、状態変更、JSON Export。
 Sampleで起動、Test、375/1440px、READMEを完了条件にする。
 </code></pre>
-<h2 id="ch-30-s2">30.2 Bug修正</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Bug報告を必ず再現手順から扱い、修正前に再現テストを書く品質運用。直したつもりを防ぐ。<br/><span class="feature-intro-io"><strong>入力:</strong> Bug報告、現状の挙動　<strong>出力:</strong> 再現テストと修正Patch、Diff</span></p>
+<h2 id="ch-30-s2">30.2 Bug修正</h2>
 <pre><code class="language-text">Reproduce Test → Investigate → Minimal Fix → Verify → Root Cause Report
 </code></pre>
 <pre><code class="language-text">Issue #123を修正。最初に失敗する再現Test。
 Test削除、Skip、Lint緩和、Type ignore禁止。
 </code></pre>
-<h2 id="ch-30-s3">30.3 大規模Migration</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>調査・段階移行・互換性・Rollbackを持たせる大規模移行の運用設計。一気に切り替えない。<br/><span class="feature-intro-io"><strong>入力:</strong> 旧仕様、新仕様、影響範囲　<strong>出力:</strong> 段階移行計画とRollback条件</span></p>
+<h2 id="ch-30-s3">30.3 大規模Migration</h2>
 <pre><code class="language-text">Static Search → Matrix → 1 Pilot → Batch/Codemod → Batch Test
 → Fresh Review → 残存0 → Rollback
 </code></pre>
 <pre><code class="language-text">/goal legacyClient.*参照を0にしTest/Build成功。
 最大20ターン。5ターンごとにProgress保存、20 File単位でCommit候補。
 </code></pre>
-<h2 id="ch-30-s4">30.4 Fresh Review</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>実装と切り離した独立コンテキストで成果物を見直す最終チェック。迎合バイアスのない指摘を得る。<br/><span class="feature-intro-io"><strong>入力:</strong> 実装済み機能、レビュー観点　<strong>出力:</strong> 独立レビュー指摘と修正アクション</span></p>
+<h2 id="ch-30-s4">30.4 Fresh Review</h2>
 <pre><code class="language-text">新Sessionで意図を教えずDiff Review。
 Security、Data loss、Behavior、Test、Maintainability順。
 各FindingにFile/Line/再現/Severity/修正案。
 </code></pre>
-<h2 id="ch-30-s5">30.5 Diet App</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>健康・投資・グローバル情報のような高リスク領域で、意思決定を自動化せず情報整理と注意喚起に機能を限定する設計例。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うリスク領域、ユーザー像　<strong>出力:</strong> 意思決定支援に限定した安全アプリ仕様</span></p>
+<h2 id="ch-30-s5">30.5 Diet App</h2>
 <p>画像からCalories/栄養を推定するPrototypeは学習例。医療判断へ使わない。</p>
 <ul>
 <li>推定/実測を分離。</li>
@@ -64,7 +64,7 @@ Security、Data loss、Behavior、Test、Maintainability順。
 <li>食品DB出典。</li>
 <li>専門家導線。</li>
 </ul>
-<h2 id="ch-30-s6">30.6 投資支援App</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>健康・投資・グローバル情報のような高リスク領域で、意思決定を自動化せず情報整理と注意喚起に機能を限定する設計例。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うリスク領域、ユーザー像　<strong>出力:</strong> 意思決定支援に限定した安全アプリ仕様</span></p>
+<h2 id="ch-30-s6">30.6 投資支援App</h2>
 <p>自動売買・最終推奨は高Risk。</p>
 <pre><code class="language-text">Data Source/時刻
 Look-ahead Bias
@@ -74,7 +74,7 @@ Human approval
 Loss limit/Kill switch
 </code></pre>
 <p>初心者題材にしない。</p>
-<h2 id="ch-30-s7">30.7 世界Dashboard</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>健康・投資・グローバル情報のような高リスク領域で、意思決定を自動化せず情報整理と注意喚起に機能を限定する設計例。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うリスク領域、ユーザー像　<strong>出力:</strong> 意思決定支援に限定した安全アプリ仕様</span></p>
+<h2 id="ch-30-s7">30.7 世界Dashboard</h2>
 <p>Flight、Trade、News、Conflict等を統合する発展課題。</p>
 <ul>
 <li>Source更新頻度。</li>
@@ -90,6 +90,7 @@ Loss limit/Kill switch
 <hr/>
 
   </section>
+  
   
   <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 小さなLocal Appへ一つ機能を追加し、再現テスト、正常系、異常系、Diff、Rollbackを記録してください。</p></div>

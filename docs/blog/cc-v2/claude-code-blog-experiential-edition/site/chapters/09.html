@@ -61,12 +61,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>大きなLogを丸ごと貼らず、必要範囲だけ読む。</li>
 <li>Subagentへ独立範囲を渡す。</li>
 </ul>
-<h2 id="ch-09-s4">9.4 Resume</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Resumeは作業再開の補助、独立Stateを正本にする運用方針。画像入力・割り込みも文脈を保つ範囲で扱う。<br/><span class="feature-intro-io"><strong>入力:</strong> 中断中のセッション、機密性のある作業　<strong>出力:</strong> 正本としての作業State、必要に応じた履歴非保持実行</span></p>
+<h2 id="ch-09-s4">9.4 Resume</h2>
 <pre><code class="language-bash">claude --continue
 claude --resume
 </code></pre>
 <p>再開時も、現在のGit状態、Issue、完了条件を確認する。過去SessionのContextと現在のFileがずれている可能性がある。</p>
-<h2 id="ch-09-s5">9.5 履歴を残さない実行</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Resumeは作業再開の補助、独立Stateを正本にする運用方針。画像入力・割り込みも文脈を保つ範囲で扱う。<br/><span class="feature-intro-io"><strong>入力:</strong> 中断中のセッション、機密性のある作業　<strong>出力:</strong> 正本としての作業State、必要に応じた履歴非保持実行</span></p>
+<h2 id="ch-09-s5">9.5 履歴を残さない実行</h2>
 <p>機密性や自動化要件により、非対話実行でSession Persistenceを無効化する選択肢がある。利用Versionの<code>--help</code>と組織Policyを確認する。</p>
 <h2 id="ch-09-s6">9.6 画像と割り込み</h2>
 <ul>
@@ -79,6 +79,7 @@ claude --resume
 <hr/>
 
   </section>
+  
   
   <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> いまの作業について、次回再開時に必要な状態をRESUME.mdへ書き、会話を閉じても続けられるか確認してください。</p></div>

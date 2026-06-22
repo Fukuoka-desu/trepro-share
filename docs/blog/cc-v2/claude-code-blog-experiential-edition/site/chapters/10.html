@@ -53,12 +53,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-10-s2">10.2 Checkpoint</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。<br/><span class="feature-intro-io"><strong>入力:</strong> AIに任せる大胆な変更、実験的な編集　<strong>出力:</strong> 巻き戻し可能なCheckpoint、戻したあとの状態</span></p>
+<h2 id="ch-10-s2">10.2 Checkpoint</h2>
 <pre><code class="language-text">/rewind
 </code></pre>
 <p>またはEscを2回押して履歴選択へ入れる場合がある。CodeとConversationのどちらを戻すか確認する。</p>
 <p>CheckpointはGitの代わりではない。</p>
-<h2 id="ch-10-s3">10.3 最小Git運用</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。<br/><span class="feature-intro-io"><strong>入力:</strong> 完了した小さな変更、検証結果　<strong>出力:</strong> 意味あるCommitメッセージとレビュー可能なdiff</span></p>
+<h2 id="ch-10-s3">10.3 最小Git運用</h2>
 <pre><code class="language-bash">git init
 git add .
 git commit -m 'chore: baseline before agent changes'
@@ -69,7 +69,7 @@ git diff
 git add &lt;intentional-files&gt;
 git commit -m 'feat: add meeting task extraction'
 </code></pre>
-<h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。<br/><span class="feature-intro-io"><strong>入力:</strong> 完了した変更、検証ログ　<strong>出力:</strong> Rule準拠のCommit、PR説明文</span></p>
+<h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2>
 <pre><code class="language-text">- Commit前にDiffを見せる
 - 変更目的を1つにする
 - Secrets Scan
@@ -78,7 +78,7 @@ git commit -m 'feat: add meeting task extraction'
 - Force Pushしない
 - Commit Messageへ事実だけを書く
 </code></pre>
-<h2 id="ch-10-s5">10.5 Worktree</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 並行して進めたい複数機能　<strong>出力:</strong> 機能別Worktreeディレクトリと衝突なしの差分</span></p>
+<h2 id="ch-10-s5">10.5 Worktree</h2>
 <p>Agentを並列化する時は、同じWorking Treeを共有しない。</p>
 <pre><code class="language-bash">git worktree add ../project-agent-tests -b agent/tests
 git worktree add ../project-agent-docs -b agent/docs
@@ -87,6 +87,7 @@ git worktree add ../project-agent-docs -b agent/docs
 <hr/>
 
   </section>
+  
   
   <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の良い状態をCommitし、その後に小さな変更を加えてDiffを確認し、元へ戻せることを試してください。</p></div>

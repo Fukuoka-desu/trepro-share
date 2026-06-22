@@ -31,7 +31,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-36-s1">Week 1</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>現有資産の棚卸しとPolicy策定。動かす前に正本と禁止事項を決める1週目の作業塊。<br/><span class="feature-intro-io"><strong>入力:</strong> 現状のSkill群・Hook群・運用ルール　<strong>出力:</strong> Inventory表、初期Policyドラフト</span></p>
+    <h2 id="ch-36-s1">Week 1</h2>
 <pre><code class="language-text">- 本書Review
 - 46 Skill Inventory
 - Naming Migration
@@ -39,21 +39,21 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Bypass/Secret/Sandbox検証
 - Release Policy
 </code></pre>
-<h2 id="ch-36-s2">Week 2</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>正本Buildと評価Fixture整備を行う2週目。Canaryへ流す前に品質基準を満たす土台作り。<br/><span class="feature-intro-io"><strong>入力:</strong> 正本ソース、Fixture　<strong>出力:</strong> Buildパイプラインと初期テスト通過状態</span></p>
+<h2 id="ch-36-s2">Week 2</h2>
 <pre><code class="language-text">- skill-src正本化
 - build/validate
 - Hook Fixture
 - sync Dry-run/Delete/Preserve Test
 - verify/Rollback
 </code></pre>
-<h2 id="ch-36-s3">Week 3</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>限定範囲のCanary配布と新人Bronze研修を並走させる3週目。小さく失敗を発見する段階。<br/><span class="feature-intro-io"><strong>入力:</strong> Canary対象、研修対象社員　<strong>出力:</strong> Canary実績ログとBronze認定者リスト</span></p>
+<h2 id="ch-36-s3">Week 3</h2>
 <pre><code class="language-text">- 管理者+開発者Canary
 - Bronze研修
 - Meeting Assistant
 - 誤検知/Sandbox/Skill観測
 - 教材修正
 </code></pre>
-<h2 id="ch-36-s4">Week 4</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Pilot範囲拡大とStable Releaseを行う4週目。Exit条件とRollback条件を持って全社展開へ進む。<br/><span class="feature-intro-io"><strong>入力:</strong> Canary通過状態、Pilot対象部署　<strong>出力:</strong> Stable Releaseと配布完了レポート</span></p>
+<h2 id="ch-36-s4">Week 4</h2>
 <pre><code class="language-text">- Pilot部署
 - Incident/Help Desk
 - Version Dashboard
@@ -61,7 +61,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - 全社員研修
 - 月次Review
 </code></pre>
-<h2 id="ch-36-s5">30日後</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>導入時間・更新率・認定完了・Rollback Drill・Critical Gap・Skill二重編集を測る経営報告用指標群。<br/><span class="feature-intro-io"><strong>入力:</strong> 30日後の運用ログ　<strong>出力:</strong> KPIダッシュボードと経営報告書ドラフト</span></p>
+<h2 id="ch-36-s5">30日後</h2>
 <pre><code class="language-text">[ ] 新人30分
 [ ] Bronze完了
 [ ] Stable 95%が24h内更新
@@ -74,6 +74,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <hr/>
 
   </section>
+  <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>4週間で詰めすぎないコツ</dt><dd>1週目のInventoryは最低でも3営業日、Policyドラフトに2営業日確保しないと、後半のCanaryで必ず差し戻しが発生します。最初の週は『動かさない作業しかしない』ことを宣言し、その分2週目以降のテンポを上げる設計にすると失敗が減ります。</dd><dt>Canary対象の選び方</dt><dd>Canary対象は『AI習熟度が高い人』ではなく、『業務頻度が高く、失敗を口頭で言ってくれる人』を3〜5名選びます。習熟度の高い人は自分で迂回路を作ってしまうため、設計上の問題が検出されにくくなります。</dd><dt>30日後指標の運用</dt><dd>指標は5〜7個に絞り、毎週月曜にダッシュボードへ自動転記します。指標を10個以上並べると誰も見なくなり、結果として導入の費用対効果がCEOに伝わりません。指標を絞り切る判断が、組織展開の成否を分けます。</dd><dt>次の章への接続</dt><dd>4週間ロードマップが回り始めると、次章のFeature/原則分離が真価を発揮します。配布物が増えれば増えるほど、長く使える原則と頻繁に変わる製品情報を別々の更新周期で管理する必要が高まるからです。</dd></dl></section>
   
   <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 自組織向けに四週間の導入表を作り、各週のOwner、成果物、合格条件、Rollback条件を記入してください。</p></div>

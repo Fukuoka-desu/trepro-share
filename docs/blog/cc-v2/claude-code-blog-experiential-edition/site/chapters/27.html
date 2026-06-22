@@ -56,7 +56,7 @@ $HOME/.local/share/trepro-harness/deploy/verify.sh
 <pre><code class="language-text">training/meeting-assistantを開く
 Plan → 実装 → git diff → Test → /rewind → Skill評価
 </code></pre>
-<h2 id="ch-27-s6">27.2 初日Safety</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>初日に必ず適用する権限・削除禁止・本番遮断のセットアップ。事故ゼロでスタートさせるための最小防御。<br/><span class="feature-intro-io"><strong>入力:</strong> 新人Project、本番資源の所在　<strong>出力:</strong> 初日Safetyが効いたLab環境</span></p>
+<h2 id="ch-27-s6">27.2 初日Safety</h2>
 <pre><code class="language-text">- 本番/顧客で練習しない
 - Bypass禁止
 - API Keyを貼らない
@@ -66,7 +66,7 @@ Plan → 実装 → git diff → Test → /rewind → Skill評価
 - 不明MCP/Plugin禁止
 - Error/Logを隠さない
 </code></pre>
-<h2 id="ch-27-s7">27.3 認定</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Plan/Verify/Git/Skill化を実演させて合否判定する、知識クイズではなく実演ベースの初期認定。<br/><span class="feature-intro-io"><strong>入力:</strong> 実演課題、観察観点　<strong>出力:</strong> Bronze合否判定と次のレベル課題</span></p>
+<h2 id="ch-27-s7">27.3 認定</h2>
 <table>
 <thead>
 <tr>
@@ -93,13 +93,13 @@ Plan → 実装 → git diff → Test → /rewind → Skill評価
 </tr>
 </tbody>
 </table>
-<h2 id="ch-27-s8">27.4 運用Cadence</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>Onboarding後も月次診断・更新確認・Incident演習を続け、知識と環境の劣化を防ぐ運用サイクル。<br/><span class="feature-intro-io"><strong>入力:</strong> 現職社員、運用カレンダー　<strong>出力:</strong> 月次診断結果、演習レポート</span></p>
+<h2 id="ch-27-s8">27.4 運用Cadence</h2>
 <pre><code class="language-text">Daily: Update失敗/SEV
 Weekly: Canary/Skill候補/Cost
 Monthly: Harness診断/Skill抜取/Deprecation/Version/Incident
 Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
 </code></pre>
-<h2 id="ch-27-s9">27.5 障害表</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>認証・権限・Path・Versionなどつまずきやすい箇所を切り分け診断するチェック表とスクリプト。<br/><span class="feature-intro-io"><strong>入力:</strong> 詰まり報告、エラー内容　<strong>出力:</strong> 症状→対応の対照表と自動診断ログ</span></p>
+<h2 id="ch-27-s9">27.5 障害表</h2>
 <table>
 <thead>
 <tr>
@@ -142,7 +142,7 @@ Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
 </tr>
 </tbody>
 </table>
-<h2 id="ch-27-s10">27.6 Diagnostics</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>認証・権限・Path・Versionなどつまずきやすい箇所を切り分け診断するチェック表とスクリプト。<br/><span class="feature-intro-io"><strong>入力:</strong> 詰まり報告、エラー内容　<strong>出力:</strong> 症状→対応の対照表と自動診断ログ</span></p>
+<h2 id="ch-27-s10">27.6 Diagnostics</h2>
 <pre><code class="language-bash">{
   echo "date=$(date -Iseconds)"
   echo "macos=$(sw_vers -productVersion)"
@@ -157,6 +157,7 @@ Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
 <hr/>
 
   </section>
+  
   
   <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 新人が30分で終える導入手順を、環境診断・Lab作成・成果物・証拠・再開の五段階で書いてください。</p></div>

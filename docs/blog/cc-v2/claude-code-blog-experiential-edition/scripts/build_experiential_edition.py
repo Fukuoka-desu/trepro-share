@@ -286,9 +286,12 @@ def first_explanation_end(heading: Tag) -> Tag:
 
 def make_beginner_section(key: str, spec: dict[str, Any]) -> Tag:
     s=BeautifulSoup('', 'html.parser')
-    sec=s.new_tag('section',attrs={'class':'beginner-primer','id':f'beginner-{key}'})
-    eyebrow=s.new_tag('div',attrs={'class':'beginner-eyebrow'});eyebrow.string='完全初心者のための準備';sec.append(eyebrow)
-    h=s.new_tag('h2');h.string='この章に入る前に';sec.append(h)
+    sec=s.new_tag('details',attrs={'class':'beginner-primer','id':f'beginner-{key}'})
+    summary=s.new_tag('summary',attrs={'class':'beginner-summary'})
+    eyebrow=s.new_tag('div',attrs={'class':'beginner-eyebrow'});eyebrow.string='完全初心者のための準備';summary.append(eyebrow)
+    h=s.new_tag('h2');h.string='この章に入る前に';summary.append(h)
+    hint=s.new_tag('span',attrs={'class':'beginner-toggle-hint'});hint.string='クリックして開く ▾';summary.append(hint)
+    sec.append(summary)
     p=s.new_tag('p',attrs={'class':'beginner-lead'});p.string=f"この章では、{spec['outcome']}ことを学びます。最初に専門用語を暗記するのではなく、{spec['focus']}小さな実習から理解します。";sec.append(p)
     grid=s.new_tag('div',attrs={'class':'beginner-grid'})
     card=s.new_tag('article',attrs={'class':'primer-card'});h3=s.new_tag('h3');h3.string='まず知っておくこと';card.append(h3);ul=s.new_tag('ul',attrs={'class':'beginner-basics'})
@@ -338,10 +341,20 @@ EXTRA_CSS = r'''
 .lesson-slide{max-width:920px;margin:28px 0 42px;border:1px solid var(--ref-border);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(20,50,100,.08)}.lesson-slide a{display:block}.lesson-slide img{width:100%;height:auto;display:block;aspect-ratio:120/67;object-fit:cover}.lesson-slide figcaption{padding:12px 17px;color:var(--ref-ink);font-size:.9rem;background:var(--ref-bg)}.lesson-slide.is-cover{margin-top:8px}
 .beginner-foundation{background:var(--ref-bg);border-top:1px solid var(--ref-border);border-bottom:1px solid var(--ref-border)}.beginner-foundation-body{max-width:1050px;margin:0 auto}
 .beginner-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0}
-.beginner-primer{margin:30px 0 38px;padding:28px;border:1px solid var(--ref-border);border-radius:22px;background:var(--ref-bg);box-shadow:0 6px 18px rgba(20,50,100,.05)}
-.beginner-primer .beginner-eyebrow{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--ref-accent);margin-bottom:8px}
-.beginner-primer h2{margin-top:0;color:var(--ref-ink)}
+.beginner-primer{margin:30px 0 38px;padding:0;border:1px solid var(--ref-border);border-radius:22px;background:var(--ref-bg);box-shadow:0 6px 18px rgba(20,50,100,.05);overflow:hidden}
+.beginner-primer .beginner-eyebrow{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--ref-accent);margin:0}
+.beginner-primer h2{margin:0;color:var(--ref-ink)}
 .beginner-primer h3{font-size:1.06rem;margin:18px 0 8px;color:var(--ref-ink)}
+.beginner-summary{list-style:none;cursor:pointer;padding:22px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--ref-bg);transition:background .15s}
+.beginner-summary::-webkit-details-marker{display:none}
+.beginner-summary:hover{background:#e3eef9}
+.beginner-summary h2{font-size:1.1rem;color:var(--ref-ink)}
+.beginner-toggle-hint{margin-left:auto;font-size:.82rem;color:var(--ref-accent);font-weight:700;letter-spacing:.04em;transition:transform .2s}
+.beginner-primer[open] .beginner-toggle-hint{transform:rotate(180deg) translateY(-2px)}
+.beginner-primer[open] .beginner-summary{border-bottom:1px solid var(--ref-border)}
+.beginner-primer>*:not(summary){padding-left:28px;padding-right:28px}
+.beginner-primer>*:not(summary):last-child{padding-bottom:24px}
+.beginner-primer>*:not(summary):first-of-type{padding-top:22px}
 .beginner-lead{font-size:1.08rem;line-height:1.9;color:var(--story-ink)}
 .primer-card{padding:18px;border:1px solid var(--ref-border);border-radius:16px;background:#fff}
 .beginner-basics{margin:0;padding-left:1.35rem}.beginner-basics li{margin:.55rem 0}

@@ -31,7 +31,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-02-s1">2.1 安全の基本式</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>最小権限・隔離・戻せる履歴・検証・監査の5要素を重ね、失敗しても被害を限定する安全設計の土台。<br/><span class="feature-intro-io"><strong>入力:</strong> 扱うデータ、許可したい操作、起きうる失敗　<strong>出力:</strong> 5要素ごとに何で守るかをマッピングした安全表</span></p>
+    <h2 id="ch-02-s1">2.1 安全の基本式</h2>
 <pre><code class="language-text">安全性 = 最小権限 × 隔離 × 可逆性 × 検証 × 監査
 </code></pre>
 <p>Claude Codeは優秀だが、初日の新人と同じく、Projectの暗黙知を知らない。最初から本番権限を渡さない。</p>
@@ -106,6 +106,7 @@ claude
 <hr/>
 
   </section>
+  
   
   <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 学習用フォルダを作り、『削除しない』『外部公開しない』『秘密情報を貼らない』の三つをプロジェクトルールへ書いてください。</p></div>

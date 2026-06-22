@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Toolと権限を限定する。</li>
 <li>作成者と評価者を分ける。</li>
 </ol>
-<h2 id="ch-13-s2">13.2 Reviewer Agent</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>成果物だけを渡して評価させ、迎合バイアスを排した指摘を得るための専任エージェント。<br/><span class="feature-intro-io"><strong>入力:</strong> 成果物、評価観点（要件/安全/保守性）　<strong>出力:</strong> 独立コンテキストからの指摘リストと優先度</span></p>
+<h2 id="ch-13-s2">13.2 Reviewer Agent</h2>
 <p><code>.claude/agents/code-reviewer.md</code>：</p>
 <pre><code class="language-markdown">---
 name: code-reviewer
@@ -53,7 +53,7 @@ and operational risk. For each finding include severity, file, symbol or line,
 evidence, and minimal remediation. Separate blockers from suggestions.
 </code></pre>
 <p>Review AgentにWrite Toolを渡さない。</p>
-<h2 id="ch-13-s3">13.3 Research Agent</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>調査専任で出典・確度・反証を分けて整理するエージェント。実装者と分離して情報収集の質を確保する。<br/><span class="feature-intro-io"><strong>入力:</strong> 調査テーマ、検索範囲、評価軸　<strong>出力:</strong> 出典付き調査結果と未確認項目リスト</span></p>
+<h2 id="ch-13-s3">13.3 Research Agent</h2>
 <pre><code class="language-markdown">---
 name: primary-source-researcher
 description: Collect primary-source evidence for a narrowly defined research question and save structured claims.
@@ -74,7 +74,7 @@ Fresh Reviewer: 欠陥探索
 Main Agent: 人間承認後に修正
 </code></pre>
 <p>同じPromptとContextを全Agentへ配ると、同じBlind Spotを共有する。役割と入力を分ける。</p>
-<h2 id="ch-13-s5">13.5 Agent View</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>複数Agentの動きを俯瞰し、独立した仕事へ分担させる運用画面。同じファイルへの同時編集は避ける指針付き。<br/><span class="feature-intro-io"><strong>入力:</strong> 並列化したいタスク群、各Agent責務　<strong>出力:</strong> Agent View上の並列実行ログと統合結果</span></p>
+<h2 id="ch-13-s5">13.5 Agent View</h2>
 <p>現行Versionで<code>claude agents</code>を確認する。複数Sessionを管理できるが、同一Fileの同時編集は避ける。</p>
 <p>安全な割当：</p>
 <pre><code class="language-text">A: Read-only調査
@@ -116,6 +116,7 @@ SNS、Code変更、最終結論は禁止。15分で打ち切る。
 <hr/>
 
   </section>
+  
   
   <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> 現在の成果物を、新しいセッションまたはReviewer Agentへ渡し、要件充足・安全・保守性の三観点で評価させてください。</p></div>

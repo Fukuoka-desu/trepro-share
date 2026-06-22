@@ -102,7 +102,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 /Library/Application Support/ClaudeCode/managed-settings.json
 /Library/Application Support/ClaudeCode/managed-mcp.json
 </code></pre>
-<h2 id="ch-23-s4">23.4 推奨Repository</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>skill-srcを正本、配布用パッケージを生成物として分離し、Claude/Codex両Runtimeへ同じ正本から展開する構造。<br/><span class="feature-intro-io"><strong>入力:</strong> Skill群、Hook群、Plugin群　<strong>出力:</strong> 正本と生成物が分かれたGit Repository</span></p>
+<h2 id="ch-23-s4">23.4 推奨Repository</h2>
 <pre><code class="language-text">trepro-harness/
 ├── VERSION
 ├── CHANGELOG.md
@@ -147,12 +147,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 └── test-hooks.py
 </code></pre>
 <p>生成先を直接編集しない。</p>
-<h2 id="ch-23-s5">23.5 Release Flow</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>PR→Test→Evaluator→Canary→Pilot→Stableの順で段階配布し、失敗を小さく発見できるリリース設計。<br/><span class="feature-intro-io"><strong>入力:</strong> 配布候補の更新セット　<strong>出力:</strong> 段階通過ごとのリリースタグと配布対象</span></p>
+<h2 id="ch-23-s5">23.5 Release Flow</h2>
 <pre><code class="language-text">PR → Static/Test/Evaluator → Canary Tag → 2〜3名 → 観測
 → Pilot部署 → Stable Tag → 全社員Update → Metrics
 </code></pre>
 <p><code>main</code>最新を無条件配布せず、承認済みTagを配る。</p>
-<h2 id="ch-23-s6">23.6 Guidance/Enforcement Mapping</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>どのルールが文章のお願いで、どれがHookやPolicyで物理強制かを表に揃えるマッピング作業。<br/><span class="feature-intro-io"><strong>入力:</strong> 現状の全ルール一覧　<strong>出力:</strong> Guidance/Enforcement分類表</span></p>
+<h2 id="ch-23-s6">23.6 Guidance/Enforcement Mapping</h2>
 <table>
 <thead>
 <tr>
@@ -199,7 +199,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-23-s7">23.7 個人Layer</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>~/.claude/local/ など、配布で上書きされない個人カスタマイズ層を分離し、私物設定を守る仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 個人カスタマイズ、私物Skill　<strong>出力:</strong> 上書き保護されたLocal Layer</span></p>
+<h2 id="ch-23-s7">23.7 個人Layer</h2>
 <p><code>~/.claude/local/</code>を保護するだけでは自動発見されるとは限らない。運用を明文化する。</p>
 <pre><code class="language-text">~/.claude/local/
 ├── CLAUDE.local.md
@@ -223,6 +223,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <hr/>
 
   </section>
+  
   <section class="reference"><h2>補助図の制作指示</h2>
 <figure class="image-shell" data-image-id="diagram-ch23-harness-architecture">
   <img src="../images/diagram-ch23-harness-architecture.webp" alt="トレプロハーネスの正本、生成物、Policy、配布、個人Layer、監視" loading="lazy" decoding="async">

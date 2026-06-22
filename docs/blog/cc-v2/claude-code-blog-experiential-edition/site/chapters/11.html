@@ -111,7 +111,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [Config弱体化、本番接続、生成物直接編集]
 </code></pre>
 <p>短く、具体的、重複なし。200行未満を目安にする。</p>
-<h2 id="ch-11-s4">11.4 <code>/init</code></h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。<br/><span class="feature-intro-io"><strong>入力:</strong> 既存プロジェクト構造、目的の概略　<strong>出力:</strong> CLAUDE.md初稿（編集して短くする出発点）</span></p>
+<h2 id="ch-11-s4">11.4 <code>/init</code></h2>
 <p>Projectを読み、初期CLAUDE.mdを作る起点にできる。ただし生成物をそのまま採用しない。</p>
 <p>Review項目：</p>
 <ul>
@@ -121,7 +121,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Security RuleをSettings/Hookへ移す。</li>
 <li>長い手順をSkillへ移す。</li>
 </ul>
-<h2 id="ch-11-s5">11.5 Rules</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。<br/><span class="feature-intro-io"><strong>入力:</strong> 特定フォルダ・拡張子に限定したいルール　<strong>出力:</strong> 対象Path下でだけ自動適用されるRule</span></p>
+<h2 id="ch-11-s5">11.5 Rules</h2>
 <p><code>.claude/rules/</code>へ領域別Ruleを分ける。</p>
 <pre><code class="language-text">.claude/rules/
 ├── frontend.md
@@ -147,7 +147,7 @@ paths:
 <li>同じ文章を二重編集しない。</li>
 <li>Build Scriptで共通Sectionを生成するか、Canonical Docを参照する。</li>
 </ul>
-<h2 id="ch-11-s7">11.7 Auto Memory</h2><p class="feature-intro"><strong class="feature-intro-label">メモ</strong>AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。<br/><span class="feature-intro-io"><strong>入力:</strong> 会話中の決定事項、繰り返される好み　<strong>出力:</strong> 短い形に圧縮された自動メモ</span></p>
+<h2 id="ch-11-s7">11.7 Auto Memory</h2>
 <p>ClaudeがBuild Command、Debug Insight、Architecture Note等を保存する。便利だが、次を定期確認する。</p>
 <pre><code class="language-text">/memory
 </code></pre>
@@ -171,6 +171,7 @@ Project規約 → CLAUDE.md/Rules
 <hr/>
 
   </section>
+  
   <section class="reference"><h2>補助図の制作指示</h2>
 <figure class="image-shell" data-image-id="diagram-ch11-knowledge-layers">
   <img src="../images/diagram-ch11-knowledge-layers.webp" alt="CLAUDE.md、Rules、Skills、Auto Memoryの責務レイヤー" loading="lazy" decoding="async">

@@ -413,12 +413,12 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .feature-io dt{color:#5478a8;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.72rem;padding-top:2px}
 .feature-io dd{margin:0;color:#2c3e5c;line-height:1.65}
 @media(max-width:520px){.features-grid{grid-template-columns:1fr}}
-/* feature-intro: subdued annotation (90+ pass) */
-.feature-intro{margin:6px 0 14px;padding:6px 12px;background:transparent;border-left:3px solid #cbd5e1;border-radius:0;font-size:.88rem;line-height:1.7;color:#475569}
-.feature-intro-label{display:inline;font-size:.74rem;letter-spacing:.04em;color:#64748b;font-weight:700;margin-right:6px;padding:0;background:transparent;border-radius:0;vertical-align:baseline}
-.feature-intro-label::after{content:"："}
-.feature-intro-io{display:block;margin-top:4px;font-size:.8rem;color:#64748b}
-.feature-intro-io strong{color:#475569;font-weight:700}
+.expansion{margin:28px 0;padding:22px 26px;border-left:5px solid var(--action-accent);background:var(--action-bg);border-radius:0 14px 14px 0}
+.expansion>h2{margin:0 0 12px;font-size:1.16rem;color:var(--action-ink)}
+.expansion-list{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px}
+.expansion-list dt{font-weight:800;color:var(--action-accent);letter-spacing:.04em;font-size:.92rem;padding-top:2px}
+.expansion-list dd{margin:0;color:var(--story-ink);line-height:1.85}
+@media(max-width:640px){.expansion-list{grid-template-columns:1fr}.expansion-list dt{padding-top:8px}}
 .usecases{margin:32px 0;padding:26px;border-radius:18px;background:var(--ref-bg);border:1px solid var(--ref-border);box-shadow:0 6px 18px rgba(20,50,100,.05)}
 .usecases>h2{margin:0 0 6px;font-size:1.22rem;color:var(--ref-ink);display:flex;align-items:center;gap:8px}
 .usecases>h2::before{content:"";display:inline-block;width:8px;height:22px;background:var(--ref-accent);border-radius:3px}
@@ -673,60 +673,9 @@ def _match_feature(heading_body: str, features: list[dict]) -> dict | None:
 
 
 def inject_feature_intros(fragment: str, features: list[dict]) -> str:
-    """Inject a <p class="feature-intro"> right after each h2/h3 that matches a feature name."""
-    if not features:
-        return fragment
-    # Wrap to ensure consistent parsing
-    soup = BeautifulSoup(f"<div>{fragment}</div>", "html.parser")
-    root = soup.div if soup.div else soup
-    for heading in root.find_all(["h2", "h3"]):
-        heading_text = heading.get_text(strip=True)
-        if not heading_text:
-            continue
-        # Skip structural headings
-        if any(kw in heading_text for kw in _FEATURE_INTRO_SKIP_KEYWORDS):
-            continue
-        body = _normalize_heading_text(heading_text)
-        if not body:
-            continue
-        # Guard against double-insertion
-        nxt = heading.find_next_sibling()
-        if nxt is not None and nxt.name == "p" and "feature-intro" in (nxt.get("class") or []):
-            continue
-        match = _match_feature(body, features)
-        if not match:
-            continue
-        summary = (match.get("summary") or "").strip()
-        if not summary:
-            continue
-        input_text = (match.get("input") or "").strip()
-        output_text = (match.get("output") or "").strip()
-        p = soup.new_tag("p")
-        p["class"] = ["feature-intro"]
-        label = soup.new_tag("strong")
-        label["class"] = ["feature-intro-label"]
-        label.string = "メモ"
-        p.append(label)
-        p.append(summary)
-        if input_text or output_text:
-            br = soup.new_tag("br")
-            p.append(br)
-            io_span = soup.new_tag("span")
-            io_span["class"] = ["feature-intro-io"]
-            if input_text:
-                io_in = soup.new_tag("strong")
-                io_in.string = "入力:"
-                io_span.append(io_in)
-                io_span.append(f" {input_text}　")
-            if output_text:
-                io_out = soup.new_tag("strong")
-                io_out.string = "出力:"
-                io_span.append(io_out)
-                io_span.append(f" {output_text}")
-            p.append(io_span)
-        heading.insert_after(p)
-    # Unwrap our wrapper div
-    return root.decode_contents() if root.name == "div" else str(soup)
+    """Deprecated. feature-intro caused 100% duplication with the features cards above.
+    Kept as no-op for callers; returns the input fragment unchanged."""
+    return fragment
 
 
 def image_figure(item: dict, image_path_prefix: str) -> str:
@@ -749,8 +698,9 @@ def image_figure(item: dict, image_path_prefix: str) -> str:
 def render_reference(body: str, prefix: str, features: list[dict] | None = None) -> str:
     rendered = md_renderer()(body)
     rendered = add_heading_ids(rendered, prefix)
-    if features:
-        rendered = inject_feature_intros(rendered, features)
+    # feature-intro was removed: 100% duplicated with features cards above and
+    # introduced ch12/ch30 in-chapter duplicate bugs. Features are now shown
+    # only in the features_html() cards.
     return rendered
 
 
@@ -779,6 +729,31 @@ def features_html(meta: dict) -> str:
         '<h2>この章の概観 ／ 何を扱い、何ができるか</h2>'
         '<p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p>'
         f'<div class="features-grid">{"".join(cards)}</div>'
+        '</section>'
+    )
+
+
+def expansion_html(meta: dict) -> str:
+    exp = meta.get("expansion")
+    if not exp:
+        return ""
+    points = exp.get("points") or []
+    if not points:
+        return ""
+    title = html.escape(exp.get("title", "実務に落とすときの補足"))
+    items = []
+    for pt in points:
+        label = html.escape((pt.get("label") or "").strip())
+        body = html.escape((pt.get("body") or "").strip())
+        if not label or not body:
+            continue
+        items.append(f"<dt>{label}</dt><dd>{body}</dd>")
+    if not items:
+        return ""
+    return (
+        '<section class="expansion" aria-label="実務に落とすときの補足">'
+        f'<h2>{title}</h2>'
+        f'<dl class="expansion-list">{"".join(items)}</dl>'
         '</section>'
     )
 
@@ -829,6 +804,7 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
     <h2>実装リファレンス</h2>
     {render_reference(ch.body, f'ch-{ch.key}', meta.get('features'))}
   </section>
+  {expansion_html(meta)}
   {extra_html}
   <section class="mission-takeaway" aria-label="体験ミッションとポイント">
     <div class="mt-mission"><h3>体験ミッション</h3><p><strong>次の一操作:</strong> {html.escape(meta['mission'])}</p></div>
