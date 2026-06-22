@@ -404,7 +404,8 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .features>h2{margin:0 0 4px;font-size:1.18rem;color:var(--ref-ink);display:flex;align-items:center;gap:8px}
 .features>h2::before{content:"";display:inline-block;width:8px;height:22px;background:var(--ref-accent);border-radius:3px}
 .features-lede{margin:0 0 16px;color:#3b5070;font-size:.93rem}
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;list-style:none;padding:0;margin:0}
+.features-grid>li{margin:0;display:block}
 .feature-card{background:white;border:1px solid #d4dff0;border-radius:14px;padding:16px 18px;box-shadow:0 4px 14px rgba(20,50,100,.05);transition:transform .18s ease,box-shadow .18s ease}
 .feature-card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(20,50,100,.1)}
 .feature-card h3{margin:0 0 6px;font-size:1.02rem;color:#143764}
@@ -708,27 +709,30 @@ def story_paragraphs(text: str) -> str:
     return "".join(f"<p>{html.escape(p.strip())}</p>" for p in text.split("\n\n") if p.strip())
 
 
-def features_html(meta: dict) -> str:
+def features_html(meta: dict, chapter_key: str = "x") -> str:
     items = meta.get("features") or []
     if not items:
         return ""
     cards = []
-    for f in items:
+    for idx, f in enumerate(items):
+        name_id = f"feature-{chapter_key}-{idx}-{re.sub(r'[^a-zA-Z0-9]+', '-', f['name']).strip('-').lower() or 'item'}"
         cards.append(
-            '<article class="feature-card">'
-            f'<h3>{html.escape(f["name"])}</h3>'
+            '<li>'
+            f'<article class="feature-card" aria-labelledby="{name_id}">'
+            f'<h3 id="{name_id}">{html.escape(f["name"])}</h3>'
             f'<p class="feature-summary">{html.escape(f["summary"])}</p>'
             '<dl class="feature-io">'
             f'<dt>入力</dt><dd>{html.escape(f["input"])}</dd>'
             f'<dt>出力</dt><dd>{html.escape(f["output"])}</dd>'
             '</dl>'
             '</article>'
+            '</li>'
         )
     return (
         '<section class="features" aria-label="この章の概観">'
         '<h2>この章の概観 ／ 何を扱い、何ができるか</h2>'
         '<p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p>'
-        f'<div class="features-grid">{"".join(cards)}</div>'
+        f'<ul class="features-grid" role="list">{"".join(cards)}</ul>'
         '</section>'
     )
 
@@ -798,7 +802,7 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
     <div class="eyebrow">{label}</div>
     <h1>{html.escape(ch.title)}</h1>
   </header>
-  {features_html(meta)}
+  {features_html(meta, ch.key)}
   {image_figure(lookup[f'chapter-{ch.key}'], image_prefix)}
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>

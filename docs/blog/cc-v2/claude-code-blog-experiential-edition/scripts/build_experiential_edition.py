@@ -315,7 +315,7 @@ def hands_on_panel(key: str, spec: dict[str, Any]) -> Tag:
     summary=s.new_tag('summary',attrs={'class':'hands-on-summary'})
     e=s.new_tag('div',attrs={'class':'eyebrow'});e.string='Chapter Hands-on Skill';summary.append(e)
     h=s.new_tag('h2');h.string='この章を実際に操作する';summary.append(h)
-    hint=s.new_tag('span',attrs={'class':'hands-on-toggle-hint'});hint.string='クリックして開く ▾';summary.append(hint)
+    hint=s.new_tag('span',attrs={'class':'hands-on-toggle-hint'});hint.string='章番号を伝えて開始 ▾';summary.append(hint)
     sec.append(summary)
     p=s.new_tag('p');p.string=f"章番号を伝えると、{spec['focus']}Labをすぐ開始します。進捗はProject内へ保存され、Cursor・Claude Code・Codex間で再開できます。";sec.append(p)
     start=f"{label_for(key)}を開始"
@@ -372,11 +372,11 @@ EXTRA_CSS = r'''
 .hands-on-launcher>*:last-child{padding-bottom:24px}
 .hands-on-launcher .eyebrow{font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--action-accent);font-weight:900}
 .hands-on-launcher h2{margin:.25rem 0 .5rem;color:var(--action-ink)}
-.hands-on-summary{list-style:none;cursor:pointer;padding:18px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,#fff8ec,var(--action-bg));transition:background .15s}
+.hands-on-summary{list-style:none;cursor:pointer;padding:14px 22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(135deg,#fff8ec,var(--action-bg));transition:background .15s}
 .hands-on-summary::-webkit-details-marker{display:none}
 .hands-on-summary:hover{background:#fff3dc}
-.hands-on-summary h2{margin:0;font-size:1.1rem}
-.hands-on-summary .eyebrow{margin:0}
+.hands-on-summary h2{margin:0;font-size:1rem;line-height:1.3}
+.hands-on-summary .eyebrow{margin:0;font-size:.7rem}
 .hands-on-toggle-hint{margin-left:auto;font-size:.82rem;color:var(--action-accent);font-weight:700;letter-spacing:.04em;transition:transform .2s}
 .hands-on-launcher[open] .hands-on-toggle-hint{transform:rotate(180deg) translateY(-2px)}
 .hands-on-launcher[open] .hands-on-summary{border-bottom:1px solid var(--action-border)}
@@ -447,6 +447,67 @@ def wrap_slide_carousels(soup: BeautifulSoup) -> None:
         carousel.append(next_btn)
 
 
+def reorder_chapter_children(soup: BeautifulSoup) -> None:
+    """Reorder direct children of each chapter article into the canonical order.
+
+    Canonical order (top to bottom):
+      1. chapter-head (header)
+      2. cover lesson-slide (figure.lesson-slide.is-cover)
+      3. features (always visible overview)
+      4. hands-on-launcher (collapsed)
+      5. beginner-primer (collapsed)
+      6. reference
+      7. mission-takeaway
+      8. expansion
+      9. usecases
+      10. slide-carousel (moved out of reference if it lives there)
+      11. anything else (kept in original order at the end)
+
+    Children not matching any of the above slots keep their relative order at the
+    end so we don't drop nodes silently.
+    """
+    def class_of(node, name):
+        return name in (node.get('class') or [])
+
+    def slot_for(node):
+        if node.name == 'header' and class_of(node, 'chapter-head'):
+            return 0
+        if node.name == 'figure' and class_of(node, 'lesson-slide') and class_of(node, 'is-cover'):
+            return 1
+        if node.name == 'section' and class_of(node, 'features'):
+            return 2
+        if node.name == 'details' and class_of(node, 'hands-on-launcher'):
+            return 3
+        if node.name == 'details' and class_of(node, 'beginner-primer'):
+            return 4
+        if node.name == 'section' and class_of(node, 'reference'):
+            return 5
+        if node.name == 'section' and class_of(node, 'mission-takeaway'):
+            return 6
+        if node.name == 'section' and class_of(node, 'expansion'):
+            return 7
+        if node.name == 'section' and class_of(node, 'usecases'):
+            return 8
+        if node.name == 'div' and class_of(node, 'slide-carousel'):
+            return 9
+        return 99
+
+    for article in soup.select('article.chapter'):
+        # Hoist slide-carousel out of reference (if nested) so it can land at the end.
+        ref = article.find('section', class_='reference', recursive=False)
+        if ref is not None:
+            for carousel in list(ref.find_all('div', class_='slide-carousel')):
+                carousel.extract()
+                article.append(carousel)
+        # Stable sort of direct children.
+        children = list(article.find_all(recursive=False))
+        indexed = list(enumerate(children))
+        indexed.sort(key=lambda kv: (slot_for(kv[1]), kv[0]))
+        for _, node in indexed:
+            node.extract()
+            article.append(node)
+
+
 def build_html(manifest: list[dict[str, Any]]) -> None:
     original=BASE_HTML.read_text(encoding='utf-8')
     (ROOT/'site'/'complete-text-only.html').write_text(original,encoding='utf-8')
@@ -500,6 +561,9 @@ def build_html(manifest: list[dict[str, Any]]) -> None:
             fig=slide_figure_html(item,prefix='../');current.insert_after(fig);current=fig
     # Slide carousel wrapping (90+ pass): group non-cover lesson-slides within each chapter into a carousel.
     wrap_slide_carousels(soup)
+    # Reorder chapter direct children into the canonical reading order so the first
+    # screen presents (features → hands-on → primer) as the shortest learning path.
+    reorder_chapter_children(soup)
     # CSS and JS.
     style=soup.find('style')
     if style: style.append(EXTRA_CSS)
