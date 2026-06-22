@@ -11,6 +11,11 @@
     <div class="eyebrow">第13章</div>
     <h1>Subagents、Agent View、並列作業</h1>
   </header>
+  <section class="intro-human" aria-label="この章のリード"><p>『自分のコードを自分でレビュー』、何回も穴をすり抜けてきましたよね。
+これ、AIにも同じことが起きます。実装した本人の文脈が残ってると、レビューが甘くなる（迎合バイアス）。</p><p>ほとんどの人は、AIを『1人の万能アシスタント』として使ってます。
+でも、調査・実装・レビューを別の文脈で動かす（複数のSubagent）と、見落としが激減します。
+実装セッションを閉じて、背景を知らないReviewer Agentに成果物だけ渡す。それだけで、要件・安全・保守性の3観点で本当の指摘が返ってきます。</p><p>複数Agentの価値は、人数じゃありません。独立した文脈と役割分担です。
+この章で、レビューの質が一段階深くなります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-13-0-subagent"><h3 id="feature-13-0-subagent">Subagent（文脈を分ける仕組み）</h3><p class="feature-summary">役割ごとに別Agentを立てて文脈を分離し、過去会話に引きずられない調査・実装・レビューを可能にする機構。</p><dl class="feature-io"><dt>入力</dt><dd>親セッションの作業、役割ごとの責務</dd><dt>出力</dt><dd>Subagentの完了報告、独立した中間成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-1-reviewer-agent"><h3 id="feature-13-1-reviewer-agent">Reviewer Agent（独立コンテキストの評価者）</h3><p class="feature-summary">成果物だけを渡して評価させ、迎合バイアスを排した指摘を得るための専任エージェント。</p><dl class="feature-io"><dt>入力</dt><dd>成果物、評価観点（要件/安全/保守性）</dd><dt>出力</dt><dd>独立コンテキストからの指摘リストと優先度</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-2-research-agent"><h3 id="feature-13-2-research-agent">Research Agent</h3><p class="feature-summary">調査専任で出典・確度・反証を分けて整理するエージェント。実装者と分離して情報収集の質を確保する。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、検索範囲、評価軸</dd><dt>出力</dt><dd>出典付き調査結果と未確認項目リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-13-3-agent-view"><h3 id="feature-13-3-agent-view">Agent View と並列実行</h3><p class="feature-summary">複数Agentの動きを俯瞰し、独立した仕事へ分担させる運用画面。同じファイルへの同時編集は避ける指針付き。</p><dl class="feature-io"><dt>入力</dt><dd>並列化したいタスク群、各Agent責務</dd><dt>出力</dt><dd>Agent View上の並列実行ログと統合結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-13">

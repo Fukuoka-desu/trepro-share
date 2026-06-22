@@ -11,6 +11,12 @@
     <div class="eyebrow">第28章</div>
     <h1>文書・ファイル・会議</h1>
   </header>
+  <section class="intro-human" aria-label="この章のリード"><p>請求書・契約書・会議メモ・整理されてない『なんとなくフォルダ』。
+派手じゃないけど、毎日の時間を一番奪うのはここです。</p><p>ほとんどの人は、こういう文書業務を『いきなりAIに加工させて』失敗します。
+件数も例外も把握せず実行した結果、稟議添付のExcelが消える事故が起きる。</p><p>この章で扱うのは、文書業務の正しい順序。
+まずRead-onlyで一覧と分類案を作る。次に抽出項目と例外パターンを定義する。それからDry-runで件数を確認してから本番に進む。
+契約書は『法的結論』ではなく『論点整理』としてAIに任せ、最終判断は人。</p><p>整理・削除は元データを残し、移動先を明示し、結果一覧を出す可逆的な手順で。
+派手じゃないけど、ここから自動化できる業務が一気に広がります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-28-0-folder"><h3 id="feature-28-0-folder">請求書Folder棚卸し</h3><p class="feature-summary">Read-onlyで請求書フォルダを一覧化し、抽出項目と例外パターンを定義してから自動化に進む業務型。</p><dl class="feature-io"><dt>入力</dt><dd>請求書PDF/画像フォルダ、台帳の現状</dd><dt>出力</dt><dd>抽出項目定義、例外一覧、Dry-run結果</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-1-folder"><h3 id="feature-28-1-folder">Folder整理（可逆な分類）</h3><p class="feature-summary">元データを残し、移動先を明示し、結果一覧を出す可逆的な整理手順。削除ではなく分類から始める。</p><dl class="feature-io"><dt>入力</dt><dd>整理対象フォルダ、分類ルール</dd><dt>出力</dt><dd>分類後フォルダと整理結果レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-2-item"><h3 id="feature-28-2-item">契約書論点整理</h3><p class="feature-summary">法的結論ではなく、契約書から論点を抽出して人の判断に渡すワークフロー。AIに最終判断をさせない型。</p><dl class="feature-io"><dt>入力</dt><dd>契約書PDF、確認したい観点</dd><dt>出力</dt><dd>論点一覧と人が判断すべき箇所のハイライト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-3-assistant"><h3 id="feature-28-3-assistant">会議Assistant本番化</h3><p class="feature-summary">第4章で作った会議アシスタントを実業務で運用するための例外対応・テンプレ整備・配布手順。</p><dl class="feature-io"><dt>入力</dt><dd>本番議事録依頼、社内テンプレ</dd><dt>出力</dt><dd>実業務で回る会議AssistantとSkill群</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-28-4-item"><h3 id="feature-28-4-item">週報生成</h3><p class="feature-summary">会議データを連結し、週報・タスク・連絡文へ展開する定期業務化。書く時間ではなく見る時間に変える。</p><dl class="feature-io"><dt>入力</dt><dd>週内の会議メモ、タスクログ</dd><dt>出力</dt><dd>週報Markdown/HTMLと未対応タスクリスト</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-28">

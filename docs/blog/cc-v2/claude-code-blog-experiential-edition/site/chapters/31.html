@@ -11,6 +11,12 @@
     <div class="eyebrow">第31章</div>
     <h1>Design・資料・公開</h1>
   </header>
+  <section class="intro-human" aria-label="この章のリード"><p>『AIで作ったLP、そのまま本番に出した』。
+あとから見たら、テスト用Analytics IDと本番APIキーがソースに残ってた。
+これ、毎週どこかの組織で起きてます。</p><p>ほとんどの人は、公開を『最後のボタンを押す作業』だと思ってます。
+でも公開は、情報・ブランド・権限・リンク・戻し方を確認する別の工程です。
+Preview公開→秘密情報・リンク・公開範囲・スマホ表示・A11yチェック→本番、というQuality Gateを通す。</p><p>この章では、LP・スライド・レポートで同じDesign Systemを再利用する運用、HTMLを正本にしてPPT/PDFをExportする標準手順、フォント崩れの直し方の順序まで揃えます。</p><p>公開は生成の続きじゃなく、独立した品質・安全ゲート。
+事故をなくす一番効くスイッチが、ここに入ります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-31-0-lp-flow"><h3 id="feature-31-0-lp-flow">LP制作Flow</h3><p class="feature-summary">Wireframe→Design System→Codeで作ったLPを、公開を見据えて整える章末仕上げの制作ライン。</p><dl class="feature-io"><dt>入力</dt><dd>LP目的、Design System、コンテンツ素材</dd><dt>出力</dt><dd>公開直前のLP実装と確認用Preview</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-1-design-system"><h3 id="feature-31-1-design-system">Design System再利用</h3><p class="feature-summary">LP・スライド・レポートで同じDesign Systemを参照し、ブランド一貫性を維持する再利用ルール。</p><dl class="feature-io"><dt>入力</dt><dd>既存Design System、新規制作物</dd><dt>出力</dt><dd>システム参照済みの新規制作物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-2-ppt-pdf-export"><h3 id="feature-31-2-ppt-pdf-export">PPT / PDF Export</h3><p class="feature-summary">HTML正本からPPT/PDFへExportする標準手順。フォント崩れ・ページ分割を事前にチェックする。</p><dl class="feature-io"><dt>入力</dt><dd>HTML正本、Export設定</dd><dt>出力</dt><dd>崩れ確認済みのPPTX/PDF</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-31-3-deploy-preview-gate"><h3 id="feature-31-3-deploy-preview-gate">Deploy / Preview Gate</h3><p class="feature-summary">Deploy前にSecret・環境変数・公開範囲・Analytics・Rollbackを確認し、Previewレビューを通す公開ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>公開予定ビルド、本番設定</dd><dt>出力</dt><dd>Preview承認ログと本番Deploy可否判定</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-31">

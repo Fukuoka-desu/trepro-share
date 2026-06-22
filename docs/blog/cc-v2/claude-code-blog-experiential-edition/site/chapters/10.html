@@ -11,6 +11,10 @@
     <div class="eyebrow">第10章</div>
     <h1>GitとCheckpoint</h1>
   </header>
+  <section class="intro-human" aria-label="この章のリード"><p>『さっきの状態に戻して』ができないと、AIに大胆な編集を頼めません。
+だから多くの人は、小さく安全な指示しか出せず、伸びしろを自分で潰してます。</p><p>実は、戻り道は2種類用意できます。
+ひとつは『会話の中で素早く巻き戻す』Checkpoint。もうひとつは『セッションや人をまたいで残る正式な履歴』であるGit。
+このふたつは競合しません。役割が違うだけ。</p><p>この章では、CheckpointとGitの最小運用、AIにコミットメッセージを書かせるルール、それから複数機能を同時に試したい時にファイル衝突を防ぐ Worktree という並列作業の仕組みまでまとめます。</p><p>戻れる安心が手に入ると、AIに任せる勇気が一段階上がります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-10-0-checkpoint"><h3 id="feature-10-0-checkpoint">Checkpoint（会話中の素早い巻き戻し）</h3><p class="feature-summary">セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。</p><dl class="feature-io"><dt>入力</dt><dd>AIに任せる大胆な変更、実験的な編集</dd><dt>出力</dt><dd>巻き戻し可能なCheckpoint、戻したあとの状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-1-git"><h3 id="feature-10-1-git">最小Git運用</h3><p class="feature-summary">意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。</p><dl class="feature-io"><dt>入力</dt><dd>完了した小さな変更、検証結果</dd><dt>出力</dt><dd>意味あるCommitメッセージとレビュー可能なdiff</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-2-claude-commit-rule"><h3 id="feature-10-2-claude-commit-rule">ClaudeへCommitさせるRule</h3><p class="feature-summary">AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。</p><dl class="feature-io"><dt>入力</dt><dd>完了した変更、検証ログ</dd><dt>出力</dt><dd>Rule準拠のCommit、PR説明文</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-3-worktree"><h3 id="feature-10-3-worktree">Worktreeによる並列作業</h3><p class="feature-summary">別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>並行して進めたい複数機能</dd><dt>出力</dt><dd>機能別Worktreeディレクトリと衝突なしの差分</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-10">

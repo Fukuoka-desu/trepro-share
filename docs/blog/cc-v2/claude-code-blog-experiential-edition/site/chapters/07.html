@@ -11,6 +11,11 @@
     <div class="eyebrow">第7章</div>
     <h1>Permission Mode、Sandbox、危険操作</h1>
   </header>
+  <section class="intro-human" aria-label="この章のリード"><p>『うっかり rm -rf』『git push で main を上書き』。
+AIに作業を任せる時、こういう取り返しのつかない事故は、油断した5秒に起きます。</p><p>ほとんどの人は、AIに『全部許可』のまま動かしてます。
+便利だから。確認が面倒だから。
+でも、その『便利』と『事故』は同じスイッチで繋がってます。</p><p>Permission Modeは、操作ごとに『許可・拒否・確認』を3段階で切り替える仕組みです。
+読み取りは自動で許可、書き換えは確認、削除と外部送信は必ず止める。それだけで、暴走の99%が手前で止まります。</p><p>この章を読み終わる頃には、自分が安心して任せられる範囲が、自分で決められるようになります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-07-0-permission-mode-permission-rule"><h3 id="feature-07-0-permission-mode-permission-rule">Permission Mode と Permission Rule</h3><p class="feature-summary">読む・編集する・実行する・ネットワーク・削除の5分類で許可と確認を切り分け、責任の境界を明示する権限設計。</p><dl class="feature-io"><dt>入力</dt><dd>扱うProject、許可してよい操作と確認したい操作</dd><dt>出力</dt><dd>Project単位の許可ポリシー表とPermission Rule定義</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-1-sandbox-bypass"><h3 id="feature-07-1-sandbox-bypass">Sandbox と Bypass運用</h3><p class="feature-summary">Bypassは隔離された使い捨て環境のみ、本番Projectは確認モード固定とする運用ルール。便利さと事故半径を分離する。</p><dl class="feature-io"><dt>入力</dt><dd>実験用ワークスペース、本番Projectの一覧</dd><dt>出力</dt><dd>Bypass許可Pathと禁止Pathを明示したCLAUDE.mdルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-2-secrets"><h3 id="feature-07-2-secrets">Secrets管理ルール</h3><p class="feature-summary">APIキー・トークンをチャットに貼らず、環境変数や専用ファイルへ置きGitから除外する3点ルール。</p><dl class="feature-io"><dt>入力</dt><dd>使う外部サービス、必要な鍵・トークン</dd><dt>出力</dt><dd>Secret保存場所、.gitignore更新、CLAUDE.md記載</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-07-3-item"><h3 id="feature-07-3-item">削除の標準手順</h3><p class="feature-summary">対象一覧→件数確認→Dry-run→バックアップ→実行→結果確認の6段で、削除事故をワンクリックで起こさない手順化。</p><dl class="feature-io"><dt>入力</dt><dd>整理したいフォルダ、削除候補ファイル</dd><dt>出力</dt><dd>削除Dry-run結果、バックアップ、削除完了レポート</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-07">

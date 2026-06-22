@@ -11,6 +11,10 @@
     <div class="eyebrow">第8章</div>
     <h1>ModelとEffort</h1>
   </header>
+  <section class="intro-human" aria-label="この章のリード"><p>『常に最上位モデルを選んでおけば安心』。
+これ、月初に利用上限を吹き飛ばす一番のパターンです。</p><p>ほとんどの人は、AIのモデルを『強さで選ぶ』と思ってます。
+でも実は、計画・実装・整理・評価という役割で選ぶのが正解。簡単な整理は軽量モデル、重要レビューだけ深く考えさせる（高Effort）。
+このスイッチを身につけると、月の利用上限が来なくなる上に、難所の品質も上がります。</p><p>ついでに、モデル名や料金は変わりやすいので、本文に書かず Feature Registry に分離しておく。これで教科書本体は古びません。</p><p>設定は15分。コスト効率と品質、両方が同時に上がります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-08-0-model"><h3 id="feature-08-0-model">Model選択（役割で使い分け）</h3><p class="feature-summary">計画・実装・軽い整理・評価という役割でモデルを選び、常に最上位を使わない使い分けの考え方。</p><dl class="feature-io"><dt>入力</dt><dd>業務の難易度、失敗コスト、必要なスピード</dd><dt>出力</dt><dd>業務カテゴリ別のモデル割り当て表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-1-effort"><h3 id="feature-08-1-effort">Effort（思考量の調整）</h3><p class="feature-summary">深く考える価値がある仕事だけEffortを上げ、定型変換は最小Effortで回すコスト最適化の設定軸。</p><dl class="feature-io"><dt>入力</dt><dd>対象タスクの判断重要度</dd><dt>出力</dt><dd>タスク別Effort設定とコスト見積</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-2-advisor-ultrathink"><h3 id="feature-08-2-advisor-ultrathink">Advisor と ultrathink</h3><p class="feature-summary">難しい判断にだけ高Effort思考を呼び出し、相談役として併走させる使い方。常用ではなく要所投入のパターン。</p><dl class="feature-io"><dt>入力</dt><dd>設計分岐、複雑な原因分析、重要レビュー</dd><dt>出力</dt><dd>Advisorからの追加観点、判断根拠の補強</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-3-feature-registry"><h3 id="feature-08-3-feature-registry">Feature Registry（変動情報の分離）</h3><p class="feature-summary">変動するモデル名・利用条件は本文ではなくRegistryへ外出しし、教科書原則を特定モデル依存から切り離す仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>現行モデル名・料金・利用上限</dd><dt>出力</dt><dd>Feature Registry更新エントリ（確認日付き）</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-08">

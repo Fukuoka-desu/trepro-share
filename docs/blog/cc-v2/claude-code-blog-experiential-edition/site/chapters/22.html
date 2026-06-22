@@ -11,6 +11,11 @@
     <div class="eyebrow">第22章</div>
     <h1>信頼できる調査とレポート</h1>
   </header>
+  <section class="intro-human" aria-label="この章のリード"><p>『この数字、どこから持ってきたの？』
+役員プレゼンで詰められて、答えられず黙る。
+これ、AIに調査させた時の代表的な事故です。</p><p>ほとんどの人は、AIの調査結果を『そのまま貼って終わり』にしてます。
+だから根拠不明の数字・古い情報・SNSの噂が混ざっていても気づけない。</p><p>この章で導入するのは、主張・根拠・日付・確度・反証を1行ずつ記録する『Claim Ledger』という台帳。情報源の重みは公式→一次→実測→解説→SNSの順で固定し、変動情報には確認日を付ける。
+ついでに、動画やSNSから情報を取る時の重複統合と、発言と事実の区別もここで仕込みます。</p><p>調査品質は、文章の滑らかさじゃなく、主張と証拠の追跡可能性で決まります。</p></section>
   <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-22-0-source-sns"><h3 id="feature-22-0-source-sns">Source優先度（公式→一次→実測→解説→SNS）</h3><p class="feature-summary">情報源の重みを序列化し、変動情報には確認日を付ける調査品質の土台。SNSの勢いと事実を分ける。</p><dl class="feature-io"><dt>入力</dt><dd>集めた情報源、それぞれの種別</dd><dt>出力</dt><dd>重み付き情報源リストと確認日メタ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-22-1-claim-ledger"><h3 id="feature-22-1-claim-ledger">Claim Ledger</h3><p class="feature-summary">主張・根拠・日付・確度・反証を1行ずつ記録する追跡可能な台帳。後で『この数字の出所は？』に即答できる。</p><dl class="feature-io"><dt>入力</dt><dd>レポート上の主張、対応する出典</dd><dt>出力</dt><dd>5列構造のClaim Ledger</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-22-2-research-skill"><h3 id="feature-22-2-research-skill">Research Skill</h3><p class="feature-summary">対象・期間・除外条件・評価軸を内蔵した調査Skill。テーマを渡すと出典付き調査結果を返す。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、期間、除外条件</dd><dt>出力</dt><dd>Research Skillによる出典付きレポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-22-3-sns"><h3 id="feature-22-3-sns">動画/SNS統合（発言と事実の区別）</h3><p class="feature-summary">同じ内容を重複カウントせず、発言と事実を区別して統合する処理。SNS発の話題を業務情報に変える。</p><dl class="feature-io"><dt>入力</dt><dd>動画・SNS投稿の集合</dd><dt>出力</dt><dd>重複統合済みの発言/事実分離レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-22-4-item"><h3 id="feature-22-4-item">完了条件（未確認事項の明示）</h3><p class="feature-summary">未確認事項と次に検証すべき点を明示してレポートを閉じる完了基準。隠れた不確実性を残さない。</p><dl class="feature-io"><dt>入力</dt><dd>調査ドラフト</dd><dt>出力</dt><dd>未確認事項リストと次の検証アクション</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-22">

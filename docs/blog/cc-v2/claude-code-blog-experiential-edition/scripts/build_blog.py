@@ -378,6 +378,10 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .content{min-width:0}.part{margin:56px 0 80px}.part-header{padding:42px;border-radius:var(--radius);background:linear-gradient(135deg,#13213e,#26406e);color:white;box-shadow:var(--shadow);scroll-margin-top:80px}.part-header h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.2;margin:.2em 0}.part-header p{color:#dbe5ff;max-width:70ch}
 .chapter{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,5vw,56px);margin:34px 0;box-shadow:var(--shadow);scroll-margin-top:80px}
 .chapter-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}.chapter-head h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;letter-spacing:-.025em;margin:.2em 0}
+.intro-human{margin:24px 0 32px;padding:26px 30px;border-radius:18px;background:linear-gradient(135deg,#fffdf6,#fff);border-left:5px solid var(--action-accent);box-shadow:0 6px 18px rgba(122,74,16,.06)}
+.intro-human p{margin:0 0 .9em;font-size:1.06rem;line-height:1.95;color:var(--story-ink)}
+.intro-human p:last-child{margin-bottom:0}
+.intro-human p:first-child{font-size:1.14rem;font-weight:600;color:#3d2f17;letter-spacing:.005em}
 .story-block{margin:24px 0 26px}
 .story-lead{font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif;font-size:1.12rem;line-height:1.8;color:var(--story-ink);background:transparent;border-left:4px solid var(--story-accent);padding:6px 18px 6px 16px;margin:0 0 14px 0;border-radius:0}
 .story-essay{font-size:1.06rem;background:#fff;border:1px solid #e3e9f5;border-radius:14px;padding:22px 26px;margin:0;color:var(--story-ink)}
@@ -709,6 +713,23 @@ def story_paragraphs(text: str) -> str:
     return "".join(f"<p>{html.escape(p.strip())}</p>" for p in text.split("\n\n") if p.strip())
 
 
+def intro_human_html(meta: dict) -> str:
+    """章タイトル直下に配置する X発信スタイルのリード文。
+    intro_human が無い章では空文字を返す（後方互換）。"""
+    text = meta.get("intro_human") or ""
+    text = text.strip()
+    if not text:
+        return ""
+    paragraphs = "".join(
+        f"<p>{html.escape(p.strip())}</p>" for p in text.split("\n\n") if p.strip()
+    )
+    return (
+        '<section class="intro-human" aria-label="この章のリード">'
+        f'{paragraphs}'
+        '</section>'
+    )
+
+
 def features_html(meta: dict, chapter_key: str = "x") -> str:
     items = meta.get("features") or []
     if not items:
@@ -802,6 +823,7 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
     <div class="eyebrow">{label}</div>
     <h1>{html.escape(ch.title)}</h1>
   </header>
+  {intro_human_html(meta)}
   {features_html(meta, ch.key)}
   {image_figure(lookup[f'chapter-{ch.key}'], image_prefix)}
   <section class="reference" aria-label="実装リファレンス">

@@ -474,22 +474,24 @@ def reorder_chapter_children(soup: BeautifulSoup) -> None:
             return 0
         if node.name == 'figure' and class_of(node, 'lesson-slide') and class_of(node, 'is-cover'):
             return 1
-        if node.name == 'section' and class_of(node, 'features'):
+        if node.name == 'section' and class_of(node, 'intro-human'):
             return 2
-        if node.name == 'details' and class_of(node, 'hands-on-launcher'):
+        if node.name == 'section' and class_of(node, 'features'):
             return 3
-        if node.name == 'details' and class_of(node, 'beginner-primer'):
+        if node.name == 'details' and class_of(node, 'hands-on-launcher'):
             return 4
-        if node.name == 'section' and class_of(node, 'reference'):
+        if node.name == 'details' and class_of(node, 'beginner-primer'):
             return 5
-        if node.name == 'section' and class_of(node, 'mission-takeaway'):
+        if node.name == 'section' and class_of(node, 'reference'):
             return 6
-        if node.name == 'section' and class_of(node, 'expansion'):
+        if node.name == 'section' and class_of(node, 'mission-takeaway'):
             return 7
-        if node.name == 'section' and class_of(node, 'usecases'):
+        if node.name == 'section' and class_of(node, 'expansion'):
             return 8
-        if node.name == 'div' and class_of(node, 'slide-carousel'):
+        if node.name == 'section' and class_of(node, 'usecases'):
             return 9
+        if node.name == 'div' and class_of(node, 'slide-carousel'):
+            return 10
         return 99
 
     for article in soup.select('article.chapter'):
