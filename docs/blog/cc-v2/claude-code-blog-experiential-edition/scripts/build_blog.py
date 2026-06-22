@@ -381,6 +381,19 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .image-shell{margin:34px 0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#e9effa,#fff4df);min-height:260px;position:relative}.image-shell img{width:100%;height:auto;display:block;aspect-ratio:3/2;object-fit:cover}.image-shell.missing img{display:none}.image-shell.missing:before{content:"生成画像の差し込み位置";display:grid;place-items:center;min-height:320px;color:var(--muted);font-weight:800;letter-spacing:.08em}.image-shell figcaption{padding:14px 18px;background:white;color:var(--muted);font-size:.92rem}.image-brief{border-top:1px solid var(--line);background:#fafcff;padding:0 18px}.image-brief summary{cursor:pointer;padding:12px 0;font-weight:800;color:var(--blue)}.image-brief pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#111827;color:#e6edf7;border-radius:12px;padding:16px;font-size:.8rem}
 .reference{margin-top:38px}.reference>h2:first-child{margin-top:0}.reference h2{font-size:1.55rem;margin-top:2.2em;border-left:4px solid var(--blue);padding-left:12px}.reference h3{font-size:1.18rem;margin-top:1.8em}.reference p,.reference li{max-width:76ch}.reference p{margin:1.05em 0}.reference table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:22px 0}.reference th,.reference td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;min-width:130px}.reference th{background:var(--soft);text-align:left}.reference blockquote{margin:20px 0;padding:12px 18px;border-left:4px solid var(--amber);background:#fff9ec;color:#4b5563}.reference code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#edf1f7;padding:.13em .35em;border-radius:5px;font-size:.9em}.code-wrap{position:relative;margin:22px 0}.code-wrap pre{overflow:auto;background:#101827;color:#e6edf7;padding:20px;border-radius:14px;line-height:1.65}.code-wrap code{background:transparent;color:inherit;padding:0}.copy-code{position:absolute;top:10px;right:10px;border:1px solid #52617c;border-radius:8px;background:#1e2a42;color:white;padding:6px 10px;cursor:pointer;font-size:.78rem}
 .mission,.takeaway{border-radius:16px;padding:22px 24px;margin:30px 0}.mission{background:#eef8f4;border:1px solid #b9dfd0}.takeaway{background:#f0f3ff;border:1px solid #c9d2f4}.mission h2,.takeaway h2{margin-top:0;font-size:1.2rem}.mission strong{color:var(--success)}
+.features{margin:24px 0;padding:24px;border-radius:18px;background:linear-gradient(140deg,#eef4fb,#f7faff);border:1px solid #c8d8ee;box-shadow:0 8px 24px rgba(20,50,100,.05)}
+.features>h2{margin:0 0 4px;font-size:1.22rem;color:#1f3d6e;display:flex;align-items:center;gap:8px}
+.features>h2::before{content:"";display:inline-block;width:8px;height:22px;background:#2456d3;border-radius:3px}
+.features-lede{margin:0 0 16px;color:#3b5070;font-size:.94rem}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.feature-card{background:white;border:1px solid #d4dff0;border-radius:14px;padding:16px 18px;box-shadow:0 4px 14px rgba(20,50,100,.05);transition:transform .18s ease,box-shadow .18s ease}
+.feature-card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(20,50,100,.1)}
+.feature-card h3{margin:0 0 6px;font-size:1.02rem;color:#143764}
+.feature-summary{margin:0 0 10px;font-size:.92rem;line-height:1.75;color:#2c3e5c}
+.feature-io{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.84rem}
+.feature-io dt{color:#5478a8;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.72rem;padding-top:2px}
+.feature-io dd{margin:0;color:#2c3e5c;line-height:1.65}
+@media(max-width:520px){.features-grid{grid-template-columns:1fr}}
 .usecases{margin:32px 0;padding:28px;border-radius:18px;background:linear-gradient(140deg,var(--usecase-bg),#fffaf2);border:1px solid var(--usecase-border);box-shadow:0 10px 28px rgba(198,106,23,.08)}
 .usecases>h2{margin:0 0 6px;font-size:1.28rem;color:var(--usecase-accent);display:flex;align-items:center;gap:8px}
 .usecases>h2::before{content:"";display:inline-block;width:8px;height:24px;background:var(--usecase-accent);border-radius:3px}
@@ -438,7 +451,7 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
   .toc-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,.45);z-index:55}
   .toc-overlay.open{display:block}
 }
-@media print{.site-header,.toc,.toc-toggle,.toc-overlay,.progress,.copy-code,.image-brief,.hero-actions{display:none!important}.layout{display:block;padding:0}.chapter,.part-header,.usecases{box-shadow:none;break-inside:avoid;border-color:#bbb}.image-shell{break-inside:avoid}body{background:white}.chapter{page-break-before:always}}
+@media print{.site-header,.toc,.toc-toggle,.toc-overlay,.progress,.copy-code,.image-brief,.hero-actions{display:none!important}.layout{display:block;padding:0}.chapter,.part-header,.usecases,.features{box-shadow:none;break-inside:avoid;border-color:#bbb}.image-shell{break-inside:avoid}body{background:white}.chapter{page-break-before:always}}
 """
 
 JS = r"""
@@ -585,6 +598,31 @@ def story_paragraphs(text: str) -> str:
     return "".join(f"<p>{html.escape(p.strip())}</p>" for p in text.split("\n\n") if p.strip())
 
 
+def features_html(meta: dict) -> str:
+    items = meta.get("features") or []
+    if not items:
+        return ""
+    cards = []
+    for f in items:
+        cards.append(
+            '<article class="feature-card">'
+            f'<h3>{html.escape(f["name"])}</h3>'
+            f'<p class="feature-summary">{html.escape(f["summary"])}</p>'
+            '<dl class="feature-io">'
+            f'<dt>入力</dt><dd>{html.escape(f["input"])}</dd>'
+            f'<dt>出力</dt><dd>{html.escape(f["output"])}</dd>'
+            '</dl>'
+            '</article>'
+        )
+    return (
+        '<section class="features" aria-label="この章で扱う機能とできること">'
+        '<h2>この章で扱う機能とできること</h2>'
+        '<p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p>'
+        f'<div class="features-grid">{"".join(cards)}</div>'
+        '</section>'
+    )
+
+
 def usecases_html(meta: dict) -> str:
     items = meta.get("usecases") or []
     if not items:
@@ -628,6 +666,7 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
   <section aria-labelledby="story-{html.escape(ch.key)}">
     <h2 id="story-{html.escape(ch.key)}">物語の現在地</h2>
     <div class="scene">{html.escape(meta['scene'])}</div>
+    {features_html(meta)}
     <div class="story-essay">{story_paragraphs(meta['essay'])}</div>
   </section>
   {image_figure(lookup[f'chapter-{ch.key}'], image_prefix)}

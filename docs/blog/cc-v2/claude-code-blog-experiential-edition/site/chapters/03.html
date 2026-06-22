@@ -14,6 +14,7 @@
   <section aria-labelledby="story-03">
     <h2 id="story-03">物語の現在地</h2>
     <div class="scene">遥のデスクトップには、資料、画像、テスト用ファイルが混ざった『AI作業』フォルダがありました。蓮は新しい空のフォルダを作り、そこだけをCursorで開きます。作業場所を決めただけで、AIが見てよい範囲と人が確認すべき範囲がはっきりしました。</div>
+    <section class="features" aria-label="この章で扱う機能とできること"><h2>この章で扱う機能とできること</h2><p class="features-lede">本文に入る前に、何の機能か／何ができるかをここで掴んでください。</p><div class="features-grid"><article class="feature-card"><h3>Project Folder（文脈と権限の境界）</h3><p class="feature-summary">AIに見せる範囲を明示的に切り、無関係な仕事を別Projectに分離するフォルダ設計。</p><dl class="feature-io"><dt>入力</dt><dd>扱う案件・顧客・テーマ、関連するファイル群</dd><dt>出力</dt><dd>案件単位で閉じた専用フォルダと参照可能Path</dd></dl></article><article class="feature-card"><h3>推奨Project構造（docs/input/output/tests）</h3><p class="feature-summary">ドキュメント・入力素材・生成物・検証データを役割で分けて配置し、AIも人も迷わない最小ディレクトリ構成。</p><dl class="feature-io"><dt>入力</dt><dd>実験・本番作業で扱うファイルの種類</dd><dt>出力</dt><dd>docs/input/output/tests を持つ標準ディレクトリ</dd></dl></article><article class="feature-card"><h3>CLI / IDE連携と基本コマンド</h3><p class="feature-summary">公式手順でCLI・VS Code・Cursorを接続し、まず覚える最小コマンドだけで動く状態を作る導入手順。</p><dl class="feature-io"><dt>入力</dt><dd>macOS環境、Node・gh等の前提パッケージ</dd><dt>出力</dt><dd>Claude Code CLIとIDE接続、基本コマンドの実行確認</dd></dl></article></div></section>
     <div class="story-essay"><p>Project Folderは単なる保存先ではなく、文脈と権限の境界です。無関係な仕事は別プロジェクトへ分け、同じ成果物へつながる仕事は共通ルートの下に整理します。ファイル構造が整うほど、AIは探索しやすく、人間は変更を追いやすくなります。</p><p>導入では、公式の方法でCLIやIDE連携を用意し、最初は基本コマンドだけを覚えます。分からない操作は、その場でエージェントへ質問し、確認用のメモとしてプロジェクト内へ保存させます。</p></div>
   </section>
   
