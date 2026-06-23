@@ -67,7 +67,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Agent Skills standard: <code>https://agentskills.io/</code></li>
 </ul>
 <p>更新時に必ず持つ：</p>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 更新時に必ず持つメタ項目リスト。verified_at・minimum_version・status・plans・official_source・migration_noteの6項目を最小単位で並べています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Registry更新時の必須欄として強制でき、確認日や移行手順のない古いエントリが残り続ける事故を構造的に防げます。</p></div><pre><code class="language-text">verified_at
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 更新時に必ず持つメタ項目リスト。verified_at・minimum_version・status・plans・official_source・migration_noteの6項目を最小単位で並べています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Registry更新時の必須欄として強制でき、確認日や移行手順のない古いエントリが残り続ける事故を構造的に防げます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>verified_at</dt><dd>そのエントリを最後に確認した日付です。書かないと有効期限が分からず、古いまま信頼され続けてしまいます。</dd><dt>minimum_version</dt><dd>動作保証する最小バージョンです。書かないと古い環境の読者が動かない手順を踏むことになります。</dd><dt>status</dt><dd>Active/Suspended/Deprecated等の現在状態です。書かないと停止済み機能を案内し続ける事故が残ります。</dd><dt>plans</dt><dd>利用可能なPlan区分です。書かないと自分のPlanでは使えない機能を読者に勧めてしまいます。</dd><dt>official_source</dt><dd>一次資料の参照先です。書かないと出典が辿れず、改訂時に誰のソースか分からなくなります。</dd><dt>migration_note</dt><dd>Deprecated項目に添える移行手順です。書かないと利用者が古い手順から安全に抜けられず取り残されます。</dd></dl></div></div><pre><code class="language-text">verified_at
 minimum_version
 status
 plans

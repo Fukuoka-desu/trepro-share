@@ -41,7 +41,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
     <h2 id="ch-05-s1">5.1 魔法のPromptより仕事の定義</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 魔法のPromptを探す方向に行くと底なし沼にハマる。本当に効くのは仕事自体の定義の精度</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Goal・Context・Constraints・Deliverables・Done when・Evidenceの6軸で仕事を定義できる。指示は短くても通る</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 強い指示の6軸。Goal・Context・Constraints・Deliverables・Done when・Evidenceで仕事自体を定義する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIに何を判断させ、何を判断させないかが分かれる。指示の精度がPromptテクニックではなく定義で決まる</p></div><pre><code class="language-text">Goal       何を達成するか
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 強い指示の6軸。Goal・Context・Constraints・Deliverables・Done when・Evidenceで仕事自体を定義する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIに何を判断させ、何を判断させないかが分かれる。指示の精度がPromptテクニックではなく定義で決まる</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Goal</dt><dd>達成したい状態の一文。これが曖昧だと他5軸が全部推測になり、出力が毎回違うものになる</dd><dt>Context</dt><dd>AIが先に読むべきファイル・既存挙動・利用者などの背景。前提を渡さないとAIは想像で穴埋めする</dd><dt>Constraints</dt><dd>守ること・してはいけないことの一覧。AIの善意による暴走（外部API追加・入力改変等）を仕様で縛る</dd><dt>Deliverables</dt><dd>成果物として何を作るかの宣言。ファイル名やArtifact種別を明示し、納品形が毎回変わるのを防ぐ</dd><dt>Done when</dt><dd>完了の判定条件。テスト・型・画面確認など機械的に確かめられる基準で書き、感覚での合格判定を排除する</dd><dt>Evidence</dt><dd>完了の証拠として出させるもの。変更File・コマンド出力・画面など、後追い確認に使う物的証跡を指定する</dd></dl></div></div><pre><code class="language-text">Goal       何を達成するか
 Context    何を読めばよいか
 Constraints 守ること・しないこと
 Deliverables 何を作るか
@@ -49,7 +49,7 @@ Done when どう判定するか
 Evidence   何を証拠として出すか
 </code></pre>
 <h2 id="ch-05-s2">5.2 汎用Template</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 毎回ゼロから書くと、書き手によって粒度がバラバラになる。Templateで型を固定する必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 6項目の汎用Templateが手元に残る。曖昧な口頭依頼でも、テンプレに流し込むだけで構造化された依頼文に変わる</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 汎用依頼Template。Goal・Context・Constraints・Deliverables・Done when・EvidenceのMarkdownひな形</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 曖昧な依頼を機械的にこのテンプレへ流し込める。書き手による粒度差が消える</p></div><pre><code class="language-markdown"># Goal
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 汎用依頼Template。Goal・Context・Constraints・Deliverables・Done when・EvidenceのMarkdownひな形</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 曖昧な依頼を機械的にこのテンプレへ流し込める。書き手による粒度差が消える</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Goal</dt><dd>達成したい状態を1行で書く欄。曖昧な動詞ではなく『〇〇できる状態』と結果で書くと判定可能になる</dd><dt>Context</dt><dd>Read・Existing behavior・Usersの3要素で背景を渡す欄。AIが現状を推測せず事実から始められる</dd><dt>Constraints</dt><dd>Must/Must not/Out of scopeの3区分で縛る欄。やる/やらない/対象外を分けて書き、暴走の余地を消す</dd><dt>Deliverables</dt><dd>成果物のファイル名やArtifact種別を並べる欄。何を納品物として扱うかを先に固定する</dd><dt>Done when</dt><dd>machine-verifiable checksを並べる欄。テスト通過・型通過などコマンドで判定できる条件だけ書く</dd><dt>Evidence</dt><dd>完了報告に添えさせる証拠の列挙。変更file・コマンド・exit code・画面・残riskを返させる</dd></dl></div></div><pre><code class="language-markdown"># Goal
 [達成したい状態]
 
 # Context
@@ -91,7 +91,7 @@ Sample Dataで起動し、Test/Build成功を完了条件とする。
 </code></pre>
 <p>質問に答えられない場合は、仮定を明示して最小版を選ぶ。</p>
 <h2 id="ch-05-s5">5.5 完了報告の型</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『完了しました』だけを受け取ると、何が変わって何が確認済みか分からない。後で別の問題で揺り戻しが来る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 結果・変更File・Check結果・画面・残Risk・次Actionの6区分で報告が返る。確認可能な証拠付きで完了判定できる</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 完了報告の型。結果・変更File・Check結果・画面/Artifact・残Risk・次Actionの6区分で報告させる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 『完了しました』が確認可能な証拠付き報告に変わる。残Riskと次Actionも同じ報告で見える</p></div><pre><code class="language-text">1. 結果
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 完了報告の型。結果・変更File・Check結果・画面/Artifact・残Risk・次Actionの6区分で報告させる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 『完了しました』が確認可能な証拠付き報告に変わる。残Riskと次Actionも同じ報告で見える</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>結果</dt><dd>依頼が達成されたかの一文。Yes/Noで答えさせ、『だいたい動いた』のような曖昧表現を排除する</dd><dt>変更File</dt><dd>今回触ったファイル一覧。後追いレビュー時にDiffを見るべき箇所を即特定できる</dd><dt>実行したCheckとExit Status</dt><dd>走らせたテスト・lint・typecheckとその終了コード。緑なら本当に通ったことの物的証拠になる</dd><dt>画面・Artifact</dt><dd>出力されたHTMLやスクリーンショット等の証拠物。文字だけでは伝わらない動作確認を視覚で残す</dd><dt>残Risk/未対応</dt><dd>今回潰しきれなかった問題と未着手項目。完了報告に隠さず書かせて、次の依頼の素材にする</dd><dt>次の推奨Action</dt><dd>AIから見た次の一手。残Riskを踏まえた優先度付き提案で、人が次に何をすべきか即決できる</dd></dl></div></div><pre><code class="language-text">1. 結果
 2. 変更File
 3. 実行したCheckとExit Status
 4. 画面・Artifact

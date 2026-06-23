@@ -54,7 +54,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>承認済みPlanの実装。</li>
 </ul>
 <h2 id="ch-09-s2">9.2 <code>/clear</code>、<code>/compact</code>、<code>/context</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ContextはAIの作業机のようなもので、肥大化すると判断が鈍ります。圧縮・全消去・確認の3操作を日常的に使い分ける必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> /clearで仕事切替・/compactで同テーマ圧縮・/contextで内訳確認、を場面で選べると、無理な閾値Ruleに頼らず安定運用できます。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> セッション制御コマンド3種の使い分け早見表。clearは切替、compactは同テーマ圧縮、contextは内訳確認です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 場面ごとにどれを使うかが即決でき、固定閾値Ruleに頼らず文脈量を意図的にコントロールできます。</p></div><pre><code class="language-text">/clear   違う仕事へ切り替える
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> セッション制御コマンド3種の使い分け早見表。clearは切替、compactは同テーマ圧縮、contextは内訳確認です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 場面ごとにどれを使うかが即決でき、固定閾値Ruleに頼らず文脈量を意図的にコントロールできます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>/clear</dt><dd>違う仕事へ切り替える時に使うコマンドです。古い前提を全て捨て、混入による誤判断を断ち切れます。</dd><dt>/compact</dt><dd>同じ仕事の履歴を圧縮するコマンドです。同テーマを継続したいがContextが膨らんだ時に判断品質を保てます。</dd><dt>/context</dt><dd>現在Contextの内訳を確認するコマンドです。何が机を占めているかを見て、clearかcompactかを意図的に選べます。</dd></dl></div></div><pre><code class="language-text">/clear   違う仕事へ切り替える
 /compact 同じ仕事の履歴を圧縮
 /context 何がContextを占めるか確認
 </code></pre>
@@ -69,7 +69,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Subagentへ独立範囲を渡す。</li>
 </ul>
 <h2 id="ch-09-s4">9.4 Resume</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Resumeは便利ですが、過去Sessionの前提と現在のFile状態がずれているリスクがあります。再開時にも事実確認の工程が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> --continue/--resume後にGit状態・Issue・完了条件を確認する習慣を付けると、古いContextに引きずられた誤判断を防げます。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 前回Sessionの再開に使うCLIコマンド。--continueは直前、--resumeは選択再開を担います。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> セッションを切っても作業を引き継げますが、再開時にGit状態と完了条件の再確認が必要なことを意識づけられます。</p></div><pre><code class="language-bash">claude --continue
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 前回Sessionの再開に使うCLIコマンド。--continueは直前、--resumeは選択再開を担います。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> セッションを切っても作業を引き継げますが、再開時にGit状態と完了条件の再確認が必要なことを意識づけられます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>claude --continue</dt><dd>直前のSessionをそのまま再開するコマンドです。短時間の中断後、同じ仕事へ素早く戻れます。</dd><dt>claude --resume</dt><dd>過去Sessionを選択して再開するコマンドです。複数の作業を行き来する時に、目的のSessionだけを呼び戻せます。</dd></dl></div></div><pre><code class="language-bash">claude --continue
 claude --resume
 </code></pre>
 <p>再開時も、現在のGit状態、Issue、完了条件を確認する。過去SessionのContextと現在のFileがずれている可能性がある。</p>

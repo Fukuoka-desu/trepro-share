@@ -78,7 +78,7 @@ git add &lt;intentional-files&gt;
 git commit -m 'feat: add meeting task extraction'
 </code></pre>
 <h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> AIにCommitを任せると、メッセージが冗長になったり粒度がばらついたりして、後日のレビューや巻き戻しが難しくなります。書き方のRuleを与える必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Diff提示・目的を1つ・Secrets Scan・事実だけ書く、などをRule化すると、人と同じ品質の履歴がAI作業でも維持できます。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> AIにCommitを任せる際のRule7か条。Diff提示・目的1つ・Secrets Scan・Force Push禁止・事実記述などを縛ります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが書くCommitでも履歴が読みやすく保たれ、後日のレビューと巻き戻しが現実的な作業として成立します。</p></div><pre><code class="language-text">- Commit前にDiffを見せる
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> AIにCommitを任せる際のRule7か条。Diff提示・目的1つ・Secrets Scan・Force Push禁止・事実記述などを縛ります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが書くCommitでも履歴が読みやすく保たれ、後日のレビューと巻き戻しが現実的な作業として成立します。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Commit前にDiffを見せる</dt><dd>実行前に変更全体を人へ提示する縛りです。提示なしのCommitは意図と実体のズレに気付けません。</dd><dt>変更目的を1つにする</dt><dd>1Commitに1つの意図しか含めない縛りです。混ぜると後日の巻き戻しと原因切り分けが難しくなります。</dd><dt>Secrets Scan</dt><dd>鍵やTokenが含まれていないか必ず走らせる縛りです。AIに任せると気付かず混入し、履歴に永続化します。</dd><dt>Test Evidence</dt><dd>検証実行Logや結果を添える縛りです。事実の裏付けなしのCommitは『動いたっぽい』を履歴化してしまいます。</dd><dt>他人の変更を含めない</dt><dd>他者の修正やマージ差分を巻き込まない縛りです。混入すると履歴の責任所在が曖昧になります。</dd><dt>Force Pushしない</dt><dd>履歴を上書きするpushを禁じる縛りです。共有Branchで実行すると他人のCommitを消し飛ばします。</dd><dt>Commit Messageへ事実だけを書く</dt><dd>推測・誇張・自賛を排し、変更内容と理由のみ書く縛りです。後日の読み手が事実だけで判断できるようにします。</dd></dl></div></div><pre><code class="language-text">- Commit前にDiffを見せる
 - 変更目的を1つにする
 - Secrets Scan
 - Test Evidence
@@ -88,7 +88,7 @@ git commit -m 'feat: add meeting task extraction'
 </code></pre>
 <h2 id="ch-10-s5">10.5 Worktree</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Agentを並列に動かす時に同じWorking Treeを共有すると、編集が衝突して上書きし合います。物理的に作業場所を分ける仕組みが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> worktree addで機能ごとに別ディレクトリへ展開すると、並列実装が衝突なしで進み、後で人間が安全に統合できます。</p></div>
 <p>Agentを並列化する時は、同じWorking Treeを共有しない。</p>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Worktreeで作業ツリーを物理分離するコマンド例。テスト用とドキュメント用に別ディレクトリ・別Branchを切ります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 複数Agentに並列実装させても同じFileを奪い合わず、人間が後で整合させてマージできる構造になります。</p></div><pre><code class="language-bash">git worktree add ../project-agent-tests -b agent/tests
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Worktreeで作業ツリーを物理分離するコマンド例。テスト用とドキュメント用に別ディレクトリ・別Branchを切ります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 複数Agentに並列実装させても同じFileを奪い合わず、人間が後で整合させてマージできる構造になります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>../project-agent-tests (agent/tests)</dt><dd>テスト追加担当Agent専用の作業ツリーです。本体ディレクトリと物理分離するため、同じFileの奪い合いが起きません。</dd><dt>../project-agent-docs (agent/docs)</dt><dd>ドキュメント整備担当Agent専用の作業ツリーです。Branchも別なので、人間が後でレビューしながら安全に統合できます。</dd></dl></div></div><pre><code class="language-bash">git worktree add ../project-agent-tests -b agent/tests
 git worktree add ../project-agent-docs -b agent/docs
 </code></pre>
 <p>各Agentへ編集範囲を割り当て、人間が統合する。</p>

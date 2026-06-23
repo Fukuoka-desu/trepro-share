@@ -47,7 +47,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>次のResearch候補。</li>
 <li>復習すべき内容。</li>
 </ul>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 個人化用ディレクトリの構成例で、状態・信号・プロファイル・学習・好み・問題を1か所に集約しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 保存対象と管理対象が見える形になり、本人がレビュー・削除できる範囲が物理的に1フォルダで完結します。</p></div><pre><code class="language-text">personalization/
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 個人化用ディレクトリの構成例で、状態・信号・プロファイル・学習・好み・問題を1か所に集約しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 保存対象と管理対象が見える形になり、本人がレビュー・削除できる範囲が物理的に1フォルダで完結します。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>state.json</dt><dd>前回どこまで処理したかを覚えておくチェックポイントです。差分追記の起点になり、毎回全ログ再走査による費用爆発を防ぎます。</dd><dt>signals.jsonl</dt><dd>ノイズと機密を落とした関心信号を1行1件で追記する原本です。プロファイル化の素材で、ここを消せば学習痕跡も消えます。</dd><dt>INTERESTS.md</dt><dd>現在の関心トピックを本人が読める形にまとめたプロファイルです。Skillが更新し、本人が手で削除・修正できる前提のファイルです。</dd><dt>LEARNING.md</dt><dd>詰まっている概念や継続中の学習テーマを記録する場所です。復習問題生成や次のResearch候補の供給元として再利用します。</dd><dt>preferences.md</dt><dd>好む説明形式・避けたい言い回しを書き留める好みファイルです。AIが返答スタイルを毎回合わせ直す手間がここで解消します。</dd><dt>quizzes/</dt><dd>LEARNING.mdから生成した復習HTMLを置くフォルダです。想起練習をローカルだけで回せ、外部送信なしの学習ループを成立させます。</dd></dl></div></div><pre><code class="language-text">personalization/
 ├── state.json
 ├── signals.jsonl
 ├── INTERESTS.md
@@ -56,7 +56,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 └── quizzes/
 </code></pre>
 <h2 id="ch-19-s2">19.2 Privacy by Design</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 個人化を進めるほど、顧客情報や評価につながる属性まで吸い込む事故が起きやすくなるため、最初に保存禁止の境界を引きます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ProjectのAllowlistとSecretマスク、人事評価非利用などのルールが先に決まり、後からの『これは消してほしい』を構造的に減らせます。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Privacy by Designの最低限ルールを箇条書きで宣言する設計メモで、Opt-in方針とユーザー権限を明文化します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 後から議論になりがちな『これ保存していい？』が事前合意になり、抽出処理側が参照すべき判断軸が固まります。</p></div><pre><code class="language-text">- 対象ProjectをAllowlist
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Privacy by Designの最低限ルールを箇条書きで宣言する設計メモで、Opt-in方針とユーザー権限を明文化します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 後から議論になりがちな『これ保存していい？』が事前合意になり、抽出処理側が参照すべき判断軸が固まります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>対象ProjectをAllowlist</dt><dd>どのプロジェクトのログだけを学習対象にするかを明示で許可する方式です。書き忘れたプロジェクトは自動的に対象外になります。</dd><dt>顧客案件はOpt-in</dt><dd>顧客情報を含むプロジェクトは本人の明示同意がない限り学習しない原則です。気付かぬうちに顧客データが混入する事故を防ぎます。</dd><dt>SecretをMask</dt><dd>APIキーやトークン文字列を抽出段階で置換して保存しない処理です。後でログ流出しても認証情報まで漏れない構造になります。</dd><dt>生LogのRetention</dt><dd>未加工のログをどのくらい残すかを期間で決めるルールです。残しすぎるほど削除要請への対応コストが膨らみます。</dd><dt>Sensitive Traitを推測しない</dt><dd>健康・思想・性的指向など評価につながる属性を推定対象にしない原則です。差別的判定への利用リスクを構造的に断ちます。</dd><dt>人事評価へ使わない</dt><dd>学習プロファイルを査定や人事評価には使わないという用途限定の宣言です。社員に対する監視ツール化を最初に否定します。</dd><dt>UserがReview/Delete可能</dt><dd>本人がいつでもプロファイルを閲覧・削除できる権限の保証です。納得感が担保され、後からの『これ消して』を構造的に減らします。</dd></dl></div></div><pre><code class="language-text">- 対象ProjectをAllowlist
 - 顧客案件はOpt-in
 - SecretをMask
 - 生LogのRetention
@@ -241,7 +241,7 @@ recency, and whether the topic remains active.
 8. Show the diff for user approval.
 </code></pre>
 <h2 id="ch-19-s5">19.5 Recency Score</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 古い興味と現在の興味を同じ重みで扱うと、すでに関心が薄れた話題が出続けるため、新しさで割り引く設計が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 頻度と深掘りに半減期を掛けた数値で並び替えでき、現在の関心が上に出るプロファイルになります。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 明示的関心・セッション数・深掘り・繰り返しに重みを置き、最後に新しさの半減期で割り引くスコア式です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 古い関心と現在の関心を分離した順位が得られ、人間評価ではなく並び替え補助としてだけ使う前提が共有されます。</p></div><pre><code class="language-text">base = explicit_interest × 3
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 明示的関心・セッション数・深掘り・繰り返しに重みを置き、最後に新しさの半減期で割り引くスコア式です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 古い関心と現在の関心を分離した順位が得られ、人間評価ではなく並び替え補助としてだけ使う前提が共有されます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>explicit_interest</dt><dd>本人が明示的に『興味がある』と発言した回数です。重み3で最も強く効かせ、推測ベースの関心と明示の関心を分けて扱います。</dd><dt>distinct_sessions</dt><dd>別セッションで同じ話題が出てきた回数です。重み2を置き、一日だけの瞬間的熱と継続的関心を切り分けます。</dd><dt>follow_up_depth</dt><dd>そのトピックを何段階深掘りしたかの深さです。表面的に触れただけの話題と、踏み込んで質問した話題を区別する指標になります。</dd><dt>repeated_actions</dt><dd>同じ操作や調査を繰り返した回数です。発言にならない行動レベルの関心まで含め、口に出さない興味を拾える指標になります。</dd><dt>0.5^(days_since_last / half_life_days)</dt><dd>最後に触れてからの経過日数で半減させる時間減衰係数です。古い興味と現在の興味を同じ重みで扱う事故を防ぎます。</dd></dl></div></div><pre><code class="language-text">base = explicit_interest × 3
      + distinct_sessions × 2
      + follow_up_depth
      + repeated_actions
@@ -256,7 +256,7 @@ Local Storageには回答状態だけを保存する。
 </code></pre>
 <h2 id="ch-19-s7">19.7 音声・画像・割り込み</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 音声入力は便利ですが、Command・Path・数値の誤認識のまま実行すると個人化の利便性が事故に変わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 実行前に目的・対象・禁止・完了条件を復唱させる運用に切り替え、画像はSecretsをマスクして使えるようになります。</p></div>
 <p>長い依頼は音声入力と相性がよいが、Command、Path、数値を実行前に復唱させる。</p>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 音声入力時にAIへ復唱を要求する短い指示文で、Command・Path・数値の聞き取り誤差を実行前にあぶり出します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 誤認識のまま処理が走るリスクが減り、実行前に修正可能なゲートが1段挟まる運用に変わります。</p></div><pre><code class="language-text">今の依頼を、目的、対象File、禁止、完了条件に分けて復唱してください。まだ実行しないでください。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 音声入力時にAIへ復唱を要求する短い指示文で、Command・Path・数値の聞き取り誤差を実行前にあぶり出します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 誤認識のまま処理が走るリスクが減り、実行前に修正可能なゲートが1段挟まる運用に変わります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>目的</dt><dd>何を達成したい依頼なのかをAIに言い直させる項目です。音声の聞き間違いで作業対象がずれたまま走るリスクを実行前に潰せます。</dd><dt>対象File</dt><dd>どのファイル・パスに対する作業かを復唱させる項目です。Path文字列の誤認識を、実行前のテキスト確認で必ず一回挟めます。</dd><dt>禁止</dt><dd>してはいけない操作を明示で言わせる項目です。削除・送信・公開などの暴発を、AI側からも禁止条件として復唱させて二重ガードにします。</dd><dt>完了条件</dt><dd>どうなったら作業を終えるかを言わせる項目です。曖昧な完了感で走り続けるのを防ぎ、停止条件をAIにも合意させた状態で進めます。</dd></dl></div></div><pre><code class="language-text">今の依頼を、目的、対象File、禁止、完了条件に分けて復唱してください。まだ実行しないでください。
 </code></pre>
 <p>画像はUI差分やError画面へ使い、SecretsをMaskする。緊急停止は割り込みTextではなく停止操作を使う。</p>
 <hr/>

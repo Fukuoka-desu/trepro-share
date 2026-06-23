@@ -94,7 +94,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </code></pre>
 <p>ただし、ここもBehavior Guidanceであり、Tool実行の強制制御はSettings/Hookで行う。</p>
 <h2 id="ch-11-s3">11.3 良いCLAUDE.md</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLAUDE.mdは毎回読まれる常駐情報のため、長くするほど起動が重く、本当に伝えたい指示が埋もれます。良い形の雛形を最初に決めておくのが安全です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Project概要・Architecture・Commands・Workflow・Constraints・Do notの6項目に絞れば、200行以内の短さを保てます。長文を許すと数か月で3,000行へ膨れ事故の温床になります。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 200行以内に収めるための良いCLAUDE.mdの骨格です。6見出しで責務を分けたMarkdown雛形になります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この構造を出発点にすれば、長文化を防ぎつつ必要な前提が網羅されます。逆にこの枠を超え始めたら別ファイル分割の合図です。</p></div><pre><code class="language-markdown"># Project overview
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 200行以内に収めるための良いCLAUDE.mdの骨格です。6見出しで責務を分けたMarkdown雛形になります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この構造を出発点にすれば、長文化を防ぎつつ必要な前提が網羅されます。逆にこの枠を超え始めたら別ファイル分割の合図です。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Project overview</dt><dd>目的と主要Userを書く章です。Claudeが最初に読む前提となり、書かないと毎回背景説明から始めることになります。</dd><dt>Architecture</dt><dd>主要Directoryと責務を1〜2行で示す章です。書かないとClaudeがファイル探索から始め、無関係な場所を編集する事故が起きます。</dd><dt>Commands</dt><dd>install・dev・lint・typecheck・test・buildなど標準コマンドを列挙する章です。書かないとClaudeが独自Commandを作って既存運用と衝突します。</dd><dt>Required workflow</dt><dd>調査→計画→実装→検証の流れを明示する章です。書かないと「すぐ実装」から入って手戻りが増えます。</dd><dt>Constraints</dt><dd>Technology・Data・Security上の制約を書く章です。書かないと禁止技術や本番接続を平気で提案してきます。</dd><dt>Do not</dt><dd>Config弱体化・本番接続・生成物直接編集など明確な禁止行為を並べる章です。書かないと安全装置を勝手に外す事故が必ず起きます。</dd></dl></div></div><pre><code class="language-markdown"># Project overview
 [目的と主要User]
 
 # Architecture
@@ -130,14 +130,14 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </ul>
 <h2 id="ch-11-s5">11.5 Rules</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Path別の細かい指示までCLAUDE.mdへ書くと、本来関係ないファイルを編集するときにも全ルールが読み込まれ、雑音が増えます。領域別Ruleで効く場所を絞るのが筋です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> `.claude/rules/`配下にfrontend.md・api.md等を分け、Frontmatterで対象Pathを限定すれば、必要なときだけ該当Ruleが効きます。混ぜ書きすると効かせたい場所で見落とされます。</p></div>
 <p><code>.claude/rules/</code>へ領域別Ruleを分ける。</p>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 領域別Ruleを置くディレクトリ構造です。frontend・api・database・testsなど扱う範囲ごとに分けます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このレイアウトに揃えると、関連ファイルを編集する文脈でだけ該当Ruleが効くようになります。CLAUDE.md本体を肥大化させずに済みます。</p></div><pre><code class="language-text">.claude/rules/
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 領域別Ruleを置くディレクトリ構造です。frontend・api・database・testsなど扱う範囲ごとに分けます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このレイアウトに揃えると、関連ファイルを編集する文脈でだけ該当Ruleが効くようになります。CLAUDE.md本体を肥大化させずに済みます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>frontend.md</dt><dd>UI領域のRuleを置くファイルです。コンポーネント命名や状態管理規約をここに集約すれば、CLAUDE.md本体を肥大化させずに済みます。</dd><dt>api.md</dt><dd>API層のRuleを置くファイルです。外部入力検証・エラー形式・ログ規約などをここへ寄せると、API編集時だけ該当指示が読まれます。</dd><dt>database.md</dt><dd>DBアクセス層のRuleを置くファイルです。Schema変更手順・Migration規約・本番DB禁止操作をまとめる場所で、無関係な編集時には読まれません。</dd><dt>tests.md</dt><dd>テスト方針のRuleを置くファイルです。テスト構造・モック方針・カバレッジ基準を分離しておけば、実装ファイルを編集する文脈には混入しません。</dd></dl></div></div><pre><code class="language-text">.claude/rules/
 ├── frontend.md
 ├── api.md
 ├── database.md
 └── tests.md
 </code></pre>
 <p>Path条件を使えるVersionではFrontmatterで対象を限定する。</p>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> RuleのFrontmatterでPath条件を指定する例です。対象Globに一致する編集時だけRuleを適用させます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このFrontmatterを書けば`src/api/`配下を編集するときだけ「外部入力検証」「型付きエラー」等の指示が読み込まれ、無関係な領域では雑音になりません。</p></div><pre><code class="language-markdown">---
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> RuleのFrontmatterでPath条件を指定する例です。対象Globに一致する編集時だけRuleを適用させます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このFrontmatterを書けば`src/api/`配下を編集するときだけ「外部入力検証」「型付きエラー」等の指示が読み込まれ、無関係な領域では雑音になりません。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>paths Frontmatter</dt><dd>Globで対象Pathを限定するメタ情報です。指定しないと全編集で読み込まれ、関係ない領域でも雑音として効きます。</dd><dt>Validate all external input</dt><dd>API境界での外部入力検証を強制するRuleです。書かないと検証漏れのままClaudeがコードを追加し、脆弱性の温床になります。</dd><dt>Return typed errors</dt><dd>エラーを型付きで返す規約です。書かないとstring throwや生Errorが混在し、呼び出し側のハンドリングが破綻します。</dd><dt>Do not log request bodies containing personal data</dt><dd>個人情報を含むリクエストBodyのログ出力禁止です。書かないとデバッグログ経由で個人情報が漏れる事故が起きます。</dd></dl></div></div><pre><code class="language-markdown">---
 paths:
   - "src/api/**/*.ts"
 ---

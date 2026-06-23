@@ -95,7 +95,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </table>
 <p>共有設定は、Owner、問い合わせ先、Read/Write、認証、Timeout、削除手順を持つ。</p>
 <h2 id="ch-15-s3">15.3 <code>.mcp.json</code> 雛形</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> .mcp.jsonに秘密を直書きする例があふれており、リポジトリに鍵が混入する事故が現実に起きています。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 雛形に沿ってenv参照と最小Scopeで書き、Commit前にgit grepで秘密文字列を検査する習慣がつきます。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> .mcp.jsonの最小雛形で、http型とstdio型のサーバー定義をenv参照付きで並べた例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 秘密直書きを避けつつチーム共有しても安全な接続定義の出発点になります。</p></div><pre><code class="language-json">{
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> .mcp.jsonの最小雛形で、http型とstdio型のサーバー定義をenv参照付きで並べた例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 秘密直書きを避けつつチーム共有しても安全な接続定義の出発点になります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>mcpServers</dt><dd>.mcp.jsonのトップキーで、この下に登録した名前ごとに別の外部接続が定義されます。サーバーを増減する単位がここで決まります。</dd><dt>type: http</dt><dd>HTTPで稼働するMCPサーバーに接続する形式です。urlだけで繋がる代わりに、相手サーバーの可用性と認証は外側に依存します。</dd><dt>type: stdio</dt><dd>ローカルプロセスを起動し標準入出力でやり取りする形式です。自前スクリプトをそのまま外部接続として使え、鍵を外部へ預けずに完結させやすくなります。</dd><dt>env</dt><dd>サーバー起動時に渡す環境変数のブロックです。秘密値を直接書かずここを参照経路にすることで、リポジトリへの鍵混入を構造的に避けられます。</dd></dl></div></div><pre><code class="language-json">{
   "mcpServers": {
     "internal-docs": {
       "type": "http",
@@ -141,7 +141,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 credentials*.json
 </code></pre>
 <h2 id="ch-15-s5">15.5 ReadとWriteを分ける</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> AIに書き込み権限を渡した瞬間、誤指示一つで送信・削除・公開が走り、人の確認が間に合いません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Read自動・WriteはDraft止まり・送信は明示承認の3段に分けることで、自動化の速度と取り返しのつく安全さを両立できます。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Read自動・Draft保留・送信は明示承認・Audit Logまでの5段階フローを言語化したテンプレートです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIに書き込みを任せる時の判断地点が明確になり、事故時の原因追跡もしやすくなります。</p></div><pre><code class="language-text">1. Read-only接続
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Read自動・Draft保留・送信は明示承認・Audit Logまでの5段階フローを言語化したテンプレートです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIに書き込みを任せる時の判断地点が明確になり、事故時の原因追跡もしやすくなります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>1. Read-only接続</dt><dd>最初は読み取り権限だけで外部サービスへ接続する段階です。誤指示が走っても取得しかしないので、自動化を試す入口として安全に置けます。</dd><dt>2. 取得結果を確認</dt><dd>取得したデータの中身と件数を人が一度見る段階です。ここを飛ばすと、欠損や想定外の項目に気付かないまま後続処理が回ってしまいます。</dd><dt>3. WriteはDraftまで</dt><dd>書き込みは下書き保存で止め、送信や公開には進めない段階です。AIが暴走しても回収可能な範囲に被害を閉じ込められます。</dd><dt>4. 送信・削除・公開は明示承認</dt><dd>外部に影響が出る操作は人が明示承認した時だけ実行する段階です。承認なしで進む経路を残さないことが、自動化と安全の両立点になります。</dd><dt>5. Audit Log</dt><dd>誰が・いつ・何を実行したかを記録に残す段階です。事故が起きた時の原因特定と、設計が守られているかの後追い検証に効きます。</dd></dl></div></div><pre><code class="language-text">1. Read-only接続
 2. 取得結果を確認
 3. WriteはDraftまで
 4. 送信・削除・公開は明示承認
@@ -158,7 +158,7 @@ credentials*.json
 </code></pre>
 <p>さらに、Secrets deny、Network制限、Write MCP制限、Hookを併用する。</p>
 <h2 id="ch-15-s7">15.7 導入Check</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 外部接続を勢いで増やすと、誰が運営しているか・どんなTool権限を持つかが棚卸しできなくなります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 9項目のチェックリストを通すと、導入の可否判定が感覚から手順へ変わり、後から削除や監査もしやすくなります。</p></div>
-<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> MCPサーバー導入時の9項目チェックリストで、運営者確認から/mcp動作確認までを並べたものです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 感覚で入れていた外部接続の導入可否を、後から監査できる手順に置き換えられます。</p></div><pre><code class="language-text">[ ] 運営者・Code・配布元を確認
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> MCPサーバー導入時の9項目チェックリストで、運営者確認から/mcp動作確認までを並べたものです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 感覚で入れていた外部接続の導入可否を、後から監査できる手順に置き換えられます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>運営者・Code・配布元を確認</dt><dd>誰が作り誰が配っているMCPサーバーかを最初に確認します。素性不明のサーバーを入れると、後から監査も削除判断もできなくなります。</dd><dt>必要Toolだけ</dt><dd>サーバーが提供するToolのうち本当に使うものだけ有効化します。使わない権限を残すと、誤指示で意図しない操作が走る面が広がります。</dd><dt>Read/Write分離</dt><dd>情報取得用と書き込み用の経路を分けて持ちます。混ぜると『取得のつもりが送信していた』事故が起きやすくなります。</dd><dt>秘密直書きなし</dt><dd>設定ファイルに鍵やトークンを直接書かないことを確認します。Commitと同時にリポジトリへ流出する事故をここで止めます。</dd><dt>Prompt Injection想定</dt><dd>取得した外部文書に紛れた命令が実行されない設計かを確認します。想定していないと、Web経由で間接操作される穴が残ります。</dd><dt>Timeout/Retry上限</dt><dd>応答が返らない時の打ち切り時間と再試行回数を決めておきます。決めないと外部障害時に処理が無限に張り付き、他業務まで止まります。</dd><dt>Audit/削除手順</dt><dd>利用履歴の追跡方法と、不要になった時の外し方を事前に決めます。手順がないと『なんとなく残っている接続』が増え続けます。</dd><dt>/mcpで確認</dt><dd>ClaudeのMCPコマンドで実際に接続状態と提供Toolを目視確認します。設定上は正しく見えても起動時に失敗しているケースをここで拾えます。</dd><dt>検証環境でTest</dt><dd>本番データに繋ぐ前に、影響のない環境で挙動を一度通します。いきなり本番に当てて巻き戻せない更新を発生させる事故を防ぎます。</dd></dl></div></div><pre><code class="language-text">[ ] 運営者・Code・配布元を確認
 [ ] 必要Toolだけ
 [ ] Read/Write分離
 [ ] 秘密直書きなし

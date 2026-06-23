@@ -397,6 +397,11 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .code-explain .code-explain-line{margin:0 0 .45em}
 .code-explain .code-explain-line:last-child{margin-bottom:0}
 .code-explain strong{display:inline-block;margin-right:.55em;color:var(--action-accent);font-weight:800;font-size:.76rem;letter-spacing:.04em;background:#fce8c0;padding:1px 8px;border-radius:6px;vertical-align:middle}
+.code-explain-items{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(122,74,16,.18)}
+.code-explain-items-label{margin:0 0 8px}
+.code-explain-dl{margin:0;display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:6px 14px;font-size:.9rem;line-height:1.7}
+.code-explain-dl dt{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:800;color:#5b3a0e;background:#fff3dc;padding:3px 10px;border-radius:6px;align-self:start;white-space:nowrap;border:1px solid #f1c98b}
+.code-explain-dl dd{margin:0;color:#3e2f1a;padding:2px 0}
 .intro-human{margin:24px 0 32px;padding:26px 30px;border-radius:18px;background:linear-gradient(135deg,#fffdf6,#fff);border-left:5px solid var(--action-accent);box-shadow:0 6px 18px rgba(122,74,16,.06)}
 .intro-human p{margin:0 0 .9em;font-size:1.06rem;line-height:1.95;color:var(--story-ink)}
 .intro-human p:last-child{margin-bottom:0}
@@ -814,6 +819,20 @@ def inject_subheading_why(fragment: str, why_data: dict | None) -> str:
             rl = soup.new_tag("strong"); rl.string = "実行するとどうなるか"
             res_p.append(rl); res_p.append(" "); res_p.append(match_entry.get("result", ""))
             box.append(res_p)
+            items = match_entry.get("items") or []
+            if items:
+                items_wrap = soup.new_tag("div", attrs={"class": "code-explain-items"})
+                items_label = soup.new_tag("p", attrs={"class": "code-explain-items-label"})
+                items_label_strong = soup.new_tag("strong"); items_label_strong.string = "それぞれの意味"
+                items_label.append(items_label_strong)
+                items_wrap.append(items_label)
+                dl = soup.new_tag("dl", attrs={"class": "code-explain-dl"})
+                for it in items:
+                    dt = soup.new_tag("dt"); dt.string = (it.get("term") or "").strip()
+                    dd = soup.new_tag("dd"); dd.string = (it.get("explain") or "").strip()
+                    dl.append(dt); dl.append(dd)
+                items_wrap.append(dl)
+                box.append(items_wrap)
             pre.insert_before(box)
 
     return wrap.decode_contents()
