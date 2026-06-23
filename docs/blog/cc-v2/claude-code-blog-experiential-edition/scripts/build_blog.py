@@ -366,6 +366,7 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .toc-toggle:hover{background:rgba(255,255,255,.22)}
 .hero{max-width:var(--max);margin:0 auto;padding:64px 24px 28px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:40px;align-items:center}.eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:800}.hero h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.08;letter-spacing:-.04em;margin:.25em 0}.lede{font-size:1.16rem;color:var(--muted);max-width:64ch}.lede strong{display:block;font-size:1.4rem;color:var(--ink);line-height:1.5;letter-spacing:.005em}
 .lede-sub{font-size:1.02rem;color:var(--muted);max-width:60ch;margin-top:8px}
+.hero-tagline{font-family:ui-serif,"Yu Mincho","Hiragino Mincho ProN",serif;font-size:clamp(1.3rem,2.5vw,1.7rem);line-height:1.5;color:var(--action-accent);margin:.6em 0 1em;letter-spacing:.02em;font-weight:600}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid var(--line);background:white;color:var(--ink)}.button.primary{background:var(--blue);border-color:var(--blue);color:white}
 .layout{max-width:var(--max);margin:auto;padding:20px 24px 80px;display:grid;grid-template-columns:var(--toc-w) minmax(0,1fr);gap:40px}
 .toc{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:18px;transition:transform .25s ease,box-shadow .25s ease}
@@ -845,6 +846,8 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
     title_hook = meta.get("title_hook", "").strip() or html.escape(ch.title)
     # Usecasesは中盤章（第2部〜第5部）のみ表示
     usecases_section = usecases_html(meta) if 2 <= ch.part <= 5 else ""
+    # Featuresは中盤章（第2部〜第5部）のみ表示。反復を避け、基礎/応用章はintro→referenceでスリムに。
+    features_section = features_html(meta, ch.key) if 2 <= ch.part <= 5 else ""
     # 終章の後に「おわりに」レター
     epilogue_section = epilogue_letter_html() if ch.key == "final" else ""
     return f"""
@@ -857,7 +860,7 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
     </h1>
   </header>
   {intro_human_html(meta)}
-  {features_html(meta, ch.key)}
+  {features_section}
   {image_figure(lookup[f'chapter-{ch.key}'], image_prefix)}
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
@@ -916,7 +919,7 @@ def intro_html(preamble: str, manifest: dict, image_prefix: str) -> str:
     )
     preamble_html = render_reference(strip_original_title(preamble), "preface")
     return f"""
-<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Practical edition</div><h1>Claude Code実践教科書<br>ブログ完全版</h1><p class="lede"><strong>AI研修を受けたのに、自席で再現できない人へ。</strong></p><p class="lede-sub">Claude Codeを、明日から会社で配れる人になる。40章＋14レッスンの実践教科書。</p><div class="hero-actions"><a class="button primary" href="#course-overview">14レッスンで始める</a><a class="button" href="#part-0">第0部から読む</a></div></div>{image_figure(lookup['cover-main'], image_prefix)}</div></section>
+<section class="hero"><div class="hero-grid"><div><div class="eyebrow">Practical edition</div><h1>Claude Code実践教科書<br>ブログ完全版</h1><p class="hero-tagline">読み終わるための本ではなく、<br>読み始めるための本。</p><p class="lede"><strong>AI研修を受けたのに、自席で再現できない人へ。</strong></p><p class="lede-sub">Claude Codeを、明日から会社で配れる人になる。40章＋14レッスンの実践教科書。</p><div class="hero-actions"><a class="button primary" href="#course-overview">14レッスンで始める</a><a class="button" href="#part-0">第0部から読む</a></div></div>{image_figure(lookup['cover-main'], image_prefix)}</div></section>
 <section class="hero"><div class="chapter"><header class="chapter-head"><div class="eyebrow">Before you start</div><h1>原典から引き継ぐ前提</h1></header><div class="reference">{preamble_html}</div></div></section>
 """
 

@@ -10,7 +10,7 @@
   <header class="chapter-head">
     <div class="eyebrow">第24章</div>
     <h1 class="chapter-title">
-      <span class="chapter-hook">配って、戻せる。それが配布の正解</span>
+      <span class="chapter-hook">配るのは、戻せる仕組みごと</span>
       <span class="chapter-name">配布、同期、更新、Rollback</span>
     </h1>
   </header>
@@ -18,7 +18,7 @@
 これは配布の事故ではなく、配布の設計が無いだけです。</p><p>ほとんどの人は、設定の更新を『コピーして送る』で済ませています。
 ですが、更新が壊れた場合に戻せなければ、配布のたびに恐怖が増えます。</p><p>この章で扱うのは、配布・同期・更新・Rollback を一連の仕掛けにする設計です。
 段階展開（Canary→Pilot→Stable）、自動同期、失敗検知、戻し手順。攻めと守りを同じ仕組みに含めます。</p><p>配って、戻せる。これが配布の正解です。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-24-0-bootstrap"><h3 id="feature-24-0-bootstrap">Bootstrap（冪等な初回セットアップ）</h3><p class="feature-summary">何度実行しても壊れない初回セットアップ。ネット障害時に安全に持ち越し、同時実行をロックで防ぐ。</p><dl class="feature-io"><dt>入力</dt><dd>新規端末、認証情報、対象Repository</dd><dt>出力</dt><dd>冪等に走るBootstrap実行ログと最終状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-24-1-convergent-sync"><h3 id="feature-24-1-convergent-sync">Convergent Sync（追加/変更/削除追従）</h3><p class="feature-summary">前回Manifestと今回正本を比較し、追加・変更・削除を最終状態へ収束させる同期処理。</p><dl class="feature-io"><dt>入力</dt><dd>Manifest差分、現端末状態</dd><dt>出力</dt><dd>収束済み最新状態と差分ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-24-2-skill-merge-update-sh"><h3 id="feature-24-2-skill-merge-update-sh">Skill Merge と update.sh</h3><p class="feature-summary">個人Layerに触れずに共通Skillだけ更新する定期マージ処理と、それを呼ぶupdate.shの標準実装。</p><dl class="feature-io"><dt>入力</dt><dd>更新対象Skill群、個人Layerパス</dd><dt>出力</dt><dd>個人保護つき更新完了ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-24-3-verify-version-hook"><h3 id="feature-24-3-verify-version-hook">Verify（存在/Version/Hook動作）</h3><p class="feature-summary">配布直後に存在・Version・Hook動作を構造化チェックし、配布の成功を客観的に確認する検証層。</p><dl class="feature-io"><dt>入力</dt><dd>配布対象、想定Version</dd><dt>出力</dt><dd>Verify結果レポートと不一致リスト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-24-4-rollback-release"><h3 id="feature-24-4-rollback-release">Rollback（既知Releaseへ一手戻し）</h3><p class="feature-summary">署名済みの以前のReleaseへ一操作で戻せる仕組み。事故時の復旧時間を分単位に短縮する。</p><dl class="feature-io"><dt>入力</dt><dd>現在版、戻り先Releaseタグ</dd><dt>出力</dt><dd>Rollback実行ログと復旧後Verify</dd></dl></article></li></ul></section>
+  
   
 <figure class="image-shell" data-image-id="chapter-24">
   <img src="../images/chapter-24-6d204a.webp" alt="第24章『配布、同期、更新、Rollback』を表すisometric delivery pipeline illustration" loading="lazy" decoding="async">
