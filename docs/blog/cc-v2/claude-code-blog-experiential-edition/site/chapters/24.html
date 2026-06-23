@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-24-s1">24.1 Bootstrap責務</h2>
+    <h2 id="ch-24-s1">24.1 Bootstrap責務</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Bootstrapが何を持つべきかを順番で並べないと、社員の端末ごとに「途中まで入っている」状態が増え、後続の同期もVerifyも失敗します。10ステップの責務範囲を最初に確定する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> macOS確認からverify完了までの10段階が共有され、Bootstrapが冪等で完走するための必須順序とスキップ可否を全員が同じ目線で議論できるようになります。</p></div>
 <pre><code class="language-text">1 macOS/Architecture
 2 Command Line Tools
 3 Homebrew
@@ -50,9 +50,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 9 Kandji/LaunchAgent
 10 verify
 </code></pre>
-<h2 id="ch-24-s2">24.2 GitHub認証</h2>
+<h2 id="ch-24-s2">24.2 GitHub認証</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Private RepoへアクセスするためのTokenが.git/configやShell履歴へ残ると、配布Repoが個人端末経由で漏えいするリスクが出ます。短期権限と扱い方を明文化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Fine-grained・Read最小・期限付きTokenを環境変数経由でgh authへ流し込み、URL・History・remoteへ残さない手順が確立されます。SSO/Device Flowへの将来移行も同じ枠で扱えます。</p></div>
 <p>Fine-grained、Read最小、期限付き。URL、History、<code>.git/config</code>へTokenを入れない。</p>
-<pre><code class="language-bash">if [[ -n "${TREPRO_GITHUB_TOKEN:-}" ]]; then
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 環境変数のTokenをgh auth login --with-tokenへ標準入力で渡し、その直後にunsetする取り扱いを示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Tokenがgit remote URLやhistoryに残らず、Fine-grained短期Tokenを安全に消費した上で gh auth setup-git で通常運用へ繋げられます。</p></div><pre><code class="language-bash">if [[ -n "${TREPRO_GITHUB_TOKEN:-}" ]]; then
   printf '%s' "$TREPRO_GITHUB_TOKEN" | gh auth login --hostname github.com --with-token
   unset TREPRO_GITHUB_TOKEN
 fi
@@ -64,8 +64,8 @@ gh auth setup-git
 fi
 </code></pre>
 <p>将来はSSO、GitHub App、Device Flow、短期Credentialを優先。</p>
-<h2 id="ch-24-s3">24.3 <code>common.sh</code></h2>
-<pre><code class="language-bash">#!/usr/bin/env bash
+<h2 id="ch-24-s3">24.3 <code>common.sh</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Bootstrap・Update・Sync・Verifyを別Scriptに散らすと、Log出力・ロック・ネット判定の挙動がそれぞれ違ってしまいます。共通土台common.shを1本に揃える必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ログのローテーション、stale Lock検出、network_ok等の関数が全Scriptで共有され、同時実行衝突やネット障害時の挙動が揃って観測・診断が一貫します。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> ログ・ロック・ローテーションと同時実行検出・stale lock回収・network_okを共通関数として一箇所に集約したcommon.shの骨格です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Bootstrap/Update/Syncが同じ規約でログを出し、同時実行を物理的に防ぎ、ネット障害時には次回へ安全に持ち越せる土台になります。</p></div><pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 HARNESS_NAME="trepro-harness"
 LOG_DIR="${HARNESS_LOG_DIR:-$HOME/Library/Logs/$HARNESS_NAME}"
@@ -104,7 +104,7 @@ acquire_lock() {
 
 network_ok() { curl -fsSIL --max-time 10 https://github.com &gt;/dev/null 2&gt;&amp;1; }
 </code></pre>
-<h2 id="ch-24-s4">24.4 Convergent Sync</h2>
+<h2 id="ch-24-s4">24.4 Convergent Sync</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 前回配ったFileと今回配るFileの差分を扱えない同期は、追加と変更しか追従できず、削除Skillが端末に残り続けます。Manifest比較で収束させる仕組みが必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Current/Previous Manifestの差集合で削除を追従し、symlinkを禁止し、保護対象（local/、settings.local.json、*.bak）を残しながら最終状態へ収束する同期が成立します。</p></div>
 <pre><code class="language-text">Current Manifest = 今回配るPath
 Previous Manifest = 前回配ったPath
 Delete = Previous - Current
@@ -167,14 +167,14 @@ if (( ! DRY_RUN )); then
 fi
 </code></pre>
 <p>Hookへ<code>0755</code>を設定し、<code>.agents/skills</code> Merge、Hash、Overlayを追加する。</p>
-<h2 id="ch-24-s5">24.5 Skill Merge</h2>
+<h2 id="ch-24-s5">24.5 Skill Merge</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Claude用Skillとagents用Skillが現時点で別ディレクトリにあるため、移行期に黙って上書きすると挙動差が出ます。Merge順序と衝突方針を明文化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 「.agents/skillsを退避→global-config/skillsで上書き→validate→両Runtimeへ配布」という順番が固定され、衝突時に黙って失う事故を防げます。</p></div>
 <p>移行中：</p>
 <pre><code class="language-text">.agents/skills → temp
 then global-config/skills overwrites
 → validate → Claude/Codexへ配布
 </code></pre>
 <p>長期は<code>skill-src</code>から両方生成。衝突を黙って上書きしない。</p>
-<h2 id="ch-24-s6">24.6 <code>update.sh</code></h2>
+<h2 id="ch-24-s6">24.6 <code>update.sh</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 更新が暴走したり、ネット不安定中に半端な状態で止まると、社員端末の挙動が日替わりで変わってしまいます。Updateには進行制御と失敗時の安全停止が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Lock取得・network_ok判定・Channel別refの切替（stableはtag、canaryはbranch）が組み込まれ、検出済みネット障害時は次回まで安全に持ち越せます。</p></div>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 ROOT="${HARNESS_ROOT:-$HOME/.local/share/trepro-harness}"
@@ -197,7 +197,7 @@ git checkout --detach "$ref"
 "$ROOT/deploy/verify.sh" --quiet
 </code></pre>
 <p>本番は署名Tag、許可Version、失敗Rollbackを追加。</p>
-<h2 id="ch-24-s7">24.7 Verify</h2>
+<h2 id="ch-24-s7">24.7 Verify</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「配布が成功した」を主観で判断すると、壊れたまま気付かず使われ続けます。存在・Version・Hook動作を機械的に確認する層が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> claude/CLAUDE.md/skills/hooks/manifest/managed-settingsの存在を順に検査するverify.shが動き、失敗カウントで配布の合否が客観値で出るようになります。</p></div>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 failures=0
@@ -213,7 +213,7 @@ check "managed" test -f "/Library/Application Support/ClaudeCode/managed-setting
 (( failures == 0 ))
 </code></pre>
 <p>代表Skill認識、Hook Fixture、Token非混入、Local保持、Dry-run、Claude/Codex Hashも検査する。</p>
-<h2 id="ch-24-s8">24.8 Rollback</h2>
+<h2 id="ch-24-s8">24.8 Rollback</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 配布事故時に「どこへ戻すか」「どう戻すか」を即座に出せないと、復旧が深夜オペになります。直前Versionを記録しておき一手で戻せる手順を用意する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> .trepro-harness-previous-versionへHEADを保存し、git checkout→sync→verifyの3工程で復旧する流れが固定されます。MCP/Deploy副作用の別Rollback要否も明示できます。</p></div>
 <pre><code class="language-bash">git rev-parse HEAD &gt; "$HOME/.claude/.trepro-harness-previous-version"
 # rollback
 previous="$(cat "$HOME/.claude/.trepro-harness-previous-version")"
@@ -223,7 +223,7 @@ git checkout --detach "$previous"
 ./deploy/verify.sh
 </code></pre>
 <p>外部MCP変更、送信/Deploy、副作用、Claude本体Versionは別Rollbackが必要。</p>
-<h2 id="ch-24-s9">24.9 配布方式</h2>
+<h2 id="ch-24-s9">24.9 配布方式</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 配布手段を1個に決め打ちすると、社員規模や管理者権限の有無で詰まります。Kandji/LaunchAgent/Server-managed/File-based managedを役割で使い分ける必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 本番はKandji・POCはLaunchAgent・Claude.ai組織はServer-managedという棲み分けが明確になり、配布事故時の責任分界点も同時に決まります。</p></div>
 <table>
 <thead>
 <tr>

@@ -38,21 +38,21 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-22-s1">22.1 Source優先度</h2>
-<pre><code class="language-text">1. 公式Document/Changelog/原論文/法令/一次Data
+    <h2 id="ch-22-s1">22.1 Source優先度</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> SNSや解説記事をそのまま事実扱いすると、勢いのある誤情報まで取り込んでしまい、訂正で信頼を失います。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 公式→一次→専門媒体→解説→SNSの順に重みを下げる序列を持ち、SNSは発見と反応の窓口に限定できます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 情報源を5段階で序列化したリストで、SNS・掲示板・Commentは最下位として扱うことを明示しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どのSourceを仕様確定の根拠に使ってよいかが揃い、SNSは発見と反応に限定する運用がそのまま定着します。</p></div><pre><code class="language-text">1. 公式Document/Changelog/原論文/法令/一次Data
 2. 開発者・当事者発表
 3. 信頼できる専門媒体
 4. 高品質解説
 5. SNS/掲示板/Comment
 </code></pre>
 <p>SNSは発見と反応に使い、仕様確定に使わない。</p>
-<h2 id="ch-22-s2">22.2 Claim Ledger</h2>
-<pre><code class="language-csv">claim_id,claim,status,source_type,source_title,source_url,published_at,retrieved_at,evidence,notes
+<h2 id="ch-22-s2">22.2 Claim Ledger</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 完成したレポートだけ見ても『この数字の出所は？』に即答できなければ、役員プレゼンで矛盾を突かれます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 主張・根拠・日付・確度・反証を行単位で記録した台帳が残り、どのClaimもSourceまで逆引きできます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Claim LedgerをCSVで実装した1行サンプルで、status・source_type・published_at・retrieved_atを分離しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 公開日と取得日が別カラムで残り、変動情報の鮮度判定や反証追加が後から差分で行える台帳になります。</p></div><pre><code class="language-csv">claim_id,claim,status,source_type,source_title,source_url,published_at,retrieved_at,evidence,notes
 C001,"Dynamic Workflows is available on paid plans",verified,official,"Dynamic workflows",...,2026-06-...,2026-06-22,"...","Check minimum version"
 </code></pre>
 <p>Status：<code>verified</code>、<code>supported</code>、<code>disputed</code>、<code>unverified</code>、<code>obsolete</code>。</p>
-<h2 id="ch-22-s3">22.3 Research Skill</h2>
-<pre><code class="language-markdown">---
+<h2 id="ch-22-s3">22.3 Research Skill</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Research・Verify・Draftの手順を毎回口頭で伝えていると、人によって出典の扱いも反証の扱いもブレます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 対象・除外条件・評価軸を内蔵したSkillとして固定でき、テーマを渡すだけで出典付きレポートが返ってきます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 一次情報優先・日付分離・SNS未検証扱い・推測の明示を内蔵したResearch Skillの定義Markdownです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> テーマを渡すとreport.md・claims.csv・sources.json・open-questions.mdまで揃った成果物が返ってきます。</p></div><pre><code class="language-markdown">---
 name: source-grounded-research
 description: Research a current topic using primary sources, build a claim ledger, verify dates, and produce a cited report.
 argument-hint: "&lt;question&gt;"
@@ -80,11 +80,11 @@ argument-hint: "&lt;question&gt;"
 - research/sources.json
 - research/open-questions.md
 </code></pre>
-<h2 id="ch-22-s4">22.4 動画/SNS統合</h2>
-<pre><code class="language-text">収集 → 完全文字起こし → 動画別Topic → 重複Cluster → Claim分解
+<h2 id="ch-22-s4">22.4 動画/SNS統合</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 動画やSNSは同じ話題を複数の発信者が繰り返すため、件数で押し切ると『複数経路で確認した』という錯覚が生まれます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 重複Clusterで畳んでから公式検証する流れが固まり、発言と事実、原則と例を分けて再構成できます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 動画とSNSの統合手順を矢印で並べたフローで、重複Cluster→Claim分解→公式検証→再構成という順序を定義します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 同じ話題の重複カウントを潰してから公式検証に回せ、最後にCoverage Matrixで漏れの有無まで確認できます。</p></div><pre><code class="language-text">収集 → 完全文字起こし → 動画別Topic → 重複Cluster → Claim分解
 → 公式検証 → 原則/手順/例/注意へ再構成 → Coverage Matrix
 </code></pre>
-<h2 id="ch-22-s5">22.5 完了条件</h2>
+<h2 id="ch-22-s5">22.5 完了条件</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 未確認のまま閉じたレポートは、後で読む人に確認済みかどうかが判別できず、誤って意思決定に使われます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 未確認事項リストと次の検証アクションをレポート末尾で明示し、不確実性を隠さず閉じる完了基準になります。</p></div>
 <pre><code class="language-text">[ ] 質問へ直接回答
 [ ] 重要Claimに根拠
 [ ] 現在/過去を分離

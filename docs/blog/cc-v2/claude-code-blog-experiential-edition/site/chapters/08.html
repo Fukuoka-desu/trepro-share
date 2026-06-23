@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-08-s1">8.1 Model名ではなく役割で選ぶ</h2>
+    <h2 id="ch-08-s1">8.1 Model名ではなく役割で選ぶ</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> モデルを『強さ』で常に最上位選択にすると、月初に利用上限を吹き飛ばします。仕事の役割で選び分ける軸が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 軽量・標準・高性能・長時間最上位を役割で割り当てると、日常は標準で回り、難所だけ高性能を投下できる構造になります。</p></div>
 <table>
 <thead>
 <tr>
@@ -66,22 +66,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <p>日常は標準Modelを使い、計画、難所、最終Reviewだけ高性能へ切り替える。</p>
-<h2 id="ch-08-s2">8.2 Effort</h2>
+<h2 id="ch-08-s2">8.2 Effort</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Effortを常に最大にしても、曖昧な依頼は曖昧なまま長く考えるだけです。判断の難しさに応じて深さを変える必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> low/medium/high/最大を仕事ごとに使い分けると、定型変換は速く・難所は深く考えさせられ、時間とコストの両方が締まります。</p></div>
 <p>Effortは、考える深さ、時間、利用量のTrade-offである。</p>
-<pre><code class="language-text">low/medium: 定型、軽い修正
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Effortの4段階を仕事種別に対応させた目安表。定型から長時間探索まで、どこに深さを投下するかを示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> タスクごとのEffort割り当てが具体化し、最大Effort常用による利用上限の早期到達を避けられます。</p></div><pre><code class="language-text">low/medium: 定型、軽い修正
 high: 複数File、分析、重要文書
 最大: 難しいArchitecture、長時間探索
 </code></pre>
 <p>深く考えるほど常に良いわけではない。曖昧な依頼を長く考えても、曖昧なままである。</p>
-<h2 id="ch-08-s3">8.3 <code>ultrathink</code></h2>
+<h2 id="ch-08-s3">8.3 <code>ultrathink</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 難しいArchitectureや原因分析では、通常の指示だけだと比較や代案が浅くなります。徹底的に考えさせるSignalを意図的に使う場面があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ultrathinkを比較軸・制約・証拠とセットで使うと、最小Riskの計画が引き出せ、Magic Word頼みの過剰起動も避けられます。</p></div>
 <p>難しい計画・Reviewで「徹底的に考える」Signalとして使える場合がある。</p>
-<pre><code class="language-text">ultrathink
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 高難度Plan/Reviewで徹底的に考えさせるSignalの使用例。比較軸・制約・証拠を併記して呼び出します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 最小Riskな計画案が比較表で返ってくるようになり、難所の判断品質が一段上がります。</p></div><pre><code class="language-text">ultrathink
 既存Architecture、Data Migration、Failure Modeを比較し、最小Riskの計画を作ってください。
 </code></pre>
 <p>Magic Wordだけに依存せず、比較軸、制約、証拠を明示する。</p>
-<h2 id="ch-08-s4">8.4 Advisor</h2>
+<h2 id="ch-08-s4">8.4 Advisor</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全工程を高性能Modelで回すとコストが膨らみ、軽くするとレビュー品質が落ちます。要所だけ助言を借りる併走設計が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 標準Modelを主、Advisorを要所投入にすると、品質を保ったままコストを抑えられ、判断根拠の補強だけを得られます。</p></div>
 <p>標準Modelを主に使い、重要な局面だけ高性能Modelの助言を得る設計は、品質とCostのBalanceがよい。現行の <code>/advisor</code> と提供条件を確認する。</p>
-<h2 id="ch-08-s5">8.5 Fable 5の扱い</h2>
+<h2 id="ch-08-s5">8.5 Fable 5の扱い</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 教材が特定モデル前提だと、提供停止や名称変更で本文ごと古びてしまいます。Workflowを特定モデルから切り離して書く必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Fable 5のような変動Modelは必須手順にせず、Registryでsuspendedとして扱うことで、教材本体の寿命を延ばせます。</p></div>
 <p>素材中では長時間Taskに強い最上位Modelとして紹介されるが、基準日にはアクセス停止中である。</p>
 <ul>
 <li>教材の必須手順にしない。</li>

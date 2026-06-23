@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-26-s1">26.1 Threat Model</h2>
+    <h2 id="ch-26-s1">26.1 Threat Model</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 想定する脅威を並べないまま安全策を積むと、抜けや過剰の判断ができません。誤操作・Secret漏えい・Injection・Supply chain・設定改変・過剰自律・古い配布・過収集の8脅威を出発点に置く必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 各脅威に対応するdeny・Hook・Sandbox・Managed Settings・Budget・Version Inventory等の対策がマトリクスで見え、抜けと重複を同じ表で議論できるようになります。</p></div>
 <table>
 <thead>
 <tr>
@@ -90,8 +90,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-26-s2">26.2 Managed Settings例</h2>
-<pre><code class="language-json">{
+<h2 id="ch-26-s2">26.2 Managed Settings例</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「.envを読まない」「force pushしない」を文章で書いても、社員端末では外せます。managed-settings.jsonで実行時に物理強制する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> defaultMode plan・bypass無効化・denyにrm/force push/secret・askに本番Deploy・Sandbox network allowedDomainsまで一式が並び、文書ではなく実装で安全が立ち上がります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Plan既定・bypass無効化・deny/ask/allow・Sandboxのfilesystem/network・managedRulesOnly・MCP Allowlistまでを1ファイルへ束ねたManaged Settingsの完全例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 個人端末側でPermissionを緩めたり、危険コマンドを実行したり、許可外DomainへNetwork接続することが、実行時に物理ブロックされるようになります。</p></div><pre><code class="language-json">{
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "defaultMode": "plan",
@@ -159,8 +159,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li><code>allowManagedHooksOnly</code>は現行User配布Hookと両立しない。Plugin化後に有効化。</li>
 <li>Network DomainをCanaryで洗い出す。</li>
 </ul>
-<h2 id="ch-26-s3">26.3 Drop-in</h2>
-<pre><code class="language-text">/Library/Application Support/ClaudeCode/
+<h2 id="ch-26-s3">26.3 Drop-in</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Managed Settingsを1ファイルに詰めると、Security・Telemetry・部署別を別チームが触りたい時に衝突します。Drop-inで分割する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> managed-settings.d/配下に10-security.json・20-telemetry.json・30-department-mm.jsonと番号付きで並べられ、レイヤ別に責任分担しつつ統合した結果として強制されるようになります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> managed-settings.d/配下に10-security.json・20-telemetry.json・30-department-mm.jsonを並べ、領域別Policyを分割管理するDrop-inの配置です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Security担当・Telemetry担当・部署別管理者が別ファイルを並走編集でき、統合結果として組織Policyが強制される運用が成立します。</p></div><pre><code class="language-text">/Library/Application Support/ClaudeCode/
 ├── managed-settings.json
 ├── managed-settings.d/
 │   ├── 10-security.json
@@ -168,7 +168,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 │   └── 30-department-mm.json
 └── managed-mcp.json
 </code></pre>
-<h2 id="ch-26-s4">26.4 Managed MCP</h2>
+<h2 id="ch-26-s4">26.4 Managed MCP</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> MCPの追加を社員任せにすると、悪性ServerやFile直書きSecretが混ざります。Allowlistで固定し、Secretは環境変数経由にする必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> managed-mcp.jsonでgithubとtrepro-docsだけ有効化し、TREPRO_DOCS_TOKENを環境変数参照に揃え、claude mcp addで追加しても拒否される運用が固まります。</p></div>
 <pre><code class="language-json">{
   "mcpServers": {
     "github": {
@@ -191,7 +191,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 claude mcp add --transport http test https://example.com/mcp
 </code></pre>
 <p>固定管理が有効なら追加は拒否される。</p>
-<h2 id="ch-26-s5">26.5 Hook Block Event</h2>
+<h2 id="ch-26-s5">26.5 Hook Block Event</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Hookで止めただけでは「何回・誰の端末で・どのRuleが止めたか」が分かりません。Block Eventを構造化Logにして観測可能にする必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> timestamp・device_id（Hash済）・harness_version・rule_id・command_hashが揃い、Command全文や顧客名は中央へ送らないという観測と最小収集を両立できます。</p></div>
 <pre><code class="language-json">{
   "timestamp": "2026-06-22T10:15:00+09:00",
   "device_id": "hashed-device-id",
@@ -204,7 +204,7 @@ claude mcp add --transport http test https://example.com/mcp
 }
 </code></pre>
 <p>Command全文や顧客名を中央へ送らない。</p>
-<h2 id="ch-26-s6">26.6 指標</h2>
+<h2 id="ch-26-s6">26.6 指標</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Block件数だけ追うと、誤検知や利用低下が見えません。Update成功率・Skill失敗・Cost・Tokenまで広く測る必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Version分布・Update成功率・Permission Prompt・Skill失敗・MCP接続失敗・Token/Cost概算が並ぶことで、安全と利便性のバランスを数値で判定できます。</p></div>
 <ul>
 <li>Claude/Harness Version分布。</li>
 <li>Update成功率/遅延。</li>
@@ -214,15 +214,15 @@ claude mcp add --transport http test https://example.com/mcp
 <li>Goal/Workflow Timeout。</li>
 <li>Token/Cost概算。</li>
 </ul>
-<h2 id="ch-26-s7">26.7 Retention</h2>
-<pre><code class="language-text">Update Log 30日
+<h2 id="ch-26-s7">26.7 Retention</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Logは長く広く持つほど、情報持ち出しと過収集のリスクが上がります。種別ごとの保持期間と権限を決め切る必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Update Log 30日・Hook Metadata 90日・Command全文は原則収集なし・Incidentは法務基準という保持基準が固定され、Retentionと閲覧権限が監査可能になります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Update Log 30日・Hook Metadata 90日・Command全文は収集なし・Skill評価は存続中+1年・Incidentは法務基準というRetention表です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> ログの保持期間と権限が種別ごとに固定され、長すぎる保持・広すぎる閲覧という過収集リスクが運用ルールで抑え込まれます。</p></div><pre><code class="language-text">Update Log 30日
 Hook Metadata 90日
 Command全文 原則収集なし
 Skill評価 Skill存続中+1年
 Incident 法務/Security Policy
 </code></pre>
-<h2 id="ch-26-s8">26.8 Incident</h2>
-<pre><code class="language-text">1 端末/Project/Version特定
+<h2 id="ch-26-s8">26.8 Incident</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 事故発生時の手順を口頭運用にすると、復旧と再発防止の両方が抜けます。隔離→Update停止→切分け→Rollbackまでを定型化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 端末/Project/Version特定→Update停止→Layer切分け→Credential失効→外部副作用確認→Rollback→Canary修正→Root Causeの8工程と、SEV1〜SEV4の重大度区分が共有されます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Incident対応の8工程を、端末特定からRoot Cause/再発防止まで順に並べたRunbookの骨子です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 事故発生時に隔離・Rollback・通知・振り返りまでが定型で進み、属人的な深夜対応ではなくRunbook運転で復旧できるようになります。</p></div><pre><code class="language-text">1 端末/Project/Version特定
 2 Update停止
 3 Layer切分け
 4 Credential失効
@@ -257,7 +257,7 @@ Incident 法務/Security Policy
 </tr>
 </tbody>
 </table>
-<h2 id="ch-26-s9">26.9 KPI</h2>
+<h2 id="ch-26-s9">26.9 KPI</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「全社AI基盤がうまく動いている」を主観で語っても経営判断には繋がりません。配布・信頼性・安全・品質・Adoption・効率・Costの数値目標が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Kit時間30分以内・Update成功99%+・Critical Incident 0・Stable Skill 85+・Active社員80%+などの目標値が並び、Block件数だけでなく誤検知率も含めた経営KPIになります。</p></div>
 <table>
 <thead>
 <tr>

@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-09-s1">9.1 Sessionを分ける基準</h2>
+    <h2 id="ch-09-s1">9.1 Sessionを分ける基準</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 1つのセッションで複数の仕事を続けると、AIは古い前提を引きずって判断を曇らせます。セッションを切る基準を明確に持つ必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 目的が変わる時・別Projectへ移る時に新Sessionを開く運用にすると、文脈混入の事故が起きにくく、回答が現状に追従します。</p></div>
 <p>新しいSessionにする：</p>
 <ul>
 <li>目的が変わる。</li>
@@ -53,13 +53,13 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>直前のTest結果を受けたDebug。</li>
 <li>承認済みPlanの実装。</li>
 </ul>
-<h2 id="ch-09-s2">9.2 <code>/clear</code>、<code>/compact</code>、<code>/context</code></h2>
-<pre><code class="language-text">/clear   違う仕事へ切り替える
+<h2 id="ch-09-s2">9.2 <code>/clear</code>、<code>/compact</code>、<code>/context</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ContextはAIの作業机のようなもので、肥大化すると判断が鈍ります。圧縮・全消去・確認の3操作を日常的に使い分ける必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> /clearで仕事切替・/compactで同テーマ圧縮・/contextで内訳確認、を場面で選べると、無理な閾値Ruleに頼らず安定運用できます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> セッション制御コマンド3種の使い分け早見表。clearは切替、compactは同テーマ圧縮、contextは内訳確認です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 場面ごとにどれを使うかが即決でき、固定閾値Ruleに頼らず文脈量を意図的にコントロールできます。</p></div><pre><code class="language-text">/clear   違う仕事へ切り替える
 /compact 同じ仕事の履歴を圧縮
 /context 何がContextを占めるか確認
 </code></pre>
 <p>「40%を超えたら必ず性能低下」のような固定閾値を一般Ruleにしない。出力品質、Context内訳、Task境界で判断する。</p>
-<h2 id="ch-09-s3">9.3 Contextを節約する設計</h2>
+<h2 id="ch-09-s3">9.3 Contextを節約する設計</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLAUDE.mdや長文Logを丸ごと積むと、すぐにContextが膨らみます。詰め込みではなく節約の設計を別建てで考える必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> CLAUDE.mdを短く・手順はSkillへ・詳細はreferences/へ分離するなどの設計で、Contextを軽く保ったまま情報の参照性は維持できます。</p></div>
 <ul>
 <li>CLAUDE.mdを短くする。</li>
 <li>長い手順をSkillへ移す。</li>
@@ -68,14 +68,14 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>大きなLogを丸ごと貼らず、必要範囲だけ読む。</li>
 <li>Subagentへ独立範囲を渡す。</li>
 </ul>
-<h2 id="ch-09-s4">9.4 Resume</h2>
-<pre><code class="language-bash">claude --continue
+<h2 id="ch-09-s4">9.4 Resume</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Resumeは便利ですが、過去Sessionの前提と現在のFile状態がずれているリスクがあります。再開時にも事実確認の工程が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> --continue/--resume後にGit状態・Issue・完了条件を確認する習慣を付けると、古いContextに引きずられた誤判断を防げます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 前回Sessionの再開に使うCLIコマンド。--continueは直前、--resumeは選択再開を担います。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> セッションを切っても作業を引き継げますが、再開時にGit状態と完了条件の再確認が必要なことを意識づけられます。</p></div><pre><code class="language-bash">claude --continue
 claude --resume
 </code></pre>
 <p>再開時も、現在のGit状態、Issue、完了条件を確認する。過去SessionのContextと現在のFileがずれている可能性がある。</p>
-<h2 id="ch-09-s5">9.5 履歴を残さない実行</h2>
+<h2 id="ch-09-s5">9.5 履歴を残さない実行</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 機密性の高い作業や自動化Jobでは、Session履歴自体が漏洩リスクや混乱要因になります。履歴を残さない実行モードが要る場面があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 利用Versionの--helpと組織Policyを確認して非対話モードでPersistenceを切ると、機密や自動化の要件に沿った実行ができます。</p></div>
 <p>機密性や自動化要件により、非対話実行でSession Persistenceを無効化する選択肢がある。利用Versionの<code>--help</code>と組織Policyを確認する。</p>
-<h2 id="ch-09-s6">9.6 画像と割り込み</h2>
+<h2 id="ch-09-s6">9.6 画像と割り込み</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 画像入力や作業中の追加指示は、便利な反面、機密漏洩や指示の取り違えにつながりやすい入口です。扱い方を先に決めておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 個人情報のMask・割り込み反映タイミング・音声指示の復唱を運用に組み込むと、UI共有や即時指示でも事故を抑えられます。</p></div>
 <ul>
 <li>UI崩れ、Diagram、Error画面は画像で伝える。</li>
 <li>個人情報・秘密を先にMaskする。</li>

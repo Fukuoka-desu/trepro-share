@@ -38,31 +38,31 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-30-s1">30.1 Local Task Manager</h2>
+    <h2 id="ch-30-s1">30.1 Local Task Manager</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 初学者がいきなり認証・DB・決済を含むApp開発に踏み込むと完成しません。Local JSON、1 Command起動、Sample、Test、READMEに範囲を絞ると、Prototypeを1日で動かす経験を作れます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 成功体験が早く得られ、次の段階で扱う認証・本番DB・外部APIへ進む前に、AIと並走する手順が身体に入ります。</p></div>
 <p>初心者版：外部API、認証、決済、DBなし。Local JSON/Storage、1 Command起動、Sample、Test、README。</p>
-<pre><code class="language-text">会議Task JSONを読むLocal Web App。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Local Task ManagerをSampleで起動可能・375/1440px対応・README付きで完了させる、初心者向けの最小要件指示例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 外部依存ゼロで動く成果物が手に入り、Prototypeを完成体験へ繋げるための最短ルートが確保できます。</p></div><pre><code class="language-text">会議Task JSONを読むLocal Web App。
 会議一覧、Task Board、Owner/Status/Due Filter、状態変更、JSON Export。
 Sampleで起動、Test、375/1440px、READMEを完了条件にする。
 </code></pre>
-<h2 id="ch-30-s2">30.2 Bug修正</h2>
-<pre><code class="language-text">Reproduce Test → Investigate → Minimal Fix → Verify → Root Cause Report
+<h2 id="ch-30-s2">30.2 Bug修正</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Bug修正で最も多い事故は『直したつもり』です。再現テストを先に書きTest削除・Skip・Lint緩和を禁止することで、修正の前後で挙動差分を機械的に検証できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 修正の確からしさがDiffとTestで提示でき、レビューが感覚ではなく証拠ベースになり、再発も検知しやすくなります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Bug修正の標準工程で、再現Testを最初に置き最後にRoot Cause Reportで締めるサイクル定義です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 『動いたら良い』ではなく原因と再現条件まで残るため、同種のBugが再発したときに即座に過去対応へ参照できます。</p></div><pre><code class="language-text">Reproduce Test → Investigate → Minimal Fix → Verify → Root Cause Report
 </code></pre>
 <pre><code class="language-text">Issue #123を修正。最初に失敗する再現Test。
 Test削除、Skip、Lint緩和、Type ignore禁止。
 </code></pre>
-<h2 id="ch-30-s3">30.3 大規模Migration</h2>
-<pre><code class="language-text">Static Search → Matrix → 1 Pilot → Batch/Codemod → Batch Test
+<h2 id="ch-30-s3">30.3 大規模Migration</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 大規模Migrationは一気に切り替えると戻せません。Static Search→Matrix→Pilot→Batch→Fresh Review→Rollbackを直列にすれば、段階ごとに人が判断地点を持てます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 残存箇所と影響範囲が常に可視化された状態で進み、想定外の挙動が出ても直前のCommit候補から巻き戻せます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 大規模Migrationを段階移行する標準パイプで、Fresh ReviewとRollbackを必ず終端に置く構成です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 20ファイル単位のCommit候補と5ターン毎のProgress保存により、長期作業でも中断・再開・巻き戻しが現実的になります。</p></div><pre><code class="language-text">Static Search → Matrix → 1 Pilot → Batch/Codemod → Batch Test
 → Fresh Review → 残存0 → Rollback
 </code></pre>
 <pre><code class="language-text">/goal legacyClient.*参照を0にしTest/Build成功。
 最大20ターン。5ターンごとにProgress保存、20 File単位でCommit候補。
 </code></pre>
-<h2 id="ch-30-s4">30.4 Fresh Review</h2>
-<pre><code class="language-text">新Sessionで意図を教えずDiff Review。
+<h2 id="ch-30-s4">30.4 Fresh Review</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装した本人が同じSessionでReviewするとバイアスが乗ります。新Sessionで意図を教えずDiffだけを見せ、Security→Data lossの順に観点を固定すれば、独立した品質判断が得られます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 迎合的な『LGTM』ではなく、File・Line・再現・Severity・修正案の付いた指摘が安定して上がってくるレビュー体制になります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 独立コンテキストでDiffだけを見せる Fresh Review プロンプトの骨格で、Severityと修正案を毎回必須化します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装者の意図を知らないレビューが返ってくるため、設計の前提が崩れている箇所にも気付きやすくなります。</p></div><pre><code class="language-text">新Sessionで意図を教えずDiff Review。
 Security、Data loss、Behavior、Test、Maintainability順。
 各FindingにFile/Line/再現/Severity/修正案。
 </code></pre>
-<h2 id="ch-30-s5">30.5 Diet App</h2>
+<h2 id="ch-30-s5">30.5 Diet App</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Calorie/栄養推定は便利に見えますが、医療判断に使われると重大事故になります。推定/実測の分離・Allergy判断禁止・専門家導線を最初から設計に含めると、学習例の範囲で安全に留められます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> AIの推定値が誤っていても利用者の意思決定がアプリ単独で進まなくなり、Prototypeを誤用される懸念が減ります。</p></div>
 <p>画像からCalories/栄養を推定するPrototypeは学習例。医療判断へ使わない。</p>
 <ul>
 <li>推定/実測を分離。</li>
@@ -71,7 +71,7 @@ Security、Data loss、Behavior、Test、Maintainability順。
 <li>食品DB出典。</li>
 <li>専門家導線。</li>
 </ul>
-<h2 id="ch-30-s6">30.6 投資支援App</h2>
+<h2 id="ch-30-s6">30.6 投資支援App</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 投資の自動売買と最終推奨は、Bias・Survivorship・Fee無視で簡単に過剰最適化されます。Look-ahead Bias・Human Approval・Kill Switchを必須化すれば、学習教材として安全に扱えます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 数字が華やかなBacktestに引き寄せられる事故を避けつつ、検証設計と承認地点の設計を学ぶ題材として機能します。</p></div>
 <p>自動売買・最終推奨は高Risk。</p>
 <pre><code class="language-text">Data Source/時刻
 Look-ahead Bias
@@ -81,7 +81,7 @@ Human approval
 Loss limit/Kill switch
 </code></pre>
 <p>初心者題材にしない。</p>
-<h2 id="ch-30-s7">30.7 世界Dashboard</h2>
+<h2 id="ch-30-s7">30.7 世界Dashboard</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Real-timeを名乗ったDashboardほど、更新失敗を隠してしまいます。Source更新頻度・取得Date・API Failure・Sensitive表示・再配布権を表示要件に入れると、表示と現実の差を常に明示できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 見ている数字がどの瞬間のものか・取得に失敗していないかが利用者に伝わり、誤情報に基づく意思決定リスクが下がります。</p></div>
 <p>Flight、Trade、News、Conflict等を統合する発展課題。</p>
 <ul>
 <li>Source更新頻度。</li>

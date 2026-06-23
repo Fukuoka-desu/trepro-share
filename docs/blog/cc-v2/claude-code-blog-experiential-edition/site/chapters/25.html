@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-25-s1">25.1 5 Prefixの移行</h2>
+    <h2 id="ch-25-s1">25.1 5 Prefixの移行</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> S_やmm-が混在したまま量だけ増やすと、用途と所有者がひと目で分からないSkill群になります。Canonical Nameを小文字英数字とHyphenへ統一する命名移行が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Legacy NameとCanonical Nameを並べた移行表とtrepro-legacy-prefix等のMetadataで来歴を保持しながら名前を揃えられ、検索性と責任所在が同時に改善します。</p></div>
 <p>現行Prefixは <code>S_</code>、<code>mm-</code>、<code>sm-</code>、<code>project-</code>、<code>feedback-</code>。Agent SkillsのCanonical Nameは小文字英数字とHyphenへ統一する。</p>
 <table>
 <thead>
@@ -77,7 +77,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <p><code>S_</code>の意味は推測で変えず、社内定義をMetadataへ。</p>
-<pre><code class="language-yaml">---
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Canonical Name・Description・trepro-category・trepro-legacy-name・trepro-owner・trepro-versionをfrontmatterに揃えるSkill MetadataのSample例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> S_接頭辞の意味を推測で書き換えずに来歴を保持でき、所有者とVersionが分かる台帳としてSkillを管理できるようになります。</p></div><pre><code class="language-yaml">---
 name: s-customer-research
 description: Research a customer account and produce a source-grounded brief for sales preparation.
 metadata:
@@ -88,8 +88,8 @@ metadata:
 ---
 </code></pre>
 <p>Legacy Command Wrapperを90日残し、新規作成を止める。</p>
-<h2 id="ch-25-s2">25.2 Lifecycle</h2>
-<pre><code class="language-text">draft → candidate → approved → stable → deprecated → retired
+<h2 id="ch-25-s2">25.2 Lifecycle</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 提案・評価・配布・廃止を一本の流れに繋げないと、評価されていないSkillが全社へ広がります。draft→retiredまでのLifecycleで各状態の配布範囲を縛る必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> draft/candidate/approved/stable/deprecated/retiredの6状態と「Canary・Pilot・全社」配布範囲が紐付き、Fresh Evaluator 85+などの昇格条件で品質ゲートが効きます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Skill Lifecycleの6状態と、各状態に許可される配布範囲、昇格に必要な条件を表で並べた運用定義です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> candidateはCanaryまで、approvedはPilotまでといった配布制約が明文化され、評価未済のSkillが全社へ流れ込む事故が構造的に防がれます。</p></div><pre><code class="language-text">draft → candidate → approved → stable → deprecated → retired
 </code></pre>
 <table>
 <thead>
@@ -132,10 +132,10 @@ metadata:
 </tr>
 </tbody>
 </table>
-<h2 id="ch-25-s3">25.3 Generator/Evaluator分離</h2>
+<h2 id="ch-25-s3">25.3 Generator/Evaluator分離</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 作った本人が採点すると自作自演バイアスが入り、SKILL.mdの過大評価が起きます。Generatorは経緯を渡し、Evaluatorは経緯を見ないという分離が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> GeneratorはSession経緯から顧客名・秘密・個人Pathを除いた仕様を作り、EvaluatorはSKILL.md・Fixture・実行結果のみを見て改善箇所を行単位で指摘できるようになります。</p></div>
 <p>Generator：成功したSessionから、入力、手順、出力、失敗、品質を抽象化し、顧客名/秘密/個人Pathを除去。</p>
 <p>Evaluator：作成経緯を知らず、SKILL.md、Fixture、実行結果だけを評価。改善を具体的な行・項目で示す。</p>
-<h2 id="ch-25-s4">25.4 4軸100点</h2>
+<h2 id="ch-25-s4">25.4 4軸100点</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillの評価軸が人によって違うと、合格基準もズレます。明確性・実用性・保守性・整合性の4軸で各25点、合計85以上という固定基準が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 各軸18以上・Critical 0という閾値が共有され、秘密混入や成功判定欠落といったCriticalがあれば総合点に関わらず不合格、というブレない評価運用になります。</p></div>
 <table>
 <thead>
 <tr>
@@ -167,8 +167,8 @@ metadata:
 Critical 0
 </code></pre>
 <p>Critical：秘密、無承認Side Effect、過剰Tool、成功判定なし、名前違反、重複。</p>
-<h2 id="ch-25-s5">25.5 Fixture-driven</h2>
-<pre><code class="language-text">skill-src/customer-brief/
+<h2 id="ch-25-s5">25.5 Fixture-driven</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillが「うちの環境では動く」状態で広がると、新人や別端末で再現せず壊れます。minimal・normal・missing-data・malicious-instructionなど固定Fixtureで開発する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> test-cases.yamlのassertionsでoutput存在・必須見出し・秘密パターン非含有・悪性指示の不実行が機械判定でき、Skill変更時の回帰チェックも同じ枠で回ります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> minimal/normal/missing-data/malicious-instructionの4ケースとexpectedを並べ、test-cases.yamlでassertionsを書くFixture-driven開発のディレクトリ構造です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 悪性指示でtool_callsに削除・送信が呼ばれない、必須見出しが揃う、秘密パターンが混入しないといった条件を、機械判定でSkillへ強制できます。</p></div><pre><code class="language-text">skill-src/customer-brief/
 ├── SKILL.md
 ├── references/output-schema.md
 ├── fixtures/
@@ -192,7 +192,7 @@ Critical 0
       - tool_calls_not_contain: [send_email, delete]
       - marks_external_instruction_untrusted: true
 </code></pre>
-<h2 id="ch-25-s6">25.6 Build</h2>
+<h2 id="ch-25-s6">25.6 Build</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Claude Code用とCodex用に手で二重編集すると、片方だけ修正される事故が起きます。skill-srcを正本にして両Runtimeへ同時生成する仕組みが必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> validate→rsyncでCLAUDE_OUTとCODEX_OUTへ同期し、diff -ruで一致を確認できるBuildになり、Runtime差での挙動ズレが構造的にゼロになります。</p></div>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." &amp;&amp; pwd)"
@@ -206,8 +206,8 @@ rsync -a "$SRC/" "$CLAUDE_OUT/"
 rsync -a "$SRC/" "$CODEX_OUT/"
 diff -ru "$CLAUDE_OUT" "$CODEX_OUT"
 </code></pre>
-<h2 id="ch-25-s7">25.7 Validator</h2>
-<pre><code class="language-python">#!/usr/bin/env python3
+<h2 id="ch-25-s7">25.7 Validator</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 命名規約や行数上限や秘密混入を目視で見ると、品質は人によって揺れます。Validatorで構造を機械検証する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> name正規表現・directory一致・description長・行数200・secretパターンをまとめてチェックするPython Validatorで、Skill構造の不正がCIで自動的に弾かれるようになります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> name正規表現・name=directory一致・description長・行数上限・secretパターン検出を1ファイルで実行するPython Validatorです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 命名違反・冗長なSKILL.md・APIキー貼り付けといった事故がCIで自動検出され、Reviewerの目視に依存しないSkill構造検査が成立します。</p></div><pre><code class="language-python">#!/usr/bin/env python3
 import re, sys
 from pathlib import Path
 import yaml
@@ -239,15 +239,15 @@ for d in sorted(x for x in root.iterdir() if x.is_dir()): errors += validate(d)
 if errors: print("\n".join(errors), file=sys.stderr); raise SystemExit(1)
 print("skills valid")
 </code></pre>
-<h2 id="ch-25-s8">25.8 重複統合</h2>
+<h2 id="ch-25-s8">25.8 重複統合</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 似た名前のSkillが量産されると、利用者が選べず、保守側も二重管理になります。重複候補は捨てる/統合する/分けるの方針を先に決める必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 完全重複→既存更新、80%共通→Core+Reference、組合せ可能→Orchestratorといった対応関係が決まり、Skill数より価値で測る運用が成立します。</p></div>
 <pre><code class="language-text">完全重複 → 既存更新
 80%共通 → Core + Reference
 名前だけ近い → Description明確化
 組合せ可能 → Orchestrator
 独立価値 → 新規
 </code></pre>
-<h2 id="ch-25-s9">25.9 Deprecation</h2>
-<pre><code class="language-yaml">metadata:
+<h2 id="ch-25-s9">25.9 Deprecation</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 古いSkillを黙って消すと、それを使っていた業務が止まります。代替先と終了日を示しながら閉じる手順が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> trepro-status: deprecated と trepro-replaced-by・trepro-removal-date が揃い、利用者が移行先と猶予期間を読み取れる安全な廃止予告になります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> trepro-status・trepro-replaced-by・trepro-removal-dateをMetadataへ書き、終了日と代替先を明示するDeprecation定義です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 利用者は代替Skillへ移行する猶予期間を読み取れ、運用側は利用0確認後の安全な削除に至る道筋を持てるようになります。</p></div><pre><code class="language-yaml">metadata:
   trepro-status: deprecated
   trepro-replaced-by: customer-brief-v2
   trepro-removal-date: "2026-09-30"

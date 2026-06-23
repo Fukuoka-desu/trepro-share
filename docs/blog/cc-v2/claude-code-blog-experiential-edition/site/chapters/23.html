@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-23-s1">23.1 Product定義</h2>
+    <h2 id="ch-23-s1">23.1 Product定義</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全社配布の議論を始める前に、ハーネスが何を提供する製品かを一文で確定させる必要があります。目的が曖昧だと、後続のScope設計と完了判定が揺れてしまうためです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 「全社員のMacへ同じ実行基盤を配布する」という定義を共有することで、CLAUDE.md・Commands・Hooks・Skillsの一元化と新人30分稼働という具体的なゴールに議論を絞り込めます。</p></div>
 <blockquote>
 <p>全社員のMacへ、同じClaude Codeの知識、手順、安全制御、外部連携方針を配布し、継続的に改善する社内AI実行基盤。</p>
 </blockquote>
@@ -50,7 +50,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>新人を30分以内で稼働。</li>
 <li>Kandji/LaunchAgentで毎日更新。</li>
 </ul>
-<h2 id="ch-23-s2">23.2 現行資産</h2>
+<h2 id="ch-23-s2">23.2 現行資産</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 新しい設計を描く前に、現在Gitで管理できている資産と、まだ個人領域に滞留している資産を切り分ける必要があります。土台の解像度がないまま4面構想に進むと、配布漏れと二重管理が発生するためです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Guidance・手順・制御・Protocol・Reference・Codex・配布・Device・Testという9区分で現状資産を棚卸しでき、不足箇所と移管対象を客観的に並べられるようになります。</p></div>
 <table>
 <thead>
 <tr>
@@ -97,7 +97,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-23-s3">23.3 追加すべき4面</h2>
+<h2 id="ch-23-s3">23.3 追加すべき4面</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 現状資産だけでは「全社強制」「Runtime二重管理」「事故抑制」が成立しないため、追加すべき面を明示する必要があります。Documentに書くだけでは社員の手元で外せてしまい、安全と一貫性が崩れるためです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Managed Policy・Canonical Skill Source・Release Channel・Telemetry/Auditの4面が定義され、macOSのmanaged-settings.json等の固定領域に置くものが具体パスで決まります。</p></div>
 <ol>
 <li><strong>Managed Policy</strong> — ユーザーが外せないPermission/Sandbox/MCP。</li>
 <li><strong>Canonical Skill Source</strong> — Claude/Codexの二重編集を廃止。</li>
@@ -105,12 +105,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li><strong>Telemetry/Audit</strong> — Version、Update、Block、Failure、Cost。</li>
 </ol>
 <p>macOS管理領域：</p>
-<pre><code class="language-text">/Library/Application Support/ClaudeCode/CLAUDE.md
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> macOSの組織管理領域に置くファイルパスを示し、Managed PolicyとManaged MCPの設置場所を物理的に確定させます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 個人ユーザーが書き換えられない領域で組織CLAUDE.md・設定・MCP定義が固定され、Safety解除や設定改変を端末側で行えなくなります。</p></div><pre><code class="language-text">/Library/Application Support/ClaudeCode/CLAUDE.md
 /Library/Application Support/ClaudeCode/managed-settings.json
 /Library/Application Support/ClaudeCode/managed-mcp.json
 </code></pre>
-<h2 id="ch-23-s4">23.4 推奨Repository</h2>
-<pre><code class="language-text">trepro-harness/
+<h2 id="ch-23-s4">23.4 推奨Repository</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillの正本と配布生成物を分けないと、片方だけ修正される事故や、Build前のFileをそのまま配ってしまう事故が起きます。両Runtime向けに同じ正本から再現可能な成果物を生成するための骨格を先に決めておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> skill-srcを正本、global-config/skills と .agents/skills を生成先とするRepository構造が共有され、scripts/build-skills.sh など整備すべきPath一覧が手戻りなく見えるようになります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 推奨Repositoryの完全構造を示し、skill-srcを正本に global-config と .agents/skills を生成物として分離する配置を提示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 正本と生成物の境界が明確になり、Skillの二重編集や生成物への直接コミットといった事故をRepository構造の段階で防げます。</p></div><pre><code class="language-text">trepro-harness/
 ├── VERSION
 ├── CHANGELOG.md
 ├── global-config/
@@ -154,12 +154,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 └── test-hooks.py
 </code></pre>
 <p>生成先を直接編集しない。</p>
-<h2 id="ch-23-s5">23.5 Release Flow</h2>
-<pre><code class="language-text">PR → Static/Test/Evaluator → Canary Tag → 2〜3名 → 観測
+<h2 id="ch-23-s5">23.5 Release Flow</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> main最新を全社員へ無条件に流すと、不具合の範囲がゼロ秒で全社に広がります。段階配布を入れ込まないと、止血の余地がない配布になってしまうためです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> PR→Test→Evaluator→Canary→Pilot→Stableの段階を経て承認Tagだけ配る運用が描けるので、事故が起きてもCanary数名規模で封じ込められるようになります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> PRから承認済みTag配布までの段階展開フローを一行で示し、各段階を通った成果だけが全社員Updateへ進める運用を定義します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Canary 2〜3名・Pilot部署・Stable全社の順で配布が進むため、不具合の影響範囲をPilot到達前に小さく封じ込められます。</p></div><pre><code class="language-text">PR → Static/Test/Evaluator → Canary Tag → 2〜3名 → 観測
 → Pilot部署 → Stable Tag → 全社員Update → Metrics
 </code></pre>
 <p><code>main</code>最新を無条件配布せず、承認済みTagを配る。</p>
-<h2 id="ch-23-s6">23.6 Guidance/Enforcement Mapping</h2>
+<h2 id="ch-23-s6">23.6 Guidance/Enforcement Mapping</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「日本語で書く」「.env禁止」のようなルールが文章のお願いなのか機械強制なのかを揃えないと、守られないルールが量産されます。Guidance/Enforcementの境目を表で見える化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 各要求に対してCLAUDE.md・Hook・managed-settings・managed-mcpのどれで実装するかが対になり、文書任せにせず実行時に止める仕組みへ落とし込めるようになります。</p></div>
 <table>
 <thead>
 <tr>
@@ -206,7 +206,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-23-s7">23.7 個人Layer</h2>
+<h2 id="ch-23-s7">23.7 個人Layer</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 配布で個人カスタマイズを上書きすると、社員ごとの私物Skill・私物Promptが消えて配布への信頼が崩壊します。中央Manifestが「自分が配ったものだけ」を扱う約束を明文化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ~/.claude/local/ 配下の保護領域と apply-local-overlay.sh の運用が決まり、中央配布と個人差分が衝突した場合のLogと優先順位も合意できる状態になります。</p></div>
 <p><code>~/.claude/local/</code>を保護するだけでは自動発見されるとは限らない。運用を明文化する。</p>
 <pre><code class="language-text">~/.claude/local/
 ├── CLAUDE.local.md
@@ -215,8 +215,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 └── apply-local-overlay.sh
 </code></pre>
 <p>中央Manifestは、自分が配ったPathだけを削除する。名前衝突は中央優先でLogへ出す。</p>
-<h2 id="ch-23-s8">23.8 完了条件</h2>
-<pre><code class="language-text">[ ] 30分導入
+<h2 id="ch-23-s8">23.8 完了条件</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Architectureの議論は、合格条件を箇条書きにしないと「だいたい出来た」で止まります。後で評価し直せる完了Checklistを置く必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 30分導入・Managed Policy優先・Skill正本1箇所・1 Command Rollback等の10項目が並び、Architecture章のゴール到達を客観的に判定できるようになります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Architecture章の完了条件を10項目のチェックリストで列挙し、Skill正本1箇所・Claude/Codex同Fixture等の達成基準を並べます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装後にこのChecklistへ突き合わせれば、「設計が紙だけで終わっていないか」を機械的に判定できるようになります。</p></div><pre><code class="language-text">[ ] 30分導入
 [ ] 承認Release配布
 [ ] 全端末Version把握
 [ ] Managed Policy優先

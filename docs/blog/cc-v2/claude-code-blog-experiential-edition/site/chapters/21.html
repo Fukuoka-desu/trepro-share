@@ -38,25 +38,25 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-21-s1">21.1 Dynamicとは</h2>
+    <h2 id="ch-21-s1">21.1 Dynamicとは</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Dynamic Workflowsはバージョンとプランで挙動が変わるため、最低要件を確認せずに使うと再現できない事故が起きます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 対象プランと/configを先に確認したうえで、ultracodeや/workflowsといった代表入口を踏むかどうかを判断できます。</p></div>
 <p>依頼内容からClaudeが工程とAgent構成を組み立てる。利用前に最低Version、対象Plan、<code>/config</code>を確認する。</p>
 <p>代表入口：</p>
-<pre><code class="language-text">ultracode
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Dynamic Workflowsへの代表的な入口を2つだけ示したメモで、利用前に確認すべき設定があることを暗示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どこから起動するかが迷子にならず、最低Version・対象Plan・/configの確認を先に行う運用が定着します。</p></div><pre><code class="language-text">ultracode
 /workflows
 </code></pre>
-<h2 id="ch-21-s2">21.2 Research → Verify → Synthesize</h2>
-<pre><code class="language-text">Research: 公式、一次Data、反対意見
+<h2 id="ch-21-s2">21.2 Research → Verify → Synthesize</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ひとつのAgentに調査と検証を兼任させると、初期仮説に引きずられて反証を拾えなくなります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Research・Verify・Synthesizeを別役割に分け、出典・日付・矛盾の検証を独立工程として走らせる構成が組めます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 三役それぞれの守備範囲を1行で定義した分業表で、Verifyに出典・日付・矛盾、Synthesizeに結論と影響を割り当てます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 各Agentに何を渡して何を返してもらうかが明確になり、役割が混ざることによる仮説バイアスを構造的に防げます。</p></div><pre><code class="language-text">Research: 公式、一次Data、反対意見
 Verify: 出典、Date、数値、矛盾
 Synthesize: 結論、根拠、影響、不確定、Action
 </code></pre>
-<pre><code class="language-text">ultracode
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 公式優先・取得日と出典付き・SNSは反応のみ・最大8 Agent25分という制約を入れた具体的なDynamic依頼例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 曖昧な『調べて』ではなく、出力先と制約付きの調査指示になり、結果を後で監査しやすい形で受け取れます。</p></div><pre><code class="language-text">ultracode
 Claude Code直近30日の主要変更を調査。
 公式Anthropicを最優先。各Claimに取得日と出典。
 SNSは反応のみ。最大8 Agent、25分。
 出力は research/claude-code-update/。
 </code></pre>
-<h2 id="ch-21-s3">21.3 Cost Control</h2>
-<pre><code class="language-text">総入力 ≒ 共通知識量 × Agent数 + 固有入力
+<h2 id="ch-21-s3">21.3 Cost Control</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Agent数を増やすと総入力トークンが掛け算で膨らみ、月のAPI料金が想定の数倍になる事故が現実に起きています。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Claim Ledger経由で中間情報を圧縮し、高価モデルを統合だけに使うなど、構造的に料金が暴走しない設定が決まります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Agentを増やすと共通知識を全員に配るためトークンが掛け算で増える、というCost Controlの中心式です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> なぜ全文を全員へ渡してはいけないのか、なぜ中間Fileの再利用が効くのかが、式の形で説明できるようになります。</p></div><pre><code class="language-text">総入力 ≒ 共通知識量 × Agent数 + 固有入力
 </code></pre>
 <ul>
 <li>ResearchをClaim Ledgerへ圧縮してVerifyへ。</li>
@@ -66,9 +66,9 @@ SNSは反応のみ。最大8 Agent、25分。
 <li>高価Modelは難所/統合だけ。</li>
 <li>中間Fileを再利用。</li>
 </ul>
-<h2 id="ch-21-s4">21.4 Dynamicを使わない</h2>
+<h2 id="ch-21-s4">21.4 Dynamicを使わない</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 小修正や単純要約までDynamic Workflowで組むと、得られる品質向上より複雑さとコストの増分が上回ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Single Agent・Skill・Scriptで済む領域を切り分けられ、Dynamicを使うべきかどうかを毎回判定できます。</p></div>
 <p>小修正、正解が明確、頻繁な低Cost処理、単純要約、Write権限作業はSingle Agent/Skill/Scriptがよい。</p>
-<h2 id="ch-21-s5">21.5 手動Workflow</h2>
+<h2 id="ch-21-s5">21.5 手動Workflow</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Dynamicが使えない環境でも、Research・Verify・Synthesizeの分業思想は手動Workflowで再現できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 公式・実例・失敗を3 Agentで分担し、Fresh Reviewerでclaims.csvを作って執筆者と分離する手順がそのまま回せます。</p></div>
 <pre><code class="language-text">1. 3 Research Agentが公式/実例/失敗を分担。
 2. raw結果を別Fileへ保存。
 3. Fresh Reviewerがclaims.csvを作る。
@@ -76,8 +76,8 @@ SNSは反応のみ。最大8 Agent、25分。
 5. 別Reviewerが欠落と過剰断定を確認。
 最大6 Agent。Code変更禁止。
 </code></pre>
-<h2 id="ch-21-s6">21.6 Acceptance</h2>
-<pre><code class="language-text">[ ] Single AgentよりWorkflowが必要
+<h2 id="ch-21-s6">21.6 Acceptance</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Workflowは中間結果が見えにくく、最終出力だけで合否を判断すると再現性も監査もできません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Single Agentとの比較・Agent上限・入出力追跡・Human Gateなどの項目を埋める受け入れ基準として使えます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> DynamicのAcceptanceを9項目のチェックリストで並べた基準で、Cost停止やHuman Gateの有無まで確認します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Workflowを採用していい場面か、上限と再開と冪等が揃っているかを、合否のチェックとして機械的に判断できます。</p></div><pre><code class="language-text">[ ] Single AgentよりWorkflowが必要
 [ ] Agent/時間上限
 [ ] 入出力追跡
 [ ] 作成者/評価者分離

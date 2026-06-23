@@ -15,6 +15,10 @@ from bs4 import BeautifulSoup
 from jinja2 import Template
 
 from content_meta import CHARACTERS, PART_META, CHAPTER_META, EXTRA_VISUALS, LESSON_COURSE, EPILOGUE_LETTER
+try:
+    from content_meta import SUBHEADING_WHY
+except ImportError:
+    SUBHEADING_WHY = {}
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "sources" / "original-textbook.md"
@@ -385,6 +389,14 @@ a{color:var(--blue);text-underline-offset:3px}.progress{position:fixed;inset:0 0
 .chapter-hook{display:block;font-size:clamp(1.6rem,3.6vw,2.5rem);color:var(--ink);letter-spacing:-.02em;font-weight:800;line-height:1.3}
 .chapter-name{display:block;font-size:clamp(1rem,1.8vw,1.2rem);color:var(--muted);margin-top:8px;font-weight:600;letter-spacing:.02em}
 .chapter-name::before{content:"──";margin-right:.5em;color:var(--ref-accent)}
+.why-block{margin:6px 0 18px;padding:14px 18px;background:#f3f8fd;border-left:4px solid var(--ref-accent);border-radius:0 12px 12px 0;font-size:.94rem;line-height:1.85;color:#33405a;box-shadow:0 2px 6px rgba(36,86,211,.04)}
+.why-block .why-line{margin:0 0 .55em}
+.why-block .why-line:last-child{margin-bottom:0}
+.why-block strong{display:inline-block;margin-right:.55em;color:var(--ref-accent);font-weight:800;font-size:.78rem;letter-spacing:.04em;background:#e5edfa;padding:1px 8px;border-radius:6px;vertical-align:middle}
+.code-explain{margin:18px 0 6px;padding:12px 16px;background:#fff8ec;border-left:4px solid var(--action-accent);border-radius:0 12px 12px 0;font-size:.92rem;line-height:1.8;color:#4a3a18}
+.code-explain .code-explain-line{margin:0 0 .45em}
+.code-explain .code-explain-line:last-child{margin-bottom:0}
+.code-explain strong{display:inline-block;margin-right:.55em;color:var(--action-accent);font-weight:800;font-size:.76rem;letter-spacing:.04em;background:#fce8c0;padding:1px 8px;border-radius:6px;vertical-align:middle}
 .intro-human{margin:24px 0 32px;padding:26px 30px;border-radius:18px;background:linear-gradient(135deg,#fffdf6,#fff);border-left:5px solid var(--action-accent);box-shadow:0 6px 18px rgba(122,74,16,.06)}
 .intro-human p{margin:0 0 .9em;font-size:1.06rem;line-height:1.95;color:var(--story-ink)}
 .intro-human p:last-child{margin-bottom:0}
@@ -711,12 +723,107 @@ def image_figure(item: dict, image_path_prefix: str) -> str:
 """
 
 
-def render_reference(body: str, prefix: str, features: list[dict] | None = None) -> str:
+_SUBHEAD_NUMBER_RE = re.compile(r'^\s*(\d+(?:\.\d+)+)\s')
+
+
+def _extract_subhead_no(heading_text: str) -> str | None:
+    m = _SUBHEAD_NUMBER_RE.match(heading_text)
+    return m.group(1) if m else None
+
+
+def inject_subheading_why(fragment: str, why_data: dict | None) -> str:
+    """各 h2/h3 の直下に WHY/SO_WHAT、各 <pre><code> の直前に WHAT/RESULT を挿入。
+
+    why_data 構造:
+      {
+        "subheadings": { "2.3": {"why": "...", "so_what": "..."}, ... },
+        "code_blocks": [ {"match_hint": "...", "what": "...", "result": "..."}, ... ]
+      }
+    """
+    if not why_data:
+        return fragment
+    soup = BeautifulSoup(f'<div id="__wrap">{fragment}</div>', 'html.parser')
+    wrap = soup.find(id="__wrap")
+    if wrap is None:
+        return fragment
+
+    subheadings = (why_data.get("subheadings") or {})
+    code_blocks = (why_data.get("code_blocks") or [])
+
+    # (A) 小見出し直下に WHY/SO_WHAT を挿入
+    for heading in wrap.find_all(["h2", "h3"]):
+        heading_text = heading.get_text(" ", strip=True)
+        heading_id = heading.get("id") or ""
+        entry = subheadings.get(heading_id)
+        if not entry:
+            no = _extract_subhead_no(heading_text)
+            if no:
+                entry = subheadings.get(no)
+        if not entry:
+            continue
+        # 二重挿入ガード
+        next_sib = heading.find_next_sibling()
+        if next_sib is not None and "why-block" in (next_sib.get("class") or []):
+            continue
+        block = soup.new_tag("div", attrs={"class": "why-block"})
+        why_p = soup.new_tag("p", attrs={"class": "why-line"})
+        why_label = soup.new_tag("strong"); why_label.string = "なぜここを読むか"
+        why_p.append(why_label); why_p.append(" "); why_p.append(entry.get("why", ""))
+        block.append(why_p)
+        sw_p = soup.new_tag("p", attrs={"class": "why-line"})
+        sw_label = soup.new_tag("strong"); sw_label.string = "やる／やらないとどうなるか"
+        sw_p.append(sw_label); sw_p.append(" "); sw_p.append(entry.get("so_what", ""))
+        block.append(sw_p)
+        heading.insert_after(block)
+
+    # (B) <pre><code> 直前に WHAT/RESULT を挿入
+    if code_blocks:
+        used = set()
+        for pre in wrap.find_all("pre"):
+            code = pre.find("code")
+            if not code:
+                continue
+            text = code.get_text("\n", strip=False)[:200]
+            text_norm = re.sub(r"\s+", " ", text).strip()
+            match_entry = None
+            match_idx = None
+            for idx, cb in enumerate(code_blocks):
+                if idx in used:
+                    continue
+                hint = (cb.get("match_hint") or "").strip()
+                if not hint:
+                    continue
+                hint_norm = re.sub(r"\s+", " ", hint)
+                if hint_norm and hint_norm[:20] in text_norm[:120]:
+                    match_entry = cb
+                    match_idx = idx
+                    break
+            if not match_entry:
+                continue
+            used.add(match_idx)
+            # 二重挿入ガード
+            prev_sib = pre.find_previous_sibling()
+            if prev_sib is not None and "code-explain" in (prev_sib.get("class") or []):
+                continue
+            box = soup.new_tag("div", attrs={"class": "code-explain"})
+            what_p = soup.new_tag("p", attrs={"class": "code-explain-line"})
+            wl = soup.new_tag("strong"); wl.string = "これは何か"
+            what_p.append(wl); what_p.append(" "); what_p.append(match_entry.get("what", ""))
+            box.append(what_p)
+            res_p = soup.new_tag("p", attrs={"class": "code-explain-line"})
+            rl = soup.new_tag("strong"); rl.string = "実行するとどうなるか"
+            res_p.append(rl); res_p.append(" "); res_p.append(match_entry.get("result", ""))
+            box.append(res_p)
+            pre.insert_before(box)
+
+    return wrap.decode_contents()
+
+
+def render_reference(body: str, prefix: str, features: list[dict] | None = None, why_data: dict | None = None) -> str:
     rendered = md_renderer()(body)
     rendered = add_heading_ids(rendered, prefix)
-    # feature-intro was removed: 100% duplicated with features cards above and
-    # introduced ch12/ch30 in-chapter duplicate bugs. Features are now shown
-    # only in the features_html() cards.
+    if why_data:
+        rendered = inject_subheading_why(rendered, why_data)
     return rendered
 
 
@@ -864,7 +971,7 @@ def chapter_article(ch: Chapter, manifest: dict, image_prefix: str, include_extr
   {image_figure(lookup[f'chapter-{ch.key}'], image_prefix)}
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    {render_reference(ch.body, f'ch-{ch.key}', meta.get('features'))}
+    {render_reference(ch.body, f'ch-{ch.key}', meta.get('features'), SUBHEADING_WHY.get(ch.key))}
   </section>
   {expansion_html(meta)}
   {extra_html}

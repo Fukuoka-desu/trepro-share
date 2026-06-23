@@ -40,16 +40,16 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-05-s1">5.1 魔法のPromptより仕事の定義</h2>
-<pre><code class="language-text">Goal       何を達成するか
+    <h2 id="ch-05-s1">5.1 魔法のPromptより仕事の定義</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 魔法のPromptを探す方向に行くと底なし沼にハマる。本当に効くのは仕事自体の定義の精度</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Goal・Context・Constraints・Deliverables・Done when・Evidenceの6軸で仕事を定義できる。指示は短くても通る</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 強い指示の6軸。Goal・Context・Constraints・Deliverables・Done when・Evidenceで仕事自体を定義する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIに何を判断させ、何を判断させないかが分かれる。指示の精度がPromptテクニックではなく定義で決まる</p></div><pre><code class="language-text">Goal       何を達成するか
 Context    何を読めばよいか
 Constraints 守ること・しないこと
 Deliverables 何を作るか
 Done when どう判定するか
 Evidence   何を証拠として出すか
 </code></pre>
-<h2 id="ch-05-s2">5.2 汎用Template</h2>
-<pre><code class="language-markdown"># Goal
+<h2 id="ch-05-s2">5.2 汎用Template</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 毎回ゼロから書くと、書き手によって粒度がバラバラになる。Templateで型を固定する必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 6項目の汎用Templateが手元に残る。曖昧な口頭依頼でも、テンプレに流し込むだけで構造化された依頼文に変わる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 汎用依頼Template。Goal・Context・Constraints・Deliverables・Done when・EvidenceのMarkdownひな形</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 曖昧な依頼を機械的にこのテンプレへ流し込める。書き手による粒度差が消える</p></div><pre><code class="language-markdown"># Goal
 [達成したい状態]
 
 # Context
@@ -74,24 +74,24 @@ Evidence   何を証拠として出すか
 - screenshots/output samples
 - remaining risks
 </code></pre>
-<h2 id="ch-05-s3">5.3 曖昧な依頼の変換</h2>
+<h2 id="ch-05-s3">5.3 曖昧な依頼の変換</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『いい感じに』『使いやすく』のような依頼はAIにとって翻訳不能。期待と違う出力が返って手戻りが連鎖する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 利用者・必要機能・対象外・完了条件まで具体化された依頼文に書き直せる。一発で意図に近い出力が返る</p></div>
 <p>悪い例：</p>
-<pre><code class="language-text">いい感じのTask管理Appを作って
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 悪い例。1行で『いい感じに作って』とだけ渡した依頼。利用者・機能・対象外が全部欠けている</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが期待をゼロから推測する。返ってくる画面は毎回違い、手戻りが連鎖する</p></div><pre><code class="language-text">いい感じのTask管理Appを作って
 </code></pre>
 <p>良い例：</p>
-<pre><code class="language-text">会議Task JSONを閲覧・更新するローカルAppを作る。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 良い例。利用者5人・必要機能・対象外・完了条件まで明示した依頼文</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIの判断材料が揃って一発で意図に近い出力が返る。Sample Dataでの起動とTest成功まで完了条件に入る</p></div><pre><code class="language-text">会議Task JSONを閲覧・更新するローカルAppを作る。
 利用者は5人の社内Team。
 会議一覧、Task Board、Owner/Status/Due Filterが必要。
 外部API、認証、DBは対象外。
 Sample Dataで起動し、Test/Build成功を完了条件とする。
 </code></pre>
-<h2 id="ch-05-s4">5.4 Claudeに質問させる</h2>
-<pre><code class="language-text">実装前に、不足情報を最大5問まで質問してください。
+<h2 id="ch-05-s4">5.4 Claudeに質問させる</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 未知の要件があるのにAIが沈黙のまま実装に入ると、勝手な仮定で暴走する。実装前に質問させる仕組みが要る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 最大5問・選択肢提示・工数Risk説明という制約付き質問が返る。仮定の暴走を実装前に止められる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Claudeに質問させるPrompt。最大5問・選択肢提示・各選択肢の工数Risk説明という制約付き</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 未知要件を勝手に仮定して暴走しない。質問への回答が次の依頼の素材になり、仕様が固まる</p></div><pre><code class="language-text">実装前に、不足情報を最大5問まで質問してください。
 選択肢を提示し、各選択肢が工数・Riskへ与える影響を短く説明してください。
 </code></pre>
 <p>質問に答えられない場合は、仮定を明示して最小版を選ぶ。</p>
-<h2 id="ch-05-s5">5.5 完了報告の型</h2>
-<pre><code class="language-text">1. 結果
+<h2 id="ch-05-s5">5.5 完了報告の型</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『完了しました』だけを受け取ると、何が変わって何が確認済みか分からない。後で別の問題で揺り戻しが来る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 結果・変更File・Check結果・画面・残Risk・次Actionの6区分で報告が返る。確認可能な証拠付きで完了判定できる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 完了報告の型。結果・変更File・Check結果・画面/Artifact・残Risk・次Actionの6区分で報告させる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 『完了しました』が確認可能な証拠付き報告に変わる。残Riskと次Actionも同じ報告で見える</p></div><pre><code class="language-text">1. 結果
 2. 変更File
 3. 実行したCheckとExit Status
 4. 画面・Artifact

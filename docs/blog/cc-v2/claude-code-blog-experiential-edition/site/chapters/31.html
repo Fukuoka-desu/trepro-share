@@ -38,14 +38,14 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-31-s1">31.1 LP</h2>
-<pre><code class="language-text">Audience/Action → Content Inventory → Wireframe → Copy Review
+    <h2 id="ch-31-s1">31.1 LP</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> LPは見た目だけ作って公開すると、Analytics・A11y・本番API差し替えが抜けがちです。Audience/Action→Inventory→Wireframe→Code→Previewと工程を分けると、各段で抜けを検知できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Designと公開を別工程として扱う運用が定着し、見せたい人に届くLPを再現性ある手順で出せます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> LP制作の標準パイプで、Analytics/SEO/A11yチェックをPreview直前に置き、本番Productionの前に独立Gateを設ける構成です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> デザイナーが入れ替わっても工程の抜けが起きにくく、Audienceから出発した一貫性のあるLPが安定して出力できます。</p></div><pre><code class="language-text">Audience/Action → Content Inventory → Wireframe → Copy Review
 → Prototype → Design System → Code → Analytics/SEO/A11y → Preview → Production
 </code></pre>
-<h2 id="ch-31-s2">31.2 Design System再利用</h2>
+<h2 id="ch-31-s2">31.2 Design System再利用</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 成果物ごとに別の色や余白を増やすと、ブランドが揺れて顧客に違和感を与えます。LP・営業資料・Dashboard・Slideで共通Tokenを参照する運用にすれば、見た目の整合性が自動で保たれます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> デザイナーが毎案件ゼロから整えなくても、共通基盤に乗せた状態で各成果物が出るためレビュー時間が短縮されます。</p></div>
 <p>営業資料、LP、Dashboard、HTML Report、Slideで共通Token。成果物ごとに勝手な色/余白を増やさない。</p>
-<h2 id="ch-31-s3">31.3 PPT/PDF Export</h2>
-<pre><code class="language-text">[ ] Font置換
+<h2 id="ch-31-s3">31.3 PPT/PDF Export</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> HTMLからPPT/PDFへExportすると、Font・改ページ・図欠落・解像度・選択可能Textで崩れが出ます。事前Checklist化することで、毎回手で気付くか運頼みかの工程を機械的に潰せます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 提案直前にレイアウトが崩れている事故が減り、Export成果物を本番資料として安心して使えるようになります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> PPT/PDF Exportの直前に通すChecklistで、Font・改ページ・解像度・Note・機密Metadataまで横並びに確認します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Export崩れの原因が3観点（フォント置換・ページ分割・余白）に絞られ、毎回数時間の手動修正がなくなります。</p></div><pre><code class="language-text">[ ] Font置換
 [ ] 改ページ
 [ ] 図欠落
 [ ] Link
@@ -54,8 +54,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [ ] 選択可能Text
 [ ] 機密Metadata
 </code></pre>
-<h2 id="ch-31-s4">31.4 Deploy</h2>
-<pre><code class="language-text">Preview → Functional → A11y/Security/Privacy → Owner Approval
+<h2 id="ch-31-s4">31.4 Deploy</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Deployを生成の延長として扱うと、Secret混入・公開範囲ミス・Rollback不在の事故が一度に起きます。PreviewをDefault・本番をAsk Ruleにすると、公開という別Gateが明確に確保されます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Preview承認とSmoke/Monitoring/Rollbackが必ず通る運用になり、即本番公開による事故が体系的に防げます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Deploy工程をPreview→Approval→Production→Smoke/Monitoring/Rollbackの順に縛る標準フロー定義です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Owner承認とRollback前提がDeploy Skillに組み込まれるため、便利さで公開事故が起きる経路を物理的に閉じられます。</p></div><pre><code class="language-text">Preview → Functional → A11y/Security/Privacy → Owner Approval
 → Production → Smoke/Monitoring/Rollback
 </code></pre>
 <p>Deploy SkillはPreviewをDefault、本番をAsk Ruleにする。</p>

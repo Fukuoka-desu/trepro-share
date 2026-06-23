@@ -38,33 +38,33 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-27-s1">27.1 30分Flow</h2>
-<h3 id="ch-27-s2">0〜5分</h3>
-<pre><code class="language-text">[ ] 管理Mac
+    <h2 id="ch-27-s1">27.1 30分Flow</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 新人のOnboardingを口頭で進めると、初日の所要時間と詰まり所が毎回違ってしまいます。30分の時間割を区切って再現可能にする必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 0〜5分・5〜15分・15〜20分・20〜30分の4ブロックで前提確認→Install→Verify→Bronze実演までの導入Flowを全員が同じ手順で完走できるようになります。</p></div>
+<h3 id="ch-27-s2">0〜5分</h3><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Installスクリプトを叩く前に、対応端末・OS・GitHub組織・Claude権限・Network/Proxy・Data研修まで確認しないと、途中で進めなくなる事故が起きます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 6項目の事前Checkboxで「ここで止まる人がいる」を早期検出でき、ScriptをPipe実行する前に環境差を潰せます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 0〜5分で確認する前提条件（管理Mac・対応macOS・GitHub組織・Claude権限・Network/Proxy・Data研修）を6項目のChecklistにしたものです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Installへ進む前に止まる原因が早期に切り分けられ、Pipe実行の前段で組織側の不備を吸い上げられます。</p></div><pre><code class="language-text">[ ] 管理Mac
 [ ] 対応macOS
 [ ] GitHub組織
 [ ] Claude権限
 [ ] Network/Proxy
 [ ] Data研修
 </code></pre>
-<h3 id="ch-27-s3">5〜15分</h3>
-<pre><code class="language-bash">export TREPRO_GITHUB_TOKEN='短期Token'
+<h3 id="ch-27-s3">5〜15分</h3><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 短期TokenをShell履歴やCommand引数に残すと、配布Repo経由で漏えいします。export→curl install→unsetの一連を型化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> TREPRO_GITHUB_TOKENが10分以内に環境変数から消え、内部URL+署名/Hash確認の運用が成立します。任意Internet ScriptをPipe実行しないという原則も同時に守れます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 短期Tokenを環境変数経由でinstall.shへ渡し、直後にunsetする5〜15分パートのInstall手順例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Tokenが.git/configやShell履歴に残らず、内部URL+署名Hash確認とセットで安全なBootstrapが完走します。</p></div><pre><code class="language-bash">export TREPRO_GITHUB_TOKEN='短期Token'
 curl -fsSL https://INTERNAL_APPROVED_URL/install.sh | bash
 unset TREPRO_GITHUB_TOKEN
 </code></pre>
 <p>内部URLと署名/Hashを確認し、任意Internet ScriptをPipe実行しない。</p>
-<h3 id="ch-27-s4">15〜20分</h3>
-<pre><code class="language-bash">claude --version
+<h3 id="ch-27-s4">15〜20分</h3><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「Install終わった」を主観で扱うと、claude本体やGitHub認証が壊れていても気付かれません。verifyを段階ごとに走らせる必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> claude --version・claude doctor・gh auth status・verify.shの4コマンドで存在・健全性・認証・配布物が同時に確認でき、不具合がここで顕在化します。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> claude本体・claude doctor・gh auth・verify.shを順に叩き、Install後15〜20分で配布全体の健全性を確認するVerifyシーケンスです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Installが終わっても壊れている要素があれば即座にFAILが出るため、新人がBronze実演へ進む前に問題を顕在化できます。</p></div><pre><code class="language-bash">claude --version
 claude doctor
 gh auth status
 $HOME/.local/share/trepro-harness/deploy/verify.sh
 </code></pre>
-<h3 id="ch-27-s5">20〜30分</h3>
+<h3 id="ch-27-s5">20〜30分</h3><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Install成功＝Onboarding完了ではありません。本人が安全なLabで実演し、Plan/Verify/Skill評価まで一周することが必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> training/meeting-assistantを使って Plan→実装→git diff→Test→/rewind→Skill評価まで通す体験となり、Bronze相当の合否を実演ベースで判定できます。</p></div>
 <pre><code class="language-text">training/meeting-assistantを開く
 Plan → 実装 → git diff → Test → /rewind → Skill評価
 </code></pre>
-<h2 id="ch-27-s6">27.2 初日Safety</h2>
-<pre><code class="language-text">- 本番/顧客で練習しない
+<h2 id="ch-27-s6">27.2 初日Safety</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 初日に本番DBや顧客Fileに触らせると、AIが便利すぎる時に事故が必ず起きます。最小防御セットを初日から強制する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 本番禁止・Bypass禁止・APIキー貼付禁止・Dry-run徹底・Diffなしcommit禁止・外部送信は承認・不明MCP禁止・Error/Log隠蔽禁止という8原則が初日から効きます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 本番禁止・Bypass禁止・APIキー禁止・Dry-run・Diff必須・外部送信承認・不明MCP禁止・Log隠蔽禁止という8項目の初日Safetyルールです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 新人の初日からAIの暴走・誤操作・情報持ち出しが構造的に抑えられ、Sandboxの範囲内で安全に学習だけが進みます。</p></div><pre><code class="language-text">- 本番/顧客で練習しない
 - Bypass禁止
 - API Keyを貼らない
 - 削除はDry-run/Manifest
@@ -73,7 +73,7 @@ Plan → 実装 → git diff → Test → /rewind → Skill評価
 - 不明MCP/Plugin禁止
 - Error/Logを隠さない
 </code></pre>
-<h2 id="ch-27-s7">27.3 認定</h2>
+<h2 id="ch-27-s7">27.3 認定</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 認定を知識クイズで済ますと、現場でPlanやVerifyが回せない社員が量産されます。実演ベースで段位を分ける必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Bronze（安全・Plan・Diff・Checkpoint）からAdmin（Kandji・Marketplace・Audit・Release）までの4段階で、次に学ぶべき領域が個人ごとに見えるようになります。</p></div>
 <table>
 <thead>
 <tr>
@@ -100,13 +100,13 @@ Plan → 実装 → git diff → Test → /rewind → Skill評価
 </tr>
 </tbody>
 </table>
-<h2 id="ch-27-s8">27.4 運用Cadence</h2>
+<h2 id="ch-27-s8">27.4 運用Cadence</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Onboardingで終わると、半年後にはVersionも知識も古くなります。Daily/Weekly/Monthly/Quarterlyの運用周期を入れる必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Daily=Update失敗・Weekly=Canary/Cost・Monthly=Harness診断/Deprecation・Quarterly=Policy/Portfolio/研修/KPIという周期で、環境と人の劣化を両方止められます。</p></div>
 <pre><code class="language-text">Daily: Update失敗/SEV
 Weekly: Canary/Skill候補/Cost
 Monthly: Harness診断/Skill抜取/Deprecation/Version/Incident
 Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
 </code></pre>
-<h2 id="ch-27-s9">27.5 障害表</h2>
+<h2 id="ch-27-s9">27.5 障害表</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 新人サポート問い合わせは認証・権限・Path・Versionに偏ります。症状→対処の対照表を一枚にしないと、情シスへ集中して業務が止まります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> claudeなし→Native Installer、Skill不明→Validator確認、Hook不動→Scope/Managed-only、MCP不明→Allowlistといった一対一対応で本人が解決できる比率が上がります。</p></div>
 <table>
 <thead>
 <tr>
@@ -149,8 +149,8 @@ Quarterly: Policy/MCP/Plugin/Portfolio/研修/KPI
 </tr>
 </tbody>
 </table>
-<h2 id="ch-27-s10">27.6 Diagnostics</h2>
-<pre><code class="language-bash">{
+<h2 id="ch-27-s10">27.6 Diagnostics</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Support依頼時に毎回環境情報を聞き直すと、Onboarding直後の社員が心理的に詰まります。安全に拾える範囲を1コマンドで出す必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> date・macOS・arch・claude/harness Version・git・gh authをRedactしながらtxtへ出力でき、会話・Secret・顧客Fileは自動添付しない安全な診断Logが成立します。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> OS・arch・Claude/harness Version・git・gh authをRedact処理しつつ/tmpへ書き出すDiagnostics収集スクリプトです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Support問い合わせ時に必要な環境情報がワンコマンドで揃い、会話・Secret・顧客Fileを自動添付しない最小収集の原則が守られます。</p></div><pre><code class="language-bash">{
   echo "date=$(date -Iseconds)"
   echo "macos=$(sw_vers -productVersion)"
   echo "arch=$(uname -m)"

@@ -38,9 +38,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-28-s1">28.1 請求書Folderを一覧化</h2>
+    <h2 id="ch-28-s1">28.1 請求書Folderを一覧化</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 請求書は金額・税・通貨が絡む高リスクデータです。元ファイルを触らずCSVへ書き出し、推測項目と低信頼行をReview表へ分けることで、自動化と人手確認の責任境界を最初に決められます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Dry-run結果と例外一覧が先にあるため、自動化を有効化しても会計事故が起きにくくなり、経理が確認すべき行だけに集中できます。</p></div>
 <p>Input：<code>inputs/invoices/</code>。Output：CSV、Review表、読取不能一覧。</p>
-<pre><code class="language-text">請求書を読み、source_file, vendor_name, invoice_number, invoice_date,
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 請求書PDFから10列のCSVを生成し、元ファイル無改変・推測禁止・total検算・重複候補抽出・低信頼Reviewまでを1プロンプトで縛る指示例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 標準項目は自動入力されつつ例外と低信頼行は人へ回り、毎月数百枚規模でも会計事故ゼロのまま処理時間を圧縮できます。</p></div><pre><code class="language-text">請求書を読み、source_file, vendor_name, invoice_number, invoice_date,
 due_date, subtotal, tax, total, currency, extraction_confidence, review_note
 の列でCSV化してください。
 
@@ -58,8 +58,8 @@ due_date, subtotal, tax, total, currency, extraction_confidence, review_note
 [ ] 元File Link
 [ ] 経理Human Review
 </code></pre>
-<h2 id="ch-28-s2">28.2 Folder整理</h2>
-<pre><code class="language-text">Explore → organization-plan.csv → Human Review → Move
+<h2 id="ch-28-s2">28.2 Folder整理</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 整理という言葉は『削除』と混同されがちです。Explore→Plan→Human Review→Moveの順で進め、移動前後のPathとHashを残すことで、誤分類を必ず元へ戻せる状態を維持できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 整理で資産を失う事故が原理的に消え、AIに整理を任せても元データへ戻れる確証を持ったまま実運用へ進められます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Folder整理を可逆な工程に分解し、Plan段階で人が見てからMoveへ進め、quarantine・Retention・Delete Approvalを段階配置する標準フローです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 整理という名の削除事故が物理的に起こらず、誤分類は移動前のPathとHashから即時にRollbackできます。</p></div><pre><code class="language-text">Explore → organization-plan.csv → Human Review → Move
 → quarantine/YYYY-MM-DD → Retention → Delete Approval
 </code></pre>
 <pre><code class="language-text">`inputs/mixed-files/`を分析し、まだ操作せず、source, proposed_destination,
@@ -67,9 +67,9 @@ category, reason, duplicate_group, riskを持つPlanを作る。
 Hidden、Package、Symlink、1GB超は対象外。
 </code></pre>
 <p>実行時は上書き禁止、移動前後のPath/HashをResultへ保存。</p>
-<h2 id="ch-28-s3">28.3 契約書論点</h2>
+<h2 id="ch-28-s3">28.3 契約書論点</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 契約書をAIに『有効か無効か』判断させると、法的責任が曖昧になります。条項・義務・期限・曖昧点・専門家質問を抽出するだけに役割を限定すれば、AIは下処理に徹し人が判断できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> AIによる誤った法的結論で社内が動く事故が消え、法務レビュー時間も論点が整理された状態から始められます。</p></div>
 <p>AIへ有効/無効を断定させず、条項、平易な説明、義務、金額/期限、曖昧点、専門家への質問を作る。最終判断は法務へ。</p>
-<h2 id="ch-28-s4">28.4 会議Assistant本番化</h2>
+<h2 id="ch-28-s4">28.4 会議Assistant本番化</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 会議AssistantをアドホックなChatのまま運用すると、Meeting IDの重複・Owner欠落・原文未参照で品質が下がります。冪等・JSON Schema・原文Quote・Retentionを固めると本番運用に耐えます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 議事録からTaskへの変換が安定し、誰が・いつまでに・どの発言を根拠に動くかが、毎回同じ精度で出力されます。</p></div>
 <ul>
 <li>Meeting IDで冪等。</li>
 <li>Participant表記統一。</li>
@@ -80,7 +80,7 @@ Hidden、Package、Symlink、1GB超は対象外。
 <li>JSON Schema。</li>
 <li>Retention。</li>
 </ul>
-<pre><code class="language-json">{
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 会議AssistantのTask出力JSON Schema例で、source.quoteとconfidence・needs_confirmationを必須化することで根拠と確度を毎回検証可能にします。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Task登録時に発言の原文へ即座に戻れ、AIが言い切ったか曖昧かが構造として可視化されるため再確認のループが短縮されます。</p></div><pre><code class="language-json">{
   "task_id": "meeting-20260622-001",
   "title": "新LPの見出し案を作成",
   "owner": "山田",
@@ -94,7 +94,7 @@ Hidden、Package、Symlink、1GB超は対象外。
   "needs_confirmation": false
 }
 </code></pre>
-<h2 id="ch-28-s5">28.5 週報</h2>
+<h2 id="ch-28-s5">28.5 週報</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 週報は『書く時間』のために遅延しがちです。過去3件から形式だけを抽出し、今週の議事録とTaskから素材を埋めるDraftに変えると、書く作業から見直す作業へ性質が変わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 送信前確認は残しつつ初稿の生成時間がゼロに近づき、上長は判断・修正に時間を使えるため週報の質が上がります。</p></div>
 <p>過去3件から形式だけを抽出し、今週の議事録/Taskから実績、数字、進行、Blocker、来週、支援依頼をDraft化。誇張せず、送信しない。</p>
 <hr/>
 

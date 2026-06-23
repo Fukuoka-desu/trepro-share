@@ -38,15 +38,15 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-13-s1">13.1 Subagentを使う理由</h2>
+    <h2 id="ch-13-s1">13.1 Subagentを使う理由</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 1つのSessionで全部やると、過去会話の文脈・権限・バイアスが混ざります。Subagentを使う理由を3点で押さえておかないと、ただの並列化に終わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Context分離・Tool/権限限定・作成者と評価者分離の3軸を意識すれば、Subagentは単なる人数増ではなく品質装置になります。理由を理解せず並列化すると、同じBlind Spotを共有したまま動きます。</p></div>
 <ol>
 <li>Contextを分離する。</li>
 <li>Toolと権限を限定する。</li>
 <li>作成者と評価者を分ける。</li>
 </ol>
-<h2 id="ch-13-s2">13.2 Reviewer Agent</h2>
+<h2 id="ch-13-s2">13.2 Reviewer Agent</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装したAgentに自分のコードをレビューさせると、迎合バイアスで甘い採点になります。Reviewer Agentを別定義し、編集権限も渡さない構成が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Read/Grep/Glob/Bashだけ持つ独立Reviewerを置けば、要件・安全・データ消失・テスト欠落・保守性の観点で本物の指摘が返ります。Write権限を渡すと「直しておきました」で原因が分からなくなります。</p></div>
 <p><code>.claude/agents/code-reviewer.md</code>：</p>
-<pre><code class="language-markdown">---
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Reviewer Agentの定義例です。toolsをRead/Grep/Glob/Bashに限定し、Write権限を渡さない構成にしています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この定義で起動すれば、編集できない独立Reviewerが要件・安全・データ消失・テスト・保守性の観点で指摘を返します。BlockerとSuggestionの分離も強制されます。</p></div><pre><code class="language-markdown">---
 name: code-reviewer
 description: Independently review changes for correctness, security, data loss, missing tests, and maintainability.
 tools: Read, Grep, Glob, Bash
@@ -60,8 +60,8 @@ and operational risk. For each finding include severity, file, symbol or line,
 evidence, and minimal remediation. Separate blockers from suggestions.
 </code></pre>
 <p>Review AgentにWrite Toolを渡さない。</p>
-<h2 id="ch-13-s3">13.3 Research Agent</h2>
-<pre><code class="language-markdown">---
+<h2 id="ch-13-s3">13.3 Research Agent</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装者が調査も兼ねると、初期仮説に都合のよい情報だけ集めてしまいます。一次情報・出典・確度を切り離して扱うResearch Agentが必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 公式Doc・原典論文・First-party発表を優先し、公開日・取得日・支持される主張・不確実性を記録する設計にすれば、調査の質が説明可能になります。最終Reportは作らせない分業も重要です。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Research Agentの定義例です。一次情報優先・公開日や取得日の記録・最終Report作成禁止を含む調査専任設定です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この役割で動かすと、出典付きの主張と不確実性が指定ファイルに保存されます。実装者と分離されるため、仮説に引きずられない調査結果が得られます。</p></div><pre><code class="language-markdown">---
 name: primary-source-researcher
 description: Collect primary-source evidence for a narrowly defined research question and save structured claims.
 tools: WebSearch, WebFetch, Read, Write
@@ -73,24 +73,24 @@ Prefer official documentation, original papers, and first-party announcements.
 Record publication date, event date, retrieval date, exact supported claim,
 and uncertainty. Save findings to the requested file. Do not synthesize the final report.
 </code></pre>
-<h2 id="ch-13-s4">13.4 作成者と評価者</h2>
-<pre><code class="language-text">Main Agent: 要件と統合
+<h2 id="ch-13-s4">13.4 作成者と評価者</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 作成者と評価者を同一Agentにすると、同じPromptと同じContextを共有するため、同じBlind Spotを再生産します。役割と入力の分離が肝心です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Main・Research・Implementer・Fresh Reviewerと役割を切り分ければ、人間承認を挟んだ健全なフィードバックループが組めます。全員に同じ前提を渡すと並列化しても品質は上がりません。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 作成者と評価者の役割分担表です。Main・Research・Implementer・Fresh Reviewerの責務を縦に並べたフロー記述になります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この役割マップに沿って委任すれば、人間承認後修正までを含む健全なReview Loopが組めます。役割が曖昧だと全員が同じ視点で動く事故が起きます。</p></div><pre><code class="language-text">Main Agent: 要件と統合
 Research Agents: 独立範囲を調査
 Implementer: 変更
 Fresh Reviewer: 欠陥探索
 Main Agent: 人間承認後に修正
 </code></pre>
 <p>同じPromptとContextを全Agentへ配ると、同じBlind Spotを共有する。役割と入力を分ける。</p>
-<h2 id="ch-13-s5">13.5 Agent View</h2>
+<h2 id="ch-13-s5">13.5 Agent View</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Agent Viewで複数Sessionを管理できるからといって、同一Fileを複数Agentへ同時編集させると衝突します。割当の安全パターンを持っておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Read-only調査・tests/のみ・src/のみ・docs/のみ・Read-only Reviewのように担当領域を物理的に分ければ、Agent間の編集競合が起きません。曖昧な割当は破壊的なマージ事故を招きます。</p></div>
 <p>現行Versionで<code>claude agents</code>を確認する。複数Sessionを管理できるが、同一Fileの同時編集は避ける。</p>
 <p>安全な割当：</p>
-<pre><code class="language-text">A: Read-only調査
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Agent Viewでの安全な担当割当パターンです。読み取り専用と書き込み領域を物理的に分けた構成を示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この割当を採用すれば、複数Agent並列でもFile編集衝突が起きません。同じファイルを複数Agentへ同時編集させる失敗を構造的に防げます。</p></div><pre><code class="language-text">A: Read-only調査
 B: tests/のみ
 C: src/のみ
 D: docs/のみ
 E: Read-only Review
 </code></pre>
-<h2 id="ch-13-s6">13.6 並列化に向く仕事</h2>
+<h2 id="ch-13-s6">13.6 並列化に向く仕事</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Subagent並列化は万能ではありません。向く仕事と向かない仕事を見分けないと、依存関係のあるTaskを並列化して整合性を失います。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 独立情報源の調査・非依存テスト追加・複数Option Prototype・別観点Reviewは向きます。同一File編集・仕様未確定・外部Write・小Taskは向きません。線引きを持てば並列化の効果が安定して出ます。</p></div>
 <ul>
 <li>独立した情報源の調査。</li>
 <li>互いに依存しないTest追加。</li>
@@ -104,8 +104,8 @@ E: Read-only Review
 <li>外部Writeを伴う。</li>
 <li>1人で数分の小Task。</li>
 </ul>
-<h2 id="ch-13-s7">13.7 委任指示</h2>
-<pre><code class="language-text">Role
+<h2 id="ch-13-s7">13.7 委任指示</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Subagentへ「いい感じに調べて」と頼むと、範囲が広がり成果物の所在も曖昧になります。委任指示には決まった項目セットが必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Role・Scope・Allowed tools・Inputs・Deliverable path・Done conditions・Prohibited actions・Budget/timeoutの8項目を埋めれば、誤動作と暴走を防げます。指示が緩いとAgentは余計なことを始めます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Subagent委任指示の必須項目チェックリストです。Role・Scope・Allowed tools・Inputs・Deliverable path・Done conditions・Prohibited actions・Budget/timeoutの8点を並べます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この項目を埋めて委任すれば、Subagentが範囲外を始めるリスクと終わらないリスクを同時に抑えられます。空欄が残るほど暴走確率が上がります。</p></div><pre><code class="language-text">Role
 Scope
 Allowed tools
 Inputs
@@ -115,7 +115,7 @@ Prohibited actions
 Budget/timeout
 </code></pre>
 <p>例：</p>
-<pre><code class="language-text">公式Documentだけを調べるResearch Agentとして動いてください。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Research Agentへの具体的な委任Promptの例です。対象範囲・出力Path・禁止事項・打ち切り時間をすべて明示しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この粒度で渡せば、Agentは指定ファイルへ一次情報だけを書いて15分で打ち切ります。曖昧な「調べて」では結論まで作ってしまう事故が防げます。</p></div><pre><code class="language-text">公式Documentだけを調べるResearch Agentとして動いてください。
 対象はDynamic Workflowsの提供条件と最低Versionだけ。
 出力は `research/dynamic-workflows-official.md`。
 SNS、Code変更、最終結論は禁止。15分で打ち切る。

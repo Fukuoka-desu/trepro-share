@@ -37,10 +37,10 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-12-s1">12.1 Skillとは</h2>
+    <h2 id="ch-12-s1">12.1 Skillとは</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillとは何かの定義が共有されていないと、単なるプロンプト断片と再利用可能な業務Packageの区別がつきません。CLAUDE.mdとの責務分担も曖昧になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 「知識・手順・出力契約・Reference・Script・Fixtureをまとめた業務Manual」と定義を揃えれば、何をSkill化すべきかが判定可能になります。定義無しではSkill乱立か死蔵かの両極端になります。</p></div>
 <p>Skillは、特定Taskを実行するための知識、手順、出力契約、Reference、Script、Fixtureをまとめた再利用Packageである。</p>
 <p>Claude.mdが「この職場の基本方針」なら、Skillは「業務Manual」である。ただし、SkillもPrompt資産であり、Security強制はHook/Permissionへ置く。</p>
-<h2 id="ch-12-s2">12.2 Custom Commands</h2>
+<h2 id="ch-12-s2">12.2 Custom Commands</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 旧来の`.claude/commands/`は互換目的で動きますが、新規もそこへ書き続けるとSkillsとCommandsの二系統が並走し、所有者と更新ルートが分裂します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Inventory化→Skill移行→互換Wrapper残し→90日後Deprecate、の順で揃えれば呼び出し口を一本化できます。両建てを続けるとどちらを直せば効くか分からない混乱が長期化します。</p></div>
 <p>旧 <code>.claude/commands/</code> は互換目的で動く場合があるが、新規はSkillsへ統合する。Commands 13個を持つ現行Harnessは、次の順で移行する。</p>
 <ol>
 <li>呼び出し名と利用実績をInventory化。</li>
@@ -48,27 +48,27 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>UI操作だけの短いものは互換Wrapperを残す。</li>
 <li>90日後に旧CommandをDeprecate。</li>
 </ol>
-<h2 id="ch-12-s3">12.3 Canonical Name</h2>
+<h2 id="ch-12-s3">12.3 Canonical Name</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skill名がlowercase-hyphen・日本語・スネークケース等で混在すると、Claude Code/Codex共通発動や検索で取りこぼしが起きます。命名規約を明文化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> lowercase letters・digits・hyphensのみ、ディレクトリ名=frontmatter nameと統一すれば、どのエージェントからも同じ名前で確実に呼べます。Legacy名はMetadataへ残し移行を追跡可能にします。</p></div>
 <p>Claude/Codex共通のAgent Skillsでは次を守る。</p>
-<pre><code class="language-text">- lowercase letters
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Skill名のCanonical Name規約です。Claude/Codex共通で使える命名ルールを列挙しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この4条件を守れば、Skillはどちらのエージェントからも同名で発動でき、ディレクトリとfrontmatter nameのズレも起きません。</p></div><pre><code class="language-text">- lowercase letters
 - digits
 - hyphens
 - directory name = frontmatter name
 </code></pre>
 <p>良い例：</p>
-<pre><code class="language-text">meeting-minutes
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Canonical Nameの良い命名例です。役割が一語で伝わるhyphen区切りの短い名前を示しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この粒度で揃えると、検索一覧で並んだ瞬間に何のSkillか判別でき、新規メンバーも迷いません。</p></div><pre><code class="language-text">meeting-minutes
 source-grounded-research
 project-kickoff
 feedback-copy-review
 </code></pre>
 <p>避ける：</p>
-<pre><code class="language-text">S_report
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 避けるべきSkill命名例です。社内prefix・日本語・アンダースコアなど、共通発動を阻害する形式を反例として示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この形を残すとClaude/Codex間で発動できないSkillが生まれます。Legacy名はMetadataへ退避し、新規はCanonical Nameへ揃える運用が必要です。</p></div><pre><code class="language-text">S_report
 YouTubeリサーチ
 meeting_minutes
 </code></pre>
 <p>Legacy名はMetadataへ保存する。</p>
-<h2 id="ch-12-s4">12.4 標準Template</h2>
-<pre><code class="language-markdown">---
+<h2 id="ch-12-s4">12.4 標準Template</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillごとに見出し構成が違うと、メンテナンスのたびに読み解き直す手間が発生します。標準Templateを持っておくと書き手も評価者も迷いません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Objective・Inputs・Preconditions・Workflow・Output contract・Safety・Quality checks・Failure behavior・Referencesを揃えれば、書き漏れと評価漏れが構造的に防げます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 標準SKILL.md Templateの全体像です。Frontmatterから9セクションまでの構造を最小例で示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この雛形にコピペして埋めれば、品質ゲートの4軸評価で機械的にチェック可能なSkillが書けます。書き漏れも構造的に減ります。</p></div><pre><code class="language-markdown">---
 name: source-grounded-report
 description: Research a current topic using primary sources, verify claims, and produce a cited decision-ready report. Use when the user asks for a current comparison, product update, or evidence-based recommendation.
 argument-hint: "&lt;question&gt;"
@@ -108,16 +108,16 @@ disable-model-invocation: true
 # References
 Read `references/...` only when [condition].
 </code></pre>
-<h2 id="ch-12-s5">12.5 Progressive Disclosure</h2>
-<pre><code class="language-text">SKILL.md: 発動条件、主要Workflow、契約、安全、参照条件
+<h2 id="ch-12-s5">12.5 Progressive Disclosure</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skill本体に長いAPI仕様・例・FAQまで詰めると、毎回の読み込みが重くなり、肝心のWorkflowが埋もれます。Progressive Disclosureで段階開示する設計が必須です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> SKILL.mdは発動条件と主要Workflowに絞り、長文はreferences/、決定的処理はscripts/、入出力例はfixtures/へ分ければ、本体200行以内を維持できます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Progressive Disclosureのファイル分割ガイドです。SKILL.md本体と補助ディレクトリの役割分担を示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このレイアウトに揃えれば、本体は短く保たれ、長文資料は必要なときだけ読まれます。Skillの読み込みコストと保守コストが下がります。</p></div><pre><code class="language-text">SKILL.md: 発動条件、主要Workflow、契約、安全、参照条件
 references/: 長いAPI仕様、例、部門Rule
 scripts/: 決定的処理
 fixtures/: 入力と期待結果
 tests/: 回帰Test
 </code></pre>
 <p>Root <code>SKILL.md</code>は200行以内を目標にする。</p>
-<h2 id="ch-12-s6">12.6 Skillを作る最良の手順</h2>
-<pre><code class="language-text">1. 手動でTaskを完走
+<h2 id="ch-12-s6">12.6 Skillを作る最良の手順</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 会話で一度うまくいったからといってそのままSkill化すると、別の入力で破綻したり固有情報を抱えたまま配布したりします。Skill化には正しい順序があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 手動完走→記録→固有情報除去→抽象化→Fixture化→Fresh Evaluator→Canary→改善、の8段を踏めば再現性のあるSkillになります。「今のをそのままSkillに」だけでは全社配布水準に到達しません。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Skillを作る8段階の手順です。手動完走から利用実績による改善までの順番を示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この順を踏めば、固有情報の混入や再現性不足を避けながら配布水準のSkillへ到達できます。会話のメモ取りだけでSkill化する事故を防げます。</p></div><pre><code class="language-text">1. 手動でTaskを完走
 2. 成功/失敗を記録
 3. 固有情報を除去
 4. 入力/出力/停止条件を抽象化
@@ -127,7 +127,7 @@ tests/: 回帰Test
 8. 利用実績で改善
 </code></pre>
 <p>会話中に「今の内容をそのままSkillにして」だけで全社配布しない。</p>
-<h2 id="ch-12-s7">12.7 4軸評価</h2>
+<h2 id="ch-12-s7">12.7 4軸評価</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillの出来不出来を主観で判定すると、配布後に「動かない」「曖昧」と苦情が出ます。4軸の機械的な採点ゲートが必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 明確性・実用性・保守性・整合性で総合85点以上、各軸18点以上、Critical 0件を合格条件にすれば、配布前に品質が担保されます。基準が無いと品質ドリフトが進みます。</p></div>
 <table>
 <thead>
 <tr>
@@ -155,7 +155,7 @@ tests/: 回帰Test
 </tbody>
 </table>
 <p>合格は総合85点以上、各軸18点以上、Critical 0件とする。</p>
-<h2 id="ch-12-s8">12.8 呼び出し</h2>
+<h2 id="ch-12-s8">12.8 呼び出し</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillには明示呼び出しと自然言語発動の2方式があり、Descriptionの書き方で発動精度が変わります。重要業務ほど明示呼び出しが安全です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 「何をするか」だけでなく「いつ使うか」をDescriptionへ書けば、自然言語発動の的中率が上がります。明示コマンドを併用すれば重要業務は確実に発動します。</p></div>
 <p>明示呼び出しと自然言語発動の両方がある。重要業務は明示呼び出しを推奨する。</p>
 <pre><code class="language-text">/meeting-minutes inputs/meeting.md
 </code></pre>

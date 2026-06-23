@@ -39,7 +39,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-10-s1">10.1 両方必要</h2>
+    <h2 id="ch-10-s1">10.1 両方必要</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CheckpointとGitはどちらか一方だと穴が残ります。守備範囲の違いを理解し、両方を並列で持つ必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Checkpointは会話中の素早い巻戻し、GitはSessionや人を跨ぐ正式履歴と役割を分けると、短時間と長期間の両方で『戻れる』状態が作れます。</p></div>
 <table>
 <thead>
 <tr>
@@ -61,13 +61,13 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-10-s2">10.2 Checkpoint</h2>
-<pre><code class="language-text">/rewind
+<h2 id="ch-10-s2">10.2 Checkpoint</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Checkpointは便利ですが、外部副作用や手動変更まで戻せるわけではありません。範囲を理解せずGit代わりにすると壊れた状態で詰みます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> /rewindで戻すのはCodeかConversationかを毎回確認することで、Checkpointを正しく軽量な安心装置として使えます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Checkpointへ巻き戻すコマンド。Esc2回でも履歴選択に入れる場合があり、CodeかConversationかを選んで戻します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> セッション内の試行錯誤を一手で戻せるようになり、AIへ大胆な変更を任せる心理的ハードルが下がります。</p></div><pre><code class="language-text">/rewind
 </code></pre>
 <p>またはEscを2回押して履歴選択へ入れる場合がある。CodeとConversationのどちらを戻すか確認する。</p>
 <p>CheckpointはGitの代わりではない。</p>
-<h2 id="ch-10-s3">10.3 最小Git運用</h2>
-<pre><code class="language-bash">git init
+<h2 id="ch-10-s3">10.3 最小Git運用</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> AIへ大胆な変更を任せる前後で良い状態を保存していないと、壊れた時に戻る場所がありません。最小限のGit操作は身に付けておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> init→add→baseline commit→検証後の意図あるcommit、を癖にすると、AI作業の前後に必ず復帰可能点が残ります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 最小Git運用の典型フロー。Baseline Commitを作り、変更後にStatusとDiffを確認してから意図あるCommitを刻みます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AI作業の前後に復帰可能点が必ず残り、壊れたら直前のCommitに戻すという退避路が常時開通します。</p></div><pre><code class="language-bash">git init
 git add .
 git commit -m 'chore: baseline before agent changes'
 
@@ -77,8 +77,8 @@ git diff
 git add &lt;intentional-files&gt;
 git commit -m 'feat: add meeting task extraction'
 </code></pre>
-<h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2>
-<pre><code class="language-text">- Commit前にDiffを見せる
+<h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> AIにCommitを任せると、メッセージが冗長になったり粒度がばらついたりして、後日のレビューや巻き戻しが難しくなります。書き方のRuleを与える必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Diff提示・目的を1つ・Secrets Scan・事実だけ書く、などをRule化すると、人と同じ品質の履歴がAI作業でも維持できます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> AIにCommitを任せる際のRule7か条。Diff提示・目的1つ・Secrets Scan・Force Push禁止・事実記述などを縛ります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが書くCommitでも履歴が読みやすく保たれ、後日のレビューと巻き戻しが現実的な作業として成立します。</p></div><pre><code class="language-text">- Commit前にDiffを見せる
 - 変更目的を1つにする
 - Secrets Scan
 - Test Evidence
@@ -86,9 +86,9 @@ git commit -m 'feat: add meeting task extraction'
 - Force Pushしない
 - Commit Messageへ事実だけを書く
 </code></pre>
-<h2 id="ch-10-s5">10.5 Worktree</h2>
+<h2 id="ch-10-s5">10.5 Worktree</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Agentを並列に動かす時に同じWorking Treeを共有すると、編集が衝突して上書きし合います。物理的に作業場所を分ける仕組みが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> worktree addで機能ごとに別ディレクトリへ展開すると、並列実装が衝突なしで進み、後で人間が安全に統合できます。</p></div>
 <p>Agentを並列化する時は、同じWorking Treeを共有しない。</p>
-<pre><code class="language-bash">git worktree add ../project-agent-tests -b agent/tests
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Worktreeで作業ツリーを物理分離するコマンド例。テスト用とドキュメント用に別ディレクトリ・別Branchを切ります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 複数Agentに並列実装させても同じFileを奪い合わず、人間が後で整合させてマージできる構造になります。</p></div><pre><code class="language-bash">git worktree add ../project-agent-tests -b agent/tests
 git worktree add ../project-agent-docs -b agent/docs
 </code></pre>
 <p>各Agentへ編集範囲を割り当て、人間が統合する。</p>

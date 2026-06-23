@@ -38,8 +38,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-29-s1">29.1 YouTube Research Skill</h2>
-<pre><code class="language-markdown">---
+    <h2 id="ch-29-s1">29.1 YouTube Research Skill</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 動画調査は対象が膨大で、目的を持たずに集めると時間だけが消えます。テーマ・期間・Allowlist・既出題目を入力に固定したSkillへすると、調査が方針付きの構造化作業へ変わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 重複Cluster・Trend・Content Gap・出典付き提案が毎回同じ形で出るため、調査者が代わっても番組のラインが揺れなくなります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Inputs/Workflow/Outputを構造化したYouTube調査Skillの定義例で、Verification noteまで必ず出力させることで一次情報確認を仕組みに組み込みます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 調査結果に出典と検証メモが揃い、後続の記事執筆や台本制作で『この主張の根拠は何か』を再度探す作業が消えます。</p></div><pre><code class="language-markdown">---
 name: youtube-topic-research
 description: Research videos in a defined niche, verify claims, identify content gaps, and propose evidence-backed topics aligned with a channel strategy.
 argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
@@ -67,8 +67,8 @@ argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
 - topic proposals
 - verification notes
 </code></pre>
-<h2 id="ch-29-s2">29.2 番組Profile</h2>
-<pre><code class="language-text">content-profile/
+<h2 id="ch-29-s2">29.2 番組Profile</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『らしさ』を会話の印象だけで運用すると、AIが書くたびにトーンが揺れます。Audience・Positioning・Tone・公開済みTopic・強い例・Do not doをファイル化すれば、外部評価可能な基準になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 新しい素材を選ぶ瞬間に基準を参照でき、人気の高い題材ではなく『自分の番組にとって価値ある題材』を選び続けられます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 番組ProfileをFolder構造で分解し、Audience・Tone・Do not doなどを独立ファイルにする標準レイアウト例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Profileの更新箇所がファイル単位で明確になり、AIがどの基準を参照すべきかが毎回同じ場所から取り出せます。</p></div><pre><code class="language-text">content-profile/
 ├── audience.md
 ├── positioning.md
 ├── tone.md
@@ -77,15 +77,15 @@ argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
 └── do-not-do.md
 </code></pre>
 <p>公開成果物から「らしさ」を明文化し、会話の印象だけにしない。</p>
-<h2 id="ch-29-s3">29.3 SNS/動画から教材</h2>
-<pre><code class="language-text">素材保存 → Topic ID → 重複Cluster → 公式確認 →
+<h2 id="ch-29-s3">29.3 SNS/動画から教材</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> SNSや動画の発言は重複と未検証情報の塊です。Topic ID→重複Cluster→公式確認→原則は本文・実例はRecipeという加工パイプにすると、教材化と事実確認が同じ流れで進められます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 発信者が違うだけの同じ主張を一つに統合でき、要検証情報が分離されるため、誤情報を教材に混ぜる事故が防げます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> SNS/動画素材を教材化するための工程フローで、obsolete/currentとCoverage 100%を完了条件として最後に置きます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 発言の重複統合と公式確認が抜けない設計になり、教材ドラフトの品質が個人の注意力に依存しなくなります。</p></div><pre><code class="language-text">素材保存 → Topic ID → 重複Cluster → 公式確認 →
 原則は本文/実例はRecipe → obsolete/current → Coverage 100%
 </code></pre>
-<h2 id="ch-29-s4">29.4 個人学習</h2>
+<h2 id="ch-29-s4">29.4 個人学習</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 個人学習は『説明できる気がする』で終わりがちです。Hookを作りFixtureを通すことを完了条件にすると、理解の有無が機械的に判定できる学習ループへ変わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 復習問題・調査テーマ・進捗状態がINTERESTS.md連動で生成され、苦手と関心に沿った継続学習が個人ペースで成立します。</p></div>
 <p>毎週：新概念3、復習10問、30分Hands-on、誤解、次の一次資料。</p>
 <pre><code class="language-text">説明できる、ではなく、Hookを作り5 Fixtureを通す。
 </code></pre>
-<h2 id="ch-29-s5">29.5 News Dashboard</h2>
+<h2 id="ch-29-s5">29.5 News Dashboard</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ニュース巡回は重複と古い記事の再浮上で時間が削られます。期間・URL重複排除・公式上位・確度・古い記事検知を持つ単一HTMLへ集約すれば、毎朝の情報収集を10分の確認作業に変えられます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 更新時刻・出典・未確認情報が常に表示されるため、見落としリスクを抑えながら情報取得時間を圧縮できます。</p></div>
 <ul>
 <li>対象期間。</li>
 <li>URL重複排除。</li>

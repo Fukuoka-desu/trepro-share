@@ -38,38 +38,38 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-36-s1">Week 1</h2>
-<pre><code class="language-text">- 本書Review
+    <h2 id="ch-36-s1">Week 1</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 正本と禁止事項を決めないままCanaryを始めると、何を測ればよいか分からず、後工程で必ず差し戻しになります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 本書Review・46 Skillの棚卸し・Naming Migration・Managed Settings Canary・Bypass検証・Release Policyを1週目に固めます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Week1のチェックリスト。本書Review・Skill棚卸し・Naming Migration・Managed Settings Canary・Bypass検証・Release Policyの6項目です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 1週目の終わりに、現有Skillの正本と禁止事項・配布ポリシーが文書として揃い、2週目以降のBuildへ安全に渡せます。</p></div><pre><code class="language-text">- 本書Review
 - 46 Skill Inventory
 - Naming Migration
 - Managed Settings Canary
 - Bypass/Secret/Sandbox検証
 - Release Policy
 </code></pre>
-<h2 id="ch-36-s2">Week 2</h2>
-<pre><code class="language-text">- skill-src正本化
+<h2 id="ch-36-s2">Week 2</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 正本ソースとFixtureが揃わないまま配布すると、誰が何を更新したかが追えなくなり、Rollbackも実行できません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> skill-srcの正本化・build/validate・Hook Fixture・syncのDry-run/Delete/Preserveテスト・Rollback手順を2週目に整えます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Week2のチェックリスト。正本化・build/validate・Hook Fixture・syncのDry-run/Delete/Preserveテスト・Rollback整備の5項目を並べています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Canary配布前に必要なビルド・検証・Rollback経路が一通り揃い、配布中の事故時に元の状態へ戻せる準備が完了します。</p></div><pre><code class="language-text">- skill-src正本化
 - build/validate
 - Hook Fixture
 - sync Dry-run/Delete/Preserve Test
 - verify/Rollback
 </code></pre>
-<h2 id="ch-36-s3">Week 3</h2>
-<pre><code class="language-text">- 管理者+開発者Canary
+<h2 id="ch-36-s3">Week 3</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 管理者だけで完結した配布は現場で必ず破綻します。失敗を口頭で言ってくれる小集団で先に当てる必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 管理者+開発者でCanary・Bronze研修・Meeting Assistant運用・誤検知や教材修正の収集を3週目で並走させ、小さく失敗を見つけます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Week3のチェックリスト。Canary対象・Bronze研修・Meeting Assistant運用・誤検知やSandbox観測・教材修正までを5項目に圧縮しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Canary実績ログとBronze認定者リストが残り、設計上の問題を全社展開前に検出した状態でWeek4へ引き継げます。</p></div><pre><code class="language-text">- 管理者+開発者Canary
 - Bronze研修
 - Meeting Assistant
 - 誤検知/Sandbox/Skill観測
 - 教材修正
 </code></pre>
-<h2 id="ch-36-s4">Week 4</h2>
-<pre><code class="language-text">- Pilot部署
+<h2 id="ch-36-s4">Week 4</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Canaryで止まると価値が組織に届きません。Exit条件を満たした時点でPilotとStable Releaseへ進ませる仕組みが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Pilot部署選定・Incident/Help Desk・Version Dashboard・Stable Release・全社員研修・月次Reviewを4週目で同時に立ち上げます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Week4のチェックリスト。Pilot拡大・Incident/Help Desk・Version Dashboard・Stable Release・全社員研修・月次Reviewの6項目です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Stable Releaseと配布完了レポートが揃い、運用Loopを月次で回し続ける常設体制に移行できます。</p></div><pre><code class="language-text">- Pilot部署
 - Incident/Help Desk
 - Version Dashboard
 - Stable Release
 - 全社員研修
 - 月次Review
 </code></pre>
-<h2 id="ch-36-s5">30日後</h2>
-<pre><code class="language-text">[ ] 新人30分
+<h2 id="ch-36-s5">30日後</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「やった感」だけで30日を終えると、経営報告に使える数字が残らず次の予算も取れません。最初から計測指標を宣言しておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 新人30分・Bronze完了・Stable 95%更新・Rollback Drill・Skill二重編集0・Critical Gap 0・Topic Coverage 100%を到達条件として並べます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 30日後の到達条件チェックリスト。新人30分・Bronze完了・Stable 95%更新・Rollback Drill・Skill二重編集0などの計測指標です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 経営報告に使える定量指標が揃い、AI推進の費用対効果をCEOへ数字で説明できる状態になります。</p></div><pre><code class="language-text">[ ] 新人30分
 [ ] Bronze完了
 [ ] Stable 95%が24h内更新
 [ ] Canary→Stable記録

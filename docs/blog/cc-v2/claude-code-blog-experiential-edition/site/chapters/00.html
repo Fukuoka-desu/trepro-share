@@ -39,22 +39,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-00-s1">0.1 3つの学習ルート</h2>
+    <h2 id="ch-00-s1">0.1 3つの学習ルート</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 学習者の役割によって、必要な順序と最初に作るものが違うから。全員に同じカリキュラムを当てても、誰かは必ず脱落する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 自分のルートを最初に決めると、無関係な章を飛ばせて到達点も明確になる。学習が『今日進んだ』と言える単位に変わる</p></div>
 <h3 id="ch-00-s2">非エンジニアルート</h3>
-<pre><code class="language-text">全体像 → 安全 → Project Folder → 会議Assistant → HTML/Cowork → 実務レシピ
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 非エンジニア向けの章順マップ。全体像から始めて安全・Project・会議Assistantを経由する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 業務担当者がどの章を飛ばさず読めば成果に届くか一発で分かる。学習のロードマップとして機能する</p></div><pre><code class="language-text">全体像 → 安全 → Project Folder → 会議Assistant → HTML/Cowork → 実務レシピ
 </code></pre>
 <p>到達点：ローカル資料から議事録、週報、レポート、簡易アプリを作り、危険操作を避けられる。</p>
 <h3 id="ch-00-s3">開発者ルート</h3>
-<pre><code class="language-text">標準ループ → Permissions/Sandbox → Git/Context → Skills/Agents/Hooks → MCP → 自律化
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 開発者向けの章順マップ。標準ループ・権限・Git・拡張・MCP・自律化まで段階で並ぶ</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装者が再現可能な開発フローを身につける順序が固まる。MCPと自律化を後半に置く理由も明確になる</p></div><pre><code class="language-text">標準ループ → Permissions/Sandbox → Git/Context → Skills/Agents/Hooks → MCP → 自律化
 </code></pre>
 <p>到達点：複数ファイルの実装、テスト、修正、レビュー、長時間タスクを再現可能に運用できる。</p>
 <h3 id="ch-00-s4">管理者ルート</h3>
-<pre><code class="language-text">安全境界 → Managed Policy → Harness配布 → Skill Governance → Telemetry/Incident
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 管理者向けの章順マップ。安全境界→ポリシー→配布→Governance→Telemetryで全社運用まで進む</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 情シス・AI推進が全社配布と監査をどの順で設計すればよいかが見える。個別操作より仕組み側に時間を使える</p></div><pre><code class="language-text">安全境界 → Managed Policy → Harness配布 → Skill Governance → Telemetry/Incident
 </code></pre>
 <p>到達点：全社員へ同じ環境を配布し、品質とセキュリティを強制・監査できる。</p>
-<h2 id="ch-00-s5">0.2 Lessonの標準形</h2>
+<h2 id="ch-00-s5">0.2 Lessonの標準形</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 教科書を読み物のままにすると、再現も検証もできずに『分かった気』で終わる。Lessonの単位を共通化する必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 前提・成果物・検証・版情報がひと塊で揃うから、自分も他人も同じ手順で再実行できる。資産化できる学習になる</p></div>
 <p>将来アプリ化しやすいよう、各Lessonを次の単位で管理する。</p>
-<pre><code class="language-yaml">lesson_id: cc-core-plan-verify
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Lesson標準形のYAML。id・level・前提・成果物・チェック・検証日・参照元を1ファイルで管理する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Lessonをコードとして扱える状態になる。後でアプリ化・進捗管理・依存解決を機械的に処理できる</p></div><pre><code class="language-yaml">lesson_id: cc-core-plan-verify
 status: stable
 level: beginner
 estimated_minutes: 25
@@ -74,8 +74,8 @@ source_topics:
   - video-v04-meeting-assistant
   - official-best-practices
 </code></pre>
-<h2 id="ch-00-s6">0.3 各章の統一フォーマット</h2>
-<pre><code class="language-text">目的
+<h2 id="ch-00-s6">0.3 各章の統一フォーマット</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 章ごとに章の構成がバラバラだと、読者は毎章で『どこを見ればいい？』の迷子になる。全章を同じ流れに統一する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 目的→概念→手順→コピペ→検証→事故防止→発展の固定順だから、章を移動しても探す位置が変わらず学習速度が上がる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 章ごとの統一フォーマット。目的→概念→手順→コピペ→検証→事故防止→発展課題の7段で並ぶ</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの章でも『次はどこを読めばいい？』が迷わない。読者の認知負荷が下がり、学習速度が一定になる</p></div><pre><code class="language-text">目的
   ↓
 概念
   ↓
@@ -89,7 +89,7 @@ source_topics:
   ↓
 発展課題
 </code></pre>
-<h2 id="ch-00-s7">0.4 変わりにくい原則と変わりやすい情報を分ける</h2>
+<h2 id="ch-00-s7">0.4 変わりにくい原則と変わりやすい情報を分ける</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ツールの仕様は半年で変わるが、安全や計画分離のような原則は変わらない。両者を混ぜると改訂のたびに全章が腐る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 本文には原則だけを残し、Model名やSlash Commandは別Registryへ逃がす。古い情報で迷わなくなり保守も楽になる</p></div>
 <h3 id="ch-00-s8">本文へ固定</h3>
 <ul>
 <li>Planと実装を分ける。</li>

@@ -38,8 +38,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-06-s1">6.1 全業務を同じ型へ入れる</h2>
-<pre><code class="language-text">Explore    現状を読む
+    <h2 id="ch-06-s1">6.1 全業務を同じ型へ入れる</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 場当たり的に進めると、同じ依頼でも毎回手順がぶれて再現できなくなります。最初に『仕事の型』を共通言語として置く必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 七段階の見出しを揃えるだけで、コードでも資料でも調査でも同じ順で進められ、抜けと作り直しが目に見えて減ります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> ESPIVRC七段階の各段階で何をするかを一望にしたテキスト表です。仕事の型を共通言語として机に並べます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 依頼テンプレや章運用の見出しとしてそのまま使え、業務種別に関わらず同じ順序で進められるようになります。</p></div><pre><code class="language-text">Explore    現状を読む
 Specify    目的と完了条件を固定
 Plan       変更範囲と検証方法を決める
 Implement  小さく変更
@@ -48,7 +48,7 @@ Review     別文脈で欠陥を探す
 Commit     良い状態を保存
 </code></pre>
 <p>このLoopはCodeだけでなく、資料、調査、業務自動化にも使える。</p>
-<h2 id="ch-06-s2">6.2 Explore</h2>
+<h2 id="ch-06-s2">6.2 Explore</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 現状を読まずに編集を始めると、AIは前提を勝手に想像して既存仕様を壊しにきます。最初に事実を集める段階が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 編集前にFile・既存挙動・Testを読ませて根拠付きでまとめさせると、後段のPlanとReviewが現実の側に着地します。</p></div>
 <p>最初に読ませるもの：</p>
 <ul>
 <li><code>README.md</code>、<code>CLAUDE.md</code>、<code>AGENTS.md</code>。</li>
@@ -58,10 +58,10 @@ Commit     良い状態を保存
 <li><code>git status</code>、最近の変更。</li>
 </ul>
 <p>Prompt：</p>
-<pre><code class="language-text">まだ編集しないでください。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Explore段階で使うPromptで、編集を禁じたまま関係File・既存挙動・制約をEvidence付きで集めさせる指示文です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが現状を読まずに想像で書き始めるのを止め、後段のPlan/Verifyが事実に基づくものになります。</p></div><pre><code class="language-text">まだ編集しないでください。
 この依頼に関係するFile、既存挙動、Test、制約、未知点を調査し、Evidence付きでまとめてください。
 </code></pre>
-<h2 id="ch-06-s3">6.3 Specify</h2>
+<h2 id="ch-06-s3">6.3 Specify</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『速くする』『見やすくする』のような動詞だけでは、AIも人もゴール判定ができません。完了を判定可能な状態に固定する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> p95やContrastなど数値や挙動で完了を定義すると、Verifyで合否を機械的に判断でき、『動いたっぽい』を排除できます。</p></div>
 <p>完了条件は動詞ではなく、判定可能な状態にする。</p>
 <table>
 <thead>
@@ -93,9 +93,9 @@ Commit     良い状態を保存
 </tr>
 </tbody>
 </table>
-<h2 id="ch-06-s4">6.4 Plan</h2>
+<h2 id="ch-06-s4">6.4 Plan</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Specifyだけでは『どこを触るか』が決まっておらず、AIは関係ない箇所まで書き換えがちです。変更範囲の宣言を挟む必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 変更File・整合・Rollback・対象外まで先に書かせると、AIの暴走が手前で止まり、レビュー側の負荷も大きく下がります。</p></div>
 <p>Planで確認する項目：</p>
-<pre><code class="language-text">- 変更Fileと理由
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Plan段階で確認すべき9項目のチェックリスト。変更範囲・整合・Migration・Side Effect・Rollbackなどを明示させます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装前に『触らない場所』が宣言され、AIの暴走と人のレビュー負荷を構造的に減らせます。</p></div><pre><code class="language-text">- 変更Fileと理由
 - 既存設計との整合
 - Data Migration
 - External Side Effect
@@ -106,7 +106,7 @@ Commit     良い状態を保存
 - 承認が必要な点
 </code></pre>
 <p>複数File、Data変更、外部連携、高RiskはPlan Modeを使う。</p>
-<h2 id="ch-06-s5">6.5 Implement</h2>
+<h2 id="ch-06-s5">6.5 Implement</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 一度に大きく変更すると、原因切り分けができず、Testを通すために設定を緩めたくなる誘惑も生まれます。Implementには規律が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 小さく・無関係Refactorを混ぜず・Configを弱体化させないルールを守ると、戻し作業と事故調査の時間が劇的に短くなります。</p></div>
 <ul>
 <li>1回の変更を小さくする。</li>
 <li>無関係Refactorを混ぜない。</li>
@@ -115,8 +115,8 @@ Commit     良い状態を保存
 <li>長時間Taskは途中成果物をFileへ保存する。</li>
 <li>同じFileを複数Agentが同時編集しない。</li>
 </ul>
-<h2 id="ch-06-s6">6.6 Verify</h2>
-<pre><code class="language-text">Static: format, lint, typecheck, schema, secret scan
+<h2 id="ch-06-s6">6.6 Verify</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Implementの後に『たぶん動いた』で進めると、本番で初めて壊れます。機械的に確かめる段階を独立させる必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Static・Behavior・Visual・Data・Operationsを通して証拠を残させれば、未実行は未実行と分かり、合否が客観的になります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Verify段階の検証カテゴリを5層に並べた一覧。静的・挙動・視覚・データ・運用の観点を漏らさず通します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの層が未実行かが見える化され、『なんとなく動いた』ではなく機械的な合否に置き換えられます。</p></div><pre><code class="language-text">Static: format, lint, typecheck, schema, secret scan
 Behavior: unit, integration, E2E, replay
 Visual: screenshot, responsive, PDF/print
 Data: row count, totals, hash, duplicate, null
@@ -126,14 +126,14 @@ Operations: logs, retry, timeout, rollback
 <pre><code class="language-text">完了条件ごとに、実行したCommand、Exit Code、出力要約、Artifact Pathを表で示してください。
 未実行は未実行と書いてください。
 </code></pre>
-<h2 id="ch-06-s7">6.7 Review</h2>
+<h2 id="ch-06-s7">6.7 Review</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装した本人の文脈は自分の判断に引っ張られ、欠陥を見落とします。Reviewは別の目で行う段階として分離する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 新しいSessionやFresh ReviewerでDiffを独立に見させると、要件・Security・Edge caseの抜けが浮き上がり、品質が一段上がります。</p></div>
 <p>作ったSessionは自分の判断へ引っ張られる。新しいSessionまたはFresh Reviewerを使う。</p>
-<pre><code class="language-text">このDiffを、要件、Security、Data loss、Edge case、Test不足の観点で独立Reviewしてください。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 別文脈Reviewer向けのPromptで、実装者の説明を鵜呑みにせずFile・Lineを根拠に独立Reviewさせる指示文です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 作成者バイアスから切り離された指摘が得られ、Edge caseやTest不足が事前に拾えるようになります</p></div><pre><code class="language-text">このDiffを、要件、Security、Data loss、Edge case、Test不足の観点で独立Reviewしてください。
 実装者の説明を鵜呑みにせず、FileとLineを根拠にしてください。
 </code></pre>
-<h2 id="ch-06-s8">6.8 Commit</h2>
+<h2 id="ch-06-s8">6.8 Commit</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 良い状態を保存しないと、次のセッションで何を直したか辿れなくなります。意味ある単位で履歴に残す段階が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Status・Diff・Statを確認してから1つの意図にまとめてCommitすると、後日の巻き戻しとレビューが現実的な作業になります。</p></div>
 <p>Commit前：</p>
-<pre><code class="language-bash">git status --short
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Commit前に必ず通す4つの確認コマンド。状態・差分・統計・全文Diffを段階的に確認します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Secretsや他人の変更の混入、意図しないFileの混在を物理的に防ぎ、Commitが1つの意図にまとまります。</p></div><pre><code class="language-bash">git status --short
 git diff --check
 git diff --stat
 git diff

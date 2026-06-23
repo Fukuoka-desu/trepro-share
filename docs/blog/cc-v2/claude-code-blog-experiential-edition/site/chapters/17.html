@@ -38,11 +38,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-17-s1">17.1 分離する</h2>
-<pre><code class="language-text">要件 → Wireframe → Prototype → Design System → 実装 → 視覚/Accessibility検証
+    <h2 id="ch-17-s1">17.1 分離する</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 情報構造・見た目・実装を同時に揺らすと、どこを直しても他の段階に揺り戻しが発生します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Wireframe・Prototype・Design System・実装を別段階で確定すれば、修正コストをその段階の中に閉じ込められます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> デザインから実装までの段階を一列に並べ、検証で締める標準フローです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの段階の決定で詰まっているかを、後から指差して指摘できる構造になります。</p></div><pre><code class="language-text">要件 → Wireframe → Prototype → Design System → 実装 → 視覚/Accessibility検証
 </code></pre>
 <p>Wireframeでは装飾より、情報の順序とActionを決める。</p>
-<h2 id="ch-17-s2">17.2 Design SystemとProject</h2>
+<h2 id="ch-17-s2">17.2 Design SystemとProject</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 個別画面ごとに色やフォントが微妙に違うと、ブランドの一貫性が静かに壊れていきます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Design SystemをProjectとは別物として扱えば、各画面はそれを参照するだけで揃い、横展開のコストが下がります。</p></div>
 <table>
 <thead>
 <tr>
@@ -61,8 +61,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
-<h2 id="ch-17-s3">17.3 最小構造</h2>
-<pre><code class="language-text">design-system/
+<h2 id="ch-17-s3">17.3 最小構造</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Design Systemを概念だけで持つと、誰がどのトークンを更新するかがふんわりして運用が止まります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> tokens/・components/・assets/・examples/という最小フォルダ構造を持つことで、更新責任と参照経路が物理的に明確になります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Design Systemの最小フォルダ構造で、tokens・components・assets・examplesを分けたレイアウトです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 更新責任と参照Pathが物理的に固定され、複数Projectから安全に再利用できます。</p></div><pre><code class="language-text">design-system/
 ├── README.md
 ├── tokens/
 │   ├── color.json
@@ -77,7 +77,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 ├── assets/
 └── examples/
 </code></pre>
-<h2 id="ch-17-s4">17.4 標準Flow</h2>
+<h2 id="ch-17-s4">17.4 標準Flow</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> いきなり実装から作ると、情報の欠落や順序ミスが見た目の上に固定されてしまいます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Wireframe→Prototype→Design System→Code→差分確認まで標準フロー化すると、各段階の決定事項を後から追える形で残せます。</p></div>
 <ol>
 <li>Wireframe作成。</li>
 <li>情報の欠落・重複・順序Review。</li>
@@ -89,8 +89,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>汎用ComponentをDesign Systemへ戻す。</li>
 </ol>
 <p>現行の <code>/design</code> と <code>/design-sync</code> を <code>/help</code> と公式情報で確認する。</p>
-<h2 id="ch-17-s5">17.5 Codeへ渡すPrompt</h2>
-<pre><code class="language-text">Designを写経せず、まず次を含む実装計画を作る。
+<h2 id="ch-17-s5">17.5 Codeへ渡すPrompt</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Designをそのままコード化させると、状態・レスポンシブ・アクセシビリティの抜けが実装後に露見します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 実装計画の必要項目を先に挙げさせるプロンプトを使えば、Hover/Focus/Error/Loadingまで含めた完成度で着手できます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Designを受け取った直後に、画面対応・Token・状態・Accessibility・Acceptanceを先に書かせる指示文です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 着手前に抜け項目が洗い出され、実装後にHover/Error/Loadingが見つかる手戻りを防げます。</p></div><pre><code class="language-text">Designを写経せず、まず次を含む実装計画を作る。
 - 画面/Component対応
 - Token/CSS変数
 - Responsive
@@ -100,7 +100,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Acceptance Test
 承認前に変更しない。
 </code></pre>
-<h2 id="ch-17-s6">17.6 Sync Rule</h2>
+<h2 id="ch-17-s6">17.6 Sync Rule</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Design側とCode側が両方とも『正本』を主張すると、トークンや共通部品が二重メンテで腐ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Git側を正本にし、採用変更だけCodeへ流す同期ルールを敷くと、デザインと実装の乖離が時間とともに発生しません。</p></div>
 <ul>
 <li>Token/共通ComponentはGit側を正本。</li>
 <li>Designで探索し、採用変更だけCodeへ。</li>
@@ -108,8 +108,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Sync前後にDiff保存。</li>
 <li>Beta変換に備えGit Commit。</li>
 </ul>
-<h2 id="ch-17-s7">17.7 公開前</h2>
-<pre><code class="language-text">[ ] 全遷移
+<h2 id="ch-17-s7">17.7 公開前</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Designレビューを通っても、未実装ボタン・認証漏れ・Contrast不足が公開直前に出るのはよくあります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Code側で再検査する8項目を通せば、見た目の確認ではなく動作と安全性の確認として公開判断ができます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 公開前ゲートとして、遷移網羅・Responsive・Contrast・自動Accessibility検査まで通す8項目です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Design承認とは別軸で、Code側でしか分からない動作上の不備を最後に拾えます</p></div><pre><code class="language-text">[ ] 全遷移
 [ ] 未実装Buttonの明示
 [ ] Responsive
 [ ] Focus/Error/Loading/Success

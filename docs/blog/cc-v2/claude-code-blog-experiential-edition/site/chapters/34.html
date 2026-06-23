@@ -38,8 +38,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-34-s1">34.1 全社共通CLAUDE.md</h2>
-<pre><code class="language-markdown"># TrePro Claude Code baseline
+    <h2 id="ch-34-s1">34.1 全社共通CLAUDE.md</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全社で会話の前提や安全・品質の基準がバラバラだと、Claude Codeの振る舞いも案件ごとに揺れます。だから組織共通のBaselineを一枚に固定します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 通信・標準ワークフロー・安全・品質・Gitを揃えた共通CLAUDE.mdが出発点になり、各案件はここからの差分だけを書けば済みます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 全社共通CLAUDE.mdのBaseline例。通信・標準ワークフロー・安全・品質・Git・Contextの6セクションを最小限の文量で揃えてあります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 新規Project作成時にコピペすれば、組織共通の前提が即座に効き、案件側は差分だけを記述する状態へ移れます。</p></div><pre><code class="language-markdown"># TrePro Claude Code baseline
 
 ## Communication
 - Respond in Japanese unless requested otherwise.
@@ -76,8 +76,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Start a new session when the objective changes.
 </code></pre>
 <p>Guidanceだけでなく、Managed Settings/Hookを併用する。</p>
-<h2 id="ch-34-s2">34.2 Project CLAUDE.md</h2>
-<pre><code class="language-markdown"># Project overview
+<h2 id="ch-34-s2">34.2 Project CLAUDE.md</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Baselineだけでは案件固有の禁止事項やコマンドが抜けます。案件ごとに何をしてはいけないか、どう動かすかは明示が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Purpose・Architecture・Commands・Required workflow・Constraints・Do notの順で書く案件CLAUDE.md初版が、新規Projectで毎回そのまま使えます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 案件用CLAUDE.mdの雛形。Purpose・Architecture・Commands・Required workflow・Constraints・Do notの6項目を空欄で揃えています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 案件キックオフ時に空欄を埋めるだけで、ClaudeがそのProjectの作法に沿って動き始める土台が出来上がります。</p></div><pre><code class="language-markdown"># Project overview
 
 ## Purpose
 [誰の何を解決するか]
@@ -114,8 +114,8 @@ npm run build
 - Do not modify test/lint configuration without approval.
 - Do not access production credentials.
 </code></pre>
-<h2 id="ch-34-s3">34.3 Requirements Template</h2>
-<pre><code class="language-markdown"># Requirements
+<h2 id="ch-34-s3">34.3 Requirements Template</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 要件定義は人によって項目が抜け、レビューで毎回同じ追加質問が走ります。考えるべき問いを再現可能な形で固定する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Background〜Rollback planまで揃ったRequirements雛形をコピーし、空欄を埋めるだけで抜けの少ない要件書の初稿が出来上がります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 要件定義テンプレ。Background〜Open questions〜Rollback planまで18項目を順序付きで並べた標準形です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 案件ごとにコピーして埋めるだけで、レビュー時の「これは決めましたか」を激減させる要件書初稿になります。</p></div><pre><code class="language-markdown"># Requirements
 
 ## Background
 ## Users
@@ -141,7 +141,7 @@ npm run build
 ## Open questions
 ## Rollback plan
 </code></pre>
-<h2 id="ch-34-s4">34.4 Implementation Plan</h2>
+<h2 id="ch-34-s4">34.4 Implementation Plan</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装に入る前に、読むファイル・変えるファイル・順序・テスト・撤退手順まで言語化しないと、途中で迷子になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ファイル変更表とSteps・Tests・Rollback・Out of scopeまで揃ったImplementation Plan雛形が、計画と実装の分離を半自動で支えます。</p></div>
 <pre><code class="language-markdown"># Implementation plan
 
 ## Summary
@@ -157,7 +157,7 @@ npm run build
 ## Out of scope
 ## Questions requiring approval
 </code></pre>
-<h2 id="ch-34-s5">34.5 Completion Report</h2>
+<h2 id="ch-34-s5">34.5 Completion Report</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「終わりました」だけでは何が変わって何を確認したかが伝わらず、レビューが二度手間になります。完了は証拠で示す必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Result・Changed files・Verification表・Screenshots・Risks・Next actionが固定されたCompletion Reportで、完了主張と証拠が同じ場所に並びます。</p></div>
 <pre><code class="language-markdown"># Completion report
 
 ## Result
@@ -170,8 +170,8 @@ npm run build
 ## Not changed
 ## Recommended next action
 </code></pre>
-<h2 id="ch-34-s6">34.6 Quality Gate Skill</h2>
-<pre><code class="language-markdown">---
+<h2 id="ch-34-s6">34.6 Quality Gate Skill</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> テンプレが空欄のまま「完成」と主張される事故を避けるには、人が毎回目で確認するのではなく仕組みで止める必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Lint・Typecheck・Test・Build・Secret検査までを通過させ、空欄や曖昧な完了をブロックするSkillが品質ゲートとして常駐します。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 品質ゲートSkillのfront matter+本文。事前条件・Workflow・Stop conditions・出力フォーマットまでを完備しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 完了報告の前に必ずこのSkillが走り、Lint/Typecheck/Test/Build/Secret検査の証拠付きでpass/fail表を返します。</p></div><pre><code class="language-markdown">---
 name: quality-gate
 description: Run the project validation sequence, inspect the diff, and produce an evidence-based completion report before work is considered done.
 argument-hint: "[scope]"
@@ -203,7 +203,7 @@ argument-hint: "[scope]"
 - risks
 - next action
 </code></pre>
-<h2 id="ch-34-s7">34.7 Fresh Reviewer Agent</h2>
+<h2 id="ch-34-s7">34.7 Fresh Reviewer Agent</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装した本人の自己レビューは前提に引きずられ、抜けを発見できません。別文脈の独立Reviewerが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Read系のみで動くFresh Reviewer Agentが、要件・差分・証拠を独立に確認し、Blockerと提案を分けて指摘する体制が組めます。</p></div>
 <pre><code class="language-markdown">---
 name: fresh-reviewer
 description: Review a change independently for correctness, security, data loss, missing tests, and maintainability.
@@ -217,7 +217,7 @@ Prioritize security, data loss, behavior, tests, and operational risk.
 For each finding include severity, file, line/symbol, evidence, and remediation.
 Separate blockers from suggestions.
 </code></pre>
-<h2 id="ch-34-s8">34.8 Definition of Done</h2>
+<h2 id="ch-34-s8">34.8 Definition of Done</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「完成」の感覚が人ごとに違うままだと、納品時に毎回認識ズレで揉めます。先に合意する仕組みが必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Goal・Acceptance・Lint・Secret・Rollback・Fresh Review・Evidenceまで並ぶDoDカードを、PJ開始時に合意して書面化できます。</p></div>
 <pre><code class="language-text">[ ] Goal/Non-goal
 [ ] Acceptance Criteria
 [ ] Lint/Typecheck/Test/Build

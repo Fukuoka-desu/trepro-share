@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-35-s1">35.1 最適形</h2>
+    <h2 id="ch-35-s1">35.1 最適形</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 教科書をPDFで配ると、読了率しか測れず、誰が何を実践し、どこで止まったかが分かりません。学びの状態は中身を持つ必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Role別Path・Lesson進捗・Copy可能Prompt・Terminal Check・Quiz・Harness Statusを備えた実行支援Learning Systemに昇格します。</p></div>
 <p>PDF Viewerではなく、次を持つ実行支援Learning Systemにする。</p>
 <ul>
 <li>Role別Path。</li>
@@ -52,8 +52,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Skill Catalog/Score。</li>
 <li>Admin Coverage Dashboard。</li>
 </ul>
-<h2 id="ch-35-s2">35.2 Content Model</h2>
-<pre><code class="language-json">{
+<h2 id="ch-35-s2">35.2 Content Model</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 本文・状態・証拠・再開を一枚のHTMLに混ぜると、再利用も検証もできなくなります。データとして構造化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> course/module/lessonの三段構造に前提・成果物・Check・Sources・change_notesを持たせた、機械が読めるContent ModelのJSONが土台になります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 教科書アプリのContent Model例。course/module/lessonの3階層にstatus・level・prerequisites・outcomes・change_notesを持たせています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 1枚のJSONを起点に、表示UI・進捗保存・修了判定・改訂差分まで同じデータ構造で扱える状態に揃います。</p></div><pre><code class="language-json">{
   "course_id": "claude-code-ultimate",
   "version": "1.0.0",
   "verified_at": "2026-06-22",
@@ -82,8 +82,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   ]
 }
 </code></pre>
-<h2 id="ch-35-s3">35.3 Lesson JSON Schema</h2>
-<pre><code class="language-json">{
+<h2 id="ch-35-s3">35.3 Lesson JSON Schema</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Lessonの定義が緩いと、人が手書きで足りない項目を埋め、再開時に検証もできません。形式は機械で検証可能であるべきです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> lesson_id・status・level・outcomes・steps・checks・verified_atを必須にしたJSON Schemaが、不完全なLessonを物理的に拒否します。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Lesson JSON Schema。lesson_idのパターン・statusのenum・stepsとchecksのオブジェクト構造・verified_at必須を定義しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Schemaチェックを通った時点で、不完全なLessonは公開ラインに乗らず、人手の見落としが構造的に減ります。</p></div><pre><code class="language-json">{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trepro.example/schemas/lesson.schema.json",
   "type": "object",
@@ -125,8 +125,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   }
 }
 </code></pre>
-<h2 id="ch-35-s4">35.4 Feature Registry</h2>
-<pre><code class="language-json">{
+<h2 id="ch-35-s4">35.4 Feature Registry</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> モデル名・利用可能Plan・最小Versionなどは月単位で変わり、本文に埋めると一斉に古びます。可変情報は外出ししないと持ちません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> feature_idごとに状態・最小Version・Plan・verified_at・official_sourceを持つRegistryへ抜き出し、本文を直さず追随できる仕組みが組めます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Feature Registryの1エントリ例。status・minimum_version・plans・verified_at・official_source・notesを持つ最小形です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 本文を一切触らずRegistryのverified_atとstatusだけを更新すれば、教材全体の最新性を維持できる運用に切り替わります。</p></div><pre><code class="language-json">{
   "feature_id": "dynamic-workflows",
   "status": "available",
   "minimum_version": "2.1.154",
@@ -137,11 +137,11 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 }
 </code></pre>
 <p>古い<code>verified_at</code>へWarningを出す。</p>
-<h2 id="ch-35-s5">35.5 Progress</h2>
-<pre><code class="language-text">seen → practiced → verified → applied
+<h2 id="ch-35-s5">35.5 Progress</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「読んだ」を進捗とすると、実践したか・現場で使えたかが見えません。学びの段階は出力可能な状態で区別する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> seen→practiced→verified→appliedの4段階で進捗を持ち、verified以上を認定にカウントすることで、修了判定が客観的になります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 4段階進捗の表記。各段階の意味を一行で示し、認定はverified以上を数えるルールと一体で運用します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 学習者と管理者の双方から、誰がどこまで到達したかが同じ語彙で見え、修了判定の客観性が担保されます。</p></div><pre><code class="language-text">seen → practiced → verified → applied
 </code></pre>
 <p>認定は<code>verified</code>以上を数える。</p>
-<h2 id="ch-35-s6">35.6 実行連携</h2>
+<h2 id="ch-35-s6">35.6 実行連携</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ブラウザから任意のShellを直接叩ける設計は、監査でほぼ必ずNGになります。実行と表示は分離しておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Lesson IDを受けたLocal Companion CLIがAllowlist Commandだけ実行し、Exit Code/Artifact Pathを返す形で安全に実機連携できます。</p></div>
 <ol>
 <li>Copy Button。</li>
 <li>Local Companion CLIがLesson IDを受ける。</li>
@@ -150,7 +150,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>高Riskは手動承認。</li>
 </ol>
 <p>Browserから任意Shellを直接実行しない。</p>
-<h2 id="ch-35-s7">35.7 画面</h2>
+<h2 id="ch-35-s7">35.7 画面</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 学習・テンプレ閲覧・Skill選択・Harness確認・認定を別アプリに分けると、学習者の現在地が分散して見えません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Home/Learning Path/Lesson Player/Template Library/Skill Catalog/Harness Status/Admin Coverage/Certificationを一画面群へまとめます。</p></div>
 <pre><code class="language-text">Home
 Learning Path
 Lesson Player

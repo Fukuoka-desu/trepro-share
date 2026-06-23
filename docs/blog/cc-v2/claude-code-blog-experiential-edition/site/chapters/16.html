@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-16-s1">16.1 形式選択</h2>
+    <h2 id="ch-16-s1">16.1 形式選択</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Markdownで何でも済ませようとすると、長文の正しさは保てても読み手の理解速度が出ません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Markdown・HTML・PPT/PDF・Web Appの強みを並べて見ると、用途ごとに最短で伝わる形式を選べるようになります。</p></div>
 <table>
 <thead>
 <tr>
@@ -71,8 +71,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <p>原則は、正本をMarkdown/JSON/CSVで持ち、HTMLをViewとして生成する。</p>
-<h2 id="ch-16-s2">16.2 単一HTMLの標準</h2>
-<pre><code class="language-text">- 1 Fileで開ける
+<h2 id="ch-16-s2">16.2 単一HTMLの標準</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 外部CDN依存のHTMLは、共有先のネットワークやオフライン環境で簡単に崩れます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 1ファイル完結・印刷・スマホ・JS無効でも主要情報が残る標準を持てば、配布経路を選ばずに同じ品質で届けられます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 単一HTMLレポートが満たすべき8項目の標準で、配布性とアクセシビリティを並列で要求しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 出力先の環境差に依存せず、同じHTMLがメール・印刷・スマホで同じように読める状態を作れます。</p></div><pre><code class="language-text">- 1 Fileで開ける
 - 外部CDNに依存しない
 - Mobile対応
 - Print CSS
@@ -81,8 +81,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - GraphとTableを併記
 - JS無効でも主要情報が読める
 </code></pre>
-<h2 id="ch-16-s3">16.3 CSV分析Prompt</h2>
-<pre><code class="language-text">`data/survey.csv` を分析し、経営会議向け単一HTMLを作る。
+<h2 id="ch-16-s3">16.3 CSV分析Prompt</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CSVを渡して『集計して』と頼むだけでは、母数や定義が抜けた『それっぽい数字』が返りがちです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 観点・出力・ルールを明示したテンプレを使えば、経営会議に出せる粒度のHTMLレポートに揃えられます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> CSVから経営会議向けHTMLを生成するプロンプトで、分析観点・出力ファイル・ルールを分けて指示するテンプレです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 母数・推測の明示・匿名化までを含んだ、そのまま会議に持ち込める粒度の1枚物が得られます。</p></div><pre><code class="language-text">`data/survey.csv` を分析し、経営会議向け単一HTMLを作る。
 
 Analysis:
 - 回答数、欠損率、KPI
@@ -104,7 +104,7 @@ Rules:
 - JavaScript Errorなし
 - Screenshotを保存
 </code></pre>
-<h2 id="ch-16-s4">16.4 HTML Slide</h2>
+<h2 id="ch-16-s4">16.4 HTML Slide</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 発表用と検討用で資料を作り分けると、同じ正本から二重管理が始まり、必ずどこかでズレます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 1ページHTMLでSlide風やDiscussion Boardを派生させると、正本を保ったまま複数の表現を素早く出せます。</p></div>
 <pre><code class="language-text">1. 表紙
 2. 結論
 3. 背景
@@ -115,18 +115,18 @@ Rules:
 8. Risk
 9. 意思決定
 </code></pre>
-<pre><code class="language-text">`output/analysis.md`を16:9 HTML Slideにしてください。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Markdown原稿を1スライド1メッセージのHTMLスライドへ変換するための指示文です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 発表用と検討用を別資料化せず、同じ正本から発表向け表現を派生できます。</p></div><pre><code class="language-text">`output/analysis.md`を16:9 HTML Slideにしてください。
 1 Slide 1 Message、本文最大6行。矢印Key/PageUp/PageDownで移動し、Print/PDF対応にしてください。
 </code></pre>
-<h2 id="ch-16-s5">16.5 Discussion Board</h2>
-<pre><code class="language-text">会議用の単一HTML Boardを作る。
+<h2 id="ch-16-s5">16.5 Discussion Board</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 会議で出した付箋やToDoは、写真に撮っただけだと検索もコピーもできず後から効きません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 列構造とLocal Storage保存・Markdown書き出しを備えたBoardにすると、議論結果を次の作業に直結させられます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 今やる・次・調査・見送りの4列で構成するDiscussion BoardのHTML生成プロンプトです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 会議中の議論結果が、後から検索・コピー・Markdown化できる形でそのまま残ります。</p></div><pre><code class="language-text">会議用の単一HTML Boardを作る。
 列は「今やる」「次」「調査」「見送り」。
 CardはDragでき、担当、期限、根拠、決定者を編集可能。
 Local Storageへ保存し、「決定事項をMarkdownでCopy」Buttonを付ける。
 </code></pre>
 <p>Local StorageへSecrets、原文、不要な個人情報を保存しない。</p>
-<h2 id="ch-16-s6">16.6 品質Check</h2>
-<pre><code class="language-text">[ ] 結論が最初にある
+<h2 id="ch-16-s6">16.6 品質Check</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 見栄えだけ整えて公開すると、印刷・スマホ・アクセシビリティのどこかで読めない読者を取りこぼします。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 8項目の品質チェックを通すことで、公開前に『誰でも開けて読める』状態をルーチンで担保できます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 公開前の品質チェック8項目で、論理構造から技術的健全性まで一気に確認するリストです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 色覚・印刷・モバイル・Console Errorといった見落としを、公開前に潰し切れます。</p></div><pre><code class="language-text">[ ] 結論が最初にある
 [ ] 元Dataへ追跡可能
 [ ] 色だけで状態区別しない
 [ ] 375/768/1440px確認

@@ -38,14 +38,14 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-03-s1">3.1 macOSへCLIを導入</h2>
+    <h2 id="ch-03-s1">3.1 macOSへCLIを導入</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Claude CodeはCLIから入るのが基本。ここを公式手順で揃えないと、後の章のコマンドが全部動かない</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> claude --versionとclaude doctorで導入確認まで取れる。会社環境ならURL・Hash・Versionも管理者で固定できる</p></div>
 <p>公式Native Installerを使う。</p>
-<pre><code class="language-bash">curl -fsSL https://claude.ai/install.sh | bash
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> macOSへClaude Code CLIを入れる公式インストール。インストール後にバージョン確認とdoctor診断まで実行する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> CLIがコマンドラインから動く状態になり、依存関係も自動診断される。会社環境では管理者がHashで固定できる</p></div><pre><code class="language-bash">curl -fsSL https://claude.ai/install.sh | bash
 claude --version
 claude doctor
 </code></pre>
 <p>会社環境では、Install URL、Hash、Proxy、許可Versionを管理者が固定する。</p>
-<h2 id="ch-03-s2">3.2 VS Code</h2>
+<h2 id="ch-03-s2">3.2 VS Code</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLI単体だと変更の見通しが悪い。IDE側でDiffとファイルツリーを見ながら進めると人間のレビュー負荷が大きく減る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> VS CodeでProjectを開き、Trust範囲を自社に限定できる。CLIとIDEが同じContextで動き、両刀使いに移行できる</p></div>
 <ul>
 <li>公式Anthropic提供のClaude Code Extensionを確認して導入する。</li>
 <li>Project FolderをVS Codeで開く。</li>
@@ -53,22 +53,22 @@ claude doctor
 <li>CLIとIDEは同じProject Contextを使う。</li>
 </ul>
 <p>IDEは見やすいが、すべての機能・診断はTerminalで先に提供される場合がある。両方使えるようにする。</p>
-<h2 id="ch-03-s3">3.3 Project Folderの原則</h2>
+<h2 id="ch-03-s3">3.3 Project Folderの原則</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> デスクトップ1フォルダに顧客A・顧客B・実験を全部入れると、AIが見るべき範囲が混ざる。誤って別案件を書き換える事故が起きる</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 案件ごとにProject Rootを切れば、AIが見るのはその顧客分だけ。情報漏えいと取り違えのリスクが構造的に消える</p></div>
 <h3 id="ch-03-s4">相関のない仕事</h3>
-<pre><code class="language-text">~/work/writing/
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 相関のない仕事を別Rootに分けるディレクトリ例。ライティングと会計が別フォルダに分かれる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIの探索範囲が無関係なファイルを巻き込まない。Context精度が上がり処理時間も短くなる</p></div><pre><code class="language-text">~/work/writing/
 ~/work/accounting/
 </code></pre>
 <p>別Rootへ分ける。</p>
 <h3 id="ch-03-s5">相関する仕事</h3>
-<pre><code class="language-text">~/work/youtube/
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 相関する仕事を共通Rootへまとめるディレクトリ例。研究・台本・素材・レポートを1つのProjectに収める</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 知識と成果物が同じRoot内で循環する。前回の調査を次回の台本へそのまま渡せる</p></div><pre><code class="language-text">~/work/youtube/
 ├── research/
 ├── scripts/
 ├── assets/
 └── reports/
 </code></pre>
 <p>共通Rootを開き、知識と成果物を共有する。</p>
-<h2 id="ch-03-s6">3.4 推奨Project構造</h2>
-<pre><code class="language-text">project/
+<h2 id="ch-03-s6">3.4 推奨Project構造</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> docsもinputもoutputも同じ階層に放り込むと、AIも人間もどこを触ればいいか迷う。役割で分ける標準が要る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> CLAUDE.md・docs・inputs・output・src・tests・scripts・.claudeの最小構造が決まる。初見の人もすぐ動ける</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 推奨Project構造。CLAUDE.md・docs・inputs・output・src・tests・scripts・.claudeを役割で分ける標準ツリー</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 初見の人でもどこを触ればいいかが一目で分かる。AIにも『生成物はoutput/』と渡せて事故が減る</p></div><pre><code class="language-text">project/
 ├── CLAUDE.md
 ├── README.md
 ├── docs/
@@ -88,14 +88,14 @@ claude doctor
 ├── .gitignore
 └── package.json / pyproject.toml
 </code></pre>
-<h2 id="ch-03-s7">3.5 CLIの基本</h2>
-<pre><code class="language-bash">claude                         # 対話Session
+<h2 id="ch-03-s7">3.5 CLIの基本</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Claude Codeは対話Session・1回実行・継続・再開で動き方が変わる。最初の数コマンドを覚えないと『どう止めて再開する？』で詰まる</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> claude・-p・--continue・--resumeと、/clear・/compact・/contextを覚えれば、Sessionを能動的に管理できる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Claude Code CLIの4つの起動モード。対話・1回実行・継続・再開を切り替えるコマンド</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> セッションを能動的に開始・継続・再開できる。長いタスクを途中で止めて翌日再開できる</p></div><pre><code class="language-bash">claude                         # 対話Session
 claude -p "依頼"              # 非対話の1回実行
 claude --continue             # 直前Sessionを継続
 claude --resume               # 保存Sessionを選んで再開
 </code></pre>
 <p>Session内の代表操作：</p>
-<pre><code class="language-text">/clear      別Topicへ切り替える前に履歴をクリア
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Session内の代表Slashコマンド。clear・compact・context・stats・rewind・memory・permissions・sandbox・mcp</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 履歴・権限・MCP接続を会話の中から直接確認・操作できる。問題が起きたら/rewindで戻せる</p></div><pre><code class="language-text">/clear      別Topicへ切り替える前に履歴をクリア
 /compact    同じ目的のまま履歴を圧縮
 /context    Contextの内訳を確認
 /stats      利用状況を確認

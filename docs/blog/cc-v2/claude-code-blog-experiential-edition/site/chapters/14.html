@@ -38,9 +38,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-14-s1">14.1 Hookは決定的な制御</h2>
+    <h2 id="ch-14-s1">14.1 Hookは決定的な制御</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLAUDE.mdに書いた安全ルールは「お願い」止まりで、本当に止めたい操作には効きません。決定的に制御できるイベントを把握しておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> SessionStart・PreToolUse・PostToolUse・Stop・SessionEnd・ConfigChangeを足場にすれば、危険Command拒否や編集後Typecheckなどを実行時に強制できます。Eventを知らないと強制と願望の境界が引けません。</p></div>
 <p>代表Event：</p>
-<pre><code class="language-text">SessionStart
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Claude Codeで使える代表的なHook Eventの一覧です。起動から終了までのライフサイクルを縦に並べて把握できます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このEvent名を押さえれば、危険Command拒否・編集後Typecheck・公開可能Context注入など、どの瞬間に介入するかを設計時に選べます。Event未把握ではHookが書けません。</p></div><pre><code class="language-text">SessionStart
 PreToolUse
 PostToolUse
 Stop
@@ -55,9 +55,9 @@ ConfigChange
 <li>Goal未達時の継続。</li>
 <li>設定改変の監査。</li>
 </ul>
-<h2 id="ch-14-s2">14.2 PreToolUse Guard</h2>
+<h2 id="ch-14-s2">14.2 PreToolUse Guard</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> `rm -rf`やForce push・Hard resetなどは、AIが文章のお願いだけでは止められない代表例です。実行直前に介入できる物理ガードが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> PreToolUseでコマンド文字列を正規表現判定し、該当時に`deny`を返す構成にすれば、AIがいくら賢くてもその操作は通りません。Hookが無い環境では破壊的コマンドが繁忙期に必ず通ります。</p></div>
 <p><code>global-config/hooks/pre-bash-guard.sh</code>：</p>
-<pre><code class="language-bash">#!/usr/bin/env bash
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> PreToolUse Guardの最小実装例です。jqでコマンドを抽出し、rm -rf・force push・hard resetなど危険文字列に対し`deny`を返します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この内容を`global-config/hooks/pre-bash-guard.sh`へ置けば、AIがどんな経緯で危険コマンドを出してもHookが拒否を返し、実行されません。文章のお願いから強制への昇格が完了します。</p></div><pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 
 payload="$(cat)"
@@ -91,7 +91,7 @@ fi
 exit 0
 </code></pre>
 <p>Hook Input SchemaはVersionで変わる可能性があるため、実機Fixtureで確認する。</p>
-<h2 id="ch-14-s3">14.3 PostToolUse Validation</h2>
+<h2 id="ch-14-s3">14.3 PostToolUse Validation</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Edit/Write後にtsc・lint・テストを手動で回す運用だと、エラー検知が翌朝までずれ込み、月曜の手戻り会議の原因になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> PostToolUseで対象拡張子にだけtypecheckを走らせれば、編集の瞬間に型エラーが検出されます。Debounce・対象Path・Timeoutを入れないと、毎Edit重くなって運用負担に振れます。</p></div>
 <p><code>global-config/hooks/post-edit-validate.sh</code>：</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
@@ -119,24 +119,24 @@ case "$file" in
 esac
 </code></pre>
 <p>重いCheckを毎Editで実行しすぎない。Debounce、対象Path、Timeoutを入れる。</p>
-<h2 id="ch-14-s4">14.4 SessionStart</h2>
+<h2 id="ch-14-s4">14.4 SessionStart</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 顧客案件ごとに必要な前提・公開可能Runbookが違うのに、毎回会話で説明していると忘れ・取り違えが起きます。SessionStart注入が有効です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Pathで顧客判定し、公開可能なRunbookの場所だけをHook出力で注入すれば、起動の瞬間に必要な前提が揃います。秘密値を出力に埋め込むと別事故になるので分離が必須です。</p></div>
 <p>顧客Pathを判定し、公開可能なRunbookの場所だけを注入する。秘密値をHook出力へ埋め込まない。</p>
-<pre><code class="language-bash">case "$PWD" in
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> SessionStart Hookで顧客Pathを判定し、公開可能Runbookの場所だけを注入する例です。秘密値はHook出力に乗せません。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この分岐を仕込めば、対象顧客ディレクトリで起動した瞬間に必要な前提と禁止事項がAIへ届きます。毎回口頭で前提共有する手間が消え、取り違えも防げます。</p></div><pre><code class="language-bash">case "$PWD" in
   */clients/acme/*)
     echo "Client context: ACME. Read docs/clients/acme/public-runbook.md. Never access production credentials."
     ;;
 esac
 </code></pre>
-<h2 id="ch-14-s5">14.5 Stop Hookと<code>/goal</code></h2>
-<pre><code class="language-text">/goal 次を満たすまで継続。ただし最大20ターン:
+<h2 id="ch-14-s5">14.5 Stop Hookと<code>/goal</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> テスト成功・型チェック成功・Build成功まで本当に走り切らせたい場面で、AIが途中で止まることがあります。`/goal`と停止判定を組むのが現実解です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 「最大20ターン」「test/typecheck/build成功」「README整備」のような上限と完了条件を併記すれば、暴走と早期停止を同時に抑えられます。上限を入れないと無限ループの危険があります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Stop Hookと組み合わせる`/goal`指示テンプレートです。継続条件と最大ターン上限を同時に明示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この書式で渡せば、test/typecheck/build成功とREADME整備を満たすまでAIが自律的に継続します。上限が無いと無限ループ化し、上限だけだと早期撤退する事故が起きます。</p></div><pre><code class="language-text">/goal 次を満たすまで継続。ただし最大20ターン:
 - npm test成功
 - npm run typecheck成功
 - npm run build成功
 - READMEに起動手順
 </code></pre>
 <p>上限と失敗Reportを必ず入れる。</p>
-<h2 id="ch-14-s6">14.6 Hook Security</h2>
-<pre><code class="language-text">- stdinを信頼しない
+<h2 id="ch-14-s6">14.6 Hook Security</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Hookは強力なだけにバグるとそれ自体が事故源になります。stdin汚染・Path Traversal・Secrets混入を防ぐSecurity項目を順守する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> stdin不信用・変数Quote・絶対Path化・Secrets除外・Timeout・Safe failure・Fixture Test・署名配布を全部入れれば、Hookを安全に長期運用できます。1つ抜けると環境破壊や情報漏えいに直結します。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Hook Securityチェックリストです。Quote・Path Traversal拒否・絶対Path化・Secrets除外・Timeout・Safe failure・Fixture Test・署名配布を網羅します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この9項目を全部潰したHookだけ配布対象にすれば、Hookそれ自体が事故源になるリスクを最小化できます。1つ抜けるだけで環境破壊や情報漏えいの入口になります。</p></div><pre><code class="language-text">- stdinを信頼しない
 - Shell変数をQuote
 - Path Traversalを拒否
 - 絶対PathまたはCLAUDE_PROJECT_DIR
@@ -146,15 +146,15 @@ esac
 - Fixture Test
 - 変更をReview/署名配布
 </code></pre>
-<h2 id="ch-14-s7">14.7 Hook Test</h2>
-<pre><code class="language-text">正常Command → 許可
+<h2 id="ch-14-s7">14.7 Hook Test</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Hookは「危険を拒否」と「正常を通す」の両方を満たす必要があります。誤検知も誤通過もFixtureテストで担保しないと本番で破綻します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 正常Command許可・rm -rf拒否・force push拒否・誤検知防止・空Input安全・壊れたJSON安全の6ケースを揃えれば、Hookの品質が機械的に検証できます。Fixture無しで配布すると現場で初めて欠陥が見つかります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Hook Fixture Testの最小ケース集です。許可・拒否・誤検知防止・空Input・壊れたJSON・破壊的引数の6パターンで動作を検証します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このFixtureを通したHookだけ配布すれば、本番で「危険を見逃す」「正常を止める」事故を構造的に防げます。テスト無しのHookは現場で初めて欠陥が露出します。</p></div><pre><code class="language-text">正常Command → 許可
 rm -rf → 拒否
 force push → 拒否
 文字列中の単なるrm → 誤検知しない
 空Input → Errorにしない
 壊れたJSON → 安全側
 </code></pre>
-<h2 id="ch-14-s8">14.8 Plugins</h2>
+<h2 id="ch-14-s8">14.8 Plugins</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skill単体・Skill+Agent+Hook・全社標準・顧客固有では、配布方法と更新管理の最適解が違います。状況別の選び方を持っておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 1 SkillならSkill単体、複合ならPlugin、全社標準ならManaged Marketplace、顧客固有なら顧客別Pluginと使い分ければ、配布範囲と更新ルートが整理されます。提供元・実行Code・MCP・Rollbackは必ずReviewします。</p></div>
 <p>PluginはSkills、Agents、Hooks、MCP等を配布単位にまとめる。</p>
 <table>
 <thead>

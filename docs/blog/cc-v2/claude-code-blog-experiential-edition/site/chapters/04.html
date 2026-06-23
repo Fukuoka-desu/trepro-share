@@ -37,9 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-04-s1">4.1 完成形</h2>
+    <h2 id="ch-04-s1">4.1 完成形</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 最初の題材を大きく取ると3週間止まる。入力と出力が固定された小さな完成形を先に決める必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 文字起こしを入れたらmd・json・htmlの3点が出る、と完成形が明確になる。90分で『動いた』を体験できる</p></div>
 <p>文字起こしを入力すると、次を生成する。</p>
-<pre><code class="language-text">output/
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 会議アシスタントの完成形ファイル構成。md・json・htmlの3点が同じ会議に対して出る</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 外部APIやDBを使わずローカルで完結する。最初の90分実習のゴールとして合格判定がしやすい</p></div><pre><code class="language-text">output/
 ├── meeting-2026-06-22.md
 ├── meeting-2026-06-22.json
 └── app.html
@@ -50,9 +50,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>MeetingとTaskを閲覧するローカルHTML。</li>
 </ul>
 <p>外部API、認証、DB、AI APIは最初の版では使わない。</p>
-<h2 id="ch-04-s2">4.2 要件定義</h2>
+<h2 id="ch-04-s2">4.2 要件定義</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 目的・入力・出力・Schema・制約・完了条件を曖昧にしたまま実装すると、AIは推測で埋めて手戻りが連鎖する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> requirements.mdが埋まると、AIは何をしてはいけないかまで分かる。担当・期限の捏造を構造的に防げる</p></div>
 <p><code>docs/requirements.md</code>：</p>
-<pre><code class="language-markdown"># Meeting Assistant 要件定義
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> requirements.md。目的・入力・出力・Task Schema・制約・完了条件を1ファイルに固定する要件定義書</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIへ渡す前に『何を作り、何を作らないか』が明確になる。担当・期限の捏造禁止まで仕様で縛れる</p></div><pre><code class="language-markdown"># Meeting Assistant 要件定義
 
 ## 目的
 会議文字起こしから、決定事項と担当Taskを追跡可能にする。
@@ -89,8 +89,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Owner/Status/DueでFilterできる
 - READMEに起動手順がある
 </code></pre>
-<h2 id="ch-04-s3">4.3 Project CLAUDE.md</h2>
-<pre><code class="language-markdown"># Meeting Assistant
+<h2 id="ch-04-s3">4.3 Project CLAUDE.md</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Project単位のお願いがないと、AIは外部API追加・入力ファイル改変・担当の創作などを善意でやってしまう</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> CLAUDE.mdに『inputsを触らない』『null+needs_confirmationを使う』と書けば、暴走が起きにくい設計になる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Project CLAUDE.md。inputs改変禁止・担当捏造禁止・null+needs_confirmation活用・外部API無断追加禁止を書く</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Project全体で守るべきルールがAIに伝わる。会話のたびに同じ注意を書く必要がなくなる</p></div><pre><code class="language-markdown"># Meeting Assistant
 
 - Respond in Japanese.
 - Read `docs/requirements.md` before changing files.
@@ -100,9 +100,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Run all checks before reporting completion.
 - Do not add external APIs, authentication, or databases without approval.
 </code></pre>
-<h2 id="ch-04-s4">4.4 議事録Skill</h2>
+<h2 id="ch-04-s4">4.4 議事録Skill</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 成功した手順を会話の中に置いたままだと、翌日同じ依頼でまた1から説明が要る。Skill化で再利用できる</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> SKILL.mdに入力・処理・出力・品質チェックを書けば、次回からは1行呼び出しで議事録パイプラインが走る</p></div>
 <p><code>.claude/skills/meeting-minutes/SKILL.md</code>：</p>
-<pre><code class="language-markdown">---
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 議事録SkillのSKILL.md。入力・Workflow・Markdown出力・Quality checksを宣言する再利用可能な手順書</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 次の会議からは1コマンドで議事録パイプラインが走る。担当捏造や日付形式のブレが構造的に消える</p></div><pre><code class="language-markdown">---
 name: meeting-minutes
 description: Convert a meeting transcript into a traceable Markdown summary and structured task JSON without inventing owners, dates, or decisions.
 argument-hint: "&lt;transcript path&gt;"
@@ -136,17 +136,17 @@ argument-hint: "&lt;transcript path&gt;"
 - Dates are ISO 8601
 - Markdown and JSON describe the same tasks
 </code></pre>
-<h2 id="ch-04-s5">4.5 Sample Input</h2>
+<h2 id="ch-04-s5">4.5 Sample Input</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装前に動作確認できるサンプル入力がないと、出力の正解が共有できない。テスト不能のまま完了宣言が出る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 具体的な発言例と決定事項が含まれるサンプルがあれば、AIも人間も同じ正解像を見ながら作業できる</p></div>
 <p><code>inputs/meeting-2026-06-22.md</code>：</p>
-<pre><code class="language-markdown"># 商品会議 2026-06-22
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> サンプル入力の文字起こし。担当決まりと未決のタスクが混在する典型的な会議発話</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが決定事項を抽出できるか、未決を未決として残せるかを同じデータで検証できる</p></div><pre><code class="language-markdown"># 商品会議 2026-06-22
 
 山田: 新LPは7月1日に公開したいです。
 佐藤: 見出し案を金曜までに私が3案作ります。
 田中: 計測タグは公開前に確認が必要です。担当はまだ決めていません。
 山田: では公開日は7月1日で決定。タグ担当は明日決めましょう。
 </code></pre>
-<h2 id="ch-04-s6">4.6 Plan依頼</h2>
-<pre><code class="language-text">`docs/requirements.md`、`CLAUDE.md`、Sample Inputを読んでください。
+<h2 id="ch-04-s6">4.6 Plan依頼</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> いきなり実装に走らせると、ファイル構成もSchemaも一発で確定する。後で『そうじゃない』が大量に発生する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Plan依頼で構成・Schema・処理・UI・Test・Risk・Rollbackを先に文書化させる。実装前にレビューできる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Plan依頼Prompt。実装に入らずFile構成・Schema・処理・UI・Test・不確定・Risk/Rollbackだけを先に出させる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装前に設計をレビューできる。後から『そうじゃなかった』で全書き直しになる事故が消える</p></div><pre><code class="language-text">`docs/requirements.md`、`CLAUDE.md`、Sample Inputを読んでください。
 まだ実装せず、次を含む計画を作ってください。
 
 - File構成
@@ -157,8 +157,8 @@ argument-hint: "&lt;transcript path&gt;"
 - 不確定事項
 - RiskとRollback
 </code></pre>
-<h2 id="ch-04-s7">4.7 実装依頼</h2>
-<pre><code class="language-text">承認した計画に従い、最小構成で実装してください。
+<h2 id="ch-04-s7">4.7 実装依頼</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 承認したPlanがあっても、実装段階の制約を毎回書かないと外部API追加・入力改変・Test省略が混入する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 禁止事項とDiff・Command・Test結果・残Riskの報告を求める形に固定できる。完了報告が証拠付きになる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 実装依頼Prompt。外部API/DB/認証禁止・入力不変・JSON Schema検証・完了時にDiff/Command/Test/残Risk報告</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装が承認済みPlanからブレない。完了報告が証拠付きで返り、後追い確認が要らない</p></div><pre><code class="language-text">承認した計画に従い、最小構成で実装してください。
 
 - 外部API/DB/認証は禁止
 - 入力を変更しない
@@ -167,8 +167,8 @@ argument-hint: "&lt;transcript path&gt;"
 - HTMLはMobile対応
 - 完了時にDiff、Command、Test結果、残Riskを報告
 </code></pre>
-<h2 id="ch-04-s8">4.8 合格基準</h2>
-<pre><code class="language-text">[ ] 山田が決定した公開日だけをDecisionとして抽出
+<h2 id="ch-04-s8">4.8 合格基準</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『動いたっぽい』では合格にできない。チェックリストで機械的・意味的に合格条件を切り出す必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 決定事項抽出・担当null・Quote追跡・JSON Schema・Filter動作・Input Hash不変まで1リストで判定できる</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 合格基準チェックリスト。決定抽出・担当null・Quote追跡・JSON Schema・Filter動作・Input Hash不変の7項目</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 『動いたっぽい』を排除して機械的に合格判定できる。Input改変を起こしていないかまで確認できる</p></div><pre><code class="language-text">[ ] 山田が決定した公開日だけをDecisionとして抽出
 [ ] 佐藤のTaskと金曜期限を抽出
 [ ] Tag担当はnull + needs_confirmation
 [ ] 原文Quoteから追跡可能
@@ -176,9 +176,9 @@ argument-hint: "&lt;transcript path&gt;"
 [ ] HTMLのFilterが動く
 [ ] Input Hashが変わっていない
 </code></pre>
-<h2 id="ch-04-s9">4.9 学びをSkillへ戻す</h2>
+<h2 id="ch-04-s9">4.9 学びをSkillへ戻す</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 今回のうまくいった工夫を会話に残すだけだと、明日には消える。一般化できるものをSkillへ戻す工程が要る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Rule・Fixture・失敗例をSkillへDiff提案できる。今回の学びが翌週以降の議事録生成にも自動で効く</p></div>
 <p>出力修正を会話だけに残さない。</p>
-<pre><code class="language-text">今回の修正で再利用価値があるものを抽出してください。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Skill昇格Prompt。Project固有事実ではなく一般化できるRule・Fixture・失敗例をDiff案で提案させる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 今回の学びが議事録Skillに恒久的に積み上がる。翌週の会議でも同じ品質が出る</p></div><pre><code class="language-text">今回の修正で再利用価値があるものを抽出してください。
 Project固有の事実ではなく、一般化できるRule、Fixture、失敗例としてSkillへ提案してください。
 まだSkillを変更せず、Diff案を出してください。
 </code></pre>

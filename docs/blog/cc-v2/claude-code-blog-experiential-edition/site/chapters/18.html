@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-18-s1">18.1 Cowork向き</h2>
+    <h2 id="ch-18-s1">18.1 Cowork向き</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Codeに何でも持ち込むと、議事録要約や朝のニュース整理のような軽い業務まで重装備になり続きません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Cowork向き・Code向きの境目を持つと、Git・認証・Deployが要らない仕事はProjectの中で軽く回せます。</p></div>
 <ul>
 <li>議事録→週報/Task。</li>
 <li>Drive資料の整理・要約。</li>
@@ -47,7 +47,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Scheduled Task。</li>
 </ul>
 <p>Codeへ移す目安：Git履歴、独自Library/Test、認証/DB、本番Deploy、複雑な監視が必要。</p>
-<h2 id="ch-18-s2">18.2 主要領域</h2>
+<h2 id="ch-18-s2">18.2 主要領域</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Project・Artifacts・Scheduled・Dispatch・Customizeを名前で覚えると、Beta更新ごとに教材が陳腐化します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 役割で整理しておけば、UI名が変わっても『どこで何をする領域か』が崩れず、新人にも説明し直しやすくなります。</p></div>
 <table>
 <thead>
 <tr>
@@ -79,12 +79,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <p>UI名より役割を教材化する。</p>
-<h2 id="ch-18-s3">18.3 Live Artifactの5層</h2>
-<pre><code class="language-text">Source → Fetch → Transform → Cache → View
+<h2 id="ch-18-s3">18.3 Live Artifactの5層</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 毎回フルでデータ取得・要約をやり直すArtifactは、コスト・速度・失敗時の挙動のどれも安定しません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Source→Fetch→Transform→Cache→Viewの5層に分けて設計すれば、変更分だけ再処理・失敗時はStale表示と切り分けられます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Live Artifactを5層で表現した設計図で、取得から表示までの責務分割を1行で示しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの層で失敗したかが切り分けやすくなり、再要約や再取得の最小範囲を判断できます。</p></div><pre><code class="language-text">Source → Fetch → Transform → Cache → View
 Drive     MCP     Parse/Summary  Hash    Filter/Search/Ask
 </code></pre>
-<h2 id="ch-18-s4">18.4 会議Dashboard Prompt</h2>
-<pre><code class="language-text">Google Driveの「全社会議文字起こし」を参照するLive Artifactを作る。
+<h2 id="ch-18-s4">18.4 会議Dashboard Prompt</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 会議要約を毎週手作りすると、属人化と更新遅延が同時に進み、週末まで状況が見えなくなります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Driveを参照するLive Artifactのプロンプトテンプレを持てば、開くたびに最新状態が出る業務インターフェースに置き換えられます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 会議Dashboardを生成するためのテンプレで、表示項目・Performance・Safetyを並列で指示しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> source_id+content_hash+prompt_versionのキャッシュ設計まで含んだ、運用に出せる粒度のArtifactが得られます。</p></div><pre><code class="language-text">Google Driveの「全社会議文字起こし」を参照するLive Artifactを作る。
 
 - 最新File一覧
 - 日付、題名、参加者、決定、担当、期限
@@ -105,8 +105,8 @@ Safety:
 - 原文全文/個人情報をLocal Storageへ保存しない
 </code></pre>
 <p>動画で紹介されたArtifact内API名はBetaで変化し得る。作成時の公式Helpを正とする。</p>
-<h2 id="ch-18-s5">18.5 Scheduled設計</h2>
-<pre><code class="language-text">- 対象期間
+<h2 id="ch-18-s5">18.5 Scheduled設計</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 定期実行を雑に組むと、重複起動・タイムゾーン違い・失敗の沈黙が運用事故として表面化します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 対象期間・Lock・Retry上限・通知・0件時挙動を先に決めておけば、Scheduledを安心して放置できます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Scheduledジョブを設計する際の8項目で、重複起動Lockや0件挙動まで網羅したチェック観点です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 定期実行に起きやすい『黙って失敗』『二重起動』を、設計段階で潰せます。</p></div><pre><code class="language-text">- 対象期間
 - 既処理判定
 - Timezone
 - Retry上限
@@ -115,8 +115,8 @@ Safety:
 - 保存先
 - 0件時の挙動
 </code></pre>
-<h2 id="ch-18-s6">18.6 Acceptance</h2>
-<pre><code class="language-text">[ ] Add/Deleteで更新
+<h2 id="ch-18-s6">18.6 Acceptance</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Artifactは見た目が動けば完成に見えてしまい、Cacheや出典の不備が後から効いてきます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 更新・キャッシュ・出典の3点をAcceptance基準として明文化すると、運用に渡せる完成判定が機械的に下せます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Live ArtifactのAcceptance基準10項目で、更新・キャッシュ・出典・モバイル・権限まで含めたゲートです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 見た目が動くだけのデモから、運用に渡せるDashboardへの卒業判定が一定にできます。</p></div><pre><code class="language-text">[ ] Add/Deleteで更新
 [ ] 未変更Dataを再処理しない
 [ ] 権限不足説明
 [ ] 0件/部分失敗/Timeout

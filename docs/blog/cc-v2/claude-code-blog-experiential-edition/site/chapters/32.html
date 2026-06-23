@@ -38,18 +38,18 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-32-s1">32.1 毎朝Brief</h2>
+    <h2 id="ch-32-s1">32.1 毎朝Brief</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 朝の状況把握は属人化しやすく、担当が休むと止まります。Calendar・未返信・締切Task・重要MentionをBriefへ集約し、送信や予定変更はしないと縛れば、自動配信しても安全です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 今日の動き方が10秒で把握でき、休んでも誰でも同じ精度でその日を立ち上げられる業務継続性が手に入ります。</p></div>
 <p>Calendar、未返信候補、締切Task、重要Mentionから、今日の予定、準備Meeting、返信Draft、Riskを作る。送信/予定変更/Task更新はしない。</p>
-<h2 id="ch-32-s2">32.2 会議→Task Board</h2>
-<pre><code class="language-text">Transcript → Meeting Skill → Human Review → Task JSON → Dashboard
+<h2 id="ch-32-s2">32.2 会議→Task Board</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 議事録からTask登録までを一気通貫にすると、AIの誤抽出がそのまま外部Systemへ流れます。Human Reviewを必ず挟み、承認済みだけDraft登録する流れにすれば、AIと人の責任が分離されます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Task Boardに不確かな情報が混入しなくなり、議事録から実行までの待ち時間も短縮されます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 会議文字起こしからTask Boardへ流すパイプで、承認済みのTaskだけ外部SystemへDraft登録する境界を明示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 議事録からTask登録までが半自動で成立しつつ、外部System側にはレビュー済みデータしか入らない安全境界が確保されます。</p></div><pre><code class="language-text">Transcript → Meeting Skill → Human Review → Task JSON → Dashboard
 → 承認済みTaskだけ外部SystemへDraft登録
 </code></pre>
-<h2 id="ch-32-s3">32.3 Skill改善Loop</h2>
-<pre><code class="language-text">実行 → User評価 → 失敗Fixture → Generator → Fresh Evaluator
+<h2 id="ch-32-s3">32.3 Skill改善Loop</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillを会話中に即全社上書きすると、誰かの作業が突然壊れます。実行ログ・失敗Fixture・Fresh Evaluator・Canary・Metricsを経てStableへ昇格させると、影響範囲を測ってから配布できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Skillの改善がデータに基づき段階配布される運用に変わり、便利な変更が誰かの本番を壊す事故が消えます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Skill改善Loopの標準パイプで、Canary配布とMetrics確認を経てStable昇格させる段階更新フローです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Skillの改修が個人の善意ではなくデータと評価器でゲートされ、配布事故と『便利な改悪』の両方を避けられます。</p></div><pre><code class="language-text">実行 → User評価 → 失敗Fixture → Generator → Fresh Evaluator
 → Canary → Metrics → Stable
 </code></pre>
 <p>会話中に即全社上書きしない。</p>
-<h2 id="ch-32-s4">32.4 成熟度</h2>
+<h2 id="ch-32-s4">32.4 成熟度</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全業務を最初から監視付き自動へ持っていくと、運用負荷が爆発します。Level 0手動Chatから Level 6 Harness+Audit+Releaseまで段階化し、業務ごとに必要な最小Levelを選ぶと最適化できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 対象業務の現在地と次のターゲット段階が共通言語になり、過剰自動化と不足自動化のどちらも避けやすくなります。</p></div>
 <table>
 <thead>
 <tr>

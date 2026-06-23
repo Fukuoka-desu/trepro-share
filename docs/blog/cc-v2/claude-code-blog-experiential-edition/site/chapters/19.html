@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 
   <section class="reference" aria-label="実装リファレンス">
     <h2>実装リファレンス</h2>
-    <h2 id="ch-19-s1">19.1 外部化する情報</h2>
+    <h2 id="ch-19-s1">19.1 外部化する情報</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> AIに何を覚えさせ、何を覚えさせないかをまず外から見える形にしないと、パーソナライズは個人情報の暴露と紙一重になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 関心・詰まる概念・好む形式といった再利用価値のある信号だけをファイル化し、本人がいつでも編集・削除できる構造になります。</p></div>
 <ul>
 <li>最近の関心。</li>
 <li>よく詰まる概念。</li>
@@ -47,7 +47,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>次のResearch候補。</li>
 <li>復習すべき内容。</li>
 </ul>
-<pre><code class="language-text">personalization/
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 個人化用ディレクトリの構成例で、状態・信号・プロファイル・学習・好み・問題を1か所に集約しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 保存対象と管理対象が見える形になり、本人がレビュー・削除できる範囲が物理的に1フォルダで完結します。</p></div><pre><code class="language-text">personalization/
 ├── state.json
 ├── signals.jsonl
 ├── INTERESTS.md
@@ -55,8 +55,8 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 ├── preferences.md
 └── quizzes/
 </code></pre>
-<h2 id="ch-19-s2">19.2 Privacy by Design</h2>
-<pre><code class="language-text">- 対象ProjectをAllowlist
+<h2 id="ch-19-s2">19.2 Privacy by Design</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 個人化を進めるほど、顧客情報や評価につながる属性まで吸い込む事故が起きやすくなるため、最初に保存禁止の境界を引きます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ProjectのAllowlistとSecretマスク、人事評価非利用などのルールが先に決まり、後からの『これは消してほしい』を構造的に減らせます。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Privacy by Designの最低限ルールを箇条書きで宣言する設計メモで、Opt-in方針とユーザー権限を明文化します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 後から議論になりがちな『これ保存していい？』が事前合意になり、抽出処理側が参照すべき判断軸が固まります。</p></div><pre><code class="language-text">- 対象ProjectをAllowlist
 - 顧客案件はOpt-in
 - SecretをMask
 - 生LogのRetention
@@ -64,7 +64,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - 人事評価へ使わない
 - UserがReview/Delete可能
 </code></pre>
-<h2 id="ch-19-s3">19.3 未分析Logだけを抽出するScript</h2>
+<h2 id="ch-19-s3">19.3 未分析Logだけを抽出するScript</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 毎回すべてのログを読み直すと処理時間も費用も伸び続けるため、前回処理位置を持つ差分処理が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ユーザー発話だけを抽出してSecretsをマスクし、ノイズを除いた信号を追記していくJSONLが手に入ります。</p></div>
 <p>Local履歴形式は更新され得る。実環境のJSONL Schemaを確認して使う。</p>
 <p><code>tools/extract_user_signals.py</code>：</p>
 <pre><code class="language-python">#!/usr/bin/env python3
@@ -206,10 +206,10 @@ def main() -&gt; int:
 if __name__ == "__main__":
     raise SystemExit(main())
 </code></pre>
-<pre><code class="language-bash">mkdir -p personalization tools
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> ユーザー発話だけを抽出し、Secretsをマスクして差分追記するPythonスクリプトで、state.jsonに処理済み行を覚えます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 毎回全ログを読み直さずに信号JSONLが追記され、ノイズと機密が落ちた状態でプロファイル化の素材が手に入ります。</p></div><pre><code class="language-bash">mkdir -p personalization tools
 python3 tools/extract_user_signals.py --allow-project my-workspace
 </code></pre>
-<h2 id="ch-19-s4">19.4 Interest Profile Skill</h2>
+<h2 id="ch-19-s4">19.4 Interest Profile Skill</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 抽出した信号をそのまま渡しても、本人が理解できる形に整っていないと活用も削除もできません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> INTERESTS.mdとLEARNING.mdを更新するSkillが、差分付きで本人レビュー可能な形に変換してくれます。</p></div>
 <pre><code class="language-markdown">---
 name: interest-profile
 description: Analyze new user-authored interaction signals and update a concise privacy-safe interest and learning profile. Use when syncing interests, personalizing research, or creating review material.
@@ -240,23 +240,23 @@ recency, and whether the topic remains active.
 7. Update INTERESTS.md and LEARNING.md.
 8. Show the diff for user approval.
 </code></pre>
-<h2 id="ch-19-s5">19.5 Recency Score</h2>
-<pre><code class="language-text">base = explicit_interest × 3
+<h2 id="ch-19-s5">19.5 Recency Score</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 古い興味と現在の興味を同じ重みで扱うと、すでに関心が薄れた話題が出続けるため、新しさで割り引く設計が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 頻度と深掘りに半減期を掛けた数値で並び替えでき、現在の関心が上に出るプロファイルになります。</p></div>
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 明示的関心・セッション数・深掘り・繰り返しに重みを置き、最後に新しさの半減期で割り引くスコア式です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 古い関心と現在の関心を分離した順位が得られ、人間評価ではなく並び替え補助としてだけ使う前提が共有されます。</p></div><pre><code class="language-text">base = explicit_interest × 3
      + distinct_sessions × 2
      + follow_up_depth
      + repeated_actions
 score = base × 0.5^(days_since_last / half_life_days)
 </code></pre>
 <p>数値は並べ替え補助であり、人間評価へ使わない。</p>
-<h2 id="ch-19-s6">19.6 学習問題</h2>
+<h2 id="ch-19-s6">19.6 学習問題</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ためた関心や苦手分野は、読み返すだけでは定着しないので、想起練習に再利用する仕組みが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> LEARNING.mdから自信度と再出題を持つ復習HTMLが生成され、ローカルだけで完結する学習ループが回せます。</p></div>
 <pre><code class="language-text">`LEARNING.md`から想起学習用HTMLを作る。
 20問。定義、比較、原因、実装、Debugを混ぜる。
 答えを初期非表示にし、自信度と不正解再出題を持つ。
 Local Storageには回答状態だけを保存する。
 </code></pre>
-<h2 id="ch-19-s7">19.7 音声・画像・割り込み</h2>
+<h2 id="ch-19-s7">19.7 音声・画像・割り込み</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 音声入力は便利ですが、Command・Path・数値の誤認識のまま実行すると個人化の利便性が事故に変わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 実行前に目的・対象・禁止・完了条件を復唱させる運用に切り替え、画像はSecretsをマスクして使えるようになります。</p></div>
 <p>長い依頼は音声入力と相性がよいが、Command、Path、数値を実行前に復唱させる。</p>
-<pre><code class="language-text">今の依頼を、目的、対象File、禁止、完了条件に分けて復唱してください。まだ実行しないでください。
+<div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 音声入力時にAIへ復唱を要求する短い指示文で、Command・Path・数値の聞き取り誤差を実行前にあぶり出します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 誤認識のまま処理が走るリスクが減り、実行前に修正可能なゲートが1段挟まる運用に変わります。</p></div><pre><code class="language-text">今の依頼を、目的、対象File、禁止、完了条件に分けて復唱してください。まだ実行しないでください。
 </code></pre>
 <p>画像はUI差分やError画面へ使い、SecretsをMaskする。緊急停止は割り込みTextではなく停止操作を使う。</p>
 <hr/>
