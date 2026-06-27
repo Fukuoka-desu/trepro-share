@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TrePro Portal 全体ガイド</title>
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #526070;
+      --subtle: #7a8797;
+      --line: #d9e1ec;
+      --soft: #f5f8fc;
+      --blue: #2563eb;
+      --cyan: #0891b2;
+      --green: #059669;
+      --amber: #d97706;
+      --rose: #e11d48;
+      --slate: #334155;
+      --card: rgba(255, 255, 255, 0.92);
+      --shadow: 0 18px 60px rgba(15, 23, 42, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: #eef4fb;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.75;
+      background:
+        radial-gradient(circle at 18% 4%, rgba(37, 99, 235, 0.12), transparent 28%),
+        radial-gradient(circle at 88% 10%, rgba(8, 145, 178, 0.12), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4fb 44%, #f7f9fc 100%);
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 750;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 42px 0 26px;
+    }
+
+    .hero-panel {
+      border: 1px solid rgba(217, 225, 236, 0.92);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      padding: 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 10px;
+      font-size: clamp(30px, 4.6vw, 54px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid #c8d3e3;
+      background: #fff;
+      color: var(--slate);
+      font-size: 14px;
+      font-weight: 850;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .button.primary {
+      border-color: #1d4ed8;
+      background: #1d4ed8;
+      color: #fff;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .summary-card {
+      border: 1px solid rgba(217, 225, 236, 0.92);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.76);
+      padding: 14px;
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .summary-card span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+      padding: 12px 0 52px;
+    }
+
+    .toc {
+      position: sticky;
+      top: 18px;
+      border: 1px solid rgba(217, 225, 236, 0.92);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: 0 14px 42px rgba(15, 23, 42, 0.08);
+      padding: 14px;
+    }
+
+    .toc-title {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--subtle);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .toc a {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--slate);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .toc a:hover {
+      background: #eef4ff;
+      text-decoration: none;
+      color: #1d4ed8;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    section {
+      border: 1px solid rgba(217, 225, 236, 0.92);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 0 14px 44px rgba(15, 23, 42, 0.07);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    p {
+      margin: 8px 0;
+      color: var(--muted);
+    }
+
+    ul, ol {
+      margin: 10px 0 0;
+      padding-left: 1.25rem;
+      color: var(--muted);
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #eef2f7;
+      color: #1e293b;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    .callout {
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--blue);
+      border-radius: 10px;
+      background: #eff6ff;
+      padding: 14px 16px;
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
+    .callout p {
+      margin: 0;
+      color: #1e3a8a;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .step {
+      min-height: 150px;
+      border: 1px solid #dce5f2;
+      border-radius: 10px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .step .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #1d4ed8;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .step strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .step span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .feature {
+      border: 1px solid #dde6f1;
+      border-radius: 10px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    .feature strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .feature p {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 12px;
+      border: 1px solid #dde6f1;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e5ebf4;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid #d8e2ef;
+      background: #fff;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .badge.blue { border-color: #bfdbfe; color: #1d4ed8; background: #eff6ff; }
+    .badge.cyan { border-color: #a5f3fc; color: #0e7490; background: #ecfeff; }
+    .badge.green { border-color: #bbf7d0; color: #047857; background: #f0fdf4; }
+    .badge.amber { border-color: #fed7aa; color: #b45309; background: #fff7ed; }
+    .badge.rose { border-color: #fecdd3; color: #be123c; background: #fff1f2; }
+
+    .mini-card {
+      border: 1px solid #dbe5f0;
+      border-left: 4px solid #3b82f6;
+      border-radius: 12px;
+      background: #fff;
+      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .mini-card.group {
+      border-left-color: #7c3aed;
+      background: linear-gradient(135deg, #fff 0%, #f5f3ff 100%);
+    }
+
+    .mini-card h3 {
+      margin-top: 0;
+    }
+
+    .footer {
+      padding: 26px 0 44px;
+      color: var(--subtle);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: static;
+      }
+
+      .summary-grid,
+      .flow,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel,
+      section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="shell">
+      <div class="hero-panel">
+        <div class="eyebrow">TrePro Portal Guide</div>
+        <h1>TrePro Portal 全体ガイド</h1>
+        <p class="lead">
+          Portalは、社内のツール、Google資料、サイト、データ、AI機能を探して開くための業務入口です。
+          よく使うものをお気に入りにし、カードを並べ替え、グループ化し、自分の作業画面として整えられます。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="https://www-treproai.com/portal">Portalを開く</a>
+          <a class="button" href="#quickstart">最短の使い方</a>
+          <a class="button" href="#layout">配置編集を見る</a>
+        </div>
+        <div class="summary-grid">
+          <div class="summary-card"><strong>探す</strong><span>検索、カテゴリ、部署、種類で絞り込みます。</span></div>
+          <div class="summary-card"><strong>開く</strong><span>カードを押して資料や社内機能へ移動します。</span></div>
+          <div class="summary-card"><strong>整える</strong><span>お気に入り、並び替え、グループ化ができます。</span></div>
+          <div class="summary-card"><strong>共有する</strong><span>個人設定を共有URLとして渡せます。</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell layout">
+    <nav class="toc" aria-label="目次">
+      <p class="toc-title">Contents</p>
+      <a href="#purpose">何をする画面か</a>
+      <a href="#quickstart">最短の使い方</a>
+      <a href="#screen">画面構成</a>
+      <a href="#cards">カードの見方</a>
+      <a href="#groups">グループ</a>
+      <a href="#layout">配置編集</a>
+      <a href="#share">設定共有</a>
+      <a href="#admin">管理者</a>
+      <a href="#ai">AI連携</a>
+      <a href="#troubleshooting">困ったとき</a>
+    </nav>
+
+    <main>
+      <section id="purpose">
+        <h2>何をする画面か</h2>
+        <p>
+          Portalは「社内の入り口」です。資料名や部署名を知らなくても、検索とフィルタで必要なカードを見つけ、
+          そこからGoogle資料、社内アプリ、サイト、データ、AI機能へ移動できます。
+        </p>
+        <div class="callout">
+          <p>タスクを流すボードではなく、業務に必要な入口を整理する画面です。個人の作業順に並べたり、よく使うものをまとめたりするために使います。</p>
+        </div>
+        <div class="badge-row" aria-label="主要カテゴリ">
+          <span class="badge blue">Sales</span>
+          <span class="badge cyan">SM</span>
+          <span class="badge">Marketing</span>
+          <span class="badge green">MM</span>
+          <span class="badge rose">CC</span>
+          <span class="badge amber">経理</span>
+          <span class="badge">HR</span>
+          <span class="badge blue">AI機能</span>
+          <span class="badge">管理者</span>
+        </div>
+      </section>
+
+      <section id="quickstart">
+        <h2>最短の使い方</h2>
+        <div class="flow">
+          <div class="step">
+            <span class="num">1</span>
+            <strong>検索する</strong>
+            <span>上部検索欄に、資料名、部署名、用途、データ名を入れます。ショートカットは <code>⌘K</code> です。</span>
+          </div>
+          <div class="step">
+            <span class="num">2</span>
+            <strong>絞り込む</strong>
+            <span><code>全社マスター</code>、<code>担当部門マスター</code>、<code>最近使った</code>、<code>お気に入り</code> などで表示を切り替えます。</span>
+          </div>
+          <div class="step">
+            <span class="num">3</span>
+            <strong>開く</strong>
+            <span>カード全体、または右側の開くアイコンを押すと、対象の資料や機能が別タブで開きます。</span>
+          </div>
+          <div class="step">
+            <span class="num">4</span>
+            <strong>自分用に整える</strong>
+            <span>星でお気に入り、<code>配置編集</code>で並び替え、<code>選択してまとめる</code>でグループ化します。</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen">
+        <h2>画面構成</h2>
+        <div class="feature-grid">
+          <div class="feature">
+            <strong>左サイドバー</strong>
+            <p><code>ポータル</code>、<code>お気に入り</code>、<code>最近使った</code>、<code>すべてのツール</code>、管理者メニュー、使い方ガイド、ヘルプへ移動します。</p>
+          </div>
+          <div class="feature">
+            <strong>上部検索</strong>
+            <p>「セールス、SM、広告、人事評価、入金、Google Docs、サイト、データ」などを横断検索します。</p>
+          </div>
+          <div class="feature">
+            <strong>フィルタ列</strong>
+            <p><code>全社マスター</code>、<code>担当部門マスター</code>、<code>グループ</code>、<code>特別枠（色分け）</code>、種類別フィルタを使います。</p>
+          </div>
+          <div class="feature">
+            <strong>カードエリア</strong>
+            <p>上段は全社や担当部門の重要入口、下段は自分が使うカード一覧です。よく使う、最近使った、お気に入りも表示されます。</p>
+          </div>
+        </div>
+
+        <h3>よく使う切り替え</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ボタン</th><th>意味</th><th>使う場面</th></tr></thead>
+            <tbody>
+              <tr><td><code>すべて</code></td><td>全カードを対象にします。</td><td>まず全体から探したいとき。</td></tr>
+              <tr><td><code>全社マスター</code></td><td>全員が使う基準資料や主要入口です。</td><td>共通の正しい入口を開きたいとき。</td></tr>
+              <tr><td><code>担当部門マスター</code></td><td>部署・担当に関係する主要入口です。</td><td>自分の部署の資料だけを見たいとき。</td></tr>
+              <tr><td><code>よく使う</code></td><td>利用回数が多いカードです。</td><td>毎日使う入口へすぐ戻るとき。</td></tr>
+              <tr><td><code>最近使った</code></td><td>直近で開いたカードです。</td><td>さっき見ていた資料へ戻るとき。</td></tr>
+              <tr><td><code>お気に入り</code></td><td>星を付けたカードです。</td><td>自分の固定セットを開くとき。</td></tr>
+              <tr><td><code>グループ</code></td><td>まとめたカードだけを見ます。</td><td>業務単位のセットを開くとき。</td></tr>
+              <tr><td><code>特別枠（色分け）</code></td><td>色や扱いが付いたカードを見ます。</td><td>通常カードと区別された入口を確認するとき。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="cards">
+        <h2>カードの見方</h2>
+        <p>カードは1つの資料、アプリ、サイト、データ、AI機能への入口です。タイトルを見て、説明で用途を確認し、必要なら星や要約を使います。</p>
+        <div class="mini-card">
+          <h3>通常カード</h3>
+          <ul>
+            <li><strong>タイトル</strong>: 開く対象の名前です。カードの一番重要な情報です。</li>
+            <li><strong>説明</strong>: そのカードで何を確認できるかを短く表示します。</li>
+            <li><strong>カテゴリ</strong>: Sales、SM、経理、HRなどの分類です。</li>
+            <li><strong>星</strong>: お気に入りに追加、または解除します。</li>
+            <li><strong>開く</strong>: 対象URLを別タブで開きます。</li>
+            <li><strong>要約</strong>: AIが内容説明に使えるカードでは要約できます。制限中のカードはAI参照できません。</li>
+            <li><strong>最終確認</strong>: 最後に確認された日付です。古い場合は扱いに注意します。</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <p>迷ったら、まずカードのタイトルと説明を見ます。詳しい中身を見るより前に「この入口が目的に合っているか」を判断できます。</p>
+        </div>
+      </section>
+
+      <section id="groups">
+        <h2>グループ</h2>
+        <p>
+          グループは、複数のカードを業務単位でまとめる機能です。たとえば「SMグループ」「HRグループ」のように、
+          いつも一緒に開くカードを1つのかたまりとして扱えます。
+        </p>
+        <div class="mini-card group">
+          <h3>グループカード</h3>
+          <ul>
+            <li>通常カードよりも目立つ色味で表示されます。</li>
+            <li>クリックすると、中に入っているカード一覧が開きます。</li>
+            <li>基本的にクリック時は一覧表示だけです。名前変更画面を毎回出す仕様ではありません。</li>
+            <li>鉛筆アイコンからグループ名などを編集できます。</li>
+            <li>一覧内から個別カードを開けます。不要になったらグループ解除や個別の外し操作を使います。</li>
+          </ul>
+        </div>
+
+        <h3>グループを作る</h3>
+        <ol>
+          <li><code>選択してまとめる</code> を押します。</li>
+          <li>まとめたいカードを複数選びます。</li>
+          <li>グループ化します。</li>
+          <li>必要なら鉛筆アイコンから名前を変更します。</li>
+        </ol>
+      </section>
+
+      <section id="layout">
+        <h2>配置編集</h2>
+        <p>
+          <code>配置編集</code> は、Portalを自分の作業順に整える機能です。押すと編集モードになり、
+          カードの並び替え、テンプレート適用、リセット、グループ化がしやすくなります。
+        </p>
+        <div class="feature-grid">
+          <div class="feature">
+            <strong>マスター上段</strong>
+            <p>全社・部門のマスター系カードを先頭に寄せるテンプレートです。</p>
+          </div>
+          <div class="feature">
+            <strong>お気に入り優先</strong>
+            <p>星を付けたカードを先に表示します。自分の頻出カードを前に出したいときに使います。</p>
+          </div>
+          <div class="feature">
+            <strong>種類別</strong>
+            <p>シート、Docs、データ、サイトなど、種類ごとに並べます。</p>
+          </div>
+          <div class="feature">
+            <strong>標準</strong>
+            <p>個人の並び替えを戻して、標準状態へ近づけます。</p>
+          </div>
+        </div>
+        <h3>保存されるもの</h3>
+        <ul>
+          <li>カードの並び順</li>
+          <li>グループ構成</li>
+          <li>お気に入り</li>
+          <li>個人追加サイトや共有から取り込んだ設定</li>
+        </ul>
+      </section>
+
+      <section id="share">
+        <h2>設定共有</h2>
+        <p>
+          <code>設定共有</code> は、自分のPortal設定をほかの人に渡すための機能です。
+          個人追加サイト、並び順、グループ、お気に入りを共有URLとして作成できます。
+        </p>
+        <ol>
+          <li><code>設定共有</code> を押します。</li>
+          <li>共有URLまたはMarkdownを取得します。</li>
+          <li>相手がURLを開くと、取り込み確認画面が出ます。</li>
+          <li>相手が承認すると、そのアカウントに設定が反映されます。</li>
+        </ol>
+        <div class="callout">
+          <p>共有は「自分の並びやグループを渡す」ためのものです。Portalの本体データやDBを書き換えるための操作ではありません。</p>
+        </div>
+      </section>
+
+      <section id="admin">
+        <h2>管理者ができること</h2>
+        <p>管理者権限がある場合だけ、カード編集や管理者向けカードが表示されます。</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>操作</th><th>説明</th><th>注意</th></tr></thead>
+            <tbody>
+              <tr><td>カード編集</td><td>鉛筆アイコンからタイトル、説明、URL、カテゴリ、タグ、AI可否などを変更します。</td><td>社員全体に影響するカードは内容を確認してから変更します。</td></tr>
+              <tr><td><code>/admin/portal-resources</code></td><td>Portalカードの管理画面です。新規追加、編集、非表示化などを扱います。</td><td>通常ユーザーには表示されません。</td></tr>
+              <tr><td>マスター固定</td><td>全員が見る上段エリアに固定したいカードを管理します。</td><td>基準資料や重要入口だけに使います。</td></tr>
+              <tr><td>AI参照制限</td><td>PIIや権限制限があるカードはAI要約やIDE送信から外します。</td><td>安全側を優先します。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="ai">
+        <h2>AI連携</h2>
+        <p>
+          Portalには、AIが内容を説明する <code>要約</code>、作業ContextをIDEへ渡す <code>IDEに送る</code>、
+          外部AIツールからPortal情報を読むための <code>MCP接続設定</code> があります。
+        </p>
+        <div class="feature-grid">
+          <div class="feature">
+            <strong>要約</strong>
+            <p>AI参照が許可されたカードだけ、内容説明を表示できます。制限中のカードは要約できません。</p>
+          </div>
+          <div class="feature">
+            <strong>IDEに送る</strong>
+            <p>選んだカードを作業ContextとしてClaude CodeやCodexへ渡すための導線です。長い情報をコピペしない設計です。</p>
+          </div>
+          <div class="feature">
+            <strong>MCP接続設定</strong>
+            <p>Codex、Claude Code、CursorなどがPortal情報を読み取るための設定確認画面です。</p>
+          </div>
+          <div class="feature">
+            <strong>安全設計</strong>
+            <p>AI参照できるカードだけをContext化します。PIIや権限制限カードは外されます。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="troubleshooting">
+        <h2>困ったとき</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>症状</th><th>見る場所</th><th>対応</th></tr></thead>
+            <tbody>
+              <tr><td>カードが見つからない</td><td>検索欄、カテゴリ、種類フィルタ</td><td>検索語を短くし、<code>すべて</code> に戻して探します。</td></tr>
+              <tr><td>カードが少ない</td><td>権限、担当部門、管理者表示</td><td>アカウントの権限によって見えるカードが変わります。</td></tr>
+              <tr><td>開いた資料が違う</td><td>カードタイトル、説明、最終確認日</td><td>管理者にカードURLや説明の更新を依頼します。</td></tr>
+              <tr><td>古い画面に見える</td><td>ブラウザキャッシュ</td><td>強制リロードします。Chromeなら <code>⌘ShiftR</code> を使います。</td></tr>
+              <tr><td>AI要約できない</td><td>カード下部の要約ボタン</td><td><code>制限</code> 表示のカードはAI参照対象外です。</td></tr>
+              <tr><td>並びが戻った</td><td>配置編集、標準、設定共有</td><td>テンプレートや共有設定を取り込んだ可能性があります。必要に応じて再配置します。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer">
+    TrePro Portal Guide / Updated 2026-06-27
+  </footer>
+</body>
+</html>
