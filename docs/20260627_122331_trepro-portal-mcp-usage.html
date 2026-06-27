@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrePro Portal MCP 接続設定ガイド</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #101827;
+        --muted: #5c6b82;
+        --line: #d8e0eb;
+        --soft: #f5f7fb;
+        --blue: #1d4ed8;
+        --blue-soft: #eaf1ff;
+        --green: #087b5b;
+        --green-soft: #e9f8f2;
+        --amber: #9a5b00;
+        --amber-soft: #fff6df;
+        --slate: #172033;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #ffffff;
+        color: var(--ink);
+        font-family:
+          Inter,
+          "Noto Sans JP",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        line-height: 1.7;
+      }
+
+      main {
+        width: min(1040px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 44px 0 64px;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 28px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(30px, 4vw, 46px);
+        line-height: 1.16;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin-top: 38px;
+        font-size: 24px;
+        line-height: 1.35;
+        letter-spacing: 0;
+      }
+
+      h3 {
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 4px 11px;
+        background: var(--soft);
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .badge.good {
+        border-color: #bce8d6;
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        padding: 18px;
+      }
+
+      .card.soft {
+        background: var(--soft);
+      }
+
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: var(--slate);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .card h3 {
+        margin-top: 12px;
+      }
+
+      .card p {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .callout {
+        margin-top: 18px;
+        border: 1px solid #bad1ff;
+        border-radius: 8px;
+        background: var(--blue-soft);
+        padding: 16px 18px;
+        color: #14346f;
+        font-weight: 700;
+      }
+
+      .warning {
+        border-color: #f2d48f;
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .ok {
+        border-color: #bce8d6;
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      ol,
+      ul {
+        margin: 14px 0 0;
+        padding-left: 22px;
+      }
+
+      li {
+        margin: 7px 0;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      strong {
+        color: var(--ink);
+      }
+
+      code,
+      pre {
+        font-family:
+          "SFMono-Regular",
+          Consolas,
+          "Liberation Mono",
+          monospace;
+      }
+
+      code {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--soft);
+        padding: 1px 6px;
+        color: #1e3a8a;
+        font-size: 0.94em;
+      }
+
+      pre {
+        overflow-x: auto;
+        margin: 12px 0 0;
+        border-radius: 8px;
+        background: #0d1321;
+        padding: 16px;
+        color: #f8fafc;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 720px;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 12px 14px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--soft);
+        color: var(--ink);
+        font-size: 13px;
+      }
+
+      td {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .footer {
+        margin-top: 46px;
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      @media (max-width: 820px) {
+        main {
+          width: min(100% - 24px, 1040px);
+          padding-top: 28px;
+        }
+
+        .three,
+        .two {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media print {
+        main {
+          width: 100%;
+          padding: 20px;
+        }
+
+        .card,
+        .callout,
+        .table-wrap {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>TrePro Portal MCP 接続設定ガイド</h1>
+        <p class="lead">
+          Portalに入っているカード、グループ、Run Handoffの情報を、Codex / Claude Code / Cursor から読み取れるようにするための使い方です。
+          重要なのは、PortalのボタンだけでIDEへ自動接続するのではなく、Portal側の接続情報をIDE側に設定して接続完了にする、という点です。
+        </p>
+        <div class="badge-row">
+          <span class="badge good">Portal MCP 稼働中</span>
+          <span class="badge">read-only</span>
+          <span class="badge">Codex / Claude Code / Cursor</span>
+          <span class="badge">DB書き込みなし</span>
+        </div>
+      </header>
+
+      <section>
+        <h2>まず結論</h2>
+        <div class="callout">
+          Portal上の <strong>MCP接続設定</strong> ボタンは、IDEへ自動で接続するボタンではありません。
+          IDEに入れる接続情報を表示し、Portal側のMCPが動いているか確認するためのボタンです。
+        </div>
+      </section>
+
+      <section>
+        <h2>接続の全体像</h2>
+        <div class="grid three">
+          <article class="card">
+            <span class="step-number">1</span>
+            <h3>Portal側</h3>
+            <p>MCPサーバーは本番で稼働済みです。PortalのContextを読み取る入口が用意されています。</p>
+          </article>
+          <article class="card">
+            <span class="step-number">2</span>
+            <h3>IDE側</h3>
+            <p>Codex / Claude Code / Cursor に、PortalのMCP URLとToken設定を追加します。</p>
+          </article>
+          <article class="card">
+            <span class="step-number">3</span>
+            <h3>接続完了</h3>
+            <p>IDE上のAIがPortal情報をPullして、カードやRun Contextを参照できます。</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Portalでの操作</h2>
+        <ol>
+          <li>Portalを開きます: <code>https://www-treproai.com/portal</code></li>
+          <li>検索欄の右側にある <strong>MCP接続設定</strong> を押します。</li>
+          <li>接続先IDEとして <strong>Codex</strong>、<strong>Claude Code</strong>、<strong>Cursor</strong> のどれかを選びます。</li>
+          <li><strong>Portal側を確認</strong> を押します。ここで確認できるのは、Portal MCPがログインsessionで読めるかどうかです。</li>
+          <li>表示された設定をコピーし、IDE側に貼り付けます。</li>
+        </ol>
+        <div class="callout warning">
+          <strong>注意:</strong> 「Portal側を確認」が成功しても、IDE側の設定が完了したわけではありません。
+          IDE側に設定とTokenを入れて初めて、Codex / Claude Code / Cursorから利用できます。
+        </div>
+      </section>
+
+      <section>
+        <h2>Codexで使う場合</h2>
+        <p class="lead">
+          Portalで <strong>Codex</strong> を選ぶと、次のような設定が表示されます。
+          これをCodexのMCP設定に追加します。
+        </p>
+        <pre><code>[mcp_servers.trepro_portal]
+url = "https://www-treproai.com/api/mcp/portal"
+bearer_token_env_var = "TREPRO_PORTAL_MCP_TOKEN"</code></pre>
+
+        <p class="lead" style="margin-top: 16px">
+          TokenはHTMLやURLに直接書きません。環境変数として渡します。
+        </p>
+        <pre><code>export TREPRO_PORTAL_MCP_TOKEN="管理者から共有されたToken"</code></pre>
+
+        <div class="callout ok">
+          Codexから使うときは、Codex側が <code>TREPRO_PORTAL_MCP_TOKEN</code> を読み取り、
+          Portal MCPへBearer token付きでアクセスします。
+        </div>
+      </section>
+
+      <section>
+        <h2>Claude Code / Cursorで使う場合</h2>
+        <div class="grid two">
+          <article class="card soft">
+            <h3>Claude Code</h3>
+            <p>
+              Claude Code側のMCP設定に、Portal MCP URLとBearer tokenを追加します。
+              Portal画面では接続情報をコピーできます。
+            </p>
+          </article>
+          <article class="card soft">
+            <h3>Cursor</h3>
+            <p>
+              Cursorで利用するAI拡張またはMCP設定に、同じPortal MCP URLとTokenを設定します。
+              Cursor Chatへ無理に本文を流し込む設計ではありません。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>何が読めるか</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>用途</th>
+                <th>例</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>search_portal_resources</code></td>
+                <td>Portalのカードや資料を検索します。</td>
+                <td>「SM」「会計」「社内マニュアル」などで検索。</td>
+              </tr>
+              <tr>
+                <td><code>get_portal_resource</code></td>
+                <td>指定したPortalカードの詳細を取得します。</td>
+                <td>タイトル、URL、説明、タグ、AI参照可否など。</td>
+              </tr>
+              <tr>
+                <td><code>get_portal_groups</code></td>
+                <td>Portal上のグループ構成を取得します。</td>
+                <td>SMグループ、HRグループ、全社マスターなど。</td>
+              </tr>
+              <tr>
+                <td><code>get_run_context</code></td>
+                <td>Run Handoffで作った実行Contextを取得します。</td>
+                <td>Portalで組み立てたAI作業内容をIDE側で読む。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>安全設計</h2>
+        <ul>
+          <li><strong>read-only:</strong> Portal MCPは読み取り専用です。DBや業務システムへ書き込みません。</li>
+          <li><strong>本文をURLに載せない:</strong> 長いContextや顧客情報をDeep Linkに入れません。</li>
+          <li><strong>Token必須:</strong> IDE側から読む場合はBearer tokenが必要です。</li>
+          <li><strong>権限分離:</strong> Portal画面のテストはブラウザsession、IDE側利用はTokenで認証します。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>よくある勘違い</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>勘違い</th>
+                <th>正しい理解</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ボタンを押すだけでCodexに接続される</td>
+                <td>いいえ。ボタンは接続設定を表示します。IDE側への設定追加が必要です。</td>
+              </tr>
+              <tr>
+                <td>Portalの情報がURLでIDEへ送られる</td>
+                <td>いいえ。IDE側がMCP APIからPullします。</td>
+              </tr>
+              <tr>
+                <td>MCPからDB更新できる</td>
+                <td>いいえ。現在のPortal MCPは読み取り専用です。</td>
+              </tr>
+              <tr>
+                <td>TokenをHTMLやURLに貼ってよい</td>
+                <td>いいえ。Tokenは環境変数やIDEの秘密設定で扱います。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>社員向けの最短説明</h2>
+        <div class="callout">
+          Portalの <strong>MCP接続設定</strong> は、AI開発ツールからPortal情報を読めるようにするための設定画面です。
+          まずPortal側の確認を押し、成功したら表示された設定をCodex / Claude Code / Cursorに入れてください。
+          設定後、IDE側のAIがPortalのカードやRun Contextを読み取れるようになります。
+        </div>
+      </section>
+
+      <p class="footer">
+        TrePro Portal MCP Guide / endpoint: https://www-treproai.com/api/mcp/portal / mode: read-only
+      </p>
+    </main>
+  </body>
+</html>
