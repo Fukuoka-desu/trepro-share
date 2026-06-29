@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrePro OS Portal・Project OS使い方ガイド</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --ink: #07111f;
+      --muted: #5f6f87;
+      --paper: #ffffff;
+      --soft: #f4f8fb;
+      --line: #d8e5ee;
+      --blue: #007f9f;
+      --blue-dark: #005a74;
+      --cyan: #22c7df;
+      --green: #00a777;
+      --yellow: #f5a400;
+      --red: #e4455b;
+      --nav: #061322;
+      --shadow: 0 14px 36px rgba(12, 38, 56, .10);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Meiryo", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(0,127,159,.10), rgba(255,255,255,0) 420px),
+        var(--soft);
+      line-height: 1.72;
+      font-size: 15px;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+    a { color: inherit; }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--nav);
+      color: #e7f5fb;
+      padding: 28px 20px;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 12px 28px rgba(0,127,159,.28);
+    }
+    .brand small {
+      display: block;
+      color: #93b2c5;
+      font-size: 11px;
+      line-height: 1.35;
+      margin-top: 2px;
+    }
+    .sidebar nav a {
+      display: block;
+      text-decoration: none;
+      color: #c4d8e4;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      border: 1px solid transparent;
+    }
+    .sidebar nav a:hover {
+      color: #fff;
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.12);
+    }
+    .main {
+      width: 100%;
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 36px 42px 72px;
+      min-width: 0;
+    }
+    .hero {
+      min-height: 360px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(360px, .9fr);
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 28px;
+      min-width: 0;
+    }
+    .hero-copy {
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(216,229,238,.9);
+      box-shadow: var(--shadow);
+      padding: 34px;
+      border-radius: 8px;
+      min-width: 0;
+    }
+    .eyebrow {
+      color: var(--blue-dark);
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .lead {
+      color: var(--muted);
+      font-size: 16px;
+      margin: 18px 0 0;
+      max-width: 760px;
+    }
+    .hero-panel {
+      background: #07111f;
+      color: #fff;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      display: grid;
+      align-content: center;
+      gap: 14px;
+      overflow: hidden;
+      min-width: 0;
+    }
+    .terminal-label {
+      color: #9fdbe6;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .command {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 15px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .hero-flow {
+      display: grid;
+      gap: 8px;
+      color: #d7edf3;
+      font-size: 13px;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0 34px;
+    }
+    .quick-card, section, .note, .check-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(12, 38, 56, .06);
+    }
+    .quick-card {
+      padding: 18px;
+      min-height: 132px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+    .quick-card strong {
+      color: var(--blue-dark);
+      font-size: 14px;
+    }
+    .quick-card p { margin: 0; color: var(--muted); font-size: 13px; }
+    section {
+      padding: 28px;
+      margin: 0 0 22px;
+    }
+    h2 {
+      font-size: 23px;
+      line-height: 1.25;
+      margin: 0 0 12px;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 24px 0 8px;
+      font-size: 17px;
+    }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); }
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #f7fbfd);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 132px;
+    }
+    .step b {
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: var(--blue);
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    .step strong { display: block; font-size: 13px; line-height: 1.45; }
+    .step span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; line-height: 1.5; }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .lane {
+      min-height: 172px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      overflow: hidden;
+    }
+    .lane h4 {
+      margin: 0;
+      padding: 11px 12px;
+      color: #fff;
+      font-size: 13px;
+    }
+    .lane:nth-child(1) h4 { background: var(--red); }
+    .lane:nth-child(2) h4 { background: var(--blue); }
+    .lane:nth-child(3) h4 { background: var(--yellow); color: #241400; }
+    .lane:nth-child(4) h4 { background: #ef5b21; }
+    .lane:nth-child(5) h4 { background: var(--green); }
+    .lane p {
+      padding: 12px;
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      border: 1px solid var(--line);
+      padding: 11px 12px;
+    }
+    th {
+      background: #e7f5f8;
+      color: #083449;
+      font-weight: 800;
+    }
+    tr:nth-child(even) td { background: #fbfdfe; }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    code {
+      background: #edf5f8;
+      border: 1px solid #d4e7ee;
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+    pre {
+      background: #061322;
+      color: #d8f5ff;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .note {
+      padding: 18px;
+      border-left: 5px solid var(--blue);
+      box-shadow: none;
+    }
+    .note strong { color: var(--blue-dark); }
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .check-card {
+      padding: 16px;
+      box-shadow: none;
+    }
+    .check-card strong { display: block; color: var(--blue-dark); margin-bottom: 6px; }
+    .check-card p { color: var(--muted); font-size: 13px; margin: 0; }
+    .footer {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 28px;
+      padding: 20px 0 0;
+      border-top: 1px solid var(--line);
+    }
+    details {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-top: 22px;
+      padding: 16px;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+    .full-md {
+      margin-top: 14px;
+      white-space: pre-wrap;
+      background: #f7fbfd;
+      color: #1c2b38;
+      border: 1px solid var(--line);
+    }
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: relative; height: auto; }
+      .sidebar nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+      .hero, .split { grid-template-columns: 1fr; }
+      .quick-grid, .workflow, .board, .check-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      .main { padding: 22px 16px 48px; }
+      .hero-copy, .hero-panel, section { padding: 20px; }
+      h1 { font-size: 28px; }
+      .quick-grid, .workflow, .board, .check-grid, .sidebar nav { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div>
+          <strong>TrePro OS</strong>
+          <small>Portal・タスクツール使い方ガイド</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#overview">全体像</a>
+        <a href="#portal">Portalで探す</a>
+        <a href="#daily">毎朝の使い方</a>
+        <a href="#board">個人ボード</a>
+        <a href="#task">タスク追加・詳細</a>
+        <a href="#ai">AI連携の使い方</a>
+        <a href="#mcp">MCPでできること</a>
+        <a href="#import">外部取り込み</a>
+        <a href="#sync">外部進捗同期</a>
+        <a href="#admin">管理者画面</a>
+        <a href="#trouble">困ったとき</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="hero" id="overview">
+        <div class="hero-copy">
+          <div class="eyebrow">Portal / 部門別ツール / Project OS / AI連携</div>
+          <h1>まずPortalで探す。タスクはProject OSで見て、必要な作業だけAIに渡す。</h1>
+          <p class="lead">Portalは全ツールの入口です。検索バー下の「部門別に探す」から担当部門マスターを開くと、MM、SM、CC、CS、TSPなど部門ごとの関連ツールだけに絞れます。AI連携は「AIで使う」「AI要約」「AI作業に渡す」の3つだけ覚えれば使えます。</p>
+        </div>
+        <div class="hero-panel">
+          <div class="terminal-label">TrePro Portal</div>
+          <div class="command">https://www-treproai.com/portal</div>
+          <div class="hero-flow">
+            <span>1. 「部門別に探す」で担当部門を選ぶ</span>
+            <span>2. 必要なツールを開く</span>
+            <span>3. AIで使うカードだけ確認する</span>
+            <span>4. 「AI要約」で目的を読む</span>
+            <span>5. 「AI作業に渡す」でClaude Code / Cursorへ渡す</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+        <div class="quick-card">
+          <strong>1. Portalで探す</strong>
+          <p>検索、または「部門別に探す」から担当部門のツールに絞ります。</p>
+        </div>
+        <div class="quick-card">
+          <strong>2. タスクを見る</strong>
+          <p>Project OSの個人ボードと「今日やること一覧」で作業を決めます。</p>
+        </div>
+        <div class="quick-card">
+          <strong>3. AIに渡す</strong>
+          <p>「AI要約」を読んで、必要なカードだけ「AI作業に渡す」を押します。</p>
+        </div>
+        <div class="quick-card">
+          <strong>4. 進捗を戻す</strong>
+          <p>状態、進捗率、申し送りをProject OSへ反映します。</p>
+        </div>
+      </div>
+
+      <section id="portal">
+        <h2>Portalでツールを探す</h2>
+        <p>Portalでは全ツールを一覧で見られます。数が多いと迷うので、最初に検索か部門別表示で絞ります。</p>
+        <div class="check-grid">
+          <div class="check-card"><strong>検索する</strong><p>ツール名や業務名が分かるときは、上部の検索欄で直接探します。</p></div>
+          <div class="check-card"><strong>部門別に探す</strong><p>検索バー下の「部門別に探す」から担当部門マスターを開き、MM、SM、CC、CS、TSPなどを選びます。</p></div>
+          <div class="check-card"><strong>AIで使う</strong><p>AI連携できるものだけ見たいときは「AIで使う」表示に切り替えます。</p></div>
+        </div>
+        <table>
+          <tr><th>やりたいこと</th><th>押す場所</th><th>何が起きるか</th></tr>
+          <tr><td>担当部門のツールだけ見たい</td><td>部門別に探す / 担当部門マスター</td><td>選んだ部門に関連するカードだけが表示されます。</td></tr>
+          <tr><td>AIに渡す前に内容を確認したい</td><td>AI要約</td><td>そのツールで何を確認し、AIに何を任せるかが短く表示されます。</td></tr>
+          <tr><td>Claude CodeやCursorで作業したい</td><td>AI作業に渡す</td><td>選んだツールの目的、URL、補足情報をAI作業用に渡します。</td></tr>
+        </table>
+        <div class="note"><strong>AIに渡すのは必要なカードだけです。</strong><br>迷ったら、まず「AI要約」を読んでから「AI作業に渡す」を押します。MCPや内部ツール名を覚える必要はありません。</div>
+      </section>
+
+      <section id="daily">
+        <h2>毎朝の基本フロー</h2>
+        <p class="muted">画面を見る順番と、Claude Codeへ移るタイミングを固定すると迷いません。</p>
+        <div class="workflow">
+          <div class="step"><b>1</b><strong>個人ページを開く</strong><span><code>/project-os/me</code> を開きます。</span></div>
+          <div class="step"><b>2</b><strong>ボードを見る</strong><span>未着手、進行中、判断待ち、停止、完了を確認します。</span></div>
+          <div class="step"><b>3</b><strong>ガントを見る</strong><span>期限が近いもの、詰まりそうなものを見ます。</span></div>
+          <div class="step"><b>4</b><strong>今日やること</strong><span>右側ボタンから一覧で確認します。</span></div>
+          <div class="step"><b>5</b><strong>/taskで作業</strong><span>CursorのClaude Codeからタスクを選びます。</span></div>
+          <div class="step"><b>6</b><strong>進捗更新</strong><span>80%、確認待ち、完了などを更新します。</span></div>
+          <div class="step"><b>7</b><strong>申し送り</strong><span>次に見る人が分かるコメントを残します。</span></div>
+        </div>
+      </section>
+
+      <section id="board">
+        <h2>個人ボードの使い方</h2>
+        <p>個人ボードはトップ画面の一番上に横一列で表示されます。カードは必要最低限の情報だけを出し、詳細はクリックして開きます。</p>
+        <div class="board">
+          <div class="lane"><h4>未着手</h4><p>まだ始めていないタスク。着手したら進行中へ動かします。</p></div>
+          <div class="lane"><h4>進行中</h4><p>自分が今進めているタスク。進捗率をこまめに更新します。</p></div>
+          <div class="lane"><h4>判断が必要</h4><p>確認、判断、承認、レビューが必要な状態です。</p></div>
+          <div class="lane"><h4>止まっている</h4><p>依存関係、不明点、素材待ちなどで止まっている状態です。</p></div>
+          <div class="lane"><h4>完了</h4><p>作業が終わった状態です。進捗率は100%になります。</p></div>
+        </div>
+        <div class="note"><strong>ドラッグで状態変更できます。</strong><br>例: 作業開始なら「未着手」から「進行中」へ、レビュー待ちなら「判断が必要」へ動かします。</div>
+      </section>
+
+      <section id="task">
+        <h2>タスク追加・タスク詳細</h2>
+        <div class="split">
+          <div>
+            <h3>タスク追加</h3>
+            <p>トップヘッダーの「タスク追加」、または各列の「+追加」から作成します。</p>
+            <table>
+              <tr><th>項目</th><th>内容</th></tr>
+              <tr><td>タスク名</td><td>何をやるか</td></tr>
+              <tr><td>親プロジェクト</td><td>どのPJに紐づくか</td></tr>
+              <tr><td>部門/ジャンル</td><td>CC、MM、SM、CS、TSP、AI</td></tr>
+              <tr><td>状態</td><td>未着手、確認待ち、進行中、完了、停滞、停止</td></tr>
+              <tr><td>進捗率</td><td>0から100%。25%、50%、75%、80%などで更新</td></tr>
+              <tr><td>期限・優先度</td><td>いつまでに、どれくらい重要か</td></tr>
+            </table>
+          </div>
+          <div>
+            <h3>タスク詳細</h3>
+            <p>カードをクリックすると詳細が開きます。上側は手入力、下側はClaude Code / Cursor連携です。</p>
+            <table>
+              <tr><th>場所</th><th>使い方</th></tr>
+              <tr><td>手動編集</td><td>状態、進捗率、期限、優先度、成果物、停滞理由を保存</td></tr>
+              <tr><td>履歴</td><td>状態変更、外部同期、申し送り、リマインドを確認</td></tr>
+              <tr><td>AI連携</td><td>Claude Codeで調査、実装、PR準備を開始</td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="ai">
+        <h2>AI連携の使い方</h2>
+        <p>AI連携は、Portalのツール情報やProject OSのタスク情報をClaude Code / Cursorへ渡して、調査、整理、実装、文章作成を進めるための入口です。普段は「AI要約」と「AI作業に渡す」を使います。</p>
+        <div class="check-grid">
+          <div class="check-card"><strong>Portalから渡す</strong><p>使いたいツールカードで「AI要約」を確認し、「AI作業に渡す」を押します。</p></div>
+          <div class="check-card"><strong>タスクから渡す</strong><p>Project OSで作業タスクを選び、必要ならClaude Code / Cursorで <code>/task</code> を実行します。</p></div>
+          <div class="check-card"><strong>結果を戻す</strong><p>作業後は状態、進捗率、申し送りをProject OSへ戻します。</p></div>
+        </div>
+        <h3>最初に覚える操作</h3>
+        <table>
+          <tr><th>画面</th><th>押すもの</th><th>使う場面</th></tr>
+          <tr><td>Portal</td><td>AIで使う</td><td>AI連携できるツールだけ見たいとき</td></tr>
+          <tr><td>Portal</td><td>AI要約</td><td>そのツールをAIにどう使わせるか確認したいとき</td></tr>
+          <tr><td>Portal</td><td>AI作業に渡す</td><td>Claude Code / Cursorで続きの作業をしたいとき</td></tr>
+          <tr><td>Project OS</td><td><code>/task接続</code></td><td>初回だけ、CursorとClaude Codeからタスクを扱えるようにするとき</td></tr>
+          <tr><td>Claude Code</td><td><code>/task</code></td><td>自分のタスク一覧から作業を始めたいとき</td></tr>
+        </table>
+        <h3>Claude Codeに頼む例</h3>
+        <pre>今日の自分のタスクを出して
+
+このタスクの詳細と過去コメントを読んで、作業計画を作って
+
+Portalで渡したツールの目的を整理して、今日やる手順にして
+
+このタスクを進捗80%にして、状態を判断が必要に変更して
+
+レビュー待ちになったので、申し送りコメントを追加して
+
+完了したのでProject OS側も完了にして、進捗100%にして</pre>
+        <div class="note"><strong>個人のClaudeログイントークンはTrePro OSに保存しません。</strong><br>社員のMac上のClaude Code / Cursorが、必要な情報だけを受け取って作業します。MCPという言葉を覚えなくても、Portalでは「AI作業に渡す」、Project OSでは <code>/task接続</code> を使えば十分です。</div>
+      </section>
+
+      <section id="mcp">
+        <h2>MCPでできること</h2>
+        <p>MCPは、Claude CodeやCursorがProject OSと安全にやり取りするための裏側の仕組みです。利用者が普段見る名前ではないので、操作としては「AI作業に渡す」と <code>/task接続</code> だけ覚えれば問題ありません。</p>
+        <table>
+          <tr><th>MCP tool</th><th>内容</th></tr>
+          <tr><td><code>get_today_tasks</code></td><td>今日やるタスクを取得</td></tr>
+          <tr><td><code>get_my_tasks</code></td><td>自分のタスクを取得</td></tr>
+          <tr><td><code>get_task_detail</code></td><td>タスク詳細を取得</td></tr>
+          <tr><td><code>get_task_comments</code></td><td>コメントや履歴を取得</td></tr>
+          <tr><td><code>add_task_comment</code></td><td>申し送りコメントを追加</td></tr>
+          <tr><td><code>update_task_status</code></td><td>状態を変更</td></tr>
+          <tr><td><code>update_progress</code></td><td>進捗率を変更</td></tr>
+          <tr><td><code>create_task</code></td><td>タスクを作成</td></tr>
+          <tr><td><code>create_tasks_from_meeting</code></td><td>会議内容からタスクを作成</td></tr>
+          <tr><td><code>record_external_progress</code></td><td>外部進捗を記録</td></tr>
+        </table>
+        <div class="note"><strong>画面上の言葉に置き換えると簡単です。</strong><br>MCP toolはAI側の内部操作名です。社員向けには「タスクを読む」「コメントを追加する」「進捗を更新する」と理解すれば十分です。</div>
+      </section>
+
+      <section id="import">
+        <h2>外部から取り込み</h2>
+        <p>すでにスプレッドシートやNotionで管理しているタスクは、ヘッダーの「外部から取り込み」から入れます。</p>
+        <table>
+          <tr><th>取り込み元</th><th>使い方</th></tr>
+          <tr><td>CSV / 貼り付け</td><td>表データをコピーして貼り付ける</td></tr>
+          <tr><td>Google Sheets</td><td>公開CSV URL、またはシート内容を貼り付ける</td></tr>
+          <tr><td>Notion</td><td>CSVエクスポート、または表を貼り付ける</td></tr>
+        </table>
+        <div class="note"><strong>プレビュー確認までは反映されません。</strong><br>追加可能、重複、無効行を確認して、選んだ行だけ確定します。</div>
+      </section>
+
+      <section id="sync">
+        <h2>会議・チャット・現場報告の進捗同期</h2>
+        <p>Claude Code上の作業だけでなく、Slack、Chatwork、tl;dv、Meet、Zoom、Teams、撮影現場などの報告も進捗に反映できます。</p>
+        <pre>POST /api/project-os/external-progress
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json</pre>
+        <pre>{
+  "sourceType": "slack",
+  "taskId": "task_id",
+  "content": "Slackで実装完了報告あり。レビュー待ちに移行。",
+  "status": "確認待ち",
+  "progress": 80,
+  "evidenceUrl": "https://example.com/thread",
+  "occurredAt": "2026-06-27T15:30:00+09:00"
+}</pre>
+        <div class="note"><strong>未認証POSTは拒否されます。</strong><br>SlackやChatworkなどから自動同期する場合も、Bearer tokenまたはProject OSセッションが必要です。</div>
+      </section>
+
+      <section id="admin">
+        <h2>管理者画面</h2>
+        <p>管理者は <code>/admin/project-os</code> を使います。</p>
+        <div class="check-grid">
+          <div class="check-card"><strong>全社を見る</strong><p>全社プロジェクト、全社タスク、責任者一覧、ガントを確認します。</p></div>
+          <div class="check-card"><strong>管理する</strong><p>プロジェクトとタスクを作成、編集、削除、非表示、復元できます。</p></div>
+          <div class="check-card"><strong>AIアラート</strong><p>自動提案は人間が承認したものだけ反映されます。</p></div>
+        </div>
+      </section>
+
+      <section id="trouble">
+        <h2>困ったとき</h2>
+        <table>
+          <tr><th>症状</th><th>見る場所</th></tr>
+          <tr><td>Cursorが開かない</td><td><code>/task接続</code> の初回設定、Cursorのインストール状態を確認</td></tr>
+          <tr><td><code>/task</code> でタスクが出ない</td><td>MCP接続、ローカルトークン期限、ログイン状態を確認</td></tr>
+          <tr><td>担当部門マスターが見つからない</td><td>Portalの検索バー下にある「部門別に探す」を確認</td></tr>
+          <tr><td>AI連携で何を押せばいいか分からない</td><td>まず「AIで使う」に切り替え、カードの「AI要約」を読んでから「AI作業に渡す」を押す</td></tr>
+          <tr><td>進捗が反映されない</td><td><code>update_progress</code> または <code>update_task_status</code> が実行されたか確認</td></tr>
+          <tr><td>外部進捗が反映されない</td><td>認証、taskId、sourceType、status、progressを確認</td></tr>
+          <tr><td>どのタスクをやるべきか分からない</td><td>今日やること一覧、ガント、通知を見る</td></tr>
+          <tr><td>タスクが多すぎる</td><td>種別、ジャンル、期間で絞り込む</td></tr>
+        </table>
+      </section>
+
+      <details>
+        <summary>完全版Markdownを開く</summary>
+        <pre class="full-md"># TrePro OS Portal・Project OS使い方ガイド
+
+まずPortalで必要なツールを探します。
+担当部門ごとに見るときは「部門別に探す」から担当部門マスターを開きます。
+AIに渡すときは「AI要約」を読んでから「AI作業に渡す」を使います。
+毎朝のタスクはProject OSで全体を見ます。
+作業タスクはCursor / Claude Codeの /task から始められます。
+進捗、状態、申し送りはProject OSへ戻します。
+
+主な機能:
+- Portal検索
+- 部門別に探す / 担当部門マスター
+- AIで使う / AI要約 / AI作業に渡す
+- 個人ボード
+- ガントチャート
+- 今日やること一覧
+- 通知
+- タスク追加
+- タスク詳細
+- Claude Code / Cursor連携
+- MCP
+- CSV / Google Sheets / Notion取り込み
+- Slack / Chatwork / tl;dv / Meet / Zoom / Teams / 現場報告の進捗同期
+- 管理者画面
+- AIアラート
+
+詳しい内容は同一Gistに併置されたMarkdown版を参照してください。</pre>
+      </details>
+
+      <div class="footer">
+        更新日: 2026-06-29 / 対象: TrePro OS Portal・Project OS / URL: https://www-treproai.com/portal
+      </div>
+    </main>
+  </div>
+</body>
+</html>
