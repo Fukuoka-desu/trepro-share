@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>シフト管理アプリ | TrePro Share</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --red: #D20B00;
+    --dark: #1A1A1A;
+    --dark2: #292F33;
+    --line: #e2e5e8;
+    --muted: #8b9196;
+    --bg: #f5f5f5;
+  }
+  body {
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg); color: #333; -webkit-text-size-adjust: 100%;
+  }
+
+  /* ---------- header ---------- */
+  .header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+    color: #fff; padding: 28px 24px; border-bottom: 4px solid var(--red); text-align: center;
+  }
+  .header .logo { color: var(--red); font-weight: 700; letter-spacing: .15em; font-size: .8rem; margin-bottom: 8px; }
+  .header h1 { font-size: 1.5rem; }
+  .header p { color: #aaa; font-size: .85rem; margin-top: 8px; }
+
+  .wrap { max-width: 1180px; margin: 24px auto 64px; padding: 0 16px; }
+  .card {
+    background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    padding: 20px; margin-bottom: 16px;
+  }
+  .card h2 {
+    font-size: .95rem; font-weight: 700; margin-bottom: 14px;
+    padding-left: 10px; border-left: 3px solid var(--red);
+  }
+
+  /* ---------- controls ---------- */
+  .toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+  .month-nav { display: flex; align-items: center; gap: 10px; }
+  .month-label { font-size: 1.15rem; font-weight: 700; min-width: 9.5em; text-align: center; }
+  button, select, input[type=text] {
+    font-family: inherit; font-size: .85rem; color: #333;
+  }
+  .btn {
+    background: #fff; border: 1px solid var(--line); border-radius: 6px;
+    padding: 8px 14px; cursor: pointer; transition: background .15s, border-color .15s;
+  }
+  .btn:hover { background: #f0f2f4; border-color: #cfd4d8; }
+  .btn-primary { background: var(--red); border-color: var(--red); color: #fff; }
+  .btn-primary:hover { background: #a80900; border-color: #a80900; }
+  .btn-ghost { color: var(--muted); }
+  .btn-icon { padding: 8px 12px; font-weight: 700; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* ---------- palette ---------- */
+  .palette { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .swatch {
+    border: 2px solid transparent; border-radius: 6px; padding: 8px 14px; cursor: pointer;
+    font-size: .85rem; font-weight: 500; display: flex; align-items: center; gap: 8px;
+    background: #fff; box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .swatch .dot { width: 12px; height: 12px; border-radius: 3px; }
+  .swatch.active { border-color: var(--dark); box-shadow: 0 2px 6px rgba(0,0,0,.14); }
+  .palette-hint { font-size: .78rem; color: var(--muted); margin-top: 10px; line-height: 1.6; }
+
+  /* ---------- table ---------- */
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; }
+  table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: .8rem; }
+  th, td { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+  th:last-child, td:last-child { border-right: none; }
+  thead th { background: #fafbfc; font-weight: 500; padding: 6px 2px; position: sticky; top: 0; z-index: 2; }
+  thead th .dow { display: block; font-size: .68rem; color: var(--muted); }
+  th.sat, td.sat { background: #f2f7fd; }
+  th.sun, td.sun { background: #fdf3f2; }
+  thead th.sat .dow { color: #2f6fb5; }
+  thead th.sun .dow { color: var(--red); }
+
+  .name-col {
+    position: sticky; left: 0; z-index: 3; background: #fff;
+    min-width: 132px; max-width: 132px; text-align: left;
+    padding: 6px 8px; border-right: 2px solid var(--line);
+  }
+  thead .name-col { z-index: 4; background: #fafbfc; }
+  .name-cell { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .name-cell .nm { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .name-cell .del {
+    border: none; background: none; color: #c9ced3; cursor: pointer; font-size: .95rem;
+    line-height: 1; padding: 2px 4px; flex: none;
+  }
+  .name-cell .del:hover { color: var(--red); }
+
+  td.cell { min-width: 34px; height: 34px; cursor: pointer; padding: 0; user-select: none; font-weight: 700; }
+  td.cell:hover { outline: 2px solid var(--dark); outline-offset: -2px; }
+  td.today { box-shadow: inset 0 0 0 2px rgba(210,11,0,.35); }
+  tfoot td { background: #fafbfc; font-size: .75rem; color: var(--muted); padding: 5px 2px; }
+  tfoot td.short { color: #d98b86; font-weight: 700; }
+  tfoot .name-col { background: #fafbfc; color: #333; font-weight: 500; }
+
+  .empty-state { text-align: center; color: var(--muted); padding: 40px 16px; font-size: .88rem; line-height: 1.8; }
+
+  /* ---------- summary ---------- */
+  .summary-table { width: 100%; font-size: .85rem; border-collapse: collapse; }
+  .summary-table th, .summary-table td { border-bottom: 1px solid var(--line); padding: 9px 8px; text-align: right; }
+  .summary-table th { background: #fafbfc; font-weight: 500; color: var(--muted); font-size: .78rem; }
+  .summary-table th:first-child, .summary-table td:first-child { text-align: left; font-weight: 500; }
+  .summary-table tfoot td { font-weight: 700; background: #fafbfc; border-bottom: none; }
+
+  .add-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .add-row input[type=text] {
+    flex: 1 1 200px; border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px;
+  }
+  .add-row input[type=text]:focus { outline: 2px solid var(--red); outline-offset: -1px; }
+
+  .footnote { text-align: center; color: var(--muted); font-size: .78rem; line-height: 1.8; margin-top: 24px; }
+
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.2rem; }
+    .toolbar { flex-direction: column; align-items: stretch; }
+    .month-nav { justify-content: space-between; }
+    .name-col { min-width: 104px; max-width: 104px; }
+  }
+  @media print {
+    .header, .no-print { display: none !important; }
+    body { background: #fff; }
+    .card { box-shadow: none; padding: 0 0 16px; }
+    .table-scroll { overflow: visible; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">TREPRO SHARE</div>
+  <h1>シフト管理アプリ</h1>
+  <p>スタッフごとの月間シフトを登録・集計できます（データはブラウザ内に保存されます）</p>
+</div>
+
+<div class="wrap">
+
+  <!-- 月操作 -->
+  <div class="card no-print">
+    <div class="toolbar">
+      <div class="month-nav">
+        <button class="btn btn-icon" id="prevMonth" aria-label="前の月">‹</button>
+        <span class="month-label" id="monthLabel"></span>
+        <button class="btn btn-icon" id="nextMonth" aria-label="次の月">›</button>
+        <button class="btn btn-ghost" id="thisMonth">今月</button>
+      </div>
+      <div class="actions">
+        <button class="btn" id="exportCsv">CSV出力</button>
+        <button class="btn" id="printBtn">印刷</button>
+        <button class="btn btn-ghost" id="clearMonth">この月をクリア</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- シフト種別パレット -->
+  <div class="card no-print">
+    <h2>シフト種別を選んでセルをクリック</h2>
+    <div class="palette" id="palette"></div>
+    <p class="palette-hint">
+      選択中の種別をセルにクリックで割り当てます。ドラッグすると連続入力、同じ種別を再クリックすると解除できます。
+    </p>
+  </div>
+
+  <!-- シフト表 -->
+  <div class="card">
+    <h2>シフト表</h2>
+    <div id="tableArea"></div>
+  </div>
+
+  <!-- スタッフ -->
+  <div class="card no-print">
+    <h2>スタッフ登録</h2>
+    <div class="add-row">
+      <input type="text" id="staffName" placeholder="スタッフ名" maxlength="20">
+      <input type="text" id="staffRole" placeholder="役割（任意）" maxlength="12" style="flex:0 1 140px">
+      <button class="btn btn-primary" id="addStaff">追加</button>
+    </div>
+  </div>
+
+  <!-- 集計 -->
+  <div class="card">
+    <h2>月間集計</h2>
+    <div id="summaryArea"></div>
+  </div>
+
+  <p class="footnote">
+    データはこのブラウザの localStorage にのみ保存されます。<br>
+    別の端末・ブラウザには引き継がれないため、共有する場合は CSV 出力をご利用ください。
+  </p>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ========== シフト種別の定義 ========== */
+  const SHIFTS = [
+    { key: 'early', label: '早番', short: '早', time: '09:00-18:00', hours: 8, bg: '#e3f0fd', fg: '#1a5aa0', dot: '#3d8bd8' },
+    { key: 'late',  label: '遅番', short: '遅', time: '13:00-22:00', hours: 8, bg: '#fff1e0', fg: '#a15c07', dot: '#eb9a34' },
+    { key: 'night', label: '夜勤', short: '夜', time: '22:00-07:00', hours: 8, bg: '#eee9fb', fg: '#5a3ba8', dot: '#7f5ada' },
+    { key: 'half',  label: '半日', short: '半', time: '09:00-13:00', hours: 4, bg: '#e6f6ee', fg: '#1d7a4c', dot: '#3aa972' },
+    { key: 'off',   label: '休み', short: '休', time: '-',           hours: 0, bg: '#f0f1f2', fg: '#8b9196', dot: '#b7bdc2' }
+  ];
+  const SHIFT_MAP = Object.fromEntries(SHIFTS.map(s => [s.key, s]));
+  const WORK_SHIFTS = SHIFTS.filter(s => s.hours > 0);
+  const DOW = ['日', '月', '火', '水', '木', '金', '土'];
+  const STORE_KEY = 'trepro-shift-app-v1';
+
+  /* ========== 状態 ========== */
+  const today = new Date();
+  let state = load();
+  let view = { year: today.getFullYear(), month: today.getMonth() + 1 }; // month: 1-12
+  let activeShift = SHIFTS[0].key;
+  let painting = null; // ドラッグ入力中に適用する値（'' = 解除）
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (Array.isArray(p.staff) && p.shifts && typeof p.shifts === 'object') return p;
+      }
+    } catch (e) { /* 壊れたデータは初期値で復旧 */ }
+    return {
+      staff: [
+        { id: uid(), name: '山田 太郎', role: '社員' },
+        { id: uid(), name: '佐藤 花子', role: 'パート' }
+      ],
+      shifts: {} // { "2026-07": { staffId: { "1": "early" } } }
+    };
+  }
+  function save() { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  function uid() { return 's' + Math.random().toString(36).slice(2, 9); }
+
+  const monthKey = () => `${view.year}-${String(view.month).padStart(2, '0')}`;
+  const daysInMonth = () => new Date(view.year, view.month, 0).getDate();
+  const dowOf = d => new Date(view.year, view.month - 1, d).getDay();
+
+  function getShift(staffId, day) {
+    return (state.shifts[monthKey()]?.[staffId]?.[day]) || '';
+  }
+  function setShift(staffId, day, key) {
+    const mk = monthKey();
+    state.shifts[mk] = state.shifts[mk] || {};
+    state.shifts[mk][staffId] = state.shifts[mk][staffId] || {};
+    if (key) state.shifts[mk][staffId][day] = key;
+    else delete state.shifts[mk][staffId][day];
+    save();
+  }
+
+  /* ========== 描画: パレット ========== */
+  function renderPalette() {
+    const el = document.getElementById('palette');
+    el.innerHTML = '';
+    SHIFTS.forEach(s => {
+      const b = document.createElement('button');
+      b.className = 'swatch' + (s.key === activeShift ? ' active' : '');
+      b.innerHTML = `<span class="dot" style="background:${s.dot}"></span>` +
+                    `<span>${s.label}</span>` +
+                    `<span style="color:var(--muted);font-size:.75rem">${s.time}</span>`;
+      b.addEventListener('click', () => { activeShift = s.key; renderPalette(); });
+      el.appendChild(b);
+    });
+  }
+
+  /* ========== 描画: シフト表 ========== */
+  function renderTable() {
+    const area = document.getElementById('tableArea');
+    if (state.staff.length === 0) {
+      area.innerHTML = '<div class="empty-state">スタッフが登録されていません。<br>下の「スタッフ登録」から追加してください。</div>';
+      return;
+    }
+
+    const nDays = daysInMonth();
+    const isThisMonth = view.year === today.getFullYear() && view.month === today.getMonth() + 1;
+    const dayClass = d => { const w = dowOf(d); return w === 0 ? 'sun' : w === 6 ? 'sat' : ''; };
+
+    let head = '<tr><th class="name-col">スタッフ</th>';
+    for (let d = 1; d <= nDays; d++) {
+      head += `<th class="${dayClass(d)}">${d}<span class="dow">${DOW[dowOf(d)]}</span></th>`;
+    }
+    head += '<th style="min-width:52px">勤務</th></tr>';
+
+    let body = '';
+    state.staff.forEach(st => {
+      let workDays = 0;
+      let row = `<tr><td class="name-col"><div class="name-cell">` +
+        `<span class="nm" title="${esc(st.name)}${st.role ? ' / ' + esc(st.role) : ''}">${esc(st.name)}` +
+        (st.role ? `<span style="color:var(--muted);font-size:.72rem"> ${esc(st.role)}</span>` : '') +
+        `</span><button class="del no-print" data-del="${st.id}" title="削除">×</button></div></td>`;
+      for (let d = 1; d <= nDays; d++) {
+        const key = getShift(st.id, d);
+        const s = SHIFT_MAP[key];
+        if (s && s.hours > 0) workDays++;
+        const style = s ? `background:${s.bg};color:${s.fg}` : '';
+        const cls = 'cell ' + dayClass(d) + (isThisMonth && d === today.getDate() ? ' today' : '');
+        row += `<td class="${cls}" style="${style}" data-staff="${st.id}" data-day="${d}">${s ? s.short : ''}</td>`;
+      }
+      row += `<td style="font-weight:700">${workDays}</td></tr>`;
+      body += row;
+    });
+
+    let foot = '<tr><td class="name-col">出勤人数</td>';
+    for (let d = 1; d <= nDays; d++) {
+      const n = state.staff.filter(st => {
+        const s = SHIFT_MAP[getShift(st.id, d)];
+        return s && s.hours > 0;
+      }).length;
+      foot += `<td class="${n === 0 ? 'short' : ''}">${n}</td>`;
+    }
+    foot += '<td></td></tr>';
+
+    area.innerHTML =
+      `<div class="table-scroll"><table>
+         <thead>${head}</thead>
+         <tbody>${body}</tbody>
+         <tfoot>${foot}</tfoot>
+       </table></div>`;
+
+    area.querySelectorAll('[data-del]').forEach(b => {
+      b.addEventListener('click', () => removeStaff(b.dataset.del));
+    });
+    area.querySelectorAll('td.cell').forEach(td => {
+      td.addEventListener('mousedown', e => {
+        e.preventDefault();
+        const cur = getShift(td.dataset.staff, +td.dataset.day);
+        painting = cur === activeShift ? '' : activeShift; // 同じ種別なら解除モード
+        applyCell(td, painting);
+      });
+      td.addEventListener('mouseenter', () => { if (painting !== null) applyCell(td, painting); });
+      td.addEventListener('click', e => { if (e.detail === 0) applyCell(td, activeShift); }); // キーボード操作向け
+    });
+  }
+
+  function applyCell(td, key) {
+    const staffId = td.dataset.staff, day = +td.dataset.day;
+    if (getShift(staffId, day) === key) return;
+    setShift(staffId, day, key);
+    const s = SHIFT_MAP[key];
+    td.textContent = s ? s.short : '';
+    td.style.background = s ? s.bg : '';
+    td.style.color = s ? s.fg : '';
+    renderFooterAndSummary();
+  }
+
+  // セル編集時は表全体を作り直さず、集計だけ更新する
+  function renderFooterAndSummary() {
+    const nDays = daysInMonth();
+    const table = document.querySelector('#tableArea table');
+    if (!table) return;
+    const cells = table.querySelectorAll('tfoot td');
+    for (let d = 1; d <= nDays; d++) {
+      const n = state.staff.filter(st => {
+        const s = SHIFT_MAP[getShift(st.id, d)];
+        return s && s.hours > 0;
+      }).length;
+      const td = cells[d];
+      if (td) { td.textContent = n; td.className = n === 0 ? 'short' : ''; }
+    }
+    table.querySelectorAll('tbody tr').forEach((tr, i) => {
+      const st = state.staff[i];
+      if (!st) return;
+      let w = 0;
+      for (let d = 1; d <= nDays; d++) {
+        const s = SHIFT_MAP[getShift(st.id, d)];
+        if (s && s.hours > 0) w++;
+      }
+      tr.lastElementChild.textContent = w;
+    });
+    renderSummary();
+  }
+
+  /* ========== 描画: 集計 ========== */
+  function renderSummary() {
+    const area = document.getElementById('summaryArea');
+    if (state.staff.length === 0) {
+      area.innerHTML = '<div class="empty-state">スタッフを登録すると集計が表示されます。</div>';
+      return;
+    }
+    const nDays = daysInMonth();
+    const totals = { hours: 0, days: 0 };
+    const shiftTotals = Object.fromEntries(SHIFTS.map(s => [s.key, 0]));
+
+    let rows = '';
+    state.staff.forEach(st => {
+      const count = Object.fromEntries(SHIFTS.map(s => [s.key, 0]));
+      let hours = 0, days = 0;
+      for (let d = 1; d <= nDays; d++) {
+        const s = SHIFT_MAP[getShift(st.id, d)];
+        if (!s) continue;
+        count[s.key]++; shiftTotals[s.key]++;
+        if (s.hours > 0) { hours += s.hours; days++; }
+      }
+      totals.hours += hours; totals.days += days;
+      rows += `<tr><td>${esc(st.name)}</td>` +
+        SHIFTS.map(s => `<td>${count[s.key] || '-'}</td>`).join('') +
+        `<td>${days}</td><td>${hours}h</td></tr>`;
+    });
+
+    area.innerHTML =
+      `<div style="overflow-x:auto"><table class="summary-table">
+        <thead><tr><th>スタッフ</th>${SHIFTS.map(s => `<th>${s.label}</th>`).join('')}<th>出勤日数</th><th>勤務時間</th></tr></thead>
+        <tbody>${rows}</tbody>
+        <tfoot><tr><td>合計</td>${SHIFTS.map(s => `<td>${shiftTotals[s.key]}</td>`).join('')}<td>${totals.days}</td><td>${totals.hours}h</td></tr></tfoot>
+      </table></div>`;
+  }
+
+  /* ========== スタッフ操作 ========== */
+  function addStaff() {
+    const nameEl = document.getElementById('staffName');
+    const roleEl = document.getElementById('staffRole');
+    const name = nameEl.value.trim();
+    if (!name) { nameEl.focus(); return; }
+    state.staff.push({ id: uid(), name, role: roleEl.value.trim() });
+    save();
+    nameEl.value = ''; roleEl.value = ''; nameEl.focus();
+    renderAll();
+  }
+  function removeStaff(id) {
+    const st = state.staff.find(s => s.id === id);
+    if (!st || !confirm(`「${st.name}」さんを削除します。登録済みのシフトも消えます。よろしいですか？`)) return;
+    state.staff = state.staff.filter(s => s.id !== id);
+    Object.values(state.shifts).forEach(m => delete m[id]);
+    save();
+    renderAll();
+  }
+
+  /* ========== CSV出力 ========== */
+  function exportCsv() {
+    const nDays = daysInMonth();
+    const q = v => `"${String(v).replace(/"/g, '""')}"`;
+    const lines = [];
+    lines.push([q(`${view.year}年${view.month}月 シフト表`)].join(','));
+    lines.push('');
+    lines.push(['スタッフ', '役割', ...Array.from({ length: nDays }, (_, i) => `${i + 1}(${DOW[dowOf(i + 1)]})`), '出勤日数', '勤務時間'].map(q).join(','));
+    state.staff.forEach(st => {
+      const cells = [];
+      let days = 0, hours = 0;
+      for (let d = 1; d <= nDays; d++) {
+        const s = SHIFT_MAP[getShift(st.id, d)];
+        cells.push(s ? s.label : '');
+        if (s && s.hours > 0) { days++; hours += s.hours; }
+      }
+      lines.push([st.name, st.role || '', ...cells, days, hours].map(q).join(','));
+    });
+    const counts = [];
+    for (let d = 1; d <= nDays; d++) {
+      counts.push(state.staff.filter(st => { const s = SHIFT_MAP[getShift(st.id, d)]; return s && s.hours > 0; }).length);
+    }
+    lines.push(['出勤人数', '', ...counts, '', ''].map(q).join(','));
+
+    // Excel で文字化けしないよう BOM を付与
+    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `shift_${view.year}${String(view.month).padStart(2, '0')}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  /* ========== その他 ========== */
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  function shiftMonth(diff) {
+    const d = new Date(view.year, view.month - 1 + diff, 1);
+    view = { year: d.getFullYear(), month: d.getMonth() + 1 };
+    renderAll();
+  }
+  function clearMonth() {
+    if (!confirm(`${view.year}年${view.month}月のシフトをすべて削除します。よろしいですか？`)) return;
+    delete state.shifts[monthKey()];
+    save();
+    renderAll();
+  }
+  function renderAll() {
+    document.getElementById('monthLabel').textContent = `${view.year}年 ${view.month}月`;
+    renderTable();
+    renderSummary();
+  }
+
+  /* ========== イベント登録 ========== */
+  document.getElementById('prevMonth').addEventListener('click', () => shiftMonth(-1));
+  document.getElementById('nextMonth').addEventListener('click', () => shiftMonth(1));
+  document.getElementById('thisMonth').addEventListener('click', () => {
+    view = { year: today.getFullYear(), month: today.getMonth() + 1 };
+    renderAll();
+  });
+  document.getElementById('addStaff').addEventListener('click', addStaff);
+  ['staffName', 'staffRole'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') addStaff(); });
+  });
+  document.getElementById('exportCsv').addEventListener('click', exportCsv);
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+  document.getElementById('clearMonth').addEventListener('click', clearMonth);
+  document.addEventListener('mouseup', () => { painting = null; });
+
+  renderPalette();
+  renderAll();
+})();
+</script>
+</body>
+</html>
