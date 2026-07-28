@@ -1,0 +1,1728 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrePro AI ポータル</title>
+<script src="data.js"></script>
+<style>
+:root{
+  --bg:#f7f2ea; --panel:#ffffff; --cream:#fff4e6; --cream2:#fff8ef;
+  --line:#e9dfd2; --line2:#f1e9dd;
+  --ink:#241a12; --ink2:#6b5d4f; --muted:#9a8b7c;
+  --orange:#e94e1b; --orange-ink:#c63d10; --orange-soft:#fdeee7;
+  --red:#d7263d; --red-soft:#fbe9ec;
+  --green:#0f9d6a; --green-ink:#0b7d54; --green-soft:#e7f5ee;
+  --amber:#b8730a; --amber-soft:#fbf1e0;
+  --blue:#2a78d6;
+  --shadow:0 1px 2px rgba(59,42,28,.03),0 8px 26px rgba(59,42,28,.07);
+  --shadow-sm:0 1px 3px rgba(59,42,28,.05);
+  --shadow-lift:0 6px 16px rgba(59,42,28,.09),0 18px 44px rgba(59,42,28,.10);
+  --sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",sans-serif;
+  --serif:var(--sans); /* 明朝体は全廃。旧 serif 参照はすべてゴシックに解決 */
+  --sb:236px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.serif{font-family:var(--serif)}
+
+.mockbar{background:#2f2620;color:#f4e9dc;font-size:12px;padding:5px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.mockbar b{color:#ffcf9a}
+.mockbar .reset{margin-left:auto;border:1px solid #5a4c3f;border-radius:14px;padding:2px 12px;color:#f4e9dc;font-size:12px}
+.mockbar .reset:hover{background:#43382e}
+
+.app{display:flex;min-height:100vh}
+/* サイドバーは常時オフキャンバス。ハンバーガーで開閉、メインは常に全幅 */
+.sidebar{width:var(--sb);background:var(--panel);border-right:1px solid var(--line);
+  position:fixed;left:calc(-1 * var(--sb) - 12px);top:0;height:100vh;display:flex;flex-direction:column;
+  padding:16px 14px;gap:4px;overflow-y:auto;z-index:210;transition:left .22s ease;box-shadow:0 12px 40px rgba(36,26,18,.14)}
+.sidebar.open{left:0}
+.scrim{position:fixed;inset:0;background:rgba(36,26,18,.34);z-index:200;opacity:0;visibility:hidden;transition:opacity .22s ease}
+.scrim.open{opacity:1;visibility:visible}
+.ico{width:20px;height:20px;object-fit:contain;border-radius:6px;vertical-align:-4px;flex:none}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px}
+.brand .logo{width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;box-shadow:0 2px 8px rgba(233,78,27,.18)}
+.brand .logo img{display:block}
+.brand .bt{font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.01em;line-height:1.2}
+.brand .bs{font-size:10.5px;color:var(--muted)}
+.navsec{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.08em;padding:12px 10px 4px}
+.nav{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:10px;font-size:13.5px;font-weight:600;color:var(--ink2);width:100%;text-align:left;position:relative}
+.nav svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7}
+.nav:hover{background:var(--line2)}
+.nav.on{background:var(--orange-soft);color:var(--orange-ink)}
+.nav .badge{margin-left:auto;background:var(--red);color:#fff;font-size:11px;font-weight:700;border-radius:9px;min-width:19px;height:19px;
+  display:flex;align-items:center;justify-content:center;padding:0 5px}
+.sb-spacer{flex:1}
+.theme-card{background:var(--cream);border:1px solid #f1ddc4;border-radius:12px;padding:11px 12px;margin-top:8px}
+.theme-card .lb{font-size:10.5px;color:var(--orange-ink);font-weight:700}
+.theme-card .tt{font-size:13px;font-weight:700;margin-top:2px}
+.theme-card .ds{font-size:11px;color:var(--ink2);margin-top:2px}
+.user{display:flex;align-items:center;gap:10px;padding:10px 8px 2px;margin-top:6px;border-top:1px solid var(--line);padding-top:12px}
+.user .av{width:34px;height:34px;border-radius:50%;background:#e9ded2 url('assets/toretan/toretan-expr-6-idle.png') center/cover;flex:none;border:1px solid var(--line)}
+.user .un{font-size:13px;font-weight:700;line-height:1.2}
+.user .ur{font-size:11px;color:var(--muted)}
+
+.main{flex:1;min-width:0}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(247,242,234,.88);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding:12px 30px;display:flex;align-items:center;gap:16px}
+.search{flex:1;max-width:460px}
+.search input{width:100%;padding:9px 14px;border:1px solid var(--line);border-radius:22px;background:var(--panel);font-size:13px;color:var(--ink)}
+.topbar .env{margin-left:auto;font-size:11px;background:var(--cream);color:var(--orange-ink);border:1px solid #f1ddc4;padding:4px 11px;border-radius:12px;font-weight:700}
+.topbar .ib{position:relative;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.topbar .ib:hover{background:var(--line2)}
+.topbar .ib svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7}
+.topbar .ib .dot{position:absolute;top:7px;right:8px;width:8px;height:8px;background:var(--red);border-radius:50%;border:2px solid var(--bg)}
+
+.view{display:none;padding:26px 30px 70px;max-width:1360px}
+.view.on{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.view.on{animation:none}}
+
+.crumb{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.crumb b{color:var(--orange-ink)}
+.h1{font-family:var(--serif);font-size:40px;font-weight:700;letter-spacing:.01em;line-height:1.15}
+.lead{font-size:14px;color:var(--ink2);margin-top:8px}
+.sec-h{font-family:var(--serif);font-size:20px;font-weight:700;margin:34px 0 14px;display:flex;align-items:center;gap:10px}
+.sec-h::before{content:"";width:5px;height:19px;border-radius:3px;background:linear-gradient(180deg,var(--orange),#f4823f);flex:none}
+.sec-h .cap{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--muted)}
+.sec-h .more{margin-left:auto;font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--orange-ink)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);
+  transition:box-shadow .18s ease,transform .18s ease,border-color .18s ease}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:6px}
+
+.hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(115deg,#ffffff 0%,#fff8ee 48%,#ffe9d2 100%);
+  border:1px solid var(--line);padding:44px 48px;display:flex;align-items:center;gap:20px;box-shadow:var(--shadow)}
+.hero .stroke{position:absolute;right:-4%;top:8%;width:62%;height:120%;background:
+  radial-gradient(closest-side,rgba(233,78,27,.12),transparent 70%);transform:rotate(-12deg);pointer-events:none}
+.hero .stroke::after{content:"";position:absolute;right:16%;top:22%;width:340px;height:340px;border-radius:50%;
+  border:1.5px dashed rgba(233,78,27,.25)}
+.hero-l{flex:1;min-width:0;position:relative;z-index:2}
+.hero .kicker{font-size:11px;letter-spacing:.18em;color:var(--orange-ink);font-weight:800;display:flex;align-items:center;gap:8px}
+.hero .kicker::before{content:"";width:26px;height:2px;background:var(--orange)}
+.hero h2{font-family:var(--serif);font-size:52px;line-height:1.12;font-weight:700;margin:14px 0 0;letter-spacing:.01em}
+.hero h2 .r{color:var(--red)}
+.hero .sub{font-size:15px;color:var(--ink2);margin-top:16px}
+.hero .cta{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-weight:700;font-size:14px;
+  padding:13px 26px;border-radius:12px;margin-top:22px;box-shadow:0 6px 18px rgba(215,38,61,.28)}
+.hero .cta:hover{background:#c11f34}
+.hero-r{width:290px;flex:none;position:relative;z-index:2;text-align:center}
+.hero-r::before{content:"";position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:270px;height:270px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,182,39,.28),rgba(233,78,27,.10) 62%,transparent 74%);pointer-events:none}
+.hero-r img{position:relative;width:264px;height:264px;object-fit:contain;filter:drop-shadow(0 14px 26px rgba(198,61,16,.26));
+  animation:floaty 5.5s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@media(prefers-reduced-motion:reduce){.hero-r img{animation:none}}
+
+/* ===== トレボイス（音声オンボーディング） ===== */
+.trevoice{margin-top:26px;max-width:452px;display:flex;align-items:center;gap:14px;
+  background:rgba(255,255,255,.74);backdrop-filter:blur(7px);border:1px solid #f1ddc4;border-radius:16px;
+  padding:12px 16px 12px 12px;box-shadow:var(--shadow);position:relative;z-index:2}
+.trevoice .tvbtn{width:48px;height:48px;border-radius:50%;flex:none;background:var(--orange);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(233,78,27,.34);transition:transform .15s}
+.trevoice .tvbtn:hover{transform:scale(1.06)}
+.trevoice .tvbtn svg{width:19px;height:19px;fill:#fff}
+.trevoice .ic-pause{display:none}
+.trevoice.on .ic-play{display:none}
+.trevoice.on .ic-pause{display:block}
+.trevoice .tvbody{flex:1;min-width:0}
+.trevoice .tvlabel{font-size:11px;font-weight:800;letter-spacing:.05em;color:var(--orange-ink);display:flex;align-items:center;gap:7px}
+.trevoice .tvlabel .live{width:6px;height:6px;border-radius:50%;background:#c9b79f}
+.trevoice.on .tvlabel .live{background:var(--red);animation:tvpulse 1s ease-in-out infinite}
+@keyframes tvpulse{0%,100%{opacity:.4}50%{opacity:1}}
+.trevoice .tvlabel .tag{margin-left:auto;font-weight:600;color:var(--muted);letter-spacing:0}
+.trevoice .tvtext{font-size:12.5px;color:var(--ink2);font-weight:600;margin-top:3px;line-height:1.5;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trevoice.on .tvtext{white-space:normal}
+.eq{display:flex;align-items:center;gap:2.5px;height:14px;margin-top:7px}
+.eq i{width:3px;height:4px;background:var(--orange);border-radius:2px;opacity:.45;transition:opacity .2s}
+.trevoice.on .eq i{opacity:1;animation:eqb .85s ease-in-out infinite}
+@keyframes eqb{0%,100%{height:4px}50%{height:14px}}
+@media(prefers-reduced-motion:reduce){.trevoice.on .eq i{animation:none;height:9px}}
+@media(max-width:900px){.trevoice{max-width:none}}
+.hero-r .tag{font-size:11px;color:var(--ink2)}
+.hero-r .tag b{display:block;font-family:var(--serif);font-size:16px;color:var(--ink);margin-top:2px}
+@media(max-width:900px){.hero{padding:30px}.hero h2{font-size:36px}.hero-r{display:none}}
+
+.myday{display:grid;grid-template-columns:1.15fr 1.15fr .9fr;gap:16px}
+@media(max-width:1100px){.myday{grid-template-columns:1fr}}
+.mcard{padding:18px 20px}
+.mcard h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.mcard h3 .ic{color:var(--orange)}
+.mcard h3 .more{margin-left:auto;font-size:12px;color:var(--orange-ink);font-weight:700}
+.mrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line2)}
+.mrow:first-of-type{border-top:none}
+.mrow .tm{font-variant-numeric:tabular-nums;font-weight:700;font-size:13px;color:var(--ink);width:82px;flex:none}
+.mrow .tm small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+.mrow .body{flex:1;min-width:0}
+.mrow .body .t{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow .body .m{font-size:11.5px;color:var(--muted)}
+.mrow .act{flex:none;display:flex;gap:6px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;border-radius:9px;padding:3px 9px;border:1px solid transparent;white-space:nowrap}
+.chip.k{background:var(--line2);color:var(--ink2);border-color:var(--line)}
+.chip.blue{background:#eaf2fb;color:#1d5eaa;border-color:#d3e3f6}
+.chip.green{background:var(--green-soft);color:var(--green-ink);border-color:#c6e7d6}
+.chip.amber{background:var(--amber-soft);color:var(--amber);border-color:#ecd9b4}
+.chip.red{background:var(--red-soft);color:var(--red);border-color:#f2c7ce}
+.chip.orange{background:var(--orange-soft);color:var(--orange-ink);border-color:#f3d6c6}
+.tbtn{border:1.4px solid var(--line);border-radius:8px;padding:5px 11px;font-size:12px;font-weight:700;color:var(--ink2);background:#fff}
+.tbtn:hover{border-color:#d9c9b6;background:var(--cream2)}
+.tbtn.done{color:var(--green-ink);border-color:#c6e7d6}
+.chk{width:19px;height:19px;border:2px solid #cdbfae;border-radius:6px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;background:#fff}
+.chk.on{background:var(--green);border-color:var(--green)}
+.task.dn .t{text-decoration:line-through;color:var(--muted)}
+
+.sumcard{padding:16px 18px}
+.sumrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line2)}
+.sumrow:first-of-type{border-top:none}
+.sumrow .ic{width:34px;height:34px;border-radius:9px;background:var(--orange-soft);color:var(--orange);display:flex;align-items:center;justify-content:center;flex:none}
+.sumrow .ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.sumrow .lb{font-size:11.5px;color:var(--ink2)}
+.sumrow .vv{font-family:var(--serif);font-size:22px;font-weight:700}
+.sumrow .vv small{font-size:12px;font-weight:600;color:var(--ink2);font-family:var(--sans);margin-left:2px}
+.sumrow .dl{margin-left:auto;text-align:right;font-size:11.5px;font-weight:700;line-height:1.3}
+.up{color:var(--green-ink)} .down{color:var(--red)}
+
+.info3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:1000px){.info3{grid-template-columns:1fr}}
+.icard{padding:16px 18px}
+.icard h3{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.icard h3 svg{width:16px;height:16px;stroke:var(--orange);fill:none;stroke-width:1.8}
+.icard h3 .more{margin-left:auto;font-size:11.5px;color:var(--orange-ink)}
+.irow{padding:10px 0;border-top:1px solid var(--line2);cursor:pointer}
+.irow:hover .t{color:var(--orange-ink)}
+.irow .t{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.irow .m{font-size:11.5px;color:var(--muted);margin-top:1px}
+.dealbar{border-left:3px solid var(--orange);padding-left:10px}
+
+.mascot{display:flex;align-items:center;gap:16px;background:var(--cream);border:1px solid #f1ddc4;border-radius:16px;padding:14px 20px;margin-top:20px}
+.mascot img{width:56px;height:56px;object-fit:contain;flex:none}
+.mascot .tt{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--orange-ink)}
+.mascot .ds{font-size:12.5px;color:var(--ink2)}
+
+.kpirow{display:flex;gap:0;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden;box-shadow:var(--shadow-sm)}
+.kpicell{flex:1;padding:14px 18px;border-left:1px solid var(--line2);position:relative}
+.kpicell:first-child{border-left:none}
+.kpicell .lb{font-size:11.5px;color:var(--ink2);font-weight:600}
+.kpicell .lb .q{color:var(--muted);font-size:10.5px;margin-left:3px}
+.kpicell .vv{font-family:var(--serif);font-size:28px;font-weight:700;margin-top:2px;letter-spacing:-.01em}
+.kpicell .vv small{font-size:12px;font-family:var(--sans);color:var(--ink2);font-weight:600}
+.kpicell .dl{font-size:11.5px;font-weight:700;margin-top:3px}
+.kbar{height:6px;background:#efe4d4;border-radius:3px;overflow:hidden;margin-top:8px;position:relative}
+.kbar i{position:absolute;inset:0;background:linear-gradient(90deg,var(--orange),#f4823f);border-radius:3px}
+.kpicell.click{cursor:pointer}
+.kpicell.click:hover{background:var(--cream2)}
+.pop{position:absolute;top:100%;left:14px;right:14px;z-index:30;background:#241a12;color:#f6efe6;font-size:11.5px;line-height:1.5;
+  border-radius:10px;padding:10px 12px;box-shadow:0 8px 24px rgba(0,0,0,.25);display:none;margin-top:4px}
+.pop.show{display:block}
+.pop b{color:#ffcf9a}
+
+.calhead{display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.calhead .titlewrap{flex:1;min-width:260px}
+.calhead .kpirow{flex:2;min-width:340px}
+.caltools{display:flex;gap:10px;margin:18px 0 14px;align-items:center;flex-wrap:wrap}
+.caltools select{padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:12.5px;color:var(--ink)}
+.caltools .sp{margin-left:auto;display:flex;gap:10px}
+.gbtn{border:1px solid var(--line);border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--ink2);background:#fff;display:inline-flex;gap:7px;align-items:center}
+.gbtn:hover{border-color:#d9c9b6;background:var(--cream2)}
+.gbtn.on{background:var(--orange-soft);color:var(--orange-ink);border-color:#f3d6c6}
+.gbtn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+.calgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+@media(max-width:1050px){.calgrid{grid-template-columns:1fr}}
+.mcol{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow-sm)}
+.mcol>.mh{display:flex;align-items:baseline;gap:10px;padding:2px 4px 12px;border-bottom:1px solid var(--line2);margin-bottom:12px}
+.mcol .yr{font-size:11px;color:var(--muted);font-weight:700}
+.mcol .mm{font-family:var(--serif);font-size:30px;font-weight:700;line-height:1}
+.mcol .mm small{font-size:14px}
+.mcol .cnt{margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:600}
+.ccard{border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:11px;transition:border-color .15s,box-shadow .15s,transform .15s;cursor:pointer;background:#fff}
+.ccard:hover{border-color:#e0cdb2;box-shadow:var(--shadow);transform:translateY(-1px)}
+.ccard.renew{background:var(--green-soft)}
+.ccard.churn{background:var(--red-soft)}
+.ccard.paused{background:var(--cream2)}
+.ccard .cn{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.ccard .cn .nm{font-size:13px;font-weight:700;line-height:1.35}
+.dotlb{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;flex:none}
+.dotlb .d{width:9px;height:9px;border-radius:50%;flex:none}
+.hi .d{background:var(--green)} .hi{color:var(--green-ink)}
+.mid .d{background:var(--amber);border-radius:2px} .mid{color:var(--amber)}
+.lo .d{background:var(--red);border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)} .lo{color:var(--red)}
+.ccard .met{display:flex;align-items:flex-end;gap:14px;margin:9px 0 8px}
+.ccard .ang{font-family:var(--serif);font-size:38px;font-weight:700;line-height:.9}
+.ccard .ang.hi{color:var(--green-ink)} .ccard .ang.mid{color:var(--amber)} .ccard .ang.lo{color:var(--red)}
+.ccard .anglb{font-size:10.5px;color:var(--muted);font-weight:600}
+.ccard .mrr{margin-left:auto;text-align:right}
+.ccard .mrr .l{font-size:10px;color:var(--muted)}
+.ccard .mrr .v{font-family:var(--serif);font-size:17px;font-weight:700}
+.ccard .trend{font-size:11px;font-weight:700;margin-left:6px}
+.ccard .na{font-size:11.5px;color:var(--ink2);border-top:1px solid var(--line2);padding-top:8px}
+.ccard .na b{color:var(--ink)}
+.ccard .acts{display:flex;gap:6px;margin-top:9px}
+.jb{flex:1;border:1.4px solid var(--line);border-radius:8px;padding:6px 4px;font-size:11.5px;font-weight:700;color:var(--ink2);background:#fff;text-align:center}
+.jb.renew:hover{background:var(--green-soft);border-color:#c6e7d6;color:var(--green-ink)}
+.jb.churn:hover{background:var(--red-soft);border-color:#f2c7ce;color:var(--red)}
+.jb.pause:hover{background:var(--cream);border-color:#f1ddc4;color:var(--orange-ink)}
+.jb.active-pause{background:var(--orange);border-color:var(--orange);color:#fff}
+.pausestrip{margin-top:18px;padding:14px 18px}
+.pausestrip .tt{font-weight:700;color:var(--orange-ink);font-size:13.5px}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:11.5px;color:var(--ink2);text-align:left;font-weight:700;letter-spacing:.04em;background:#faf6ef;border-bottom:1px solid var(--line);padding:12px 16px;white-space:nowrap}
+td{border-bottom:1px solid var(--line2);padding:12px 16px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:var(--cream2)}
+.right{text-align:right}
+
+.kbanner{display:flex;align-items:center;gap:22px;background:linear-gradient(120deg,#fff,var(--cream2));border:1px solid var(--line);border-radius:18px;padding:22px 26px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kbanner .ktile{width:76px;height:76px;border-radius:16px;background:#e7f5f0;display:flex;align-items:center;justify-content:center;font-size:34px;flex:none}
+.kbanner .kt{font-family:var(--serif);font-size:30px;font-weight:700;line-height:1.15}
+.kbanner .kc{font-size:13px;color:var(--ink2);margin-top:4px}
+.kbanner .kstats{display:flex;gap:0;margin-left:auto}
+.kbanner .kstat{padding:0 18px;border-left:1px solid var(--line);text-align:left}
+.kbanner .kstat .l{font-size:10.5px;color:var(--muted)}
+.kbanner .kstat .v{font-family:var(--serif);font-size:18px;font-weight:700;margin-top:2px}
+.kbanner .kstat .d{font-size:10.5px;font-weight:700}
+.kbanner img.klion{width:104px;height:104px;object-fit:contain;flex:none}
+@media(max-width:900px){.kbanner .kstats,.kbanner img.klion{display:none}}
+.kcols{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:16px;margin-top:18px;align-items:start}
+@media(max-width:1050px){.kcols{grid-template-columns:1fr}}
+.tl{position:relative;padding-left:20px}
+.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tlitem{position:relative;padding:0 0 16px}
+.tlitem::before{content:"";position:absolute;left:-19px;top:4px;width:11px;height:11px;border-radius:50%;background:#fff;border:2.5px solid var(--muted)}
+.tlitem.a::before{border-color:var(--green)}
+.tlitem .dt{font-size:11px;color:var(--muted);font-weight:700}
+.tlitem .tt{font-size:13px;font-weight:700;margin:2px 0}
+.tlitem .sm{font-size:12px;color:var(--ink2)}
+.aicard{background:linear-gradient(160deg,#fff,var(--cream2));border:1px solid #f1ddc4}
+.aicard .aih{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--orange-ink)}
+.aiexp{background:var(--panel);border:1px dashed #e6c9a8;border-radius:12px;padding:14px;text-align:center;margin:12px 0}
+.aiexp .big{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--orange);line-height:1}
+.approve{width:100%;background:var(--red);color:#fff;font-weight:700;font-size:14px;padding:12px;border-radius:11px;margin-top:6px;box-shadow:0 5px 14px rgba(215,38,61,.25)}
+.approve:hover{background:#c11f34}
+.approve.done{background:var(--green);box-shadow:none;cursor:default}
+
+.inbox-filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.inbox-filters select{padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:12.5px}
+.inbox-filters .cnt{margin-left:auto;font-size:12px;color:var(--muted);font-weight:600}
+.ibcard{display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow-sm);position:relative}
+.ibcard.read{opacity:.62}
+.ibcard .unread{position:absolute;left:6px;top:50%;transform:translateY(-50%);width:7px;height:7px;background:var(--red);border-radius:50%}
+.ibcard.read .unread{display:none}
+.ibcard .ic{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex:none}
+.ibcard .ic svg{width:21px;height:21px;stroke-width:1.7;fill:none}
+.ic.k-承認{background:var(--orange-soft)} .ic.k-承認 svg{stroke:var(--orange)}
+.ic.k-アラート{background:var(--red-soft)} .ic.k-アラート svg{stroke:var(--red)}
+.ic.k-タスク{background:#eef4ec} .ic.k-タスク svg{stroke:var(--green)}
+.ic.k-メンション{background:#eaf2fb} .ic.k-メンション svg{stroke:var(--blue)}
+.ibcard .body{flex:1;min-width:0}
+.ibcard .body .t{font-size:14px;font-weight:700}
+.ibcard .body .m{font-size:12px;color:var(--muted);margin-top:2px}
+.ibcard .meta{text-align:right;font-size:11.5px;color:var(--ink2);flex:none}
+.ibcard .meta .l{color:var(--muted);font-size:10.5px}
+.ibcard .ibacts{display:flex;gap:6px;flex:none;align-items:center}
+@media(max-width:720px){.ibcard .meta{display:none}}
+
+.dashhero{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center;background:linear-gradient(120deg,#fff,var(--cream));
+  border:1px solid var(--line);border-radius:20px;padding:32px 36px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+@media(max-width:900px){.dashhero{grid-template-columns:1fr}}
+.dashhero .greet{font-size:12.5px;color:var(--orange-ink);font-weight:700;display:flex;align-items:center;gap:8px}
+.dashhero .greet::before{content:"";width:24px;height:2px;background:var(--orange)}
+.dashhero h2{font-family:var(--serif);font-size:40px;line-height:1.15;font-weight:700;margin-top:12px}
+.dashhero .herokpi .l{font-size:13px;color:var(--ink2);font-weight:600}
+.dashhero .herokpi .v{font-family:var(--serif);font-size:44px;font-weight:700;letter-spacing:-.01em;margin:2px 0}
+.dashhero .herokpi .v small{font-size:18px}
+.bar{height:9px;background:#efe6d9;border-radius:5px;overflow:hidden;margin:8px 0 6px;position:relative}
+.bar i{position:absolute;inset:0;background:linear-gradient(90deg,var(--orange),#f4823f);border-radius:5px}
+.kpi4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
+@media(max-width:1000px){.kpi4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.kpi4{grid-template-columns:1fr}}
+.ktile{padding:16px 18px}
+.ktile .top{display:flex;align-items:center;justify-content:space-between}
+.ktile .l{font-size:12px;color:var(--ink2);font-weight:600}
+.ktile .ic{width:32px;height:32px;border-radius:9px;background:var(--orange-soft);color:var(--orange);display:flex;align-items:center;justify-content:center}
+.ktile .ic svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.ktile .v{font-family:var(--serif);font-size:26px;font-weight:700;margin:6px 0 2px}
+.ktile .v small{font-size:12px;font-family:var(--sans);color:var(--ink2)}
+.ktile .d{font-size:11.5px;font-weight:700}
+.dashcols{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;margin-top:16px;align-items:start}
+@media(max-width:1000px){.dashcols{grid-template-columns:1fr}}
+.chartcard{padding:20px}
+.chartcard h3{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.chartcard .lg{margin-left:auto;font-size:11.5px;color:var(--ink2);display:flex;gap:12px;font-weight:600}
+.chartcard .lg i{display:inline-block;width:11px;height:11px;border-radius:3px;background:var(--blue);margin-right:4px;vertical-align:-1px}
+.actitem{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line2)}
+.actitem:first-of-type{border-top:none}
+.actitem .ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;background:var(--cream)}
+.actitem .t{font-size:13px;font-weight:600;flex:1;min-width:0}
+.actitem .t small{display:block;color:var(--muted);font-weight:500;font-size:11px}
+.actitem .tm{font-size:11px;color:var(--muted);flex:none}
+
+.modal{position:fixed;inset:0;background:rgba(36,26,18,.4);display:none;z-index:100;padding:40px;overflow:auto}
+.modal.on{display:flex;align-items:flex-start;justify-content:center}
+.modal .box{background:var(--panel);border-radius:18px;max-width:900px;width:100%;padding:26px 30px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal .box h3{font-family:var(--serif);font-size:22px;font-weight:700}
+.modal .cat{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+@media(max-width:700px){.modal .cat{grid-template-columns:1fr}}
+.catitem{border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.catitem .t{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px}
+.catitem .s{font-size:11.5px;color:var(--muted);margin-top:3px}
+.roadmap{background:var(--cream2);border:1px dashed #e6c9a8;border-radius:12px;padding:14px 16px;margin-top:16px}
+.roadmap .ph{font-size:12.5px;color:var(--ink2);margin-top:4px}
+.roadmap .ph b{color:var(--orange-ink)}
+.xbtn{margin-left:auto;font-size:20px;color:var(--muted)}
+
+.launch{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:1000px){.launch{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.launch{grid-template-columns:1fr}}
+.lcard{padding:16px;display:flex;flex-direction:column;gap:6px;position:relative}
+.lcard::after{content:"→";position:absolute;right:14px;top:14px;color:var(--orange);font-weight:800;font-size:15px;
+  opacity:0;transform:translateX(-5px);transition:opacity .18s,transform .18s}
+.lcard:hover{border-color:#e0cdb2;box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+.lcard:hover::after{opacity:1;transform:none}
+.lcard .ic{width:46px;height:46px;border-radius:12px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:20px}
+.lcard b{font-size:13.5px}
+.lcard .d{font-size:11.5px;color:var(--ink2)}
+.lcard .chip{align-self:flex-start;margin-top:2px}
+
+/* ===== company (news / pending / schedule) ===== */
+.company2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+@media(max-width:1000px){.company2{grid-template-columns:1fr}}
+.cap-mini{font-size:10.5px;color:var(--muted);font-weight:600;margin-left:6px}
+.newsrow{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line2);cursor:pointer}
+.newsrow:first-of-type{border-top:none}
+.newsrow .dt{font-size:11px;color:var(--muted);font-weight:700;width:74px;flex:none;padding-top:2px}
+.newsrow .t{font-size:13.5px;font-weight:700}
+.newsrow .b{font-size:12px;color:var(--ink2);margin-top:2px}
+.pendrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line2);cursor:pointer}
+.pendrow:first-of-type{border-top:none}
+.pendrow .t{font-size:12.5px;font-weight:700;flex:1}
+.pendrow .n{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--orange-ink)}
+.ys{display:flex;gap:4px;margin:10px 0 8px}
+.ys .q{flex:1;text-align:center;font-size:10px;color:var(--ink2);font-weight:700;background:var(--line2);border-radius:6px;padding:3px 0}
+.ys .q.now{background:var(--orange-soft);color:var(--orange-ink)}
+.yev{display:flex;gap:9px;align-items:center;padding:6px 0;font-size:12px;color:var(--ink2)}
+.yev .m{font-weight:700;color:var(--ink);width:56px;flex:none;font-variant-numeric:tabular-nums}
+.yev .kd{width:8px;height:8px;border-radius:50%;flex:none}
+.yev.now .m,.yev.now{color:var(--orange-ink);font-weight:700}
+
+/* ===== people ===== */
+.pplgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:1100px){.pplgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.pplgrid{grid-template-columns:1fr}}
+.pcard{padding:16px;display:flex;flex-direction:column;gap:6px}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cream),#f6e2cd);color:var(--orange-ink);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;font-family:var(--serif);border:1px solid #f1ddc4}
+.pcard .nm{font-size:14px;font-weight:800}
+.pcard .rl{font-size:11.5px;color:var(--ink2)}
+.pcard .sk{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+.orgroot{display:flex;flex-direction:column;align-items:center;gap:0;min-width:760px}
+.orgnode{border:1.4px solid var(--line);border-radius:10px;background:#fff;padding:8px 14px;text-align:center;box-shadow:var(--shadow-sm)}
+.orgnode .nm{font-size:12.5px;font-weight:800}
+.orgnode .rl{font-size:10.5px;color:var(--muted)}
+.orgnode.ceo{border-color:#f1ddc4;background:var(--cream2)}
+.orgline{width:2px;height:16px;background:var(--line)}
+.orgrow{display:flex;gap:14px;align-items:flex-start;justify-content:center}
+.orgcol{display:flex;flex-direction:column;align-items:center;gap:8px}
+.orgcol .dep{font-size:11px;font-weight:800;color:var(--orange-ink);background:var(--orange-soft);border:1px solid #f3d6c6;border-radius:8px;padding:2px 10px}
+/* ===== org page (independent view) ===== */
+.org2{display:flex;flex-direction:column;align-items:center;gap:0;min-width:840px}
+.org2 .ceo2{display:flex;align-items:center;gap:13px;border:1.6px solid #f1ddc4;background:var(--cream2);border-radius:16px;padding:15px 26px;box-shadow:var(--shadow)}
+.org2 .ceo2 .nm{font-size:17px;font-weight:800}
+.org2 .ceo2 .rl{font-size:12px;color:var(--ink2)}
+.org2 .trunk{width:2px;height:26px;background:#d9c9b4}
+.org2 .deprow{position:relative;display:flex;gap:18px;align-items:flex-start;justify-content:flex-start;flex-wrap:nowrap;padding-top:26px}
+.org2 .deprow::before{content:"";position:absolute;top:0;left:102px;right:102px;height:2px;background:#d9c9b4}
+.depcol{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow-sm);flex:0 0 204px}
+.depcol::before{content:"";position:absolute;top:-26px;left:calc(50% - 1px);width:2px;height:26px;background:#d9c9b4}
+.depcol .dhead{display:flex;align-items:center;gap:8px;justify-content:center;padding-bottom:4px}
+.depcol .dep{font-size:12px;font-weight:800;color:var(--orange-ink);background:var(--orange-soft);border:1px solid #f3d6c6;border-radius:8px;padding:3px 12px}
+.depcol .cbadge{font-size:11px;font-weight:800;color:var(--ink2);background:var(--line2);border-radius:20px;padding:2px 9px}
+.pnode{display:flex;align-items:center;gap:10px;border:1.2px solid var(--line);border-radius:11px;padding:8px 11px;width:100%;background:#fff}
+.pnode.mgr{border-color:#f1ddc4;background:var(--cream2)}
+.pnode .av2{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--cream),#f6e2cd);color:var(--orange-ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;border:1px solid #f1ddc4;flex:none}
+.pnode .nm{font-size:12.5px;font-weight:800;line-height:1.2}
+.pnode .rl{font-size:10.5px;color:var(--ink2)}
+.pnode .mgrtag{margin-left:auto;font-size:9.5px;font-weight:800;color:var(--orange-ink);white-space:nowrap}
+.depcol .subs{display:flex;flex-direction:column;gap:8px;width:100%;padding-left:11px;border-left:2px dashed var(--line);margin-left:6px}
+
+/* ===== tabs2 / hyoka ===== */
+.tabs2{display:flex;gap:6px;margin:16px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tabs2 button{padding:9px 16px;font-size:13px;font-weight:700;color:var(--ink2);border-bottom:3px solid transparent;margin-bottom:-1px}
+.tabs2 button.on{color:var(--orange-ink);border-bottom-color:var(--orange)}
+.prog{height:8px;background:#efe6d9;border-radius:4px;position:relative;overflow:hidden;margin-top:6px}
+.prog i{position:absolute;inset:0;border-radius:4px;background:var(--green)}
+.prog i.mid{background:var(--amber)} .prog i.low{background:var(--red)}
+.selfeval{display:flex;align-items:center;gap:18px;padding:18px 20px;background:linear-gradient(120deg,#fff,var(--cream2));border:1px solid #f1ddc4}
+.selfeval .big{font-family:var(--serif);font-size:20px;font-weight:700}
+
+/* ===== recruit ===== */
+.jobgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:900px){.jobgrid{grid-template-columns:1fr}}
+.jobcard{padding:18px 20px;cursor:pointer}
+.jobcard:hover{border-color:#e0cdb2;box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+.jobcard .jt{font-family:var(--serif);font-size:17px;font-weight:700}
+.jobcard .jm{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.jobhead{display:flex;align-items:center;gap:14px;margin:14px 0}
+.jobsec{font-weight:800;font-size:13px;margin:16px 0 6px;color:var(--orange-ink)}
+.joblist{padding-left:18px;font-size:13px;color:var(--ink2)}
+.joblist li{margin:4px 0}
+
+/* ===== rooms ===== */
+.roomgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:1100px){.roomgrid{grid-template-columns:repeat(2,1fr)}}
+.roomcard{padding:14px 16px;cursor:pointer;border-width:1.4px}
+.roomcard.free{border-color:#c6e7d6;background:linear-gradient(160deg,#fff,var(--green-soft))}
+.roomcard.busy{border-color:#f2c7ce;background:linear-gradient(160deg,#fff,var(--red-soft))}
+.roomcard.sel{outline:2px solid var(--orange)}
+.roomcard .rn{font-weight:800;font-size:14px}
+.roomcard .rc{font-size:11px;color:var(--muted)}
+.roomcard .st{font-family:var(--serif);font-size:16px;font-weight:700;margin-top:6px}
+.roomcard.free .st{color:var(--green-ink)} .roomcard.busy .st{color:var(--red)}
+.roomcard .rm{font-size:11.5px;color:var(--ink2)}
+.rtl{position:relative;height:52px;background:#faf7f2;border:1px solid var(--line2);border-radius:9px;margin:10px 0 4px}
+.rtl .ev{position:absolute;top:7px;bottom:7px;background:var(--orange-soft);border:1px solid #f3d6c6;border-radius:6px;
+  font-size:10.5px;color:var(--orange-ink);font-weight:700;padding:3px 6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.rtl .nowln{position:absolute;top:0;bottom:0;width:2px;background:var(--red)}
+.rtlx{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);padding:0 2px}
+
+/* ===== news page / support ===== */
+.newsbig{padding:18px 22px;margin-bottom:12px}
+.newsbig .hd{display:flex;gap:10px;align-items:center}
+.newsbig .t{font-family:var(--serif);font-size:17px;font-weight:700;margin-top:6px}
+.newsbig .b{font-size:13px;color:var(--ink2);margin-top:4px}
+.field{margin:14px 0}
+.field label{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px}
+.field label .req{color:var(--red);font-size:11px;margin-left:4px}
+.field input[type=text],.field select,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:13px;background:#fff;color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical}
+.shot{border:1.5px dashed #d9c9b6;border-radius:10px;padding:14px;text-align:center;color:var(--muted);font-size:12.5px;background:var(--cream2)}
+.faqitem{border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:10px;overflow:hidden}
+.faqitem summary{list-style:none;cursor:pointer;padding:14px 18px;font-size:13.5px;font-weight:700;display:flex;gap:10px;align-items:center}
+.faqitem summary::before{content:"Q";font-family:var(--serif);color:var(--orange-ink);font-weight:800}
+.faqitem[open]{border-color:#f1ddc4}
+.faqitem .a{padding:0 18px 14px 40px;font-size:13px;color:var(--ink2)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#241a12;color:#fff;font-size:13px;font-weight:700;
+  padding:11px 20px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:300;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+button.lcard{text-align:left}
+
+.menu{display:flex;width:38px;height:38px;border-radius:10px;align-items:center;justify-content:center;color:var(--ink2)}
+.menu:hover{background:var(--line2)}
+.menu svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.topbar .pagename{font-size:14px;font-weight:800;color:var(--ink);white-space:nowrap}
+@media(max-width:820px){
+  .view{padding:20px 16px 60px}
+  .h1{font-size:30px}
+  .hero h2{font-size:34px}
+  .topbar .pagename{display:none}
+}
+
+/* ================= トレボイス（フルページ音声アシスタント） ================= */
+#v-trevoice{max-width:none;padding:0}
+.tv-stage{position:relative;min-height:calc(100vh - 92px);display:flex;flex-direction:column;
+  padding:22px 30px 30px;overflow:hidden;
+  background:radial-gradient(130% 90% at 50% -10%, #ffffff 0%, #f5f4f9 55%, #eceef5 100%)}
+.tv-head{display:flex;align-items:flex-start;gap:16px}
+.tv-id .n{font-size:17px;font-weight:800;letter-spacing:.01em;color:#2a2734}
+.tv-id .s{font-size:10.5px;font-weight:700;letter-spacing:.16em;color:#9b98a8;margin-top:1px}
+.tv-head .sp{margin-left:auto;display:flex;align-items:center;gap:10px}
+.tv-quest{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:#4a4757;
+  background:rgba(255,255,255,.8);border:1px solid #e6e4ee;border-radius:20px;padding:7px 14px;box-shadow:0 1px 3px rgba(60,55,80,.05)}
+.tv-quest:hover{background:#fff}
+.tv-quest svg{width:15px;height:15px;stroke:#6b6880;fill:none;stroke-width:1.8}
+.tv-scope{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#3f7d5e;
+  background:rgba(232,246,238,.9);border:1px solid #cfeadc;border-radius:20px;padding:7px 13px}
+.tv-scope .g{width:7px;height:7px;border-radius:50%;background:#22b573}
+.tv-sub{display:flex;align-items:center;margin-top:12px}
+.tv-sub .kick{font-size:11px;font-weight:800;letter-spacing:.2em;color:#a7a4b4}
+.tv-sub .grounded{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800;
+  letter-spacing:.08em;color:#7b6bb8;background:rgba(238,235,250,.8);border:1px solid #e3ddf3;border-radius:20px;padding:5px 12px}
+.tv-sub .grounded svg{width:14px;height:14px;stroke:#7b6bb8;fill:none;stroke-width:1.8}
+.tv-sub .tv-live{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800;letter-spacing:.06em;
+  color:#c0392f;background:rgba(251,233,236,.9);border:1px solid #f2c7ce;border-radius:20px;padding:5px 12px}
+.tv-sub .tv-live+.grounded{margin-left:10px}
+.tv-sub .tv-live .ld{width:7px;height:7px;border-radius:50%;background:var(--red);animation:tvpulse 1s infinite}
+
+.tv-body{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;
+  width:100%;max-width:900px;margin:0 auto;padding:20px 0}
+.tv-thread{width:100%;display:flex;flex-direction:column;gap:14px;max-height:46vh;overflow-y:auto;padding:4px 2px}
+.tv-thread:empty{display:none}
+.tv-msg{display:flex;gap:11px;max-width:88%;animation:tvrise .25s ease}
+@keyframes tvrise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.tv-msg{animation:none}}
+.tv-msg.user{align-self:flex-end;flex-direction:row-reverse}
+.tv-msg .mava{width:38px;height:38px;border-radius:50%;flex:none;overflow:hidden;background:#fff;border:1px solid #eae7f2;
+  display:flex;align-items:center;justify-content:center}
+.tv-msg .mava img{width:34px;height:34px;object-fit:contain}
+.tv-bubble{border-radius:16px;padding:12px 16px;font-size:14px;line-height:1.65;box-shadow:0 2px 10px rgba(60,55,80,.06)}
+.tv-msg.bot .tv-bubble{background:#fff;border:1px solid #ece9f4;color:#2f2c3a;border-top-left-radius:5px}
+.tv-msg.user .tv-bubble{background:linear-gradient(120deg,#e9f3f0,#eee9f7 60%,#f7e8f1);border:1px solid #e6e2f0;color:#37333f;border-top-right-radius:5px}
+.tv-src{display:inline-flex;align-items:center;gap:6px;margin-top:9px;font-size:11px;font-weight:700;color:#7b6bb8;
+  background:#f4f1fb;border:1px solid #e7e1f5;border-radius:8px;padding:4px 9px}
+.tv-src svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8}
+.tv-typing{display:inline-flex;gap:4px;padding:2px 0}
+.tv-typing i{width:7px;height:7px;border-radius:50%;background:#c3bfd4;animation:tvdot 1s infinite}
+.tv-typing i:nth-child(2){animation-delay:.15s}.tv-typing i:nth-child(3){animation-delay:.3s}
+@keyframes tvdot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+
+.tv-pillwrap{width:100%;max-width:840px}
+.tv-pill{display:flex;align-items:center;gap:16px;padding:11px 12px 11px 12px;border-radius:999px;
+  background:linear-gradient(100deg,#cfeee7 0%,#dcdcf2 46%,#f4dae8 100%);background-size:200% 100%;
+  border:1px solid rgba(255,255,255,.7);box-shadow:0 18px 44px rgba(120,110,170,.22),0 2px 6px rgba(120,110,170,.12),inset 0 1px 1px rgba(255,255,255,.6);
+  animation:tvsheen 9s ease-in-out infinite}
+@keyframes tvsheen{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@media(prefers-reduced-motion:reduce){.tv-pill{animation:none}}
+.tv-pill.listening{box-shadow:0 0 0 4px rgba(215,38,61,.14),0 18px 44px rgba(120,110,170,.22)}
+.tv-avalg{width:58px;height:58px;border-radius:50%;flex:none;background:#fff;border:3px solid rgba(255,255,255,.9);
+  box-shadow:0 4px 12px rgba(120,110,170,.28);overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s}
+.tv-avalg:hover{transform:scale(1.05)}
+.tv-avalg img{width:52px;height:52px;object-fit:contain}
+.tv-pill.speaking .tv-avalg{animation:tvspk 1s ease-in-out infinite}
+@keyframes tvspk{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.tv-ask{font-size:16.5px;font-weight:800;color:#2c2937;white-space:nowrap}
+.tv-divv{width:1px;height:26px;background:rgba(90,80,120,.22)}
+.tv-input{flex:1;min-width:0;border:none;background:transparent;font:inherit;font-size:15px;color:#2c2937;outline:none}
+.tv-input::placeholder{color:#8a86a0}
+.tv-actions{display:flex;align-items:center;gap:8px;flex:none}
+.tv-cbtn{width:44px;height:44px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.8);transition:background .15s,transform .1s}
+.tv-cbtn:hover{background:rgba(255,255,255,.92)}
+.tv-cbtn:active{transform:scale(.94)}
+.tv-cbtn svg{width:19px;height:19px;stroke:#4a4757;fill:none;stroke-width:1.9}
+.tv-cbtn.send{background:rgba(255,255,255,.92)}
+.tv-cbtn.mic.on{background:var(--red);border-color:var(--red)}
+.tv-cbtn.mic.on svg{stroke:#fff}
+.tv-status{display:flex;align-items:center;gap:10px;font-size:13px;color:#6b6880}
+.tv-status b{color:#2f2c3a;font-weight:800}
+.tv-status .d{width:8px;height:8px;border-radius:50%;background:#22b573;flex:none}
+.tv-status.listening .d{background:var(--red);animation:tvpulse 1s infinite}
+.tv-status.thinking .d{background:#e0a020;animation:tvpulse 1s infinite}
+.tv-status.speaking .d{background:#7b6bb8;animation:tvpulse 1s infinite}
+.tv-suggest{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;max-width:760px}
+.tv-chip{font-size:12.5px;font-weight:700;color:#514d61;background:rgba(255,255,255,.72);border:1px solid #e6e3ef;
+  border-radius:20px;padding:8px 15px;cursor:pointer;transition:background .15s,border-color .15s}
+.tv-chip:hover{background:#fff;border-color:#d7d2e6}
+.tv-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:8px}
+.tv-foot .lock{font-size:11.5px;font-weight:700;color:#9b98a8;display:inline-flex;align-items:center;gap:6px}
+.tv-foot .lock svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8}
+.tv-foot .note{font-size:11.5px;color:#a7a4b4;text-align:right;max-width:60%}
+.tv-pixel{position:absolute;right:26px;bottom:64px;width:74px;height:74px;image-rendering:pixelated;
+  filter:drop-shadow(0 6px 10px rgba(120,110,170,.28));animation:floaty 6s ease-in-out infinite;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.tv-pixel{animation:none}}
+@media(max-width:820px){.tv-ask{font-size:14px}.tv-pill{gap:10px}.tv-avalg{width:46px;height:46px}.tv-avalg img{width:40px;height:40px}
+  .tv-foot .note{max-width:100%}.tv-pixel{width:54px;height:54px;right:12px;bottom:70px}}
+</style>
+</head>
+<body>
+
+<div class="mockbar">
+  <span><b>デザインモック v7（B案）</b>Salesforce「TrePro AI」アプリ／トレタン全面・エディトリアル</span>
+  <span>社名・数値・担当者は<b>すべて架空</b>／状態はこのブラウザにのみ擬似保存</span>
+  <button class="reset" onclick="resetAll()">↺ 初期化</button>
+</div>
+
+<div class="scrim" id="scrim" onclick="closeNav()"></div>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo"><img class="ico" src="assets/icons/logo.png" style="width:38px;height:38px;border-radius:10px" alt="TrePro AI" onerror="this.style.display='none'"></div>
+      <div><div class="bt">TrePro AI</div><div class="bs">マテリアルグループ ポータル</div></div>
+    </div>
+    <div class="navsec">メイン</div>
+    <button class="nav on" data-view="home"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>ホーム</button>
+    <button class="nav" data-view="trevoice"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>トレボイス<span class="badge" style="background:linear-gradient(120deg,#7b6bb8,#c98bbf)">AI</span></button>
+    <button class="nav" data-view="calendar"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>継続カレンダー</button>
+    <button class="nav" data-view="karte"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5"/></svg>顧客カルテ</button>
+    <button class="nav" data-view="inbox"><svg viewBox="0 0 24 24"><path d="M3 12h5l2 3h4l2-3h5"/><path d="M4 7h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>統合受信箱<span class="badge" id="ibbadge">0</span></button>
+    <button class="nav" data-view="deals"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>案件</button>
+    <button class="nav" data-view="accounts"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h4M8 11h4M8 15h4"/></svg>取引先</button>
+    <div class="navsec">会社</div>
+    <button class="nav" data-view="people"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><path d="M16 4a3 3 0 0 1 0 6M17.5 15.2c2 .6 3.5 2 3.5 4.8"/></svg>ピープル</button>
+    <button class="nav" data-view="org"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-2h12v2M12 12v2"/></svg>組織図</button>
+    <button class="nav" data-view="hyoka"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z"/></svg>評価・育成</button>
+    <button class="nav" data-view="recruit"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5"/></svg>採用</button>
+    <button class="nav" data-view="rooms"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18M9 5v15"/></svg>会議室</button>
+    <button class="nav" data-view="news"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12.5h7M7 16h4"/></svg>ニュース</button>
+    <div class="navsec">経営</div>
+    <button class="nav" data-view="dashboard"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>ダッシュボード</button>
+    <button class="nav" data-view="catalog" onclick="openCatalog()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>機能カタログ</button>
+    <div class="navsec">サポート</div>
+    <button class="nav" data-view="support"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .8-1 1.7"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>お問い合わせ</button>
+    <div class="sb-spacer"></div>
+    <div class="theme-card">
+      <div class="lb">今月の行動テーマ</div>
+      <div class="tt">顧客価値の最大化</div>
+      <div class="ds">小さな挑戦を、確かな成果へ。</div>
+    </div>
+    <div class="user">
+      <div class="av"></div>
+      <div><div class="un">山田 花子</div><div class="ur">CS / マネージャー</div></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="menu" onclick="toggleNav()" aria-label="メニュー"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <span class="pagename" id="pageName">ホーム</span>
+      <div class="search"><input type="search" placeholder="検索（案件・取引先・ジャッジ）※モックでは無効" disabled></div>
+      <button class="ib" title="通知"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="dot"></span></button>
+      <button class="ib" title="ヘルプ"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .8-1 1.7"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg></button>
+      <span class="env">MOCK</span>
+    </div>
+
+    <section class="view on" id="v-home">
+      <div class="hero">
+        <div class="stroke"></div>
+        <div class="hero-l">
+          <div class="kicker">TREPRO AI PORTAL</div>
+          <h2 class="serif">今日も、<span class="r">挑戦中</span>。</h2>
+          <div class="sub">一人ひとりの挑戦が、未来をつくる力になる。<br>会社の今と、次の一手が、この1画面に集まる。</div>
+          <button class="cta" onclick="go('calendar')">今日のアクションを見る →</button>
+
+          <div class="trevoice" id="trevoice">
+            <button class="tvbtn" onclick="trevoiceToggle()" aria-label="トレボイスを再生">
+              <svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+            </button>
+            <div class="tvbody" onclick="go('trevoice')" style="cursor:pointer" title="トレボイスを開く">
+              <div class="tvlabel"><span class="live"></span>トレボイス<span class="tag" id="tvTag">今日のひとこと · 0:30</span></div>
+              <div class="tvtext" id="tvText">トレたんが、今日のポイントを声でお伝えします。</div>
+              <div class="eq" id="tvEq"></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-r">
+          <img src="assets/toretan/hero.png" alt="トレタン" onerror="this.src='assets/toretan/toretan-expr-1-celebrate.png'">
+          <div class="tag">みんなの挑戦パートナー<b>トレたん</b></div>
+        </div>
+      </div>
+
+      <div class="kpirow" id="homeKpi" style="margin-top:22px"></div>
+
+      <div class="sec-h serif">会社の今 <span class="cap">ニュース・対応待ち・年間スケジュール</span><span class="more" onclick="go('news')">ニュース一覧 →</span></div>
+      <div class="company2">
+        <div class="card icard">
+          <h3><svg viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12.5h7M7 16h4"/></svg> ニュース＆お知らせ</h3>
+          <div id="newsHome"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+          <div class="card icard">
+            <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 対応待ち</h3>
+            <div id="pendingList"></div>
+          </div>
+          <div class="card icard">
+            <h3><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> 年間スケジュール <span class="cap-mini">FY26（2025/9〜2026/8）</span></h3>
+            <div id="yearSched"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-h serif">現場の動き <span class="cap">注目案件・採用・最近のレコード</span></div>
+      <div class="info3">
+        <div class="card icard">
+          <h3><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> 注目の案件 <span class="more" onclick="go('deals')">すべて</span></h3>
+          <div id="dealMini"></div>
+        </div>
+        <div class="card icard">
+          <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5"/></svg> 採用ハイライト <span class="more" onclick="go('recruit')">求人一覧</span></h3>
+          <div id="jobMini"></div>
+        </div>
+        <div class="card icard">
+          <h3><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg> 最近使ったレコード</h3>
+          <div class="irow" onclick="openKarte(2)"><div class="t">ひまわり介護ホールディングス様</div><div class="m">取引先 ・ 継続角度 52</div></div>
+          <div class="irow" onclick="openKarte(1)"><div class="t">株式会社青葉製作所様</div><div class="m">取引先 ・ 継続角度 85</div></div>
+          <div class="irow" onclick="go('calendar')"><div class="t">継続更新カレンダー</div><div class="m">レポート ・ 2026-07 更新分</div></div>
+        </div>
+      </div>
+
+      <div class="sec-h serif">業務エリア <span class="cap">部門・役割ごとの入口</span></div>
+      <div class="launch">
+        <button class="card lcard" onclick="go('people')"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/people.png" alt=""></span><b>ピープル</b><span class="d">社員検索・組織図</span></button>
+        <button class="card lcard" onclick="go('hyoka')"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/hyoka.png" alt=""></span><b>評価・育成</b><span class="d">自己評価・MBO・1on1</span></button>
+        <button class="card lcard" onclick="go('recruit')"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/recruit.png" alt=""></span><b>採用</b><span class="d">募集求人・社員紹介</span></button>
+        <button class="card lcard" onclick="go('rooms')"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/room.png" alt=""></span><b>会議室</b><span class="d">空き状況・予約</span></button>
+        <button class="card lcard" onclick="go('calendar')"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/calendar.png" alt=""></span><b>契約管理</b><span class="d">継続カレンダー・ジャッジ</span></button>
+        <button class="card lcard" onclick="go('inbox')"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/inbox.png" alt=""></span><b>統合受信箱</b><span class="d">タスク・承認・アラート</span></button>
+        <button class="card lcard" onclick="go('dashboard')"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/dashboard.png" alt=""></span><b>経営・分析</b><span class="d">MRR・継続率・KPI</span></button>
+        <button class="card lcard" onclick="go('support')"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/support.png" alt=""></span><b>お問い合わせ</b><span class="d">バグ報告・FAQ</span></button>
+      </div>
+
+      <div class="sec-h serif">アプリ一覧 <span class="cap">Cloud Run 側の既存機能（外部リンク）</span></div>
+      <div class="launch">
+        <a class="card lcard" href="#"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/dashboard.png" alt=""></span><b>TreView</b><span class="d">SNS分析・レポート</span><span class="chip blue">外部・Cloud Run</span></a>
+        <a class="card lcard" href="#"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/meeting.png" alt=""></span><b>TreMeet</b><span class="d">会議DX・議事録</span><span class="chip blue">外部・Cloud Run</span></a>
+        <a class="card lcard" href="#"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/galaxy.png" alt=""></span><b>TreAX 組織銀河</b><span class="d">課題・組織可視化</span><span class="chip blue">外部・Cloud Run</span></a>
+        <a class="card lcard" href="#"><span class="ic"><img class="ico" style="width:40px;height:40px" src="assets/icons/ledger.png" alt=""></span><b>経営台帳</b><span class="d">freee BS/CF・PL</span><span class="chip blue">外部・Cloud Run</span></a>
+      </div>
+
+      <div class="mascot">
+        <img id="homeMascot" src="assets/toretan/toretan-expr-3-cheer.png" alt="">
+        <div><div class="tt" id="mascotTitle">今日も、いい挑戦を。</div><div class="ds">小さな一歩の積み重ねが、大きな未来をつくるよ。さあ、次の挑戦へ！</div></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-trevoice">
+      <div class="tv-stage">
+        <div class="tv-head">
+          <div class="tv-id">
+            <div class="n">トレタン</div>
+            <div class="s">TREPRO ONBOARDING PARTNER</div>
+          </div>
+          <div class="sp">
+            <button class="tv-quest" onclick="toast('TrePro Quest（社内オンボーディング・ゲーミフィケーション）は準備中です')">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="5"/><path d="M7 12h3M8.5 10.5v3"/><circle cx="16" cy="11" r="1"/><circle cx="18.5" cy="13.5" r="1"/></svg>
+              TrePro Quest <span style="color:#a7a4b4">↗</span></button>
+            <span class="tv-scope"><span class="g"></span>社内限定</span>
+          </div>
+        </div>
+        <div class="tv-sub">
+          <span class="kick">TORETAN VOICE / 01</span>
+          <span class="tv-live" id="tvLive" style="display:none"><span class="ld"></span>GPT Live 接続中</span>
+          <span class="grounded"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 5.5v15"/></svg>MANUAL GROUNDED</span>
+        </div>
+
+        <div class="tv-body">
+          <div class="tv-thread" id="tvThread"></div>
+
+          <div class="tv-pillwrap">
+            <div class="tv-pill" id="tvPill">
+              <div class="tv-avalg" onclick="tvConverse()" title="押して音声会話を開始"><img src="assets/toretan/toretan-expr-2-happy.png" alt="トレタン"></div>
+              <div class="tv-ask">トレタンに聞く</div>
+              <div class="tv-divv"></div>
+              <input class="tv-input" id="tvInput" placeholder="社内のことを質問する" autocomplete="off"
+                onkeydown="if(event.key==='Enter')tvSend()">
+              <div class="tv-actions">
+                <button class="tv-cbtn" onclick="tvToggleSuggest()" title="よくある質問"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                <button class="tv-cbtn mic" id="tvMicBtn" onclick="tvMic()" title="マイクで質問"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+                <button class="tv-cbtn send" onclick="tvSend()" title="送信"><svg viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tv-status" id="tvStatus"><span class="d"></span><b>準備できています</b>&nbsp;トレタンかマイクを押して音声会話を開始</div>
+
+          <div class="tv-suggest" id="tvSuggest"></div>
+        </div>
+
+        <div class="tv-foot">
+          <span class="lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>アカウント限定</span>
+          <span class="note">音声ファイルは保存しません。重要な判断は担当部署にも確認してください。</span>
+        </div>
+        <img class="tv-pixel" src="assets/toretan/toretan-pixel.png" alt="">
+      </div>
+    </section>
+
+    <section class="view" id="v-calendar">
+      <div class="calhead">
+        <div class="titlewrap">
+          <div class="crumb"><b>契約管理</b> ＞ 継続更新カレンダー</div>
+          <div class="h1">継続更新カレンダー</div>
+          <div class="lead">契約の更新予定とアクションを月次で把握し、継続率の最大化を実現しましょう。</div>
+        </div>
+        <div class="kpirow" id="calKpi"></div>
+      </div>
+      <div class="caltools">
+        <select id="fOwner"><option value="">担当: 全員</option></select>
+        <select id="fState">
+          <option value="">状態: すべて</option>
+          <option value="pending">未判定のみ</option>
+          <option value="paused">一時停止のみ</option>
+          <option value="judged">判定済みのみ</option>
+        </select>
+        <div class="sp">
+          <button class="gbtn" id="asaToggle" onclick="toggleAsakai()"><svg viewBox="0 0 24 24"><path d="M12 3v2M5 12H3M12 21v-2M21 12h-2"/><circle cx="12" cy="12" r="5"/></svg>CXO朝会モード</button>
+          <button class="gbtn"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>エクスポート</button>
+        </div>
+      </div>
+      <div class="calgrid" id="calGrid"></div>
+      <div class="card pausestrip">
+        <div class="tt"><img class="ico" style="width:18px;height:18px;vertical-align:-3px" src="assets/icons/pending.png" alt=""> 一時停止サマリー</div>
+        <div class="lead" id="pauseSummary" style="margin-top:4px"></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-karte">
+      <div class="crumb"><b>クライアント</b> ＞ 一覧 ＞ カルテ</div>
+      <div id="karteBody"></div>
+    </section>
+
+    <section class="view" id="v-inbox">
+      <div class="h1">統合受信箱</div>
+      <div class="lead">タスク・承認・アラート・メンションを1つの形式で処理できます。</div>
+      <div class="inbox-filters">
+        <select id="ibKind"><option value="">すべての種別</option><option>承認</option><option>アラート</option><option>タスク</option><option>メンション</option></select>
+        <select id="ibPri"><option value="">すべての優先度</option><option value="high">高</option><option value="mid">中</option><option value="low">低</option></select>
+        <label style="font-size:12.5px;color:var(--ink2);display:flex;align-items:center;gap:6px"><input type="checkbox" id="ibUnread"> 未読のみ</label>
+        <button class="gbtn" onclick="markAllRead()">すべて既読</button>
+        <span class="cnt" id="ibCount"></span>
+      </div>
+      <div id="inboxList"></div>
+    </section>
+
+    <section class="view" id="v-deals">
+      <div class="h1">案件</div>
+      <div class="lead">リストビュー: トレプロの案件 ／ 裏側はグループ共用の商談（Opportunity）。</div>
+      <div class="tblwrap" style="margin-top:16px">
+        <table><thead><tr><th>案件名</th><th>取引先</th><th>レコードタイプ</th><th>フェーズ</th><th class="right">金額</th><th>完了予定</th><th>所有者</th></tr></thead>
+        <tbody id="dealRows"></tbody></table>
+      </div>
+    </section>
+
+    <section class="view" id="v-accounts">
+      <div class="h1">取引先</div>
+      <div class="lead">グループ横断顧客リストの構成要素（標準 Account）。行クリックでカルテへ。</div>
+      <div class="tblwrap" style="margin-top:16px">
+        <table><thead><tr><th>取引先名</th><th>業種</th><th>規模</th><th>担当</th><th class="right">MRR</th><th>継続角度</th><th>状態</th></tr></thead>
+        <tbody id="accRows"></tbody></table>
+      </div>
+    </section>
+
+    <section class="view" id="v-dashboard">
+      <div class="crumb"><b>経営</b> ＞ ダッシュボード</div>
+      <div class="dashhero">
+        <div>
+          <div class="greet">山田 太郎 様、おはようございます</div>
+          <h2 class="serif">挑戦が、<br>未来を動かす。</h2>
+        </div>
+        <div class="herokpi">
+          <div class="l">稼働MRR（今期）</div>
+          <div class="v num" id="dashMrr"></div>
+          <div class="bar"><i id="dashBar"></i></div>
+          <div style="font-size:12px;color:var(--ink2)" id="dashMrrSub"></div>
+        </div>
+      </div>
+      <div class="kpi4" id="dashKpi4"></div>
+      <div class="dashcols">
+        <div class="card chartcard">
+          <h3>MRR の推移 <span class="lg"><span><i></i>MRR実績</span></span></h3>
+          <svg id="dashChart" viewBox="0 0 720 260" width="100%" role="img" aria-label="MRR推移の棒グラフ"></svg>
+        </div>
+        <div class="card chartcard">
+          <h3>最近の活動</h3>
+          <div class="actitem"><div class="ic"><img class="ico" style="width:20px;height:20px" src="assets/icons/meeting.png" alt=""></div><div class="t">ひまわり介護HD様 更新面談<small>会議</small></div><div class="tm">今日 10:00</div></div>
+          <div class="actitem"><div class="ic"><img class="ico" style="width:20px;height:20px" src="assets/icons/task.png" alt=""></div><div class="t">青葉製作所様 承認申請<small>タスク</small></div><div class="tm">今日 09:15</div></div>
+          <div class="actitem"><div class="ic"><img class="ico" style="width:20px;height:20px" src="assets/icons/inbox.png" alt=""></div><div class="t">すばる自動車販売様 アラート<small>広告連携</small></div><div class="tm">昨日 16:45</div></div>
+          <div class="actitem"><div class="ic"><img class="ico" style="width:20px;height:20px" src="assets/icons/support.png" alt=""></div><div class="t">みなと海運様 フォローコール<small>活動</small></div><div class="tm">昨日 15:20</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PEOPLE ===== -->
+    <section class="view" id="v-people">
+      <div class="crumb"><b>会社</b> ＞ ピープル</div>
+      <div class="h1">ピープル</div>
+      <div class="lead">社員検索と組織図。「誰に聞けばいいか」を10秒で。</div>
+      <div class="caltools">
+        <input type="search" id="pplSearch" placeholder="名前・部署・スキルで検索" style="flex:1;max-width:340px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:#fff">
+        <select id="pplDept"><option value="">部署: すべて</option></select>
+        <span class="cnt" style="margin-left:auto;font-size:12px;color:var(--muted)" id="pplCount"></span>
+      </div>
+      <div class="pplgrid" id="memberGrid"></div>
+      <div class="card" style="margin-top:20px;padding:18px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(120deg,#fff,var(--cream2));border-color:#f1ddc4">
+        <div style="flex:1;min-width:200px"><div style="font-weight:800;font-size:14px">組織図で全体像を見る</div>
+          <div class="lead" style="margin-top:2px">代表から各部門・メンバーまでの体制をツリーで確認できます。</div></div>
+        <button class="cta" style="margin-top:0" onclick="go('org')">組織図を開く →</button>
+      </div>
+    </section>
+
+    <!-- ===== ORG CHART ===== -->
+    <section class="view" id="v-org">
+      <div class="crumb"><b>会社</b> ＞ 組織図</div>
+      <div class="h1">組織図</div>
+      <div class="lead">FY26 体制 ・ 代表 → 部門 → メンバー。各ノードのアバターと部門人数を表示します。</div>
+      <div class="card" style="margin-top:18px;padding:26px 22px;overflow-x:auto"><div id="orgChart2"></div></div>
+    </section>
+
+    <!-- ===== HYOKA ===== -->
+    <section class="view" id="v-hyoka">
+      <div class="crumb"><b>会社</b> ＞ 評価・育成</div>
+      <div class="h1">評価・育成</div>
+      <div class="lead">自己評価・目標（MBO）・1on1（アングルチェック）・デベロップメントシート。</div>
+      <div class="tabs2" id="hyTabs">
+        <button class="on" data-hy="eval">評価管理</button>
+        <button data-hy="mbo">目標設定（MBO）</button>
+        <button data-hy="angle">アングルチェック</button>
+        <button data-hy="dev">デベロップメントシート</button>
+      </div>
+      <div id="hyBody"></div>
+    </section>
+
+    <!-- ===== RECRUIT ===== -->
+    <section class="view" id="v-recruit">
+      <div class="crumb"><b>会社</b> ＞ 採用</div>
+      <div id="recruitBody"></div>
+    </section>
+
+    <!-- ===== ROOMS ===== -->
+    <section class="view" id="v-rooms">
+      <div class="crumb"><b>会社</b> ＞ 会議室</div>
+      <div class="h1">会議室</div>
+      <div class="lead">トレプロ本社 ・ Google カレンダー連携（予約の正本は Google カレンダー）。</div>
+      <div class="caltools">
+        <button class="gbtn">← 前日</button>
+        <button class="gbtn on">今日 7/22（火）</button>
+        <button class="gbtn">翌日 →</button>
+        <span class="cnt" style="margin-left:auto;font-size:12px;color:var(--muted)">最終更新 13:30 ・ 現在時刻基準で表示</span>
+      </div>
+      <div class="roomgrid" id="roomCards"></div>
+      <div id="roomDetail"></div>
+    </section>
+
+    <!-- ===== NEWS ===== -->
+    <section class="view" id="v-news">
+      <div class="crumb"><b>会社</b> ＞ ニュース</div>
+      <div class="h1">ニュース</div>
+      <div class="lead">全社のお知らせ・事例・イベント。重要マークは既読確認が必要です。</div>
+      <div id="newsAll" style="margin-top:16px"></div>
+    </section>
+
+    <!-- ===== SUPPORT ===== -->
+    <section class="view" id="v-support">
+      <div class="crumb"><b>サポート</b> ＞ お問い合わせ</div>
+      <div class="h1">お問い合わせ</div>
+      <div class="lead">現在の画面情報を添えて報告できます。まずは FAQ での自己解決もお試しください。</div>
+      <div class="tabs2" id="spTabs">
+        <button class="on" data-sp="bug">バグ報告</button>
+        <button data-sp="req">追加機能のご依頼</button>
+        <button data-sp="faq">QA・よくある質問</button>
+      </div>
+      <div id="spBody"></div>
+    </section>
+  </div>
+</div>
+
+<div class="modal" id="catalog" onclick="if(event.target===this)closeCatalog()">
+  <div class="box">
+    <h3 style="display:flex;align-items:center">機能カタログ <button class="xbtn" onclick="closeCatalog()">×</button></h3>
+    <div class="lead">稼働中の機能のみ掲載。準備中はロードマップに集約（期待値だけ上げない方針）。</div>
+    <div class="cat">
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/calendar.png" alt=""> 継続カレンダー</div><div class="s">稼働 ・ 更新ジャッジ／一時停止</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/account.png" alt=""> 顧客カルテ</div><div class="s">稼働 ・ AI提案の承認フロー</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/inbox.png" alt=""> 統合受信箱</div><div class="s">稼働 ・ タスク/承認/アラート</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/deal.png" alt=""> 案件（商談）</div><div class="s">稼働 ・ トレプロ新規/ショット</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/account.png" alt=""> 取引先</div><div class="s">稼働 ・ グループ共用 Account</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/dashboard.png" alt=""> ダッシュボード</div><div class="s">稼働 ・ MRR/チャーン/CPA</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/people.png" alt=""> ピープル</div><div class="s">稼働 ・ 社員検索・組織図</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/hyoka.png" alt=""> 評価・育成</div><div class="s">稼働 ・ 自己評価/MBO/1on1</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/recruit.png" alt=""> 採用</div><div class="s">稼働 ・ 募集求人・社員紹介</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/room.png" alt=""> 会議室</div><div class="s">稼働 ・ 空き状況・Google連携</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/news.png" alt=""> ニュース</div><div class="s">稼働 ・ お知らせ・年間予定</div></div>
+      <div class="catitem"><div class="t"><img class="ico" src="assets/icons/support.png" alt=""> お問い合わせ</div><div class="s">稼働 ・ バグ報告/FAQ</div></div>
+    </div>
+    <div class="roadmap">
+      <div style="font-weight:700;font-size:12.5px;color:var(--orange-ink)">ロードマップ（部分ローンチ）</div>
+      <div class="ph"><b>Phase 2</b> 入金×freee連携 ／ 議事録AI自動入力</div>
+      <div class="ph"><b>Phase 3</b> 広告ROI・CPA ／ 月次レポート管理 ／ モバイル最適化</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const LS="treproPortalV3";
+let STATE=load();
+function load(){try{return JSON.parse(localStorage.getItem(LS))||{}}catch(e){return{}}}
+function save(){localStorage.setItem(LS,JSON.stringify(STATE))}
+function resetAll(){localStorage.removeItem(LS);location.reload()}
+const $=s=>document.querySelector(s);
+const fmt=n=>n.toLocaleString("ja-JP");
+const PIN='<svg viewBox="0 0 24 24" style="width:13px;height:13px;vertical-align:-2px;stroke:currentColor;fill:none;stroke-width:1.8;display:inline-block"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>';
+
+STATE.judge=STATE.judge||{}; STATE.paused=STATE.paused||{};
+STATE.taskDone=STATE.taskDone||{}; STATE.read=STATE.read||{}; STATE.snooze=STATE.snooze||{};
+STATE.approved=STATE.approved||{};
+ACCOUNTS.forEach(a=>{
+  if(STATE.judge[a.id]!==undefined) a.judgeResult=STATE.judge[a.id];
+  if(STATE.paused[a.id]!==undefined) a.paused=STATE.paused[a.id];
+});
+
+function angCls(a){return a>=80?"hi":a>=60?"mid":"lo"}
+function pickExpr(actual,target,lower){
+  if(actual==null) return "6-idle";
+  let r = lower ? target/actual : actual/target;
+  if(r>=1.1)return "1-celebrate"; if(r>=1.0)return "2-happy";
+  if(r>=0.9)return "3-cheer"; if(r>=0.7)return "4-worried";
+  if(r>=0.001)return "5-alarmed"; return "6-idle";
+}
+function sprite(name){return "assets/toretan/toretan-expr-"+name+".png"}
+
+document.querySelectorAll(".nav[data-view]").forEach(b=>{
+  if(b.dataset.view==="catalog")return;
+  b.onclick=()=>go(b.dataset.view);
+});
+const VIEW_NAMES={home:"ホーム",trevoice:"トレボイス",calendar:"継続カレンダー",karte:"顧客カルテ",inbox:"統合受信箱",deals:"案件",accounts:"取引先",people:"ピープル",org:"組織図",hyoka:"評価・育成",recruit:"採用",rooms:"会議室",news:"ニュース",dashboard:"ダッシュボード",support:"お問い合わせ"};
+function openNav(){$("#sidebar").classList.add("open");$("#scrim").classList.add("open")}
+function closeNav(){$("#sidebar").classList.remove("open");$("#scrim").classList.remove("open")}
+function toggleNav(){$("#sidebar").classList.contains("open")?closeNav():openNav()}
+function defaultKarteId(){
+  const c=[...ACCOUNTS].filter(a=>a.judgeResult!=="churn"&&!a.paused).sort((a,b)=>a.continuityAngle-b.continuityAngle)[0];
+  return (c||ACCOUNTS[0]).id;
+}
+function go(v){
+  if(typeof trevoiceStop==="function")trevoiceStop();
+  if(typeof tvLeave==="function")tvLeave();
+  if(v==="karte"&&!$("#karteBody").innerHTML.trim()){openKarte(defaultKarteId());return}
+  document.querySelectorAll(".nav[data-view]").forEach(n=>n.classList.toggle("on",n.dataset.view===v));
+  document.querySelectorAll(".view").forEach(s=>s.classList.remove("on"));
+  $("#v-"+v).classList.add("on");
+  const pn=$("#pageName"); if(pn&&VIEW_NAMES[v]) pn.textContent=VIEW_NAMES[v];
+  closeNav();
+  window.scrollTo(0,0);
+  if(v==="trevoice"){tvInit();const i=$("#tvInput");if(i)setTimeout(()=>i.focus(),80)}
+}
+
+function activeMrr(){return ACCOUNTS.filter(a=>a.judgeResult!=="churn"&&!a.paused).reduce((s,a)=>s+a.mrr,0)}
+function renderHome(){
+  const mrr=activeMrr();
+  const won=ACCOUNTS.filter(a=>a.judgeResult).length, renew=ACCOUNTS.filter(a=>a.judgeResult==="renew").length;
+  const rr=won?renew/won*100:0;
+  const risk=ACCOUNTS.filter(a=>a.continuityAngle<60&&a.judgeResult!=="churn").length;
+  $("#homeKpi").innerHTML=`
+    <div class="kpicell"><div class="lb">稼働MRR<span class="q">今月</span></div><div class="vv num">¥${fmt(mrr*1000)}</div><div class="dl ${mrr>=TARGETS.mrr?'up':'down'}">目標 ¥${fmt(TARGETS.mrr*1000)} ・ 達成率 ${(mrr/TARGETS.mrr*100).toFixed(0)}%</div><div class="kbar"><i style="width:${Math.min(mrr/TARGETS.mrr*100,100)}%"></i></div></div>
+    <div class="kpicell"><div class="lb">更新率<span class="q">直近</span></div><div class="vv num">${rr.toFixed(0)}<small>%</small></div><div class="dl ${rr>=TARGETS.renewalRate?'up':'down'}">${rr>=TARGETS.renewalRate?'↑ 目標達成':'↓ 目標 '+TARGETS.renewalRate+'%に未達'}</div></div>
+    <div class="kpicell"><div class="lb">危険アカウント<span class="q">角度60未満</span></div><div class="vv num" style="color:var(--red)">${risk}<small>社</small></div><div class="dl down">要・先出し対応</div></div>`;
+  $("#dealMini").innerHTML=DEALS.slice(0,3).map(d=>`
+    <div class="irow dealbar"><div class="t">${d.account}</div>
+    <div class="m">${d.name} ・ ${d.stage} ・ ¥${fmt(d.amount*1000)}</div></div>`).join("");
+  $("#homeMascot").src=sprite(pickExpr(mrr,TARGETS.mrr,false));
+  $("#mascotTitle").textContent = mrr>=TARGETS.mrr ? "今日も、よくやってるね！" : "今日も、いい挑戦を。";
+  renderTrevoice(mrr,rr,risk);
+}
+
+/* ================= トレボイス（音声オンボーディング） ================= */
+let TV_LINE="", TV_VOICES=[], TV_T=null;
+function loadTvVoices(){ if(window.speechSynthesis) TV_VOICES=speechSynthesis.getVoices()||[]; }
+if(window.speechSynthesis){ loadTvVoices(); speechSynthesis.onvoiceschanged=loadTvVoices; }
+function renderTrevoice(mrr,rr,risk){
+  const pct=Math.round(mrr/TARGETS.mrr*100), rrN=Math.round(rr);
+  const mrrClause = pct>=100 ? `稼働MRRは達成率${pct}パーセントで、目標を達成しています` : `稼働MRRは達成率${pct}パーセント、目標までもう一歩です`;
+  const rrClause  = rrN>=TARGETS.renewalRate ? `更新率は${rrN}パーセントで好調です` : `更新率は${rrN}パーセントで、目標に向けてあと少しです`;
+  const riskClause= risk>0 ? `継続に注意が必要なお客様が${risk}社あります。まずは1件、今日のアクションから始めましょう` : `注意が必要なお客様はいません。この調子で、次の一手へ進みましょう`;
+  TV_LINE=`おはようございます。${mrrClause}。${rrClause}。${riskClause}。挑戦中！`;
+  const disp=`稼働MRR達成率${pct}％ ・ 更新率${rrN}％${risk>0?` ・ 危険${risk}社`:""}。まず1件、今日のアクションから。`;
+  const t=$("#tvText"); if(t)t.textContent=disp;
+  const sec=Math.min(59,Math.max(24,Math.round(TV_LINE.length/6)));
+  const tag=$("#tvTag"); if(tag)tag.textContent=`今日のひとこと · 0:${String(sec).padStart(2,"0")}`;
+  const eq=$("#tvEq");
+  if(eq&&!eq.childElementCount){for(let i=0;i<20;i++){const b=document.createElement("i");b.style.animationDelay=(i*0.06).toFixed(2)+"s";eq.appendChild(b)}}
+}
+function trevoiceToggle(){
+  const el=$("#trevoice"); if(!el)return;
+  if(el.classList.contains("on")){ trevoiceStop(); return; }
+  el.classList.add("on");
+  if(window.speechSynthesis){
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(TV_LINE);
+    u.lang="ja-JP"; u.rate=1.04; u.pitch=1.18;
+    const jp=TV_VOICES.find(v=>/ja(-|_)?jp/i.test(v.lang))||TV_VOICES.find(v=>/kyoko|otoya|japanese|日本|hattori|nanami/i.test(v.name));
+    if(jp)u.voice=jp;
+    u.onend=trevoiceStop; u.onerror=trevoiceStop;
+    speechSynthesis.speak(u);
+  }else{
+    clearTimeout(TV_T); TV_T=setTimeout(trevoiceStop,6500);
+  }
+}
+function trevoiceStop(){
+  const el=$("#trevoice"); if(el)el.classList.remove("on");
+  clearTimeout(TV_T);
+  if(window.speechSynthesis)speechSynthesis.cancel();
+}
+function tvLeave(){
+  if(typeof tvRtStop==="function")tvRtStop(true);
+  TV_CONV=false; TVV.speaking=false;
+  if(TV_REC){try{TV_REC.stop()}catch(_){}} tvStopListen&&tvStopListen();
+  if(window.speechSynthesis)speechSynthesis.cancel();
+  const p=tvEl&&tvEl("tvPill"); if(p)p.classList.remove("speaking","listening");
+}
+
+/* ========= トレボイス フルページ：マニュアル参照 音声アシスタント ========= */
+const TV_MANUAL=[
+  {k:["経費","精算","立替","領収書","交通費"], a:"経費精算はTeamSpiritの「経費申請」から行います。領収書は写真を添付し、月末締め・翌月10日払いです。5,000円以上は但し書きの記載をお願いします。", src:"総務マニュアル §3.2 経費精算"},
+  {k:["有給","休暇","年休","休み","欠勤"], a:"有給休暇はTeamSpiritから申請します。取得希望日の3営業日前までが原則で、5営業日以上の連続取得は上長承認が必要です。", src:"就業規則 §5 休暇"},
+  {k:["会議室","予約","部屋","ミーティングルーム"], a:"会議室はポータルの「会議室」から空き状況を確認して予約できます。30分単位で、当日キャンセルはSlackへ一報をお願いします。", src:"総務マニュアル §4.1 会議室"},
+  {k:["継続角度","角度","ジャッジ","継続判定","継続"], a:"継続角度は更新の見込みを0〜100で表す指標です。80以上=ポジティブ、60〜79=懸念はあるが対話継続中、60未満=明確なリスク。判定は「継続カレンダー」から行います。", src:"継続ジャッジ運用フロー v2 §2"},
+  {k:["一時停止","停止","解約","休止"], a:"一時停止は請求を止めて関係を維持する状態で、翌月以降も自動でヒアリング対象に載ります。解約は契約終了の確定です。迷ったら独断にせず担当マネージャーへ相談してください。", src:"継続ジャッジ運用フロー v2 §4"},
+  {k:["ai提案","提案","根拠","エビデンス"], a:"AI提案は顧客カルテのカードに表示され、元になった議事録・数値へのリンクが付きます。承認する前に必ず根拠を確認してください。承認するとカルテに記録されます。", src:"TrePro AI 利用ガイド §3 AI提案"},
+  {k:["保存","ボタン","保存ボタン"], a:"継続カレンダーとカルテの操作は、押した瞬間に自動保存されます（保存ボタンはありません）。判定の取り消しはカード内の「判定取消」から行えます。", src:"TrePro AI 利用ガイド §1 基本操作"},
+  {k:["評価","自己評価","確定","締め切り","締切"], a:"上期の自己評価は7月に入力します。確定の条件は、自己評価がすべて入力済みで、1on1（アングルチェック）が今期1回以上記録されていることです。", src:"人事評価ガイド §1 スケジュール"},
+  {k:["mbo","目標","ウェイト"], a:"MBOは上期の目標をウェイト合計100%で設定し、進捗は月次の1on1で更新します。「評価・育成」のMBOタブから確認できます。", src:"人事評価ガイド §2 MBO"},
+  {k:["入社","オンボーディング","初日","メンター","手続き"], a:"入社初日はアカウント発行→セキュリティ研修→メンター顔合わせの順です。1週間の立ち上げチェックリストは、このトレボイスからいつでも確認できます。", src:"オンボーディング §1 初日の流れ"},
+  {k:["パスワード","ログイン","リセット","二段階","認証"], a:"パスワードの再発行は情シスポータルのセルフリセットから可能です。二段階認証はSalesforceモバイルアプリを利用します。解決しない場合は情シスSlackへ。", src:"情シスFAQ §2 アカウント"},
+  {k:["mrr","解約率","更新率","kpi","売上","指標"], a:"稼働MRRは解約・一時停止を除いた月次売上の合計です。更新率=継続判定のうち継続の割合、解約率=解約の割合で算出します。各定義はダッシュボードのKPIから確認できます。", src:"TrePro AI 利用ガイド §4 KPI定義"},
+  {k:["期","切替","切り替え","上期","下期"], a:"対象期は画面右上のユーザーメニューから切り替えられます（このモックでは2026年上期に固定しています）。", src:"TrePro AI 利用ガイド §1 基本操作"},
+  {k:["トレたん","トレタン","マスコット","理念","ミッション","トレプロ"], a:"トレたんは「挑戦中！」を合言葉に、みんなの挑戦を応援するトレプロの公式パートナーです。一人ひとりの挑戦を、確かな成果に変えていきましょう。挑戦中！", src:"ブランドブック §1 トレたん"}
+];
+const TV_SUGGEST=["経費精算のやり方は？","有給休暇はどう申請する？","継続角度って何？","会議室を予約したい","自己評価の締め切りは？","パスワードを忘れた"];
+let TVV={speaking:false}, TV_REC=null, TV_CONV=false, TV_LISTENING=false, TV_INIT=false;
+const tvEl=id=>document.getElementById(id);
+
+function tvInit(){
+  if(TV_INIT)return; TV_INIT=true;
+  tvEl("tvSuggest").innerHTML=TV_SUGGEST.map(s=>`<button class="tv-chip" onclick="tvAsk('${s}')">${s}</button>`).join("");
+  tvEl("tvSuggest").style.display="none";
+}
+function tvIdle(){tvSetStatus("","準備できています","トレタンかマイクを押して音声会話を開始")}
+function tvSetStatus(cls,bold,rest){
+  const s=tvEl("tvStatus"); if(!s)return;
+  s.className="tv-status"+(cls?" "+cls:"");
+  s.innerHTML=`<span class="d"></span><b>${bold}</b>${rest?"&nbsp;"+rest:""}`;
+}
+function tvBotAva(){return `<div class="mava"><img src="assets/toretan/toretan-expr-2-happy.png" alt=""></div>`}
+function tvPush(role,text,src){
+  const th=tvEl("tvThread"), el=document.createElement("div"); el.className="tv-msg "+role;
+  const srcHtml=src?`<div class="tv-src"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 5.5v15"/></svg>出典: ${src}</div>`:"";
+  el.innerHTML=(role==="bot"?tvBotAva():"")+`<div class="tv-bubble">${text}${srcHtml}</div>`;
+  th.appendChild(el); th.scrollTop=th.scrollHeight; return el;
+}
+function tvPushTyping(){
+  const th=tvEl("tvThread"), el=document.createElement("div"); el.className="tv-msg bot";
+  el.innerHTML=tvBotAva()+`<div class="tv-bubble"><div class="tv-typing"><i></i><i></i><i></i></div></div>`;
+  th.appendChild(el); th.scrollTop=th.scrollHeight; return el;
+}
+function tvMatch(q){
+  q=(q||"").toLowerCase(); let best=null,bs=0;
+  TV_MANUAL.forEach(e=>{let s=0;e.k.forEach(k=>{if(q.includes(k.toLowerCase()))s+=k.length});if(s>bs){bs=s;best=e}});
+  return bs>0?best:null;
+}
+function tvToggleSuggest(){const el=tvEl("tvSuggest");el.style.display=el.style.display==="none"?"flex":"none"}
+function tvSend(){
+  const v=tvEl("tvInput").value; if(!v.trim())return;
+  tvEl("tvSuggest").style.display="none";
+  if(RT.connected){tvEl("tvInput").value="";tvRtSendText(v.trim());return}
+  tvAsk(v);
+}
+function tvAsk(text){
+  text=(text||"").trim(); if(!text)return;
+  tvEl("tvSuggest").style.display="none";
+  tvEl("tvInput").value="";
+  tvPush("user",text);
+  tvSetStatus("thinking","考えています…","マニュアルを確認しています");
+  const typing=tvPushTyping();
+  const wait=650+Math.min(text.length*22,1400);
+  clearTimeout(TVV._t); TVV._t=setTimeout(()=>{
+    typing.remove();
+    const m=tvMatch(text);
+    const ans=m?m.a:"うーん、その内容はマニュアルにまだ見つかりませんでした。担当部署に確認して、あらためてお答えしますね。まずは近くのメンターにも聞いてみてください。";
+    tvPush("bot",ans,m?m.src:null);
+    tvSpeak(ans);
+  },wait);
+}
+function tvSpeak(text){
+  tvSetStatus("speaking","話しています…","音声で回答中");
+  const pill=tvEl("tvPill"); if(pill)pill.classList.add("speaking");
+  if(window.speechSynthesis){
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang="ja-JP"; u.rate=1.05; u.pitch=1.14;
+    const jp=TV_VOICES.find(v=>/ja(-|_)?jp/i.test(v.lang))||TV_VOICES.find(v=>/kyoko|otoya|japanese|日本/i.test(v.name));
+    if(jp)u.voice=jp;
+    TVV.speaking=true;
+    u.onend=()=>{TVV.speaking=false;if(pill)pill.classList.remove("speaking");TV_CONV?tvListen():tvIdle()};
+    u.onerror=()=>{TVV.speaking=false;if(pill)pill.classList.remove("speaking");tvIdle()};
+    speechSynthesis.speak(u);
+  }else{
+    setTimeout(()=>{if(pill)pill.classList.remove("speaking");TV_CONV?tvListen():tvIdle()},1600);
+  }
+}
+function tvRecSupported(){return "webkitSpeechRecognition"in window||"SpeechRecognition"in window}
+function tvListen(){
+  if(!tvRecSupported()){tvSetStatus("listening","マイクは未対応です","このブラウザは音声入力に非対応。テキストで質問できます");setTimeout(tvIdle,2200);TV_CONV=false;return;}
+  const R=window.SpeechRecognition||window.webkitSpeechRecognition, r=new R();
+  r.lang="ja-JP"; r.interimResults=true; r.maxAlternatives=1; TV_REC=r; TV_LISTENING=true;
+  tvSetStatus("listening","聞いています…","マイクに向かって話してください");
+  const pill=tvEl("tvPill"); if(pill)pill.classList.add("listening"); tvEl("tvMicBtn").classList.add("on");
+  let finalText="";
+  r.onresult=e=>{let t="";for(let i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;tvEl("tvInput").value=t;if(e.results[e.results.length-1].isFinal)finalText=t};
+  r.onerror=()=>tvStopListen();
+  r.onend=()=>{tvStopListen();const t=(finalText||tvEl("tvInput").value).trim();if(t)tvAsk(t);else if(TV_CONV)tvIdle()};
+  try{r.start()}catch(_){tvStopListen()}
+}
+function tvStopListen(){TV_LISTENING=false;const p=tvEl("tvPill");if(p)p.classList.remove("listening");const b=tvEl("tvMicBtn");if(b)b.classList.remove("on")}
+/* ブラウザ内蔵の音声認識フォールバック（GPT Live非対応/接続失敗時） */
+function tvMicLocal(){if(TV_LISTENING){if(TV_REC)TV_REC.stop();return}tvListen()}
+
+/* ========= GPT Realtime（GPT Live）音声↔音声クライアント ========= */
+const RT={pc:null,dc:null,stream:null,audio:null,connected:false,connecting:false,fallback:false,curBot:null,curText:""};
+function tvSetLive(on){const b=tvEl("tvLive");if(b)b.style.display=on?"inline-flex":"none";const m=tvEl("tvMicBtn");if(m)m.classList.toggle("on",on)}
+async function tvRtConnect(){
+  if(RT.connecting||RT.connected)return;
+  if(!window.RTCPeerConnection||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){return tvRtFallback("このブラウザは音声会話に非対応です")}
+  RT.connecting=true;
+  tvSetStatus("thinking","接続しています…","GPT Live を起動中");
+  const pill=tvEl("tvPill"); if(pill)pill.classList.add("listening");
+  try{
+    const res=await fetch("api/realtime/token",{method:"POST"});
+    if(!res.ok)throw new Error("token "+res.status);
+    const tok=await res.json(); const EK=tok.value, MODEL=tok.model||"gpt-realtime-mini";
+    if(!EK)throw new Error("no token");
+    const pc=new RTCPeerConnection(); RT.pc=pc;
+    const audio=new Audio(); audio.autoplay=true; RT.audio=audio;
+    pc.ontrack=e=>{audio.srcObject=e.streams[0]};
+    pc.onconnectionstatechange=()=>{if(["failed","disconnected","closed"].includes(pc.connectionState)&&RT.connected)tvRtStop()};
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true}); RT.stream=stream;
+    stream.getTracks().forEach(t=>pc.addTrack(t,stream));
+    const dc=pc.createDataChannel("oai-events"); RT.dc=dc;
+    dc.onmessage=tvRtEvent;
+    dc.onopen=()=>{RT.connected=true;RT.connecting=false;tvSetLive(true);tvSetStatus("listening","聞いています…","マイクに話しかけてください（もう一度押すと終了）")};
+    const offer=await pc.createOffer(); await pc.setLocalDescription(offer);
+    const sdpRes=await fetch("https://api.openai.com/v1/realtime/calls?model="+encodeURIComponent(MODEL),
+      {method:"POST",body:offer.sdp,headers:{Authorization:"Bearer "+EK,"Content-Type":"application/sdp"}});
+    if(!sdpRes.ok)throw new Error("sdp "+sdpRes.status);
+    await pc.setRemoteDescription({type:"answer",sdp:await sdpRes.text()});
+  }catch(err){console.warn("[trevoice] GPT Live connect failed:",err);tvRtStop(true);tvRtFallback("GPT Live に接続できませんでした")}
+}
+function tvRtStop(silent){
+  try{RT.dc&&RT.dc.close()}catch(_){}
+  try{RT.pc&&RT.pc.close()}catch(_){}
+  try{RT.stream&&RT.stream.getTracks().forEach(t=>t.stop())}catch(_){}
+  if(RT.audio)RT.audio.srcObject=null;
+  RT.pc=RT.dc=RT.stream=RT.audio=RT.curBot=null; RT.curText=""; RT.connected=false; RT.connecting=false;
+  const p=tvEl("tvPill"); if(p)p.classList.remove("speaking","listening");
+  tvSetLive(false);
+  if(!silent)tvIdle();
+}
+function tvRtFallback(msg){
+  RT.fallback=true; RT.connecting=false;
+  const p=tvEl("tvPill"); if(p)p.classList.remove("listening");
+  tvSetStatus("","簡易モードで応答します",(msg||"")+"。テキスト＋簡易音声で続けられます");
+}
+function tvRtEvent(e){
+  let m; try{m=JSON.parse(e.data)}catch(_){return}
+  switch(m.type){
+    case "input_audio_buffer.speech_started": tvSetStatus("listening","聞いています…","どうぞ話してください"); break;
+    case "input_audio_buffer.speech_stopped": tvSetStatus("thinking","考えています…","マニュアルを確認しています"); break;
+    case "conversation.item.input_audio_transcription.completed": if(m.transcript&&m.transcript.trim())tvPush("user",m.transcript.trim()); break;
+    case "response.created": tvSetStatus("thinking","考えています…","マニュアルを確認しています"); break;
+    case "response.output_audio_transcript.delta": tvRtBot(m.delta); break;
+    case "response.output_audio_transcript.done": RT.curBot=null; RT.curText=""; break;
+    case "response.done": if(RT.connected)tvSetStatus("listening","聞いています…","続けて話しかけてください"); break;
+    case "error": console.warn("[trevoice] realtime error:",m.error||m); break;
+  }
+}
+function tvRtBot(delta){
+  if(!delta)return;
+  tvSetStatus("speaking","話しています…","GPT Live で回答中");
+  const pill=tvEl("tvPill"); if(pill)pill.classList.add("speaking");
+  if(!RT.curBot){RT.curBot=tvPush("bot","");RT.curText=""}
+  RT.curText+=delta;
+  RT.curBot.querySelector(".tv-bubble").textContent=RT.curText;
+  const th=tvEl("tvThread"); th.scrollTop=th.scrollHeight;
+}
+function tvRtSendText(text){
+  if(!RT.dc||RT.dc.readyState!=="open")return false;
+  tvPush("user",text);
+  RT.dc.send(JSON.stringify({type:"conversation.item.create",item:{type:"message",role:"user",content:[{type:"input_text",text}]}}));
+  RT.dc.send(JSON.stringify({type:"response.create"}));
+  return true;
+}
+/* マイク/アバター押下：GPT Live をトグル。非対応・失敗時はブラウザ内蔵音声へ */
+function tvMic(){
+  if(RT.connected||RT.connecting){tvRtStop();return}
+  if(RT.fallback){tvMicLocal();return}
+  tvRtConnect();
+}
+function tvConverse(){tvMic()}
+
+const MONTHS=["2026-07","2026-08","2026-09","2026-10","2026-11","2026-12"];
+let ASAKAI=false;
+function toggleAsakai(){ASAKAI=!ASAKAI;$("#asaToggle").classList.toggle("on",ASAKAI);renderCal()}
+function renderCalKpi(){
+  const won=ACCOUNTS.filter(a=>a.judgeResult).length,renew=ACCOUNTS.filter(a=>a.judgeResult==="renew").length;
+  const rr=won?renew/won*100:0;
+  const target=ACCOUNTS.filter(a=>a.judgeResult!=="churn").reduce((s,a)=>s+a.mrr,0);
+  const risk=ACCOUNTS.filter(a=>a.continuityAngle<60&&a.judgeResult!=="churn").reduce((s,a)=>s+a.mrr,0);
+  $("#calKpi").innerHTML=`
+    <div class="kpicell click" onclick="togglePop(this)"><div class="lb">今期 継続率<span class="q">見込</span></div><div class="vv num">${rr.toFixed(1)}<small>%</small></div><div class="dl ${rr>=TARGETS.renewalRate?'up':'down'}">${rr>=TARGETS.renewalRate?'↑ 目標達成':'↓ 目標 '+TARGETS.renewalRate+'%に未達'}</div><div class="pop"><b>継続率</b><br>${KPI_META.renewalRate.def}<br>出所: ${KPI_META.renewalRate.source}<br>更新: ${KPI_META.renewalRate.updated}</div></div>
+    <div class="kpicell click" onclick="togglePop(this)"><div class="lb">今期 対象金額<span class="q">MRR</span></div><div class="vv num">¥${fmt(target*1000)}</div><div class="dl up">継続見込ベース</div><div class="pop"><b>対象金額</b><br>${KPI_META.mrr.def}<br>出所: ${KPI_META.mrr.source}<br>更新: ${KPI_META.mrr.updated}</div></div>
+    <div class="kpicell click" onclick="togglePop(this)"><div class="lb">今期 リスク金額<span class="q">角度60未満</span></div><div class="vv num" style="color:var(--red)">¥${fmt(risk*1000)}</div><div class="dl down">要・先出し対応</div><div class="pop"><b>リスク金額</b><br>${KPI_META.danger.def}<br>出所: ${KPI_META.danger.source}<br>更新: ${KPI_META.danger.updated}</div></div>`;
+}
+function togglePop(cell){const p=cell.querySelector(".pop");const open=p.classList.contains("show");document.querySelectorAll(".pop").forEach(x=>x.classList.remove("show"));if(!open)p.classList.add("show")}
+document.addEventListener("click",e=>{if(!e.target.closest(".kpicell"))document.querySelectorAll(".pop").forEach(x=>x.classList.remove("show"))});
+
+function ccard(a){
+  const c=angCls(a.continuityAngle);
+  const cls=a.judgeResult==="renew"?"renew":a.judgeResult==="churn"?"churn":a.paused?"paused":"";
+  const dot=`<span class="dotlb ${c}"><span class="d"></span>${c==="hi"?"高":c==="mid"?"中":"低"}</span>`;
+  const dd=a.continuityAngle-a.prevAngle;
+  const trend=dd!==0?`<span class="trend ${dd>0?'up':'down'}">${dd>0?'▲':'▼'}${Math.abs(dd)}</span>`:"";
+  let acts;
+  if(a.judgeResult){
+    acts=`<button class="jb" onclick="event.stopPropagation();judge(${a.id},null)">判定取消</button>`;
+  }else{
+    acts=`<button class="jb renew" onclick="event.stopPropagation();judge(${a.id},'renew')">継続</button>
+      <button class="jb churn" onclick="event.stopPropagation();judge(${a.id},'churn')">解約</button>
+      <button class="jb pause ${a.paused?'active-pause':''}" onclick="event.stopPropagation();togglePause(${a.id})">${a.paused?'再開':'保留'}</button>`;
+  }
+  const badge=a.judgeResult==="renew"?'<span class="chip green">✓ 継続</span>':a.judgeResult==="churn"?'<span class="chip red">✕ 解約</span>':a.paused?'<span class="chip orange">停止中</span>':a.drop?'<span class="chip red">▼ 低下</span>':'';
+  return `<div class="ccard ${cls}" onclick="openKarte(${a.id})">
+    <div class="cn"><div class="nm">${a.name}</div>${dot}</div>
+    <div class="met"><div><span class="ang ${c}">${a.continuityAngle}</span>${trend}<div class="anglb">継続角度</div></div>
+      <div class="mrr"><div class="l">月次売上</div><div class="v num">¥${fmt(a.mrr*1000)}</div></div></div>
+    <div style="margin:-2px 0 8px">${badge}</div>
+    <div class="na"><b>次アクション:</b> ${a.nextAction}<br>期限 ${a.dueDate.slice(5).replace("-","/")}</div>
+    <div class="acts">${acts}</div></div>`;
+}
+function renderCal(){
+  const fo=$("#fOwner").value,fs=$("#fState").value;
+  let months=MONTHS.filter(m=>ACCOUNTS.some(a=>a.renewalMonth===m));
+  $("#calGrid").innerHTML=months.slice(0,3).map(m=>{
+    let list=ACCOUNTS.filter(a=>a.renewalMonth===m)
+      .filter(a=>!fo||a.owner===fo)
+      .filter(a=>{if(fs==="pending")return !a.judgeResult&&!a.paused;if(fs==="paused")return a.paused;if(fs==="judged")return !!a.judgeResult;return true});
+    list.sort((a,b)=>a.continuityAngle-b.continuityAngle);
+    const done=ACCOUNTS.filter(a=>a.renewalMonth===m&&a.judgeResult).length,tot=ACCOUNTS.filter(a=>a.renewalMonth===m).length;
+    const parts=m.split("-");
+    return `<div class="mcol"><div class="mh"><span class="yr">${parts[0]}</span><span class="mm">${+parts[1]}<small>月</small></span><span class="cnt">${tot}件の契約 ・ 判定 ${done}</span></div>
+      ${list.map(ccard).join("")||'<div class="lead" style="padding:8px">該当なし</div>'}</div>`;
+  }).join("");
+  const ps=ACCOUNTS.filter(a=>a.paused&&a.judgeResult!=="churn");
+  $("#pauseSummary").innerHTML=ps.length?
+    ps.map(a=>`${a.renewalMonth.slice(5).replace(/^0/,'')}月: ${a.name}（角度${a.continuityAngle}・${a.owner}）`).join(" ／ ")+
+    `<br>合計 <b class="num">${ps.length}社・月額 ¥${fmt(ps.reduce((s,a)=>s+a.mrr,0)*1000)}</b> が停止中 — 各更新月のヒアリングに自動計上`:
+    "一時停止中のクライアントはありません";
+}
+function judge(id,v){const a=ACCOUNTS.find(x=>x.id===id);a.judgeResult=v;STATE.judge[id]=v;save();renderAll()}
+function togglePause(id){const a=ACCOUNTS.find(x=>x.id===id);a.paused=!a.paused;STATE.paused[id]=a.paused;save();renderAll()}
+
+function openKarte(id){
+  const a=ACCOUNTS.find(x=>x.id===id);if(!a)return;
+  const mins=(MINUTES[id]||[]).map(m=>`
+    <div class="tlitem a"><div class="dt">${m.date} ${m.aiDraft?'<span class="chip orange" style="padding:1px 6px">AI下書きあり</span>':''}</div>
+    <div class="tt">${m.title}</div><div class="sm">${m.summary}</div></div>`).join("")||'<div class="lead">議事録はまだありません。</div>';
+  const su=AI_SUGGESTIONS.find(s=>s.accountId===id);
+  const approved=STATE.approved[id];
+  const trend=[]; for(let i=0;i<12;i++){trend.push(Math.round(a.mrr*1000*(0.6+i*0.04+(i%3)*0.02)))}
+  const spark=sparkSvg(trend);
+  const c=angCls(a.continuityAngle);
+  $("#karteBody").innerHTML=`
+    <div class="kbanner">
+      <div class="ktile"><img class="ico" style="width:46px;height:46px;border-radius:12px" src="assets/icons/account.png" alt=""></div>
+      <div><div class="kt serif">${a.name}</div>
+        <div class="kc">${a.industry} ・ ${a.employeeSize} ・ 担当 ${a.owner} <span class="chip ${c==='hi'?'green':c==='mid'?'amber':'red'}" style="margin-left:6px">継続角度 ${a.continuityAngle}</span></div></div>
+      <div class="kstats">
+        <div class="kstat"><div class="l">月次売上</div><div class="v num">¥${fmt(a.mrr*1000)}</div></div>
+        <div class="kstat"><div class="l">年間換算</div><div class="v num">¥${fmt(a.mrr*12000)}</div></div>
+        <div class="kstat"><div class="l">更新月</div><div class="v num">${a.renewalMonth.replace('-','/')}</div><div class="d ${a.judgeResult==='renew'?'up':a.judgeResult==='churn'?'down':''}"${a.judgeResult?'':' style="color:var(--amber)"'}>${a.judgeResult==='renew'?'継続確定':a.judgeResult==='churn'?'解約':'未判定'}</div></div>
+      </div>
+      <img class="klion" src="${sprite(pickExpr(a.continuityAngle,80,false))}" alt="">
+    </div>
+    <div class="kcols">
+      <div class="card mcard"><h3>ミーティング履歴</h3><div class="tl" style="margin-top:12px">${mins}</div></div>
+      <div class="card mcard"><h3>売上推移 <span style="color:var(--muted);font-weight:500;font-size:12px">直近12ヶ月</span></h3>
+        <div style="font-family:var(--serif);font-size:26px;font-weight:700;margin:6px 0">¥${fmt(trend[11])} <span style="font-size:12px;color:var(--green-ink)">▲ 継続成長</span></div>
+        ${spark}
+        <div class="lead" style="margin-top:8px;background:var(--cream2);border-radius:10px;padding:10px 12px">プロダクトの活用拡大により、売上は継続的に成長しています。</div>
+      </div>
+      <div class="card mcard aicard"><div class="aih"><img class="ico" style="width:18px;height:18px" src="assets/icons/ai.png" alt=""> AIからの提案</div>
+        ${su?`<div style="margin-top:8px"><span class="chip orange">${a.continuityAngle<60?'解約回避':'アップセル'}</span></div>
+        <div style="font-size:13px;font-weight:600;margin:8px 0">${su.text}</div>
+        <div class="aiexp"><div style="font-size:11px;color:var(--ink2)">期待される効果</div><div class="big">${a.continuityAngle<60?'解約 −1':'+15〜20%'}</div></div>
+        <button class="approve ${approved?'done':''}" onclick="approveAI(${id})">${approved?'✓ 承認済み（記録に反映）':'提案を承認する'}</button>`
+        :`<div class="lead" style="margin-top:10px">この顧客への新しいAI提案はありません。良好に推移しています。</div>`}
+      </div>
+    </div>
+    <div class="mascot"><img src="${sprite(pickExpr(a.continuityAngle,80,false))}"><div>
+      <div class="tt">トレたんのひとこと</div>
+      <div class="ds">${a.continuityAngle>=80?'いい感じで成長してるね！この調子で、次のステージも一緒に目指そう！':a.continuityAngle>=60?'あと一歩！次アクションを丁寧に積み上げていこう。':'ここが踏ん張りどころ。早めの一手で流れを変えよう！'}</div></div></div>`;
+  go("karte");
+}
+function approveAI(id){STATE.approved[id]=true;save();openKarte(id)}
+function sparkSvg(vals){
+  const W=380,H=120,mx=Math.max(...vals)*1.1,mn=Math.min(...vals)*0.9;
+  const x=i=>10+i*(W-20)/(vals.length-1), y=v=>H-10-(v-mn)/(mx-mn)*(H-24);
+  const pts=vals.map((v,i)=>`${x(i)},${y(v)}`).join(" ");
+  const area=`10,${H-10} `+pts+` ${W-10},${H-10}`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%"><polygon points="${area}" fill="rgba(233,78,27,.08)"/>
+    <polyline points="${pts}" fill="none" stroke="var(--orange)" stroke-width="2.2"/>
+    <circle cx="${x(vals.length-1)}" cy="${y(vals[vals.length-1])}" r="5" fill="#fff" stroke="var(--orange)" stroke-width="2.5"/></svg>`;
+}
+
+function renderInbox(){
+  const fk=$("#ibKind").value,fp=$("#ibPri").value,fu=$("#ibUnread").checked;
+  const icons={承認:'<path d="M20 6 9 17l-5-5"/>',アラート:'<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.5"/>',タスク:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h9"/>',メンション:'<circle cx="12" cy="12" r="4"/><path d="M16 12v1.5a2.5 2.5 0 0 0 5 0V12a9 9 0 1 0-3.5 7.1"/>'};
+  let list=INBOX.filter(i=>!STATE.snooze[i.id])
+    .filter(i=>!fk||i.kind===fk).filter(i=>!fp||i.priority===fp).filter(i=>!fu||!STATE.read[i.id]);
+  $("#ibCount").textContent=`${list.length}件のアイテム`;
+  const unread=INBOX.filter(i=>!STATE.read[i.id]&&!STATE.snooze[i.id]).length;
+  $("#ibbadge").textContent=unread; $("#ibbadge").style.display=unread?'flex':'none';
+  $("#inboxList").innerHTML=list.map(i=>{
+    const pc=i.priority==="high"?"red":i.priority==="mid"?"amber":"k";
+    const pl=i.priority==="high"?"高":i.priority==="mid"?"中":"低";
+    const acc=i.accountId?ACCOUNTS.find(a=>a.id===i.accountId):null;
+    return `<div class="ibcard ${STATE.read[i.id]?'read':''}"><span class="unread"></span>
+      <div class="ic k-${i.kind}"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">${icons[i.kind]}</svg></div>
+      <div class="body"><div class="t">${i.title}</div><div class="m">${i.source}${acc?' ・ '+acc.name:''}</div></div>
+      <span class="chip ${pc}">${pl}</span>
+      <div class="meta"><div class="l">期限</div>${i.due?i.due.slice(5).replace('-','/'):'—'}</div>
+      <div class="ibacts">
+        <button class="tbtn" onclick="ibRead('${i.id}')">${STATE.read[i.id]?'未読へ':'既読'}</button>
+        <button class="tbtn" onclick="ibSnooze('${i.id}')">スヌーズ</button>
+        <span class="chip k">${i.kind}</span></div></div>`;
+  }).join("")||'<div class="lead">受信箱は空です</div>';
+}
+function ibRead(id){STATE.read[id]=!STATE.read[id];save();renderInbox()}
+function ibSnooze(id){STATE.snooze[id]=true;save();renderInbox()}
+function markAllRead(){INBOX.forEach(i=>STATE.read[i.id]=true);save();renderInbox()}
+
+function renderDeals(){
+  $("#dealRows").innerHTML=DEALS.map(d=>`<tr>
+    <td><b>${d.name}</b></td><td>${d.account}</td>
+    <td><span class="chip ${d.recordType==='トレプロ新規'?'green':'amber'}">${d.recordType}</span></td>
+    <td>${d.stage}</td><td class="right num">¥${fmt(d.amount*1000)}</td><td class="num">${d.closeDate}</td><td>${d.owner}</td></tr>`).join("");
+}
+function renderAcc(){
+  $("#accRows").innerHTML=ACCOUNTS.map(a=>{const c=angCls(a.continuityAngle);return `<tr onclick="openKarte(${a.id})">
+    <td><b>${a.name}</b></td><td>${a.industry}</td><td>${a.employeeSize}</td><td>${a.owner}</td>
+    <td class="right num">¥${fmt(a.mrr*1000)}</td>
+    <td><span class="dotlb ${c}"><span class="d"></span>${a.continuityAngle}</span></td>
+    <td>${a.judgeResult==='churn'?'<span class="chip red">解約</span>':a.paused?'<span class="chip orange">一時停止</span>':'<span class="chip green">稼働中</span>'}</td></tr>`}).join("");
+}
+
+function renderDash(){
+  const mrr=activeMrr(),rate=Math.min(mrr/TARGETS.mrr,1)*100;
+  $("#dashMrr").innerHTML=`¥${fmt(mrr*1000)}`;
+  $("#dashBar").style.width=rate+"%";
+  $("#dashMrrSub").innerHTML=`目標 ¥${fmt(TARGETS.mrr*1000)} ・ 達成率 <b>${(mrr/TARGETS.mrr*100).toFixed(1)}%</b> ・ <span class="up">前年同期比 +18.7%</span>`;
+  const won=ACCOUNTS.filter(a=>a.judgeResult).length,renew=ACCOUNTS.filter(a=>a.judgeResult==="renew").length,churn=won-renew;
+  const activeCnt=ACCOUNTS.filter(a=>a.judgeResult!=="churn"&&!a.paused).length;
+  const rr2=won?renew/won*100:0, rrOk=rr2>=TARGETS.renewalRate;
+  const tiles=[
+    {l:"解約率（直近）",v:won?(churn/won*100).toFixed(1):"0.0",u:"%",d:"前期比 −1.2pt（改善）",good:true,arrow:"↓",ic:'<path d="M4 18 9 11l4 4 7-9"/>'},
+    {l:"更新率（直近）",v:rr2.toFixed(0),u:"%",d:rrOk?`目標 ${TARGETS.renewalRate}% 達成`:`目標 ${TARGETS.renewalRate}%に未達`,good:rrOk,arrow:rrOk?"↑":"↓",ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'},
+    {l:"稼働クライアント",v:activeCnt,u:"社",d:"前月比 +3",good:true,arrow:"↑",ic:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/>'},
+    {l:"平均MRR単価",v:'¥'+fmt(Math.round(mrr/activeCnt)*1000),u:"",d:"前月比 +2.4%",good:true,arrow:"↑",ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.8 1.8 0 0 1 0 3.5h-3a1.8 1.8 0 0 0 0 3.5h4"/>'}
+  ];
+  $("#dashKpi4").innerHTML=tiles.map(t=>`<div class="card ktile">
+    <div class="top"><span class="l">${t.l}</span><span class="ic"><svg viewBox="0 0 24 24">${t.ic}</svg></span></div>
+    <div class="v num">${t.v}<small> ${t.u}</small></div><div class="d ${t.good?'up':'down'}">${t.arrow} ${t.d}</div></div>`).join("");
+  drawBar();
+}
+function drawBar(){
+  const svg=$("#dashChart"),W=720,H=260,pl=92,pb=30,pt=18;
+  const max=Math.ceil(Math.max(TARGETS.mrr,...MRR_TREND.map(d=>d[1]))*1.1/1000)*1000;
+  const gap=(W-pl-10)/MRR_TREND.length,bw=Math.min(42,gap*0.6);
+  const y=v=>pt+(H-pb-pt)*(1-v/max);
+  /* 金額は常に実額（円）表記。千円・k表記は使わない */
+  let s=`<line x1="${pl}" x2="${W-6}" y1="${y(TARGETS.mrr)}" y2="${y(TARGETS.mrr)}" stroke="#c9b79f" stroke-width="1.4" stroke-dasharray="5 4"/>
+    <text x="${pl+4}" y="${y(TARGETS.mrr)-7}" text-anchor="start" font-size="11" font-weight="600" fill="#9a8b7c">目標 ¥${fmt(TARGETS.mrr*1000)}</text>`;
+  [0,0.5,1].forEach(f=>{const v=max*f;s+=`<text x="${pl-10}" y="${y(v)+4}" text-anchor="end" font-size="10" fill="#c3b4a4">¥${fmt(Math.round(v)*1000)}</text>`});
+  MRR_TREND.forEach((d,i)=>{
+    const x=pl+gap*i+(gap-bw)/2,top=y(d[1]),h=H-pb-top,last=i===MRR_TREND.length-1;
+    s+=`<rect x="${x}" y="${top}" width="${bw}" height="${h}" rx="5" fill="${last?'#2a78d6':'#a9cbf0'}"><title>${d[0]}: ¥${fmt(d[1]*1000)}</title></rect>
+      ${last?`<text x="${x+bw/2}" y="${top-8}" text-anchor="middle" font-size="11.5" font-weight="700" fill="#241a12">¥${fmt(d[1]*1000)}</text>`:''}
+      <text x="${x+bw/2}" y="${H-8}" text-anchor="middle" font-size="11" fill="#9a8b7c">${d[0]}</text>`;
+  });
+  svg.innerHTML=s;
+}
+
+function openCatalog(){$("#catalog").classList.add("on")}
+function closeCatalog(){$("#catalog").classList.remove("on")}
+
+/* ================= company: news / pending / year schedule ================= */
+const CATCHIP={重要:"red",新着:"orange",事例:"green",イベント:"blue",人事:"amber",業務:"k"};
+const newsChip=n=>`<span class="chip ${CATCHIP[n.cat]||'k'}" style="padding:1px 8px">${n.cat}</span>`;
+function renderCompany(){
+  $("#newsHome").innerHTML=NEWS.slice(0,4).map(n=>`
+    <div class="newsrow" onclick="go('news')"><div class="dt num">${n.date.slice(5).replace('-','/')}</div>
+    <div style="min-width:0"><div class="t">${n.title} ${n.mustRead?'<span class="chip red" style="padding:1px 7px">要確認</span>':''}</div>
+    <div class="b">${newsChip(n)} 対象: ${n.target}</div></div></div>`).join("");
+  const unread=INBOX.filter(i=>!STATE.read[i.id]&&!STATE.snooze[i.id]).length;
+  const pend=ACCOUNTS.filter(a=>a.renewalMonth==="2026-07"&&!a.judgeResult).length;
+  const items=[];
+  if(EVAL_SELF.status==="未提出")items.push({t:`自己評価（${EVAL_SELF.period}）が未提出`,n:1,go:"hyoka"});
+  if(pend)items.push({t:"今月の継続ジャッジ 未判定",n:pend,go:"calendar"});
+  if(unread)items.push({t:"受信箱の未読",n:unread,go:"inbox"});
+  $("#pendingList").innerHTML=items.map(i=>`<div class="pendrow" onclick="go('${i.go}')"><div class="t">${i.t}</div><div class="n num">${i.n}<span style="font-size:11px;font-family:var(--sans);color:var(--muted)"> 件</span></div><span style="color:var(--muted)">→</span></div>`).join("")||'<div class="lead">対応待ちはありません</div>';
+  const KD={イベント:"var(--blue)",評価:"var(--orange)",休暇:"var(--green)"};
+  $("#yearSched").innerHTML=`<div class="ys"><div class="q">Q1<br>9-11月</div><div class="q">Q2<br>12-2月</div><div class="q">Q3<br>3-5月</div><div class="q now">Q4<br>6-8月</div></div>`+
+    YEAR_EVENTS.map(e=>`<div class="yev ${e.now?'now':''}"><span class="m">${e.m.replace('-','/')}</span><span class="kd" style="background:${KD[e.kind]}"></span>${e.t}${e.now?'（実施中）':''}</div>`).join("");
+  $("#jobMini").innerHTML=JOBS.slice(0,3).map(j=>`<div class="irow" onclick="openJob(${j.id})"><div class="t">${j.title}</div><div class="m">${j.type} ・ ${j.loc}</div></div>`).join("")+
+    `<div class="irow"><div class="m">募集中 <b class="num">${JOBS.length}</b> 職種 ・ 社員紹介も歓迎</div></div>`;
+}
+function renderNewsAll(){
+  $("#newsAll").innerHTML=NEWS.map(n=>`<div class="card newsbig">
+    <div class="hd">${newsChip(n)}<span class="cap-mini num">${n.date}</span><span class="cap-mini">対象: ${n.target}</span>${n.mustRead?'<span class="chip red">要確認</span>':''}</div>
+    <div class="t">${n.title}</div><div class="b">${n.body}</div>
+    ${n.mustRead?`<button class="tbtn" style="margin-top:10px" onclick="toast('確認を記録しました（モック）')">内容を確認しました</button>`:""}</div>`).join("");
+}
+
+/* ================= people / org ================= */
+const initials=n=>n.split(/\s/)[0][0]; /* 姓の頭文字1字（「火村 誠」→「火」） */
+function renderPeople(){
+  const q=($("#pplSearch").value||"").trim(), d=$("#pplDept").value;
+  const list=MEMBERS.filter(m=>!d||m.dept===d).filter(m=>!q||[m.name,m.dept,m.role,...m.skills].join(" ").includes(q));
+  $("#pplCount").textContent=`${list.length} / ${MEMBERS.length} 名`;
+  $("#memberGrid").innerHTML=list.map(m=>`<div class="card pcard">
+    <div style="display:flex;gap:12px;align-items:center"><div class="avatar">${initials(m.name)}</div>
+    <div><div class="nm">${m.name}</div><div class="rl">${m.dept} ・ ${m.role}</div></div></div>
+    <div class="rl">${PIN} ${m.loc}</div>
+    <div class="sk">${m.skills.map(s=>`<span class="chip k">${s}</span>`).join("")}</div></div>`).join("")||'<div class="lead">該当するメンバーがいません</div>';
+}
+function renderOrg(){
+  const ceo=MEMBERS.find(m=>!m.boss);
+  const depts=[...new Set(MEMBERS.filter(m=>m.boss).map(m=>m.dept))];
+  const av=n=>`<div class="av2">${initials(n)}</div>`;
+  const node=(m,mgr)=>`<div class="pnode ${mgr?'mgr':''}">${av(m.name)}<div style="min-width:0"><div class="nm">${m.name}</div><div class="rl">${m.role}</div></div>${mgr?'<span class="mgrtag">部門長</span>':''}</div>`;
+  const cols=depts.map(dp=>{
+    const mem=MEMBERS.filter(m=>m.dept===dp&&m.boss);
+    const mgrs=mem.filter(m=>m.boss===ceo.id);
+    const others=mem.filter(m=>m.boss!==ceo.id);
+    let inner;
+    if(mgrs.length){
+      inner=mgrs.map(mg=>{
+        const subs=others.filter(o=>o.boss===mg.id);
+        return node(mg,true)+(subs.length?`<div class="subs">${subs.map(s=>node(s,false)).join("")}</div>`:"");
+      }).join("");
+      const orphan=others.filter(o=>!mgrs.some(mg=>mg.id===o.boss));
+      inner+=orphan.map(o=>node(o,false)).join("");
+    }else{
+      inner=mem.map(m=>node(m,false)).join("");
+    }
+    return `<div class="depcol"><div class="dhead"><span class="dep">${dp}</span><span class="cbadge">${mem.length}名</span></div>${inner}</div>`;
+  }).join("");
+  $("#orgChart2").innerHTML=`<div class="org2">
+    <div class="ceo2">${av(ceo.name)}<div><div class="nm">${ceo.name}</div><div class="rl">${ceo.role} ・ ${ceo.dept}</div></div></div>
+    <div class="trunk"></div>
+    <div class="deprow">${cols}</div></div>`;
+}
+
+/* ================= hyoka ================= */
+let HY="eval";
+function renderHyoka(){
+  document.querySelectorAll("#hyTabs button").forEach(b=>b.classList.toggle("on",b.dataset.hy===HY));
+  const el=$("#hyBody");
+  if(HY==="eval"){
+    el.innerHTML=`<div class="card selfeval"><div style="flex:1;min-width:0"><div class="cap-mini">自己評価 ・ ${EVAL_SELF.period}</div>
+      <div class="big">状態: ${EVAL_SELF.status}（入力期間 ${EVAL_SELF.window}）</div>
+      <div class="lead" style="margin-top:2px">期限 ${EVAL_SELF.due} — 早めの提出にご協力ください。</div></div>
+      <button class="approve" style="width:auto;padding:12px 26px;flex:none" onclick="toast('自己評価フォームを開きます（モック）')">自己評価を入力する</button></div>
+    <div class="sec-h serif">過去の評価結果</div>
+    <div class="tblwrap"><table><thead><tr><th>評価期</th><th class="right">業績合計</th><th>業績ランク</th><th class="right">能力合計</th><th>能力ランク</th><th class="right">バリュー合計</th><th>バリューランク</th><th class="right">総合点</th><th>総合ランク</th><th>評価者</th><th>状態</th></tr></thead>
+    <tbody>${EVALS.map(e=>`<tr><td><b>${e.period}</b></td><td class="right num">${e.biz}</td><td><span class="chip green">${e.bizRank}</span></td><td class="right num">${e.abil}</td><td><span class="chip amber">${e.abilRank}</span></td><td class="right num">${e.value}</td><td><span class="chip green">${e.valueRank}</span></td><td class="right num"><b>${e.total}</b></td><td><span class="chip orange">${e.totalRank}</span></td><td>${e.by}</td><td>${e.status}</td></tr>`).join("")}</tbody></table></div>`;
+  }else if(HY==="mbo"){
+    el.innerHTML=`<div class="lead" style="margin-bottom:12px">2026年上期の目標（ウェイト合計100%）。進捗は月次1on1で更新します。</div>`+
+      MBO.map(g=>`<div class="card mcard" style="margin-bottom:12px"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px;font-weight:700;font-size:13.5px">${g.goal}</div><span class="chip k">ウェイト ${g.weight}%</span>
+        <span class="num" style="font-family:var(--serif);font-weight:700;font-size:18px;color:${g.prog>=100?'var(--green-ink)':g.prog>=70?'var(--ink)':'var(--red)'}">${g.prog}%</span></div>
+        <div class="prog"><i class="${g.prog>=100?'':g.prog>=70?'mid':'low'}" style="width:${Math.min(g.prog,100)}%"></i></div></div>`).join("");
+  }else if(HY==="angle"){
+    el.innerHTML=`<div class="lead" style="margin-bottom:12px">1on1の記録と観点メモ。上長と本人のみ閲覧できます。</div>
+      <div class="card mcard"><div class="tl" style="margin-top:4px">${ANGLE_CHECKS.map(a=>`<div class="tlitem a"><div class="dt">${a.date} ・ ${a.with}</div><div class="sm">${a.memo}</div></div>`).join("")}</div>
+      <button class="tbtn" onclick="toast('1on1メモを追加します（モック）')">＋ 記録を追加</button></div>`;
+  }else{
+    el.innerHTML=`<div class="tblwrap"><table><thead><tr><th>期間</th><th>テンプレート</th><th>ステータス</th><th>最終更新</th><th></th></tr></thead>
+    <tbody>${DEV_SHEETS.map(d=>`<tr><td><b>${d.period}</b></td><td>${d.template}</td><td><span class="chip ${d.status==='確定'?'green':'amber'}">${d.status}</span></td><td class="num">${d.updated}</td><td><button class="tbtn" onclick="toast('シートを開きます（モック）')">開く</button></td></tr>`).join("")}</tbody></table></div>`;
+  }
+}
+
+/* ================= recruit ================= */
+function renderRecruit(){renderJobList()}
+function renderJobList(){
+  $("#recruitBody").innerHTML=`<div class="h1">採用</div>
+    <div class="lead">募集中 <b class="num">${JOBS.length}</b> 職種 ・ 社員紹介（リファラル）も歓迎です。</div>
+    <div class="jobgrid" style="margin-top:16px">${JOBS.map(j=>`
+      <div class="card jobcard" onclick="openJob(${j.id})">
+        <div class="jt">${j.title}</div>
+        <div class="jm"><span class="chip orange">${j.type}</span><span class="chip k">${j.dept}</span><span class="chip k">${PIN} ${j.loc}</span></div>
+        <div class="lead" style="margin-top:8px">${j.salary}</div>
+      </div>`).join("")}</div>`;
+}
+function openJob(id){
+  const j=JOBS.find(x=>x.id===id);
+  go('recruit');
+  $("#recruitBody").innerHTML=`<button class="gbtn" onclick="renderJobList()">← 求人一覧へ戻る</button>
+    <div class="card" style="margin-top:14px;padding:26px 30px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip orange">${j.type}</span><span class="chip k">${j.dept}</span><span class="chip k">${PIN} ${j.loc}</span></div>
+      <div class="h1" style="font-size:30px;margin-top:10px">${j.title}</div>
+      <div class="lead"><b>${j.salary}</b></div>
+      <div class="jobsec">仕事内容</div><div class="lead" style="margin-top:0">${j.desc}</div>
+      <div class="jobsec">この求人の魅力</div><ul class="joblist">${j.points.map(p=>`<li>${p}</li>`).join("")}</ul>
+      <div class="jobsec">応募資格</div><ul class="joblist">${j.reqs.map(p=>`<li>${p}</li>`).join("")}</ul>
+      <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+        <button class="approve" style="width:auto;padding:12px 28px" onclick="toast('応募フォームを開きます（モック）')">この求人に応募する</button>
+        <button class="gbtn" onclick="toast('紹介リンクをコピーしました（モック）')">知人に紹介する</button>
+      </div></div>
+    <div class="mascot"><img src="${sprite('3-cheer')}"><div><div class="tt">トレたんより</div><div class="ds">一緒に挑戦してくれる仲間、待ってるよ！</div></div></div>`;
+}
+
+/* ================= rooms ================= */
+let ROOM_SEL="A";
+const hhmm=v=>`${String(Math.floor(v)).padStart(2,"0")}:${v%1?"30":"00"}`;
+function roomState(r){
+  const cur=r.sched.find(s=>s.s<=ROOMS_NOW&&ROOMS_NOW<s.e);
+  if(cur){const min=Math.round((cur.e-ROOMS_NOW)*60);return{busy:true,meta:`終了まで あと${min}分 ・ ${cur.t}`}}
+  const next=r.sched.find(s=>s.s>ROOMS_NOW);
+  return{busy:false,meta:next?`${hhmm(next.s)} まで空き`:"終日 空き"}
+}
+function renderRooms(){
+  $("#roomCards").innerHTML=ROOMS.map(r=>{const st=roomState(r);return `
+    <div class="card roomcard ${st.busy?'busy':'free'} ${ROOM_SEL===r.id?'sel':''}" onclick="ROOM_SEL='${r.id}';renderRooms()">
+      <div class="rn">${r.name}</div><div class="rc">定員 ${r.cap} 名</div>
+      <div class="st">${st.busy?'● 利用中':'○ 空き'}</div><div class="rm">${st.meta}</div></div>`}).join("");
+  const r=ROOMS.find(x=>x.id===ROOM_SEL),S=10,E=19;
+  const evs=r.sched.map(s=>`<div class="ev" style="left:${(s.s-S)/(E-S)*100}%;width:${(s.e-s.s)/(E-S)*100}%" title="${s.t}（${s.o}）">${s.t}</div>`).join("");
+  $("#roomDetail").innerHTML=`<div class="card mcard">
+    <h3>${r.name} のタイムライン <span style="color:var(--muted);font-weight:500;font-size:12px">10:00〜19:00 ・ 赤線=現在</span>
+    <span class="more"><button class="gbtn" onclick="toast('Google カレンダーの予約画面を開きます（モック）')">Googleカレンダーで予約</button></span></h3>
+    <div class="rtl">${evs}<div class="nowln" style="left:${(ROOMS_NOW-S)/(E-S)*100}%"></div></div>
+    <div class="rtlx">${Array.from({length:10},(_,i)=>`<span>${S+i}:00</span>`).join("")}</div>
+    <div style="margin-top:10px">${r.sched.length?r.sched.map(s=>`<div class="mrow"><div class="tm num" style="width:110px">${hhmm(s.s)}〜${hhmm(s.e)}</div><div class="body"><div class="t">${s.t}</div><div class="m">主催: ${s.o}</div></div></div>`).join(""):'<div class="lead">本日の予定はありません。</div>'}</div></div>`;
+}
+
+/* ================= support ================= */
+let SP="bug";
+function renderSupport(){
+  document.querySelectorAll("#spTabs button").forEach(b=>b.classList.toggle("on",b.dataset.sp===SP));
+  const el=$("#spBody");
+  if(SP==="bug"){
+    el.innerHTML=`<div class="card" style="padding:22px;max-width:720px">
+      <div class="field"><label>どの画面・機能ですか？（自動設定）</label>
+        <select><option>お問い合わせ（現在の画面）</option><option>ホーム</option><option>継続カレンダー</option><option>顧客カルテ</option><option>統合受信箱</option><option>ダッシュボード</option></select></div>
+      <div class="field"><label>該当箇所</label>
+        <button class="gbtn" onclick="toast('画面上の要素を選択できます（モック）')">画面上の要素を選択</button></div>
+      <div class="field"><label>どんな事象ですか？<span class="req">必須</span></label><textarea placeholder="例）継続カレンダーで「保留」を押しても表示が変わらない"></textarea></div>
+      <div class="field"><label>スクリーンショット</label>
+        <div class="shot" id="shotBox">まだ添付されていません<br><button class="gbtn" style="margin-top:8px" onclick="fakeShot()">いまの画面を撮影</button> または貼り付け／ファイル選択</div></div>
+      <button class="approve" style="width:auto;padding:12px 30px" onclick="toast('受付番号 #TP-1042 で報告を受け付けました（モック）')">送信する</button></div>`;
+  }else if(SP==="req"){
+    el.innerHTML=`<div class="card" style="padding:22px;max-width:720px">
+      <div class="field"><label>どんな機能がほしいですか？<span class="req">必須</span></label><textarea placeholder="例）継続カレンダーに担当者ごとの週次ビューがほしい"></textarea></div>
+      <div class="field"><label>それができると何が変わりますか？</label><textarea style="min-height:70px" placeholder="例）朝会の準備時間が15分→3分になる"></textarea></div>
+      <button class="approve" style="width:auto;padding:12px 30px" onclick="toast('ご依頼を受け付けました。優先度判断のうえ回答します（モック）')">送信する</button></div>`;
+  }else{
+    el.innerHTML=`<div class="field" style="max-width:720px"><input type="text" id="faqQ" placeholder="質問を自然文で入力（例: 保存ボタンがない）" oninput="renderFaq()"></div>
+      <div id="faqList" style="max-width:720px"></div>
+      <div class="lead" style="max-width:720px">解決しない場合は、この内容のまま <b>バグ報告</b> タブから送信できます。</div>`;
+    renderFaq();
+  }
+}
+function renderFaq(){
+  const el=$("#faqQ");const q=el?el.value.trim():"";
+  const list=FAQS.filter(f=>!q||f.q.includes(q)||f.a.includes(q));
+  $("#faqList").innerHTML=list.map(f=>`<details class="faqitem"><summary>${f.q}</summary><div class="a">${f.a}</div></details>`).join("")||'<div class="lead">該当するFAQがありません。バグ報告タブからお問い合わせください。</div>';
+}
+function fakeShot(){$("#shotBox").innerHTML='screenshot_2026-07-22.png を添付しました（モック）'}
+function toast(msg){let t=$("#toast");if(!t){t=document.createElement("div");t.id="toast";t.className="toast";document.body.appendChild(t)}
+  t.textContent=msg;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),2600)}
+
+/* ================= init ================= */
+OWNERS.forEach(o=>{const op=document.createElement("option");op.value=o;op.textContent="担当: "+o;$("#fOwner").appendChild(op)});
+$("#fOwner").onchange=renderCal; $("#fState").onchange=renderCal;
+["ibKind","ibPri"].forEach(id=>$("#"+id).onchange=renderInbox);
+$("#ibUnread").onchange=renderInbox;
+[...new Set(MEMBERS.map(m=>m.dept))].forEach(d=>{const o=document.createElement("option");o.value=d;o.textContent="部署: "+d;$("#pplDept").appendChild(o)});
+$("#pplSearch").oninput=renderPeople; $("#pplDept").onchange=renderPeople;
+document.querySelectorAll("#hyTabs button").forEach(b=>b.onclick=()=>{HY=b.dataset.hy;renderHyoka()});
+document.querySelectorAll("#spTabs button").forEach(b=>b.onclick=()=>{SP=b.dataset.sp;renderSupport()});
+function renderAll(){renderHome();renderCompany();renderCalKpi();renderCal();renderInbox();renderDeals();renderAcc();renderDash();renderPeople();renderOrg();renderHyoka();renderRecruit();renderRooms();renderNewsAll();renderSupport()}
+renderAll();
+</script>
+</body>
+</html>
