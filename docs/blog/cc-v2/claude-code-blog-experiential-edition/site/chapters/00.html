@@ -38,7 +38,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-00-s1">0.1 3つの学習ルート</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 学習者の役割によって、必要な順序と最初に作るものが違うから。全員に同じカリキュラムを当てても、誰かは必ず脱落する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 自分のルートを最初に決めると、無関係な章を飛ばせて到達点も明確になる。学習が『今日進んだ』と言える単位に変わる</p></div>
 <h3 id="ch-00-s2">非エンジニアルート</h3>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 非エンジニア向けの章順マップ。全体像から始めて安全・Project・会議Assistantを経由する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 業務担当者がどの章を飛ばさず読めば成果に届くか一発で分かる。学習のロードマップとして機能する</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>全体像</dt><dd>Claude Codeが何でどう動くかの俯瞰。最初に持つことで、後の各章が地図のどこに対応するか迷わなくなる</dd><dt>安全</dt><dd>事故を起こさない設定と練習場の話。ここを先に抑えないと、便利機能を試す前に本番データを壊す</dd><dt>Project Folder</dt><dd>案件ごとにAIの作業範囲を区切る単位。これがないとAIが別案件のファイルまで触る事故が起きる</dd><dt>会議Assistant</dt><dd>文字起こしから議事録・タスク・HTMLを出す最初の成果物。動くものを90分で持ち帰る体験用題材</dd><dt>HTML/Cowork</dt><dd>結果を共有できる形に整える段階。Cowork面でレポートやArtifactを作る型を覚える</dd><dt>実務レシピ</dt><dd>週報・調査・整理など定型業務のテンプレ集。会議Assistantで掴んだ型を他業務へ横展開する</dd></dl></div></div><pre><code class="language-text">全体像 → 安全 → Project Folder → 会議Assistant → HTML/Cowork → 実務レシピ
@@ -52,6 +52,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 管理者向けの章順マップ。安全境界→ポリシー→配布→Governance→Telemetryで全社運用まで進む</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 情シス・AI推進が全社配布と監査をどの順で設計すればよいかが見える。個別操作より仕組み側に時間を使える</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>安全境界</dt><dd>全社で守る最小権限・隔離・監査の枠。これを先に決めないと、配布後にユーザーごとに穴が開く</dd><dt>Managed Policy</dt><dd>管理者が一括強制する設定層。ユーザーが外せないCLAUDE.mdや権限定義をここへ置いて全社統制する</dd><dt>Harness配布</dt><dd>設定・スキル・Hookをまとめて配るパッケージ運用。手作業配布だと環境差で再現性が崩れる</dd><dt>Skill Governance</dt><dd>Skillの登録・審査・更新ルール。野良Skill乱立を防ぎ、誰が何を変えたかを監査可能にする</dd><dt>Telemetry/Incident</dt><dd>利用ログと事故対応の仕組み。使用状況を観測し、問題発生時に原因と影響範囲を即特定できる体制</dd></dl></div></div><pre><code class="language-text">安全境界 → Managed Policy → Harness配布 → Skill Governance → Telemetry/Incident
 </code></pre>
 <p>到達点：全社員へ同じ環境を配布し、品質とセキュリティを強制・監査できる。</p>
+<p><strong>【なぜこの設計か】</strong> 役割別に入口を分けると、読者は自分の到達点に不要な設定や運用を先に抱えません。同時に、安全やProject Folderなど共通の前提を飛ばしにくくなります。一本道にすると、非エンジニアが管理者向け制御で止まり、管理者が個人利用の成功だけで全社配布へ進む事故が起きます。</p>
 <h2 id="ch-00-s5">0.2 Lessonの標準形</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 教科書を読み物のままにすると、再現も検証もできずに『分かった気』で終わる。Lessonの単位を共通化する必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 前提・成果物・検証・版情報がひと塊で揃うから、自分も他人も同じ手順で再実行できる。資産化できる学習になる</p></div>
 <p>将来アプリ化しやすいよう、各Lessonを次の単位で管理する。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Lesson標準形のYAML。id・level・前提・成果物・チェック・検証日・参照元を1ファイルで管理する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Lessonをコードとして扱える状態になる。後でアプリ化・進捗管理・依存解決を機械的に処理できる</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>lesson_id</dt><dd>Lessonを一意に識別する文字列。後でアプリ化・依存解決・進捗追跡をするときの主キーになる</dd><dt>status</dt><dd>stable/draft/deprecatedなど運用状態。読者が安心して取り組んでいいかを一目で判断できる</dd><dt>level</dt><dd>beginner/intermediate/advancedの難易度。自分のルートに合うLessonを順序立てて選べるようにする</dd><dt>estimated_minutes</dt><dd>想定所要時間。スキマ時間に1Lesson回せるか、まとまった時間が要るかを事前に見積もれる</dd><dt>prerequisites</dt><dd>先に終えるべきLessonのid。順序を守らないと前提知識が無くて詰まる地点を明示する</dd><dt>outcomes</dt><dd>学習後にできるようになる行動。完了したかどうかを自分で判定する基準として使う</dd><dt>artifacts</dt><dd>Lesson終了時に残るファイル群。後日見返したり再開したりするときの物的証拠になる</dd><dt>checks</dt><dd>合格判定に使う観点。テスト結果や画面証拠など、提示すべき証拠の種類を先に決めておく</dd><dt>verified_at</dt><dd>最終検証日。半年で仕様が変わるので、いつ時点の動作確認かを残さないと古い手順で詰む</dd><dt>source_topics</dt><dd>出典となった動画・公式Doc・原論文。なぜこの手順なのかを後追いできる根拠リンクとして機能する</dd></dl></div></div><pre><code class="language-yaml">lesson_id: cc-core-plan-verify
@@ -74,6 +75,24 @@ source_topics:
   - video-v04-meeting-assistant
   - official-best-practices
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> Lessonを目的、前提、成果物、Checkまで一単位にすると、「読んだ」と「実行できた」を分けて記録できます。途中でSessionが変わっても、次に作るArtifactと合格証拠から再開できます。本文だけを並べる方式では、理解したつもりでも未検証のまま次章へ進みます。</p>
+<p><strong>【実演】</strong> <code>cc-core-plan-verify</code>を一つ進める場面です。対象は練習用ProjectにあるTask一覧の小さな表示変更とします。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">このProjectの練習用Task一覧に、完了済み件数を表示してください。
+最初に関連Fileと既存Testを調べ、要件をrequirements.mdへ整理してください。
+次に変更File、手順、Test、対象外をimplementation-plan.mdへ書いてください。
+計画と実装を混ぜず、計画が要件と矛盾しないことを確認してから最小差分を実装してください。
+Project既定のTestを実行し、結果と変更Fileを報告してください。
+Testを弱めたり、練習用Projectの外を変更したりしないでください。
+完了条件は、二つの文書、実装差分、成功したTest結果を確認できることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>まずTask一覧の実装とTestを読み、表示対象と対象外を要件へ分けます。次に計画をFileへ保存し、その計画に沿う最小差分だけを実装します。最後に既定のTestを実行し、成果物と結果を対応付けます。</p>
+<p><strong>成果物</strong></p>
+<p>Project内に<code>requirements.md</code>と<code>implementation-plan.md</code>ができ、Task一覧の変更とTest結果が残ります。Lessonの<code>outcomes</code>は文書と差分、<code>checks</code>はTest結果で確認できます。</p>
+<p><strong>検証方法</strong></p>
+<p>二つの文書を開き、要件、対象外、変更File、Testが対応しているかを見ます。Diffに計画外のFileがないことを確認し、報告されたTestを同じ条件で再実行します。文書があるだけ、または画面が変わっただけでは合格にしません。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-00-s6">0.3 各章の統一フォーマット</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 章ごとに章の構成がバラバラだと、読者は毎章で『どこを見ればいい？』の迷子になる。全章を同じ流れに統一する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 目的→概念→手順→コピペ→検証→事故防止→発展の固定順だから、章を移動しても探す位置が変わらず学習速度が上がる</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 章ごとの統一フォーマット。目的→概念→手順→コピペ→検証→事故防止→発展課題の7段で並ぶ</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの章でも『次はどこを読めばいい？』が迷わない。読者の認知負荷が下がり、学習速度が一定になる</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>目的</dt><dd>この章で何ができるようになるか。最初にゴールが見えないと、読みながら『なぜ今これを読んでいる』が分からなくなる</dd><dt>概念</dt><dd>目的を達成するために必要な考え方の定義。手順だけ覚えると応用が利かず、半年後に陳腐化する</dd><dt>手順</dt><dd>概念を実際の操作へ落とした順序。ここを読めば手を動かす段取りが分かる</dd><dt>コピペ例</dt><dd>そのまま貼り付けて試せるコマンドや設定。最初の一歩を踏み出す摩擦をゼロにする役割</dd><dt>検証方法</dt><dd>うまくいったかを機械的に確かめる手順。『動いたっぽい』を排除して合否を客観化する</dd><dt>事故防止</dt><dd>踏みやすい地雷と避け方。先に知らないと初日に致命傷を負う領域をまとめる</dd><dt>発展課題</dt><dd>次に挑戦すべき応用。基本を終えた人が腐らず次のレベルへ進めるよう橋を渡す</dd></dl></div></div><pre><code class="language-text">目的
   ↓
@@ -107,6 +126,7 @@ source_topics:
 <li>Beta/Preview/Suspended状態。</li>
 <li>最低Claude Code Version。</li>
 </ul>
+<p><strong>【なぜこの設計か】</strong> 原則と変動情報を同じ本文へ固定すると、料金や提供範囲が変わった時に、正しい作業原則まで古い説明と一緒に疑われます。変動項目をRegistryへ分ければ、確認日とSourceを更新する対象が見えます。確認できない値は本文へ残さず、現行公式情報の確認へ戻せます。</p>
 <hr/>
 
   </section>

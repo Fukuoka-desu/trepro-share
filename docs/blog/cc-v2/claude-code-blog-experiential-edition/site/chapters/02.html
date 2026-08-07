@@ -38,12 +38,14 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-02-s1">2.1 安全の基本式</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『気をつけよう』は読まれないし守られない。事故は油断した10秒で起きる。安全は要素を掛け算で重ねる必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 最小権限×隔離×可逆性×検証×監査の5層で守れば、どれか1つが破れても被害は限定される。事故が起きても戻せる</p></div>
+<p><strong>【なぜこの設計か】</strong> この式を掛け算で捉えると、一つの対策だけでは安全にならない理由が見えます。権限を絞っても本番Folderで練習すれば隔離がなく、Checkpointがあっても外部送信には可逆性がありません。欠けた要素を先に見つけることで、Agentの性能ではなく作業環境で事故範囲を狭められます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 安全の基本式。最小権限・隔離・可逆性・検証・監査の5要素を掛け算で重ねる安全設計の土台</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの要素で何を守っているかを言語化できる。穴があれば即座に補強箇所が見える</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>最小権限</dt><dd>やる必要のある操作だけをAIに許す原則。最初から本番権限を渡すと、暗黙知を知らないAIが事故を起こす</dd><dt>隔離</dt><dd>本番データから物理的に切り離された場所で作業する設計。失敗してもLabの中で完結し本番に波及しない</dd><dt>可逆性</dt><dd>失敗を元に戻せる状態を常時保つこと。Checkpoint・Git・Dry-runで『取り返しがつく』を担保する</dd><dt>検証</dt><dd>完了の主張を機械的に確かめる工程。テスト・型・画面で証拠を取り、感覚での合格判定を排除する</dd><dt>監査</dt><dd>誰が何をしたかの履歴を残す仕組み。事故発生時に原因と影響範囲を遡れる状態を作る</dd></dl></div></div><pre><code class="language-text">安全性 = 最小権限 × 隔離 × 可逆性 × 検証 × 監査
 </code></pre>
 <p>Claude Codeは優秀だが、初日の新人と同じく、Projectの暗黙知を知らない。最初から本番権限を渡さない。</p>
 <h2 id="ch-02-s2">2.2 GuidanceとEnforcement</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLAUDE.mdの『お願い』は守られないことがある。本当に止めたい操作はPrompt層ではなく権限・Hook層で物理的に止める必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 守って欲しいだけならGuidance、絶対に止めたいならEnforcementと判断軸が分かれる。重大事故は仕組みで阻止できる</p></div>
+<p><strong>【なぜこの設計か】</strong> Guidanceは望ましい振る舞いを伝えますが、実行そのものを止める仕組みではありません。たとえばCLAUDE.mdに「削除前に確認」と書いても、長い作業の途中で削除が必要だと判断されれば、お願いだけでは最後の防壁になりません。削除やDeployのような高Risk操作をAsk、Deny、Hook、権限と組み合わせると、指示の読み違いが実行へ直結する経路を断てます。</p>
 <table>
 <thead>
 <tr>
@@ -82,6 +84,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </table>
 <p>重要な禁止事項をPromptだけに頼らない。</p>
 <h2 id="ch-02-s3">2.3 初心者が最初に禁止すること</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 初日に踏みやすい地雷は決まっている。これを最初に潰さないと、便利な機能を試す前に事故で学習が終わる</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 権限スキップ・本番Folder・APIキー貼付・無承認操作・テスト弱体化・出所不明Plugin・Diff未確認Commitを禁止と決められる</p></div>
+<p><strong>【なぜこの設計か】</strong> 初心者は正常な出力と危険な近道をまだ見分けにくいため、最初に禁止範囲を固定します。特に権限回避、秘密の貼り付け、無承認の外部操作を許すと、練習中の小さな誤解が本番の変更へ広がります。禁止したうえで安全な代替手順を覚えると、速度を上げても事故の型を持ち込みません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 初心者が最初に禁止する7項目。権限スキップ・本番練習・APIキー貼付・テスト弱体化・出所不明Pluginなど</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> やってはいけない操作リストが手元に残る。初日に踏みやすい地雷をすべて先回りで潰せる</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>--dangerously-skip-permissions</dt><dd>確認なしで全操作を許すフラグ。便利だが本番Projectで使うと一発で復旧不能の事故になる</dd><dt>本番・顧客Folderでの練習</dt><dd>学習目的で実データに触る行為。失敗が即顧客への被害になり、信用と契約を同時に失う</dd><dt>APIキーの貼り付け</dt><dd>Chat欄や履歴に鍵を直書きする行為。会話ログ経由で漏れ、悪用課金や情報窃取を招く</dd><dt>無承認の削除・送信・公開・Deploy</dt><dd>外部副作用のある操作を確認なしで通すこと。CheckpointやGitでは戻せず、誤送信・誤公開が即事故化する</dd><dt>Test/Lint/Typecheckの弱体化</dt><dd>通したいがために検査を緩める行為。安全網を自分で外すと、後段で気付けない欠陥が本番へ流れる</dd><dt>出所不明MCP/Pluginの追加</dt><dd>誰が作ったか分からない拡張を入れること。悪意あるツールが鍵やファイルを外部送信する経路になる</dd><dt>Git diffを見ないCommit</dt><dd>AIが書いた変更を読まずに保存する行為。意図しない箇所や秘密値の混入を見落として履歴に残る</dd></dl></div></div><pre><code class="language-text">- --dangerously-skip-permissions
 - 本番・顧客Folderでの練習
 - APIキーの貼り付け
@@ -91,6 +94,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Git diffを見ないCommit
 </code></pre>
 <h2 id="ch-02-s4">2.4 安全な練習場</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 本番フォルダや顧客データの上で練習すると、失敗が即事故になる。学習用の物理境界が要る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 個人用Copyだけを置いたLabが完成する。秘密情報と本番接続は持ち込まれず、失敗してもLabの中で完結する</p></div>
+<p><strong>【なぜこの設計か】</strong> 専用Folder、Copyデータ、Gitの組合せは、失敗の影響を練習場の中へ閉じ込めます。既存案件のFolderで試すと、探索対象に本物の設定やSecretsが混ざり、意図しないFileを変更する可能性があります。最初のCommitを作っておけば、実習前後のDiffも明確になります。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 学習用Labを作るbashコマンド。フォルダ作成→git init→README commit→claude起動まで一気通貫</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 本番データから物理的に切り離された練習場が完成する。安全に失敗できる場所を5分で用意できる</p></div><pre><code class="language-bash">mkdir -p ~/claude-lab/meeting-assistant
 cd ~/claude-lab/meeting-assistant
 git init
@@ -101,6 +105,7 @@ claude
 </code></pre>
 <p>個人用のCopyデータだけを置き、Secretsと本番接続を入れない。</p>
 <h2 id="ch-02-s5">2.5 外部副作用はCheckpointで戻らない</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Email送信・公開・Deploy・課金は、ファイルの巻き戻しでは元に戻らない。CheckpointとGitだけでは守れない領域がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 外部副作用はDraft→Preview→人間承認→Executeに分離する。誤送信・誤公開・誤課金の事故が物理的に起きにくくなる</p></div>
+<p><strong>【なぜこの設計か】</strong> Local Fileの復元と外部Systemの取消しを分けるのは、Rollbackの効く範囲が違うためです。送信、公開、Deploy、DB更新は、Gitを戻しても相手側に残ります。DraftとPreviewを先に作り、人間承認の後だけExecuteへ進めると、不可逆な操作の直前に内容と対象を確認できます。</p>
 <p>CheckpointやGitで戻せるのはローカルファイル中心である。次は別のRollbackが必要。</p>
 <ul>
 <li>送信したEmail。</li>
@@ -111,6 +116,7 @@ claude
 <li>Payment、注文、契約。</li>
 </ul>
 <p>外部副作用は <code>Draft → Preview → Human Approval → Execute</code> に分離する。</p>
+<p><strong>【失敗するとこうなる】</strong> CLAUDE.mdへ「外部送信前に確認」とだけ書き、送信Toolを実行可能なまま議事録処理を依頼します。処理後にDraftではなく送信済みの通知が表示され、Checkpointを戻しても受信者のInboxからは消えません。原因はGuidanceをEnforcementとして扱い、Execute直前のAskや権限制限を置かなかったことです。まず以後の実行権限を止め、外部側で取消しや訂正を行い、DraftとHuman Approvalを強制する構成へ直します。</p>
 <hr/>
 
   </section>

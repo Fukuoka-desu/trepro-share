@@ -36,8 +36,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-04-s1">4.1 完成形</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 最初の題材を大きく取ると3週間止まる。入力と出力が固定された小さな完成形を先に決める必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 文字起こしを入れたらmd・json・htmlの3点が出る、と完成形が明確になる。90分で『動いた』を体験できる</p></div>
+<p><strong>【なぜこの設計か】</strong> 最初に完成形を固定すると、後続の要件、Skill、Testが同じ三つの成果物へ収束します。出力像を決めずに作り始めると、Markdownだけで終わる、JSONと画面のTaskが一致しない、といった完成範囲のずれが起きます。</p>
 <p>文字起こしを入力すると、次を生成する。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 会議アシスタントの完成形ファイル構成。md・json・htmlの3点が同じ会議に対して出る</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 外部APIやDBを使わずローカルで完結する。最初の90分実習のゴールとして合格判定がしやすい</p></div><pre><code class="language-text">output/
 ├── meeting-2026-06-22.md
@@ -50,7 +51,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>MeetingとTaskを閲覧するローカルHTML。</li>
 </ul>
 <p>外部API、認証、DB、AI APIは最初の版では使わない。</p>
+<p><strong>【このコードの読み方】</strong> Markdownの行は人が会議内容を確認する成果物です。JSONの行は同じTaskを機械処理へ渡す契約です。<code>app.html</code>の行は両者を閲覧する入口であり、外部APIやDBを足さずに表示まで検証できる範囲を示します。</p>
 <h2 id="ch-04-s2">4.2 要件定義</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 目的・入力・出力・Schema・制約・完了条件を曖昧にしたまま実装すると、AIは推測で埋めて手戻りが連鎖する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> requirements.mdが埋まると、AIは何をしてはいけないかまで分かる。担当・期限の捏造を構造的に防げる</p></div>
+<p><strong>【なぜこの設計か】</strong> 完成形の次に要件を言語化すると、実装前に入力、出力、禁止事項、合格条件を一つの契約へまとめられます。ここを飛ばすと、後から見つかった制約のためにSchemaや画面を作り直すことになります。</p>
 <p><code>docs/requirements.md</code>：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> requirements.md。目的・入力・出力・Task Schema・制約・完了条件を1ファイルに固定する要件定義書</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIへ渡す前に『何を作り、何を作らないか』が明確になる。担当・期限の捏造禁止まで仕様で縛れる</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>目的</dt><dd>そのProjectが何を達成するかの一文。ここを曖昧にすると以下の項目すべてが推測ベースで埋まる</dd><dt>入力</dt><dd>AIに渡す素材の場所と形式。文字コードや欠損仕様まで決めて、想定外データでの暴走を防ぐ</dd><dt>出力</dt><dd>成果物の形態。人間向け・機械向け・閲覧用と分けて宣言し、AIが勝手に形式を変えるのを防ぐ</dd><dt>Task Schema</dt><dd>タスクJSONのキー定義。task_id・owner・due_date・confidence等を先に固めて、機械処理可能な構造を保証する</dd><dt>task_id</dt><dd>タスクを一意に識別するID。後でフィルタや更新をする際の主キーになり、重複の検出にも使う</dd><dt>owner</dt><dd>担当者を入れるキー。不明なら必ずnullにし、推測で名前を入れる事故を構造的に防ぐ</dd><dt>due_date</dt><dd>期限を入れるキー。発言に無ければnullを入れ、AIが勝手に『来週金曜』等と捏造するのを止める</dd><dt>source_quote</dt><dd>根拠となった原文発言の短い引用。決定や担当の出所を遡れて、AIの幻覚を検出できる</dd><dt>confidence</dt><dd>AIが付ける確信度。低い項目を人が優先的にレビューする目印として使う</dd><dt>needs_confirmation</dt><dd>人間確認が必要かのフラグ。trueなら担当・期限が未確定であることを後段の画面で目立たせられる</dd><dt>制約</dt><dd>やってはいけないことの列挙。入力改変・担当推測・外部送信などをここで縛って事故の入口を塞ぐ</dd><dt>完了条件</dt><dd>合格判定の機械的基準。Sample件数・Schema検証・Filter動作などで『動いたっぽい』を排除する</dd></dl></div></div><pre><code class="language-markdown"># Meeting Assistant 要件定義
 
@@ -89,7 +92,10 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Owner/Status/DueでFilterできる
 - READMEに起動手順がある
 </code></pre>
+<p><strong>【このコードの読み方】</strong> <code>Task Schema</code>の<code>source_quote</code>は抽出結果を原文へ戻って確かめるための行です。<code>needs_confirmation</code>は不明値を推測で埋めず、確認待ちとして残します。制約の「決定事項と提案を分離する」は、発言を過大に確定扱いする事故を防ぎます。完了条件のSample、Schema検証、Filter、READMEは、生成、構造、利用、再現の四面を確認します。</p>
+<p><strong>【失敗するとこうなる】</strong> 要件定義を作らず、Sample Inputだけを渡して実装を始めたとします。Markdownは生成されてもJSONに<code>source_quote</code>がなく、担当不明のTaskへ発言者名が自動で入ります。原因は、追跡可能性と推測禁止を実装前の契約にしなかったことです。実装を止め、要件を固定してからSchemaとSample出力を作り直します。</p>
 <h2 id="ch-04-s3">4.3 Project CLAUDE.md</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Project単位のお願いがないと、AIは外部API追加・入力ファイル改変・担当の創作などを善意でやってしまう</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> CLAUDE.mdに『inputsを触らない』『null+needs_confirmationを使う』と書けば、暴走が起きにくい設計になる</p></div>
+<p><strong>【なぜこの設計か】</strong> 要件のうち毎回守る判断をProject CLAUDE.mdへ移すと、依頼文が短くても同じ制約を適用できます。要件より先に書くと、何を恒常Ruleにすべきか決まらず、場当たり的な禁止事項が増えます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Project CLAUDE.md。inputs改変禁止・担当捏造禁止・null+needs_confirmation活用・外部API無断追加禁止を書く</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Project全体で守るべきルールがAIに伝わる。会話のたびに同じ注意を書く必要がなくなる</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Respond in Japanese</dt><dd>返答を日本語に固定する指示。混在を防ぎ、議事録やTaskが英語混じりで返る事故を防ぐ</dd><dt>Read docs/requirements.md before changing files</dt><dd>編集前に要件を必ず読ませる指示。要件を見ずに推測実装する暴走を入口で止める</dd><dt>Never modify files under inputs/</dt><dd>素材ファイルの改変を全面禁止する指示。Input Hash不変が崩れると過去結果の再現性が消える</dd><dt>Do not invent owners, deadlines, or decisions</dt><dd>担当・期限・決定の捏造禁止。AIが空欄を埋めたがる癖を仕様で抑え、虚偽情報の混入を止める</dd><dt>Use null and needs_confirmation: true when uncertain</dt><dd>不確定な値の表現方法を指定。空欄ではなく明示的なnull+フラグにして、後で人が確認すべき箇所を可視化する</dd><dt>Run all checks before reporting completion</dt><dd>完了報告前に検査を全て通す指示。テストを省略して『できました』と返す事故を防ぐ</dd><dt>Do not add external APIs, authentication, or databases without approval</dt><dd>外部依存の無断追加を禁止。AIが善意で課金API・認証・DBを足し、構成と料金が肥大化するのを止める</dd></dl></div></div><pre><code class="language-markdown"># Meeting Assistant
 
 - Respond in Japanese.
@@ -100,7 +106,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Run all checks before reporting completion.
 - Do not add external APIs, authentication, or databases without approval.
 </code></pre>
+<p><strong>【このコードの読み方】</strong> <code>Read docs/requirements.md</code>の行は、変更前に正本へ戻る順序を固定します。<code>Never modify files under inputs/</code>は原本の上書きを防ぎます。不明値を<code>null</code>と<code>needs_confirmation: true</code>へ送る行は、推測をDataへ混ぜません。最後の外部機能禁止は、最小版の検証前に範囲と副作用が広がるのを止めます。</p>
 <h2 id="ch-04-s4">4.4 議事録Skill</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 成功した手順を会話の中に置いたままだと、翌日同じ依頼でまた1から説明が要る。Skill化で再利用できる</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> SKILL.mdに入力・処理・出力・品質チェックを書けば、次回からは1行呼び出しで議事録パイプラインが走る</p></div>
+<p><strong>【なぜこの設計か】</strong> Projectの制約を決めた後でSkillへ処理手順を切り出すと、安全条件を保ったまま抽出作業を再利用できます。先にSkillだけ作ると、Projectが要求するSchemaや推測禁止と食い違い、毎回会話で補正する状態になります。</p>
 <p><code>.claude/skills/meeting-minutes/SKILL.md</code>：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 議事録SkillのSKILL.md。入力・Workflow・Markdown出力・Quality checksを宣言する再利用可能な手順書</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 次の会議からは1コマンドで議事録パイプラインが走る。担当捏造や日付形式のブレが構造的に消える</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>name</dt><dd>Skillを呼び出すときの識別子。ここを一意にしないと同名Skillが衝突して呼び出しがブレる</dd><dt>description</dt><dd>そのSkillが何をするかの一文。AIが自動でSkillを選ぶときの判断材料になり、誤起動を減らす</dd><dt>argument-hint</dt><dd>呼び出し時に渡す引数の形のヒント。利用者が『何を渡せばいいか』を都度調べずに済む</dd><dt>Inputs</dt><dd>Skillが受け取る入力の定義。何を渡せば動くかが明確になり、引数不足での失敗を減らせる</dd><dt>Workflow</dt><dd>Skillが内部で実行する手順の番号付きリスト。AIが順序を入れ替えて勝手な実装をするのを防ぐ</dd><dt>Markdown output</dt><dd>人間向け出力の節構成。OverviewからRisksまで固定し、議事録ごとに章立てが揺れるのを止める</dd><dt>Quality checks</dt><dd>出力の自己検査ルール。捏造禁止・Quote付与・日付ISO・MD/JSON整合性をSkill自身に守らせる</dd></dl></div></div><pre><code class="language-markdown">---
 name: meeting-minutes
@@ -136,7 +144,9 @@ argument-hint: "&lt;transcript path&gt;"
 - Dates are ISO 8601
 - Markdown and JSON describe the same tasks
 </code></pre>
+<p><strong>【このコードの読み方】</strong> Workflowの「decisions separate from proposals」は、提案を決定として記録する誤りを防ぎます。<code>source quote</code>を残す行は、Taskの根拠を原文から再確認できるようにします。不明な担当や日付を<code>null</code>へ送る行は、もっともらしい補完をDataへ固定しません。最後のJSON検証とMarkdownとの一致確認は、二つの成果物が別々に正しそうに見える不整合を検出します。</p>
 <h2 id="ch-04-s5">4.5 Sample Input</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装前に動作確認できるサンプル入力がないと、出力の正解が共有できない。テスト不能のまま完了宣言が出る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 具体的な発言例と決定事項が含まれるサンプルがあれば、AIも人間も同じ正解像を見ながら作業できる</p></div>
+<p><strong>【なぜこの設計か】</strong> RuleとSkillの後にSample Inputを置くと、決めた振る舞いを具体的な発言で検証できます。Sampleを先に正解扱いすると、一例だけに合う処理へ寄り、担当不明や提案と決定の区別が一般化されません。</p>
 <p><code>inputs/meeting-2026-06-22.md</code>：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> サンプル入力の文字起こし。担当決まりと未決のタスクが混在する典型的な会議発話</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが決定事項を抽出できるか、未決を未決として残せるかを同じデータで検証できる</p></div><pre><code class="language-markdown"># 商品会議 2026-06-22
 
@@ -145,7 +155,29 @@ argument-hint: "&lt;transcript path&gt;"
 田中: 計測タグは公開前に確認が必要です。担当はまだ決めていません。
 山田: では公開日は7月1日で決定。タグ担当は明日決めましょう。
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 1行目の公開希望は、まだ決定ではありません。2行目は担当者と期限を含むTaskとして追跡できます。3行目は作業の必要性だけがあり、担当は不明です。4行目で公開日だけが決定へ変わり、タグ担当は確認待ちのまま残ります。</p>
+<p><strong>【実演】</strong> Sample Inputを変更せず、議事録Skillへ入力Pathと生成先を渡します。ここでは「公開したい」と「決定」を別扱いにし、担当が明示された見出し案だけを確定Taskへします。計測タグは必要な作業ですが担当が決まっていないため、<code>owner</code>を補完せず確認待ちに残します。実行前に入力Hashを控えるのは、生成処理が原文を書き換えていないことを最後に確かめるためです。</p>
+<pre><code class="language-text">$ shasum inputs/meeting-2026-06-22.md
+[input hash]  inputs/meeting-2026-06-22.md
+$ claude
+&gt; meeting-minutes Skillを使い、inputs/meeting-2026-06-22.mdからMarkdownとTask JSONをoutput/へ生成してください。入力は変更しないでください。
+生成: output/meeting-2026-06-22.md
+生成: output/meeting-2026-06-22.json
+検証: JSON Schema PASS
+$ shasum inputs/meeting-2026-06-22.md
+[same input hash]  inputs/meeting-2026-06-22.md
+</code></pre>
+<pre><code class="language-json">{
+  "decisions": ["公開日は7月1日"],
+  "tasks": [
+    {"title": "見出し案を3案作る", "owner": "[明示された担当者]", "due_date": "2026-06-26", "needs_confirmation": false},
+    {"title": "計測タグを確認する", "owner": null, "due_date": null, "needs_confirmation": true}
+  ]
+}
+</code></pre>
+<p>出力では、希望段階の発言がDecisionへ入っていないこと、明示された担当だけが入っていること、担当不明が<code>null</code>であることを読みます。さらに生成前後のHashが同じなら、入力原本を保ったまま成果物を作れたと判断できます。Markdown側でも同じ二件のTaskと確認待ち状態を探し、JSONだけが正しい状態を合格にしません。日付表現などの正規化はProjectの決めたSchemaに従って確認します。出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-04-s6">4.6 Plan依頼</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> いきなり実装に走らせると、ファイル構成もSchemaも一発で確定する。後で『そうじゃない』が大量に発生する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Plan依頼で構成・Schema・処理・UI・Test・Risk・Rollbackを先に文書化させる。実装前にレビューできる</p></div>
+<p><strong>【なぜこの設計か】</strong> Sampleで境界条件を見せた後にPlanを求めると、抽象要件と具体例の両方から変更範囲を組み立てられます。実装と同時に考えさせると、File構成やRollbackを比較する前に変更が始まり、承認の意味が失われます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Plan依頼Prompt。実装に入らずFile構成・Schema・処理・UI・Test・不確定・Risk/Rollbackだけを先に出させる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装前に設計をレビューできる。後から『そうじゃなかった』で全書き直しになる事故が消える</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>File構成</dt><dd>どこに何のファイルを置くかの計画。実装に入る前に固めないと、後でディレクトリ移動の戻し作業が発生する</dd><dt>Data Schema</dt><dd>扱うデータの構造定義。先に決めないと実装後に『キー名が違う』で全箇所修正になる</dd><dt>処理手順</dt><dd>入力から出力までのステップ列。AIが内部で何をするか可視化し、誤った順序を実装前に潰せる</dd><dt>UI構成</dt><dd>画面や操作の骨格。HTMLレポートやFilterの配置を先に決め、後でデザインだけ載せ替えできるようにする</dd><dt>Test Case</dt><dd>合否判定に使うシナリオ。完了条件と紐付けて、何が通れば合格かをPlan段階で固定する</dd><dt>不確定事項</dt><dd>Planでは決められない未知点の明示。実装前に質問・確認すべき項目を浮き上がらせる</dd><dt>RiskとRollback</dt><dd>失敗時の想定リスクと巻き戻し手順。事故対応をPlan段階で用意し、本番事故時に動けない事態を防ぐ</dd></dl></div></div><pre><code class="language-text">`docs/requirements.md`、`CLAUDE.md`、Sample Inputを読んでください。
 まだ実装せず、次を含む計画を作ってください。
 
@@ -157,7 +189,9 @@ argument-hint: "&lt;transcript path&gt;"
 - 不確定事項
 - RiskとRollback
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 冒頭の「まだ実装せず」は、計画の確認前にFileが変わるのを防ぎます。File構成とData Schemaは、成果物の置き場と形式を先に固定します。Test Caseは完了条件を実行可能な確認へ落とします。不確定事項とRollbackは、仮定を隠したまま一方向の変更へ進むのを止めます。</p>
 <h2 id="ch-04-s7">4.7 実装依頼</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 承認したPlanがあっても、実装段階の制約を毎回書かないと外部API追加・入力改変・Test省略が混入する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 禁止事項とDiff・Command・Test結果・残Riskの報告を求める形に固定できる。完了報告が証拠付きになる</p></div>
+<p><strong>【なぜこの設計か】</strong> 承認済みPlanの後に実装を始めると、変更範囲と検証方法を合意した状態で手を動かせます。この順番を逆にすると、Planは実装済み内容の追認になり、対象外機能の混入を止められません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 実装依頼Prompt。外部API/DB/認証禁止・入力不変・JSON Schema検証・完了時にDiff/Command/Test/残Risk報告</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装が承認済みPlanからブレない。完了報告が証拠付きで返り、後追い確認が要らない</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>外部API/DB/認証は禁止</dt><dd>最小実装に集中させる制約。AIが善意で課金API・DB・OAuthを追加して構成が肥大化するのを止める</dd><dt>入力を変更しない</dt><dd>inputs/領域の不変保証。素材改変が起きると再現性が崩れ、Hash突合での検証が無意味になる</dd><dt>JSON Schema検証を追加</dt><dd>出力JSONを機械的に検査する仕組み。キー欠損や型ずれを実装段階で検出し、後段で詰まらない</dd><dt>Sample DataでTest</dt><dd>用意したサンプル入力で動作確認させる指示。実装直後に通るかを毎回同じデータで判定する</dd><dt>HTMLはMobile対応</dt><dd>出力HTMLが手元スマホでも読める要件。PCでだけ崩れない設計を実装段階で強制する</dd><dt>完了時にDiff、Command、Test結果、残Riskを報告</dt><dd>完了報告の必須内容。証拠付きで返らせて、人が後追い確認する手間を削る</dd></dl></div></div><pre><code class="language-text">承認した計画に従い、最小構成で実装してください。
 
 - 外部API/DB/認証は禁止
@@ -167,7 +201,9 @@ argument-hint: "&lt;transcript path&gt;"
 - HTMLはMobile対応
 - 完了時にDiff、Command、Test結果、残Riskを報告
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 「承認した計画に従い」は、実装範囲を直前の合意へ拘束します。外部API、DB、認証の禁止は、初版へ運用負荷と副作用を持ち込みません。JSON Schema検証とSample Testは、見た目だけの完成を防ぎます。最後のDiff、Command、Test結果、残Riskは、完了報告を再検証できる証拠へ変えます。</p>
 <h2 id="ch-04-s8">4.8 合格基準</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『動いたっぽい』では合格にできない。チェックリストで機械的・意味的に合格条件を切り出す必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 決定事項抽出・担当null・Quote追跡・JSON Schema・Filter動作・Input Hash不変まで1リストで判定できる</p></div>
+<p><strong>【なぜこの設計か】</strong> 実装後に合格基準を一件ずつ照合すると、生成できたことと正しく生成できたことを分けられます。画面が開くだけで完了にすると、決定の誤抽出や入力改変が見えないまま残ります。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 合格基準チェックリスト。決定抽出・担当null・Quote追跡・JSON Schema・Filter動作・Input Hash不変の7項目</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 『動いたっぽい』を排除して機械的に合格判定できる。Input改変を起こしていないかまで確認できる</p></div><pre><code class="language-text">[ ] 山田が決定した公開日だけをDecisionとして抽出
 [ ] 佐藤のTaskと金曜期限を抽出
 [ ] Tag担当はnull + needs_confirmation
@@ -176,17 +212,21 @@ argument-hint: "&lt;transcript path&gt;"
 [ ] HTMLのFilterが動く
 [ ] Input Hashが変わっていない
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 最初の三行は、決定、確定Task、未確定Taskを別々に検証します。原文Quoteの行は、抽出結果を入力へ遡れるかを見ます。SchemaとFilterはData契約と利用時の振る舞いを確認し、Input Hashは処理の副作用が原本へ及んでいないことを示します。</p>
+<p><strong>【失敗するとこうなる】</strong> HTMLが開いた時点で合格とし、Checklistを途中で止めたとします。画面にはTaskが並びますが、タグ担当に発言者名が入り、公開希望と決定が二重に表示されます。原因は、表示成功だけを見て意味の正しさと原本追跡を検証しなかったことです。合格基準へ戻り、各項目をSampleの原文QuoteとJSON Schema結果に照らして修正します。</p>
 <h2 id="ch-04-s9">4.9 学びをSkillへ戻す</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 今回のうまくいった工夫を会話に残すだけだと、明日には消える。一般化できるものをSkillへ戻す工程が要る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Rule・Fixture・失敗例をSkillへDiff提案できる。今回の学びが翌週以降の議事録生成にも自動で効く</p></div>
+<p><strong>【なぜこの設計か】</strong> 合格確認の後で再利用可能な学びだけをSkillへ戻すと、実測した修正を次回の標準手順にできます。検証前に会話の思いつきをRule化すると、Project固有の例外まで一般化され、別の会議で誤作動します。</p>
 <p>出力修正を会話だけに残さない。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Skill昇格Prompt。Project固有事実ではなく一般化できるRule・Fixture・失敗例をDiff案で提案させる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 今回の学びが議事録Skillに恒久的に積み上がる。翌週の会議でも同じ品質が出る</p></div><pre><code class="language-text">今回の修正で再利用価値があるものを抽出してください。
 Project固有の事実ではなく、一般化できるRule、Fixture、失敗例としてSkillへ提案してください。
 まだSkillを変更せず、Diff案を出してください。
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 「再利用価値があるもの」は、一度きりの好みをSkillへ混ぜないための選別条件です。Project固有の事実を除く行は、別案件へ実名や固有期限を持ち出す事故を防ぎます。Rule、Fixture、失敗例の三つに分けると、指示、再現入力、観測症状を対応させられます。「まだSkillを変更せず」は、提案を人が確認してから恒常化するための停止線です。</p>
 <hr/>
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch04-meeting-flow">
   <img src="../images/diagram-ch04-meeting-flow.webp" alt="文字起こしから議事録、タスク、HTML、Skillへ展開する処理の概念図" loading="lazy" decoding="async">
   <figcaption>一つの入力を、人が読む成果物・機械が読む成果物・再利用手順へ分けます。</figcaption>

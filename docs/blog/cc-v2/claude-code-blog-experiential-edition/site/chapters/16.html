@@ -18,7 +18,7 @@
 これは内容ではなく、出力形式の問題です。</p><p>ほとんどの人は、AIに『レポートを書いて』と頼んで、長文の Markdown を受け取って終わりにしています。
 ですが、受け取った相手は、それを読み切る時間も読む構造も持っていません。</p><p>HTML は、見出し・図・色・前後関係を視覚で伝えられる出力形式です。
 同じ情報を 1 枚に整え、結論を上に、根拠を下に、補足は折りたたみへ。読み手の意思決定速度が変わります。</p><p>この章を読み終わる頃には、『長く書く』ではなく『短く伝える』の方向で、AIに頼めるようになります。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-16-0-markdown-vs-html"><h3 id="feature-16-0-markdown-vs-html">形式選択（Markdown vs 単一HTML）</h3><p class="feature-summary">執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。</p><dl class="feature-io"><dt>入力</dt><dd>成果物の用途、読み手、共有経路</dd><dt>出力</dt><dd>形式選択の根拠と最終出力フォーマット</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-1-html"><h3 id="feature-16-1-html">単一HTML標準（自己完結レポート）</h3><p class="feature-summary">外部CSS/JSに依存せず、1ファイルだけで開ける標準フォーマット。共有・印刷・スマホ表示も担保する。</p><dl class="feature-io"><dt>入力</dt><dd>Markdown原稿、データ、画像</dd><dt>出力</dt><dd>外部依存なし1ファイルHTMLレポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-2-csv-prompt"><h3 id="feature-16-2-csv-prompt">CSV分析Prompt</h3><p class="feature-summary">CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。</p><dl class="feature-io"><dt>入力</dt><dd>CSVデータ、注目したい軸</dd><dt>出力</dt><dd>集計表・グラフ・要点カード入りHTML</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-3-html-slide-discussion-board"><h3 id="feature-16-3-html-slide-discussion-board">HTML Slide / Discussion Board</h3><p class="feature-summary">Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。</p><dl class="feature-io"><dt>入力</dt><dd>発表用骨子または議題リスト</dd><dt>出力</dt><dd>HTML Slide、Discussion Board</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-4-check-a11y"><h3 id="feature-16-4-check-a11y">品質Check（A11y/印刷/スマホ）</h3><p class="feature-summary">公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。</p><dl class="feature-io"><dt>入力</dt><dd>完成したHTML</dd><dt>出力</dt><dd>A11y/印刷/スマホでの動作確認結果</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-16-0-markdown-vs-html"><p class="feature-title" id="feature-16-0-markdown-vs-html">形式選択（Markdown vs 単一HTML）</p><p class="feature-summary">執筆・差分管理が強いMarkdownと、視認性・操作性が強いHTMLを目的別に使い分ける判定基準。</p><dl class="feature-io"><dt>入力</dt><dd>成果物の用途、読み手、共有経路</dd><dt>出力</dt><dd>形式選択の根拠と最終出力フォーマット</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-1-html"><p class="feature-title" id="feature-16-1-html">単一HTML標準（自己完結レポート）</p><p class="feature-summary">外部CSS/JSに依存せず、1ファイルだけで開ける標準フォーマット。共有・印刷・スマホ表示も担保する。</p><dl class="feature-io"><dt>入力</dt><dd>Markdown原稿、データ、画像</dd><dt>出力</dt><dd>外部依存なし1ファイルHTMLレポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-2-csv-prompt"><p class="feature-title" id="feature-16-2-csv-prompt">CSV分析Prompt</p><p class="feature-summary">CSVを読み込んで集計結果と図解を含むHTMLにする標準プロンプト。経営共有しやすい1枚物に変換する。</p><dl class="feature-io"><dt>入力</dt><dd>CSVデータ、注目したい軸</dd><dt>出力</dt><dd>集計表・グラフ・要点カード入りHTML</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-3-html-slide-discussion-board"><p class="feature-title" id="feature-16-3-html-slide-discussion-board">HTML Slide / Discussion Board</p><p class="feature-summary">Markdownから1ページHTMLでスライド風や議論用ボードを作る派生形式。同じ正本から複数表現を出す。</p><dl class="feature-io"><dt>入力</dt><dd>発表用骨子または議題リスト</dd><dt>出力</dt><dd>HTML Slide、Discussion Board</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-16-4-check-a11y"><p class="feature-title" id="feature-16-4-check-a11y">品質Check（A11y/印刷/スマホ）</p><p class="feature-summary">公開前にアクセシビリティ・印刷・スマホ表示・装飾依存度を確認する標準チェック項目。</p><dl class="feature-io"><dt>入力</dt><dd>完成したHTML</dd><dt>出力</dt><dd>A11y/印刷/スマホでの動作確認結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-16">
   <img src="../images/chapter-16-bebf82.webp" alt="第16章『MarkdownよりHTMLが向く仕事』を表すeditorial comparison illustration" loading="lazy" decoding="async">
@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-16-s1">16.1 形式選択</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Markdownで何でも済ませようとすると、長文の正しさは保てても読み手の理解速度が出ません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Markdown・HTML・PPT/PDF・Web Appの強みを並べて見ると、用途ごとに最短で伝わる形式を選べるようになります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 形式は見た目ではなく、読者が次に何をするかと更新頻度で選びます。差分Reviewと再利用が中心ならMarkdownが扱いやすく、絞り込みやGraphから判断するならHTMLが向きます。正本とViewを分けると、表示を作り直しても根拠Dataまで失いません。</p>
 <table>
 <thead>
 <tr>
@@ -71,7 +72,23 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <p>原則は、正本をMarkdown/JSON/CSVで持ち、HTMLをViewとして生成する。</p>
+<p><strong>【実演】</strong> 同じ週次進捗を、更新する人向けのMarkdownと、会議で見る人向けのHTMLへ分けます。Markdown版は変更行がそのままDiffになり、次週も項目を足せます。HTML版は結論、数値、注意点を一画面へ配置でき、会議中に読む順序を固定できます。ここでHTMLだけへ数値を書き足すと、翌週の再生成で消えるため、内容の正本はMarkdown側です。反対に、共有相手が原文を精読するだけなら、装飾したHTMLを作る工程は増やしません。判断基準は「編集と履歴」ならMarkdown、「閲覧時の比較と操作」ならHTMLです。比較Reviewでは、Markdownの三項目とHTMLの三表示が同じ内容かを確認します。数値を変える時はMarkdownを更新し、HTMLを生成し直します。HTML側の強調や配置だけを変える時は、正本の数値へ触れません。この往復ができれば、Data更新と見た目の改善を別のDiffとして扱えます。出力は例示であり、Version・環境で異なります。</p>
+<pre><code class="language-markdown">**週次進捗**
+- 完了: 3件
+- 進行中: 2件
+- 注意: Review待ち1件
+</code></pre>
+<pre><code class="language-html">&lt;main&gt;
+  &lt;h1&gt;週次進捗&lt;/h1&gt;
+  &lt;section aria-label="進捗サマリー"&gt;
+    &lt;p&gt;完了 &lt;strong&gt;3件&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;進行中 &lt;strong&gt;2件&lt;/strong&gt;&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;p role="status"&gt;注意: Review待ち1件&lt;/p&gt;
+&lt;/main&gt;
+</code></pre>
 <h2 id="ch-16-s2">16.2 単一HTMLの標準</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 外部CDN依存のHTMLは、共有先のネットワークやオフライン環境で簡単に崩れます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 1ファイル完結・印刷・スマホ・JS無効でも主要情報が残る標準を持てば、配布経路を選ばずに同じ品質で届けられます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 単一HTMLは、受け手の環境に追加の依存を要求せず、File一つで内容を渡すための形です。外部ScriptやCDNへ依存すると、Network制限や提供停止でGraphだけ消えることがあります。JSが動かない場合にも主要情報を残すと、演出の失敗がReport全体の読めなさへ波及しません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 単一HTMLレポートが満たすべき8項目の標準で、配布性とアクセシビリティを並列で要求しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 出力先の環境差に依存せず、同じHTMLがメール・印刷・スマホで同じように読める状態を作れます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>1 Fileで開ける</dt><dd>HTMLが単体ファイルとして完結している状態です。メール添付・USB配布・オフライン環境でもそのまま開け、共有経路を選びません。</dd><dt>外部CDNに依存しない</dt><dd>外部から読み込むCSSやJSに頼らない設計です。回線不調や社内ネットワーク制限の環境でも、表示が崩れず同じ品質で届きます。</dd><dt>Mobile対応</dt><dd>スマートフォン幅でもレイアウトが破綻しないことです。役員や顧客が移動中に開いた瞬間に読めない機会損失を防げます。</dd><dt>Print CSS</dt><dd>印刷時の見え方を専用に整える指定です。会議で紙配布された時に、画面と違う崩れ方をするレポートを防げます。</dd><dt>見出し/Keyboard/Contrast</dt><dd>見出し構造・キーボード操作・色のコントラストといった基本のアクセシビリティ要件です。読めない人を出さないための最低ラインになります。</dd><dt>更新日・出典・母数</dt><dd>いつ作られ何のデータが何件あるかを明記することです。書かれていないと、数字の信頼度を読み手が判断できず議論が止まります。</dd><dt>GraphとTableを併記</dt><dd>視覚で掴むGraphと、正確な値で確認するTableを両方載せることです。直感と検算の両方が同じ画面で完結します。</dd><dt>JS無効でも主要情報が読める</dt><dd>JavaScriptをオフにしても、結論や主要な数字は読める設計です。社内ポリシーでJSが止まる環境や検索クローラに対しても情報が残ります。</dd></dl></div></div><pre><code class="language-text">- 1 Fileで開ける
 - 外部CDNに依存しない
 - Mobile対応
@@ -82,6 +99,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - JS無効でも主要情報が読める
 </code></pre>
 <h2 id="ch-16-s3">16.3 CSV分析Prompt</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CSVを渡して『集計して』と頼むだけでは、母数や定義が抜けた『それっぽい数字』が返りがちです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 観点・出力・ルールを明示したテンプレを使えば、経営会議に出せる粒度のHTMLレポートに揃えられます。</p></div>
+<p><strong>【なぜこの設計か】</strong> HTML、分析文、指標Dataを別々に出すのは、見せ方と計算根拠を追跡するためです。HTMLだけを成果物にすると、数値がどの母数と計算式から出たかを後から検証しにくくなります。元Data非改変と匿名化を同時に指定すると、分析の再現性を保ちながら個人特定のRiskを下げられます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> CSVから経営会議向けHTMLを生成するプロンプトで、分析観点・出力ファイル・ルールを分けて指示するテンプレです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 母数・推測の明示・匿名化までを含んだ、そのまま会議に持ち込める粒度の1枚物が得られます。</p></div><pre><code class="language-text">`data/survey.csv` を分析し、経営会議向け単一HTMLを作る。
 
 Analysis:
@@ -105,6 +123,7 @@ Rules:
 - Screenshotを保存
 </code></pre>
 <h2 id="ch-16-s4">16.4 HTML Slide</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 発表用と検討用で資料を作り分けると、同じ正本から二重管理が始まり、必ずどこかでズレます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 1ページHTMLでSlide風やDiscussion Boardを派生させると、正本を保ったまま複数の表現を素早く出せます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Slideの順序を結論から意思決定まで固定すると、情報を並べただけの資料になるのを防げます。1 Slide 1 Messageに絞ることで、根拠Dataと推奨Actionの対応が見えます。Print/PDFも確認対象に入れるのは、Browser表示で見えた要素が配布版で欠ける事故を避けるためです。</p>
 <pre><code class="language-text">1. 表紙
 2. 結論
 3. 背景
@@ -119,6 +138,7 @@ Rules:
 1 Slide 1 Message、本文最大6行。矢印Key/PageUp/PageDownで移動し、Print/PDF対応にしてください。
 </code></pre>
 <h2 id="ch-16-s5">16.5 Discussion Board</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 会議で出した付箋やToDoは、写真に撮っただけだと検索もコピーもできず後から効きません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 列構造とLocal Storage保存・Markdown書き出しを備えたBoardにすると、議論結果を次の作業に直結させられます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 会議中の分類、担当、期限、根拠を一つのBoardで扱うと、議論と決定事項の転記漏れを減らせます。一方、Local StorageはBrowser内に残るため、Secretsや原文を入れると端末共有時に露出します。継続的なData更新や複数人の状態管理が必要なら、単一HTMLではなくWeb Appとして設計し直します。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 今やる・次・調査・見送りの4列で構成するDiscussion BoardのHTML生成プロンプトです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 会議中の議論結果が、後から検索・コピー・Markdown化できる形でそのまま残ります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>今やる</dt><dd>今この場で着手すると決めた項目を置く列です。会議が終わった瞬間に動き出せるToDoだけがここに集まります。</dd><dt>次</dt><dd>今やる対象ではないが、近いうちに着手する項目を置く列です。優先度の温度差を可視化し、全部を『今やる』に積む過負荷を防げます。</dd><dt>調査</dt><dd>判断材料が足りず結論を保留する項目を置く列です。誰が何を調べれば判断できるかが、見える形で残せます。</dd><dt>見送り</dt><dd>今回はやらないと意思決定した項目を置く列です。捨てた判断を記録しておくことで、同じ議論を次の会議で蒸し返さずに済みます。</dd></dl></div></div><pre><code class="language-text">会議用の単一HTML Boardを作る。
 列は「今やる」「次」「調査」「見送り」。
 CardはDragでき、担当、期限、根拠、決定者を編集可能。
@@ -126,6 +146,7 @@ Local Storageへ保存し、「決定事項をMarkdownでCopy」Buttonを付け�
 </code></pre>
 <p>Local StorageへSecrets、原文、不要な個人情報を保存しない。</p>
 <h2 id="ch-16-s6">16.6 品質Check</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 見栄えだけ整えて公開すると、印刷・スマホ・アクセシビリティのどこかで読めない読者を取りこぼします。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 8項目の品質チェックを通すことで、公開前に『誰でも開けて読める』状態をルーチンで担保できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 見た目の完成だけでは、根拠、Accessibility、画面幅、印刷時の欠落を検出できません。GraphとTable、Keyboardと色以外の区別、BrowserとPrintを対で確認すると、一つの表現手段が使えない読者にも情報が残ります。Console Errorまで見ることで、画面上は静かでも操作が止まっている状態を発見できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 公開前の品質チェック8項目で、論理構造から技術的健全性まで一気に確認するリストです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 色覚・印刷・モバイル・Console Errorといった見落としを、公開前に潰し切れます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>結論が最初にある</dt><dd>ページ冒頭に結論が置かれていることです。読み手が忙しくても、最初の数秒で判断材料を受け取れます。</dd><dt>元Dataへ追跡可能</dt><dd>数値や主張から元データへ辿れる導線があることです。後から疑問が出た時に検証できず議論が止まる事態を防げます。</dd><dt>色だけで状態区別しない</dt><dd>良し悪しを色のみで示さず、ラベルや記号も併用することです。色覚特性や白黒印刷でも情報が抜け落ちません。</dd><dt>375/768/1440px確認</dt><dd>スマホ・タブレット・PCの代表幅で表示崩れがないことの確認です。配布先の端末がバラついても同じ理解度で読めます。</dd><dt>Keyboard操作</dt><dd>マウスなしでも主要な操作ができることです。スクリーンリーダー利用者やキーボード派の業務環境でも使えます。</dd><dt>Print/PDF欠落なし</dt><dd>印刷やPDF出力時に内容が欠けないことです。紙で配布された場でも会議の判断材料がそのまま残ります。</dd><dt>外部Scriptなし</dt><dd>外部から読み込むスクリプトに依存しないことです。配布先のネットワーク制限や提供元サーバー停止の影響を受けません。</dd><dt>Console Errorなし</dt><dd>ブラウザのコンソールにエラーが出ないことです。見た目だけ動いていて裏側で機能が止まっている状態を、公開前に検出できます。</dd></dl></div></div><pre><code class="language-text">[ ] 結論が最初にある
 [ ] 元Dataへ追跡可能
 [ ] 色だけで状態区別しない
@@ -135,11 +156,12 @@ Local Storageへ保存し、「決定事項をMarkdownでCopy」Buttonを付け�
 [ ] 外部Scriptなし
 [ ] Console Errorなし
 </code></pre>
+<p><strong>【失敗するとこうなる】</strong> 分析結果をHTMLだけに直接書き足し、そのFileを翌週も正本として更新します。画面では最新の数値に見えても、元CSVとの対応がなく、Print版ではGraphの一部が空白になります。原因はData、分析、Viewを分けず、Browser表示だけで合格にしたことです。元DataとMarkdownの分析へ数値を戻し、HTMLを再生成してTable、Print、Consoleを順に確認します。</p>
 <hr/>
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch16-format-choice">
   <img src="../images/diagram-ch16-format-choice.webp" alt="MarkdownとHTMLの用途比較" loading="lazy" decoding="async">
   <figcaption>正本の書きやすさと、読み手の理解しやすさを分けて選びます。</figcaption>
@@ -156,7 +178,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある経営企画（架空）が、毎月の予実報告をMarkdownで提出するが、役員が目を通さず会議で同じ説明を繰り返している。</p><h3>こう使う</h3><p>同内容を単一HTMLレポートへ変換し、結論カード・グラフ・強調点を1ページに集約する。</p><h3>得られるもの</h3><p>結論到達時間が短くなり、会議の冒頭で『見ました』前提で議論が始まる。</p></article><article class="usecase-card"><h3>場面</h3><p>中堅メーカーの開発者（架空）が、テストレポートをスクリーンショットで貼り、後日参照しても何が壊れていたか追えない。</p><h3>こう使う</h3><p>テスト結果を単一HTMLで保存し、印刷・スマホ・Alt textで読める形式に揃える。</p><h3>得られるもの</h3><p>障害後の振り返り会議で誰でも開けて確認でき、Markdown原本との二重管理にしなくて済む。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>ある経営企画（架空）が、毎月の予実報告をMarkdownで提出するが、役員が目を通さず会議で同じ説明を繰り返している。</p><p class="usecase-label">こう使う</p><p>同内容を単一HTMLレポートへ変換し、結論カード・グラフ・強調点を1ページに集約する。</p><p class="usecase-label">得られるもの</p><p>結論到達時間が短くなり、会議の冒頭で『見ました』前提で議論が始まる。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>中堅メーカーの開発者（架空）が、テストレポートをスクリーンショットで貼り、後日参照しても何が壊れていたか追えない。</p><p class="usecase-label">こう使う</p><p>テスト結果を単一HTMLで保存し、印刷・スマホ・Alt textで読める形式に揃える。</p><p class="usecase-label">得られるもの</p><p>障害後の振り返り会議で誰でも開けて確認でき、Markdown原本との二重管理にしなくて済む。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="15.html">← MCP、Connectors、APIを安全につなぐ</a><a href="17.html">Claude Designから実装へ →</a></nav></main></div>

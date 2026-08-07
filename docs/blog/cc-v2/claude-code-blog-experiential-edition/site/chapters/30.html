@@ -37,19 +37,39 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-30-s1">30.1 Local Task Manager</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 初学者がいきなり認証・DB・決済を含むApp開発に踏み込むと完成しません。Local JSON、1 Command起動、Sample、Test、READMEに範囲を絞ると、Prototypeを1日で動かす経験を作れます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 成功体験が早く得られ、次の段階で扱う認証・本番DB・外部APIへ進む前に、AIと並走する手順が身体に入ります。</p></div>
 <p>初心者版：外部API、認証、決済、DBなし。Local JSON/Storage、1 Command起動、Sample、Test、README。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Local Task ManagerをSampleで起動可能・375/1440px対応・README付きで完了させる、初心者向けの最小要件指示例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 外部依存ゼロで動く成果物が手に入り、Prototypeを完成体験へ繋げるための最短ルートが確保できます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Sampleで起動</dt><dd>外部認証もDBもなしにSampleデータで動く条件で、Prototypeを15分で触れる状態を保証します。初学者の挫折を防ぎます。</dd><dt>Test</dt><dd>正常系と異常系を機械検証で固定する条件で、『動いた気がする』を排除し再現可能な完成定義に変えます。</dd><dt>375/1440px</dt><dd>スマホとPC幅で崩れない最低条件で、レスポンシブ未対応のままデモして恥をかく事故を防ぎます。</dd><dt>README</dt><dd>起動コマンド・依存・データ場所を1ファイルで説明する条件で、明日の自分や他者が動かせるかを完成判定に組み込みます。</dd></dl></div></div><pre><code class="language-text">会議Task JSONを読むLocal Web App。
 会議一覧、Task Board、Owner/Status/Due Filter、状態変更、JSON Export。
 Sampleで起動、Test、375/1440px、READMEを完了条件にする。
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> 最初のPrototypeから外部API、認証、決済、DBを外すと、Task表示と操作の価値を小さな範囲で検証できます。Sample Dataと一つの起動手順があれば、環境依存の準備より先に利用Flowを確認できます。境界を置かないと、画面検証の前に認証やData移行が増え、どこが未完成か分からなくなります。</p>
+<p><strong>【実演】</strong> 会議Task JSONのPrototypeを、別の読者が起動して確認できるLocal Appまで通します。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">このProjectに、会議Task JSONを読むLocal Task Managerを実装してください。
+最初に既存構成とProject既定のCommandを調べ、最小の実装計画を示してください。
+会議一覧、Task Board、Owner・Status・DueのFilter、状態変更、JSON Exportを実装してください。
+外部API、認証、決済、DBは追加せず、Local JSONまたはStorageだけを使ってください。
+初回起動で確認できるSample Dataを用意してください。
+既存のTest方針に沿って主要操作を検証し、375pxと1440pxで表示を確認してください。
+一つのCommandで起動できる手順と、Sampleの場所、Test方法をREADMEへ書いてください。
+完了条件は、READMEどおりに起動し、Filter、状態変更、Exportを再現でき、Testが成功することです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>既存のFramework、Command、Componentを調べ、追加範囲を計画へ落とします。次にSample JSONから一覧とBoardを描画し、Filter、状態変更、Exportを実装します。最後にTestと二つの画面幅を確認し、起動と検証手順をREADMEへまとめます。</p>
+<p><strong>成果物</strong></p>
+<p>Project内に動作するLocal App、Sample Data、Test、READMEができます。外部Serviceなしで、入力から操作、JSON Exportまでを一つの環境で試せます。</p>
+<p><strong>検証方法</strong></p>
+<p>新しい環境でREADMEの起動手順を実行し、Sampleが表示されるかを確認します。三つのFilter、状態変更、Export後のJSONを順に試し、Project既定のTestを再実行します。375pxと1440pxの表示崩れも確認し、外部APIや認証がDiffへ増えていないことを見ます。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-30-s2">30.2 Bug修正</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Bug修正で最も多い事故は『直したつもり』です。再現テストを先に書きTest削除・Skip・Lint緩和を禁止することで、修正の前後で挙動差分を機械的に検証できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 修正の確からしさがDiffとTestで提示でき、レビューが感覚ではなく証拠ベースになり、再発も検知しやすくなります。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Bug修正の標準工程で、再現Testを最初に置き最後にRoot Cause Reportで締めるサイクル定義です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 『動いたら良い』ではなく原因と再現条件まで残るため、同種のBugが再発したときに即座に過去対応へ参照できます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Reproduce Test</dt><dd>Bugを必ず失敗するTestで再現する最初の段で、ここを省くと『直したつもり』のまま本番事故が再発します。</dd><dt>Investigate</dt><dd>原因仮説を立てて関連コードを読み込む段で、闇雲な書き換えではなく根拠を持った修正に進ませます。</dd><dt>Minimal Fix</dt><dd>再現Testだけ通す最小差分で直す段で、関係ない箇所まで広範囲に書き換えてリグレッションを生む事故を防ぎます。</dd><dt>Verify</dt><dd>再現Testを含む全Testが緑になるか検証する段で、修正の確からしさを感覚ではなく機械判定で示せます。</dd><dt>Root Cause Report</dt><dd>原因と再発防止策を文書化する締めの段で、同種Bugが将来出た時に過去対応へ即参照できる学習資産になります。</dd></dl></div></div><pre><code class="language-text">Reproduce Test → Investigate → Minimal Fix → Verify → Root Cause Report
 </code></pre>
 <pre><code class="language-text">Issue #123を修正。最初に失敗する再現Test。
 Test削除、Skip、Lint緩和、Type ignore禁止。
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> Bug修正を再現Testから始めると、症状を直した証拠と再発防止を同じCaseにできます。原因調査前にCodeを変えると、偶然症状が消えても根本原因と副作用を説明できません。TestやLintを弱めない制約は、合格条件を下げて完了に見せる経路を閉じます。</p>
 <h2 id="ch-30-s3">30.3 大規模Migration</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 大規模Migrationは一気に切り替えると戻せません。Static Search→Matrix→Pilot→Batch→Fresh Review→Rollbackを直列にすれば、段階ごとに人が判断地点を持てます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 残存箇所と影響範囲が常に可視化された状態で進み、想定外の挙動が出ても直前のCommit候補から巻き戻せます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 大規模Migrationを段階移行する標準パイプで、Fresh ReviewとRollbackを必ず終端に置く構成です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 20ファイル単位のCommit候補と5ターン毎のProgress保存により、長期作業でも中断・再開・巻き戻しが現実的になります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Static Search</dt><dd>移行対象の参照箇所をコード横断で全列挙する段で、影響範囲を把握せずに着手する博打を排除します。</dd><dt>Matrix</dt><dd>対象ファイルごとに状態と難易度を表で並べる段で、進捗とリスクを同じ表で管理できます。</dd><dt>1 Pilot</dt><dd>代表1ファイルだけ先に変換して通し検証する段で、本格Batch前に方針の妥当性を実証できます。</dd><dt>Batch/Codemod</dt><dd>Pilotで固めた変換ルールを残ファイルへ一括適用する段で、人手作業ではなく機械的変換で速度と一貫性を担保します。</dd><dt>Batch Test</dt><dd>Batch後にTest/Buildを通す段で、変換差分が壊した箇所を即座に検知して直前まで巻き戻せます。</dd><dt>Fresh Review</dt><dd>実装者の意図を知らない独立Sessionで差分レビューする段で、迎合的LGTMを避けて品質判断を客観化します。</dd><dt>残存0 → Rollback</dt><dd>対象パターンが0件になったことを確認し、戻し手順を必ず添えて完了とする段で、未収束のまま完了宣言する事故を防ぎます。</dd></dl></div></div><pre><code class="language-text">Static Search → Matrix → 1 Pilot → Batch/Codemod → Batch Test
 → Fresh Review → 残存0 → Rollback
@@ -62,6 +82,7 @@ Test削除、Skip、Lint緩和、Type ignore禁止。
 Security、Data loss、Behavior、Test、Maintainability順。
 各FindingにFile/Line/再現/Severity/修正案。
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> Fresh Reviewで実装意図を先に渡さないのは、作者の説明でDiffの欠落を補わせないためです。File、Line、再現方法を要求すると、感想ではなく修正可能なFindingになります。同じSessionだけで確認すると、計画時の思い込みをReviewにも引き継ぎます。</p>
 <h2 id="ch-30-s5">30.5 Diet App</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Calorie/栄養推定は便利に見えますが、医療判断に使われると重大事故になります。推定/実測の分離・Allergy判断禁止・専門家導線を最初から設計に含めると、学習例の範囲で安全に留められます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> AIの推定値が誤っていても利用者の意思決定がアプリ単独で進まなくなり、Prototypeを誤用される懸念が減ります。</p></div>
 <p>画像からCalories/栄養を推定するPrototypeは学習例。医療判断へ使わない。</p>
 <ul>

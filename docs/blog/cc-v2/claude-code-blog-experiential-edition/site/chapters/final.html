@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <ol>
 <li>原則と変動情報を分ける。</li>
 <li>全TopicをSource IDで追跡する。</li>
@@ -45,12 +45,31 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>読了率より成果物とCheckを測る。</li>
 <li>Harnessと教材を同時更新する。</li>
 </ol>
+<p><strong>【なぜこの設計か】</strong> 原則、変動情報、Source、Checkを分けて点検すると、仕様変更のたびに教科書全体を書き直さずに済みます。週次では古い確認日と失敗したCheckを拾い、月次ではCoverageとSkill運用の偏りを見直します。読了率だけを追うと、教材が読まれていても古い操作や失敗するSkillを残します。</p>
 <p>最終形は「Claude Codeの使い方を説明する本」ではない。</p>
 <blockquote>
 <p>全社員が安全で再現可能な型を使い、成功した仕事をSkillへ昇格させ、そのSkillを評価・配布・改善し続けるための組織OSである。</p>
 </blockquote>
+<p><strong>【なぜこの設計か】</strong> Harnessと教材を同時に更新すると、配布された制御と学習した手順が食い違いません。Skillだけ更新すると教材が古い入力を教え、教材だけ更新すると端末に必要な制御が届きません。同じRelease記録から両方の差分を確認することで、「最強」を一時点の機能数ではなく更新可能な状態として保てます。</p>
+<p><strong>【実演】</strong> 今週の点検を行い、その四週分を月次Reviewへ束ねる場面です。自動修正や配布は行いません。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">Project内のFeature Registry、Source ID一覧、Coverage Map、Skill検証結果、Harness Release記録を読み、週次点検を実行してください。
+確認日が古い変動情報、Sourceへ戻れないTopic、失敗したCheck、教材とHarnessの差分を抽出してください。
+確認できない項目は未確認とし、推測でPASSにしないでください。
+今週の結果をreviews/week-current.mdへ、四週分が揃っている場合は傾向と未解決項目をreviews/month-current.mdへまとめてください。
+各Findingに根拠File、状態、次の確認Actionを付けてください。
+Registry更新、Skill配布、Policy変更、公開は実行しないでください。
+完了条件は、週次の各Findingを根拠へ戻せ、月次では継続、解消、新規を区別できることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>最初に五種の運用Artifactが存在し、読めるかを確認します。次に古さ、Coverage、Check、教材とHarnessの差分を根拠付きで分類します。四週分があれば月次の変化へまとめ、修正や配布はせず次のActionを提示します。</p>
+<p><strong>成果物</strong></p>
+<p><code>reviews/week-current.md</code>に今週の点検結果ができ、条件を満たす場合は<code>reviews/month-current.md</code>に四週の傾向ができます。未確認や未解決も消さず、根拠と次の確認Actionが残ります。</p>
+<p><strong>検証方法</strong></p>
+<p>各FindingのFileを開き、記載された状態を再確認します。週次の件数と月次の継続、解消、新規の合計が対応するかを見ます。DiffでRegistry、Skill、Policy、公開物が変更されていないことを確認して点検完了とします。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <hr/>
-<h1>公式確認先</h1>
+<h2>公式確認先</h2>
 <ul>
 <li>Overview: <code>https://code.claude.com/docs/en/overview</code></li>
 <li>Settings: <code>https://code.claude.com/docs/en/settings</code></li>

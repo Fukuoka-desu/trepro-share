@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-35-s1">35.1 最適形</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 教科書をPDFで配ると、読了率しか測れず、誰が何を実践し、どこで止まったかが分かりません。学びの状態は中身を持つ必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Role別Path・Lesson進捗・Copy可能Prompt・Terminal Check・Quiz・Harness Statusを備えた実行支援Learning Systemに昇格します。</p></div>
 <p>PDF Viewerではなく、次を持つ実行支援Learning Systemにする。</p>
 <ul>
@@ -52,6 +52,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Skill Catalog/Score。</li>
 <li>Admin Coverage Dashboard。</li>
 </ul>
+<p><strong>【なぜこの設計か】</strong> PDF Viewerではなく実行支援にすると、読者は閲覧位置ではなく、実践したLesson、作ったArtifact、通したCheckから再開できます。Copy、Terminal Check、Version差分を同じLessonへ結び付けるため、古い操作を読んだだけで完了扱いにしません。管理画面も個人会話ではなくCoverageとHarnessの状態を扱えます。</p>
 <h2 id="ch-35-s2">35.2 Content Model</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 本文・状態・証拠・再開を一枚のHTMLに混ぜると、再利用も検証もできなくなります。データとして構造化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> course/module/lessonの三段構造に前提・成果物・Check・Sources・change_notesを持たせた、機械が読めるContent ModelのJSONが土台になります。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 教科書アプリのContent Model例。course/module/lessonの3階層にstatus・level・prerequisites・outcomes・change_notesを持たせています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 1枚のJSONを起点に、表示UI・進捗保存・修了判定・改訂差分まで同じデータ構造で扱える状態に揃います。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>course</dt><dd>教材全体の最上位単位で、IDとverson、対象audienceを持ちます。揃えないと改訂時の差分追跡ができません。</dd><dt>module</dt><dd>学習領域でまとめたLessonの束です。順序とテーマを定義しないとLessonが孤立し学習導線が崩れます。</dd><dt>lesson</dt><dd>前提・成果物・Check・所要時間を持つ実習最小単位です。これを構造化しないと進捗保存も修了判定もできません。</dd><dt>verified_at</dt><dd>教材内容の最終確認日です。書かないとどれが古びているか分からず、教材全体の信頼が落ちます。</dd><dt>audiences</dt><dd>非Engineer・開発者・管理者など対象読者の定義です。書かないと全員に同じ難度で出てしまい脱落者が出ます。</dd><dt>change_notes</dt><dd>Lesson単位の変更履歴です。残さないと「いつ何が変わったか」が追えず、現場の混乱を招きます。</dd></dl></div></div><pre><code class="language-json">{
   "course_id": "claude-code-ultimate",
@@ -82,6 +83,24 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   ]
 }
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> LessonをSchemaで検証すると、画面ごとの都合でStepやCheckの形が変わるのを防げます。<code>required</code>は表示と進捗判定に必要な欠落を検出し、<code>evidence_type</code>は何を証拠として受け取るかを明示します。自由文だけでは、Lesson Playerが次へ進める条件を機械的に判定できません。</p>
+<p><strong>【実演】</strong> Lesson Playerの「Checkを提出して進捗を<code>verified</code>へ進める」機能だけを情報設計します。全画面や全Courseは作りません。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">第35章のContent Model、Lesson JSON Schema、Progress定義を使い、Lesson Playerの検証提出機能を1機能分だけ設計してください。
+入力はlesson JSON、現在のProgress、利用者が示すEvidenceです。
+画面に表示するOutcome、Step、Check、Evidenceの対応と、seen、practiced、verified、appliedの遷移条件を整理してください。
+Check未完了、Evidence不足、Lesson JSON不正の状態も分けてください。
+Browserから任意Shellを実行する設計にせず、CommandはLocal Companion CLIのAllowlistを前提にしてください。
+docs/lesson-player-verification.md、fixtures/lesson-verification.json、wireframes/lesson-player-verification.mdを作ってください。
+実装はせず、完了条件はSample Lessonを開いて各状態とCheckの根拠を追跡できることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>まず既存Modelから、この機能に必要な入力、状態、表示要素だけを抜き出します。次にLesson、Check、Evidence、Progressの関係を一つの仕様とSample JSONへ落とします。正常、未完了、不正Dataの画面状態をWireframeで対応付け、実装範囲の外を明記します。</p>
+<p><strong>成果物</strong></p>
+<p>検証提出機能の仕様、Schemaに沿うSample Lesson、状態別Wireframeができます。一つのCheckがどのEvidenceを受け、どのProgressへ進むかをFile間で追えます。</p>
+<p><strong>検証方法</strong></p>
+<p>Sample JSONを章内Schemaへ照合し、必須項目と値の種類を確認します。Wireframeの各表示が仕様内のOutcome、Step、Check、Evidenceに対応するかを見ます。Evidence不足で<code>verified</code>にならず、任意CommandをBrowserから実行する経路がないこともReviewします。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-35-s3">35.3 Lesson JSON Schema</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Lessonの定義が緩いと、人が手書きで足りない項目を埋め、再開時に検証もできません。形式は機械で検証可能であるべきです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> lesson_id・status・level・outcomes・steps・checks・verified_atを必須にしたJSON Schemaが、不完全なLessonを物理的に拒否します。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Lesson JSON Schema。lesson_idのパターン・statusのenum・stepsとchecksのオブジェクト構造・verified_at必須を定義しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Schemaチェックを通った時点で、不完全なLessonは公開ラインに乗らず、人手の見落としが構造的に減ります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>lesson_id</dt><dd>Lesson一意識別子で命名規則を正規表現で固定します。揃えないと参照や進捗保存がIDの揺れで壊れます。</dd><dt>status</dt><dd>stable/beta/preview/suspended/deprecatedの状態enumです。書かないと公開可否や利用警告の出し分けができません。</dd><dt>level</dt><dd>beginner〜adminの難度区分です。書かないと初心者にいきなり管理者操作が出るなど誤配が起きます。</dd><dt>outcomes</dt><dd>Lessonで到達すべき学習成果の配列です。書かないと完了判定の基準が消え、verifiedの意味も曖昧になります。</dd><dt>steps</dt><dd>explain/command/prompt/edit/verify/quizなどの実行単位です。型付けしないとUI側で表示と操作を切り替えられません。</dd><dt>checks</dt><dd>manual/command/file/quiz/reviewなど証拠提示方法の配列です。書かないと「やった」を客観的に示せません。</dd><dt>verified_at</dt><dd>Lesson内容の最終確認日（日付形式必須）です。欠落させると古い手順が無自覚に公開され続けます。</dd></dl></div></div><pre><code class="language-json">{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -150,6 +169,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>高Riskは手動承認。</li>
 </ol>
 <p>Browserから任意Shellを直接実行しない。</p>
+<p><strong>【なぜこの設計か】</strong> BrowserとLocal Companion CLIを分けると、教材画面に渡された文字列をそのままShellとして実行しません。Allowlistと高Riskの手動承認が、学習用CommandからProject外の操作へ広がる経路を閉じます。Exit CodeとArtifact Pathだけを返せば、会話内容を管理画面へ集めずにCheck結果を扱えます。</p>
 <h2 id="ch-35-s7">35.7 画面</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 学習・テンプレ閲覧・Skill選択・Harness確認・認定を別アプリに分けると、学習者の現在地が分散して見えません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Home/Learning Path/Lesson Player/Template Library/Skill Catalog/Harness Status/Admin Coverage/Certificationを一画面群へまとめます。</p></div>
 <pre><code class="language-text">Home
 Learning Path
@@ -167,7 +187,7 @@ Certification
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch35-learning-system">
   <img src="../images/diagram-ch35-learning-system.webp" alt="教科書アプリのLearning Path、Lesson、証拠、Feature Registry、進捗、Local Companion" loading="lazy" decoding="async">
   <figcaption>本文、行動、証拠、状態、Version差分を一つの学習Systemとして扱います。</figcaption>

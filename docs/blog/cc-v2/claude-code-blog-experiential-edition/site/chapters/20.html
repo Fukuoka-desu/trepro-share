@@ -18,7 +18,7 @@
 これは AI の手抜きではなく、自律実行の設計をしていないだけです。</p><p>ほとんどの人は、AIを『呼んだら動くもの』として使っています。
 ですが、明確なゴールを渡せば、AIは寝ている間にも走れます。</p><p>`/goal` と Headless 実行、定期実行は、AIに目的だけを渡し、停止条件と最大回数を決めて自走させる仕掛けです。
 朝起きたら、調査・要約・草案の3つが机の上に揃っている──そういう状態を作ります。</p><p>ただし、無条件で走らせれば事故も無条件です。成功条件・タイムアウト・人の承認地点を必ず併せて設計します。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-20-0-goal"><h3 id="feature-20-0-goal">/goal（成功条件と停止条件）</h3><p class="feature-summary">成功条件・最大ターン・Timeout・許可範囲・失敗時停止を仕様化し、自律実行が安全に終わるよう設計するコマンド。</p><dl class="feature-io"><dt>入力</dt><dd>自動化したい仕事、成功判定の機械条件</dd><dt>出力</dt><dd>完了 or 安全停止のどちらかで終わる自律実行</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-1-headless"><h3 id="feature-20-1-headless">Headless実行</h3><p class="feature-summary">対話画面なしで定型タスクを走らせる実行形態。CI・夜間バッチ・サーバー常駐に組み込む。</p><dl class="feature-io"><dt>入力</dt><dd>実行内容、引数、許可範囲</dd><dt>出力</dt><dd>Headlessジョブの実行ログとExitステータス</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-2-wrapper"><h3 id="feature-20-2-wrapper">安全なWrapper（重複防止・ロック・ログ）</h3><p class="feature-summary">/goalやHeadlessを実運用に乗せるための重複防止・ロック・ログ・通知・再試行を包んだラッパースクリプト。</p><dl class="feature-io"><dt>入力</dt><dd>ベース実行コマンド、運用要件</dd><dt>出力</dt><dd>Wrapperスクリプトと運用ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-3-scheduled"><h3 id="feature-20-3-scheduled">Scheduled必須要件</h3><p class="feature-summary">定期実行で必ず満たすべき重複防止・冪等性・通知の要件チェック。配信時刻のブレも管理する。</p><dl class="feature-io"><dt>入力</dt><dd>スケジュール対象ジョブ、頻度</dd><dt>出力</dt><dd>必須要件チェック通過記録</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-4-launchagent"><h3 id="feature-20-4-launchagent">LaunchAgent例</h3><p class="feature-summary">macOS LaunchAgentによる定期実行設定の具体例。個人Mac〜開発機での自動化導入に使う。</p><dl class="feature-io"><dt>入力</dt><dd>実行コマンド、頻度、ログ出力先</dd><dt>出力</dt><dd>動作するLaunchAgent plist例</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-5-item"><h3 id="feature-20-5-item">自動化しない領域の明示</h3><p class="feature-summary">公開・送信・課金・削除など、最後の一歩を必ず人間に残す領域を明確化するルール。</p><dl class="feature-io"><dt>入力</dt><dd>自動化候補リスト、副作用の有無</dd><dt>出力</dt><dd>自動化可/人間承認必須の振り分け表</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-20-0-goal"><p class="feature-title" id="feature-20-0-goal">/goal（成功条件と停止条件）</p><p class="feature-summary">成功条件・最大ターン・Timeout・許可範囲・失敗時停止を仕様化し、自律実行が安全に終わるよう設計するコマンド。</p><dl class="feature-io"><dt>入力</dt><dd>自動化したい仕事、成功判定の機械条件</dd><dt>出力</dt><dd>完了 or 安全停止のどちらかで終わる自律実行</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-1-headless"><p class="feature-title" id="feature-20-1-headless">Headless実行</p><p class="feature-summary">対話画面なしで定型タスクを走らせる実行形態。CI・夜間バッチ・サーバー常駐に組み込む。</p><dl class="feature-io"><dt>入力</dt><dd>実行内容、引数、許可範囲</dd><dt>出力</dt><dd>Headlessジョブの実行ログとExitステータス</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-2-wrapper"><p class="feature-title" id="feature-20-2-wrapper">安全なWrapper（重複防止・ロック・ログ）</p><p class="feature-summary">/goalやHeadlessを実運用に乗せるための重複防止・ロック・ログ・通知・再試行を包んだラッパースクリプト。</p><dl class="feature-io"><dt>入力</dt><dd>ベース実行コマンド、運用要件</dd><dt>出力</dt><dd>Wrapperスクリプトと運用ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-3-scheduled"><p class="feature-title" id="feature-20-3-scheduled">Scheduled必須要件</p><p class="feature-summary">定期実行で必ず満たすべき重複防止・冪等性・通知の要件チェック。配信時刻のブレも管理する。</p><dl class="feature-io"><dt>入力</dt><dd>スケジュール対象ジョブ、頻度</dd><dt>出力</dt><dd>必須要件チェック通過記録</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-4-launchagent"><p class="feature-title" id="feature-20-4-launchagent">LaunchAgent例</p><p class="feature-summary">macOS LaunchAgentによる定期実行設定の具体例。個人Mac〜開発機での自動化導入に使う。</p><dl class="feature-io"><dt>入力</dt><dd>実行コマンド、頻度、ログ出力先</dd><dt>出力</dt><dd>動作するLaunchAgent plist例</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-20-5-item"><p class="feature-title" id="feature-20-5-item">自動化しない領域の明示</p><p class="feature-summary">公開・送信・課金・削除など、最後の一歩を必ず人間に残す領域を明確化するルール。</p><dl class="feature-io"><dt>入力</dt><dd>自動化候補リスト、副作用の有無</dd><dt>出力</dt><dd>自動化可/人間承認必須の振り分け表</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-20">
   <img src="../images/chapter-20-25d3a1.webp" alt="第20章『`/goal`、Headless、定期実行』を表すautomation control illustration" loading="lazy" decoding="async">
@@ -37,14 +37,16 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-20-s1">20.1 自律化の4要素</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 自律実行は始め方より止め方が難しく、Goal・Verifier・Budget・Stopの4要素が揃わないと事故になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 達成判定・上限・停止条件をそれぞれ明文化する設計テンプレが手に入り、後段の/goal仕様の骨格になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 自律化では、実行方法より先に成功、予算切れ、異常の停止条件を決めます。Goalだけを渡すと、Verifierが合格できない状態でも修正を続けられます。BudgetとStopを同じ枠に置くことで、未達を未達のまま報告して止まる経路を作れます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 自律化に必要な4要素を1行ずつ並べた最小フレームで、達成状態・判定方法・上限・停止を分けて書いています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 個別のジョブを設計する前に、何を欠けば事故になるかが視覚化され、/goal仕様の骨組みとして再利用できます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Goal</dt><dd>何が達成された状態をゴールと呼ぶかを定義する要素です。これが曖昧だとAIは『どこまでやれば終わりか』を判断できず走り続けます。</dd><dt>Verifier</dt><dd>達成したかどうかを機械的に判定する方法です。テスト合格や型チェック通過など、人間の主観を挟まない条件を1個以上置きます。</dd><dt>Budget</dt><dd>ターン数・実行時間・トークン・費用などの上限です。設定し忘れると、達成できないまま無限ループで料金だけ加算され続けます。</dd><dt>Stop</dt><dd>成功・失敗・異常それぞれで停止する条件です。安全停止の出口が決まっているおかげで、達成不能でも事故にせず終わらせられます。</dd></dl></div></div><pre><code class="language-text">Goal      達成状態
 Verifier  判定方法
 Budget    Turn/時間/Token/費用上限
 Stop      成功/失敗/異常停止
 </code></pre>
 <h2 id="ch-20-s2">20.2 良いGoal</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『テストが通るまで直して』のような曖昧な目標は永遠に走り続ける原因なので、機械的に検証できる成功条件が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> テスト・型・ビルド・E2E・Issue件数を全部満たすという形でGoalが書け、未達時の残課題保存先まで決まります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 良いGoalは、達成状態をTestやBuildの結果へ変換し、最大Turnと時間で探索範囲を閉じます。残課題と最後のErrorをFileへ残すため、未達でも次のSessionが原因調査を再開できます。「直るまで続ける」だけでは、同じErrorの反復と成功報告の基準を区別できません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> テスト・型・ビルド・E2E・Issue件数の全充足を成功条件にし、最大15ターン30分の上限を付けた/goalの宣言文です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 曖昧な『直して』を機械検証可能な目標に置換でき、未達時にgoal-report.mdへ残課題が落ちる安全停止が成立します。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>npm test成功</dt><dd>ユニットテスト全件パスを成功条件にします。AIに『直して』と曖昧に頼まず、機械的に合否を切れる第一の関門になります。</dd><dt>npm run typecheck成功</dt><dd>型エラー0を成功条件にします。テストは通るが型が壊れているといった部分修復の自己満足を排除できます。</dd><dt>npm run build成功</dt><dd>本番ビルド成功を成功条件にします。テスト環境では動くがリリースできないという落とし穴を、Goal側で塞ぐ役割です。</dd><dt>主要3画面のE2E成功</dt><dd>ユーザーが触る代表3画面のE2Eを通すことを必須にします。ユニットだけ緑で実画面が壊れる事故を、自律実行の合格条件に組み込めます。</dd><dt>Critical/High Issue 0</dt><dd>重大・高優先度のLint/解析指摘ゼロを条件にします。テストは通っても危険コードが残るパターンを、Goal側で排除できます。</dd></dl></div></div><pre><code class="language-text">/goal 次をすべて満たすまで修正。ただし最大15ターン、30分。
 - npm test成功
 - npm run typecheck成功
@@ -54,11 +56,13 @@ Stop      成功/失敗/異常停止
 未達時は `goal-report.md` に残課題と最後のErrorを保存。
 </code></pre>
 <h2 id="ch-20-s3">20.3 Headless</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 対話画面を持たないHeadless実行は承認ダイアログがないので、許可範囲を絞らないと副作用付き操作も通ってしまいます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Read-onlyとAllowed Toolを絞ったうえで、ファイル化された機械可読JSONを得るパターンが安全に組み込めます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Headlessは対話中の確認を挟めないため、実行前にTool、Sandbox、出力形式を狭めます。Read-onlyの調査へ限定すれば、承認待ちで停止する処理と、無承認で外部変更する処理の両方を避けられます。FlagはVersionで変わり得るため、現在のHelpを確認せず定期実行へ固定しません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Headless実行でREADMEを読みJSONで返すコマンド例で、--output-format jsonにより機械処理しやすい形を要求します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 対話なしで構造化結果が得られ、後段スクリプトがそのまま読める前提でCI・夜間バッチへ組み込めます。</p></div><pre><code class="language-bash">claude -p "READMEを読み、起動Commandと前提をJSONで返す" \
   --output-format json &gt; /tmp/project-summary.json
 </code></pre>
 <p>Flagは<code>claude --help</code>で確認する。Headlessは対話承認できないためRead-only、Allowed Tool、Sandboxを絞る。</p>
 <h2 id="ch-20-s4">20.4 安全なWrapper</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 自律実行を本番運用に乗せるには、二重起動・途中失敗・ログ欠落といったありがちな事故への防御層が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Lockディレクトリ・trapによる解放・tmpファイル経由のatomic差し替えを備えたWrapperで、運用に耐える形に格上げできます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Wrapperは、Working Directory、Lock、出力先、終了時処理を毎回同じにします。Lockが重複起動を止め、一時Fileからの置換が前回成功した出力の破損を防ぎます。対話では見落とせる実行環境の差をScript側で固定するため、定期実行の再現性が上がります。</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." &amp;&amp; pwd)"
@@ -78,6 +82,7 @@ claude -p "Read-onlyで昨日の変更を要約しJSONで返す。File変更禁�
 mv "$OUT.tmp" "$OUT"
 </code></pre>
 <h2 id="ch-20-s5">20.5 Scheduled必須要件</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 定期実行は『動いている／止まっている』が見えにくいため、最低要件を明文チェックリスト化しないと劣化に気付けません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 冪等・Lock・Timeout・JST/UTC明記・Alert先などの項目を埋めたかが運用判定の根拠として残ります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Scheduled処理は担当者が画面を見ていないため、冪等性、Timeout、有限Retry、Alertまでを実装条件に含めます。成功時と0件時、失敗時の出口を分けないと、何も更新されない状態を正常終了と誤認します。前回成功を壊さない条件は、途中失敗が利用中の成果物へ波及するのを防ぎます。</p>
 <pre><code class="language-text">[ ] 冪等
 [ ] Lock
 [ ] Timeout
@@ -89,7 +94,20 @@ mv "$OUT.tmp" "$OUT"
 [ ] stdout/stderr保存
 [ ] Alert先
 </code></pre>
+<p><strong>【実演】</strong> 毎朝のRead-only要約を一つだけ定期実行する例です。先に停止条件を決めます。正常終了はJSONが一時Fileから置換された時、重複起動はLock検出時、異常終了はCommandが非0を返した時です。異常時は前回の<code>daily-summary.json</code>を上書きせず、Logを人が確認します。Scheduleへ入れる前にWrapperを手動実行し、終了Code、出力File、二重起動時の表示を確かめます。cronの行ではWorking Directoryを固定し、標準出力と標準Errorを同じLogへ残します。同じErrorが続く場合はScheduleを止め、原因を直してから手動検証へ戻します。0件で正常に終わる場合も先に定義し、取得失敗と同じ空出力にしません。読み方は、時刻より先に終了Code、Lock表示、前回成功Fileの保持、Logの保存先を見ることです。これにより「毎朝動かす」より前に「いつ止まり、何を残すか」が決まります。出力は例示であり、Version・環境で異なります。</p>
+<pre><code class="language-cron">0 8 * * * cd /Users/REPLACE_ME/project &amp;&amp; ./scripts/daily-summary.sh &gt;&gt; ./output/daily-summary.log 2&gt;&amp;1
+</code></pre>
+<pre><code class="language-text">$ ./scripts/daily-summary.sh
+$ echo $?
+0
+$ ls output/daily-summary.json
+output/daily-summary.json
+
+$ ./scripts/daily-summary.sh   # 別の実行がLockを保持中
+already running
+</code></pre>
 <h2 id="ch-20-s6">20.6 LaunchAgent例</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> macOSで定期実行を組むときの設定は地味に書き方依存で、PATHやWorkingDirectoryの抜けが事故源になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ProgramArguments・StartCalendarInterval・StdOut/Errの最小セットを揃えたplist例が、そのまま雛形として使えます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 実行時刻だけでなくProgram、Working Directory、標準出力、標準Errorを一緒に定義すると、手動実行との差を減らせます。相対Pathの解決先が変わると別のFileを読んだり、成果物が見つからなかったりするためです。Logの行先を固定すれば、無人実行が止まった時にも最初の症状を確認できます。</p>
 <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
   "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
@@ -111,13 +129,15 @@ mv "$OUT.tmp" "$OUT"
 </code></pre>
 <p>会社では個人Agentを乱立させずHarnessへ集約する。</p>
 <h2 id="ch-20-s7">20.7 自動化しないもの</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 公開・送信・課金・削除のような戻せない操作まで自動化すると、得られる効率より事故損失のほうが大きくなります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 最後の一歩を人間承認に残す境界線が明文化され、それ以外を堂々と自動化できる構造に切り替わります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 本番Deploy、外部送信、Payment、削除、権限変更は、成功しても外部副作用が残ります。これらをHeadlessへ入れると、内容や対象がずれた時に人が実行直前で止められません。自動化はDraft、検証、候補作成までに留め、不可逆なExecuteにはHuman Gateを残します。</p>
 <p>人間承認なしで行わない：本番Deploy、外部送信、Payment、契約、Data削除、権限変更、公開範囲変更、高Risk判断。</p>
+<p><strong>【失敗するとこうなる】</strong> 停止条件を決めず、「成功するまで要約を更新」とだけ書いた処理を定期実行します。取得先が権限Errorになると、同じ処理が重なり、Logには同じErrorが並び、前回の正常な出力まで空Fileで置き換わります。原因はGoalより先にVerifier、Budget、Lock、失敗時の保存方針を設計しなかったことです。Scheduleを止め、前回成功Fileを戻し、手動で一回だけ再現してから異常停止と通知を追加します。</p>
 <hr/>
 
   </section>
   
   
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある社内開発者（架空）が、AIに『テストが通るまで直して』と頼み、無限ループで朝までCPUが回り続けて停止条件もなく止まれない。</p><h3>こう使う</h3><p>成功条件・最大ターン・Timeout・許可範囲・失敗時停止を/goal仕様として先に書き出す。</p><h3>得られるもの</h3><p>夜間自動実行が安全に走り、達成 or 安全停止の二状態で終わる。</p></article><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、毎日のレポート自動配信を構築したいが、誤送信時の責任の所在が決まらず承認が出ない。</p><h3>こう使う</h3><p>公開・送信・課金・削除は完全自動化せず、最後の一歩を人間承認に残す設計にする。</p><h3>得られるもの</h3><p>副作用のある操作だけ責任者が承認し、それ以外は自動で進む構造になり、承認が下りる。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>ある社内開発者（架空）が、AIに『テストが通るまで直して』と頼み、無限ループで朝までCPUが回り続けて停止条件もなく止まれない。</p><p class="usecase-label">こう使う</p><p>成功条件・最大ターン・Timeout・許可範囲・失敗時停止を/goal仕様として先に書き出す。</p><p class="usecase-label">得られるもの</p><p>夜間自動実行が安全に走り、達成 or 安全停止の二状態で終わる。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>情シス（架空）が、毎日のレポート自動配信を構築したいが、誤送信時の責任の所在が決まらず承認が出ない。</p><p class="usecase-label">こう使う</p><p>公開・送信・課金・削除は完全自動化せず、最後の一歩を人間承認に残す設計にする。</p><p class="usecase-label">得られるもの</p><p>副作用のある操作だけ責任者が承認し、それ以外は自動で進む構造になり、承認が下りる。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="19.html">← Claude Codeを自分専用に育てる</a><a href="21.html">Dynamic Workflowsと複数Agent →</a></nav></main></div>

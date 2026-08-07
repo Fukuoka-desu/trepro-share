@@ -39,8 +39,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-05-s1">5.1 魔法のPromptより仕事の定義</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 魔法のPromptを探す方向に行くと底なし沼にハマる。本当に効くのは仕事自体の定義の精度</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Goal・Context・Constraints・Deliverables・Done when・Evidenceの6軸で仕事を定義できる。指示は短くても通る</p></div>
+<p><strong>【なぜこの設計か】</strong> 指示を六つの要素へ分けると、Claudeが目的、参照範囲、禁止事項、成果物、判定、証拠を混同しません。表現だけを工夫しても仕事の境界が欠けていれば、もっともらしい成果物が出ても完了かどうかを判定できません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 強い指示の6軸。Goal・Context・Constraints・Deliverables・Done when・Evidenceで仕事自体を定義する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIに何を判断させ、何を判断させないかが分かれる。指示の精度がPromptテクニックではなく定義で決まる</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Goal</dt><dd>達成したい状態の一文。これが曖昧だと他5軸が全部推測になり、出力が毎回違うものになる</dd><dt>Context</dt><dd>AIが先に読むべきファイル・既存挙動・利用者などの背景。前提を渡さないとAIは想像で穴埋めする</dd><dt>Constraints</dt><dd>守ること・してはいけないことの一覧。AIの善意による暴走（外部API追加・入力改変等）を仕様で縛る</dd><dt>Deliverables</dt><dd>成果物として何を作るかの宣言。ファイル名やArtifact種別を明示し、納品形が毎回変わるのを防ぐ</dd><dt>Done when</dt><dd>完了の判定条件。テスト・型・画面確認など機械的に確かめられる基準で書き、感覚での合格判定を排除する</dd><dt>Evidence</dt><dd>完了の証拠として出させるもの。変更File・コマンド出力・画面など、後追い確認に使う物的証跡を指定する</dd></dl></div></div><pre><code class="language-text">Goal       何を達成するか
 Context    何を読めばよいか
 Constraints 守ること・しないこと
@@ -48,7 +49,9 @@ Deliverables 何を作るか
 Done when どう判定するか
 Evidence   何を証拠として出すか
 </code></pre>
+<p><strong>【このコードの読み方】</strong> <code>Goal</code>は作業ではなく到達状態を固定します。<code>Constraints</code>は達成方法のうち許されない経路を閉じます。<code>Done when</code>は完成を観測可能な状態へ変え、<code>Evidence</code>はその判定を依頼者が再確認できる形で残します。</p>
 <h2 id="ch-05-s2">5.2 汎用Template</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 毎回ゼロから書くと、書き手によって粒度がバラバラになる。Templateで型を固定する必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 6項目の汎用Templateが手元に残る。曖昧な口頭依頼でも、テンプレに流し込むだけで構造化された依頼文に変わる</p></div>
+<p><strong>【なぜこの設計か】</strong> Templateは依頼の抜けを送信前に見つけるための点検枠です。毎回自由文だけで頼むと、対象Fileや禁止範囲が暗黙になり、Claudeと依頼者が別の完成像を持ったまま作業が進みます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 汎用依頼Template。Goal・Context・Constraints・Deliverables・Done when・EvidenceのMarkdownひな形</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 曖昧な依頼を機械的にこのテンプレへ流し込める。書き手による粒度差が消える</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Goal</dt><dd>達成したい状態を1行で書く欄。曖昧な動詞ではなく『〇〇できる状態』と結果で書くと判定可能になる</dd><dt>Context</dt><dd>Read・Existing behavior・Usersの3要素で背景を渡す欄。AIが現状を推測せず事実から始められる</dd><dt>Constraints</dt><dd>Must/Must not/Out of scopeの3区分で縛る欄。やる/やらない/対象外を分けて書き、暴走の余地を消す</dd><dt>Deliverables</dt><dd>成果物のファイル名やArtifact種別を並べる欄。何を納品物として扱うかを先に固定する</dd><dt>Done when</dt><dd>machine-verifiable checksを並べる欄。テスト通過・型通過などコマンドで判定できる条件だけ書く</dd><dt>Evidence</dt><dd>完了報告に添えさせる証拠の列挙。変更file・コマンド・exit code・画面・残riskを返させる</dd></dl></div></div><pre><code class="language-markdown"># Goal
 [達成したい状態]
 
@@ -74,7 +77,9 @@ Evidence   何を証拠として出すか
 - screenshots/output samples
 - remaining risks
 </code></pre>
+<p><strong>【このコードの読み方】</strong> <code>Read: [files]</code>は、判断に使う正本を指定して探索の広がりを抑えます。<code>Must not</code>と<code>Out of scope</code>は、禁止された方法と今回やらない範囲を分けます。<code>machine-verifiable checks</code>は主観的な完成報告を検証可能な結果へ変えます。EvidenceのExit Codeと出力Sampleは、Commandを実行した事実と成果物の中身を別々に示します。</p>
 <h2 id="ch-05-s3">5.3 曖昧な依頼の変換</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『いい感じに』『使いやすく』のような依頼はAIにとって翻訳不能。期待と違う出力が返って手戻りが連鎖する</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 利用者・必要機能・対象外・完了条件まで具体化された依頼文に書き直せる。一発で意図に近い出力が返る</p></div>
+<p><strong>【なぜこの設計か】</strong> 曖昧な形容を、利用者、機能、対象外、完了条件へ変換すると、実装の選択肢を目的に沿って狭められます。変換しないまま進めると、「いい感じ」をClaudeが独自解釈し、依頼者が欲しい範囲より広い機能や別の見た目を作ります。</p>
 <p>悪い例：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 悪い例。1行で『いい感じに作って』とだけ渡した依頼。利用者・機能・対象外が全部欠けている</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが期待をゼロから推測する。返ってくる画面は毎回違い、手戻りが連鎖する</p></div><pre><code class="language-text">いい感じのTask管理Appを作って
 </code></pre>
@@ -85,12 +90,47 @@ Evidence   何を証拠として出すか
 外部API、認証、DBは対象外。
 Sample Dataで起動し、Test/Build成功を完了条件とする。
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 悪い例には、利用者、必要機能、対象外、判定方法がありません。良い例の「5人の社内Team」は利用規模を固定します。三つの画面機能はDeliverablesを具体化し、外部APIなどの対象外は初版の範囲拡大を止めます。最後のTestとBuildが、見た目の印象ではなく実行結果で完了を判定します。</p>
+<p><strong>【失敗するとこうなる】</strong> 完了条件を書かずにApp作成を頼み、画面が生成された時点で「完了」と報告されたとします。起動するとSample Dataが読めず、Filterを操作しても表示が変わりません。原因は、生成すべきFileだけを伝え、起動、操作、Testの合格状態を契約にしなかったことです。依頼を止めてDone whenを追加し、未確認項目を一件ずつ検証させます。</p>
+<p><strong>【実演】</strong> 一組目は、成果物の形式だけを頼む報告書作成です。悪い依頼では対象Data、読者、必須項目、確認方法がないため、Claudeは構成と集計範囲を補ってしまいます。良い依頼では入力を限定し、出力、対象外、完了条件、証拠を全文に含めます。これにより、文章が生成されたことではなく、元Dataとの一致まで完了条件になります。</p>
+<pre><code class="language-text">悪い依頼1:
+月次レポートを見やすく作ってください。
+
+良い依頼1:
+inputs/monthly.csvだけを読み、社内確認用の月次レポートをoutput/report.mdへ作ってください。
+合計、前月との差、欠損件数を記載してください。外部調査とData補完は対象外です。
+CSVの行数と合計値を再計算し、本文の値と一致することを完了条件とします。
+変更File、確認Command、Exit Code、残った欠損を証拠として報告してください。
+</code></pre>
+<p>二組目は、不具合の修正です。悪い依頼では再現条件と守る挙動がないため、症状を隠すだけの変更でも完了に見えます。良い依頼では再現、変更範囲、非回帰、Testの前後を固定します。両組とも、Constraintsが手段を狭め、Done whenが停止位置を決め、Evidenceが完了報告を検証可能にしています。</p>
+<pre><code class="language-text">悪い依頼2:
+一覧画面の不具合を直してください。
+
+良い依頼2:
+Sample DataでOwner Filterを選んでも一覧が変わらない不具合を修正してください。
+関係Codeと既存Testを先に調べ、無関係な画面変更はしないでください。
+再現Testが修正前にFailし、修正後にPassすることを完了条件とします。
+変更File、Test Command、Exit Code、未確認のEdge caseを報告してください。
+</code></pre>
+<p>二つ目の良い依頼を対話Sessionへ渡すと、出力は変更内容だけでなく再現と確認の証拠まで含みます。</p>
+<pre><code class="language-text">$ claude
+&gt; 上記の「良い依頼2」の全文を入力
+出力抜粋:
+変更File: src/task-filter.js, tests/task-filter.test.js
+修正前の再現Test: FAIL
+修正後の再現Test: PASS
+未確認: Owner未指定時の表示
+</code></pre>
+<p>読み比べる時は、良い依頼に情報が多いかではなく、判断が必要な箇所と機械判定できる箇所が分かれているかを見ます。出力抜粋では、修正前後の同じTestが依頼のDone whenに対応しているかを確認します。変更Fileが依頼範囲を超えた場合は、PASSでも受け入れません。出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-05-s4">5.4 Claudeに質問させる</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 未知の要件があるのにAIが沈黙のまま実装に入ると、勝手な仮定で暴走する。実装前に質問させる仕組みが要る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 最大5問・選択肢提示・工数Risk説明という制約付き質問が返る。仮定の暴走を実装前に止められる</p></div>
+<p><strong>【なぜこの設計か】</strong> 実装前の質問回数と回答形式を決めると、不明点を放置せず、調査だけが際限なく続くことも防げます。選択肢に工数とRiskを添えると、依頼者は好みではなく影響を見て決められます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Claudeに質問させるPrompt。最大5問・選択肢提示・各選択肢の工数Risk説明という制約付き</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 未知要件を勝手に仮定して暴走しない。質問への回答が次の依頼の素材になり、仕様が固まる</p></div><pre><code class="language-text">実装前に、不足情報を最大5問まで質問してください。
 選択肢を提示し、各選択肢が工数・Riskへ与える影響を短く説明してください。
 </code></pre>
 <p>質問に答えられない場合は、仮定を明示して最小版を選ぶ。</p>
+<p><strong>【このコードの読み方】</strong> 「実装前に」は、仮定のままFile変更へ入るのを止めます。「最大5問」は質問を意思決定に必要な範囲へ絞ります。選択肢の提示は自由回答の負担を下げ、工数・Riskの説明は選択後に起きる差を先に見えるようにします。</p>
 <h2 id="ch-05-s5">5.5 完了報告の型</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『完了しました』だけを受け取ると、何が変わって何が確認済みか分からない。後で別の問題で揺り戻しが来る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 結果・変更File・Check結果・画面・残Risk・次Actionの6区分で報告が返る。確認可能な証拠付きで完了判定できる</p></div>
+<p><strong>【なぜこの設計か】</strong> 完了報告を結果、変更、確認、成果物、残Riskへ分けると、「作業した」と「受け入れ可能」を区別できます。結論だけを受け入れると、Test未実行や対象外変更が隠れ、次の担当者が同じ確認をやり直します。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 完了報告の型。結果・変更File・Check結果・画面/Artifact・残Risk・次Actionの6区分で報告させる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 『完了しました』が確認可能な証拠付き報告に変わる。残Riskと次Actionも同じ報告で見える</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>結果</dt><dd>依頼が達成されたかの一文。Yes/Noで答えさせ、『だいたい動いた』のような曖昧表現を排除する</dd><dt>変更File</dt><dd>今回触ったファイル一覧。後追いレビュー時にDiffを見るべき箇所を即特定できる</dd><dt>実行したCheckとExit Status</dt><dd>走らせたテスト・lint・typecheckとその終了コード。緑なら本当に通ったことの物的証拠になる</dd><dt>画面・Artifact</dt><dd>出力されたHTMLやスクリーンショット等の証拠物。文字だけでは伝わらない動作確認を視覚で残す</dd><dt>残Risk/未対応</dt><dd>今回潰しきれなかった問題と未着手項目。完了報告に隠さず書かせて、次の依頼の素材にする</dd><dt>次の推奨Action</dt><dd>AIから見た次の一手。残Riskを踏まえた優先度付き提案で、人が次に何をすべきか即決できる</dd></dl></div></div><pre><code class="language-text">1. 結果
 2. 変更File
 3. 実行したCheckとExit Status
@@ -99,6 +139,8 @@ Sample Dataで起動し、Test/Build成功を完了条件とする。
 6. 次の推奨Action
 </code></pre>
 <p>「完了しました」だけを受け入れない。</p>
+<p><strong>【このコードの読み方】</strong> <code>変更File</code>は依頼範囲と実際のDiffを照合する入口です。<code>CheckとExit Status</code>は、実行したという説明を機械結果へ結び付けます。<code>画面・Artifact</code>は利用者が触る成果を確認し、<code>残Risk/未対応</code>は完了範囲の外側を隠さず次の判断へ渡します。</p>
+<p><strong>【失敗するとこうなる】</strong> 「完了しました」という返答だけで受け入れ、後から変更を確認したとします。対象外の設定Fileまで変わり、Testは一度も実行されていません。原因は、結果、Diff、Exit Status、残Riskを分けて報告させなかったことです。完了報告の六項目を再提出させ、実行していない確認は未実行のまま明示させます。</p>
 <hr/>
 
   </section>

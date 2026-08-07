@@ -37,18 +37,39 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-32-s1">32.1 毎朝Brief</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 朝の状況把握は属人化しやすく、担当が休むと止まります。Calendar・未返信・締切Task・重要MentionをBriefへ集約し、送信や予定変更はしないと縛れば、自動配信しても安全です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 今日の動き方が10秒で把握でき、休んでも誰でも同じ精度でその日を立ち上げられる業務継続性が手に入ります。</p></div>
 <p>Calendar、未返信候補、締切Task、重要Mentionから、今日の予定、準備Meeting、返信Draft、Riskを作る。送信/予定変更/Task更新はしない。</p>
+<p><strong>【なぜこの設計か】</strong> 毎朝BriefをRead-onlyのDraftへ限定すると、誤抽出が返信、予定変更、Task更新として外部へ確定しません。取得失敗と予定0件を別の状態にすれば、空のBriefを「今日は何もない」と誤認せずに済みます。人は原文を確認してから必要なActionだけを実行できます。</p>
+<p><strong>【実演】</strong> 毎朝の入力SnapshotからBriefを作る反復業務です。欠損時と重複時の停止条件を先に固定します。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">inputs/daily/にあるCalendar、未返信候補、締切Task、重要MentionのSnapshotから、今日のBriefを作ってください。
+今日の予定、準備が必要なMeeting、返信Draft、Riskを分けてoutputs/daily-brief/へ保存してください。
+各項目に元のSnapshotと該当箇所を示し、内容を推測で補わないでください。
+送信、予定変更、Task更新、外部Systemへの書込みはしないでください。
+必要なSnapshotを読めない場合は通常のBriefを作らず、失敗した入力を記録して停止してください。
+同じ日付の成果物が既にある場合は上書きせず、差分候補を示して停止してください。
+予定が0件の場合は取得成功を確認したうえで0件と記録してください。
+完了条件は、すべての項目を入力へ戻して確認でき、停止条件が実行結果に残ることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>最初に四種のSnapshotが読めるかと、同日成果物の有無を確認します。条件を満たす場合だけ項目を分類し、Source付きのBriefと返信Draftを作ります。欠損、重複、0件を別の結果として記録し、外部変更を行わず終了します。</p>
+<p><strong>成果物</strong></p>
+<p><code>outputs/daily-brief/</code>に日付単位のBriefと実行結果ができます。失敗時は通常のBriefではなく、読めなかった入力または重複した成果物が記録されます。</p>
+<p><strong>検証方法</strong></p>
+<p>Briefの予定、Meeting、Draft、Riskを元Snapshotへ照合します。入力欠損と同日成果物ありのCaseも試し、通常出力を上書きせず停止するかを見ます。送信、予定、Taskの外部状態が変わっていないことを確認して完了とします。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-32-s2">32.2 会議→Task Board</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 議事録からTask登録までを一気通貫にすると、AIの誤抽出がそのまま外部Systemへ流れます。Human Reviewを必ず挟み、承認済みだけDraft登録する流れにすれば、AIと人の責任が分離されます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Task Boardに不確かな情報が混入しなくなり、議事録から実行までの待ち時間も短縮されます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 会議文字起こしからTask Boardへ流すパイプで、承認済みのTaskだけ外部SystemへDraft登録する境界を明示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 議事録からTask登録までが半自動で成立しつつ、外部System側にはレビュー済みデータしか入らない安全境界が確保されます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Transcript</dt><dd>会議の文字起こし原文で、抽出根拠を後から辿れる一次データになります。要約から始めると引用検証が不可能になります。</dd><dt>Meeting Skill</dt><dd>Transcriptを構造化Task JSONに変換するSkillで、抽出ルールをコード化することで担当者が変わっても結果がブレません。</dd><dt>Human Review</dt><dd>AIが抽出したTask候補を人が承認する段で、ここを省くと誤抽出がそのまま外部Systemへ流れます。責任分界点です。</dd><dt>Task JSON</dt><dd>承認済みTaskを定型JSONで保持する中間形で、複数の外部System（Notion/Jira等）へ同じデータから配布できます。</dd><dt>Dashboard</dt><dd>Task JSONを集約表示するUIで、議事録と実行状況を1画面で見られるためフォロー漏れを発見しやすくなります。</dd><dt>承認済みTaskだけ外部SystemへDraft登録</dt><dd>外部Systemには未承認データを流さず、登録もDraft状態にとどめる二重ガードで、AI誤抽出による外部事故を防ぎます。</dd></dl></div></div><pre><code class="language-text">Transcript → Meeting Skill → Human Review → Task JSON → Dashboard
 → 承認済みTaskだけ外部SystemへDraft登録
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> 会議から外部Taskまでの間にHuman Reviewを置くと、提案や聞き違いが担当者付きTaskとして登録されません。承認済みTaskだけを次工程へ渡すため、Dashboardの表示と外部SystemへのDraft登録を別々に検証できます。原文から一気に登録すると、後から誤りの発生地点を特定できません。</p>
 <h2 id="ch-32-s3">32.3 Skill改善Loop</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillを会話中に即全社上書きすると、誰かの作業が突然壊れます。実行ログ・失敗Fixture・Fresh Evaluator・Canary・Metricsを経てStableへ昇格させると、影響範囲を測ってから配布できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Skillの改善がデータに基づき段階配布される運用に変わり、便利な変更が誰かの本番を壊す事故が消えます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Skill改善Loopの標準パイプで、Canary配布とMetrics確認を経てStable昇格させる段階更新フローです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Skillの改修が個人の善意ではなくデータと評価器でゲートされ、配布事故と『便利な改悪』の両方を避けられます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>実行</dt><dd>Skillを実際の業務で動かして使う段で、机上ではなく現場負荷下のログを集める出発点になります。</dd><dt>User評価</dt><dd>利用者が結果に対して良し悪しを付ける段で、定量的改善の素材になります。なければ感想ベースの改修になります。</dd><dt>失敗Fixture</dt><dd>失敗ケースを再現可能な入力データとして固定する段で、修正後に同じ失敗が起きないか機械検証できます。</dd><dt>Generator</dt><dd>失敗Fixtureを踏まえてSkill改修案を生成する段で、人が手で書き直すのではなく差分の根拠が残ります。</dd><dt>Fresh Evaluator</dt><dd>改修案を独立コンテキストで評価する段で、改修者の願望バイアスを排除して品質判定を客観化します。</dd><dt>Canary</dt><dd>少人数へ先に配布する段で、全社破壊する前に本番で本当に壊れないかを限定範囲で確かめます。</dd><dt>Metrics → Stable</dt><dd>Canary実績が指標を満たした時だけStable昇格させる段で、便利な改悪が全社配布される事故を構造的に防ぎます。</dd></dl></div></div><pre><code class="language-text">実行 → User評価 → 失敗Fixture → Generator → Fresh Evaluator
 → Canary → Metrics → Stable
 </code></pre>
 <p>会話中に即全社上書きしない。</p>
+<p><strong>【なぜこの設計か】</strong> Skill改善をFixture、独立評価、Canaryの順に通すと、一人の成功例だけで全社の挙動を変えません。失敗を再現するFixtureが先に残るため、修正後に同じ症状が戻ったかを判定できます。会話中の即時上書きは、変更理由と評価結果を配布記録から失わせます。</p>
 <h2 id="ch-32-s4">32.4 成熟度</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全業務を最初から監視付き自動へ持っていくと、運用負荷が爆発します。Level 0手動Chatから Level 6 Harness+Audit+Releaseまで段階化し、業務ごとに必要な最小Levelを選ぶと最適化できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 対象業務の現在地と次のターゲット段階が共通言語になり、過剰自動化と不足自動化のどちらも避けやすくなります。</p></div>
 <table>
 <thead>
@@ -92,7 +113,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <hr/>
 
   </section>
-  <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>自動化候補の優先順位</dt><dd>週1回以上の頻度・入力フォーマットが安定・完了条件が機械検証できる・失敗しても人へ戻せる、の4条件を満たす業務だけを最初の自動化対象にします。条件を満たさない業務を強引にSkill化すると、最初の数週間は動いても運用フェーズで誤動作が出てきます。</dd><dt>Morning Brief の入力源を固定する</dt><dd>Calendar・メール・Slackメンション・締切Taskなど、毎朝の情報源を毎回違う方法で取りに行くと、ある日急に空欄になります。情報源と更新時刻を仕様として書き、対象が増えた時はSkillを直すのではなくRegistryへ追記する設計にします。</dd><dt>成熟度を測る尺度</dt><dd>個人手作業→再利用→半自動→監視付き自動の4段階で、対象業務がいまどこにいるかを月次で記録します。一気に最終段階を目指さず、半自動で1ヶ月動かしてから監視付き自動へ進めると、運用事故がほぼ起きません。</dd><dt>次の章への接続</dt><dd>自動化を増やすほど、過去の失敗を学習資産へ変換する次章のテーマが重要になります。動くものが増えるほど、止まったときの原因分析と再発防止の仕組みが品質を決めるからです。</dd></dl></section>
+  <section class="expansion" aria-label="実務に落とすときの補足"><p class="panel-title">実務に落とすときの補足</p><dl class="expansion-list"><dt>自動化候補の優先順位</dt><dd>週1回以上の頻度・入力フォーマットが安定・完了条件が機械検証できる・失敗しても人へ戻せる、の4条件を満たす業務だけを最初の自動化対象にします。条件を満たさない業務を強引にSkill化すると、最初の数週間は動いても運用フェーズで誤動作が出てきます。</dd><dt>Morning Brief の入力源を固定する</dt><dd>Calendar・メール・Slackメンション・締切Taskなど、毎朝の情報源を毎回違う方法で取りに行くと、ある日急に空欄になります。情報源と更新時刻を仕様として書き、対象が増えた時はSkillを直すのではなくRegistryへ追記する設計にします。</dd><dt>成熟度を測る尺度</dt><dd>個人手作業→再利用→半自動→監視付き自動の4段階で、対象業務がいまどこにいるかを月次で記録します。一気に最終段階を目指さず、半自動で1ヶ月動かしてから監視付き自動へ進めると、運用事故がほぼ起きません。</dd><dt>次の章への接続</dt><dd>自動化を増やすほど、過去の失敗を学習資産へ変換する次章のテーマが重要になります。動くものが増えるほど、止まったときの原因分析と再発防止の仕組みが品質を決めるからです。</dd></dl></section>
   
   
 </article>

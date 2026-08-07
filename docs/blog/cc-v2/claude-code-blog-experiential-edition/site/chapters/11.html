@@ -18,7 +18,7 @@
 これは時間の問題だけでなく、再現性の問題でもあります。</p><p>ほとんどの人は、AIに毎回同じ前提を打ち込んでいます。
 TypeScript を使っている、コメントは英語で書いている、テストは vitest で実行する──毎日10回、同じ説明をしている計算です。</p><p>CLAUDE.md は、プロジェクトの前提を一か所にまとめておくファイルです。AI は作業を始める前に必ずそこを読みます。
 これだけで、毎回の前置きが消えます。</p><p>この章を読み終わる頃には、自分のプロジェクトに『専属の同僚』を一人配置している感覚を得られます。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-11-0-claude-md"><h3 id="feature-11-0-claude-md">CLAUDE.md（プロジェクトの案内板）</h3><p class="feature-summary">常時読まれる短い案内板。プロジェクトの目的・前提・最低限のルールだけを簡潔に置く。</p><dl class="feature-io"><dt>入力</dt><dd>プロジェクトの目的、必ず守らせたい最低限ルール</dd><dt>出力</dt><dd>簡潔で肥大化しないCLAUDE.md</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-1-rules-path"><h3 id="feature-11-1-rules-path">Rules（Path固有の指示）</h3><p class="feature-summary">ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>特定フォルダ・拡張子に限定したいルール</dd><dt>出力</dt><dd>対象Path下でだけ自動適用されるRule</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-2-init"><h3 id="feature-11-2-init">/init による初稿生成</h3><p class="feature-summary">プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。</p><dl class="feature-io"><dt>入力</dt><dd>既存プロジェクト構造、目的の概略</dd><dt>出力</dt><dd>CLAUDE.md初稿（編集して短くする出発点）</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-3-auto-memory"><h3 id="feature-11-3-auto-memory">Auto Memory（短い事実の自動保存）</h3><p class="feature-summary">AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。</p><dl class="feature-io"><dt>入力</dt><dd>会話中の決定事項、繰り返される好み</dd><dt>出力</dt><dd>短い形に圧縮された自動メモ</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-11-0-claude-md"><p class="feature-title" id="feature-11-0-claude-md">CLAUDE.md（プロジェクトの案内板）</p><p class="feature-summary">常時読まれる短い案内板。プロジェクトの目的・前提・最低限のルールだけを簡潔に置く。</p><dl class="feature-io"><dt>入力</dt><dd>プロジェクトの目的、必ず守らせたい最低限ルール</dd><dt>出力</dt><dd>簡潔で肥大化しないCLAUDE.md</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-1-rules-path"><p class="feature-title" id="feature-11-1-rules-path">Rules（Path固有の指示）</p><p class="feature-summary">ディレクトリ単位で適用されるルール。CLAUDE.mdを膨らませず、効く場所だけに知識を置く仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>特定フォルダ・拡張子に限定したいルール</dd><dt>出力</dt><dd>対象Path下でだけ自動適用されるRule</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-2-init"><p class="feature-title" id="feature-11-2-init">/init による初稿生成</p><p class="feature-summary">プロジェクトを読み込みCLAUDE.mdの叩き台を作るコマンド。生成内容をそのまま使わず短く整える前提で使う。</p><dl class="feature-io"><dt>入力</dt><dd>既存プロジェクト構造、目的の概略</dd><dt>出力</dt><dd>CLAUDE.md初稿（編集して短くする出発点）</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-11-3-auto-memory"><p class="feature-title" id="feature-11-3-auto-memory">Auto Memory（短い事実の自動保存）</p><p class="feature-summary">AIが見つけた短い事実だけを自動保存する記憶層。常時読み込み情報を短く安定させる役割を担う。</p><dl class="feature-io"><dt>入力</dt><dd>会話中の決定事項、繰り返される好み</dd><dt>出力</dt><dd>短い形に圧縮された自動メモ</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-11">
   <img src="../images/chapter-11-d5b01f.webp" alt="第11章『CLAUDE.md、Rules、Auto Memory』を表すlayered architecture illustration" loading="lazy" decoding="async">
@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-11-s1">11.1 責務</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLAUDE.md・Rules・Memory・Settings・Hookは似て見えますが、書く人・効く範囲・強制力が違います。役割表で整理しないと、同じ知識を別の場所に重複して書く事故が起きます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 誰が何を書きどこで効くかを最初に決めれば、ルール衝突や二重管理が消えます。曖昧なまま運用すると、強制したい設定が単なるお願い止まりになり安全装置として機能しません。</p></div>
+<p><strong>【なぜこの設計か】</strong> CLAUDE.md、Rules、Auto Memoryを分けるのは、知識の共有範囲と更新者が異なるからです。全部をCLAUDE.mdへ集めると個人の一時情報までTeam規約になり、全部をMemoryへ置くと人間がReviewできるProject方針が残りません。さらに、守らないと事故になる制御はGuidanceから分離し、Managed SettingsやHookへ置きます。</p>
 <table>
 <thead>
 <tr>
@@ -81,7 +82,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
+<p><strong>【この表の読み方】</strong> CLAUDE.mdの行はProject全体で繰り返す方針、Rulesの行はPathや領域で切り替える指示を表します。Auto MemoryはClaudeが得た短い知見の置き場で、人間が定める規約の代替ではありません。Managed SettingsとHookの<code>Enforced</code>は、文章で促す上3層とは違い、ToolやEventの側で制御する境界です。</p>
 <h2 id="ch-11-s2">11.2 CLAUDE.mdのScope</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLAUDE.mdは管理者・User・Project・Localの4階層で読まれるため、どこに置くかで適用範囲と上書き順が決まります。Scopeを意識しないと組織ルールと個人設定が衝突します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 適切なScopeへ置けば全社必須・個人好みを物理的に分離できます。誤って個人設定をProject層に置くと、他メンバーの環境まで巻き込んで挙動が変わってしまいます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 同じ指示でも、組織全体、個人、Project、端末だけの差分ではOwnerと配布範囲が違います。Scopeを誤ると、個人の好みが全員へ配られたり、外せない全社方針が各Repositoryの編集で消えたりします。誰が変更でき、どこまで届くべきかを先に決めてから置き場所を選びます。</p>
 <p>代表的なScope：</p>
 <ul>
 <li>Managed policy: 組織共通、ユーザーが除外できない。</li>
@@ -93,7 +96,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> macOSの管理領域に置く全社共通CLAUDE.mdのPathです。ユーザーが除外できないManaged Policy層になります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> ここへ配置すると全社員のClaude Code起動時に強制読み込みされ、組織共通の前提を全環境へ一斉適用できます。</p></div><pre><code class="language-text">/Library/Application Support/ClaudeCode/CLAUDE.md
 </code></pre>
 <p>ただし、ここもBehavior Guidanceであり、Tool実行の強制制御はSettings/Hookで行う。</p>
+<p><strong>【このコードの読み方】</strong> 管理領域のPathは、全社で共通に読ませる文書の置き場所を示します。User Scopeは個人の複数Projectへ届き、Project ScopeはRepositoryを共有するTeamへ届きます。Local ScopeはGit管理しない差分なので、他人が再現すべきCommandや方針の正本には使いません。どのPathに置いてもGuidanceである点は変わらないため、拒否が必要な処理はSettings/Hookへ分けます。</p>
 <h2 id="ch-11-s3">11.3 良いCLAUDE.md</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLAUDE.mdは毎回読まれる常駐情報のため、長くするほど起動が重く、本当に伝えたい指示が埋もれます。良い形の雛形を最初に決めておくのが安全です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Project概要・Architecture・Commands・Workflow・Constraints・Do notの6項目に絞れば、200行以内の短さを保てます。長文を許すと数か月で3,000行へ膨れ事故の温床になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> CLAUDE.mdはSessionごとに参照される基本方針なので、長さと重複が増えるほど今回必要な指示を見失いやすくなります。Project概要、実行Command、Workflow、禁止事項へ絞ると、古い手順と新しい手順が同時に残る事故を減らせます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 200行以内に収めるための良いCLAUDE.mdの骨格です。6見出しで責務を分けたMarkdown雛形になります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この構造を出発点にすれば、長文化を防ぎつつ必要な前提が網羅されます。逆にこの枠を超え始めたら別ファイル分割の合図です。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Project overview</dt><dd>目的と主要Userを書く章です。Claudeが最初に読む前提となり、書かないと毎回背景説明から始めることになります。</dd><dt>Architecture</dt><dd>主要Directoryと責務を1〜2行で示す章です。書かないとClaudeがファイル探索から始め、無関係な場所を編集する事故が起きます。</dd><dt>Commands</dt><dd>install・dev・lint・typecheck・test・buildなど標準コマンドを列挙する章です。書かないとClaudeが独自Commandを作って既存運用と衝突します。</dd><dt>Required workflow</dt><dd>調査→計画→実装→検証の流れを明示する章です。書かないと「すぐ実装」から入って手戻りが増えます。</dd><dt>Constraints</dt><dd>Technology・Data・Security上の制約を書く章です。書かないと禁止技術や本番接続を平気で提案してきます。</dd><dt>Do not</dt><dd>Config弱体化・本番接続・生成物直接編集など明確な禁止行為を並べる章です。書かないと安全装置を勝手に外す事故が必ず起きます。</dd></dl></div></div><pre><code class="language-markdown"># Project overview
 [目的と主要User]
 
@@ -118,7 +123,10 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [Config弱体化、本番接続、生成物直接編集]
 </code></pre>
 <p>短く、具体的、重複なし。200行未満を目安にする。</p>
+<p><strong>【このコードの読み方】</strong> <code>Commands</code>はAgentが推測せずに検証へ進むための入口です。<code>Required workflow</code>は作業順、<code>Constraints</code>は選択できる範囲、<code>Do not</code>は越えてはいけない境界を担当します。詳細な業務手順までここへ展開せず、繰り返し実行する手順はSkillへ分けると正本が短く保たれます。</p>
+<p><strong>【失敗するとこうなる】</strong> 会話で出た注意を毎回CLAUDE.md末尾へ足すと、同じCommandの旧版と新版が離れた場所に残り、Agentが古い方を実行します。画面には廃止済みFileを探すErrorや、存在しないScriptの実行失敗が続けて表示されます。原因は、再発条件と置き場所を評価せず、一時情報までProject規約へ昇格したことです。重複と期限切れの記述を人間がReviewし、Project共通の短い正本だけを残し、手順はRulesやSkillへ移します。</p>
 <h2 id="ch-11-s4">11.4 <code>/init</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> `/init`は既存Projectを読み込んで初稿を生成してくれますが、出力は冗長で当たり前のことを並べがちです。そのまま採用するとCLAUDE.mdが最初から肥大化します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Reviewして実Commandと一致しない記述・古いFile説明・Settings/Hookへ移すべき強制ルールを整理すれば、起点として安全に使えます。Reviewなしで採用すると初日から負債になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> <code>/init</code>はRepositoryの現状を読む起点になりますが、生成時点では運用上の例外や古いFileの背景まで確定できません。人間のReviewを挟むことで、自動生成された説明をTeamが保証する方針へ変えます。</p>
 <p>Projectを読み、初期CLAUDE.mdを作る起点にできる。ただし生成物をそのまま採用しない。</p>
 <p>Review項目：</p>
 <ul>
@@ -128,7 +136,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Security RuleをSettings/Hookへ移す。</li>
 <li>長い手順をSkillへ移す。</li>
 </ul>
+<p><strong>【このコードの読み方】</strong> <code>/init</code>は完成した規約を受け取るCommandではなく、Review対象の下書きを作る入口です。「実際のCommand」と「古いFile説明」を先に照合すると、起動不能な手順を正本化せずに済みます。Security Ruleと長い手順をそれぞれSettings/HookとSkillへ移す項目は、CLAUDE.mdを強制機構や業務Manualとして肥大化させないためにあります。</p>
 <h2 id="ch-11-s5">11.5 Rules</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Path別の細かい指示までCLAUDE.mdへ書くと、本来関係ないファイルを編集するときにも全ルールが読み込まれ、雑音が増えます。領域別Ruleで効く場所を絞るのが筋です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> `.claude/rules/`配下にfrontend.md・api.md等を分け、Frontmatterで対象Pathを限定すれば、必要なときだけ該当Ruleが効きます。混ぜ書きすると効かせたい場所で見落とされます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Frontend、API、Database、Testでは、同じRepositoryでも守るべき条件が違います。領域別Ruleに分けると、無関係な作業へ指示を持ち込まず、変更対象に必要な制約だけを近くに置けます。</p>
 <p><code>.claude/rules/</code>へ領域別Ruleを分ける。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 領域別Ruleを置くディレクトリ構造です。frontend・api・database・testsなど扱う範囲ごとに分けます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このレイアウトに揃えると、関連ファイルを編集する文脈でだけ該当Ruleが効くようになります。CLAUDE.md本体を肥大化させずに済みます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>frontend.md</dt><dd>UI領域のRuleを置くファイルです。コンポーネント命名や状態管理規約をここに集約すれば、CLAUDE.md本体を肥大化させずに済みます。</dd><dt>api.md</dt><dd>API層のRuleを置くファイルです。外部入力検証・エラー形式・ログ規約などをここへ寄せると、API編集時だけ該当指示が読まれます。</dd><dt>database.md</dt><dd>DBアクセス層のRuleを置くファイルです。Schema変更手順・Migration規約・本番DB禁止操作をまとめる場所で、無関係な編集時には読まれません。</dd><dt>tests.md</dt><dd>テスト方針のRuleを置くファイルです。テスト構造・モック方針・カバレッジ基準を分離しておけば、実装ファイルを編集する文脈には混入しません。</dd></dl></div></div><pre><code class="language-text">.claude/rules/
 ├── frontend.md
@@ -146,7 +156,9 @@ paths:
 - Return typed errors.
 - Do not log request bodies containing personal data.
 </code></pre>
+<p><strong>【このコードの読み方】</strong> Directory TreeはRuleのOwnerを領域名で分ける例です。Frontmatterの<code>paths</code>は、API配下を扱う時だけ本文の指示を適用する境界です。本文では入力検証、型付きError、個人Dataを含むLog禁止をまとめ、API変更で同時に確認すべき事故を一か所へ集めています。Path条件の利用可否はVersionで変わり得るため、現行公式情報を確認します。</p>
 <h2 id="ch-11-s6">11.6 AGENTS.mdとの共存</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Claude CodeとCodexを併用する組織では、AGENTS.mdとCLAUDE.mdが重複しがちです。同じ文章を二重で編集すると、片方だけ更新される事故が必ず起きます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 共通原則はAGENTS.md、Claude固有だけCLAUDE.mdに分ければ、更新ポイントが一本化されます。役割分担を決めずに併用すると、エージェント間で挙動が割れて再現性が失われます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 複数Runtimeで同じ原則を別々に複製すると、片方だけ更新されて挙動が分かれます。共通原則の正本とRuntime固有の差分を分ければ、どこを直せば全体へ反映されるかを人間が追跡できます。</p>
 <p>Claude CodeとCodexを併用する場合：</p>
 <ul>
 <li>共通原則は<code>AGENTS.md</code>。</li>
@@ -155,6 +167,7 @@ paths:
 <li>Build Scriptで共通Sectionを生成するか、Canonical Docを参照する。</li>
 </ul>
 <h2 id="ch-11-s7">11.7 Auto Memory</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Auto MemoryはClaudeが学んだ事実を勝手に蓄える便利な機能ですが、放置すると古い情報・秘密値・端末固有情報が混ざります。常時読み込まれるだけに汚染リスクが大きいです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> `/memory`を定期確認して棚卸しすれば、品質を保てます。Teamで共有すべき知見はCLAUDE.md/Skillへ昇格、不要な短期情報は削除、というルールを決めないと信頼できない記憶になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Auto Memoryは、Claudeが作業中に得た再利用可能な短い知見を次のSessionへ持ち越す層です。ただし自動で蓄積される知見には期限切れや端末固有情報が混ざるため、Project規約へ自動昇格させず、定期Reviewを挟みます。</p>
 <p>ClaudeがBuild Command、Debug Insight、Architecture Note等を保存する。便利だが、次を定期確認する。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Auto Memoryの中身を確認するコマンドです。Claudeが自動保存した内容を一覧表示できます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実行すると現在の自動メモが見え、古い情報・秘密値・端末固有値の混入を点検できます。定期実行しないとMemoryがゴミ箱化します。</p></div><pre><code class="language-text">/memory
 </code></pre>
@@ -164,7 +177,10 @@ paths:
 <li>Teamで共有すべき知見はCLAUDE.md/Rule/Skillへ昇格。</li>
 <li>端末固有の一時情報を共通Ruleへ入れない。</li>
 </ul>
+<p><strong>【このコードの読み方】</strong> <code>/memory</code>は保存内容を確認し、古い知見や秘密が混ざっていないかを見る入口です。複数人が再現すべきBuild CommandはCLAUDE.mdへ、領域限定の注意はRulesへ、反復可能な業務手順はSkillへ昇格します。端末だけで成立する回避策はMemoryに残しても、Team共通のRuleにはしません。</p>
+<p><strong>【失敗するとこうなる】</strong> 一時的なDebug回避策をMemoryへ残したまま環境を更新すると、次のSessionでも不要な回避手順が先に実行され、正常なBuildが途中で止まります。出力には現行環境には存在しないPathやCommandのErrorが現れます。原因は、知見の有効期限を確認せず、古いMemoryを現行手順として扱ったことです。<code>/memory</code>で該当項目を削除し、Teamで再現する正しいCommandはCLAUDE.mdへ人間のReview付きで移します。</p>
 <h2 id="ch-11-s8">11.8 改善Loop</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 会話中に出た修正を毎回どこへ昇格させるか迷うと、知識が散らかります。再発頻度と影響範囲で行き先を決めるルートを持っておくのが実務的です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 一時的→Sessionのみ、個人習慣→Memory、Project規約→CLAUDE.md/Rules、業務手順→Skill、必須制御→Hookと振り分ければ、知識が適切な階層に積み上がります。ルートが無いと毎回その場限りで終わります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 会話中の修正をすぐ恒久Ruleにすると、単発の事情まで全Sessionへ影響します。再発性、共有範囲、強制の要否を順に評価することで、知識をCLAUDE.md、Rules、Memory、Skill、Hookへ過不足なく昇格できます。</p>
 <pre><code class="language-text">会話中の修正
   ↓
 再発するか評価
@@ -175,11 +191,30 @@ Project規約 → CLAUDE.md/Rules
 業務手順 → Skill
 必須制御 → Hook/Managed Settings
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 最初の分岐は「再発するか」で、一時的ならSession内に留めます。個人習慣とProject規約の分岐は、他の人にも同じ行動を求めるかで決まります。手順として繰り返すならSkill、破られると実害が出るならHook/Managed Settingsへ進み、文章量と強制力を同じ層へ混ぜません。</p>
+<p><strong>【実演】</strong> 例として、Team全員が使うTest Command、API配下だけの入力検証、ある端末だけで見つけたDebug知見を仕分けます。最初にProject内のCLAUDE.mdとRulesを列挙し、行数を見ます。次に<code>rg</code>の結果から、Test CommandはCLAUDE.mdに1回だけ、APIの注意は<code>api.md</code>だけにあることを確認します。端末固有の知見は<code>/memory</code>で確認し、Project Fileへ重複していないことを読みます。もし同じ文が複数層に出たら、誰が共有すべきかを基準に正本を1つへ戻します。この確認により、CLAUDE.mdはProject共通、Rulesは領域限定、Memoryは個人・端末で得た短い知見という3層の境界が、実際のFile配置として見えるようになります。最後に、Teamが再現すべき事実をMemoryだけへ残していないかも確認します。</p>
+<pre><code class="language-text">$ find . -maxdepth 3 -type f \( -name 'CLAUDE.md' -o -path './.claude/rules/*.md' \) -print
+./CLAUDE.md
+./.claude/rules/api.md
+
+$ wc -l CLAUDE.md .claude/rules/api.md
+      42 CLAUDE.md
+      11 .claude/rules/api.md
+
+$ rg -n 'test|external input' CLAUDE.md .claude/rules/api.md
+CLAUDE.md:18:- test: [ProjectのTest Command]
+.claude/rules/api.md:7:- Validate all external input.
+
+[Claude Codeで確認]
+/memory
+&gt; Debug insight: [この端末だけで確認した短い知見]
+</code></pre>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <hr/>
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch11-knowledge-layers">
   <img src="../images/diagram-ch11-knowledge-layers.webp" alt="CLAUDE.md、Rules、Skills、Auto Memoryの責務レイヤー" loading="lazy" decoding="async">
   <figcaption>常時読む情報ほど短くし、詳細手順は必要時だけ読み込みます。</figcaption>
@@ -196,7 +231,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABCコンサル（架空）のCLAUDE.mdが3,000行を超え、毎回読み込みに時間がかかり、AIが本来の指示を見落とすようになっている。</p><h3>こう使う</h3><p>CLAUDE.mdは『常に読みたい短い案内板』だけ残し、Path固有事項はRules、業務手順はSkillsへ移す。</p><h3>得られるもの</h3><p>起動が軽くなり、AIが本当に必要な指示を確実に拾うようになる。</p></article><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、Project AとProject Bで日本語化ルールが毎回ぶつかり、混乱した出力を受け取り続けている。</p><h3>こう使う</h3><p>全社共通ルールはGlobal CLAUDE.mdへ、Project個別はProject CLAUDE.mdへ、Path別はRulesへと役割を分ける。</p><h3>得られるもの</h3><p>ルール衝突が物理的に起きず、どこを直せばどこへ効くかが明確になる。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>ABCコンサル（架空）のCLAUDE.mdが3,000行を超え、毎回読み込みに時間がかかり、AIが本来の指示を見落とすようになっている。</p><p class="usecase-label">こう使う</p><p>CLAUDE.mdは『常に読みたい短い案内板』だけ残し、Path固有事項はRules、業務手順はSkillsへ移す。</p><p class="usecase-label">得られるもの</p><p>起動が軽くなり、AIが本当に必要な指示を確実に拾うようになる。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>個人開発者（架空）が、Project AとProject Bで日本語化ルールが毎回ぶつかり、混乱した出力を受け取り続けている。</p><p class="usecase-label">こう使う</p><p>全社共通ルールはGlobal CLAUDE.mdへ、Project個別はProject CLAUDE.mdへ、Path別はRulesへと役割を分ける。</p><p class="usecase-label">得られるもの</p><p>ルール衝突が物理的に起きず、どこを直せばどこへ効くかが明確になる。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="10.html">← GitとCheckpoint</a><a href="12.html">Skills設計 →</a></nav></main></div>

@@ -37,15 +37,19 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-03-s1">3.1 macOSへCLIを導入</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Claude CodeはCLIから入るのが基本。ここを公式手順で揃えないと、後の章のコマンドが全部動かない</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> claude --versionとclaude doctorで導入確認まで取れる。会社環境ならURL・Hash・Versionも管理者で固定できる</p></div>
+<p><strong>【なぜこの設計か】</strong> 導入直後にVersionと診断結果まで確認すると、Installの成否と実行環境の問題を切り分けられます。確認を省くと、後の不具合をProjectの問題だと誤認し、原稿や設定を直し始める事故につながります。</p>
 <p>公式Native Installerを使う。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> macOSへClaude Code CLIを入れる公式インストール。インストール後にバージョン確認とdoctor診断まで実行する</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> CLIがコマンドラインから動く状態になり、依存関係も自動診断される。会社環境では管理者がHashで固定できる</p></div><pre><code class="language-bash">curl -fsSL https://claude.ai/install.sh | bash
 claude --version
 claude doctor
 </code></pre>
 <p>会社環境では、Install URL、Hash、Proxy、許可Versionを管理者が固定する。</p>
+<p><strong>【このコードの読み方】</strong> 1行目は公式InstallerからCLIを導入する操作です。2行目は実行できる状態と利用中Versionを確かめます。3行目はVersion表示だけでは分からない環境上の問題を診断し、Project作成前に原因を狭めます。</p>
+<p><strong>【失敗するとこうなる】</strong> Installerの実行だけで導入完了と判断し、そのまま作業を始めたとします。初回起動時にCLIが見つからない、または診断で問題が出て先へ進めません。原因は導入後の確認を飛ばし、Installと実行環境を分けて確かめなかったことです。まずVersion確認と診断へ戻り、会社環境なら管理者が固定した条件と照合します。</p>
 <h2 id="ch-03-s2">3.2 VS Code</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLI単体だと変更の見通しが悪い。IDE側でDiffとファイルツリーを見ながら進めると人間のレビュー負荷が大きく減る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> VS CodeでProjectを開き、Trust範囲を自社に限定できる。CLIとIDEが同じContextで動き、両刀使いに移行できる</p></div>
+<p><strong>【なぜこの設計か】</strong> IDEとCLIで同じProject Folderを開くと、読んでいる指示と編集対象が一致します。異なるFolderを開くと、画面で見ているFileとCLIが変更するFileがずれ、正しいつもりで別成果物を直す事故が起きます。</p>
 <ul>
 <li>公式Anthropic提供のClaude Code Extensionを確認して導入する。</li>
 <li>Project FolderをVS Codeで開く。</li>
@@ -54,6 +58,7 @@ claude doctor
 </ul>
 <p>IDEは見やすいが、すべての機能・診断はTerminalで先に提供される場合がある。両方使えるようにする。</p>
 <h2 id="ch-03-s3">3.3 Project Folderの原則</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> デスクトップ1フォルダに顧客A・顧客B・実験を全部入れると、AIが見るべき範囲が混ざる。誤って別案件を書き換える事故が起きる</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 案件ごとにProject Rootを切れば、AIが見るのはその顧客分だけ。情報漏えいと取り違えのリスクが構造的に消える</p></div>
+<p><strong>【なぜこの設計か】</strong> Project Folderは、Claude Codeへ渡す仕事の境界です。無関係な案件を同じRootへ置くと、別案件の指示、用語、成果物が判断材料へ混ざり、対象外Fileの参照や誤った前提の流用を招きます。</p>
 <h3 id="ch-03-s4">相関のない仕事</h3>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 相関のない仕事を別Rootに分けるディレクトリ例。ライティングと会計が別フォルダに分かれる</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIの探索範囲が無関係なファイルを巻き込まない。Context精度が上がり処理時間も短くなる</p></div><pre><code class="language-text">~/work/writing/
 ~/work/accounting/
@@ -67,7 +72,10 @@ claude doctor
 └── reports/
 </code></pre>
 <p>共通Rootを開き、知識と成果物を共有する。</p>
+<p><strong>【このコードの読み方】</strong> <code>writing/</code>と<code>accounting/</code>を別Rootにする行は、用途の違う指示やDataを同時に見せないための境界です。<code>youtube/</code>を共通Rootにする行は、一つの成果へ向かう作業だけを共有します。配下の<code>research/</code>、<code>scripts/</code>、<code>assets/</code>は役割を分けつつ、同じ案件のContextから追跡できる配置です。</p>
+<p><strong>【失敗するとこうなる】</strong> 複数案件をまとめた上位FolderでSessionを始め、会議資料の要約を頼んだとします。出力に別案件の呼称が混ざる、または無関係な過去資料を根拠にした説明が現れます。原因は、Claude Codeが参照できる仕事の境界を広くしすぎたことです。Sessionを止め、案件ごとのRootを開き直し、対象Fileと完了条件を再提示してやり直します。</p>
 <h2 id="ch-03-s6">3.4 推奨Project構造</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> docsもinputもoutputも同じ階層に放り込むと、AIも人間もどこを触ればいいか迷う。役割で分ける標準が要る</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> CLAUDE.md・docs・inputs・output・src・tests・scripts・.claudeの最小構造が決まる。初見の人もすぐ動ける</p></div>
+<p><strong>【なぜこの設計か】</strong> 指示、入力、実装、検証、出力の置き場を先に分けると、何を読んで何を変更してよいかがFile配置から判断できます。置き場が曖昧だと、入力を成果物として上書きしたり、生成物を実装Fileへ混ぜたりして、復旧範囲が広がります。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 推奨Project構造。CLAUDE.md・docs・inputs・output・src・tests・scripts・.claudeを役割で分ける標準ツリー</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 初見の人でもどこを触ればいいかが一目で分かる。AIにも『生成物はoutput/』と渡せて事故が減る</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>CLAUDE.md</dt><dd>Project共通の常設方針を書くファイル。AIが起動時に必ず読み、毎回同じ注意を書く手間を省く</dd><dt>docs/</dt><dd>要件・アーキテクチャ・運用手順を置く文書置き場。AIに『仕様はここ』と渡せて推測を防ぐ</dd><dt>inputs/</dt><dd>AIに渡す素材ファイルの専用置き場。改変禁止の領域として宣言でき、入力Hash不変を守れる</dd><dt>output/</dt><dd>AIが生成した成果物の出力先。生成物と素材が混ざらず、間違って入力を上書きする事故を防ぐ</dd><dt>src/</dt><dd>アプリ本体のソースコード置き場。役割が明確だから、AIに『実装はsrc/に書いて』と一行で伝わる</dd><dt>tests/</dt><dd>テストコードを置くディレクトリ。Verifyを機械的に回せる場所を最初から用意しておく</dd><dt>scripts/</dt><dd>実行・ビルド・運用補助のシェルやスクリプト置き場。再利用コマンドが散らからない</dd><dt>.claude/</dt><dd>Rule・Skill・Agent・Settingsを置くClaude Code専用設定領域。Project固有の挙動はここに集約する</dd></dl></div></div><pre><code class="language-text">project/
 ├── CLAUDE.md
 ├── README.md
@@ -88,7 +96,9 @@ claude doctor
 ├── .gitignore
 └── package.json / pyproject.toml
 </code></pre>
+<p><strong>【このコードの読み方】</strong> <code>CLAUDE.md</code>はProject固有の判断基準を入口で渡す位置です。<code>inputs/</code>と<code>output/</code>を分ける行は、原本と生成物の取り違えを防ぎます。<code>tests/</code>は完了条件を機械判定へ接続し、<code>.claude/</code>配下はRuleやSkillの出所をProject内で追えるようにします。</p>
 <h2 id="ch-03-s7">3.5 CLIの基本</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Claude Codeは対話Session・1回実行・継続・再開で動き方が変わる。最初の数コマンドを覚えないと『どう止めて再開する？』で詰まる</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> claude・-p・--continue・--resumeと、/clear・/compact・/contextを覚えれば、Sessionを能動的に管理できる</p></div>
+<p><strong>【なぜこの設計か】</strong> 対話、1回実行、継続、再開を目的で使い分けると、必要なContextだけを引き継げます。区別せず過去Sessionを続けると、前の目的や誤った仮定が新しい依頼へ残り、別の仕事として扱うべき変更まで連鎖します。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Claude Code CLIの4つの起動モード。対話・1回実行・継続・再開を切り替えるコマンド</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> セッションを能動的に開始・継続・再開できる。長いタスクを途中で止めて翌日再開できる</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>claude</dt><dd>対話Sessionを開く基本起動。質問しながら段階的に進めるとき、または手探りで仕事を始めるときに使う</dd><dt>claude -p "依頼"</dt><dd>非対話で1回だけ実行するモード。スクリプトやCI、自動化Jobから決まった依頼を一発で投げるのに使う</dd><dt>claude --continue</dt><dd>直前のSessionをそのまま続けるコマンド。短時間離席した後、文脈を保ったまま再開できる</dd><dt>claude --resume</dt><dd>保存済みSessionを一覧から選んで再開するモード。複数案件を行き来する人がSession指名で戻るのに使う</dd></dl></div></div><pre><code class="language-bash">claude                         # 対話Session
 claude -p "依頼"              # 非対話の1回実行
 claude --continue             # 直前Sessionを継続
@@ -106,6 +116,25 @@ claude --resume               # 保存Sessionを選んで再開
 /mcp        MCP接続を確認
 </code></pre>
 <p>利用中Versionの <code>/help</code> を最優先にする。</p>
+<p><strong>【このコードの読み方】</strong> <code>claude</code>は同じ目的を往復しながら進める入口です。<code>claude -p "依頼"</code>は一度で完結する処理に使い、長い会話を持ち込みません。<code>--continue</code>は直前の流れを継ぎ、<code>--resume</code>は保存済みSessionから対象を選ぶため、再開先の取り違えを減らします。Session内では<code>/clear</code>、<code>/compact</code>、<code>/context</code>の3行をまず見分けると、目的変更、圧縮、内訳確認を混同しません。</p>
+<p><strong>【実演】</strong> 公式Native Installerの実行が終わった状態から、導入確認、練習用Projectの作成、初回起動までを一続きで確認します。最初にVersionと診断を実行し、CLIそのものの問題をProjectの問題から分離します。次に、他案件を含まないFolderを作って移動します。この境界が、別案件の指示やFileを読ませないための最初の安全策です。</p>
+<p>初回起動後は、いきなり編集を頼みません。現在のProjectとContextを確認し、<code>README.md</code>だけを作る計画を尋ねます。応答に対象Folderと変更予定Fileが現れれば、CLI、Project境界、対話Sessionの三点を同時に確認できます。想定外のPathが出た場合は実装へ進まず、Sessionを止めて<code>pwd</code>と開いたFolderを見直します。</p>
+<pre><code class="language-text">$ claude --version
+Claude Code [version]
+$ claude doctor
+Installation: OK
+$ mkdir -p ~/work/sample-project/inputs ~/work/sample-project/output
+$ cd ~/work/sample-project
+$ pwd
+.../work/sample-project
+$ claude
+&gt; /context
+Project context: sample-project
+&gt; まだ編集せず、README.mdだけを作る計画と確認方法を示してください。
+対象: README.md
+状態: 計画のみ。File変更なし
+</code></pre>
+<p>最後に見るのは、Version文字列の細部ではなく、診断が先へ進める状態か、表示されたProjectが意図したFolderか、依頼どおり編集前で止まったかです。この三つが揃ってから最初の小さな変更へ進みます。出力は例示であり、Version・環境で異なります。</p>
 <hr/>
 
   </section>

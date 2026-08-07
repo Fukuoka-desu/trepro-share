@@ -18,7 +18,7 @@
 これは技術力の問題ではなく、橋渡しの仕組みが無いだけです。</p><p>ほとんどの人は、Figma のキャンプを手で読み、HTML/CSS を書き、JS をつなぎ、確認に何往復もしています。
 ですが、Claude Design からそのまま実装へ渡せば、その往復は半分に圧縮できます。</p><p>この章で扱うのは、デザインのレイヤー・トークン・コンポーネントを、AIが解釈できる形で渡すための型です。
 カンプを情報として渡せば、AI はそれを生きた UI へ翻訳します。</p><p>この章を読み終わる頃には、『デザインから実装』の距離が、1日へ縮まります。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-17-0-wireframe-design-system-prototype-code"><h3 id="feature-17-0-wireframe-design-system-prototype-code">Wireframe / Design System / Prototype / Code 分離</h3><p class="feature-summary">情報・見た目・動作・実装を別段階で確定する4分離設計。修正コストを段階で閉じ込める。</p><dl class="feature-io"><dt>入力</dt><dd>作りたい画面の目的と利用者</dd><dt>出力</dt><dd>段階ごとに確定した情報設計・スタイル・プロトタイプ・コード</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-1-design-system-project"><h3 id="feature-17-1-design-system-project">Design SystemとProject分離</h3><p class="feature-summary">色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。</p><dl class="feature-io"><dt>入力</dt><dd>ブランドカラー、フォント、共通余白ルール</dd><dt>出力</dt><dd>再利用可能なDesign System Projectと参照Path</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-2-claude-design-flow"><h3 id="feature-17-2-claude-design-flow">Claude Design 標準Flow</h3><p class="feature-summary">白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。</p><dl class="feature-io"><dt>入力</dt><dd>ラフ案、要件、対象ユーザー</dd><dt>出力</dt><dd>段階別の決定記録と実装ドラフト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-3-code-prompt-sync-rule"><h3 id="feature-17-3-code-prompt-sync-rule">Codeへ渡すPromptとSync Rule</h3><p class="feature-summary">Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。</p><dl class="feature-io"><dt>入力</dt><dd>Designでの確定事項、参照コンポーネント</dd><dt>出力</dt><dd>実装プロンプトとSync用ルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-4-item"><h3 id="feature-17-4-item">公開前チェック</h3><p class="feature-summary">レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みページ、公開予定</dd><dt>出力</dt><dd>5項目のチェック結果と公開可否判定</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-17-0-wireframe-design-system-prototype-code"><p class="feature-title" id="feature-17-0-wireframe-design-system-prototype-code">Wireframe / Design System / Prototype / Code 分離</p><p class="feature-summary">情報・見た目・動作・実装を別段階で確定する4分離設計。修正コストを段階で閉じ込める。</p><dl class="feature-io"><dt>入力</dt><dd>作りたい画面の目的と利用者</dd><dt>出力</dt><dd>段階ごとに確定した情報設計・スタイル・プロトタイプ・コード</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-1-design-system-project"><p class="feature-title" id="feature-17-1-design-system-project">Design SystemとProject分離</p><p class="feature-summary">色・タイポ・余白の共通システムを別Projectに固定し、各画面はそれを参照する形に揃える運用。</p><dl class="feature-io"><dt>入力</dt><dd>ブランドカラー、フォント、共通余白ルール</dd><dt>出力</dt><dd>再利用可能なDesign System Projectと参照Path</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-2-claude-design-flow"><p class="feature-title" id="feature-17-2-claude-design-flow">Claude Design 標準Flow</p><p class="feature-summary">白黒WireframeからDesign System適用、実装まで進める標準的な制作フロー。各段階の決定事項を記録する。</p><dl class="feature-io"><dt>入力</dt><dd>ラフ案、要件、対象ユーザー</dd><dt>出力</dt><dd>段階別の決定記録と実装ドラフト</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-3-code-prompt-sync-rule"><p class="feature-title" id="feature-17-3-code-prompt-sync-rule">Codeへ渡すPromptとSync Rule</p><p class="feature-summary">Designの決定をコード側へ漏れなく伝える受け渡しプロンプトと、後で齟齬を起こさない同期ルール。</p><dl class="feature-io"><dt>入力</dt><dd>Designでの確定事項、参照コンポーネント</dd><dt>出力</dt><dd>実装プロンプトとSync用ルール</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-17-4-item"><p class="feature-title" id="feature-17-4-item">公開前チェック</p><p class="feature-summary">レスポンシブ・アクセシビリティ・リンク・秘密情報・ブランド整合をCode側で再検証する公開前ゲート。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みページ、公開予定</dd><dt>出力</dt><dd>5項目のチェック結果と公開可否判定</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-17">
   <img src="../images/chapter-17-c96cf4.webp" alt="第17章『Claude Designから実装へ』を表すdesign process illustration" loading="lazy" decoding="async">
@@ -37,12 +37,14 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-17-s1">17.1 分離する</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 情報構造・見た目・実装を同時に揺らすと、どこを直しても他の段階に揺り戻しが発生します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Wireframe・Prototype・Design System・実装を別段階で確定すれば、修正コストをその段階の中に閉じ込められます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 要件、Wireframe、Prototype、Design System、実装を分けると、情報構造の問題を装飾やCodeで隠さずに済みます。人が決めるのは、誰が何を先に読み、どのActionを選び、どの曖昧さを残さないかです。その判断を終える前に実装すると、正確に作られた不要な画面が完成します。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> デザインから実装までの段階を一列に並べ、検証で締める標準フローです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの段階の決定で詰まっているかを、後から指差して指摘できる構造になります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>要件</dt><dd>誰が何のために使うか、何ができれば成功かを言葉で固める段階です。ここがぶれると、後段の作業がすべて作り直しになります。</dd><dt>Wireframe</dt><dd>装飾なしで情報の配置と順序だけを決める段階です。見た目に気を取られず、情報の抜けや順序ミスをここで潰せます。</dd><dt>Prototype</dt><dd>実装前に画面遷移と操作感を試せる試作品の段階です。動かして初めて気付く違和感を、コードを書く前に拾えます。</dd><dt>Design System</dt><dd>色・タイポ・余白・部品の共通ルールを当てる段階です。複数画面のばらつきを構造的に揃え、ブランドの一貫性を守れます。</dd><dt>実装</dt><dd>確定した要件・構造・スタイルをコードへ落とす段階です。前段で決まったことを翻訳する作業に集中でき、判断と実装が混ざりません。</dd><dt>視覚/Accessibility検証</dt><dd>見た目とアクセシビリティを最後に再検査する段階です。実装で見落とした崩れや読みにくさを、公開前にここで拾えます。</dd></dl></div></div><pre><code class="language-text">要件 → Wireframe → Prototype → Design System → 実装 → 視覚/Accessibility検証
 </code></pre>
 <p>Wireframeでは装飾より、情報の順序とActionを決める。</p>
 <h2 id="ch-17-s2">17.2 Design SystemとProject</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 個別画面ごとに色やフォントが微妙に違うと、ブランドの一貫性が静かに壊れていきます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Design SystemをProjectとは別物として扱えば、各画面はそれを参照するだけで揃い、横展開のコストが下がります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 共通の色、文字、余白、Componentを個別Projectから分けると、画面ごとの思いつきで表現が増えるのを防げます。ただしProject固有の目的までDesign Systemへ入れると、別の画面で再利用できません。人はBrand Ruleと再利用範囲を決め、実装はその境界に従います。</p>
 <table>
 <thead>
 <tr>
@@ -62,6 +64,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <h2 id="ch-17-s3">17.3 最小構造</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Design Systemを概念だけで持つと、誰がどのトークンを更新するかがふんわりして運用が止まります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> tokens/・components/・assets/・examples/という最小フォルダ構造を持つことで、更新責任と参照経路が物理的に明確になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Token、Component説明、Asset、Exampleを分けると、数値の正本と利用方法を取り違えません。色や余白を各画面へ直書きすると、変更時に一部だけ古い値が残ります。最小構造を先に作ることで、探索中の案と採用済みの規則も区別できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Design Systemの最小フォルダ構造で、tokens・components・assets・examplesを分けたレイアウトです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 更新責任と参照Pathが物理的に固定され、複数Projectから安全に再利用できます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>tokens/</dt><dd>色・タイポ・余白・角丸といった最小単位の値を置く場所です。ここを正本にすることで、各画面の調整が個別実装で散らばらなくなります。</dd><dt>components/</dt><dd>Button・Card・Form・Navigationなど再利用するUI部品を置く場所です。同じ部品を画面ごとに作り直す重複を構造的になくせます。</dd><dt>assets/</dt><dd>ロゴ・アイコン・画像などの静的素材を置く場所です。配布元が一箇所に固定されることで、古い素材が紛れ込む事故を減らせます。</dd><dt>examples/</dt><dd>Design Systemを使った実例画面を置く場所です。トークンや部品の使い方が文書だけでは伝わらない時の、生きた参照になります。</dd></dl></div></div><pre><code class="language-text">design-system/
 ├── README.md
 ├── tokens/
@@ -78,6 +81,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 └── examples/
 </code></pre>
 <h2 id="ch-17-s4">17.4 標準Flow</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> いきなり実装から作ると、情報の欠落や順序ミスが見た目の上に固定されてしまいます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Wireframe→Prototype→Design System→Code→差分確認まで標準フロー化すると、各段階の決定事項を後から追える形で残せます。</p></div>
+<p><strong>【なぜこの設計か】</strong> この順序は、情報の欠落、遷移の矛盾、見た目の差、実装の不整合を段階ごとに発見するためです。人は情報の優先順位、Actionの意味、Mobileでの省略、Brandとの折り合いをReviewします。Claude Codeへ渡した後は、Component対応とTestでその判断がCodeへ残ったかを確かめます。</p>
 <ol>
 <li>Wireframe作成。</li>
 <li>情報の欠落・重複・順序Review。</li>
@@ -90,6 +94,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </ol>
 <p>現行の <code>/design</code> と <code>/design-sync</code> を <code>/help</code> と公式情報で確認する。</p>
 <h2 id="ch-17-s5">17.5 Codeへ渡すPrompt</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Designをそのままコード化させると、状態・レスポンシブ・アクセシビリティの抜けが実装後に露見します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 実装計画の必要項目を先に挙げさせるプロンプトを使えば、Hover/Focus/Error/Loadingまで含めた完成度で着手できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Designをそのまま写す依頼では、Hover、Error、Loadingなど静止画にない状態が抜けます。先に実装計画を出させると、画面とComponent、Token、Responsive、Testの対応を人が変更前に確認できます。Mockの範囲も決めるため、見た目だけ動く仮実装を本番相当と誤認しません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Designを受け取った直後に、画面対応・Token・状態・Accessibility・Acceptanceを先に書かせる指示文です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 着手前に抜け項目が洗い出され、実装後にHover/Error/Loadingが見つかる手戻りを防げます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>画面/Component対応</dt><dd>Designのどの画面・部品が、実装側のどのComponentに対応するかを先に明示します。対応表がないと、同じ部品を別実装で二重に作る事故が起きます。</dd><dt>Token/CSS変数</dt><dd>色や余白を変数として一元化する設計を先に決めます。後からブランド変更が入っても、置換すべき場所が散らからずに済みます。</dd><dt>Responsive</dt><dd>画面幅ごとのレイアウト切り替え方針を実装前に決めます。スマホで崩れて作り直すような大きな手戻りを防げます。</dd><dt>Hover/Focus/Disabled/Error/Loading</dt><dd>見た目だけでなく操作中・無効・失敗・読み込み中の状態をあらかじめ列挙します。実装後に状態が抜けて発見されるパターンを潰せます。</dd><dt>Accessibility</dt><dd>コントラスト・キーボード操作・代替テキストなどの要件を先に書きます。あとから足すと構造改修が必要になる項目を、設計段階で確保できます。</dd><dt>Mock範囲</dt><dd>実データの代わりに使うダミーデータの範囲を決めます。本番接続前にUIだけ先に確認でき、依存待ちで止まらない開発になります。</dd><dt>Acceptance Test</dt><dd>完成と見なすための判定条件を先に書き出します。実装後に『どこまでやれば終わりか』が曖昧になり延々と直し続ける状態を防げます。</dd></dl></div></div><pre><code class="language-text">Designを写経せず、まず次を含む実装計画を作る。
 - 画面/Component対応
 - Token/CSS変数
@@ -100,7 +105,22 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Acceptance Test
 承認前に変更しない。
 </code></pre>
+<p><strong>【実演】</strong> 一枚のカンプに「処理状況Card」が描かれているとします。人が先に決めるのは、見出しを主情報にすること、状態文を色だけで区別しないこと、再試行を利用者のActionとして残すことです。Claude Codeには、その決定を既存TokenとComponentへ対応させ、静止画にないFocusとErrorも含めるよう渡します。次の変換例では、Wireframeの四要素が<code>article</code>、見出し、状態文、Buttonへ対応しています。ReviewではPixelの近さだけでなく、情報順、Keyboardでの到達、Error時の文言、共通Component化の可否を見ます。さらに、補足を常に見せるかError時だけにするか、再試行を押した後に何を表示するかはカンプだけでは確定しません。その二点はAgentに推測させず、人が要件として決めてから状態別のTestへ落とします。共通Cardとして戻す判断も、別画面で同じ意味と状態を持つかを確認して行います。出力は例示であり、Version・環境で異なります。</p>
+<pre><code class="language-text">[処理状況Card]
+見出し: Data更新
+状態: 取得に失敗しました
+操作: 再試行
+補足: 前回成功Dataは保持
+</code></pre>
+<pre><code class="language-html">&lt;article class="status-card" aria-labelledby="update-title"&gt;
+  &lt;h2 id="update-title"&gt;Data更新&lt;/h2&gt;
+  &lt;p role="status"&gt;取得に失敗しました&lt;/p&gt;
+  &lt;button type="button"&gt;再試行&lt;/button&gt;
+  &lt;small&gt;前回成功Dataは保持しています&lt;/small&gt;
+&lt;/article&gt;
+</code></pre>
 <h2 id="ch-17-s6">17.6 Sync Rule</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Design側とCode側が両方とも『正本』を主張すると、トークンや共通部品が二重メンテで腐ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Git側を正本にし、採用変更だけCodeへ流す同期ルールを敷くと、デザインと実装の乖離が時間とともに発生しません。</p></div>
+<p><strong>【なぜこの設計か】</strong> Git側を採用済みTokenと共通Componentの正本にすると、DesignとCodeの両方で同じ要素を別々に変更する競合を防げます。探索案はDesignに残し、採用した差分だけを戻すことで、試案が配布物へ混ざりません。Sync前後のDiffは、意図した変更だけが往復した証拠になります。</p>
 <ul>
 <li>Token/共通ComponentはGit側を正本。</li>
 <li>Designで探索し、採用変更だけCodeへ。</li>
@@ -109,6 +129,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Beta変換に備えGit Commit。</li>
 </ul>
 <h2 id="ch-17-s7">17.7 公開前</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Designレビューを通っても、未実装ボタン・認証漏れ・Contrast不足が公開直前に出るのはよくあります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Code側で再検査する8項目を通せば、見た目の確認ではなく動作と安全性の確認として公開判断ができます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 公開前Checkは、カンプに描かれていない遷移、状態、認証、Logまで実装済みかを確認します。Desktopの一画面が一致しても、Mobile、Focus、Error、Loadingで操作不能なら利用者には未完成です。自動検査とScreenshot差分を併用すると、構造上の欠落と視覚上のずれを別々に見つけられます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 公開前ゲートとして、遷移網羅・Responsive・Contrast・自動Accessibility検査まで通す8項目です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Design承認とは別軸で、Code側でしか分からない動作上の不備を最後に拾えます</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>全遷移</dt><dd>ページ間のすべての遷移が成立することを確認します。Designで承認されても、リンク切れや行き止まりは実装側でしか発見できません。</dd><dt>未実装Buttonの明示</dt><dd>押せるが何も起きないボタンが残っていないかを点検します。残っていると、利用者は『壊れている』と判断してしまいます。</dd><dt>Responsive</dt><dd>代表的な画面幅で破綻なく表示できることを確認します。実機で見て初めて気付く崩れを、公開前にここで止めます。</dd><dt>Focus/Error/Loading/Success</dt><dd>操作中・失敗・読み込み中・成功の各状態が正しく見えることの確認です。状態の見落としが、ユーザーの操作迷子を生みます。</dd><dt>Contrast</dt><dd>文字と背景の色差が読める水準にあることを確認します。明るい場所や色覚特性のあるユーザーが取り残されないラインを担保します。</dd><dt>自動Accessibility検査</dt><dd>ツールによるアクセシビリティ自動チェックを通すことです。人の目視では拾いにくい構造的な不備を機械的に検出できます。</dd><dt>Design差分Screenshot</dt><dd>Designと実装のスクリーンショットを並べて差分を残すことです。後から『どっちが正か』を確認する根拠として効きます。</dd><dt>環境変数/認証/Log</dt><dd>本番公開に必要な環境変数・認証設定・ログ出力が揃っていることの確認です。Design承認の枠外で発生しがちな、本番でだけ顕在化する不備を拾えます。</dd></dl></div></div><pre><code class="language-text">[ ] 全遷移
 [ ] 未実装Buttonの明示
 [ ] Responsive
@@ -118,11 +139,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [ ] Design差分Screenshot
 [ ] 環境変数/認証/Log
 </code></pre>
+<p><strong>【失敗するとこうなる】</strong> カンプ画像だけを渡して「同じ見た目にして」と実装させます。通常状態のScreenshotは一致しても、送信中にButtonが押せたままで、Error発生時には説明のない空白が表示されます。原因は人が状態とActionを判断せず、静止画に存在しない要件を実装計画へ入れなかったことです。遷移と全状態を定義し直し、Component対応表とAcceptance Testを承認してから差分を修正します。</p>
 <hr/>
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch17-design-to-code">
   <img src="../images/diagram-ch17-design-to-code.webp" alt="Wireframe、Design System、Prototype、Codeの流れ" loading="lazy" decoding="async">
   <figcaption>情報・見た目・動作を段階的に確定します。</figcaption>
@@ -139,7 +161,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある中小Web会社（架空）が、AIに『LPを作って』と頼むたびに情報構造とビジュアルが同時に揺れて、毎回ゼロからやり直している。</p><h3>こう使う</h3><p>白黒Wireframe→Design System適用→実装の三段階に分け、各段階の決定事項を記録する。</p><h3>得られるもの</h3><p>情報・見た目・動作の修正コストが分離され、出戻りが特定段階だけで済む。</p></article><article class="usecase-card"><h3>場面</h3><p>個人事業主（架空）が、複数LPで色・フォント・余白がバラバラになり、ブランドの一貫性が失われている。</p><h3>こう使う</h3><p>Design Systemを別Projectとして固定し、各LPはそれを参照する形に揃える。</p><h3>得られるもの</h3><p>1箇所直せば全LPに反映され、ブランド資産として再利用できる。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>ある中小Web会社（架空）が、AIに『LPを作って』と頼むたびに情報構造とビジュアルが同時に揺れて、毎回ゼロからやり直している。</p><p class="usecase-label">こう使う</p><p>白黒Wireframe→Design System適用→実装の三段階に分け、各段階の決定事項を記録する。</p><p class="usecase-label">得られるもの</p><p>情報・見た目・動作の修正コストが分離され、出戻りが特定段階だけで済む。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>個人事業主（架空）が、複数LPで色・フォント・余白がバラバラになり、ブランドの一貫性が失われている。</p><p class="usecase-label">こう使う</p><p>Design Systemを別Projectとして固定し、各LPはそれを参照する形に揃える。</p><p class="usecase-label">得られるもの</p><p>1箇所直せば全LPに反映され、ブランド資産として再利用できる。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="16.html">← MarkdownよりHTMLが向く仕事</a><a href="18.html">CoworkとLive Artifacts →</a></nav></main></div>

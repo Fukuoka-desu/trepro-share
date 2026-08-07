@@ -4,8 +4,8 @@
 - Blog chapter count: 40
 - Original subsection headings: 285
 - Missing original subsection headings: 0
-- Original code-fence markers: 410
-- Blog code-fence markers: 410
+- Original code-fence markers: 490
+- Blog code-fence markers: 490
 - Image directives: 63
 - Core image directives: 23
 - Chapter image directives: 40

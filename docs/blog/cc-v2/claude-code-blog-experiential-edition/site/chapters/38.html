@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-38-s1">38.1 動画別</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「全部の動画を解説したつもり」でも、レビューで重要トピックの抜けが見つかり大改修になりがちです。網羅性は表で証明する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> v01〜v10の主内容と、それぞれを本書のどの章に配置したかを表で対応付け、抜けと重複を可視化します。</p></div>
 <table>
 <thead>
@@ -100,6 +100,24 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
+<p><strong>【なぜこの設計か】</strong> 動画ごとの主内容を配置先へ結ぶと、素材を保存しただけの状態と、教材で説明した状態を分けられます。一つの動画を一章へ丸ごと置かずTopic単位で確認するため、重複と未配置を発見できます。ただし章番号があるだけではCoverageの証拠にならず、実際の節へ戻る必要があります。</p>
+<p><strong>【実演】</strong> <code>v10 Live Artifacts</code>のTopicだけを取り出し、Coverage Mapを一回描き直す例です。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">inputs/source-v10-notes.mdと現在の教科書原稿を読み、v10 Live ArtifactsのCoverage Mapを作ってください。
+Source内のProject、Artifacts、Scheduled、Dispatch、Drive、Cache、Chatを個別Topicとして扱ってください。
+各Topicに、配置章、該当節、根拠となる本文位置、Coverage状態、補足が必要な点を対応させてください。
+章番号が表にあるだけでCoveredにせず、本文で説明または実例を確認してください。
+該当箇所がない場合は推測で配置せずGapとして残してください。
+coverage/source-v10.mdへ保存し、原稿自体は変更しないでください。
+完了条件は、七つのTopicすべてが本文位置またはGapへ一意に追跡できることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>まずSource Noteを七つのTopicへ分解します。次に第18章と第32章を中心に原稿を検索し、章番号ではなく本文の根拠位置へ対応させます。説明不足や未配置は埋めずにGapとして残し、一枚のMapへまとめます。</p>
+<p><strong>成果物</strong></p>
+<p><code>coverage/source-v10.md</code>に、Source Topic、配置章、該当節、本文根拠、Coverage状態が並びます。CoveredとGapのどちらからも元Sourceと原稿位置へ戻れます。</p>
+<p><strong>検証方法</strong></p>
+<p>七つのTopicが一度ずつ評価されているかを数えます。Coveredの行は示された本文位置を開き、Topicの説明か実例が本当にあるかを確認します。Gapが空欄や推測の章番号で隠されていないこともReviewします。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-38-s2">38.2 Harness要件</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ハーネス要件（配布・同期・Hook・Skill・Safety等）がどの章で扱われたか不明だと、要件側の充足を主張できません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> F-1配布・F-2同期・F-3 Hook・F-4 Skill・F-5 Safety・信頼性/観測性・Security・KPI・Onboardingを章番号と対応付けて並べます。</p></div>
 <table>
 <thead>
@@ -151,6 +169,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
+<p><strong>【なぜこの設計か】</strong> Harness要件を章へ対応させると、配布やSecurityの実装と、それを運用するRunbookやKPIの説明を一緒に確認できます。配置がない要件は教材上のGapになり、複数章へまたがる要件は責務の境界をReviewできます。表を作るだけで終えず、要件変更時に影響章を再点検する索引として使います。</p>
 <hr/>
 
   </section>

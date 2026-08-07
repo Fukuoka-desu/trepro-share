@@ -18,7 +18,7 @@
 これが、月初に利用上限を吹き飛ばす最もよくあるパターンです。</p><p>ほとんどの人は、AIのモデルを『強さで選ぶ』と考えています。
 ですが実際には、計画・実装・整理・評価という役割で選ぶのが正解です。簡単な整理は軽量モデル、重要なレビューだけ深く考えさせる（高Effort）。
 このスイッチを身につけると、月の利用上限が来なくなる上に、難所の品質も上がります。</p><p>加えて、モデル名や料金は変わりやすいので、本文に書かず Feature Registry に分離しておきます。これで教科書本体は古びません。</p><p>設定は15分。コスト効率と品質、両方が同時に上がります。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-08-0-model"><h3 id="feature-08-0-model">Model選択（役割で使い分け）</h3><p class="feature-summary">計画・実装・軽い整理・評価という役割でモデルを選び、常に最上位を使わない使い分けの考え方。</p><dl class="feature-io"><dt>入力</dt><dd>業務の難易度、失敗コスト、必要なスピード</dd><dt>出力</dt><dd>業務カテゴリ別のモデル割り当て表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-1-effort"><h3 id="feature-08-1-effort">Effort（思考量の調整）</h3><p class="feature-summary">深く考える価値がある仕事だけEffortを上げ、定型変換は最小Effortで回すコスト最適化の設定軸。</p><dl class="feature-io"><dt>入力</dt><dd>対象タスクの判断重要度</dd><dt>出力</dt><dd>タスク別Effort設定とコスト見積</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-2-advisor-ultrathink"><h3 id="feature-08-2-advisor-ultrathink">Advisor と ultrathink</h3><p class="feature-summary">難しい判断にだけ高Effort思考を呼び出し、相談役として併走させる使い方。常用ではなく要所投入のパターン。</p><dl class="feature-io"><dt>入力</dt><dd>設計分岐、複雑な原因分析、重要レビュー</dd><dt>出力</dt><dd>Advisorからの追加観点、判断根拠の補強</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-3-feature-registry"><h3 id="feature-08-3-feature-registry">Feature Registry（変動情報の分離）</h3><p class="feature-summary">変動するモデル名・利用条件は本文ではなくRegistryへ外出しし、教科書原則を特定モデル依存から切り離す仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>現行モデル名・料金・利用上限</dd><dt>出力</dt><dd>Feature Registry更新エントリ（確認日付き）</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-08-0-model"><p class="feature-title" id="feature-08-0-model">Model選択（役割で使い分け）</p><p class="feature-summary">計画・実装・軽い整理・評価という役割でモデルを選び、常に最上位を使わない使い分けの考え方。</p><dl class="feature-io"><dt>入力</dt><dd>業務の難易度、失敗コスト、必要なスピード</dd><dt>出力</dt><dd>業務カテゴリ別のモデル割り当て表</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-1-effort"><p class="feature-title" id="feature-08-1-effort">Effort（思考量の調整）</p><p class="feature-summary">深く考える価値がある仕事だけEffortを上げ、定型変換は最小Effortで回すコスト最適化の設定軸。</p><dl class="feature-io"><dt>入力</dt><dd>対象タスクの判断重要度</dd><dt>出力</dt><dd>タスク別Effort設定とコスト見積</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-2-advisor-ultrathink"><p class="feature-title" id="feature-08-2-advisor-ultrathink">Advisor と ultrathink</p><p class="feature-summary">難しい判断にだけ高Effort思考を呼び出し、相談役として併走させる使い方。常用ではなく要所投入のパターン。</p><dl class="feature-io"><dt>入力</dt><dd>設計分岐、複雑な原因分析、重要レビュー</dd><dt>出力</dt><dd>Advisorからの追加観点、判断根拠の補強</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-08-3-feature-registry"><p class="feature-title" id="feature-08-3-feature-registry">Feature Registry（変動情報の分離）</p><p class="feature-summary">変動するモデル名・利用条件は本文ではなくRegistryへ外出しし、教科書原則を特定モデル依存から切り離す仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>現行モデル名・料金・利用上限</dd><dt>出力</dt><dd>Feature Registry更新エントリ（確認日付き）</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-08">
   <img src="../images/chapter-08-2ebf79.webp" alt="第8章『ModelとEffort』を表すeditorial metaphor illustration" loading="lazy" decoding="async">
@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-08-s1">8.1 Model名ではなく役割で選ぶ</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> モデルを『強さ』で常に最上位選択にすると、月初に利用上限を吹き飛ばします。仕事の役割で選び分ける軸が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 軽量・標準・高性能・長時間最上位を役割で割り当てると、日常は標準で回り、難所だけ高性能を投下できる構造になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Model名ではなく仕事の役割で選ぶと、名称や提供状況が変わっても判断基準を保てます。失敗時の影響が小さい定型処理まで高性能へ寄せると利用量を先に消費し、難所と最終Reviewへ使う余地が減ります。</p>
 <table>
 <thead>
 <tr>
@@ -66,22 +67,49 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <p>日常は標準Modelを使い、計画、難所、最終Reviewだけ高性能へ切り替える。</p>
+<p><strong>【この表の読み方】</strong> 軽量の行は、正解の型が決まった変換へCostをかけすぎない選択です。標準の行は、通常作業を継続して回す基準点です。高性能の行は、設計判断や難しいDebugのように誤りの手戻りが大きい局面へ割り当てます。長時間最上位の行は、複雑さだけで選ばずCostと提供状況を確認する停止条件を含みます。</p>
+<p><strong>【失敗するとこうなる】</strong> 複数FileとData変更を含む計画を、定型変換と同じ判断密度で進めたとします。実装後にMigrationとRollbackがPlanから抜けていることが分かり、変更を組み直す必要が出ます。原因は、作業時間だけを小さく見積もり、失敗時の手戻りをModel選択へ反映しなかったことです。難所と最終Reviewだけを高性能の役割へ戻し、比較軸とRiskを明示して再計画します。</p>
 <h2 id="ch-08-s2">8.2 Effort</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Effortを常に最大にしても、曖昧な依頼は曖昧なまま長く考えるだけです。判断の難しさに応じて深さを変える必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> low/medium/high/最大を仕事ごとに使い分けると、定型変換は速く・難所は深く考えさせられ、時間とコストの両方が締まります。</p></div>
+<p><strong>【なぜこの設計か】</strong> EffortをTaskの曖昧さ、変更範囲、失敗時の影響に合わせると、必要な思考時間へ利用量を集中できます。常に最大へ固定すると定型作業にも時間と利用量を使い、逆に難所で必要な余地が残りません。</p>
 <p>Effortは、考える深さ、時間、利用量のTrade-offである。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Effortの4段階を仕事種別に対応させた目安表。定型から長時間探索まで、どこに深さを投下するかを示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> タスクごとのEffort割り当てが具体化し、最大Effort常用による利用上限の早期到達を避けられます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>low/medium</dt><dd>定型変換や軽い修正など、深く考える価値が小さい仕事へ割り当てる深さです。常用すると上限到達を大きく遅らせます。</dd><dt>high</dt><dd>複数File編集・分析・重要文書など、判断が必要な仕事に割り当てる深さです。標準では浅くなりがちな比較や代案が出ます。</dd><dt>最大</dt><dd>難しいArchitectureや長時間探索だけに投入する深さです。常用すると月初に利用上限を吹き飛ばす原因になります。</dd></dl></div></div><pre><code class="language-text">low/medium: 定型、軽い修正
 high: 複数File、分析、重要文書
 最大: 難しいArchitecture、長時間探索
 </code></pre>
 <p>深く考えるほど常に良いわけではない。曖昧な依頼を長く考えても、曖昧なままである。</p>
+<p><strong>【このコードの読み方】</strong> <code>low/medium</code>は、手順と正解の型が見えている作業へ割り当てます。<code>high</code>は、複数Fileの整合や重要文書のように見落としの影響が広い作業へ使います。最大の行は、難しいArchitectureや長時間探索に限定し、日常の既定値にはしません。曖昧な依頼はEffortを上げる前にSpecifyへ戻す必要があります。</p>
+<p><strong>【失敗するとこうなる】</strong> 朝から短い要約や定型変換まで最大Effortで連続実行したとします。最終Reviewの前に利用上限へ達した旨が表示され、必要な局面で処理を続けられません。原因は、正解の型がある低Risk作業にも同じ利用量を配分し、章の後半で必要な余地を残さなかったことです。未完了TaskをRisk順に並べ、定型作業は低いEffortへ戻し、難所とReviewへ残りを配分します。表示と提供条件はVersion・環境で異なります。</p>
 <h2 id="ch-08-s3">8.3 <code>ultrathink</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 難しいArchitectureや原因分析では、通常の指示だけだと比較や代案が浅くなります。徹底的に考えさせるSignalを意図的に使う場面があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ultrathinkを比較軸・制約・証拠とセットで使うと、最小Riskの計画が引き出せ、Magic Word頼みの過剰起動も避けられます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 強く考えるSignalに比較軸、制約、証拠を添えると、思考時間を必要な判断へ向けられます。Signalだけを渡すと、何を比較し、何を守り、どの根拠で止めるかが欠けたまま説明だけが長くなります。</p>
 <p>難しい計画・Reviewで「徹底的に考える」Signalとして使える場合がある。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 高難度Plan/Reviewで徹底的に考えさせるSignalの使用例。比較軸・制約・証拠を併記して呼び出します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 最小Riskな計画案が比較表で返ってくるようになり、難所の判断品質が一段上がります。</p></div><pre><code class="language-text">ultrathink
 既存Architecture、Data Migration、Failure Modeを比較し、最小Riskの計画を作ってください。
 </code></pre>
 <p>Magic Wordだけに依存せず、比較軸、制約、証拠を明示する。</p>
+<p><strong>【このコードの読み方】</strong> <code>ultrathink</code>は難しい計画やReviewで思考を深めるSignalです。既存Architectureの行は現在の制約を出発点にします。Data MigrationとFailure Modeは、成功経路だけでなく変更中と失敗時の影響を比較します。最小Riskの計画という結びは、比較結果を選択へ収束させます。</p>
 <h2 id="ch-08-s4">8.4 Advisor</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全工程を高性能Modelで回すとコストが膨らみ、軽くするとレビュー品質が落ちます。要所だけ助言を借りる併走設計が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 標準Modelを主、Advisorを要所投入にすると、品質を保ったままコストを抑えられ、判断根拠の補強だけを得られます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 標準Modelを主作業にし、判断の重い局面だけ助言を得ると、全工程のCostを上げずに難所の見落としを減らせます。毎工程を高性能へ寄せる方法と、難所まで標準だけで押し切る方法の両方を避ける設計です。</p>
 <p>標準Modelを主に使い、重要な局面だけ高性能Modelの助言を得る設計は、品質とCostのBalanceがよい。現行の <code>/advisor</code> と提供条件を確認する。</p>
+<p><strong>【実演】</strong> 小さな文言修正と、Data変更を含む計画を同じModelとEffortで扱わず、先にRiskで分けます。文言修正は変更範囲が狭く、既存Testで判定できるため標準の役割と低いEffortから始めます。Data変更は複数File、Migration、Rollbackの判断があり、誤りの手戻りが広いため、計画と最終Reviewだけ高性能の役割と高いEffortへ寄せます。</p>
+<pre><code class="language-text">$ claude
+&gt; 次の2 Taskを、失敗時の影響、曖昧さ、変更範囲で比較してください。
+&gt; A: 既存画面の説明文を1文修正し、既存Testを実行する。
+&gt; B: Data Schema変更の計画を作り、MigrationとRollbackを比較する。
+&gt; Modelは軽量・標準・高性能の役割、Effortはlow/medium・high・最大から提案し、理由と検証を示してください。
+
+出力抜粋:
+A: 標準 / lowまたはmedium
+理由: 範囲が狭く、既存Testで判定可能
+検証: Diffと既存Test
+
+Bの計画・最終Review: 高性能 / high
+理由: 複数File、Migration、Rollbackの比較が必要
+Bの通常実装: 標準 / high
+検証: Planで定めた機械Checkと独立Review
+</code></pre>
+<p>出力では名称ではなく、Riskと役割の対応を読みます。Bでも全工程を最上位へ固定せず、判断の重い計画とReviewへ集中している点がCostとのBalanceです。AとBの検証方法が別々に示されていれば、考える深さだけでなく合格判定までTaskに合わせられています。提案をそのまま採用せず、Taskが曖昧なら先に完了条件を固定します。利用量の制約がある場合は、難所から逆算して配分を見直します。実際のModel名、Mode名、提供範囲は現行公式情報で確認します。出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-08-s5">8.5 Fable 5の扱い</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 教材が特定モデル前提だと、提供停止や名称変更で本文ごと古びてしまいます。Workflowを特定モデルから切り離して書く必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Fable 5のような変動Modelは必須手順にせず、Registryでsuspendedとして扱うことで、教材本体の寿命を延ばせます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 特定Modelを必須手順から外すと、提供停止や利用条件の変更があってもWorkflow全体を止めずに済みます。Model名へ手順を結び付けると、利用不能になった瞬間に教材、Skill、運用の全経路を直すことになります。</p>
 <p>素材中では長時間Taskに強い最上位Modelとして紹介されるが、基準日にはアクセス停止中である。</p>
 <ul>
 <li>教材の必須手順にしない。</li>
@@ -94,7 +122,7 @@ high: 複数File、分析、重要文書
   </section>
   
   
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>個人開発者（架空）が、すべての作業を最上位モデル＋最大Effortで回した結果、月初に利用上限に達して残り3週間を低性能モデルで耐えている。</p><h3>こう使う</h3><p>業務を軽量処理・標準処理・高難度判断の三つに分類し、Effortを上げるのは判断系のみにする。</p><h3>得られるもの</h3><p>利用上限の発火が遅れ、難所だけに高性能を集中投下できる。コスト効率が大きく改善する。</p></article><article class="usecase-card"><h3>場面</h3><p>ABC SIerのテックリード（架空）が、レビュー指摘の質に悩み、レビュー専用モデルを高Effortで分けたいが手順が決まっていない。</p><h3>こう使う</h3><p>Plan/Implement/Reviewそれぞれにモデル設定を分け、変動するモデル名はFeature Registryへ外出しする。</p><h3>得られるもの</h3><p>重要レビューだけ深く考えさせる構造になり、後でモデル名が変わってもRegistry更新で済む。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>個人開発者（架空）が、すべての作業を最上位モデル＋最大Effortで回した結果、月初に利用上限に達して残り3週間を低性能モデルで耐えている。</p><p class="usecase-label">こう使う</p><p>業務を軽量処理・標準処理・高難度判断の三つに分類し、Effortを上げるのは判断系のみにする。</p><p class="usecase-label">得られるもの</p><p>利用上限の発火が遅れ、難所だけに高性能を集中投下できる。コスト効率が大きく改善する。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>ABC SIerのテックリード（架空）が、レビュー指摘の質に悩み、レビュー専用モデルを高Effortで分けたいが手順が決まっていない。</p><p class="usecase-label">こう使う</p><p>Plan/Implement/Reviewそれぞれにモデル設定を分け、変動するモデル名はFeature Registryへ外出しする。</p><p class="usecase-label">得られるもの</p><p>重要レビューだけ深く考えさせる構造になり、後でモデル名が変わってもRegistry更新で済む。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="07.html">← Permission Mode、Sandbox、危険操作</a><a href="09.html">SessionとContext →</a></nav></main></div>

@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-34-s1">34.1 全社共通CLAUDE.md</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全社で会話の前提や安全・品質の基準がバラバラだと、Claude Codeの振る舞いも案件ごとに揺れます。だから組織共通のBaselineを一枚に固定します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 通信・標準ワークフロー・安全・品質・Gitを揃えた共通CLAUDE.mdが出発点になり、各案件はここからの差分だけを書けば済みます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 全社共通CLAUDE.mdのBaseline例。通信・標準ワークフロー・安全・品質・Git・Contextの6セクションを最小限の文量で揃えてあります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 新規Project作成時にコピペすれば、組織共通の前提が即座に効き、案件側は差分だけを記述する状態へ移れます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Communication</dt><dd>応答言語・前提共有・進捗報告のルールです。揃えないと案件ごとに会話作法が揺れ、レビュー時間が膨らみます。</dd><dt>Standard workflow</dt><dd>Read→明確化→Plan→最小変更→Check→Diff報告の標準6手順です。型を共有しないと毎回手順を作り直す羽目になります。</dd><dt>Safety</dt><dd>資格情報・破壊操作・外部入力・本番反映に関する最低禁則です。明示しないと事故が個人判断に委ねられます。</dd><dt>Quality</dt><dd>テスト・lint・型チェックの弱体化禁止と完了主張への証拠要求です。書かないと「動きました」だけの完了が量産されます。</dd><dt>Git</dt><dd>status/diff確認・force push禁止・秘密混入禁止のGit作法です。共通化しないと履歴汚染や事故Pushが起きやすくなります。</dd><dt>Context</dt><dd>このBaselineを短く保ち詳細はSkillsとRulesへ逃がす指針です。守らないとCLAUDE.mdが肥大し読まれなくなります。</dd></dl></div></div><pre><code class="language-markdown"># TrePro Claude Code baseline
 
@@ -76,6 +76,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 - Start a new session when the objective changes.
 </code></pre>
 <p>Guidanceだけでなく、Managed Settings/Hookを併用する。</p>
+<p><strong>【なぜこの設計か】</strong> 全社共通CLAUDE.mdを短い基準に留めると、Project固有の手順やSkillの詳細が混ざらず、どの環境でも最初に読む原則が保たれます。ただしGuidanceだけでは禁止を強制できないため、高Risk操作はManaged SettingsやHookへ分けます。文章を長くするだけでは、見落としと迂回の両方を防げません。</p>
 <h2 id="ch-34-s2">34.2 Project CLAUDE.md</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Baselineだけでは案件固有の禁止事項やコマンドが抜けます。案件ごとに何をしてはいけないか、どう動かすかは明示が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Purpose・Architecture・Commands・Required workflow・Constraints・Do notの順で書く案件CLAUDE.md初版が、新規Projectで毎回そのまま使えます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 案件用CLAUDE.mdの雛形。Purpose・Architecture・Commands・Required workflow・Constraints・Do notの6項目を空欄で揃えています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 案件キックオフ時に空欄を埋めるだけで、ClaudeがそのProjectの作法に沿って動き始める土台が出来上がります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Purpose</dt><dd>誰の何を解決するProjectかを一行で書く欄です。書かないとAIが優先順位を独自解釈し、的外れな提案を返します。</dd><dt>Architecture</dt><dd>src・tests・docs・outputなど主要ディレクトリの責務を示します。明示しないと生成物がどこへ置かれるか毎回ブレます。</dd><dt>Commands</dt><dd>install/dev/lint/typecheck/test/build等の標準コマンドです。揃えないと検証が場当たり的になり再現性が落ちます。</dd><dt>Required workflow</dt><dd>要件読解→失敗テスト追加→最小変更→検証→証拠報告の必須手順です。書かないと一気書き完了で品質ゲートが抜けます。</dd><dt>Constraints</dt><dd>技術・データ・セキュリティ上の制約です。明示しないと禁止技術や秘密データ利用がレビューまで気付かれません。</dd><dt>Do not</dt><dd>生成ファイル直接編集禁止など案件固有の禁則です。書かないと「やってはいけない」がAIに伝わらず事故が再発します。</dd></dl></div></div><pre><code class="language-markdown"># Project overview
 
@@ -141,6 +142,24 @@ npm run build
 ## Open questions
 ## Rollback plan
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> RequirementsでGoal、Non-goal、Acceptance Evidenceを実装前に分けると、何を作らないかと何をもって合格かが残ります。Open Questionを空想で埋めずに済むため、曖昧な要求をCodeで既成事実にしません。Rollbackまで先に考えることで、変更後に戻せないDataや外部連携を発見できます。</p>
+<p><strong>【実演】</strong> Requirements Templateを、Task一覧へOwner Filterを追加する依頼に使う例です。この段階では実装しません。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">既存ProjectのTask一覧へOwner Filterを追加するため、Requirements Templateを使って要件を整理してください。
+最初に関連する仕様、画面、Data、既存Testを読み、確認済み事実と未確認事項を分けてください。
+User、Problem、Goal、Non-goal、Input、Output、機能要件、非機能要件、Error状態、Acceptance Criteria、Rollbackを埋めてください。
+各機能要件にIDとAcceptance Evidenceを付けてください。
+既存資料にない挙動は推測せず、Open Questionsへ残してください。
+Codeや設定は変更せず、docs/requirements/owner-filter.mdだけを作ってください。
+完了条件は、各Acceptance Criteriaを既存画面、Test、またはReviewで検証する方法が書かれ、未確認事項が断定されていないことです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>関連Fileと既存挙動を調べ、依頼を確認済み要件とOpen Questionへ分けます。次にTemplateの各欄を埋め、機能要件とAcceptance Evidenceを対応させます。Codeへ進まず、判断が必要な点をReview可能な一つの文書へ残します。</p>
+<p><strong>成果物</strong></p>
+<p><code>docs/requirements/owner-filter.md</code>ができます。Goal、対象外、要件ID、合格証拠、未確認事項、Rollbackが一つの文書で追跡できます。</p>
+<p><strong>検証方法</strong></p>
+<p>要件IDごとにAcceptance Evidenceがあるかを確認します。既存資料にない挙動が確定表現になっていないか、Open Questionsへ分かれているかを見ます。Git DiffでRequirements以外のFileが変更されていないことも確認します。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-34-s4">34.4 Implementation Plan</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装に入る前に、読むファイル・変えるファイル・順序・テスト・撤退手順まで言語化しないと、途中で迷子になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ファイル変更表とSteps・Tests・Rollback・Out of scopeまで揃ったImplementation Plan雛形が、計画と実装の分離を半自動で支えます。</p></div>
 <pre><code class="language-markdown"># Implementation plan
 
@@ -203,6 +222,7 @@ argument-hint: "[scope]"
 - risks
 - next action
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> Quality Gateを独立したTemplateにすると、実装者が都合のよいCheckだけを選びません。停止条件があるため、Command不明や本番Credential要求を無理に回避してPASSへ進むのを防げます。結果、変更File、Exit Status、Riskを一緒に残すことで、完了報告を再検証できます。</p>
 <h2 id="ch-34-s7">34.7 Fresh Reviewer Agent</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装した本人の自己レビューは前提に引きずられ、抜けを発見できません。別文脈の独立Reviewerが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Read系のみで動くFresh Reviewer Agentが、要件・差分・証拠を独立に確認し、Blockerと提案を分けて指摘する体制が組めます。</p></div>
 <pre><code class="language-markdown">---
 name: fresh-reviewer

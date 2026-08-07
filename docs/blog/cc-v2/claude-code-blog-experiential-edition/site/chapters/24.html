@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-24-s1">24.1 Bootstrap責務</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Bootstrapが何を持つべきかを順番で並べないと、社員の端末ごとに「途中まで入っている」状態が増え、後続の同期もVerifyも失敗します。10ステップの責務範囲を最初に確定する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> macOS確認からverify完了までの10段階が共有され、Bootstrapが冪等で完走するための必須順序とスキップ可否を全員が同じ目線で議論できるようになります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Bootstrapの責務を環境確認から認証、同期、定期更新、検証まで順に分けると、失敗地点を特定できます。途中の前提を飛ばして同期すると、CLI不足や認証失敗を配布Contentの不具合と誤認します。最後にVerifyを置くことで、Install Commandの終了ではなく利用可能な状態を合格にできます。</p>
 <pre><code class="language-text">1 macOS/Architecture
 2 Command Line Tools
 3 Homebrew
@@ -51,6 +52,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 10 verify
 </code></pre>
 <h2 id="ch-24-s2">24.2 GitHub認証</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Private RepoへアクセスするためのTokenが.git/configやShell履歴へ残ると、配布Repoが個人端末経由で漏えいするリスクが出ます。短期権限と扱い方を明文化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Fine-grained・Read最小・期限付きTokenを環境変数経由でgh authへ流し込み、URL・History・remoteへ残さない手順が確立されます。SSO/Device Flowへの将来移行も同じ枠で扱えます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 認証情報を短期かつRead最小にし、URLや履歴へ残さないのは、一台の漏えいをRepository全体の変更権限へ広げないためです。環境変数を使用後に外し、remote URLを検査すると、Bootstrap後にもToken文字列が永続化していないか確認できます。認証と配布Scriptを分けることで、更新処理がCredentialを本文へ埋め込みません。</p>
 <p>Fine-grained、Read最小、期限付き。URL、History、<code>.git/config</code>へTokenを入れない。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 環境変数のTokenをgh auth login --with-tokenへ標準入力で渡し、その直後にunsetする取り扱いを示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Tokenがgit remote URLやhistoryに残らず、Fine-grained短期Tokenを安全に消費した上で gh auth setup-git で通常運用へ繋げられます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>gh auth login --with-token</dt><dd>標準入力経由でTokenを渡す認証コマンドです。コマンド履歴や引数にTokenを残さず安全に消費できます。</dd><dt>unset TREPRO_GITHUB_TOKEN</dt><dd>認証直後に環境変数からTokenを消す処理です。後続プロセスがTokenを参照できなくなり、漏えい窓口が短くなります。</dd><dt>gh auth setup-git</dt><dd>ghの認証情報をgitのcredential helperへ橋渡しする設定です。以後のgit操作でTokenを.git/configへ書かずに済みます。</dd></dl></div></div><pre><code class="language-bash">if [[ -n "${TREPRO_GITHUB_TOKEN:-}" ]]; then
   printf '%s' "$TREPRO_GITHUB_TOKEN" | gh auth login --hostname github.com --with-token
@@ -65,6 +67,7 @@ fi
 </code></pre>
 <p>将来はSSO、GitHub App、Device Flow、短期Credentialを優先。</p>
 <h2 id="ch-24-s3">24.3 <code>common.sh</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Bootstrap・Update・Sync・Verifyを別Scriptに散らすと、Log出力・ロック・ネット判定の挙動がそれぞれ違ってしまいます。共通土台common.shを1本に揃える必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ログのローテーション、stale Lock検出、network_ok等の関数が全Scriptで共有され、同時実行衝突やネット障害時の挙動が揃って観測・診断が一貫します。</p></div>
+<p><strong>【なぜこの設計か】</strong> Log、Lock、時刻、Error終了を共通化すると、install、update、rollbackが同じ失敗形式を残します。各Scriptが独自にLockを作ると、古いLockの扱いや終了時削除がずれ、更新が永久に止まる端末が出ます。共通関数を一か所で直すことで、100台へ同じ復旧動作を配れます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> ログ・ロック・ローテーションと同時実行検出・stale lock回収・network_okを共通関数として一箇所に集約したcommon.shの骨格です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Bootstrap/Update/Syncが同じ規約でログを出し、同時実行を物理的に防ぎ、ネット障害時には次回へ安全に持ち越せる土台になります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>LOG_DIR / rotate_log</dt><dd>ログの保存先とサイズ超過時のローテーション関数です。長期運用でログが肥大化し、ディスクや解析を圧迫するのを防ぎます。</dd><dt>acquire_lock</dt><dd>lock dirをmkdirで取る排他制御です。Update/Syncの同時実行衝突を物理的に防ぎ、半端な状態を作りません。</dd><dt>stale lock判定</dt><dd>プロセス事故で残ったlockを30分閾値で回収する仕組みです。一度の異常終了で次回以降が永久に動かない事故を防ぎます。</dd><dt>network_ok</dt><dd>GitHubへの軽量HEADで疎通を確認する関数です。ネット断中のUpdateを早期に諦め、次回まで安全に持ち越せます。</dd><dt>die / warn / info</dt><dd>終了・警告・情報を統一フォーマットで出すLog関数群です。Bootstrap/Update/Syncのログ書式が揃い、横断的に追跡できます。</dd></dl></div></div><pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 HARNESS_NAME="trepro-harness"
@@ -105,6 +108,7 @@ acquire_lock() {
 network_ok() { curl -fsSIL --max-time 10 https://github.com &gt;/dev/null 2&gt;&amp;1; }
 </code></pre>
 <h2 id="ch-24-s4">24.4 Convergent Sync</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 前回配ったFileと今回配るFileの差分を扱えない同期は、追加と変更しか追従できず、削除Skillが端末に残り続けます。Manifest比較で収束させる仕組みが必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Current/Previous Manifestの差集合で削除を追従し、symlinkを禁止し、保護対象（local/、settings.local.json、*.bak）を残しながら最終状態へ収束する同期が成立します。</p></div>
+<p><strong>【なぜこの設計か】</strong> Convergent Syncは、何度実行しても中央が所有するPathだけを期待状態へ近づけます。前回と今回のManifest差分で削除対象を決めるため、配布元から消えたFileだけを片付け、利用者のFileは残せます。単純な全置換では、個人Layerの消失と古いFileの残存を同時に防げません。</p>
 <pre><code class="language-text">Current Manifest = 今回配るPath
 Previous Manifest = 前回配ったPath
 Delete = Previous - Current
@@ -168,6 +172,7 @@ fi
 </code></pre>
 <p>Hookへ<code>0755</code>を設定し、<code>.agents/skills</code> Merge、Hash、Overlayを追加する。</p>
 <h2 id="ch-24-s5">24.5 Skill Merge</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Claude用Skillとagents用Skillが現時点で別ディレクトリにあるため、移行期に黙って上書きすると挙動差が出ます。Merge順序と衝突方針を明文化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 「.agents/skillsを退避→global-config/skillsで上書き→validate→両Runtimeへ配布」という順番が固定され、衝突時に黙って失う事故を防げます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 移行中の二つのSkill群は、一度tempへ集め、優先順とValidatorを通してから配布します。衝突を黙って上書きすると、同じ名前のどちらが実行されたか追跡できません。長期的に<code>skill-src</code>へ正本を寄せることで、Merge自体を例外的な移行処理へ縮小できます。</p>
 <p>移行中：</p>
 <pre><code class="language-text">.agents/skills → temp
 then global-config/skills overwrites
@@ -175,6 +180,7 @@ then global-config/skills overwrites
 </code></pre>
 <p>長期は<code>skill-src</code>から両方生成。衝突を黙って上書きしない。</p>
 <h2 id="ch-24-s6">24.6 <code>update.sh</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 更新が暴走したり、ネット不安定中に半端な状態で止まると、社員端末の挙動が日替わりで変わってしまいます。Updateには進行制御と失敗時の安全停止が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Lock取得・network_ok判定・Channel別refの切替（stableはtag、canaryはbranch）が組み込まれ、検出済みネット障害時は次回まで安全に持ち越せます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Updateを承認済みChannelとTagへ限定すると、端末が偶然取得した時点の<code>main</code>を配りません。Lockは重複更新を止め、Network確認はOfflineを破損扱いにせず終了させます。Sync後にVerifyすることで、取得できたReleaseと実際に利用できる設定を分けて判定できます。</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 ROOT="${HARNESS_ROOT:-$HOME/.local/share/trepro-harness}"
@@ -198,6 +204,7 @@ git checkout --detach "$ref"
 </code></pre>
 <p>本番は署名Tag、許可Version、失敗Rollbackを追加。</p>
 <h2 id="ch-24-s7">24.7 Verify</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「配布が成功した」を主観で判断すると、壊れたまま気付かず使われ続けます。存在・Version・Hook動作を機械的に確認する層が必要です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> claude/CLAUDE.md/skills/hooks/manifest/managed-settingsの存在を順に検査するverify.shが動き、失敗カウントで配布の合否が客観値で出るようになります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Verifyは、CLI、Version、診断、配布File、Managed設定を端末上で確認し、配布Scriptの成功表示を鵜呑みにしません。複数のCheckを最後まで走らせると、一つ目の失敗だけでなく端末の不足全体を復旧担当へ渡せます。代表Skill、Hook Fixture、Local保持まで加えることで、Fileの存在と実際の動作を区別できます。</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 failures=0
@@ -214,6 +221,7 @@ check "managed" test -f "/Library/Application Support/ClaudeCode/managed-setting
 </code></pre>
 <p>代表Skill認識、Hook Fixture、Token非混入、Local保持、Dry-run、Claude/Codex Hashも検査する。</p>
 <h2 id="ch-24-s8">24.8 Rollback</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 配布事故時に「どこへ戻すか」「どう戻すか」を即座に出せないと、復旧が深夜オペになります。直前Versionを記録しておき一手で戻せる手順を用意する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> .trepro-harness-previous-versionへHEADを保存し、git checkout→sync→verifyの3工程で復旧する流れが固定されます。MCP/Deploy副作用の別Rollback要否も明示できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Rollbackは問題発生後に考えると、戻すVersion、戻す対象、復旧後のVerifierが決まっていません。配布前に前Versionを記録し、SyncとVerifyを同じ手順で再実行できるようにすると、故障した新Releaseから既知の状態へ戻せます。外部MCPや送信など別の副作用は同じGit操作では戻らないため、Rollback範囲も事前に分けます。</p>
 <pre><code class="language-bash">git rev-parse HEAD &gt; "$HOME/.claude/.trepro-harness-previous-version"
 # rollback
 previous="$(cat "$HOME/.claude/.trepro-harness-previous-version")"
@@ -223,7 +231,28 @@ git checkout --detach "$previous"
 ./deploy/verify.sh
 </code></pre>
 <p>外部MCP変更、送信/Deploy、副作用、Claude本体Versionは別Rollbackが必要。</p>
+<p><strong>【実演】</strong> 配布前に現在の参照を保存し、新Releaseを反映した直後にVerifyを走らせる例です。ここではHook検査が<code>FAIL</code>になった時点で配布成功とはしません。保存済みの参照へ戻し、同じ<code>sync.sh</code>と<code>verify.sh</code>を通します。二回目のVerifyがすべて<code>PASS</code>になって初めて復旧完了です。読み取る箇所は、最初の失敗項目、Rollbackに使った参照、復旧後の検査結果です。この流れをCanaryで先に試しておけば、全社配布後に戻すCommandや権限が不足している事態を避けられます。Rollback後も<code>FAIL</code>が残る場合は、Release以外のLayerを疑い、配布対象を広げずIncident手順へ移ります。成功した旧Versionを記録に残すことで、端末ごとの手作業復旧にも同じ基準を使えます。なお、外部送信やDeployの副作用はこのGit Rollbackの対象外なので、別の復旧手順へ引き渡します。出力は例示であり、Version・環境で異なります。</p>
+<pre><code class="language-bash">cd "$HOME/.local/share/trepro-harness"
+git rev-parse HEAD &gt; "$HOME/.claude/.trepro-harness-previous-version"
+./deploy/update.sh
+./deploy/verify.sh
+
+previous="$(cat "$HOME/.claude/.trepro-harness-previous-version")"
+git checkout --detach "$previous"
+./sync.sh
+./deploy/verify.sh
+</code></pre>
+<pre><code class="language-text">PASS claude
+PASS version
+FAIL hooks
+rollback: previous version selected
+PASS claude
+PASS version
+PASS hooks
+PASS managed
+</code></pre>
 <h2 id="ch-24-s9">24.9 配布方式</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 配布手段を1個に決め打ちすると、社員規模や管理者権限の有無で詰まります。Kandji/LaunchAgent/Server-managed/File-based managedを役割で使い分ける必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 本番はKandji・POCはLaunchAgent・Claude.ai組織はServer-managedという棲み分けが明確になり、配布事故時の責任分界点も同時に決まります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 配布方式は、管理者権限、対象範囲、運用段階で選びます。POC向けのLaunchAgentを本番全社配布の代わりにすると、端末統制と配布結果の把握が弱くなります。本番とFallbackを分けることで、検証中の簡易経路が標準運用として残るのを防げます。</p>
 <table>
 <thead>
 <tr>
@@ -251,11 +280,12 @@ git checkout --detach "$previous"
 </tbody>
 </table>
 <p>本番はKandji、LaunchAgentはPOCまたはFallback。</p>
+<p><strong>【失敗するとこうなる】</strong> Rollbackを用意せずに新しい安全設定を全端末へ配布します。更新後、代表SkillとHookが動かない端末が増えますが、前Versionの参照がなく、担当者ごとに手作業でFileを戻し始めます。原因は配布手順だけを検証し、戻すVersion、対象、Command、復旧後Verifyを先に試さなかったことです。配布を止め、既知の参照を確定し、CanaryでRollbackとVerifyを通してから同じ手順を対象端末へ適用します。</p>
 <hr/>
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch24-sync-rollback">
   <img src="../images/diagram-ch24-sync-rollback.webp" alt="Manifest方式の同期、検証、Rollbackの流れ" loading="lazy" decoding="async">
   <figcaption>配布は毎回、同じ正しい状態へ収束し、失敗時には既知のReleaseへ戻します。</figcaption>

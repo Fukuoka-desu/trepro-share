@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <table>
 <thead>
 <tr>
@@ -88,10 +88,29 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
+<p><strong>【なぜこの設計か】</strong> 素材上の記述と本書の現行扱いを並べると、古い説明を黙って消さず、何をどう補正したかを追跡できます。発見した記述を直ちに書き換えるのではなく、一次資料で確認してから現在の扱いを決めます。確認できない場合は未確認のまま残すため、推測が最新版として広がりません。</p>
+<p><strong>【なぜこの設計か】</strong> 変動情報へ<code>verified_at</code>、<code>status</code>、<code>official_source</code>、<code>migration_note</code>を持たせると、値だけでなく確認時点と移行理由をReviewできます。本文中の一文だけを直す方式では、同じ古い説明が別章やRecipeに残ります。RegistryとCoverageへ記録すれば、影響箇所を再点検できます。</p>
+<p><strong>【実演】</strong> 素材に残る「Context 40%を固定閾値にする」という一件を補正する流れです。発見、確認、修正、記録を分けます。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">materials/の全文を検索し、「Context 40%を固定の切替Ruleにする」という記述を探してください。
+該当箇所と参照元を一覧にし、まだ修正しないでください。
+次に本書の公式確認先から現行情報を確認し、固定閾値として裏付けられるかを判定してください。
+裏付けられない場合は「固定Ruleにしない」という本章の現行扱いへ、該当する教材記述だけを補正してください。
+確認できない場合は未確認として停止し、本文を変更しないでください。
+変更前後、確認日、Source ID、影響Lesson、migration_noteをupdates/context-threshold.mdへ記録してください。
+完了条件は、検索結果、一次資料の確認、最小Diff、更新記録の四つを確認できることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>最初に古い表現の全出現箇所と参照関係を集めます。次に一次資料で固定閾値の根拠を確認し、裏付けがない場合だけ対象文を現行扱いへ補正します。最後に変更前後とSource、影響範囲を更新記録へ残し、再検索します。</p>
+<p><strong>成果物</strong></p>
+<p>対象の教材記述が最小差分で補正され、<code>updates/context-threshold.md</code>に発見箇所、確認結果、変更前後、影響Lessonが残ります。確認不能なら教材は変わらず、未確認の記録だけが残ります。</p>
+<p><strong>検証方法</strong></p>
+<p>修正前の検索結果とDiffを照合し、対象外の文が変わっていないことを確認します。更新記録のSource IDから一次資料へ戻り、確認日と結論が一致するかを見ます。最後に同じ表現を再検索し、残存箇所があれば理由を記録します。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <hr/>
 
   </section>
-  <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>Registryに最低限書くべき項目</dt><dd>名前・状態（Active/Suspended/Deprecated）・確認日・公式Sourceの4項目は必須です。代替手順は任意ですが、Deprecated項目には必ず入れます。確認日のない項目はRegistryに置く意味がないため、新規追加時の必須欄として強制する仕組みにします。</dd><dt>本文とRegistryの境界線</dt><dd>『3ヶ月以内に変わりそうか』を判断基準にすると、本文へ書くか、Registryへ書くかが迷わず決まります。モデル名・料金・利用上限・UI・Beta状態はほぼ全てRegistry側です。本文に書いてよいのは、変わっても古びない設計思想と原則のみと割り切ります。</dd><dt>確認日の運用</dt><dd>確認日は『前回見たから動くと推定する有効期限』であり、過ぎたら必ず再確認します。3ヶ月を上限とし、過ぎたものはダッシュボードに赤で出します。確認日が形骸化したRegistryは、ない方がマシです。</dd><dt>終章への接続</dt><dd>原則とFeatureを分けて運用すると、配布物が時間経過で腐らなくなります。次の終章では、ここまでの全章を通じて作ってきた配布物群を、長く続くハーネスとして組み立て直す視点が問われます。</dd></dl></section>
+  <section class="expansion" aria-label="実務に落とすときの補足"><p class="panel-title">実務に落とすときの補足</p><dl class="expansion-list"><dt>Registryに最低限書くべき項目</dt><dd>名前・状態（Active/Suspended/Deprecated）・確認日・公式Sourceの4項目は必須です。代替手順は任意ですが、Deprecated項目には必ず入れます。確認日のない項目はRegistryに置く意味がないため、新規追加時の必須欄として強制する仕組みにします。</dd><dt>本文とRegistryの境界線</dt><dd>『3ヶ月以内に変わりそうか』を判断基準にすると、本文へ書くか、Registryへ書くかが迷わず決まります。モデル名・料金・利用上限・UI・Beta状態はほぼ全てRegistry側です。本文に書いてよいのは、変わっても古びない設計思想と原則のみと割り切ります。</dd><dt>確認日の運用</dt><dd>確認日は『前回見たから動くと推定する有効期限』であり、過ぎたら必ず再確認します。3ヶ月を上限とし、過ぎたものはダッシュボードに赤で出します。確認日が形骸化したRegistryは、ない方がマシです。</dd><dt>終章への接続</dt><dd>原則とFeatureを分けて運用すると、配布物が時間経過で腐らなくなります。次の終章では、ここまでの全章を通じて作ってきた配布物群を、長く続くハーネスとして組み立て直す視点が問われます。</dd></dl></section>
   
   
 </article>

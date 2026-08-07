@@ -102,6 +102,11 @@
     const closeBtn = toc.querySelector('.toc-drawer-close');
     const openDrawer = () => { toc.classList.add('open'); overlay && overlay.classList.add('open'); };
     const closeDrawer = () => { toc.classList.remove('open'); overlay && overlay.classList.remove('open'); };
+    document.querySelectorAll('[data-open-toc]').forEach(link => link.addEventListener('click', e => {
+      if (!window.matchMedia('(max-width:980px)').matches) return;
+      e.preventDefault(); openDrawer();
+      toc.querySelector('h2')?.focus();
+    }));
     toggle && toggle.addEventListener('click', () => {
       if (toc.classList.contains('open')) closeDrawer(); else openDrawer();
     });

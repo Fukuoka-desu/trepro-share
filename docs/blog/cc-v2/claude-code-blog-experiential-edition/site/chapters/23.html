@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-23-s1">23.1 Product定義</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全社配布の議論を始める前に、ハーネスが何を提供する製品かを一文で確定させる必要があります。目的が曖昧だと、後続のScope設計と完了判定が揺れてしまうためです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 「全社員のMacへ同じ実行基盤を配布する」という定義を共有することで、CLAUDE.md・Commands・Hooks・Skillsの一元化と新人30分稼働という具体的なゴールに議論を絞り込めます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 1台で動く設定は、その端末で人が直せば復旧できます。100台へ配る基盤では、同じVersion、同じ安全制御、同じ検証結果を再現し、失敗した端末を把握して戻せなければなりません。Productを「Fileの配布」ではなく継続的に改善する実行基盤と定義することで、更新、監査、Onboardingまで設計対象に入ります。</p>
 <blockquote>
 <p>全社員のMacへ、同じClaude Codeの知識、手順、安全制御、外部連携方針を配布し、継続的に改善する社内AI実行基盤。</p>
 </blockquote>
@@ -51,6 +52,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 <li>Kandji/LaunchAgentで毎日更新。</li>
 </ul>
 <h2 id="ch-23-s2">23.2 現行資産</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 新しい設計を描く前に、現在Gitで管理できている資産と、まだ個人領域に滞留している資産を切り分ける必要があります。土台の解像度がないまま4面構想に進むと、配布漏れと二重管理が発生するためです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Guidance・手順・制御・Protocol・Reference・Codex・配布・Device・Testという9区分で現状資産を棚卸しでき、不足箇所と移管対象を客観的に並べられるようになります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 現行資産をGuidance、手順、制御、外部連携、配布、Testへ棚卸しすると、同じ責務の二重実装と空白を発見できます。個人端末では暗黙に補えた手順も、配布先ではAssetとして存在しなければ再現されません。追加開発の前に資産を対応付けることで、動いているものを別名で作り直す事故を防ぎます。</p>
 <table>
 <thead>
 <tr>
@@ -98,6 +100,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <h2 id="ch-23-s3">23.3 追加すべき4面</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 現状資産だけでは「全社強制」「Runtime二重管理」「事故抑制」が成立しないため、追加すべき面を明示する必要があります。Documentに書くだけでは社員の手元で外せてしまい、安全と一貫性が崩れるためです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Managed Policy・Canonical Skill Source・Release Channel・Telemetry/Auditの4面が定義され、macOSのmanaged-settings.json等の固定領域に置くものが具体パスで決まります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Managed Policy、正本、Release Channel、Telemetryは、台数が増えた時に個人運用では埋められない四つの差を補います。利用者が外せる禁止、二重編集されたSkill、未承認の最新版、観測できない失敗が残ると、端末ごとに別の製品になります。四面を揃えることで、配る内容、配る順序、強制する規則、結果の観測を一つのReleaseとして扱えます。</p>
 <ol>
 <li><strong>Managed Policy</strong> — ユーザーが外せないPermission/Sandbox/MCP。</li>
 <li><strong>Canonical Skill Source</strong> — Claude/Codexの二重編集を廃止。</li>
@@ -110,6 +113,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 /Library/Application Support/ClaudeCode/managed-mcp.json
 </code></pre>
 <h2 id="ch-23-s4">23.4 推奨Repository</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skillの正本と配布生成物を分けないと、片方だけ修正される事故や、Build前のFileをそのまま配ってしまう事故が起きます。両Runtime向けに同じ正本から再現可能な成果物を生成するための骨格を先に決めておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> skill-srcを正本、global-config/skills と .agents/skills を生成先とするRepository構造が共有され、scripts/build-skills.sh など整備すべきPath一覧が手戻りなく見えるようになります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Repository内で正本、生成物、Managed設定、配布Script、Testを分けると、どこを編集し、何を再生成するかが明確になります。生成先を直接直すと次のBuildで消え、Claude側とCodex側に別の修正が残ります。<code>skill-src</code>を一つの入口にすることで、同じFixtureとValidatorを両方へ適用できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 推奨Repositoryの完全構造を示し、skill-srcを正本に global-config と .agents/skills を生成物として分離する配置を提示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 正本と生成物の境界が明確になり、Skillの二重編集や生成物への直接コミットといった事故をRepository構造の段階で防げます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>VERSION / CHANGELOG.md</dt><dd>配布物のバージョンと変更履歴を機械可読に固定するファイルです。端末側のVersion突合とRollback判断の基準になります。</dd><dt>global-config/</dt><dd>~/.claude/へ展開する生成物の置き場です。Skillはbuild outputとして並ぶので、ここを直接編集すると正本との不整合事故が起きます。</dd><dt>skill-src/</dt><dd>Skillの唯一のCanonical Source（正本）です。SKILL.md・references・scripts・fixtures・testsを束ねた一次情報で、ここだけを編集する規約になります。</dd><dt>.agents/skills/</dt><dd>Codex Agent向けのbuild outputです。skill-srcから自動生成される配布先で、Claude側出力とdiffゼロを保つ前提で扱います。</dd><dt>managed-config/</dt><dd>macOS管理領域へ配るManaged Policy一式のソースです。Drop-in分割（managed-settings.d/）を含み、Security/Telemetry/部署別を並走編集できます。</dd><dt>deploy/</dt><dd>install/bootstrap/update/verifyとlib/common.sh、Kandji・LaunchAgent資材を集約したフォルダです。配布事故の調査起点となる重要領域です。</dd><dt>scripts/</dt><dd>build-skills.sh・validate-skills.py・create-release.sh・rollback.shなどの内製スクリプト置き場です。CIで叩く前提の運用接点となります。</dd></dl></div></div><pre><code class="language-text">trepro-harness/
 ├── VERSION
 ├── CHANGELOG.md
@@ -155,11 +159,13 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </code></pre>
 <p>生成先を直接編集しない。</p>
 <h2 id="ch-23-s5">23.5 Release Flow</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> main最新を全社員へ無条件に流すと、不具合の範囲がゼロ秒で全社に広がります。段階配布を入れ込まないと、止血の余地がない配布になってしまうためです。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> PR→Test→Evaluator→Canary→Pilot→Stableの段階を経て承認Tagだけ配る運用が描けるので、事故が起きてもCanary数名規模で封じ込められるようになります。</p></div>
+<p><strong>【なぜこの設計か】</strong> CanaryからPilot、Stableへ段階を分けるのは、少数端末でしか出ない環境差を全社配布前に観測するためです。<code>main</code>の最新を直接配ると、Review済みかどうかと配布可能かどうかが同じ状態になります。承認済みTagを配布単位にすると、問題端末がどのReleaseを使ったかも追跡できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> PRから承認済みTag配布までの段階展開フローを一行で示し、各段階を通った成果だけが全社員Updateへ進める運用を定義します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Canary 2〜3名・Pilot部署・Stable全社の順で配布が進むため、不具合の影響範囲をPilot到達前に小さく封じ込められます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>PR</dt><dd>変更提案の入口です。ここでレビューを通さないとmainへ取り込まれず、後段の自動検査も走らない仕組みになります。</dd><dt>Static/Test/Evaluator</dt><dd>静的解析・自動テスト・Skill Evaluatorの3関門です。スコア未達の成果物がCanaryへ流出するのを機械的に止めます。</dd><dt>Canary Tag → 2〜3名</dt><dd>署名Tag付きの先行配布枠です。社内2〜3名にだけ当てて副作用を観測し、不具合の影響範囲を最小に閉じ込めます。</dd><dt>Pilot部署</dt><dd>Canaryを通過した版を一部署単位で当てる中段階です。実業務での誤検知や速度低下を、全社展開前に検出できます。</dd><dt>Stable Tag → 全社員Update</dt><dd>Pilot実績付きの承認Tagのみが全社員Updateへ進む最終段階です。main最新を無条件配布する構造的事故を防げます。</dd><dt>Metrics</dt><dd>Update成功率・Block件数・Skill失敗などを観測する戻りループです。次のリリース判断の根拠データになります。</dd></dl></div></div><pre><code class="language-text">PR → Static/Test/Evaluator → Canary Tag → 2〜3名 → 観測
 → Pilot部署 → Stable Tag → 全社員Update → Metrics
 </code></pre>
 <p><code>main</code>最新を無条件配布せず、承認済みTagを配る。</p>
 <h2 id="ch-23-s6">23.6 Guidance/Enforcement Mapping</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 「日本語で書く」「.env禁止」のようなルールが文章のお願いなのか機械強制なのかを揃えないと、守られないルールが量産されます。Guidance/Enforcementの境目を表で見える化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 各要求に対してCLAUDE.md・Hook・managed-settings・managed-mcpのどれで実装するかが対になり、文書任せにせず実行時に止める仕組みへ落とし込めるようになります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 要求ごとにGuidanceとEnforcementの実装先を対応させると、文章で頼むだけの禁止を見つけられます。日本語応答のような好みと、秘密読取やDeployのような高Risk操作を同じ強度で扱う必要はありません。要求のRiskに応じてHook、Managed deny、CIへ移すことで、利用者やSessionが変わっても禁止が残ります。</p>
 <table>
 <thead>
 <tr>
@@ -207,6 +213,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tbody>
 </table>
 <h2 id="ch-23-s7">23.7 個人Layer</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 配布で個人カスタマイズを上書きすると、社員ごとの私物Skill・私物Promptが消えて配布への信頼が崩壊します。中央Manifestが「自分が配ったものだけ」を扱う約束を明文化する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> ~/.claude/local/ 配下の保護領域と apply-local-overlay.sh の運用が決まり、中央配布と個人差分が衝突した場合のLogと優先順位も合意できる状態になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 中央配布と個人設定の所有範囲を分けると、更新が個人の正当な工夫を消すのを防げます。Manifestが自分で配ったPathだけを削除し、衝突をLogへ出すため、中央更新を繰り返しても状態が収束します。個人Layerの発見方法まで明文化しないと、Fileを保護できても実行時に読み込まれません。</p>
 <p><code>~/.claude/local/</code>を保護するだけでは自動発見されるとは限らない。運用を明文化する。</p>
 <pre><code class="language-text">~/.claude/local/
 ├── CLAUDE.local.md
@@ -216,6 +223,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </code></pre>
 <p>中央Manifestは、自分が配ったPathだけを削除する。名前衝突は中央優先でLogへ出す。</p>
 <h2 id="ch-23-s8">23.8 完了条件</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Architectureの議論は、合格条件を箇条書きにしないと「だいたい出来た」で止まります。後で評価し直せる完了Checklistを置く必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 30分導入・Managed Policy優先・Skill正本1箇所・1 Command Rollback等の10項目が並び、Architecture章のゴール到達を客観的に判定できるようになります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 完了条件は、導入できた一台ではなく、配布、強制、正本、Rollback、個人Layerが全端末で維持される状態を測ります。Version把握がなければ、失敗が設定差か古いReleaseかを切り分けられません。1 Command Rollbackまで含めることで、配布成功だけでなく配布失敗からの復旧もProductの責務になります。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Architecture章の完了条件を10項目のチェックリストで列挙し、Skill正本1箇所・Claude/Codex同Fixture等の達成基準を並べます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装後にこのChecklistへ突き合わせれば、「設計が紙だけで終わっていないか」を機械的に判定できるようになります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>30分導入</dt><dd>新人がInstall→Verify→Bronze実演まで30分で完走できる状態を保つ条件です。崩れるとOnboarding工数が再び属人化します。</dd><dt>承認Release配布</dt><dd>Canary→Pilot→Stableを通過したTagだけを全社員へ配る運用基準です。mainの即時配布事故を構造で防ぎます。</dd><dt>全端末Version把握</dt><dd>harness/Claude/Skillの版を中央で把握できている状態です。インシデント時の影響範囲特定に直結します。</dd><dt>Managed Policy優先</dt><dd>User設定よりmanaged-settingsが必ず勝つ状態の維持条件です。Safety解除が端末側で出来ないことを保証します。</dd><dt>Bypass禁止</dt><dd>--dangerously-skip-permissions等のBypass経路を物理的に塞ぐ条件です。便利すぎる時の事故を初日から止めます。</dd><dt>MCP統制</dt><dd>Allowlistで承認済みMCPのみ接続可能にする条件です。悪性ServerやSecret平文書きの侵入経路を閉じます。</dd><dt>Skill正本1箇所</dt><dd>skill-src以外にCanonical Sourceが存在しない状態です。Claude/Codex二重編集による挙動差を構造的に排除します。</dd><dt>Claude/Codex同Fixture</dt><dd>両Runtimeが同じFixtureで同じ結果を返せる状態です。Runtime差を理由にした品質ブレを発生させません。</dd><dt>1 Command Rollback</dt><dd>一手で直前Versionへ戻せる仕組みの保持条件です。深夜オペの復旧負荷を避ける最後の安全網となります。</dd><dt>個人Layer保持</dt><dd>~/.claude/local/配下が中央配布で消えない条件です。社員の私物Skillが守られないと配布への信頼が崩壊します。</dd></dl></div></div><pre><code class="language-text">[ ] 30分導入
 [ ] 承認Release配布
 [ ] 全端末Version把握
@@ -227,11 +235,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [ ] 1 Command Rollback
 [ ] 個人Layer保持
 </code></pre>
+<p><strong>【失敗するとこうなる】</strong> 一台で成功した同期Scriptを、そのまま100台へ一斉配布します。翌朝、端末ごとにSkill数と安全設定が異なり、一部では個人設定が消えていますが、どのVersionが入ったか一覧にできません。原因はRelease Channel、Manifest所有範囲、Version Inventory、段階配布を一台の成功で代用したことです。全体更新を止め、端末Versionと差分を収集し、既知のReleaseへ戻してからCanaryで同期と個人Layer保持を再検証します。</p>
 <hr/>
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch23-harness-architecture">
   <img src="../images/diagram-ch23-harness-architecture.webp" alt="トレプロハーネスの正本、生成物、Policy、配布、個人Layer、監視" loading="lazy" decoding="async">
   <figcaption>正本と生成物、共通層と個人層、GuidanceとEnforcementを分離します。</figcaption>

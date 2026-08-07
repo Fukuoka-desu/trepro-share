@@ -19,7 +19,7 @@
 便利ですが、壊れた瞬間に戻る場所を失います。</p><p>この章で扱うのは、Gitと Checkpoint を使った『戻れる仕事場』の作り方です。
 意味のある単位で保存し、壊れたら 1 分前に戻り、誰が何のために変えたかを履歴に残す。
 それだけで、AI と作業する不安の大半は消えます。</p><p>不可逆な操作ほど、可逆な仕掛けで包む。Git は AI 時代の安全網です。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-10-0-checkpoint"><h3 id="feature-10-0-checkpoint">Checkpoint（会話中の素早い巻き戻し）</h3><p class="feature-summary">セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。</p><dl class="feature-io"><dt>入力</dt><dd>AIに任せる大胆な変更、実験的な編集</dd><dt>出力</dt><dd>巻き戻し可能なCheckpoint、戻したあとの状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-1-git"><h3 id="feature-10-1-git">最小Git運用</h3><p class="feature-summary">意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。</p><dl class="feature-io"><dt>入力</dt><dd>完了した小さな変更、検証結果</dd><dt>出力</dt><dd>意味あるCommitメッセージとレビュー可能なdiff</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-2-claude-commit-rule"><h3 id="feature-10-2-claude-commit-rule">ClaudeへCommitさせるRule</h3><p class="feature-summary">AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。</p><dl class="feature-io"><dt>入力</dt><dd>完了した変更、検証ログ</dd><dt>出力</dt><dd>Rule準拠のCommit、PR説明文</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-3-worktree"><h3 id="feature-10-3-worktree">Worktreeによる並列作業</h3><p class="feature-summary">別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>並行して進めたい複数機能</dd><dt>出力</dt><dd>機能別Worktreeディレクトリと衝突なしの差分</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-10-0-checkpoint"><p class="feature-title" id="feature-10-0-checkpoint">Checkpoint（会話中の素早い巻き戻し）</p><p class="feature-summary">セッション内で直前の変更を一手で戻せる機能。試行錯誤の安心担保として軽量な保存地点を作る。</p><dl class="feature-io"><dt>入力</dt><dd>AIに任せる大胆な変更、実験的な編集</dd><dt>出力</dt><dd>巻き戻し可能なCheckpoint、戻したあとの状態</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-1-git"><p class="feature-title" id="feature-10-1-git">最小Git運用</p><p class="feature-summary">意味のある単位でCommitし、変更理由と検証結果を残すことで、セッションや人をまたぐ正式な履歴を作る。</p><dl class="feature-io"><dt>入力</dt><dd>完了した小さな変更、検証結果</dd><dt>出力</dt><dd>意味あるCommitメッセージとレビュー可能なdiff</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-2-claude-commit-rule"><p class="feature-title" id="feature-10-2-claude-commit-rule">ClaudeへCommitさせるRule</p><p class="feature-summary">AIがCommitメッセージを書く際の体裁・粒度・禁止事項を定めるルール。履歴の読みやすさを保つ。</p><dl class="feature-io"><dt>入力</dt><dd>完了した変更、検証ログ</dd><dt>出力</dt><dd>Rule準拠のCommit、PR説明文</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-10-3-worktree"><p class="feature-title" id="feature-10-3-worktree">Worktreeによる並列作業</p><p class="feature-summary">別ブランチを別ディレクトリとして展開し、同じファイルへの編集衝突なしに並列実装を進める仕組み。</p><dl class="feature-io"><dt>入力</dt><dd>並行して進めたい複数機能</dd><dt>出力</dt><dd>機能別Worktreeディレクトリと衝突なしの差分</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-10">
   <img src="../images/chapter-10-2950ba.webp" alt="第10章『GitとCheckpoint』を表すeditorial metaphor illustration" loading="lazy" decoding="async">
@@ -38,8 +38,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-10-s1">10.1 両方必要</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CheckpointとGitはどちらか一方だと穴が残ります。守備範囲の違いを理解し、両方を並列で持つ必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Checkpointは会話中の素早い巻戻し、GitはSessionや人を跨ぐ正式履歴と役割を分けると、短時間と長期間の両方で『戻れる』状態が作れます。</p></div>
+<p><strong>【なぜこの設計か】</strong> CheckpointとGitは、戻せる時間軸と対象が違います。Session内の試行錯誤だけをGitへ細かく残すと履歴が読みにくくなり、Checkpointだけに頼るとSessionを跨いだ復旧やReviewができません。短い巻戻しと長期の履歴を分担させることで、復旧速度と監査可能性を同時に保ちます。</p>
 <table>
 <thead>
 <tr>
@@ -61,12 +62,17 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
+<p><strong>【この表の読み方】</strong> Checkpointの行は、今のSessionで直前の試行を取り消す用途を示します。Gitの行は、Session終了後にも残す基準点とReviewの用途を示します。特に「限界」列を見ると、一方を導入すれば他方を省けるわけではないと分かります。</p>
 <h2 id="ch-10-s2">10.2 Checkpoint</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Checkpointは便利ですが、外部副作用や手動変更まで戻せるわけではありません。範囲を理解せずGit代わりにすると壊れた状態で詰みます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> /rewindで戻すのはCodeかConversationかを毎回確認することで、Checkpointを正しく軽量な安心装置として使えます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Checkpointは、対話の途中で生じた局所的な失敗を、Commitを作らずに切り離すためにあります。CodeとConversationを分けて戻せるため、壊れた変更だけを捨てたい場面と、誤った前提を含む会話ごと戻したい場面を区別できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Checkpointへ巻き戻すコマンド。Esc2回でも履歴選択に入れる場合があり、CodeかConversationかを選んで戻します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> セッション内の試行錯誤を一手で戻せるようになり、AIへ大胆な変更を任せる心理的ハードルが下がります。</p></div><pre><code class="language-text">/rewind
 </code></pre>
 <p>またはEscを2回押して履歴選択へ入れる場合がある。CodeとConversationのどちらを戻すか確認する。</p>
 <p>CheckpointはGitの代わりではない。</p>
+<p><strong>【このコードの読み方】</strong> <code>/rewind</code>は履歴選択へ入る起点です。Codeだけを戻す選択は、会話で得た判断を残しつつ変更を外したい時に使います。Conversationも戻す選択は、その後の指示が誤った前提から連鎖している時に使います。</p>
+<p><strong>【失敗するとこうなる】</strong> 壊れた直後に確認せず作業を続けると、複数Fileへ誤変更が広がり、履歴選択画面でどの地点が安全か判別できなくなります。原因は、失敗の境界を越えて新しい操作を積み重ねたことです。症状が出た時点で作業を止め、Diffで影響範囲を確認してから、壊す直前のCheckpointへ戻します。外部副作用や手動変更まで起きている場合は、Checkpointだけで復旧したと判断せずGitと外部状態も確認します。</p>
 <h2 id="ch-10-s3">10.3 最小Git運用</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> AIへ大胆な変更を任せる前後で良い状態を保存していないと、壊れた時に戻る場所がありません。最小限のGit操作は身に付けておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> init→add→baseline commit→検証後の意図あるcommit、を癖にすると、AI作業の前後に必ず復帰可能点が残ります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Agentへ変更を任せる前にBaseline Commitを作ると、人間の既存変更とAgentの変更の境界が固定されます。変更後に<code>status</code>と<code>diff</code>を確認してから対象Fileだけを追加すれば、無関係な生成物やSecretsをCommitへ混ぜる事故を減らせます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 最小Git運用の典型フロー。Baseline Commitを作り、変更後にStatusとDiffを確認してから意図あるCommitを刻みます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AI作業の前後に復帰可能点が必ず残り、壊れたら直前のCommitに戻すという退避路が常時開通します。</p></div><pre><code class="language-bash">git init
 git add .
 git commit -m 'chore: baseline before agent changes'
@@ -77,7 +83,31 @@ git diff
 git add &lt;intentional-files&gt;
 git commit -m 'feat: add meeting task extraction'
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 最初のCommitは機能完成ではなく、Agent変更前の復旧点です。<code>git status --short</code>は変更Fileの広がりを、<code>git diff</code>は内容の意図を確認するために並べています。最後の<code>git add &lt;intentional-files&gt;</code>は全変更ではなく、目的に含めるFileだけを選ぶ行です。</p>
+<p><strong>【実演】</strong> まず小さなRepositoryに正常な文を置き、GitでBaselineを作ります。次にClaude Codeへ追記を依頼した後、内容を壊す追加依頼を出したと想定します。<code>git status --short</code>の<code>M</code>は、Baseline以後に<code>memo.md</code>が変更された印です。<code>git diff</code>の<code>-</code>と<code>+</code>を見ると、完成文が未確定の文字列へ置き換わった地点を特定できます。ここで<code>/rewind</code>を開き、壊す依頼の直前を選んでCodeを戻します。再度<code>git diff</code>を実行し、壊した差分が消え、先に作った正常な追記だけが残ったことを読みます。適切なCheckpointが見つからなくても、Baseline Commitが残っているため、長期の復旧判断をGitの履歴からやり直せます。Checkpointは短い試行の取消、CommitはSessionを跨ぐ基準点として使い分けます。戻した後は、意図した追記まで消えていないこともDiffで確認します。</p>
+<pre><code class="language-text">$ mkdir checkpoint-demo &amp;&amp; cd checkpoint-demo
+$ git init
+$ printf '結論: 現行案を採用します。\n' &gt; memo.md
+$ git add .
+$ git commit -m 'chore: baseline before agent changes'
+
+[正常な追記後、さらに「結論を未確定へ変えて」と依頼した状態]
+$ git status --short
+ M memo.md
+$ git diff -- memo.md
+-結論: 現行案を採用します。
++結論: TODO???
+
+[Claude Codeで実行]
+/rewind
+&gt; 壊す依頼の直前を選び、Codeを戻す
+
+$ git diff -- memo.md
+[壊した置換差分は表示されない]
+</code></pre>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-10-s4">10.4 ClaudeへCommitさせるRule</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> AIにCommitを任せると、メッセージが冗長になったり粒度がばらついたりして、後日のレビューや巻き戻しが難しくなります。書き方のRuleを与える必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Diff提示・目的を1つ・Secrets Scan・事実だけ書く、などをRule化すると、人と同じ品質の履歴がAI作業でも維持できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> AgentはCommitを作れても、その内容が人間の意図と一致するとは限りません。Diff、目的、Secrets、TestをCommit前の確認項目にすると、「Commitができた」という操作結果を「後から説明できる変更」へ変えられます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> AIにCommitを任せる際のRule7か条。Diff提示・目的1つ・Secrets Scan・Force Push禁止・事実記述などを縛ります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが書くCommitでも履歴が読みやすく保たれ、後日のレビューと巻き戻しが現実的な作業として成立します。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Commit前にDiffを見せる</dt><dd>実行前に変更全体を人へ提示する縛りです。提示なしのCommitは意図と実体のズレに気付けません。</dd><dt>変更目的を1つにする</dt><dd>1Commitに1つの意図しか含めない縛りです。混ぜると後日の巻き戻しと原因切り分けが難しくなります。</dd><dt>Secrets Scan</dt><dd>鍵やTokenが含まれていないか必ず走らせる縛りです。AIに任せると気付かず混入し、履歴に永続化します。</dd><dt>Test Evidence</dt><dd>検証実行Logや結果を添える縛りです。事実の裏付けなしのCommitは『動いたっぽい』を履歴化してしまいます。</dd><dt>他人の変更を含めない</dt><dd>他者の修正やマージ差分を巻き込まない縛りです。混入すると履歴の責任所在が曖昧になります。</dd><dt>Force Pushしない</dt><dd>履歴を上書きするpushを禁じる縛りです。共有Branchで実行すると他人のCommitを消し飛ばします。</dd><dt>Commit Messageへ事実だけを書く</dt><dd>推測・誇張・自賛を排し、変更内容と理由のみ書く縛りです。後日の読み手が事実だけで判断できるようにします。</dd></dl></div></div><pre><code class="language-text">- Commit前にDiffを見せる
 - 変更目的を1つにする
 - Secrets Scan
@@ -86,18 +116,22 @@ git commit -m 'feat: add meeting task extraction'
 - Force Pushしない
 - Commit Messageへ事実だけを書く
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 「変更目的を1つにする」は、Rollback時に無関係な変更まで失わないための境界です。「他人の変更を含めない」は、dirtyなWorking Treeで所有者不明の差分を取り込む事故を防ぎます。「Test Evidence」と事実だけのMessageを組み合わせると、何を確認してCommitしたかをReview時に追跡できます。</p>
 <h2 id="ch-10-s5">10.5 Worktree</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Agentを並列に動かす時に同じWorking Treeを共有すると、編集が衝突して上書きし合います。物理的に作業場所を分ける仕組みが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> worktree addで機能ごとに別ディレクトリへ展開すると、並列実装が衝突なしで進み、後で人間が安全に統合できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 並列Agentが同じWorking Treeを共有すると、FileだけでなくIndexや未Commit差分も競合します。AgentごとにWorktreeとBranchを分けると、変更範囲を物理的に隔離でき、人間が統合前に各Diffを個別確認できます。</p>
 <p>Agentを並列化する時は、同じWorking Treeを共有しない。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Worktreeで作業ツリーを物理分離するコマンド例。テスト用とドキュメント用に別ディレクトリ・別Branchを切ります。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 複数Agentに並列実装させても同じFileを奪い合わず、人間が後で整合させてマージできる構造になります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>../project-agent-tests (agent/tests)</dt><dd>テスト追加担当Agent専用の作業ツリーです。本体ディレクトリと物理分離するため、同じFileの奪い合いが起きません。</dd><dt>../project-agent-docs (agent/docs)</dt><dd>ドキュメント整備担当Agent専用の作業ツリーです。Branchも別なので、人間が後でレビューしながら安全に統合できます。</dd></dl></div></div><pre><code class="language-bash">git worktree add ../project-agent-tests -b agent/tests
 git worktree add ../project-agent-docs -b agent/docs
 </code></pre>
 <p>各Agentへ編集範囲を割り当て、人間が統合する。</p>
+<p><strong>【このコードの読み方】</strong> 1行目はTest担当用、2行目はDocument担当用の作業場所とBranchを同時に作ります。Directory名とBranch名を役割に合わせると、どのAgentの差分かを一覧から判断できます。最後に人間が統合する前提を外すと、分離した変更の矛盾を検出する工程がなくなります。</p>
+<p><strong>【失敗するとこうなる】</strong> 2つのAgentを同じWorking Treeで動かすと、一方が編集したFileを他方が読み直して上書きし、<code>git status --short</code>には両者の変更が混ざって表示されます。原因は、担当範囲を言葉だけで分け、作業場所とBranchを分離しなかったことです。両Agentを止めて各差分の所有者を確認し、別Worktreeへ割り当て直します。その後、人間が片方ずつDiffと検証結果を確認して統合します。</p>
 <hr/>
 
   </section>
   
   
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中小Webサイト運営者（架空）が、AIに『大胆に作り直して』を依頼するたび、戻したい時に戻せず古い版を失っている。</p><h3>こう使う</h3><p>毎回の作業開始前に良い状態をCommitし、Checkpoint＋Gitの二重保存で『戻れる』を物理的に作る。</p><h3>得られるもの</h3><p>AIへ強気に試行させても、いつでも前に戻れる安心が手に入る。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人開発（架空）が、複数機能を同時に試したくて同じファイルを並列編集し、お互いの変更を上書きして混乱した。</p><h3>こう使う</h3><p>Worktreeで作業ツリーを物理的に分け、機能ごとに別ディレクトリで並列に動かす。</p><h3>得られるもの</h3><p>AIに並列実装させても衝突が起きず、後でCherry-pickで良い変更だけを統合できる。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>中小Webサイト運営者（架空）が、AIに『大胆に作り直して』を依頼するたび、戻したい時に戻せず古い版を失っている。</p><p class="usecase-label">こう使う</p><p>毎回の作業開始前に良い状態をCommitし、Checkpoint＋Gitの二重保存で『戻れる』を物理的に作る。</p><p class="usecase-label">得られるもの</p><p>AIへ強気に試行させても、いつでも前に戻れる安心が手に入る。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>ある個人開発（架空）が、複数機能を同時に試したくて同じファイルを並列編集し、お互いの変更を上書きして混乱した。</p><p class="usecase-label">こう使う</p><p>Worktreeで作業ツリーを物理的に分け、機能ごとに別ディレクトリで並列に動かす。</p><p class="usecase-label">得られるもの</p><p>AIに並列実装させても衝突が起きず、後でCherry-pickで良い変更だけを統合できる。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="09.html">← SessionとContext</a><a href="11.html">CLAUDE.md、Rules、Auto Memory →</a></nav></main></div>

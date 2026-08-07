@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-01-s1">1.1 チャットAIからエージェントへ</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> チャットAIはコードと文章を渡してくるだけで、実行と検証は人間に丸投げ。同じ作業を何度も貼り付けるロスがある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Claude Codeは探索・編集・実行・検証を同じ場所で回す。人間はタイピング作業から目的・権限・品質の設計側へ仕事が移る</p></div>
+<p><strong>【なぜこの設計か】</strong> 例えば「CSVを集計して報告書を作る」という同じ依頼でも、チャットAIは集計Codeを返し、人間が保存、実行、Error転記を担います。Agentは対象Fileを探し、成果物を作り、実行結果とDiffを読んで修正まで進めます。そのため依頼に完了条件と証拠がないと、作業を実行できても、どこで合格とするかを決められません。</p>
 <p>従来のチャットAIでは、人間がコードをコピーし、実行し、エラーを再度貼り付けていた。Claude Codeは同じ作業場所で次を行う。</p>
 <ol>
 <li>Projectを探索する。</li>
@@ -52,6 +53,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </ol>
 <p>したがって、強い依頼は「コードを書いて」ではなく、<strong>目的、文脈、制約、成果物、完了条件、証拠</strong>を渡す。</p>
 <h2 id="ch-01-s2">1.2 AIコーディングの3世代</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Copy時代・Editor時代・Agent時代では、人間に求められる仕事が違う。今いる世代を勘違いするとAIの使い方を間違える</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 自分が第2世代の使い方で止まっていることに気づける。次に投資すべきは入力速度ではなく目的設計だと分かる</p></div>
+<p><strong>【なぜこの設計か】</strong> 世代ごとに人間とAIの担当を分けると、Agentを「何でも自動で終えるChat」と誤解せずに済みます。探索と実行がAI側へ移るほど、人間は目的、権限、合否を先に決める必要があります。この役割移動を見落とすと、入力作業だけ減らし、品質判定まで手放す事故が起きます。</p>
 <table>
 <thead>
 <tr>
@@ -84,6 +86,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </table>
 <p>人間が不要になるのではない。人間の仕事が、入力作業から<strong>目的設計、権限設計、品質判定</strong>へ移る。</p>
 <h2 id="ch-01-s3">1.3 Chat、Cowork、Code、Design</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 全部の仕事を1つの入口に押し込むと、相談まで重くなり実装は浅くなる。仕事ごとに最適な入口を分ける必要がある</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Chatで要件整理→Coworkで素材処理→Designで情報設計→Codeで実装、と渡せる。1つの仕事が無理なく前へ進む</p></div>
+<p><strong>【なぜこの設計か】</strong> Surfaceを仕事の性質で選ぶのは、成果物と検証方法を一致させるためです。相談段階でCodeを動かすと未確定要件を実装しやすく、実装作業をChatだけで進めるとFile、Test、Diffの確認が人間へ戻ります。途中でSurfaceを移す前提にすると、各段階の強みだけを使えます。</p>
 <table>
 <thead>
 <tr>
@@ -125,6 +128,7 @@ Designで情報設計
 Codeで実装・検証・公開準備
 </code></pre>
 <h2 id="ch-01-s4">1.4 「育てる」の正しい意味</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 成功した会話を会話のまま残しても、翌日には同じ説明が必要。これを『育てた』とは呼べない</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 知見をCLAUDE.md・Rule・Skill・Hook・MCPへ昇格させる。個人の工夫が再呼び出し可能な資産に変わり、属人化が消える</p></div>
+<p><strong>【なぜこの設計か】</strong> 知見を役割別の保存先へ外部化すると、新しいSessionや別の担当者でも同じ手順を再現できます。会話だけに残すと、Contextを切った時点で成功条件も安全策も失われます。逆に何でも一か所へ詰めると、関係のない仕事まで同じ指示に引きずられます。</p>
 <p>会話を長く続けることではない。成功した知見を適切なレイヤーへ外部化する。</p>
 <table>
 <thead>
@@ -168,6 +172,7 @@ Codeで実装・検証・公開準備
 </tr>
 </tbody>
 </table>
+<p><strong>【失敗するとこうなる】</strong> 「売上CSVを集計して」とだけAgentへ依頼すると、近くにあるCSVを選び、見た目の整ったReportまで作ることがあります。画面には完成報告が出ても、対象期間が違い、期待したTestや根拠Fileも残りません。原因はChatと同じ短い質問を渡し、対象、禁止、完了条件、証拠を定義しなかったことです。対象Fileと期間を明示し、成果物を破棄せずDiffを確認してから、正しい条件で再実行します。</p>
 <hr/>
 
   </section>

@@ -37,11 +37,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-31-s1">31.1 LP</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> LPは見た目だけ作って公開すると、Analytics・A11y・本番API差し替えが抜けがちです。Audience/Action→Inventory→Wireframe→Code→Previewと工程を分けると、各段で抜けを検知できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Designと公開を別工程として扱う運用が定着し、見せたい人に届くLPを再現性ある手順で出せます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> LP制作の標準パイプで、Analytics/SEO/A11yチェックをPreview直前に置き、本番Productionの前に独立Gateを設ける構成です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> デザイナーが入れ替わっても工程の抜けが起きにくく、Audienceから出発した一貫性のあるLPが安定して出力できます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Audience/Action</dt><dd>誰に何をさせたいLPかを最初に決める段で、これが曖昧なまま走ると全要素が中途半端になります。CV設計の土台です。</dd><dt>Content Inventory</dt><dd>掲載予定の素材・主張・証拠を棚卸しする段で、後から『この情報を入れ忘れた』『重複した』を防ぎます。</dd><dt>Wireframe</dt><dd>色やコピー前に骨格だけ確定する段で、構成議論とビジュアル議論を分離して手戻りを減らします。</dd><dt>Copy Review</dt><dd>コピー文言だけを独立に磨く段で、見た目に引きずられず言葉の説得力を評価できます。</dd><dt>Prototype</dt><dd>クリック可能な試作を作る段で、関係者が触って初めて気付く違和感を早期に拾えます。</dd><dt>Design System</dt><dd>色・余白・タイポグラフィをTokenで参照する段で、後続のSlide/Reportと一貫性を保ちます。</dd><dt>Code</dt><dd>実装フェーズで、Design Systemに沿って組むことで個別調整によるブランド揺れを抑えます。</dd><dt>Analytics/SEO/A11y</dt><dd>計測・検索性・アクセシビリティをPreview直前に確認する段で、公開後に気付く致命的抜けを潰します。</dd><dt>Preview → Production</dt><dd>本番前にPreview承認Gateを置く段で、生成の延長で即公開する事故を構造的に防ぎます。</dd></dl></div></div><pre><code class="language-text">Audience/Action → Content Inventory → Wireframe → Copy Review
 → Prototype → Design System → Code → Analytics/SEO/A11y → Preview → Production
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> AudienceとActionを先に決めると、見栄えの良いSectionを増やしても目的の導線が埋もれません。Copy ReviewをCodeより前に置くため、実装後の大きな構成変更も減らせます。Previewまで段階を分けることで、Designの承認と公開の承認を一つの操作にしません。</p>
 <h2 id="ch-31-s2">31.2 Design System再利用</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 成果物ごとに別の色や余白を増やすと、ブランドが揺れて顧客に違和感を与えます。LP・営業資料・Dashboard・Slideで共通Tokenを参照する運用にすれば、見た目の整合性が自動で保たれます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> デザイナーが毎案件ゼロから整えなくても、共通基盤に乗せた状態で各成果物が出るためレビュー時間が短縮されます。</p></div>
 <p>営業資料、LP、Dashboard、HTML Report、Slideで共通Token。成果物ごとに勝手な色/余白を増やさない。</p>
 <h2 id="ch-31-s3">31.3 PPT/PDF Export</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> HTMLからPPT/PDFへExportすると、Font・改ページ・図欠落・解像度・選択可能Textで崩れが出ます。事前Checklist化することで、毎回手で気付くか運頼みかの工程を機械的に潰せます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 提案直前にレイアウトが崩れている事故が減り、Export成果物を本番資料として安心して使えるようになります。</p></div>
@@ -54,15 +55,35 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 [ ] 選択可能Text
 [ ] 機密Metadata
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> PPTやPDFは編集画面と配布FileでFont、改ページ、Link、Metadataが変わります。元資料だけを確認すると、配布先で図が欠けたり機密情報が残ったりしても気づけません。Export後の成果物を開いて検査することで、作成完了と配布可能を分けられます。</p>
 <h2 id="ch-31-s4">31.4 Deploy</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Deployを生成の延長として扱うと、Secret混入・公開範囲ミス・Rollback不在の事故が一度に起きます。PreviewをDefault・本番をAsk Ruleにすると、公開という別Gateが明確に確保されます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Preview承認とSmoke/Monitoring/Rollbackが必ず通る運用になり、即本番公開による事故が体系的に防げます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Deploy工程をPreview→Approval→Production→Smoke/Monitoring/Rollbackの順に縛る標準フロー定義です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Owner承認とRollback前提がDeploy Skillに組み込まれるため、便利さで公開事故が起きる経路を物理的に閉じられます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Preview</dt><dd>本番と同等の表示環境へまず出す段で、実機での見え方を承認前に確認できる状態を作ります。生成の延長で本番直行を防ぎます。</dd><dt>Functional</dt><dd>リンク到達・フォーム送信・主要動線が機能するかを検証する段で、見た目だけ整って動かない事故を潰します。</dd><dt>A11y/Security/Privacy</dt><dd>アクセシビリティ・秘密情報・個人情報の3観点を横並びで確認する段で、公開後に致命傷化する観点を一度に検査します。</dd><dt>Owner Approval</dt><dd>責任者が明示的に公開可否を判断する段で、Deploy Skillに承認なしでは進めない物理ガードを組み込みます。</dd><dt>Production</dt><dd>承認後にだけ本番へ反映する段で、Preview/本番の境界を曖昧にしない運用を担保します。</dd><dt>Smoke/Monitoring/Rollback</dt><dd>本番直後の動作確認・継続監視・即時切り戻し手順の3点セットで、事故時に最短で元へ戻せる経路を必ず確保します。</dd></dl></div></div><pre><code class="language-text">Preview → Functional → A11y/Security/Privacy → Owner Approval
 → Production → Smoke/Monitoring/Rollback
 </code></pre>
 <p>Deploy SkillはPreviewをDefault、本番をAsk Ruleにする。</p>
+<p><strong>【なぜこの設計か】</strong> Previewを既定にすると、機能、Accessibility、Security、Privacyを公開前の実物で確認できます。本番を別の承認にするため、Preview生成の依頼がそのまま外部公開へ進みません。公開後のSmokeとRollbackまで残すことで、Deploy Commandの成功表示だけを完了証拠にしません。</p>
+<p><strong>【実演】</strong> Design BriefからLPを実装し、配布用PDFとPreviewで確認する場面です。本番公開はHuman Gateの手前で止めます。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">inputs/design-brief.mdとProject内の既存Design Tokenを読み、単一Actionへ導くLPを作ってください。
+最初にAudience、期待するAction、利用できるContentを整理し、WireframeとCopy DraftをReview用に出してください。
+承認済みと明記されたCopyだけを使い、既存Tokenと共通Componentで実装してください。
+DesktopとMobile、Keyboard操作、Error・Loading状態を確認してください。
+配布確認用のPDFもExportし、Font、改ページ、図、Link、選択可能Text、機密Metadataを点検してください。
+Project既定の検査を実行した後、Previewへ公開してください。
+Production公開は行わず、必要な承認とRollback手順を報告して停止してください。
+完了条件は、Local成果物とPDFとPreviewが同じ内容を示し、検査結果を確認できることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>最初にBriefをContentとActionへ分解し、WireframeとCopyの確認点を作ります。承認済みの内容を既存Design Systemへ対応させ、画面状態と二つの表示幅を実装します。検査とPDF確認後にPreviewだけを作り、本番公開前で停止します。</p>
+<p><strong>成果物</strong></p>
+<p>Project内にLPのCodeと検査結果が残り、配布用PDFとPreview参照が作られます。本番公開に必要な承認事項とRollback手順はCompletion Reportへ分離されます。</p>
+<p><strong>検証方法</strong></p>
+<p>LocalとPreviewで主要Action、Link、Keyboard操作、Mobile表示を試します。PDFを別Viewerで開き、Check項目を一つずつ確認します。PreviewとProductionを区別し、本番側に変更がないことを報告と公開先の状態で確かめます。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <hr/>
 
   </section>
-  <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>公開前に最低限揃えるもの</dt><dd>Preview URL、スマホ表示確認、内部リンクと外部リンクの到達確認、Analytics・APIキー等の秘密情報の有無、Rollback手順の5点を1枚の事前チェックに固定します。ここを言語化していない組織では、毎回担当者の記憶頼みで公開され、必ずいつか事故が起きます。</dd><dt>Export崩れの直し方の順序</dt><dd>PPT/PDFへExportして崩れた時、HTML側を直すかExport設定を直すかで悩む前に、まず正本はHTMLだと宣言します。崩れの再現箇所を1ページだけ抜き出して原因を見極め、フォント置換・ページ分割・余白の3観点で順に潰すと最短で安定します。</dd><dt>測ると効く指標</dt><dd>公開回数、公開前事故件数、Rollback回数、Export修正に費やした時間を月単位で記録します。事故ゼロを目指すのではなく、Rollback回数が一定範囲内に収まっているかを健全性の指標にすると、過剰な慎重さで止まらなくなります。</dd><dt>次の章への接続</dt><dd>公開Gateの感覚が掴めると、次章の毎日業務の自動化でも『失敗時の戻し方』を最初に決められるようになります。公開とは独立した品質ゲートだという意識が、自動化全体の安全装置として効いてきます。</dd></dl></section>
+  <section class="expansion" aria-label="実務に落とすときの補足"><p class="panel-title">実務に落とすときの補足</p><dl class="expansion-list"><dt>公開前に最低限揃えるもの</dt><dd>Preview URL、スマホ表示確認、内部リンクと外部リンクの到達確認、Analytics・APIキー等の秘密情報の有無、Rollback手順の5点を1枚の事前チェックに固定します。ここを言語化していない組織では、毎回担当者の記憶頼みで公開され、必ずいつか事故が起きます。</dd><dt>Export崩れの直し方の順序</dt><dd>PPT/PDFへExportして崩れた時、HTML側を直すかExport設定を直すかで悩む前に、まず正本はHTMLだと宣言します。崩れの再現箇所を1ページだけ抜き出して原因を見極め、フォント置換・ページ分割・余白の3観点で順に潰すと最短で安定します。</dd><dt>測ると効く指標</dt><dd>公開回数、公開前事故件数、Rollback回数、Export修正に費やした時間を月単位で記録します。事故ゼロを目指すのではなく、Rollback回数が一定範囲内に収まっているかを健全性の指標にすると、過剰な慎重さで止まらなくなります。</dd><dt>次の章への接続</dt><dd>公開Gateの感覚が掴めると、次章の毎日業務の自動化でも『失敗時の戻し方』を最初に決められるようになります。公開とは独立した品質ゲートだという意識が、自動化全体の安全装置として効いてきます。</dd></dl></section>
   
   
 </article>

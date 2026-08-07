@@ -18,7 +18,7 @@
 これは慣れの問題ではなく、共有空間が無いだけです。</p><p>ほとんどの人は、AIの出力をコピーし、エディタへ貼り、戻ってきて指示し直しています。
 そのたびに、文脈の半分が抜け落ちます。</p><p>Cowork と Live Artifacts は、AIと人が同じファイルを同時に編集できる場所です。
 AI が直したところがそのまま反映され、人が直したところを AI が拾います。</p><p>この章を読み終わる頃には、『AI に頼む』から『AI と並んで書く』へ、距離感が変わります。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-18-0-cowork"><h3 id="feature-18-0-cowork">Cowork（非開発業務の複数ステップ）</h3><p class="feature-summary">Projectで文脈を固定し、複数ステップの業務処理を継続実行する作業形態。Codeとは別の入口として扱う。</p><dl class="feature-io"><dt>入力</dt><dd>繰り返し発生する業務、参照する文脈ファイル</dd><dt>出力</dt><dd>継続実行可能なCowork Project</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-1-live-artifact-5"><h3 id="feature-18-1-live-artifact-5">Live Artifact 5層構造</h3><p class="feature-summary">データ取得・整形・表示・AI要約・キャッシュの5層に分けて設計する、開くたびに最新化する業務インターフェース。</p><dl class="feature-io"><dt>入力</dt><dd>対象データソース、表示したい指標</dd><dt>出力</dt><dd>5層分離されたLive Artifact実装</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-2-dashboard-prompt"><h3 id="feature-18-2-dashboard-prompt">会議Dashboard Prompt</h3><p class="feature-summary">Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするダッシュボード用プロンプトのテンプレ。</p><dl class="feature-io"><dt>入力</dt><dd>Drive上の会議ファイル群、要約観点</dd><dt>出力</dt><dd>リロード時に最新化される会議Dashboard</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-3-scheduled"><h3 id="feature-18-3-scheduled">Scheduled設計</h3><p class="feature-summary">定期実行で重複防止・ロック・ログ・通知・再試行を持たせる業務スケジュール設計。</p><dl class="feature-io"><dt>入力</dt><dd>実行頻度、失敗時の挙動、通知先</dd><dt>出力</dt><dd>Scheduledジョブ設定と運用ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-4-acceptance"><h3 id="feature-18-4-acceptance">Acceptance（更新/キャッシュ/出典）</h3><p class="feature-summary">Live Artifactの完成判定。更新時刻・キャッシュ振る舞い・出典表示の3点をAcceptance基準にする。</p><dl class="feature-io"><dt>入力</dt><dd>完成したArtifact、運用シナリオ</dd><dt>出力</dt><dd>3点Acceptance通過記録、Stale時の挙動確認</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-18-0-cowork"><p class="feature-title" id="feature-18-0-cowork">Cowork（非開発業務の複数ステップ）</p><p class="feature-summary">Projectで文脈を固定し、複数ステップの業務処理を継続実行する作業形態。Codeとは別の入口として扱う。</p><dl class="feature-io"><dt>入力</dt><dd>繰り返し発生する業務、参照する文脈ファイル</dd><dt>出力</dt><dd>継続実行可能なCowork Project</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-1-live-artifact-5"><p class="feature-title" id="feature-18-1-live-artifact-5">Live Artifact 5層構造</p><p class="feature-summary">データ取得・整形・表示・AI要約・キャッシュの5層に分けて設計する、開くたびに最新化する業務インターフェース。</p><dl class="feature-io"><dt>入力</dt><dd>対象データソース、表示したい指標</dd><dt>出力</dt><dd>5層分離されたLive Artifact実装</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-2-dashboard-prompt"><p class="feature-title" id="feature-18-2-dashboard-prompt">会議Dashboard Prompt</p><p class="feature-summary">Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするダッシュボード用プロンプトのテンプレ。</p><dl class="feature-io"><dt>入力</dt><dd>Drive上の会議ファイル群、要約観点</dd><dt>出力</dt><dd>リロード時に最新化される会議Dashboard</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-3-scheduled"><p class="feature-title" id="feature-18-3-scheduled">Scheduled設計</p><p class="feature-summary">定期実行で重複防止・ロック・ログ・通知・再試行を持たせる業務スケジュール設計。</p><dl class="feature-io"><dt>入力</dt><dd>実行頻度、失敗時の挙動、通知先</dd><dt>出力</dt><dd>Scheduledジョブ設定と運用ログ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-18-4-acceptance"><p class="feature-title" id="feature-18-4-acceptance">Acceptance（更新/キャッシュ/出典）</p><p class="feature-summary">Live Artifactの完成判定。更新時刻・キャッシュ振る舞い・出典表示の3点をAcceptance基準にする。</p><dl class="feature-io"><dt>入力</dt><dd>完成したArtifact、運用シナリオ</dd><dt>出力</dt><dd>3点Acceptance通過記録、Stale時の挙動確認</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-18">
   <img src="../images/chapter-18-bee544.webp" alt="第18章『CoworkとLive Artifacts』を表すdashboard concept illustration" loading="lazy" decoding="async">
@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-18-s1">18.1 Cowork向き</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Codeに何でも持ち込むと、議事録要約や朝のニュース整理のような軽い業務まで重装備になり続きません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Cowork向き・Code向きの境目を持つと、Git・認証・Deployが要らない仕事はProjectの中で軽く回せます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Coworkは、資料を集めて整理し、Artifactへまとめる非開発の複数ステップ業務に向きます。Git履歴、独自Test、認証、DB、本番Deployが必要になった時点でCodeへ移すと、変更と検証をFile単位で管理できます。判断基準を「簡単そうか」ではなく、運用にCodeの証拠が必要かで置くとSurface選択がぶれません。</p>
 <ul>
 <li>議事録→週報/Task。</li>
 <li>Drive資料の整理・要約。</li>
@@ -48,6 +49,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </ul>
 <p>Codeへ移す目安：Git履歴、独自Library/Test、認証/DB、本番Deploy、複雑な監視が必要。</p>
 <h2 id="ch-18-s2">18.2 主要領域</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Project・Artifacts・Scheduled・Dispatch・Customizeを名前で覚えると、Beta更新ごとに教材が陳腐化します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 役割で整理しておけば、UI名が変わっても『どこで何をする領域か』が崩れず、新人にも説明し直しやすくなります。</p></div>
+<p><strong>【なぜこの設計か】</strong> UI名ではなくProject、Artifacts、Scheduled、Dispatch、Customizeの役割で覚えると、画面名が変わっても業務設計を保てます。素材、成果物、実行時刻、指示経路、外部能力を混ぜると、失敗時にどの層を直すべきか分かりません。役割を分ければ、定期実行だけ止めてArtifactは残す判断もできます。</p>
 <table>
 <thead>
 <tr>
@@ -80,10 +82,12 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </table>
 <p>UI名より役割を教材化する。</p>
 <h2 id="ch-18-s3">18.3 Live Artifactの5層</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 毎回フルでデータ取得・要約をやり直すArtifactは、コスト・速度・失敗時の挙動のどれも安定しません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Source→Fetch→Transform→Cache→Viewの5層に分けて設計すれば、変更分だけ再処理・失敗時はStale表示と切り分けられます。</p></div>
+<p><strong>【なぜこの設計か】</strong> SourceからViewまでを5層に分けると、表示不良をData不足、取得失敗、変換失敗、古いCache、View不具合へ切り分けられます。すべてを一度に再処理すると、未変更Fileにも費用と時間がかかり、原因の再現も難しくなります。Hashで変更を見分け、原文へ戻れる構造にすると、要約の誤りも確認できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Live Artifactを5層で表現した設計図で、取得から表示までの責務分割を1行で示しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの層で失敗したかが切り分けやすくなり、再要約や再取得の最小範囲を判断できます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Source</dt><dd>データの源を指す層です。Driveや外部APIなど『どこから取るか』を1箇所に固定することで、変更時の影響範囲を限定できます。</dd><dt>Fetch</dt><dd>Sourceから実際にデータを取得する層です。MCP等の経路と認証をここに閉じ込めることで、上位の表示処理が認証の詳細を知らずに済みます。</dd><dt>Transform</dt><dd>取得した生データを整形・要約する層です。表示用の構造に変える処理をここに集めると、表示と取得の責務が混ざりません。</dd><dt>Cache</dt><dd>整形済みデータを一時保存する層です。変更がない部分の再処理を省き、コストと表示速度の両方を安定させられます。</dd><dt>View</dt><dd>Cacheを読んで利用者に見せる層です。Filterや検索もここで完結させると、データ取得を介さず軽く操作できます。</dd></dl></div></div><pre><code class="language-text">Source → Fetch → Transform → Cache → View
 Drive     MCP     Parse/Summary  Hash    Filter/Search/Ask
 </code></pre>
 <h2 id="ch-18-s4">18.4 会議Dashboard Prompt</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 会議要約を毎週手作りすると、属人化と更新遅延が同時に進み、週末まで状況が見えなくなります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Driveを参照するLive Artifactのプロンプトテンプレを持てば、開くたびに最新状態が出る業務インターフェースに置き換えられます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 一覧、決定、担当、期限と原文Linkを同時に要求するのは、要約を読むだけでActionの根拠を失わないためです。権限不足、空Data、Timeoutを正常系と並べて指定すると、失敗が空白画面へ化けません。Read-onlyと保存禁止を明記することで、閲覧用Dashboardが権限変更や機密の端末保存へ広がるのを防ぎます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 会議Dashboardを生成するためのテンプレで、表示項目・Performance・Safetyを並列で指示しています。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> source_id+content_hash+prompt_versionのキャッシュ設計まで含んだ、運用に出せる粒度のArtifactが得られます。</p></div><pre><code class="language-text">Google Driveの「全社会議文字起こし」を参照するLive Artifactを作る。
 
 - 最新File一覧
@@ -106,6 +110,7 @@ Safety:
 </code></pre>
 <p>動画で紹介されたArtifact内API名はBetaで変化し得る。作成時の公式Helpを正とする。</p>
 <h2 id="ch-18-s5">18.5 Scheduled設計</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 定期実行を雑に組むと、重複起動・タイムゾーン違い・失敗の沈黙が運用事故として表面化します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 対象期間・Lock・Retry上限・通知・0件時挙動を先に決めておけば、Scheduledを安心して放置できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 定期実行では、人が見ていない時間にも同じ処理が始まるため、対象期間と既処理判定を先に決めます。LockとRetry上限がなければ、遅延した前回処理と次回処理が重なり、同じArtifactを上書きします。0件と失敗通知を定義すると、「更新不要」と「取得不能」を区別できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Scheduledジョブを設計する際の8項目で、重複起動Lockや0件挙動まで網羅したチェック観点です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 定期実行に起きやすい『黙って失敗』『二重起動』を、設計段階で潰せます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>対象期間</dt><dd>ジョブが処理対象とする時間範囲を決めます。曖昧だと『どこからどこまで』が実行ごとにずれ、抜けや二重処理の原因になります。</dd><dt>既処理判定</dt><dd>既に処理済みのデータを判別する仕組みです。なければ同じデータを何度も処理し続け、外部APIコストや通知重複を招きます。</dd><dt>Timezone</dt><dd>実行時刻の解釈に使う時間帯を固定します。サーバーと利用者でずれると、深夜実行のはずが昼に走るなどの事故が起きます。</dd><dt>Retry上限</dt><dd>失敗時の再試行回数の上限です。上限を決めないと、外部障害時に無限再試行で他処理まで巻き添えにします。</dd><dt>重複起動Lock</dt><dd>前回の実行が終わる前に次が走るのを防ぐ仕組みです。なければ同じ処理が二重に走り、出力が壊れたり外部APIを過剰に叩いたりします。</dd><dt>失敗通知</dt><dd>ジョブ失敗時に人へ知らせる経路です。設計しないと、止まっていることに気付かず数日経つ『黙って失敗』が起きます。</dd><dt>保存先</dt><dd>処理結果を書き出す場所をあらかじめ決めます。決めないと出力が散らばり、次のジョブから参照できません。</dd><dt>0件時の挙動</dt><dd>処理対象が0件だった時の振る舞いです。エラー扱いか正常終了かを決めておかないと、運用通知が誤報で埋まります。</dd></dl></div></div><pre><code class="language-text">- 対象期間
 - 既処理判定
 - Timezone
@@ -116,6 +121,7 @@ Safety:
 - 0件時の挙動
 </code></pre>
 <h2 id="ch-18-s6">18.6 Acceptance</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Artifactは見た目が動けば完成に見えてしまい、Cacheや出典の不備が後から効いてきます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 更新・キャッシュ・出典の3点をAcceptance基準として明文化すると、運用に渡せる完成判定が機械的に下せます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Acceptanceは、きれいな初回表示ではなく、更新、未変更、権限不足、0件、部分失敗までLive Artifactが扱えるかを判定します。AI要約と原文を区別しないと、推測された文を会議の決定事項として扱う事故が起きます。更新日時と原文導線を残すことで、利用者が鮮度と根拠を自分で確認できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Live ArtifactのAcceptance基準10項目で、更新・キャッシュ・出典・モバイル・権限まで含めたゲートです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 見た目が動くだけのデモから、運用に渡せるDashboardへの卒業判定が一定にできます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Add/Deleteで更新</dt><dd>データの追加・削除が画面に反映されることの確認です。固定スナップショットのままだと、最新状況に基づく判断ができません。</dd><dt>未変更Dataを再処理しない</dt><dd>中身が変わっていないデータには再要約を走らせないことの確認です。コストと所要時間を、変更分だけに抑えられます。</dd><dt>権限不足説明</dt><dd>アクセス権がない時にその旨を明示することです。黙って空表示にすると、利用者が『データがない』と誤解します。</dd><dt>0件/部分失敗/Timeout</dt><dd>0件・一部失敗・Timeoutといった非常時の見え方を確認することです。失敗状態が正常と区別できないと、判断ミスにつながります。</dd><dt>原文へ戻れる</dt><dd>要約や集計から元の原文へ辿れる導線です。怪しい記述があった時、原典に当たれないと信頼性が崩れます。</dd><dt>AI要約と原文を区別</dt><dd>AIが要約した部分と原文そのままの部分が見分けられることです。区別がつかないと、AIの解釈ミスが事実として扱われます。</dd><dt>更新日時</dt><dd>画面のデータがいつ時点のものかを表示することです。古い情報を最新と誤認することによる意思決定ミスを防げます。</dd><dt>Mobile</dt><dd>スマートフォン幅でも操作・閲覧できることの確認です。移動中や会議室の手元で開いた時に使えない状態にしません。</dd><dt>Write権限不要</dt><dd>閲覧用Dashboardが書き込み権限を要求しないことです。読み取りに不要な強権限を渡さないことで、誤操作の被害面を狭められます。</dd><dt>Browser Storageへ機密なし</dt><dd>ブラウザのLocal Storage等に機密情報を残さないことの確認です。共有端末や開発者ツール経由の漏えい経路を物理的に閉じられます。</dd></dl></div></div><pre><code class="language-text">[ ] Add/Deleteで更新
 [ ] 未変更Dataを再処理しない
 [ ] 権限不足説明
@@ -127,11 +133,12 @@ Safety:
 [ ] Write権限不要
 [ ] Browser Storageへ機密なし
 </code></pre>
+<p><strong>【失敗するとこうなる】</strong> 認証とDBを持つ継続業務Toolを、試作Artifactが動いたという理由だけでCoworkのまま本番化します。初回画面は見えても、権限Error後の状態が残らず、誰がどの変更を入れたかGitでも追えません。原因は資料整理向けのSurfaceと、TestやDeploy管理が必要な実装を分けなかったことです。Artifactを要件とPrototypeとして保存し、認証、DB、Test、監視の範囲を決めてCodeへ移します。</p>
 <hr/>
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch18-live-artifact-layers">
   <img src="../images/diagram-ch18-live-artifact-layers.webp" alt="Live Artifactのデータ取得、整形、表示、AI要約、キャッシュ" loading="lazy" decoding="async">
   <figcaption>更新される画面は、表示だけでなく取得・AI処理・キャッシュまで分離します。</figcaption>
@@ -148,7 +155,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ある営業マネージャー（架空）が、週報を毎週手動更新しており、開くたびに最新化されないため週末まで状況が見えない。</p><h3>こう使う</h3><p>Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするLive Artifact Dashboardを作る。</p><h3>得られるもの</h3><p>開いた瞬間に最新の進捗が見え、週次更新作業そのものが不要になる。</p></article><article class="usecase-card"><h3>場面</h3><p>中小オペレーター（架空）が、外部APIを毎リロードで叩く実装にして請求金額がはねた。</p><h3>こう使う</h3><p>Cache・更新時刻・出典・失敗時のStale表示を分離して設計する。</p><h3>得られるもの</h3><p>コストとUXのバランスが取れ、データ取得失敗時にも古い情報と明示できる。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>ある営業マネージャー（架空）が、週報を毎週手動更新しており、開くたびに最新化されないため週末まで状況が見えない。</p><p class="usecase-label">こう使う</p><p>Driveの会議ファイルを開くたびに取り込み・要約・キャッシュするLive Artifact Dashboardを作る。</p><p class="usecase-label">得られるもの</p><p>開いた瞬間に最新の進捗が見え、週次更新作業そのものが不要になる。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>中小オペレーター（架空）が、外部APIを毎リロードで叩く実装にして請求金額がはねた。</p><p class="usecase-label">こう使う</p><p>Cache・更新時刻・出典・失敗時のStale表示を分離して設計する。</p><p class="usecase-label">得られるもの</p><p>コストとUXのバランスが取れ、データ取得失敗時にも古い情報と明示できる。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="17.html">← Claude Designから実装へ</a><a href="19.html">Claude Codeを自分専用に育てる →</a></nav></main></div>

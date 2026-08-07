@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-29-s1">29.1 YouTube Research Skill</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 動画調査は対象が膨大で、目的を持たずに集めると時間だけが消えます。テーマ・期間・Allowlist・既出題目を入力に固定したSkillへすると、調査が方針付きの構造化作業へ変わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 重複Cluster・Trend・Content Gap・出典付き提案が毎回同じ形で出るため、調査者が代わっても番組のラインが揺れなくなります。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Inputs/Workflow/Outputを構造化したYouTube調査Skillの定義例で、Verification noteまで必ず出力させることで一次情報確認を仕組みに組み込みます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 調査結果に出典と検証メモが揃い、後続の記事執筆や台本制作で『この主張の根拠は何か』を再度探す作業が消えます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>name / description</dt><dd>Skill名と用途説明で、AIがどの場面で呼び出すべきか判定する材料になります。曖昧だと別Skillと競合して呼ばれません。</dd><dt>argument-hint</dt><dd>呼び出し時に必要な引数のヒントで、ユーザーが何を渡せばよいかが構造化されます。なければ毎回プロンプトで聞き直しが発生します。</dd><dt>Inputs (audience / date range / allowlist / previous topics)</dt><dd>調査対象と禁止条件を固定する入力欄で、Skillが毎回同じ基準で動くことを保証します。曖昧な調査命令を構造化命令に変えます。</dd><dt>Workflow</dt><dd>Collect→Extract→Cluster→Verifyの7段で進める処理手順で、調査者が変わっても同じ品質の中間成果物が出ます。</dd><dt>Output (research table / trend clusters / content gaps / topic proposals / verification notes)</dt><dd>出力5点セットで、特にVerification notesを必須化することで出典確認が抜けにくくなります。</dd></dl></div></div><pre><code class="language-markdown">---
 name: youtube-topic-research
@@ -67,6 +67,7 @@ argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
 - topic proposals
 - verification notes
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> 候補収集と主張検証を分けると、再生数や話題性を仕様の正しさと取り違えません。重複Clusterを作ってから一次資料へ戻るため、同じ主張を繰り返す複数動画を複数の根拠として数えずに済みます。確認できない主張はVerification Noteへ残し、企画の前提へ混ぜません。</p>
 <h2 id="ch-29-s2">29.2 番組Profile</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『らしさ』を会話の印象だけで運用すると、AIが書くたびにトーンが揺れます。Audience・Positioning・Tone・公開済みTopic・強い例・Do not doをファイル化すれば、外部評価可能な基準になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 新しい素材を選ぶ瞬間に基準を参照でき、人気の高い題材ではなく『自分の番組にとって価値ある題材』を選び続けられます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 番組ProfileをFolder構造で分解し、Audience・Tone・Do not doなどを独立ファイルにする標準レイアウト例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Profileの更新箇所がファイル単位で明確になり、AIがどの基準を参照すべきかが毎回同じ場所から取り出せます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>audience.md</dt><dd>視聴者像を定義するファイルで、想定読者の知識レベルと関心を明文化します。これが曖昧だとAIの口調と難易度が毎回揺れます。</dd><dt>positioning.md</dt><dd>他チャンネルとの差別化軸を書くファイルで、テーマ選定時に『どこに陣取るか』を一貫した基準で判断できます。</dd><dt>tone.md</dt><dd>口調・敬体・禁止表現を定義するファイルで、AIが書くたびにブレるトーンを外部評価可能な基準として固定できます。</dd><dt>published-topics.csv</dt><dd>公開済みTopic一覧で、同じ題材の重複公開を防ぐ参照表になります。なければAIが過去テーマを再提案しがちです。</dd><dt>strong-examples.md</dt><dd>自分の番組で評価が高かった事例集で、AIに『この方向で書け』と具体例で示せます。抽象指示より精度が上がります。</dd><dt>do-not-do.md</dt><dd>避けたい話題・表現・依頼を明示するファイルで、過去の炎上やNG事項を踏まないための安全弁になります。</dd></dl></div></div><pre><code class="language-text">content-profile/
 ├── audience.md
@@ -81,10 +82,30 @@ argument-hint: "&lt;theme&gt; &lt;date-range&gt;"
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> SNS/動画素材を教材化するための工程フローで、obsolete/currentとCoverage 100%を完了条件として最後に置きます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 発言の重複統合と公式確認が抜けない設計になり、教材ドラフトの品質が個人の注意力に依存しなくなります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>素材保存</dt><dd>SNS投稿や動画文字起こしを原文のまま保存する段で、後から発言の原典へ戻れる状態を作ります。要約から始めると検証不能になります。</dd><dt>Topic ID</dt><dd>発言や記事を主題単位でID付けする段で、後段の重複統合や引用管理の主キーになります。</dd><dt>重複Cluster</dt><dd>発信者違いの同じ主張を一つのClusterへまとめる段で、N人が同じことを言っている題材を1つに圧縮できます。</dd><dt>公式確認</dt><dd>Clusterの主張を公式情報源で裏取りする段で、SNS発言の又聞きをそのまま教材化する事故を防ぎます。</dd><dt>原則は本文/実例はRecipe</dt><dd>汎用化できる原則と一回性の実例を分けて格納する段で、教材本文の寿命を伸ばします。</dd><dt>obsolete/current</dt><dd>古びた情報を捨てずに状態管理する区分で、過去事例を残しつつ現行扱いだけを表へ出せます。</dd><dt>Coverage 100%</dt><dd>対象素材を全て処理し終えたことを確認する完了条件で、抜けたまま教材化される事故を構造的に塞ぎます。</dd></dl></div></div><pre><code class="language-text">素材保存 → Topic ID → 重複Cluster → 公式確認 →
 原則は本文/実例はRecipe → obsolete/current → Coverage 100%
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> 素材、主張、教材、Coverageを段階化すると、同じ話題の重複と古い実例を追跡できます。原則とRecipeを分けるため、操作例が古くなっても概念説明まで一緒に捨てません。公式確認を飛ばすと、印象的な発言が現行仕様として教材へ固定されます。</p>
+<p><strong>【実演】</strong> 複数の動画メモから、既存番組に重複しない教材案を一つ作る場面です。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">content-profile/とinputs/video-notes/を読み、Claude Codeの安全な定期業務を題材に教材候補を調査してください。
+対象Audience、Positioning、既存Topicを最初に確認してください。
+各素材からPromise、構成、実例、仕様に関する主張を抽出し、同じ主張はCluster化してください。
+仕様に関する主張は現行の一次資料で確認し、確認できない内容は未確認として本文案へ入れないでください。
+原則は教材本文、個別の操作例はRecipe候補として分けてください。
+research-table.md、content-gaps.md、lesson-draft.md、verification-notes.mdをoutputs/research/へ保存してください。
+公開や投稿はしないでください。
+完了条件は、教材案の各主張から素材と確認結果へ戻れ、既存Topicとの差分を説明できることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>まず番組Profileと既存Topicを読み、採用基準を固定します。次に動画メモをTopic単位でまとめ、変動し得る主張だけを一次資料で確認します。検証済みの原則から教材案を作り、個別操作と未確認事項を別Fileへ分けます。</p>
+<p><strong>成果物</strong></p>
+<p><code>outputs/research/</code>に調査表、Content Gap、教材Draft、確認記録ができます。教材本文とRecipe候補が分かれ、採用しなかった主張も確認記録に残ります。</p>
+<p><strong>検証方法</strong></p>
+<p>調査表の各主張に素材、確認状態、配置先があるかを確認します。教材Draftの文を調査表へ逆引きし、未確認の主張が本文へ混ざっていないかを見ます。既存Topicと同じ内容なら、差分が説明されるまで新規案として扱いません。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-29-s4">29.4 個人学習</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 個人学習は『説明できる気がする』で終わりがちです。Hookを作りFixtureを通すことを完了条件にすると、理解の有無が機械的に判定できる学習ループへ変わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 復習問題・調査テーマ・進捗状態がINTERESTS.md連動で生成され、苦手と関心に沿った継続学習が個人ペースで成立します。</p></div>
 <p>毎週：新概念3、復習10問、30分Hands-on、誤解、次の一次資料。</p>
 <pre><code class="language-text">説明できる、ではなく、Hookを作り5 Fixtureを通す。
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> 学習目標を説明からHands-onとFixtureへ変えると、用語を覚えただけの状態を見分けられます。失敗したFixtureは次週の復習対象になり、何を誤解したかが成果物に残ります。正答数だけを追うと、実際のProjectで同じ判断を再現できるか確認できません。</p>
 <h2 id="ch-29-s5">29.5 News Dashboard</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ニュース巡回は重複と古い記事の再浮上で時間が削られます。期間・URL重複排除・公式上位・確度・古い記事検知を持つ単一HTMLへ集約すれば、毎朝の情報収集を10分の確認作業に変えられます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 更新時刻・出典・未確認情報が常に表示されるため、見落としリスクを抑えながら情報取得時間を圧縮できます。</p></div>
 <ul>
 <li>対象期間。</li>

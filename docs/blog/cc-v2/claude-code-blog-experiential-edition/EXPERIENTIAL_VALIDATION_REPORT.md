@@ -1,6 +1,6 @@
 # Experiential Edition Validation Report
 
-- Status: **FAIL**
+- Status: **PASS**
 
 ## Checks
 
@@ -16,12 +16,12 @@
 - **markdown_beginner_sections**: 40
 - **markdown_hands_on_sections**: 40
 - **original_content_ordered**: True
-- **original_code_fences**: 410
-- **integrated_code_fences**: 410
+- **original_code_fences**: 490
+- **integrated_code_fences**: 490
 - **course_chapters**: 40
 - **course_steps**: 160
 - **course_validator**: PASS
 
 ## Failures
 
-- Broken anchor site/index.html -> #course-overview
+- None

@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <table>
 <thead>
 <tr>
@@ -88,10 +88,20 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </tr>
 </tbody>
 </table>
+<p><strong>【失敗するとこうなる】</strong> <strong>いきなり実装。</strong> 要件を一文だけ渡して、探索やPlanの前に変更を始めます。初期症状は、最初の報告ですでに複数FileのDiffが出ている一方、Doneと対象外が示されないことです。原因は目的と合否を実装後に考えたことであり、変更を広げずに止め、要件、Prototype、Planを確認してから再開します。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>1 Sessionで全部。</strong> 無関係な調査、実装、文書作成を同じSessionへ追加し続けます。初期症状は、前の仕事の用語が回答へ混ざり、修正済みの前提を再び説明し始めることです。原因はTopicごとのContextと成果物を分けなかったことであり、中間結果をFileへ保存し、新しいSessionを目的別に開始します。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>CLAUDE.mdへ全部。</strong> 一時的な手順やPath固有の注意まで常設Fileへ追記します。初期症状は、関係のない作業でも同じ長い指示を読み、別のDirectoryで矛盾するRuleが適用されることです。原因は知見のScopeを分けなかったことであり、Path別Rule、繰り返し手順のSkill、詳細Referenceへ移します。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>Skill乱立。</strong> 似たDescriptionのSkillをOwnerやFixtureなしで追加します。初期症状は、同じ依頼で呼ばれるSkillが変わり、成果物の名前や見出しが毎回揃わないことです。原因は重複判定とLifecycleを通さなかったことであり、新規配布を止め、既存統合、評価、Deprecationを行います。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>全Permission許可。</strong> 承認Dialogを減らすため、探索から外部操作まで広く実行可能にします。初期症状は、File変更やShell実行がAskなしで連続し、どの操作が境界を越えたか利用者が追えないことです。原因は仕事に必要な最小権限を定義しなかったことであり、実行を止め、SandboxとAllow、Ask、Denyを用途ごとに戻します。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>Bypass効率化。</strong> Permission確認を遅さとして扱い、通常業務でBypassを使います。初期症状は、以前は止まっていた危険Commandが確認なしで進み、練習Folder外のPathまで変更候補に入ることです。原因は安全境界を速度向上の手段として外したことであり、Sessionを停止し、隔離環境と通常のPermissionへ戻してDiffを確認します。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>自己Review。</strong> 作成したSessionへ、そのまま「問題がないか確認して」と依頼します。初期症状は、Reviewが実装時と同じ説明を繰り返し、未検証の前提を指摘せず「問題なし」と結論することです。原因は作成者のContextを評価者が引き継いだことであり、Fresh Session、別Agent、別Toolへ成果物と合格基準だけを渡します。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>Test弱体化。</strong> 実装を通すためにTest、Lint、Typecheckの条件を緩めます。初期症状は、機能のDiffより先にskip、除外、期待値の削除が増え、急にすべてのCheckが緑になることです。原因は不具合ではなく判定基準を変更したことであり、弱体化した差分を戻し、元のCheckを保ったまま実装を修正します。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>HTMLだけ正本。</strong> 会議で見える数値をHTMLへ直接上書きし、元Dataを更新しません。初期症状は、画面の値を検索してもCSVやMarkdownに同じ根拠がなく、再生成すると変更が消えることです。原因はViewとDataの責務を分けなかったことであり、正しい値をDataまたはMarkdownへ戻してHTMLを生成し直します。</p>
+<p><strong>【失敗するとこうなる】</strong> <strong>動画を仕様扱い。</strong> 動画内の画面名や操作を確認せず、現在も同じだと断定して手順化します。初期症状は、読者のHelpに同じ入口がなく、利用条件や表示名について別の結果が出ることです。原因は紹介時点の情報を現行仕様として固定したことであり、公式Changelogと現在のHelpを確認し、確認日と未確認範囲を記録します。</p>
 <hr/>
 
   </section>
-  <section class="expansion" aria-label="実務に落とすときの補足"><h2>実務に落とすときの補足</h2><dl class="expansion-list"><dt>失敗台帳を続けるための仕組み</dt><dd>失敗Patternは『書こうと思った時に書く』運用では絶対に続きません。インシデント発生時に必ず1行残すRunbookと、月末に台帳を読み返す15分の枠を予定として固定します。書く労力をゼロに近づけることが、最大の継続要因です。</dd><dt>5観点分解の使い方</dt><dd>人・手順・権限・検証・配布のうち、対策を置く場所は必ず1つに絞ります。複数に分散すると責任の所在がぼやけ、結局どれも実装されません。最も影響の大きい1観点へ置き、他観点は『今回は対象外』と明示することで、対策の実装率が劇的に上がります。</dd><dt>対策の落とし先の選び方</dt><dd>Rule（CLAUDE.md）は読み返さないと効きません。Skillは呼ばれて初めて動きます。Hookは無条件に動きます。Runbookは事故時に開きます。失敗の性質を見て『無条件に止めるべきか／その瞬間だけ呼べばいいか』を分けると、過剰防御も穴も出にくくなります。</dd><dt>次の章への接続</dt><dd>失敗をHook/Skill/Rule/Runbookへ変換する設計が身につくと、次の組織展開フェーズで『全社員に同じ防御を物理配布する』思想がそのまま使えます。失敗対策は個人の記憶ではなく配布物として育てる、というのが組織展開の核心です。</dd></dl></section>
+  <section class="expansion" aria-label="実務に落とすときの補足"><p class="panel-title">実務に落とすときの補足</p><dl class="expansion-list"><dt>失敗台帳を続けるための仕組み</dt><dd>失敗Patternは『書こうと思った時に書く』運用では絶対に続きません。インシデント発生時に必ず1行残すRunbookと、月末に台帳を読み返す15分の枠を予定として固定します。書く労力をゼロに近づけることが、最大の継続要因です。</dd><dt>5観点分解の使い方</dt><dd>人・手順・権限・検証・配布のうち、対策を置く場所は必ず1つに絞ります。複数に分散すると責任の所在がぼやけ、結局どれも実装されません。最も影響の大きい1観点へ置き、他観点は『今回は対象外』と明示することで、対策の実装率が劇的に上がります。</dd><dt>対策の落とし先の選び方</dt><dd>Rule（CLAUDE.md）は読み返さないと効きません。Skillは呼ばれて初めて動きます。Hookは無条件に動きます。Runbookは事故時に開きます。失敗の性質を見て『無条件に止めるべきか／その瞬間だけ呼べばいいか』を分けると、過剰防御も穴も出にくくなります。</dd><dt>次の章への接続</dt><dd>失敗をHook/Skill/Rule/Runbookへ変換する設計が身につくと、次の組織展開フェーズで『全社員に同じ防御を物理配布する』思想がそのまま使えます。失敗対策は個人の記憶ではなく配布物として育てる、というのが組織展開の核心です。</dd></dl></section>
   
   
 </article>

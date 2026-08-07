@@ -18,7 +18,7 @@
 ほとんどの人は、また最初から書き直しています。
 そして、また違う結果が返ってきます。</p><p>これは運の問題ではなく、仕事の順序が決まっていないことが原因です。
 速いチームは、毎回同じ7つの段階を回しています。探す→仕様を決める→計画→実装→検証→レビュー→保存（Explore/Specify/Plan/Implement/Verify/Review/Commit、頭文字でESPIVRC）。</p><p>この章を読み終わる頃には、アプリ開発だけでなく、資料作成・調査・ファイル整理・Skill改善まで、同じ順序で進められるようになります。速いチームは工程を省いているのではなく、同じ工程を小さく明確に回している。それがこの章の核心です。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-06-0-espivrc"><h3 id="feature-06-0-espivrc">ESPIVRC標準ループ</h3><p class="feature-summary">Explore→Specify→Plan→Implement→Verify→Review→Commitの7段階を共通言語にし、業務種別を問わず同じ順で進める仕事の骨格。</p><dl class="feature-io"><dt>入力</dt><dd>新しい依頼、作業対象、関係者</dd><dt>出力</dt><dd>7段階ごとの成果物（探索メモ・仕様・計画・実装・検証・レビュー・コミット）</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-06-1-plan"><h3 id="feature-06-1-plan">Plan段階の変更範囲宣言</h3><p class="feature-summary">実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。</p><dl class="feature-io"><dt>入力</dt><dd>仕様、現状のコード/ファイル</dd><dt>出力</dt><dd>影響範囲・差分予定・前提条件を含むPlan</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-06-2-verify-review-commit"><h3 id="feature-06-2-verify-review-commit">Verify→Review→Commit分離</h3><p class="feature-summary">機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みの変更、テストケース、レビュー観点</dd><dt>出力</dt><dd>検証ログ、レビュー指摘、コミットメッセージ付き履歴</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-06-0-espivrc"><p class="feature-title" id="feature-06-0-espivrc">ESPIVRC標準ループ</p><p class="feature-summary">Explore→Specify→Plan→Implement→Verify→Review→Commitの7段階を共通言語にし、業務種別を問わず同じ順で進める仕事の骨格。</p><dl class="feature-io"><dt>入力</dt><dd>新しい依頼、作業対象、関係者</dd><dt>出力</dt><dd>7段階ごとの成果物（探索メモ・仕様・計画・実装・検証・レビュー・コミット）</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-06-1-plan"><p class="feature-title" id="feature-06-1-plan">Plan段階の変更範囲宣言</p><p class="feature-summary">実装の前に『何を触り何は触らない』を明示させ、AIの暴走と人のレビュー負荷を構造的に減らす設計。</p><dl class="feature-io"><dt>入力</dt><dd>仕様、現状のコード/ファイル</dd><dt>出力</dt><dd>影響範囲・差分予定・前提条件を含むPlan</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-06-2-verify-review-commit"><p class="feature-title" id="feature-06-2-verify-review-commit">Verify→Review→Commit分離</p><p class="feature-summary">機械検証・別文脈レビュー・意味のある単位での保存を分けて、『動いたっぽい』を本物の完了に変える終盤フロー。</p><dl class="feature-io"><dt>入力</dt><dd>実装済みの変更、テストケース、レビュー観点</dd><dt>出力</dt><dd>検証ログ、レビュー指摘、コミットメッセージ付き履歴</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-06">
   <img src="../images/chapter-06-3ebed7.webp" alt="第6章『Explore → Specify → Plan → Implement → Verify → Review → Commit』を表すworkflow illustration" loading="lazy" decoding="async">
@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-06-s1">6.1 全業務を同じ型へ入れる</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 場当たり的に進めると、同じ依頼でも毎回手順がぶれて再現できなくなります。最初に『仕事の型』を共通言語として置く必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 七段階の見出しを揃えるだけで、コードでも資料でも調査でも同じ順で進められ、抜けと作り直しが目に見えて減ります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 七工程を固定すると、考える、変える、確かめる、保存するを同じ言葉で引き継げます。順序がないと、調査中の仮説がそのまま実装され、検証前の状態が保存されるなど、工程間の取り違えが起きます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> ESPIVRC七段階の各段階で何をするかを一望にしたテキスト表です。仕事の型を共通言語として机に並べます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 依頼テンプレや章運用の見出しとしてそのまま使え、業務種別に関わらず同じ順序で進められるようになります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Explore</dt><dd>現状のFile・既存挙動・Testを根拠付きで読み解く段階です。省くとAIが想像で書き始め、既存仕様を壊しにきます。</dd><dt>Specify</dt><dd>目的と完了条件を判定可能な状態に固定する段階です。動詞のままだと『動いたっぽい』で終わってしまいます。</dd><dt>Plan</dt><dd>変更範囲と検証方法を先に宣言する段階です。触らない場所を明示しないとAIの暴走とレビュー負荷が膨らみます。</dd><dt>Implement</dt><dd>小さく1つの意図だけを実装する段階です。一度に大きく変えると原因切り分けと巻き戻しが極端に難しくなります。</dd><dt>Verify</dt><dd>機械的・視覚的に証拠を取って確かめる段階です。独立させないと本番で初めて壊れる事態を招きます。</dd><dt>Review</dt><dd>別文脈の目でDiffを独立に見直す段階です。実装者本人の文脈は判断に引っ張られ、欠陥を見落とします。</dd><dt>Commit</dt><dd>良い状態を意味ある単位で履歴に保存する段階です。残さないと次のセッションで何を直したか辿れなくなります。</dd></dl></div></div><pre><code class="language-text">Explore    現状を読む
 Specify    目的と完了条件を固定
 Plan       変更範囲と検証方法を決める
@@ -48,7 +49,9 @@ Review     別文脈で欠陥を探す
 Commit     良い状態を保存
 </code></pre>
 <p>このLoopはCodeだけでなく、資料、調査、業務自動化にも使える。</p>
+<p><strong>【このコードの読み方】</strong> <code>Explore</code>と<code>Specify</code>は、現状の事実と望む状態を分けます。<code>Plan</code>はその差を埋める変更と検証を先に並べます。<code>Verify</code>と<code>Review</code>は、作った本人の確認と別文脈からの欠陥探索を分担します。最後の<code>Commit</code>は、検証済みの一つの意図だけを再現可能な状態として保存します。</p>
 <h2 id="ch-06-s2">6.2 Explore</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 現状を読まずに編集を始めると、AIは前提を勝手に想像して既存仕様を壊しにきます。最初に事実を集める段階が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 編集前にFile・既存挙動・Testを読ませて根拠付きでまとめさせると、後段のPlanとReviewが現実の側に着地します。</p></div>
+<p><strong>【なぜこの設計か】</strong> Exploreを最初に置くのは、依頼文の想像ではなく現在のFileと挙動を出発点にするためです。飛ばすと、既存Test、作業中の変更、Project固有Ruleを見落とし、正しい機能を古い前提で壊します。</p>
 <p>最初に読ませるもの：</p>
 <ul>
 <li><code>README.md</code>、<code>CLAUDE.md</code>、<code>AGENTS.md</code>。</li>
@@ -61,7 +64,10 @@ Commit     良い状態を保存
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Explore段階で使うPromptで、編集を禁じたまま関係File・既存挙動・制約をEvidence付きで集めさせる指示文です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> AIが現状を読まずに想像で書き始めるのを止め、後段のPlan/Verifyが事実に基づくものになります。</p></div><pre><code class="language-text">まだ編集しないでください。
 この依頼に関係するFile、既存挙動、Test、制約、未知点を調査し、Evidence付きでまとめてください。
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 「まだ編集しない」は、調査結果を確認する前の変更を止めます。関係Fileと既存挙動は、変更対象と守るべき動作を分けて示します。Testと制約は実装の許容範囲を狭め、未知点は仮定が事実として混ざるのを防ぎます。Evidence付きにすることで、説明をFileや実行結果へ戻って検証できます。</p>
+<p><strong>【失敗するとこうなる】</strong> Exploreを飛ばし、一覧画面だけを見てFilterを直し始めたとします。修正後に別の集計画面が空になり、<code>git status</code>には依頼前からの変更まで混ざって表示されます。原因は、共通処理と作業開始時の状態を確認しなかったことです。編集を止め、関係File、既存Test、開始前Diffを調べ、今回の変更だけを再度切り出します。</p>
 <h2 id="ch-06-s3">6.3 Specify</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 『速くする』『見やすくする』のような動詞だけでは、AIも人もゴール判定ができません。完了を判定可能な状態に固定する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> p95やContrastなど数値や挙動で完了を定義すると、Verifyで合否を機械的に判断でき、『動いたっぽい』を排除できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Specifyは、観察した現状を判定可能なゴールへ変える工程です。ここを飛ばすと、実装者ごとに「速い」「見やすい」「直った」の意味が変わり、Verifyで何を測れば終わりか決まりません。</p>
 <p>完了条件は動詞ではなく、判定可能な状態にする。</p>
 <table>
 <thead>
@@ -93,7 +99,9 @@ Commit     良い状態を保存
 </tr>
 </tbody>
 </table>
+<p><strong>【この表の読み方】</strong> 左列は作業の方向だけを示し、停止条件を持ちません。<code>p95が500ms以下</code>の行は、速さを測定値へ変えます。<code>再現Testが修正前Fail、修正後Pass</code>の行は、症状の再現と修正の効果を一組にします。Hash一致と一次出典の行は、移動や調査が「それらしく終わった」だけでは合格にしません。</p>
 <h2 id="ch-06-s4">6.4 Plan</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Specifyだけでは『どこを触るか』が決まっておらず、AIは関係ない箇所まで書き換えがちです。変更範囲の宣言を挟む必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 変更File・整合・Rollback・対象外まで先に書かせると、AIの暴走が手前で止まり、レビュー側の負荷も大きく下がります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Planは、固定した完了条件から逆算して変更範囲と確認方法を並べます。飛ばすと、実装中にData変更や外部副作用へ気づき、Rollbackを用意しないまま途中状態を抱えます。</p>
 <p>Planで確認する項目：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Plan段階で確認すべき9項目のチェックリスト。変更範囲・整合・Migration・Side Effect・Rollbackなどを明示させます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 実装前に『触らない場所』が宣言され、AIの暴走と人のレビュー負荷を構造的に減らせます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>変更Fileと理由</dt><dd>どのFileをなぜ触るかを先に宣言します。無関係Fileへの不意の変更を防ぐ最初の防波堤になります。</dd><dt>既存設計との整合</dt><dd>現行Architectureに反する設計を持ち込まないか確認します。整合が崩れると後段のReviewで全面差戻しになります。</dd><dt>Data Migration</dt><dd>Schema変更や既存Dataの移行手順を明示します。漏らすと本番投入時にData破損や復旧不能を引き起こします。</dd><dt>External Side Effect</dt><dd>外部APIや通知など副作用の範囲を宣言します。書かないと『送ってはいけない先』へ実行が伸びます。</dd><dt>Test/Verification</dt><dd>どのTestを追加・実行するかを事前に決めます。後付けにすると検証が形骸化し、合否判断が曖昧になります。</dd><dt>Security/Privacy</dt><dd>認証・権限・個人情報の扱いをPlan段階で確認します。実装後の発覚は手戻りと事故対応の両方が重くなります。</dd><dt>Rollback</dt><dd>失敗時の戻し手順を先に用意します。準備していないと本番障害時に判断に時間を取られ被害が拡大します。</dd><dt>対象外</dt><dd>今回は触らない範囲を明示します。書かないとAIが『ついでに直す』形で関係ない箇所へ手を伸ばします。</dd><dt>承認が必要な点</dt><dd>人の判断を挟むべき箇所を事前に切り出します。曖昧にすると勝手判断で進められ、後から差し戻しが必要になります。</dd></dl></div></div><pre><code class="language-text">- 変更Fileと理由
 - 既存設計との整合
@@ -106,7 +114,9 @@ Commit     良い状態を保存
 - 承認が必要な点
 </code></pre>
 <p>複数File、Data変更、外部連携、高RiskはPlan Modeを使う。</p>
+<p><strong>【このコードの読み方】</strong> 変更Fileと既存設計の二行は、最小範囲と整合性を先に確認します。Data MigrationとExternal Side Effectは、File編集だけでは戻らない影響を見つけます。TestとRollbackは、成功の判定と失敗時の戻り方を対にします。対象外と承認事項は、Planが無断で広がるのを止めます。</p>
 <h2 id="ch-06-s5">6.5 Implement</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 一度に大きく変更すると、原因切り分けができず、Testを通すために設定を緩めたくなる誘惑も生まれます。Implementには規律が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 小さく・無関係Refactorを混ぜず・Configを弱体化させないルールを守ると、戻し作業と事故調査の時間が劇的に短くなります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Implementを独立工程にすると、承認したPlanを小さなDiffへ変換することだけに集中できます。飛ばせば当然成果物は変わりませんが、Planを実装扱いして完了報告する事故や、逆に一度に広い変更を入れて原因を追えなくする事故も起きます。</p>
 <ul>
 <li>1回の変更を小さくする。</li>
 <li>無関係Refactorを混ぜない。</li>
@@ -116,6 +126,7 @@ Commit     良い状態を保存
 <li>同じFileを複数Agentが同時編集しない。</li>
 </ul>
 <h2 id="ch-06-s6">6.6 Verify</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Implementの後に『たぶん動いた』で進めると、本番で初めて壊れます。機械的に確かめる段階を独立させる必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Static・Behavior・Visual・Data・Operationsを通して証拠を残させれば、未実行は未実行と分かり、合否が客観的になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Verifyは、完了条件をCommand、画面、Dataで実測する工程です。飛ばすと、Codeの見た目が正しくてもTest失敗、画面崩れ、件数差分、Rollback不能が利用時まで発見されません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Verify段階の検証カテゴリを5層に並べた一覧。静的・挙動・視覚・データ・運用の観点を漏らさず通します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どの層が未実行かが見える化され、『なんとなく動いた』ではなく機械的な合否に置き換えられます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Static</dt><dd>format・lint・typecheck・schema・secret scanなど機械が静止状態で確認できる層です。動かす前の最低保証線になります。</dd><dt>Behavior</dt><dd>unit・integration・E2E・replayなど実行して挙動を確かめる層です。仕様通り動くかを動的に保証します。</dd><dt>Visual</dt><dd>screenshot・responsive・PDF/printなど見た目を担保する層です。コードは通ってもUIが崩れる事故を防ぎます。</dd><dt>Data</dt><dd>row count・totals・hash・duplicate・nullなどデータの整合を確かめる層です。数字がズレたまま運用に乗ることを防ぎます。</dd><dt>Operations</dt><dd>logs・retry・timeout・rollbackなど運用時の振る舞いを検査する層です。本番で初めて気付く運用事故を手前で潰します。</dd></dl></div></div><pre><code class="language-text">Static: format, lint, typecheck, schema, secret scan
 Behavior: unit, integration, E2E, replay
 Visual: screenshot, responsive, PDF/print
@@ -126,12 +137,17 @@ Operations: logs, retry, timeout, rollback
 <pre><code class="language-text">完了条件ごとに、実行したCommand、Exit Code、出力要約、Artifact Pathを表で示してください。
 未実行は未実行と書いてください。
 </code></pre>
+<p><strong>【このコードの読み方】</strong> <code>Static</code>は実行前に形式や型の破綻を拾います。<code>Behavior</code>は利用時の振る舞いをTestで確認します。<code>Data</code>の件数、合計、Hashは、処理が通っただけでは見えない欠落や重複を検出します。報告PromptのExit CodeとArtifact Pathは、成功したという説明を実行結果と成果物へ結び付けます。</p>
+<p><strong>【失敗するとこうなる】</strong> Implement後に画面だけを一度開き、Verifyを終えたことにしたとします。提出後、狭い画面で横Scrollが出て、Test Commandは型Errorで終了します。原因は、Visualだけを見てStaticと完了条件別の確認を実行しなかったことです。変更を合格扱いから戻し、各条件へCommand、Exit Code、Artifactを対応させて未実行を埋めます。</p>
 <h2 id="ch-06-s7">6.7 Review</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 実装した本人の文脈は自分の判断に引っ張られ、欠陥を見落とします。Reviewは別の目で行う段階として分離する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 新しいSessionやFresh ReviewerでDiffを独立に見させると、要件・Security・Edge caseの抜けが浮き上がり、品質が一段上がります。</p></div>
+<p><strong>【なぜこの設計か】</strong> ReviewをVerifyの後に分けるのは、動くことを確認した成果物へ、要件漏れや危険な前提がないか別の視点を当てるためです。飛ばすと、実装中に採用した仮説を同じSessionが正しいものとして扱い、Edge caseや対象外変更を見逃します。</p>
 <p>作ったSessionは自分の判断へ引っ張られる。新しいSessionまたはFresh Reviewerを使う。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 別文脈Reviewer向けのPromptで、実装者の説明を鵜呑みにせずFile・Lineを根拠に独立Reviewさせる指示文です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 作成者バイアスから切り離された指摘が得られ、Edge caseやTest不足が事前に拾えるようになります</p></div><pre><code class="language-text">このDiffを、要件、Security、Data loss、Edge case、Test不足の観点で独立Reviewしてください。
 実装者の説明を鵜呑みにせず、FileとLineを根拠にしてください。
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 「このDiff」はReview対象を実際の変更へ限定します。要件とSecurityは、正しさと危険性を別の軸で見ます。Data lossとEdge caseは通常経路のTestで隠れる損失を探します。FileとLineを根拠にする行は、実装者の要約をそのまま結論にするのを防ぎます。</p>
 <h2 id="ch-06-s8">6.8 Commit</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 良い状態を保存しないと、次のセッションで何を直したか辿れなくなります。意味ある単位で履歴に残す段階が要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Status・Diff・Statを確認してから1つの意図にまとめてCommitすると、後日の巻き戻しとレビューが現実的な作業になります。</p></div>
+<p><strong>【なぜこの設計か】</strong> Commitを最後に置くと、検証とReviewを通った一つの意図だけを戻れる状態として保存できます。飛ばすと良い状態の境界がなくなり、次の変更で壊れた時に、どこまで戻せばよいか判断できません。</p>
 <p>Commit前：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Commit前に必ず通す4つの確認コマンド。状態・差分・統計・全文Diffを段階的に確認します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Secretsや他人の変更の混入、意図しないFileの混在を物理的に防ぎ、Commitが1つの意図にまとまります。</p></div><pre><code class="language-bash">git status --short
 git diff --check
@@ -139,11 +155,49 @@ git diff --stat
 git diff
 </code></pre>
 <p>Commitは1つの意図にまとめ、Secrets、生成Noise、他人の変更を含めない。</p>
+<p><strong>【このコードの読み方】</strong> <code>git status --short</code>は変更対象と未追跡Fileを一覧で確認します。<code>git diff --check</code>は空白などDiffの機械的な問題を先に拾います。<code>git diff --stat</code>は変更規模がPlanを超えていないかを見せ、最後の<code>git diff</code>で保存する内容そのものを確認します。</p>
+<p><strong>【実演】</strong> 小タスクとして「Owner Filterを選んでも一覧が変わらない」症状を七工程で通します。Exploreでは関係File、既存Test、開始時Diffを読み、編集しません。Specifyでは再現Testの前後だけを合格条件にします。Planでは共通処理へ広げず、Filter処理とTestの二点に範囲を限定します。Implementではその小さな変更だけを入れます。</p>
+<p>VerifyでTestとDiffの機械Checkを実行し、Reviewでは要件、Data loss、Edge caseを新しい文脈で確認します。最後に<code>status</code>とDiff全体を見て、Secrets、生成Noise、他人の変更がない一つの意図だけをCommitします。途中の工程で失敗したら次へ進まず、その工程の入力へ戻るのが通し方の要点です。</p>
+<pre><code class="language-text">Explore:
+$ git status --short
+$ rg -n "Owner|Filter" src tests
+関係File: src/task-filter.js, tests/task-filter.test.js
+
+Specify:
+完了条件: Owner選択の再現Testが修正前Fail、修正後Pass
+
+Plan:
+変更予定: Filter処理1件、再現Test1件
+対象外: 画面Layout、Data Schema
+
+Implement:
+変更: 2 files
+
+Verify:
+$ npm run test
+Result: PASS
+$ git diff --check
+Result: no errors
+
+Review:
+重大な指摘: なし
+残Risk: 未指定Ownerの表示を追加確認
+
+Commit:
+$ git status --short
+ M src/task-filter.js
+ M tests/task-filter.test.js
+$ git diff --stat
+2 files changed
+$ git commit -m "Fix owner filter"
+[branch revision] Fix owner filter
+</code></pre>
+<p>出力では、各工程の成果が次工程の入力になっているかを読みます。特に、Specifyの完了条件とVerifyのTest結果、Planの変更予定とCommit直前のFile一覧が対応している必要があります。対応しないFileがあれば、保存前に今回の意図から外します。出力は例示であり、Version・環境で異なります。</p>
 <hr/>
 
   </section>
   
-  <section class="reference"><h2>補助図の制作指示</h2>
+  <section class="reference"><p class="reference-title">補助図の制作指示</p>
 <figure class="image-shell" data-image-id="diagram-ch06-standard-loop">
   <img src="../images/diagram-ch06-standard-loop.webp" alt="探索からCommitまでの七段階標準Loop" loading="lazy" decoding="async">
   <figcaption>どの仕事も同じLoopへ入れると、抜けと手戻りを発見しやすくなります。</figcaption>
@@ -160,7 +214,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
   </details>
 </figure>
 </section>
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>ABC物流の社内システム改修で、依頼→実装→『動いたっぽい』→本番→事故、という流れを毎月繰り返している。</p><h3>こう使う</h3><p>Explore→Specify→Plan→Implement→Verify→Review→Commitの七段階に依頼テンプレを揃え、各段階で証拠を残す。</p><h3>得られるもの</h3><p>本番事故の発生源を段階に切り分けて潰せるようになり、改修1本あたりの平均事故件数が減る。</p></article><article class="usecase-card"><h3>場面</h3><p>Webデザイナー（架空）が、AIに『修正お願い』と頼んだら関係ない部分まで書き換えられ、何が変わったか追えない。</p><h3>こう使う</h3><p>Plan段階で変更範囲をAIに宣言させ、Verifyで差分とテスト結果を見てからCommitする運用にする。</p><h3>得られるもの</h3><p>予期しない書き換えがPlanで弾かれ、レビュー時間が短く、巻き戻しも安全になる。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>ABC物流の社内システム改修で、依頼→実装→『動いたっぽい』→本番→事故、という流れを毎月繰り返している。</p><p class="usecase-label">こう使う</p><p>Explore→Specify→Plan→Implement→Verify→Review→Commitの七段階に依頼テンプレを揃え、各段階で証拠を残す。</p><p class="usecase-label">得られるもの</p><p>本番事故の発生源を段階に切り分けて潰せるようになり、改修1本あたりの平均事故件数が減る。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>Webデザイナー（架空）が、AIに『修正お願い』と頼んだら関係ない部分まで書き換えられ、何が変わったか追えない。</p><p class="usecase-label">こう使う</p><p>Plan段階で変更範囲をAIに宣言させ、Verifyで差分とテスト結果を見てからCommitする運用にする。</p><p class="usecase-label">得られるもの</p><p>予期しない書き換えがPlanで弾かれ、レビュー時間が短く、巻き戻しも安全になる。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="05.html">← 強い指示の書き方</a><a href="07.html">Permission Mode、Sandbox、危険操作 →</a></nav></main></div>

@@ -18,7 +18,7 @@
 これは限界の問題ではなく、編成の問題です。</p><p>ほとんどの人は、AIをチームではなく、ひとりの賢い人として扱っています。
 ですが、複数の AI に役割を割り振り、互いに結果を渡し合う設計をすると、こなせる仕事の量が一段変わります。</p><p>Dynamic Workflows は、目的に応じて複数の AI が動的に役割を分担する仕掛けです。
 調査担当が結果を出し、設計担当が計画に直し、実装担当が手を動かし、レビュー担当が読み返す。</p><p>この章を読み終わる頃には、AI を 1 つの道具ではなく、1 つのチームとして見られるようになります。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-21-0-dynamic-workflows"><h3 id="feature-21-0-dynamic-workflows">Dynamic Workflows</h3><p class="feature-summary">入力に応じて複数Agentの流れを組み替える可変Workflow。仮説バイアスを分離した調査・統合に向く。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、必要な情報源、品質基準</dd><dt>出力</dt><dd>Agent構成と各Agentの中間成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-1-research-verify-synthesize"><h3 id="feature-21-1-research-verify-synthesize">Research → Verify → Synthesize</h3><p class="feature-summary">情報源を探す・主張を検証する・矛盾と重複を整理して統合する三役分業の代表構成。</p><dl class="feature-io"><dt>入力</dt><dd>調査依頼、複数情報源</dd><dt>出力</dt><dd>出典付き検証済み統合レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-2-cost-control-agent"><h3 id="feature-21-2-cost-control-agent">Cost Control（Agent数/トークン/再試行）</h3><p class="feature-summary">Agent数・検索範囲・最大トークン・再試行回数を制限し、料金暴走を構造的に防ぐ運用設定。</p><dl class="feature-io"><dt>入力</dt><dd>想定予算、現状のAgent構成</dd><dt>出力</dt><dd>上限つきCost設定とアラート閾値</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-3-workflow-dynamic"><h3 id="feature-21-3-workflow-dynamic">手動Workflow（Dynamic不要の判定）</h3><p class="feature-summary">単純な仕事ではDynamicを使わず、手動の小さなWorkflowで済ませる判断軸。複雑度とコストを天秤にかける。</p><dl class="feature-io"><dt>入力</dt><dd>タスク内容、必要な分業度合い</dd><dt>出力</dt><dd>Dynamic採用/手動採用の判定理由</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-4-acceptance"><h3 id="feature-21-4-acceptance">Acceptance（中間成果物の保存）</h3><p class="feature-summary">各段階の中間成果物を保存し、最終出力だけで判断しない受け入れ基準。再現と監査を可能にする。</p><dl class="feature-io"><dt>入力</dt><dd>Workflow実行ログ、中間成果物</dd><dt>出力</dt><dd>段階別保存ファイルとAcceptance結果</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-21-0-dynamic-workflows"><p class="feature-title" id="feature-21-0-dynamic-workflows">Dynamic Workflows</p><p class="feature-summary">入力に応じて複数Agentの流れを組み替える可変Workflow。仮説バイアスを分離した調査・統合に向く。</p><dl class="feature-io"><dt>入力</dt><dd>調査テーマ、必要な情報源、品質基準</dd><dt>出力</dt><dd>Agent構成と各Agentの中間成果物</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-1-research-verify-synthesize"><p class="feature-title" id="feature-21-1-research-verify-synthesize">Research → Verify → Synthesize</p><p class="feature-summary">情報源を探す・主張を検証する・矛盾と重複を整理して統合する三役分業の代表構成。</p><dl class="feature-io"><dt>入力</dt><dd>調査依頼、複数情報源</dd><dt>出力</dt><dd>出典付き検証済み統合レポート</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-2-cost-control-agent"><p class="feature-title" id="feature-21-2-cost-control-agent">Cost Control（Agent数/トークン/再試行）</p><p class="feature-summary">Agent数・検索範囲・最大トークン・再試行回数を制限し、料金暴走を構造的に防ぐ運用設定。</p><dl class="feature-io"><dt>入力</dt><dd>想定予算、現状のAgent構成</dd><dt>出力</dt><dd>上限つきCost設定とアラート閾値</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-3-workflow-dynamic"><p class="feature-title" id="feature-21-3-workflow-dynamic">手動Workflow（Dynamic不要の判定）</p><p class="feature-summary">単純な仕事ではDynamicを使わず、手動の小さなWorkflowで済ませる判断軸。複雑度とコストを天秤にかける。</p><dl class="feature-io"><dt>入力</dt><dd>タスク内容、必要な分業度合い</dd><dt>出力</dt><dd>Dynamic採用/手動採用の判定理由</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-21-4-acceptance"><p class="feature-title" id="feature-21-4-acceptance">Acceptance（中間成果物の保存）</p><p class="feature-summary">各段階の中間成果物を保存し、最終出力だけで判断しない受け入れ基準。再現と監査を可能にする。</p><dl class="feature-io"><dt>入力</dt><dd>Workflow実行ログ、中間成果物</dd><dt>出力</dt><dd>段階別保存ファイルとAcceptance結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-21">
   <img src="../images/chapter-21-71acac.webp" alt="第21章『Dynamic Workflowsと複数Agent』を表すmulti-agent workflow illustration" loading="lazy" decoding="async">
@@ -37,14 +37,16 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-21-s1">21.1 Dynamicとは</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Dynamic Workflowsはバージョンとプランで挙動が変わるため、最低要件を確認せずに使うと再現できない事故が起きます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 対象プランと/configを先に確認したうえで、ultracodeや/workflowsといった代表入口を踏むかどうかを判断できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Dynamic Workflowは、調査範囲によって工程とAgentの分担を変えられる反面、毎回同じ経路を通るとは限りません。利用条件と設定を先に確認することで、使えない入口を前提に計画するのを防ぎます。分担を動的にしても、成果物、上限、合否は人が固定します。</p>
 <p>依頼内容からClaudeが工程とAgent構成を組み立てる。利用前に最低Version、対象Plan、<code>/config</code>を確認する。</p>
 <p>代表入口：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Dynamic Workflowsへの代表的な入口を2つだけ示したメモで、利用前に確認すべき設定があることを暗示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> どこから起動するかが迷子にならず、最低Version・対象Plan・/configの確認を先に行う運用が定着します。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>ultracode</dt><dd>Dynamic Workflowsをトリガーする代表入口の一つです。利用前にプラン要件とバージョンを満たしているかを/configで確認する必要があります。</dd><dt>/workflows</dt><dd>登録済みWorkflowを呼ぶ別経路の入口です。自分で組んだ手動Workflowもここから走らせる構成にすると、入口が二系統に分散しません。</dd></dl></div></div><pre><code class="language-text">ultracode
 /workflows
 </code></pre>
 <h2 id="ch-21-s2">21.2 Research → Verify → Synthesize</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> ひとつのAgentに調査と検証を兼任させると、初期仮説に引きずられて反証を拾えなくなります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Research・Verify・Synthesizeを別役割に分け、出典・日付・矛盾の検証を独立工程として走らせる構成が組めます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 調査、検証、統合を別工程にすると、集めた量をそのまま正しさとして扱いません。複数Agentの結果は、Claim、Date、Sourceの単位で突き合わせ、矛盾を解消できない項目を未確認のまま残します。突き合わせを飛ばすと、Writerは読みやすい一方の回答を選び、反対の根拠を落とします。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 三役それぞれの守備範囲を1行で定義した分業表で、Verifyに出典・日付・矛盾、Synthesizeに結論と影響を割り当てます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 各Agentに何を渡して何を返してもらうかが明確になり、役割が混ざることによる仮説バイアスを構造的に防げます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Research</dt><dd>公式・一次データ・反対意見まで含めて素材を集める役です。最初から仮説に寄せず、否定材料も同じ手で拾うのが分業の前提になります。</dd><dt>Verify</dt><dd>出典・日付・数値・矛盾だけを確認する独立の役です。Researchと兼任させると初期仮説に引きずられるので、人格を分けて反証チェックさせます。</dd><dt>Synthesize</dt><dd>結論・根拠・影響・不確定・Actionに整理する統合役です。検証済みClaimだけを材料にし、未検証の素材から論を組み立てさせません。</dd></dl></div></div><pre><code class="language-text">Research: 公式、一次Data、反対意見
 Verify: 出典、Date、数値、矛盾
 Synthesize: 結論、根拠、影響、不確定、Action
@@ -56,6 +58,7 @@ SNSは反応のみ。最大8 Agent、25分。
 出力は research/claude-code-update/。
 </code></pre>
 <h2 id="ch-21-s3">21.3 Cost Control</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Agent数を増やすと総入力トークンが掛け算で膨らみ、月のAPI料金が想定の数倍になる事故が現実に起きています。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Claim Ledger経由で中間情報を圧縮し、高価モデルを統合だけに使うなど、構造的に料金が暴走しない設定が決まります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 同じ背景資料を全Agentへ渡すと、Agent数に比例して共通入力が増えます。Claim Ledgerへ圧縮し、担当範囲と中間Fileを分けることで、必要な根拠だけを次工程へ渡せます。高価なModelを統合や難所へ限定するのは、単純収集まで同じCostで反復しないためです。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Agentを増やすと共通知識を全員に配るためトークンが掛け算で増える、というCost Controlの中心式です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> なぜ全文を全員へ渡してはいけないのか、なぜ中間Fileの再利用が効くのかが、式の形で説明できるようになります。</p></div><pre><code class="language-text">総入力 ≒ 共通知識量 × Agent数 + 固有入力
 </code></pre>
 <ul>
@@ -67,8 +70,10 @@ SNSは反応のみ。最大8 Agent、25分。
 <li>中間Fileを再利用。</li>
 </ul>
 <h2 id="ch-21-s4">21.4 Dynamicを使わない</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 小修正や単純要約までDynamic Workflowで組むと、得られる品質向上より複雑さとコストの増分が上回ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Single Agent・Skill・Scriptで済む領域を切り分けられ、Dynamicを使うべきかどうかを毎回判定できます。</p></div>
+<p><strong>【なぜこの設計か】</strong> 工程が明確な小修正まで複数Agentへ分けると、分担指示、出力保存、突き合わせの費用が本作業を上回ります。Write権限を持つ作業では、並行した変更同士が同じFileや前提を上書きします。Single Agent、Skill、Scriptで十分な仕事を除外すると、Dynamicは不確実性の高い問題へ集中できます。</p>
 <p>小修正、正解が明確、頻繁な低Cost処理、単純要約、Write権限作業はSingle Agent/Skill/Scriptがよい。</p>
 <h2 id="ch-21-s5">21.5 手動Workflow</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Dynamicが使えない環境でも、Research・Verify・Synthesizeの分業思想は手動Workflowで再現できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 公式・実例・失敗を3 Agentで分担し、Fresh Reviewerでclaims.csvを作って執筆者と分離する手順がそのまま回せます。</p></div>
+<p><strong>【なぜこの設計か】</strong> raw結果を別Fileへ保存し、Fresh Reviewerがclaims.csvへ揃えるのは、Agentごとの結論を同じ尺度で比較するためです。Writerがraw結果を直接読むと、先に読んだ説や文章の強い説へ引っ張られます。検証済みClaimだけを入力にすることで、収集者の見落としを統合文へ持ち込みません。</p>
 <pre><code class="language-text">1. 3 Research Agentが公式/実例/失敗を分担。
 2. raw結果を別Fileへ保存。
 3. Fresh Reviewerがclaims.csvを作る。
@@ -77,6 +82,7 @@ SNSは反応のみ。最大8 Agent、25分。
 最大6 Agent。Code変更禁止。
 </code></pre>
 <h2 id="ch-21-s6">21.6 Acceptance</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Workflowは中間結果が見えにくく、最終出力だけで合否を判断すると再現性も監査もできません。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Single Agentとの比較・Agent上限・入出力追跡・Human Gateなどの項目を埋める受け入れ基準として使えます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Acceptanceは、複数Agentを使った事実ではなく、結果を追跡、再開、比較できるかを判定します。Agentと時間の上限があっても、ClaimとSourceの対応がなければ、最終結論の根拠を再構成できません。Human Gateを最後に置くことで、矛盾やCost超過を残したまま成果物を確定しません。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> DynamicのAcceptanceを9項目のチェックリストで並べた基準で、Cost停止やHuman Gateの有無まで確認します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> Workflowを採用していい場面か、上限と再開と冪等が揃っているかを、合否のチェックとして機械的に判断できます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Single AgentよりWorkflowが必要</dt><dd>そもそも分業する必要がある仕事かを確認する項目です。単独Agentで済む依頼にWorkflowを当てると、複雑さとコストが品質向上を上回ります。</dd><dt>Agent/時間上限</dt><dd>Agent数と総時間に明示的な上限を置いたかの確認です。上限がないと並列爆発で料金が想定の数倍になる事故が現実に起きます。</dd><dt>入出力追跡</dt><dd>各Agentの入出力をファイルとして残しているかの確認です。後で『どこで結論が歪んだか』を遡れる監査経路をWorkflowに組み込む条件です。</dd><dt>作成者/評価者分離</dt><dd>書いたAgentと評価するAgentを別人格にしているかの確認です。自作自演レビューによる甘い合格判定を構造的に排除します。</dd><dt>ClaimとSource対応</dt><dd>主張ごとに対応する出典が紐付いているかの確認です。根拠と切れた一文がレポートに紛れ込み、後で出所不明になる事故を防ぎます。</dd><dt>途中再開</dt><dd>失敗した段階から再開できる構造かの確認です。再開不能だと毎回最初からやり直しになり、Cost制限を簡単に突破してしまいます。</dd><dt>冪等</dt><dd>同じ入力で何度走らせても同じ結果になるかの確認です。冪等でないと再実行のたびに副作用が増え、安全な再試行ができなくなります。</dd><dt>Human Gate</dt><dd>重要判断の前に人間の承認ステップを挟むかの確認です。これがないと、Workflow全体が暴走したまま最終アクションまで届きます。</dd><dt>Cost停止</dt><dd>費用が上限を超えたら自動停止するかの確認です。明示停止がないと、夜間バッチで予算月額を1日で焼き切るような事故が起きます。</dd></dl></div></div><pre><code class="language-text">[ ] Single AgentよりWorkflowが必要
 [ ] Agent/時間上限
 [ ] 入出力追跡
@@ -87,12 +93,13 @@ SNSは反応のみ。最大8 Agent、25分。
 [ ] Human Gate
 [ ] Cost停止
 </code></pre>
+<p><strong>【失敗するとこうなる】</strong> 三つのResearch Agentへ同じ論点を分担させ、返答を保存しただけでWriterへ渡します。完成Reportには同じ機能の提供時期が二通り書かれ、Source一覧にもどの文を支えるか表示されません。原因はAgent数を増やした後にClaim単位の突き合わせをせず、矛盾した結果を統合工程へ流したことです。raw結果からclaims.csvを作り、DateとSourceを照合し、解消できないClaimを未確認へ戻してから再執筆します。</p>
 <hr/>
 
   </section>
   
   
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>中堅リサーチ会社（架空）が、新市場調査をひとりのAIに任せたら初期仮説に引きずられて、後で重大な事実を見逃したと判明した。</p><h3>こう使う</h3><p>Research・Verify・Synthesizeの三役を独立Agentに分け、Cost上限と再試行回数も決める。</p><h3>得られるもの</h3><p>仮説バイアスが分離され、結論への反証も統合される。意思決定の質が説明可能になる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある個人投資家（架空）が、複数Agent構成にしたら検索量が爆発し、月のAPI料金が想定の5倍になった。</p><h3>こう使う</h3><p>Agent数・検索範囲・最大トークンを段階的に制限し、各段階の中間成果物を保存する。</p><h3>得られるもの</h3><p>暴走しないCost構造になり、シンプルな調査は手動Workflowへ戻す判断もできる。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>中堅リサーチ会社（架空）が、新市場調査をひとりのAIに任せたら初期仮説に引きずられて、後で重大な事実を見逃したと判明した。</p><p class="usecase-label">こう使う</p><p>Research・Verify・Synthesizeの三役を独立Agentに分け、Cost上限と再試行回数も決める。</p><p class="usecase-label">得られるもの</p><p>仮説バイアスが分離され、結論への反証も統合される。意思決定の質が説明可能になる。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>ある個人投資家（架空）が、複数Agent構成にしたら検索量が爆発し、月のAPI料金が想定の5倍になった。</p><p class="usecase-label">こう使う</p><p>Agent数・検索範囲・最大トークンを段階的に制限し、各段階の中間成果物を保存する。</p><p class="usecase-label">得られるもの</p><p>暴走しないCost構造になり、シンプルな調査は手動Workflowへ戻す判断もできる。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="20.html">← `/goal`、Headless、定期実行</a><a href="22.html">信頼できる調査とレポート →</a></nav></main></div>

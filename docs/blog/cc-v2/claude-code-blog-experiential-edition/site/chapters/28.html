@@ -37,7 +37,7 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-28-s1">28.1 請求書Folderを一覧化</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 請求書は金額・税・通貨が絡む高リスクデータです。元ファイルを触らずCSVへ書き出し、推測項目と低信頼行をReview表へ分けることで、自動化と人手確認の責任境界を最初に決められます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Dry-run結果と例外一覧が先にあるため、自動化を有効化しても会計事故が起きにくくなり、経理が確認すべき行だけに集中できます。</p></div>
 <p>Input：<code>inputs/invoices/</code>。Output：CSV、Review表、読取不能一覧。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> 請求書PDFから10列のCSVを生成し、元ファイル無改変・推測禁止・total検算・重複候補抽出・低信頼Reviewまでを1プロンプトで縛る指示例です。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 標準項目は自動入力されつつ例外と低信頼行は人へ回り、毎月数百枚規模でも会計事故ゼロのまま処理時間を圧縮できます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>source_file</dt><dd>元PDFのパスを記録し、抽出値が怪しい時に原本へ即座に戻れるようにする列です。これがないと根拠検証が不可能になります。</dd><dt>vendor_name</dt><dd>請求元の名称で、同一取引先を統一表記にしないと集計と支払先突合が狂います。表記揺れは別途辞書で補正します。</dd><dt>invoice_number</dt><dd>請求書を一意に識別する番号で、重複候補検知の主キーになります。空欄や重複は二重払い事故の温床です。</dd><dt>invoice_date / due_date</dt><dd>発行日と支払期限で、月次計上と振込スケジュールの根拠になります。混同すると遅延損害金が発生します。</dd><dt>subtotal / tax / total</dt><dd>小計・消費税・合計の三点で、total = subtotal + tax を検算しないと税抜誤計上による会計事故が起きます。</dd><dt>currency</dt><dd>通貨コードで、JPYとUSDの混在を見落とすと為替換算が抜けて利益が歪みます。必ず明示します。</dd><dt>extraction_confidence</dt><dd>AIが抽出した値の確度スコアで、低信頼行をReview表へ振り分ける閾値判定に使います。なければ全行が手動確認対象になります。</dd><dt>review_note</dt><dd>AIが迷った理由や曖昧箇所を人へ申し送るメモ列で、Reviewerが文脈ゼロから読まずに済みます。</dd><dt>元File無改変・推測禁止</dt><dd>原本を改変せず空欄も推測で埋めない縛りで、後で根拠を辿れる状態を維持します。便利を優先すると監査で詰みます。</dd><dt>支払/会計登録はしない</dt><dd>抽出と入金実行の責任を分離する境界で、AI誤抽出が即座に資金移動へ伝播する事故を物理的に止めます。</dd></dl></div></div><pre><code class="language-text">請求書を読み、source_file, vendor_name, invoice_number, invoice_date,
@@ -58,6 +58,7 @@ due_date, subtotal, tax, total, currency, extraction_confidence, review_note
 [ ] 元File Link
 [ ] 経理Human Review
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> 抽出値に元File、検算、信頼度を結び付けると、CSVの一行を原本まで戻して確認できます。不明値を推測すると、見た目の整った表が支払判断へ流れます。Review表を分けることで、自動抽出の成功件数と人が確定した件数を混同しません。</p>
 <h2 id="ch-28-s2">28.2 Folder整理</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 整理という言葉は『削除』と混同されがちです。Explore→Plan→Human Review→Moveの順で進め、移動前後のPathとHashを残すことで、誤分類を必ず元へ戻せる状態を維持できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 整理で資産を失う事故が原理的に消え、AIに整理を任せても元データへ戻れる確証を持ったまま実運用へ進められます。</p></div>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Folder整理を可逆な工程に分解し、Plan段階で人が見てからMoveへ進め、quarantine・Retention・Delete Approvalを段階配置する標準フローです。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> 整理という名の削除事故が物理的に起こらず、誤分類は移動前のPathとHashから即時にRollbackできます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>Explore</dt><dd>対象フォルダを変更せず走査して候補を作る段で、いきなりMoveしないことで誤分類の被害を未然に防ぎます。</dd><dt>organization-plan.csv</dt><dd>source/proposed_destination/category/reason等を持つ計画表で、人が見て判断できる単位に変更案を可視化します。</dd><dt>Human Review</dt><dd>計画表に人が承認印を入れる段で、ここを飛ばすと誤分類が本番フォルダへ流れます。自動化の責任分界点です。</dd><dt>Move</dt><dd>承認済みエントリだけを実際に移動する段で、移動前後のPath/Hashを必ず残してRollback可能性を確保します。</dd><dt>quarantine/YYYY-MM-DD</dt><dd>削除候補を即消さず日付付き隔離フォルダへ送る緩衝地帯で、誤判定を取り消せる猶予期間を作ります。</dd><dt>Retention / Delete Approval</dt><dd>保管期間を経て初めて削除し、最終承認も人が押す二段ゲートで、整理という名の削除事故を構造的に排除します。</dd></dl></div></div><pre><code class="language-text">Explore → organization-plan.csv → Human Review → Move
 → quarantine/YYYY-MM-DD → Retention → Delete Approval
@@ -67,6 +68,7 @@ category, reason, duplicate_group, riskを持つPlanを作る。
 Hidden、Package、Symlink、1GB超は対象外。
 </code></pre>
 <p>実行時は上書き禁止、移動前後のPath/HashをResultへ保存。</p>
+<p><strong>【なぜこの設計か】</strong> Folder整理を分析、承認、移動に分けるのは、誤分類を不可逆な削除へ直結させないためです。移動前後のPathとHashがあれば、内容が変わっていないことと戻し先を確認できます。Planを飛ばすと、同名Fileの上書きや対象外Fileの移動を実行後にしか発見できません。</p>
 <h2 id="ch-28-s3">28.3 契約書論点</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 契約書をAIに『有効か無効か』判断させると、法的責任が曖昧になります。条項・義務・期限・曖昧点・専門家質問を抽出するだけに役割を限定すれば、AIは下処理に徹し人が判断できます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> AIによる誤った法的結論で社内が動く事故が消え、法務レビュー時間も論点が整理された状態から始められます。</p></div>
 <p>AIへ有効/無効を断定させず、条項、平易な説明、義務、金額/期限、曖昧点、専門家への質問を作る。最終判断は法務へ。</p>
 <h2 id="ch-28-s4">28.4 会議Assistant本番化</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 会議AssistantをアドホックなChatのまま運用すると、Meeting IDの重複・Owner欠落・原文未参照で品質が下がります。冪等・JSON Schema・原文Quote・Retentionを固めると本番運用に耐えます。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 議事録からTaskへの変換が安定し、誰が・いつまでに・どの発言を根拠に動くかが、毎回同じ精度で出力されます。</p></div>
@@ -94,6 +96,25 @@ Hidden、Package、Symlink、1GB超は対象外。
   "needs_confirmation": false
 }
 </code></pre>
+<p><strong>【なぜこの設計か】</strong> Decision、Proposal、Taskを分け、Taskへ原文Quoteを持たせると、依頼と検討案を取り違えません。Ownerや期限が不明な時に<code>null</code>を残せば、AIの補完を担当者の合意として登録する事故を防げます。Meeting IDとSchemaは、同じ会議の重複処理と項目揺れを検出する基準になります。</p>
+<p><strong>【実演】</strong> 会議文字起こしから、確認可能な議事録とTask JSONを作る定型業務です。</p>
+<p><strong>依頼文</strong></p>
+<pre><code class="language-text">inputs/meeting-transcript.txtを読み、会議Assistantの成果物をoutputs/meeting/へ作ってください。
+元Fileは変更、移動、削除しないでください。
+決定事項と提案を分け、Taskにはtitle、owner、due_date、status、source quoteを持たせてください。
+担当者または期限が原文にない場合は推測せずnullにし、確認が必要だと分かるようにしてください。
+同じ会議を重複処理しないよう、入力からMeeting IDを定めて成果物に記録してください。
+meeting-summary.mdとtasks.jsonを作り、JSONは章内の構造に合わせてください。
+外部Task Systemへの登録、送信、予定変更はしないでください。
+完了条件は、各決定とTaskを原文Quoteへ戻して確認でき、JSONを機械的に読めることです。
+</code></pre>
+<p><strong>Claude Codeが何をするか</strong></p>
+<p>最初に原文を読み、発言を決定、提案、Taskへ分類します。次に不明項目を補完せず、Meeting IDとSource Quoteを付けてMarkdownとJSONへ整形します。最後にJSONの構造と原文対応を検査し、外部登録を行わず終了します。</p>
+<p><strong>成果物</strong></p>
+<p><code>outputs/meeting/meeting-summary.md</code>と<code>outputs/meeting/tasks.json</code>ができます。原文は<code>inputs/meeting-transcript.txt</code>に残り、各Taskから該当発言へ戻れます。</p>
+<p><strong>検証方法</strong></p>
+<p>JSONをParserで読み、必須の構造が壊れていないことを確認します。議事録の決定事項とTaskを原文に照合し、Quote、Owner、期限が一致するか、情報がなければ<code>null</code>かを見ます。外部Systemに登録や送信が発生していないことも作業報告で確認します。</p>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-28-s5">28.5 週報</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 週報は『書く時間』のために遅延しがちです。過去3件から形式だけを抽出し、今週の議事録とTaskから素材を埋めるDraftに変えると、書く作業から見直す作業へ性質が変わります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 送信前確認は残しつつ初稿の生成時間がゼロに近づき、上長は判断・修正に時間を使えるため週報の質が上がります。</p></div>
 <p>過去3件から形式だけを抽出し、今週の議事録/Taskから実績、数字、進行、Blocker、来週、支援依頼をDraft化。誇張せず、送信しない。</p>
 <hr/>

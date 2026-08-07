@@ -13,6 +13,7 @@ from typing import Any
 from bs4 import BeautifulSoup, Tag
 
 ROOT = Path(__file__).resolve().parents[1]
+HTML_HEADING_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 BASE_HTML = ROOT / 'site' / 'complete.html'
 BASE_MD = ROOT / 'claude-code-blog-complete.md'
 SLIDE_DIR = ROOT / 'assets' / 'slides'
@@ -238,8 +239,8 @@ def expected_target_label(soup: BeautifulSoup, target_type: str, target: str) ->
     node = soup.find(id=target)
     if not node: return target
     if target_type == 'chapter-cover':
-        h = node.select_one('.chapter-head h1')
-        # Prefer the .chapter-name (機能名) for slide captions; fall back to whole h1.
+        h = node.select_one('.chapter-head .chapter-title')
+        # Prefer the .chapter-name (機能名) for slide captions; fall back to the whole title.
         name = h.select_one('.chapter-name') if h else None
         text = name.get_text(' ', strip=True) if name else (h.get_text(' ', strip=True) if h else '')
         return f"{label_for(chapter_id_from_target(target) or 'final')} {text}".strip()
@@ -279,7 +280,7 @@ def first_explanation_end(heading: Tag) -> Tag:
     node=heading.find_next_sibling()
     last=heading
     while node:
-        if isinstance(node,Tag) and node.name in {'h1','h2','h3'}: break
+        if isinstance(node,Tag) and node.name in HTML_HEADING_TAGS: break
         if isinstance(node,Tag) and node.name in {'p','ul','ol','pre','blockquote','table','div'}:
             last=node
             if node.get_text(' ',strip=True): break
@@ -292,17 +293,17 @@ def make_beginner_section(key: str, spec: dict[str, Any]) -> Tag:
     sec=s.new_tag('details',attrs={'class':'beginner-primer','id':f'beginner-{key}'})
     summary=s.new_tag('summary',attrs={'class':'beginner-summary'})
     eyebrow=s.new_tag('div',attrs={'class':'beginner-eyebrow'});eyebrow.string='完全初心者のための準備';summary.append(eyebrow)
-    h=s.new_tag('h2');h.string='この章に入る前に';summary.append(h)
+    h=s.new_tag('span',attrs={'class':'panel-title'});h.string='この章に入る前に';summary.append(h)
     hint=s.new_tag('span',attrs={'class':'beginner-toggle-hint'});hint.string='クリックして開く ▾';summary.append(hint)
     sec.append(summary)
     p=s.new_tag('p',attrs={'class':'beginner-lead'});p.string=f"この章では、{spec['outcome']}ことを学びます。最初に専門用語を暗記するのではなく、{spec['focus']}小さな実習から理解します。";sec.append(p)
     grid=s.new_tag('div',attrs={'class':'beginner-grid'})
-    card=s.new_tag('article',attrs={'class':'primer-card'});h3=s.new_tag('h3');h3.string='まず知っておくこと';card.append(h3);ul=s.new_tag('ul',attrs={'class':'beginner-basics'})
+    card=s.new_tag('article',attrs={'class':'primer-card'});h3=s.new_tag('p',attrs={'class':'panel-subtitle'});h3.string='まず知っておくこと';card.append(h3);ul=s.new_tag('ul',attrs={'class':'beginner-basics'})
     basics=[f"この章の中心は「{spec['outcome']}」です。",f"練習は `learning-lab/chapter-{key}-{spec['slug']}` の中だけで行います。",f"完成は感覚ではなく、{spec['artifacts'][0]} と確認結果で判断します。"]
     for b in basics: li=s.new_tag('li');li.string=b;ul.append(li)
     card.append(ul);grid.append(card)
-    card2=s.new_tag('article',attrs={'class':'primer-card'});h3=s.new_tag('h3');h3.string='身近なたとえ';card2.append(h3);p2=s.new_tag('p',attrs={'class':'beginner-analogy'});p2.string=spec['analogy'];card2.append(p2);grid.append(card2);sec.append(grid)
-    h3=s.new_tag('h3');h3.string='この章で出てくる言葉';sec.append(h3)
+    card2=s.new_tag('article',attrs={'class':'primer-card'});h3=s.new_tag('p',attrs={'class':'panel-subtitle'});h3.string='身近なたとえ';card2.append(h3);p2=s.new_tag('p',attrs={'class':'beginner-analogy'});p2.string=spec['analogy'];card2.append(p2);grid.append(card2);sec.append(grid)
+    h3=s.new_tag('p',attrs={'class':'panel-subtitle'});h3.string='この章で出てくる言葉';sec.append(h3)
     dl=s.new_tag('dl',attrs={'class':'beginner-terms'})
     for term,meaning in spec['terms'].items():
         dt=s.new_tag('dt');dt.string=term;dd=s.new_tag('dd');dd.string=meaning;dl.append(dt);dl.append(dd)
@@ -317,7 +318,7 @@ def hands_on_panel(key: str, spec: dict[str, Any]) -> Tag:
     sec=s.new_tag('details',attrs={'class':'hands-on-launcher','id':f'hands-on-{key}','data-chapter-lab':key})
     summary=s.new_tag('summary',attrs={'class':'hands-on-summary'})
     e=s.new_tag('div',attrs={'class':'eyebrow'});e.string='Chapter Hands-on Skill';summary.append(e)
-    h=s.new_tag('h2');h.string='この章を実際に操作する';summary.append(h)
+    h=s.new_tag('span',attrs={'class':'panel-title'});h.string='この章を実際に操作する';summary.append(h)
     hint=s.new_tag('span',attrs={'class':'hands-on-toggle-hint'});hint.string='章番号を伝えて開始 ▾';summary.append(hint)
     sec.append(summary)
     p=s.new_tag('p');p.string=f"章番号を伝えると、{spec['focus']}Labをすぐ開始します。進捗はProject内へ保存され、Cursor・Claude Code・Codex間で再開できます。";sec.append(p)
@@ -342,16 +343,16 @@ def hands_on_panel(key: str, spec: dict[str, Any]) -> Tag:
 EXTRA_CSS = r'''
 /* Experiential edition (90+ pass: 3-token palette) */
 .lesson-slide{max-width:920px;margin:28px 0 42px;border:1px solid var(--ref-border);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(20,50,100,.08)}.lesson-slide a{display:block}.lesson-slide img{width:100%;height:auto;display:block;aspect-ratio:120/67;object-fit:cover}.lesson-slide figcaption{padding:12px 17px;color:var(--ref-ink);font-size:.9rem;background:var(--ref-bg)}.lesson-slide.is-cover{margin-top:8px}
-.beginner-foundation{background:var(--ref-bg);border-top:1px solid var(--ref-border);border-bottom:1px solid var(--ref-border)}.beginner-foundation-body{max-width:1050px;margin:0 auto}
+.beginner-foundation{background:var(--ref-bg);border-top:1px solid var(--ref-border);border-bottom:1px solid var(--ref-border)}.zero-start-details{padding:0}.zero-start-details[open]>.disclosure-summary{border-bottom:1px solid var(--ref-border)}.beginner-foundation-body{max-width:1050px;margin:0 auto;padding:24px clamp(24px,5vw,56px) 34px}
 .beginner-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0}
 .beginner-primer{margin:30px 0 38px;padding:0;border:1px solid var(--ref-border);border-radius:22px;background:var(--ref-bg);box-shadow:0 6px 18px rgba(20,50,100,.05);overflow:hidden}
 .beginner-primer .beginner-eyebrow{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--ref-accent);margin:0}
-.beginner-primer h2{margin:0;color:var(--ref-ink)}
-.beginner-primer h3{font-size:1.06rem;margin:18px 0 8px;color:var(--ref-ink)}
+.beginner-primer .panel-title{margin:0;color:var(--ref-ink)}
+.beginner-primer .panel-subtitle{font-size:1.06rem;font-weight:800;margin:18px 0 8px;color:var(--ref-ink)}
 .beginner-summary{list-style:none;cursor:pointer;padding:22px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--ref-bg);transition:background .15s}
 .beginner-summary::-webkit-details-marker{display:none}
 .beginner-summary:hover{background:#e3eef9}
-.beginner-summary h2{font-size:1.1rem;color:var(--ref-ink)}
+.beginner-summary .panel-title{font-size:1.1rem;color:var(--ref-ink)}
 .beginner-toggle-hint{margin-left:auto;font-size:.82rem;color:var(--ref-accent);font-weight:700;letter-spacing:.04em;transition:transform .2s}
 .beginner-primer[open] .beginner-toggle-hint{transform:rotate(180deg) translateY(-2px)}
 .beginner-primer[open] .beginner-summary{border-bottom:1px solid var(--ref-border)}
@@ -374,11 +375,11 @@ EXTRA_CSS = r'''
 .hands-on-launcher>*:not(summary):first-of-type{padding-top:18px}
 .hands-on-launcher>*:last-child{padding-bottom:24px}
 .hands-on-launcher .eyebrow{font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--action-accent);font-weight:900}
-.hands-on-launcher h2{margin:.25rem 0 .5rem;color:var(--action-ink)}
+.hands-on-launcher .panel-title{margin:.25rem 0 .5rem;color:var(--action-ink)}
 .hands-on-summary{list-style:none;cursor:pointer;padding:14px 22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(135deg,#fff8ec,var(--action-bg));transition:background .15s}
 .hands-on-summary::-webkit-details-marker{display:none}
 .hands-on-summary:hover{background:#fff3dc}
-.hands-on-summary h2{margin:0;font-size:1rem;line-height:1.3}
+.hands-on-summary .panel-title{margin:0;font-size:1rem;line-height:1.3}
 .hands-on-summary .eyebrow{margin:0;font-size:.7rem}
 .hands-on-toggle-hint{margin-left:auto;font-size:.82rem;color:var(--action-accent);font-weight:700;letter-spacing:.04em;transition:transform .2s}
 .hands-on-launcher[open] .hands-on-toggle-hint{transform:rotate(180deg) translateY(-2px)}
@@ -521,7 +522,7 @@ def build_html(manifest: list[dict[str, Any]]) -> None:
     # Remove generated placeholders and prompt panels from reading flow; keep manifests in package.
     for fig in soup.select('figure.image-shell'): fig.decompose()
     for sec in list(soup.select('section.reference')):
-        h=sec.find(['h2','h3'])
+        h=sec.find(['h2','h3','h4','h5','h6','p'])
         if h and '補助図の制作指示' in h.get_text(): sec.decompose()
     # Header link.
     nav=soup.select_one('.site-header nav')
@@ -534,7 +535,7 @@ def build_html(manifest: list[dict[str, Any]]) -> None:
     # Zero-start primer.
     first_part=soup.find(id='part-0')
     if first_part:
-        primer=BeautifulSoup('''<section class="hero beginner-foundation" aria-labelledby="zero-start-title"><div class="chapter"><header class="chapter-head"><div class="eyebrow">Zero-start foundation</div><h1 id="zero-start-title">本当に0から読む人のための5分準備</h1></header><div class="beginner-foundation-body"><p class="lede">ファイルは情報を保存する箱、フォルダは箱をまとめる引き出し、Cursorは作業机、ターミナルは文字で命令する画面、ブラウザはHTMLを見る窓です。分からない言葉は各章で必要な分だけ説明します。</p><div class="beginner-note"><strong>四つの約束:</strong> 練習用コピーを使う。秘密を貼らない。削除・送信・公開・課金では止まる。「できた」は成果物と証拠で確認する。</div></div></div></section>''','html.parser').section
+        primer=BeautifulSoup('''<section class="hero beginner-foundation" aria-labelledby="zero-start-title"><details class="chapter zero-start-details"><summary class="disclosure-summary"><span class="eyebrow">Zero-start foundation</span><span class="disclosure-title" id="zero-start-title">本当に0から読む人のための5分準備</span><span class="disclosure-hint">必要なときに開く ▾</span></summary><div class="beginner-foundation-body"><p class="lede">ファイルは情報を保存する箱、フォルダは箱をまとめる引き出し、Cursorは作業机、ターミナルは文字で命令する画面、ブラウザはHTMLを見る窓です。分からない言葉は各章で必要な分だけ説明します。</p><div class="beginner-note"><strong>四つの約束:</strong> 練習用コピーを使う。秘密を貼らない。削除・送信・公開・課金では止まる。「できた」は成果物と証拠で確認する。</div></div></details></section>''','html.parser').section
         first_part.insert_before(primer)
     # Chapter supplements and launchers.
     for key,spec in CHAPTERS.items():
@@ -551,10 +552,12 @@ def build_html(manifest: list[dict[str, Any]]) -> None:
         if typ=='hero':
             anchor=soup.select_one('.hero-grid')
             if not anchor: raise SystemExit('hero missing')
-            for item in reversed(items): anchor.insert_before(slide_figure_html(item,prefix='../'))
+            # Keep the reading-path selector in the first viewport and use the
+            # hero slide as the grid's visual column instead of placing it above.
+            for item in items: anchor.append(slide_figure_html(item,prefix='../'))
             continue
         if typ=='heading-text':
-            anchor=next((h for h in soup.find_all(['h1','h2','h3']) if h.get_text(' ',strip=True)==target),None)
+            anchor=next((h for h in soup.find_all(HTML_HEADING_TAGS) if h.get_text(' ',strip=True)==target),None)
         else: anchor=soup.find(id=target)
         if not anchor: raise SystemExit(f'target missing {typ} {target}')
         if typ=='chapter-cover': insert_after=anchor.select_one('.chapter-head') or anchor
@@ -688,9 +691,13 @@ def markdown_target_line(lines:list[str], item:dict[str,Any]) -> int:
         for j in range(start+1,len(lines)):
             if lines[j].startswith('# 第') and ('章' in lines[j] or '部' in lines[j]) or lines[j].startswith('# 終章') or lines[j].startswith('# 公式確認先'):
                 end=j;break
-    label=normalize_heading(item['target_label'])
+    labels={normalize_heading(item['target_label'])}
+    # HTML uses the clearer display name, while the preserved source Markdown
+    # intentionally keeps its original heading for ordered-content validation.
+    if target == 'preface-s3':
+        labels.add(normalize_heading('目次'))
     for i in range(start,end):
-        if lines[i].startswith('#') and normalize_heading(lines[i].lstrip('# ').strip())==label:
+        if lines[i].startswith('#') and normalize_heading(lines[i].lstrip('# ').strip()) in labels:
             # Insert after the first explanatory block.
             j=i+1
             while j<end and not lines[j].strip(): j+=1

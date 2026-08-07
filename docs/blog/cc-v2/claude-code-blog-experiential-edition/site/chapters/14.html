@@ -18,7 +18,7 @@
 これはAIの怠惰ではなく、お願いと強制を混同しているだけです。</p><p>ほとんどの人は、安全ルールを文章のお願い（Guidance）で済ませています。
 ですが、本当に止めたい操作は、文章では止まりません。物理的な仕組み（Enforcement）が要ります。</p><p>Hooks と Plugins は、操作の前後に自前のチェックを差し込む仕掛けです。
 危険コマンドは事前に止め、編集後に型チェックを走らせ、コミット時にテストを通す。お願いを強制へ昇格させる装置です。</p><p>この章を読み終わる頃には、『お願い』と『強制』の境界が、自分の言葉で説明できるようになります。</p></section>
-  <section class="features" aria-label="この章の概観"><h2>この章の概観 ／ 何を扱い、何ができるか</h2><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-14-0-pretooluse-guard"><h3 id="feature-14-0-pretooluse-guard">PreToolUse Guard（危険操作の物理拒否）</h3><p class="feature-summary">rm -rfや本番DB操作など、文章のお願いでは止められない操作を実行直前に拒否するHook。</p><dl class="feature-io"><dt>入力</dt><dd>実行されようとしたコマンド、対象Path</dd><dt>出力</dt><dd>ブロック判定とログ、許可された操作のみの実行</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-1-posttooluse-validation"><h3 id="feature-14-1-posttooluse-validation">PostToolUse Validation</h3><p class="feature-summary">Edit/Write直後にtsc・lint・テスト等を自動実行し、編集の瞬間にエラーを検出する検証Hook。</p><dl class="feature-io"><dt>入力</dt><dd>編集したファイル、プロジェクトの検証コマンド</dd><dt>出力</dt><dd>検証結果、エラー時のブロックと修正指示</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-2-sessionstart-hook"><h3 id="feature-14-2-sessionstart-hook">SessionStart Hook</h3><p class="feature-summary">セッション開始時に必要な前提・ルール・現在地ファイルを自動注入し、毎回ゼロから説明させない仕掛け。</p><dl class="feature-io"><dt>入力</dt><dd>セッション起動イベント、注入したい文脈ファイル</dd><dt>出力</dt><dd>起動時自動ロードされた前提情報</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-3-plugins"><h3 id="feature-14-3-plugins">Plugins（配布単位）</h3><p class="feature-summary">Skills・Hooks・設定をまとめて配布する束ね単位。導入範囲と更新を組織的に管理する。</p><dl class="feature-io"><dt>入力</dt><dd>配布したいSkill群、Hook群</dd><dt>出力</dt><dd>インストール可能なPluginパッケージ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-4-hook-test-fixture"><h3 id="feature-14-4-hook-test-fixture">Hook Test（Fixture検証）</h3><p class="feature-summary">安全な入力と危険な入力のFixtureで、Hook自体の動作を単体テストする仕組み。Hookコードの品質を担保する。</p><dl class="feature-io"><dt>入力</dt><dd>安全/危険のFixture、想定動作</dd><dt>出力</dt><dd>Fixture通過/拒否の検証結果</dd></dl></article></li></ul></section>
+  <section class="features" aria-label="この章の概観"><p class="panel-title">この章の概観 ／ 何を扱い、何ができるか</p><p class="features-lede">この章で扱う機能と、それで何ができるようになるか。実装に入る前に、全体像をここでつかみます。</p><ul class="features-grid" role="list"><li><article class="feature-card" aria-labelledby="feature-14-0-pretooluse-guard"><p class="feature-title" id="feature-14-0-pretooluse-guard">PreToolUse Guard（危険操作の物理拒否）</p><p class="feature-summary">rm -rfや本番DB操作など、文章のお願いでは止められない操作を実行直前に拒否するHook。</p><dl class="feature-io"><dt>入力</dt><dd>実行されようとしたコマンド、対象Path</dd><dt>出力</dt><dd>ブロック判定とログ、許可された操作のみの実行</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-1-posttooluse-validation"><p class="feature-title" id="feature-14-1-posttooluse-validation">PostToolUse Validation</p><p class="feature-summary">Edit/Write直後にtsc・lint・テスト等を自動実行し、編集の瞬間にエラーを検出する検証Hook。</p><dl class="feature-io"><dt>入力</dt><dd>編集したファイル、プロジェクトの検証コマンド</dd><dt>出力</dt><dd>検証結果、エラー時のブロックと修正指示</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-2-sessionstart-hook"><p class="feature-title" id="feature-14-2-sessionstart-hook">SessionStart Hook</p><p class="feature-summary">セッション開始時に必要な前提・ルール・現在地ファイルを自動注入し、毎回ゼロから説明させない仕掛け。</p><dl class="feature-io"><dt>入力</dt><dd>セッション起動イベント、注入したい文脈ファイル</dd><dt>出力</dt><dd>起動時自動ロードされた前提情報</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-3-plugins"><p class="feature-title" id="feature-14-3-plugins">Plugins（配布単位）</p><p class="feature-summary">Skills・Hooks・設定をまとめて配布する束ね単位。導入範囲と更新を組織的に管理する。</p><dl class="feature-io"><dt>入力</dt><dd>配布したいSkill群、Hook群</dd><dt>出力</dt><dd>インストール可能なPluginパッケージ</dd></dl></article></li><li><article class="feature-card" aria-labelledby="feature-14-4-hook-test-fixture"><p class="feature-title" id="feature-14-4-hook-test-fixture">Hook Test（Fixture検証）</p><p class="feature-summary">安全な入力と危険な入力のFixtureで、Hook自体の動作を単体テストする仕組み。Hookコードの品質を担保する。</p><dl class="feature-io"><dt>入力</dt><dd>安全/危険のFixture、想定動作</dd><dt>出力</dt><dd>Fixture通過/拒否の検証結果</dd></dl></article></li></ul></section>
   
 <figure class="image-shell" data-image-id="chapter-14">
   <img src="../images/chapter-14-122810.webp" alt="第14章『HooksとPlugins』を表すisometric quality-control illustration" loading="lazy" decoding="async">
@@ -37,8 +37,9 @@ Composition: Landscape 3:2 composition. Use visual hierarchy and clear spatial r
 </figure>
 
   <section class="reference" aria-label="実装リファレンス">
-    <h2>実装リファレンス</h2>
+    <p class="reference-title">実装リファレンス</p>
     <h2 id="ch-14-s1">14.1 Hookは決定的な制御</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> CLAUDE.mdに書いた安全ルールは「お願い」止まりで、本当に止めたい操作には効きません。決定的に制御できるイベントを把握しておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> SessionStart・PreToolUse・PostToolUse・Stop・SessionEnd・ConfigChangeを足場にすれば、危険Command拒否や編集後Typecheckなどを実行時に強制できます。Eventを知らないと強制と願望の境界が引けません。</p></div>
+<p><strong>【なぜこの設計か】</strong> CLAUDE.mdやPromptの禁止は、モデルが文脈から解釈して守るGuidanceです。HookはTool実行前後などのEventで実際の入力を処理し、同じ条件に同じ拒否や検証を返せます。これにより、注意文を思い出す確率へ依存していた制御を、実行経路上の判定へ移します。</p>
 <p>代表Event：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Claude Codeで使える代表的なHook Eventの一覧です。起動から終了までのライフサイクルを縦に並べて把握できます。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このEvent名を押さえれば、危険Command拒否・編集後Typecheck・公開可能Context注入など、どの瞬間に介入するかを設計時に選べます。Event未把握ではHookが書けません。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>SessionStart</dt><dd>セッション起動時に発火するEventです。顧客文脈やRunbook場所の自動注入に使い、毎回口頭説明する手間を消せます。</dd><dt>PreToolUse</dt><dd>Tool実行直前に発火するEventです。危険Commandを実行前に拒否する物理ガードを置く場所で、ここを使わない限り「お願い」は強制になりません。</dd><dt>PostToolUse</dt><dd>Tool実行直後に発火するEventです。Edit/Write後のtypecheckや自動lintを走らせ、編集の瞬間にエラーを検出できます。</dd><dt>Stop</dt><dd>Agentが停止しようとする時に発火するEventです。/goalで継続条件を満たすまで自動再開させる仕掛けに使います。</dd><dt>SessionEnd</dt><dd>セッション終了時に発火するEventです。日次ログ追記・タスクハブ更新など終了時の片付けを自動化できます。</dd><dt>ConfigChange</dt><dd>設定改変時に発火するEventです。Settings/Hookの改変を監査ログに残し、安全装置が勝手に外される事故を検知できます。</dd></dl></div></div><pre><code class="language-text">SessionStart
 PreToolUse
@@ -55,7 +56,9 @@ ConfigChange
 <li>Goal未達時の継続。</li>
 <li>設定改変の監査。</li>
 </ul>
+<p><strong>【このコードの読み方】</strong> <code>PreToolUse</code>はToolが動く前の拒否、<code>PostToolUse</code>は動いた後の検証に対応します。<code>SessionStart</code>は作業開始時に公開可能なContextを渡し、<code>Stop</code>は完了条件を再確認する位置です。<code>ConfigChange</code>と<code>SessionEnd</code>は、設定変更や終了時の記録に使うEventとして並んでいます。利用できるEventとSchemaはVersionで変わり得るため、現行公式情報を確認します。</p>
 <h2 id="ch-14-s2">14.2 PreToolUse Guard</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> `rm -rf`やForce push・Hard resetなどは、AIが文章のお願いだけでは止められない代表例です。実行直前に介入できる物理ガードが要ります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> PreToolUseでコマンド文字列を正規表現判定し、該当時に`deny`を返す構成にすれば、AIがいくら賢くてもその操作は通りません。Hookが無い環境では破壊的コマンドが繁忙期に必ず通ります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 危険Commandを実行後に検出しても、削除や履歴変更は既に起きています。PreToolUseでTool Inputを読み、実行前に拒否を返すと、モデルが提案を生成した後でも副作用の直前に止められます。</p>
 <p><code>global-config/hooks/pre-bash-guard.sh</code>：</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> PreToolUse Guardの最小実装例です。jqでコマンドを抽出し、rm -rf・force push・hard resetなど危険文字列に対し`deny`を返します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この内容を`global-config/hooks/pre-bash-guard.sh`へ置けば、AIがどんな経緯で危険コマンドを出してもHookが拒否を返し、実行されません。文章のお願いから強制への昇格が完了します。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>rm -rf 検出ブロック</dt><dd>再帰強制削除を正規表現で検出して拒否する分岐です。dry-runマニフェスト提示を促す設計で、誤削除事故をHook層で物理的に止められます。</dd><dt>git push --force 検出ブロック</dt><dd>強制Pushを検出して拒否する分岐です。トレプロポリシー違反として止めるため、AIが履歴書き換えを提案してもmainブランチが守られます。</dd><dt>git reset --hard 検出ブロック</dt><dd>Hard resetを検出して拒否する分岐です。可逆Branchか承認要求へ誘導する設計で、未コミット変更の消失事故を防げます。</dd></dl></div></div><pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
@@ -91,7 +94,29 @@ fi
 exit 0
 </code></pre>
 <p>Hook Input SchemaはVersionで変わる可能性があるため、実機Fixtureで確認する。</p>
+<p><strong>【このコードの読み方】</strong> <code>payload</code>と<code>command</code>の行は、stdin全体から判定対象のCommandだけを取り出します。<code>block()</code>は<code>permissionDecision: "deny"</code>と理由を返し、拒否を利用者へ説明します。3つの条件式は再帰的な強制削除、Force Push、Hard Resetだけを選び、それ以外は末尾の<code>exit 0</code>へ流します。正規表現とInput Schemaのずれは誤許可や誤拒否になるため、実機Fixtureで境界を確認します。</p>
+<p><strong>【実演】</strong> beforeは、危険Commandをしないよう文章で依頼していても、Tool Inputにその文字列が入った場合をFixtureで再現します。最初の<code>jq</code>はCommandを表示するだけで実行しません。この段階では文字列がそのまま通過し、拒否結果はありません。afterでは同じJSONをPreToolUse Guardへ渡します。出力の<code>permissionDecision</code>が<code>deny</code>で、理由に再帰的な強制削除の禁止が入っている箇所を見ます。つまりモデルが禁止文をどう解釈したかに関係なく、Guardへ届いた同じ入力はScriptの条件で拒否されます。最後に安全なCommandのFixtureでは拒否JSONが出ないことも確認し、危険操作だけを止める境界を検証します。beforeの確認は文字列抽出だけであり、危険Command自体は実行しません。Hook登録方法とInput SchemaはVersion・環境に合わせて現行公式情報を確認します。</p>
+<pre><code class="language-text">[before: Guardを通さずTool Inputだけを確認]
+$ printf '%s' '{"tool_input":{"command":"rm -rf ./build"}}' | jq -r '.tool_input.command'
+rm -rf ./build
+
+[after: 同じFixtureをPreToolUse Guardへ渡す]
+$ printf '%s' '{"tool_input":{"command":"rm -rf ./build"}}' | bash global-config/hooks/pre-bash-guard.sh
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "Recursive force deletion is blocked. Produce a dry-run manifest and request approval."
+  }
+}
+
+[安全なFixture]
+$ printf '%s' '{"tool_input":{"command":"git status --short"}}' | bash global-config/hooks/pre-bash-guard.sh
+[拒否出力なし]
+</code></pre>
+<p>出力は例示であり、Version・環境で異なります。</p>
 <h2 id="ch-14-s3">14.3 PostToolUse Validation</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Edit/Write後にtsc・lint・テストを手動で回す運用だと、エラー検知が翌朝までずれ込み、月曜の手戻り会議の原因になります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> PostToolUseで対象拡張子にだけtypecheckを走らせれば、編集の瞬間に型エラーが検出されます。Debounce・対象Path・Timeoutを入れないと、毎Edit重くなって運用負担に振れます。</p></div>
+<p><strong>【なぜこの設計か】</strong> Editが成功したというTool結果だけでは、変更後の型やBuildが正しいか分かりません。PostToolUseで対象Fileに応じた検証を返すと、失敗をSessionの近い位置で発見し、壊れた変更を積み重ねる前に修正できます。</p>
 <p><code>global-config/hooks/post-edit-validate.sh</code>：</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
@@ -119,7 +144,10 @@ case "$file" in
 esac
 </code></pre>
 <p>重いCheckを毎Editで実行しすぎない。Debounce、対象Path、Timeoutを入れる。</p>
+<p><strong>【このコードの読み方】</strong> <code>file_path</code>が空なら終了する行は、判定対象がないEventで重い処理を走らせません。<code>*.ts|*.tsx</code>と<code>package.json</code>の条件は、Typecheckが意味を持つFileとProjectだけへ範囲を絞ります。失敗時の<code>tail</code>はLog全体ではなく末尾の要約を取り、<code>additionalContext</code>で直前のEditへ戻す材料を渡します。</p>
+<p><strong>【失敗するとこうなる】</strong> 対象Pathや実行頻度を絞らず、すべてのEdit後に重いCheckを走らせると、1文字の修正ごとに待ち時間が発生し、画面には同じTimeoutや途中終了が繰り返し表示されます。原因は、検証の価値ではなくEvent発生だけを条件にしたことです。Hookを止めて失敗Logを保存し、対象Path、Debounce、Timeoutを設定してからFixtureで再実行します。軽いCheckは近くに残し、重い一式は適切な検証段階へ移します。</p>
 <h2 id="ch-14-s4">14.4 SessionStart</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> 顧客案件ごとに必要な前提・公開可能Runbookが違うのに、毎回会話で説明していると忘れ・取り違えが起きます。SessionStart注入が有効です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> Pathで顧客判定し、公開可能なRunbookの場所だけをHook出力で注入すれば、起動の瞬間に必要な前提が揃います。秘密値を出力に埋め込むと別事故になるので分離が必須です。</p></div>
+<p><strong>【なぜこの設計か】</strong> Session開始時に必要なRunbookの場所だけを渡すと、Agentは顧客領域を推測せず公開可能な正本へ進めます。秘密値そのものを出力へ含めないことで、ContextやLogへ認証情報が残る事故を防ぎます。</p>
 <p>顧客Pathを判定し、公開可能なRunbookの場所だけを注入する。秘密値をHook出力へ埋め込まない。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> SessionStart Hookで顧客Pathを判定し、公開可能Runbookの場所だけを注入する例です。秘密値はHook出力に乗せません。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この分岐を仕込めば、対象顧客ディレクトリで起動した瞬間に必要な前提と禁止事項がAIへ届きます。毎回口頭で前提共有する手間が消え、取り違えも防げます。</p></div><pre><code class="language-bash">case "$PWD" in
   */clients/acme/*)
@@ -127,7 +155,9 @@ esac
     ;;
 esac
 </code></pre>
+<p><strong>【このコードの読み方】</strong> <code>case "$PWD"</code>は現在地から対象Contextを選びます。該当Pathの分岐はRunbookの場所と本番Credentialへ触れない指示だけを返し、秘密値は返しません。顧客名やPathは実環境の公開可能な識別情報だけを使い、Hook出力にSecretを埋め込まないことが境界です。</p>
 <h2 id="ch-14-s5">14.5 Stop Hookと<code>/goal</code></h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> テスト成功・型チェック成功・Build成功まで本当に走り切らせたい場面で、AIが途中で止まることがあります。`/goal`と停止判定を組むのが現実解です。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 「最大20ターン」「test/typecheck/build成功」「README整備」のような上限と完了条件を併記すれば、暴走と早期停止を同時に抑えられます。上限を入れないと無限ループの危険があります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 完了条件だけを与えて上限を決めないと、外部要因で合格できないTestを延々と再実行します。最大Turnと失敗Reportを組み合わせると、Goalを追跡しつつ、進展がない時は証拠を残して人間へ返せます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Stop Hookと組み合わせる`/goal`指示テンプレートです。継続条件と最大ターン上限を同時に明示します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この書式で渡せば、test/typecheck/build成功とREADME整備を満たすまでAIが自律的に継続します。上限が無いと無限ループ化し、上限だけだと早期撤退する事故が起きます。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>npm test成功</dt><dd>テストグリーンを完了条件に含める指示です。書かないとClaudeが「実装できた」で止まり、テスト未実行のまま完了報告する事故が起きます。</dd><dt>npm run typecheck成功</dt><dd>型チェック通過を完了条件に含める指示です。書かないと型エラーを残したまま完了扱いになり、後段のCIで初めて発覚します。</dd><dt>npm run build成功</dt><dd>Build成功を完了条件に含める指示です。書かないと本番ビルドで初めて壊れる事故になり、Deploy直前で止まります。</dd><dt>READMEに起動手順</dt><dd>Doc整備まで完了条件に含める指示です。書かないと動くコードだけ残り、引き継ぎ時に起動方法が分からない負債になります。</dd></dl></div></div><pre><code class="language-text">/goal 次を満たすまで継続。ただし最大20ターン:
 - npm test成功
 - npm run typecheck成功
@@ -135,7 +165,10 @@ esac
 - READMEに起動手順
 </code></pre>
 <p>上限と失敗Reportを必ず入れる。</p>
+<p><strong>【このコードの読み方】</strong> 冒頭の最大Turnは継続回数の停止線です。3つの成功条件はTest、Typecheck、Buildという別の証拠を要求し、READMEは利用者向け成果物を確認します。いずれかを満たせない時は、成功扱いにせず上限で止まり、失敗Reportへ残します。</p>
+<p><strong>【失敗するとこうなる】</strong> 外部Serviceへ到達できないTestをGoalへ入れ、Turn上限と失敗Reportを省くと、同じ接続Errorと再試行が画面に並び続けます。原因は、Agentが修正できない失敗と未完了を区別する停止条件がないことです。実行を止め、最後に成功した工程、同じErrorの回数、未達条件をReportへ残します。その上で上限を設定し、外部状態の確認を人間へ戻してから再開します。</p>
 <h2 id="ch-14-s6">14.6 Hook Security</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Hookは強力なだけにバグるとそれ自体が事故源になります。stdin汚染・Path Traversal・Secrets混入を防ぐSecurity項目を順守する必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> stdin不信用・変数Quote・絶対Path化・Secrets除外・Timeout・Safe failure・Fixture Test・署名配布を全部入れれば、Hookを安全に長期運用できます。1つ抜けると環境破壊や情報漏えいに直結します。</p></div>
+<p><strong>【なぜこの設計か】</strong> Hook自身も外部入力を読む実行Codeなので、未検証の文字列やPathをShellへ渡すと、守るための仕組みが攻撃経路になります。Quote、Path制限、Timeout、Safe failure、Fixture TestをHook側へ要求し、判定処理そのものの副作用を閉じ込めます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Hook Securityチェックリストです。Quote・Path Traversal拒否・絶対Path化・Secrets除外・Timeout・Safe failure・Fixture Test・署名配布を網羅します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> この9項目を全部潰したHookだけ配布対象にすれば、Hookそれ自体が事故源になるリスクを最小化できます。1つ抜けるだけで環境破壊や情報漏えいの入口になります。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>stdinを信頼しない</dt><dd>Hookへ渡される標準入力を無検証で使わない原則です。守らないと細工されたpayloadでHookロジックを誤動作させられます。</dd><dt>Shell変数をQuote</dt><dd>変数展開を必ずダブルクォートで囲む原則です。守らないとPath内のスペースや特殊文字でコマンド分解が起き、意図しない実行になります。</dd><dt>Path Traversalを拒否</dt><dd>../を含むPathを弾く原則です。守らないとHook経由でProject外のファイルを読み書きされ、機密ファイル漏えいの入口になります。</dd><dt>絶対PathまたはCLAUDE_PROJECT_DIR</dt><dd>相対Pathに頼らずに動かす原則です。守らないとHook起動時のCWDによって参照先が変わり、再現性が崩れます。</dd><dt>Secrets/.gitを除外</dt><dd>.env・.git配下を処理対象から除外する原則です。守らないとHookログや出力に秘密値が混入し、配布物経由で漏えいします。</dd><dt>Timeout</dt><dd>Hook自体に時間上限を設ける原則です。守らないとHookが無限ループしてClaude Code全体が固まる事故になります。</dd><dt>Safe failure</dt><dd>Hookがエラーでも安全側に倒す原則です。守らないとHook障害時に危険操作が素通りし、Hookがあるのに守られない最悪の状態になります。</dd><dt>Fixture Test</dt><dd>Hook自体を単体テストする原則です。守らないと配布後に「危険を見逃す」「正常を止める」事故が現場で初めて露見します。</dd><dt>変更をReview/署名配布</dt><dd>Hookコード変更をReview経由・署名付きで配布する原則です。守らないと悪意あるHook差し替えで全社環境が同時に侵害される事故になります。</dd></dl></div></div><pre><code class="language-text">- stdinを信頼しない
 - Shell変数をQuote
 - Path Traversalを拒否
@@ -146,7 +179,9 @@ esac
 - Fixture Test
 - 変更をReview/署名配布
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 「stdinを信頼しない」「Shell変数をQuote」は、受け取った文字列をそのままCommandとして解釈しないための入口です。Path Traversal拒否とProject Rootの固定は、検査対象が意図した範囲の外へ出るのを防ぎます。Secretsと<code>.git</code>の除外は検証処理による情報露出や履歴破壊を避け、TimeoutとSafe failureはHook異常時の停止方法を決めます。最後のFixture TestとReviewは、配布前後で同じ境界を再現するためにあります。</p>
 <h2 id="ch-14-s7">14.7 Hook Test</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Hookは「危険を拒否」と「正常を通す」の両方を満たす必要があります。誤検知も誤通過もFixtureテストで担保しないと本番で破綻します。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 正常Command許可・rm -rf拒否・force push拒否・誤検知防止・空Input安全・壊れたJSON安全の6ケースを揃えれば、Hookの品質が機械的に検証できます。Fixture無しで配布すると現場で初めて欠陥が見つかります。</p></div>
+<p><strong>【なぜこの設計か】</strong> 危険入力だけでHookを試すと、通常Commandを誤って止める副作用を見逃します。許可、拒否、誤検知、空入力、壊れた入力を対にしてTestすると、守る範囲と日常作業を妨げない範囲を同時に固定できます。</p>
 <div class="code-explain"><p class="code-explain-line"><strong>これは何か</strong> Hook Fixture Testの最小ケース集です。許可・拒否・誤検知防止・空Input・壊れたJSON・破壊的引数の6パターンで動作を検証します。</p><p class="code-explain-line"><strong>実行するとどうなるか</strong> このFixtureを通したHookだけ配布すれば、本番で「危険を見逃す」「正常を止める」事故を構造的に防げます。テスト無しのHookは現場で初めて欠陥が露出します。</p><div class="code-explain-items"><p class="code-explain-items-label"><strong>それぞれの意味</strong></p><dl class="code-explain-dl"><dt>正常Command → 許可</dt><dd>ls・git statusなど安全Commandは通すケースです。これを検証しないと過剰拒否で日常運用が止まり、Hookを外す圧力が生まれます。</dd><dt>rm -rf → 拒否</dt><dd>再帰強制削除を確実に止めるケースです。Hookの存在意義そのもので、ここが落ちると配布する意味が消えます。</dd><dt>force push → 拒否</dt><dd>強制Pushを確実に止めるケースです。AIが履歴整理目的で提案してもブランチ破壊を物理的に防げることを確認します。</dd><dt>文字列中の単なるrm → 誤検知しない</dt><dd>コメントやログ文字列内のrmを拒否しないケースです。誤検知すると正当な編集まで止まり、Hookが信頼を失います。</dd><dt>空Input → Errorにしない</dt><dd>stdinが空でもHookがクラッシュしないケースです。落ちると全Tool呼び出しが連鎖失敗し、Claude Codeが使えなくなります。</dd><dt>壊れたJSON → 安全側</dt><dd>不正payloadでも安全側に倒すケースです。例外で落ちずdeny返却にしないと、エラーで素通りする最悪挙動になります。</dd></dl></div></div><pre><code class="language-text">正常Command → 許可
 rm -rf → 拒否
 force push → 拒否
@@ -154,7 +189,9 @@ force push → 拒否
 空Input → Errorにしない
 壊れたJSON → 安全側
 </code></pre>
+<p><strong>【このコードの読み方】</strong> 正常Commandと危険Commandの対は、許可と拒否の基本境界です。「文字列中の単なるrm」は正規表現の過剰一致を検出します。空InputはEvent情報がない場合の終了、壊れたJSONはParse不能時のSafe failureを確認します。拒否件数だけで合否を決めず、誤検知がないことも読みます。</p>
 <h2 id="ch-14-s8">14.8 Plugins</h2><div class="why-block"><p class="why-line"><strong>なぜここを読むか</strong> Skill単体・Skill+Agent+Hook・全社標準・顧客固有では、配布方法と更新管理の最適解が違います。状況別の選び方を持っておく必要があります。</p><p class="why-line"><strong>やる／やらないとどうなるか</strong> 1 SkillならSkill単体、複合ならPlugin、全社標準ならManaged Marketplace、顧客固有なら顧客別Pluginと使い分ければ、配布範囲と更新ルートが整理されます。提供元・実行Code・MCP・Rollbackは必ずReviewします。</p></div>
+<p><strong>【なぜこの設計か】</strong> Skill、Agent、Hook、MCPを別々に配ると、対応VersionやRollback単位がずれ、片方だけ更新された状態が生まれます。複数部品が一緒に動く機能をPluginへまとめると、提供元、実行Code、更新、Rollbackを1つの配布単位としてReviewできます。</p>
 <p>PluginはSkills、Agents、Hooks、MCP等を配布単位にまとめる。</p>
 <table>
 <thead>
@@ -183,12 +220,13 @@ force push → 拒否
 </tbody>
 </table>
 <p>提供元、実行Code、MCP、更新方式、RollbackをReviewする。</p>
+<p><strong>【この表の読み方】</strong> 1つのSkillだけなら単体配布に留め、実行CodeやAgentを組み合わせる時にPluginを選びます。全社標準の行は統制された配布元と強制範囲、顧客固有の行は他顧客へ設定を混ぜない分離を示します。形式を選んだ後も、提供元、MCP接続、更新方式、Rollbackを個別に確認します。</p>
 <hr/>
 
   </section>
   
   
-  <section class="usecases" aria-label="こんな場面で使う"><h2>こんな場面で使う</h2><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><h3>場面</h3><p>情シス（架空）が、CLAUDE.mdに『rm -rf禁止』と書いても、繁忙期にAIが破壊的コマンドを生成して事故が起きる。</p><h3>こう使う</h3><p>PreToolUseでrm -rf・本番DB操作・外部送信を物理的に拒否するHookを書き、Fixtureテストを通す。</p><h3>得られるもの</h3><p>AIがどんなに賢くてもHookで止まる。文章のお願いから決定論的な強制へ昇格できる。</p></article><article class="usecase-card"><h3>場面</h3><p>ある制作チーム（架空）が、編集後のTypeScript型エラーを翌朝まで気づかず、毎週の月曜に手戻りが発生している。</p><h3>こう使う</h3><p>PostToolUseでEdit/Write後にtsc --noEmitを自動実行するHookを入れる。</p><h3>得られるもの</h3><p>型エラーが編集の瞬間に検出され、月曜の手戻り会議が消える。</p></article></div></section>
+  <section class="usecases" aria-label="こんな場面で使う"><p class="panel-title">こんな場面で使う</p><p class="usecases-lede">章の内容が実務でどう活きるか。架空の場面・行動・効果の三点で示します。</p><div class="usecase-grid"><article class="usecase-card"><p class="usecase-label">場面</p><p>情シス（架空）が、CLAUDE.mdに『rm -rf禁止』と書いても、繁忙期にAIが破壊的コマンドを生成して事故が起きる。</p><p class="usecase-label">こう使う</p><p>PreToolUseでrm -rf・本番DB操作・外部送信を物理的に拒否するHookを書き、Fixtureテストを通す。</p><p class="usecase-label">得られるもの</p><p>AIがどんなに賢くてもHookで止まる。文章のお願いから決定論的な強制へ昇格できる。</p></article><article class="usecase-card"><p class="usecase-label">場面</p><p>ある制作チーム（架空）が、編集後のTypeScript型エラーを翌朝まで気づかず、毎週の月曜に手戻りが発生している。</p><p class="usecase-label">こう使う</p><p>PostToolUseでEdit/Write後にtsc --noEmitを自動実行するHookを入れる。</p><p class="usecase-label">得られるもの</p><p>型エラーが編集の瞬間に検出され、月曜の手戻り会議が消える。</p></article></div></section>
 </article>
 
 <nav class="chapter-nav"><a href="13.html">← Subagents、Agent View、並列作業</a><a href="15.html">MCP、Connectors、APIを安全につなぐ →</a></nav></main></div>
