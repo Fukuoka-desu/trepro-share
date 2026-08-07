@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0",
+  "created_for": "Claude Code 超入門教科書",
+  "default_model": "gpt-image-2",
+  "default_output_directory": "site/images",
+  "art_direction": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Use hand-drawn softness, rounded shapes, and approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, with a friendly assistant figure suggested abstractly; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, and no decorative gibberish. Leave intentional negative space for nearby HTML headings and captions.",
+  "production_policy": {
+    "critical_information_in_images": false,
+    "reason": "画像がなくても本文だけで理解でき、欠落時はfigureを出力しない。",
+    "secret_handling": "OPENAI_API_KEYは環境変数からだけ読み、ファイルやHTMLへ書かない。"
+  },
+  "images": [
+    {
+      "id": "cover-zero",
+      "tier": "core",
+      "placement": "ページ冒頭のヒーロー。",
+      "filename": "cover-zero.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "仕事机で新人アシスタントと一緒に、読む、頼む、確かめるを学ぶ佐藤さんの表紙イラスト。",
+      "caption": "読む、頼む、確かめる。佐藤さんと一緒に、仕事の任せ方を一章ずつ学びます。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: guidebook cover hero. Scene: Sato sits confidently at a tidy everyday office desk, learning a gentle three-part rhythm through visual actions: reading a document, making a request, and checking a finished file. The abstract assistant presence helps beside her without looking mechanical. Composition: welcoming landscape cover, clear focal pair, open space on the upper left for an HTML title. Mood: calm first day at work, reassuring and practical."
+    },
+    {
+      "id": "zch-01-img1",
+      "tier": "core",
+      "placement": "手順3の依頼文を貼り付けた直後。",
+      "filename": "zch-01-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "依頼文を入力し、変更しない条件を確認する画面の例。",
+      "caption": "最初は「変更しない」と伝え、返答だけを確認します。画面の文言はVersionにより異なります。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: Sato enters a careful first request on a laptop while keeping a nearby stack of source documents visibly untouched; the abstract assistant responds from a calm speech-shaped glow. Use blank lines and simple shapes on the screen with nothing readable. Composition: approachable three-quarter desk view with negative space around the display. Emphasize observation and reassurance, not action or file changes."
+    },
+    {
+      "id": "zch-02-img1",
+      "tier": "core",
+      "placement": "手順11で練習用フォルダを選んだ直後。",
+      "filename": "zch-02-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "Claude練習フォルダを仕事場所として選んだ画面の例。",
+      "caption": "大切な資料と分けた練習用フォルダだけを選びます。画面の文言はVersionにより異なります。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: Sato chooses one clearly separate practice folder as the assistant's work desk, while important folders remain safely closed on another shelf. A laptop shows only an abstract folder selection with no readable interface. Composition: clear visual separation between the warm amber practice folder and protected navy folders, generous margins, friendly everyday office atmosphere."
+    },
+    {
+      "id": "zch-03-img1",
+      "tier": "core",
+      "placement": "手順12で要約と元のメモを見比べる箇所。",
+      "filename": "zch-03-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "元の営業会議メモと3点の要約を見比べる画面の例。",
+      "caption": "最初の依頼は読むだけです。元のファイルには手を加えません。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: Sato compares an original meeting memo on one side with a concise three-part summary on the other, using her finger to trace matching points. The original document remains intact under a small protective paper cover. Composition: balanced side-by-side comparison, three clear blank summary cards, calm focused expression, no readable words or interface."
+    },
+    {
+      "id": "zch-04-img1",
+      "tier": "core",
+      "placement": "黒画面ボックスの直後。",
+      "filename": "zch-04-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "許可を求める画面で、対象と作業内容を確認する3つの視点。",
+      "caption": "読めない文字ではなく、対象と「削除・送信・公開・購入」の有無を見ます。画面の文言はVersionにより異なります。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: safety chapter illustration. Scene: Sato pauses before a dark navy permission panel and calmly checks three visual cues: a protected practice folder, the intended action, and a safe stop choice. Represent risky actions only with small universal abstract symbols crossed out, not words. The assistant waits patiently. Composition: dark panel as focal point with warm amber border, three inspection points arranged clearly, reassuring rather than alarming."
+    },
+    {
+      "id": "zch-05-img1",
+      "tier": "core",
+      "placement": "手順19で2つのファイルを見比べる箇所。",
+      "filename": "zch-05-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "元の営業会議メモと、整えられた議事録ファイルを並べた例。",
+      "caption": "成果物は自分で開き、元のメモにない内容が増えていないか確認します。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: Sato opens and compares a rough source meeting memo with a neatly structured minutes document, checking that every visual marker corresponds and nothing extra appears. The assistant holds a simple magnifying-glass-shaped paper cutout. Composition: two large documents side by side on a desk, distinct rough and organized layouts using unreadable marks only, warm attentive mood."
+    },
+    {
+      "id": "zch-06-img1",
+      "tier": "core",
+      "placement": "良い依頼2の直後。",
+      "filename": "zch-06-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "依頼の型4点が、良い依頼のどこに入っているかを示す例。",
+      "caption": "何を、どこから、どんな形に、完成条件の順で伝えます。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: Sato assembles a clear request from four rounded paper cards: the task, the source material, the desired shape, and the completion check. Show the four concepts through simple objects such as a target, source sheet, formatted page, and checkmark, without labels. The assistant arranges them into an orderly path. Composition: four-step left-to-right visual sequence with ample whitespace and warm clarity."
+    },
+    {
+      "id": "zch-07-img1",
+      "tier": "core",
+      "placement": "手順22の直後。",
+      "filename": "zch-07-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "間違った1行が追加され、その1行だけを取り消した前後の比較。",
+      "caption": "何を加えたかを確かめ、その変更だけを戻します。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: a before-and-after comparison of one document where a single misplaced amber line appears, then is gently lifted away while every other line remains unchanged. Sato verifies the two pages and the assistant indicates only the corrected line. Composition: two document panels with a soft curved return arrow, no readable text, precise change emphasized without technical imagery."
+    },
+    {
+      "id": "zch-08-img1",
+      "tier": "core",
+      "placement": "手順15の直後。",
+      "filename": "zch-08-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "週次議事録レシピと、それを使って作った確認用議事録の例。",
+      "caption": "毎回の共通条件をレシピに残し、元ネタと成果物だけを伝えます。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: Sato reuses a friendly recipe card with stable visual sections, combines it with a fresh weekly source note, and receives a neatly organized minutes document. The assistant connects the reusable card and new input with a soft ribbon-like path. Composition: recipe card, source sheet, and final document form a clear triangular workflow, cozy practical desk setting."
+    },
+    {
+      "id": "zch-09-img1",
+      "tier": "core",
+      "placement": "手順15の直後。",
+      "filename": "zch-09-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "紺色と白で整理された、ABC商事の1枚会議レポート。",
+      "caption": "結論、担当、期限を1枚で確認できる形に整えます。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: Sato reviews a polished single-page meeting report arranged in midnight navy and ivory sections, with three visually clear areas for conclusion, owner, and deadline. The report contains only abstract lines, blank blocks, and simple markers. Composition: one page centered as the hero object, Sato and assistant at the side, clean office presentation and generous border space."
+    },
+    {
+      "id": "zch-10-img1",
+      "tier": "core",
+      "placement": "事故10の直後。",
+      "filename": "zch-10-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "10の初期症状から、止まる、確かめる、正しい行動を選ぶ流れ。",
+      "caption": "違和感を見つけた時点で止まると、事故を作業前に避けられます。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: safety chapter illustration. Scene: ten small early-warning cards funnel into a simple three-step safe response: stop at an amber boundary, inspect with a magnifying glass, then choose a protected path. Sato pauses confidently while the assistant waits beside her. Use only universal shapes and symbols, no letters or words. Composition: clear flow from many small cues to three large actions, reassuring instructional poster feeling without readable labels."
+    },
+    {
+      "id": "zch-11-img1",
+      "tier": "core",
+      "placement": "手順42の直後。",
+      "filename": "zch-11-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "練習用コピー、4点の依頼、成果物、証拠確認までの卒業制作チェック表。",
+      "caption": "チェック欄を上から進め、最後は自分の目で成果物を確認します。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: graduation-project chapter illustration. Scene: Sato follows a large checklist journey from a safe practice copy, through four request cards, to a finished document and a final evidence check with her own eyes. The assistant supports but Sato makes the decisions. Composition: gentle curved path across the landscape canvas, visible blank checkboxes and objects but no readable text, celebratory yet grounded office mood."
+    },
+    {
+      "id": "zch-12-img1",
+      "tier": "core",
+      "placement": "2つ目の依頼文の直後。",
+      "filename": "zch-12-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "困った表示を、読む、写す、聞くの順に扱う3段階。",
+      "caption": "表示を省略せずに渡し、次の確認を一つだけ聞きます。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: chapter illustration. Scene: a three-stage sequence where Sato first observes a confusing blank notification carefully, then copies its complete shape onto a note while masking a private portion, then asks the patient assistant one focused question. Composition: three rounded panels connected in order, expressive actions and clear visual hierarchy, no readable text or interface details."
+    },
+    {
+      "id": "zch-final-img1",
+      "tier": "core",
+      "placement": "手順10の直後。",
+      "filename": "zch-final-img1.webp",
+      "size": "1536x1024",
+      "quality": "medium",
+      "format": "webp",
+      "alt": "超入門版から、別のタブで本編を開いた画面の例。",
+      "caption": "超入門版を残したまま、本編で次の学びを選びます。",
+      "prompt": "Warm, friendly Japanese editorial illustration for an absolute-beginner guidebook. Palette: midnight navy, warm ivory, and soft amber accents with a gentle paper texture. Hand-drawn softness, rounded shapes, approachable everyday office scenes. Feature Sato, a Japanese office worker in her 30s wearing business casual, and a friendly assistant figure suggested abstractly as a warm presence made of simple paper-like shapes; no robots and no futuristic spectacle. No text, no logos, no readable UI, no watermarks, no decorative gibberish. Leave intentional negative space.\n\nUse case: illustration-story. Asset type: final chapter illustration. Scene: Sato keeps the warm beginner guide open in one abstract browser tab while opening a larger learning map in a second tab, choosing her next path with confidence. The assistant stands nearby as a supportive paper-like presence. Composition: two clearly separate overlapping window shapes with no readable UI, a subtle bridge from the first to the second, hopeful practical closing mood."
+    }
+  ]
+}

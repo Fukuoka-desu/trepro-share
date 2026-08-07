@@ -10,12 +10,13 @@ from collections import Counter
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "sources" / "zero-textbook.md"
 HTML = ROOT / "site" / "index.html"
+SITE = ROOT / "site"
 
 EXPECTED_CHAPTERS = [
     ("zch-00", "第0章 この教科書の使い方（10分）"),
@@ -90,6 +91,7 @@ class TextbookHTMLParser(HTMLParser):
         super().__init__()
         self.ids: list[str] = []
         self.links: list[dict[str, str]] = []
+        self.images: list[dict[str, str]] = []
         self.external_dependencies: list[str] = []
         self.has_inline_style = False
 
@@ -99,6 +101,8 @@ class TextbookHTMLParser(HTMLParser):
             self.ids.append(values["id"])
         if tag == "a" and values.get("href"):
             self.links.append(values)
+        if tag == "img":
+            self.images.append(values)
         if tag == "style":
             self.has_inline_style = True
         if (
@@ -302,6 +306,47 @@ def run_checks(strict: bool) -> list[tuple[str, list[str]]]:
                 f"{chapter.chapter_id}: line {line_number}: {preview!r}"
             )
     results.append(("行頭の操作文字列パターン", command_errors))
+
+    site_errors: list[str] = []
+    for path in sorted(item for item in SITE.rglob("*") if item.is_file()):
+        relative = path.relative_to(SITE)
+        parts = relative.parts
+        allowed = relative == Path("index.html")
+        if len(parts) == 2 and parts[0] == "images":
+            allowed = path.suffix.lower() == ".webp"
+        elif len(parts) == 2 and parts[0] == "materials":
+            allowed = path.suffix.lower() in {".txt", ".zip"}
+        elif len(parts) == 2 and parts[0] == "videos":
+            allowed = path.suffix.lower() == ".mp4"
+        if not allowed:
+            site_errors.append(f"unsupported site artifact: {relative.as_posix()}")
+    results.append(("site配下の許可ファイル", site_errors))
+
+    image_errors: list[str] = []
+    for position, image in enumerate(parser.images, start=1):
+        if "alt" not in image:
+            image_errors.append(
+                f"img #{position} missing alt: {image.get('src', '(srcなし)')!r}"
+            )
+    results.append(("全imgのalt属性", image_errors))
+
+    download_errors: list[str] = []
+    download_links = [link for link in parser.links if "download" in link]
+    for link in download_links:
+        href = link.get("href", "")
+        parsed_href = urlparse(href)
+        if parsed_href.scheme or parsed_href.netloc or not parsed_href.path:
+            download_errors.append(f"invalid download href: {href!r}")
+            continue
+        target = (HTML.parent / unquote(parsed_href.path)).resolve()
+        try:
+            target.relative_to(SITE.resolve())
+        except ValueError:
+            download_errors.append(f"download target outside site: {href!r}")
+            continue
+        if not target.is_file():
+            download_errors.append(f"missing download target: {href!r}")
+    results.append(("DLリンク参照先の実在", download_errors))
     return results
 
 
@@ -327,19 +372,20 @@ def main() -> int:
         return 1
 
     failed = False
+    check_count = len(results)
     for number, (label, errors) in enumerate(results, start=1):
         if errors:
             failed = True
-            print(f"FAIL [{number}/7] {label}")
+            print(f"FAIL [{number}/{check_count}] {label}")
             for error in errors:
                 print(f"  - {error}")
         else:
-            print(f"PASS [{number}/7] {label}")
+            print(f"PASS [{number}/{check_count}] {label}")
 
     if failed:
         print("RESULT: FAIL")
         return 1
-    print("RESULT: PASS (7/7)")
+    print(f"RESULT: PASS ({check_count}/{check_count})")
     return 0
 
 
