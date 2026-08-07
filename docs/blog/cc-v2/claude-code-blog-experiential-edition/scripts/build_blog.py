@@ -1057,7 +1057,7 @@ PAGE_TEMPLATE = Template(r"""<!doctype html>
 <title>{{ title }}</title><meta name="description" content="{{ description }}">
 {% if inline_assets %}<style>{{ css }}</style>{% else %}<link rel="stylesheet" href="{{ asset_prefix }}assets/styles.css">{% endif %}
 </head><body><div class="progress" aria-hidden="true"><span></span></div>
-<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="{{ home_href }}">Claude Code 教科書・ブログ版</a><nav><a href="{{ home_href }}">目次</a><a href="{{ complete_href }}">全章一括</a><a href="{{ image_guide_href }}">画像実装</a></nav></div></header>
+<header class="site-header"><div class="inner"><button class="toc-toggle" type="button" aria-label="目次を開く" aria-controls="site-toc">☰ 目次</button><a class="brand" href="{{ home_href }}">Claude Code 教科書・ブログ版</a><nav><a href="{{ home_href }}">目次</a><a href="{{ complete_href }}">全章一括</a><a href="{{ image_guide_href }}">画像実装</a><a href="{{ asset_prefix }}../../../cc-zero/site/" target="_blank" rel="noopener">超入門版</a></nav></div></header>
 <div class="toc-overlay" aria-hidden="true"></div>
 {{ body }}
 <footer class="site-footer"><div class="inner"><strong>Claude Code実践教科書 — ブログ完全版</strong><p>画像は補助情報です。本文、Alt、Captionのみでも内容が完結するよう設計しています。</p></div></footer>

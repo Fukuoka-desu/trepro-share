@@ -1,0 +1,1173 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="画面操作が初めてでも進められるClaude Code超入門教科書">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b1f33'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='%23f6c76b' stroke-width='6'/%3E%3C/svg%3E">
+  <title>Claude Code 超入門教科書</title>
+  <style>
+    :root {
+      --navy-950: #081827;
+      --navy-900: #0b1f33;
+      --navy-800: #17354f;
+      --ivory: #fff8e7;
+      --ivory-deep: #f4ead2;
+      --amber: #d9911b;
+      --amber-light: #f6c76b;
+      --ink: #17212b;
+      --muted: #5c6570;
+      --line: #d9cdb4;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background: var(--ivory);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+        "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      line-height: 1.85;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+    a { color: #8a5200; text-underline-offset: 0.18em; }
+    a:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+    .skip-link {
+      position: absolute;
+      left: 1rem;
+      top: -5rem;
+      z-index: 20;
+      padding: 0.65rem 0.9rem;
+      color: var(--navy-950);
+      background: var(--amber-light);
+      border-radius: 0.4rem;
+    }
+    .skip-link:focus { top: 0.75rem; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(8, 24, 39, 0.97);
+      border-bottom: 1px solid rgba(246, 199, 107, 0.45);
+    }
+    .header-inner {
+      width: min(72rem, calc(100% - 2rem));
+      margin: 0 auto;
+      min-height: 4.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand { color: var(--white); font-weight: 750; letter-spacing: 0.02em; }
+    .main-book-link {
+      flex: 0 1 auto;
+      color: var(--amber-light);
+      font-weight: 700;
+      text-align: right;
+    }
+    .hero {
+      color: var(--white);
+      background:
+        radial-gradient(circle at 82% 15%, rgba(217, 145, 27, 0.24), transparent 30rem),
+        linear-gradient(145deg, var(--navy-950), var(--navy-800));
+      border-bottom: 0.35rem solid var(--amber);
+    }
+    .hero-inner { width: min(64rem, calc(100% - 2rem)); margin: 0 auto; padding: 4rem 0 3.5rem; }
+    .eyebrow { margin: 0 0 0.65rem; color: var(--amber-light); font-weight: 750; letter-spacing: 0.08em; }
+    .hero h1 { margin: 0; max-width: 18ch; font-size: clamp(2rem, 7vw, 4.3rem); line-height: 1.15; }
+    .lead { max-width: 39rem; margin: 1.25rem 0 0; color: #f7f0df; font-size: clamp(1rem, 2.4vw, 1.2rem); }
+    .layout { width: min(72rem, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 5rem; }
+    .toc {
+      margin: 0 0 2rem;
+      padding: clamp(1.1rem, 4vw, 2rem);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-top: 0.32rem solid var(--amber);
+      border-radius: 0.8rem;
+      box-shadow: 0 0.5rem 1.5rem rgba(8, 24, 39, 0.08);
+    }
+    .toc h2 { margin: 0 0 0.8rem; color: var(--navy-900); font-size: 1.35rem; }
+    .toc ol { columns: 2; column-gap: 2rem; margin: 0; padding-left: 1.5rem; }
+    .toc li { break-inside: avoid; margin: 0.25rem 0; }
+    .chapter {
+      margin: 1.4rem 0;
+      padding: clamp(1.1rem, 4vw, 2.5rem);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 0.8rem;
+    }
+    .chapter > h2 {
+      margin: 0 0 1.7rem;
+      padding-bottom: 0.85rem;
+      color: var(--navy-900);
+      border-bottom: 0.2rem solid var(--amber);
+      font-size: clamp(1.55rem, 4vw, 2.15rem);
+      line-height: 1.4;
+    }
+    .chapter h3 { margin: 2.2rem 0 0.7rem; color: var(--navy-800); font-size: 1.25rem; line-height: 1.5; }
+    .chapter p { max-width: 46rem; margin: 0.7rem 0; }
+    .chapter li { margin: 0.45rem 0; padding-left: 0.25rem; }
+    .chapter ol, .chapter ul { max-width: 46rem; padding-left: 1.55rem; }
+    .copy-block {
+      width: 100%;
+      max-width: 46rem;
+      margin: 1rem 0 1.3rem;
+      overflow: hidden;
+      color: #f8f4e8;
+      background: var(--navy-950);
+      border: 1px solid #25465f;
+      border-radius: 0.65rem;
+    }
+    .copy-label { display: block; padding: 0.5rem 0.85rem; color: var(--amber-light); background: #102b43; font-size: 0.82rem; font-weight: 750; }
+    pre { margin: 0; max-width: 100%; padding: 1rem; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow-x: auto; }
+    pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.94rem; }
+    p code, li code { padding: 0.08rem 0.3rem; background: var(--ivory-deep); border-radius: 0.25rem; }
+    blockquote { max-width: 46rem; margin: 1.2rem 0; padding: 1rem 1.1rem; border-radius: 0.55rem; }
+    blockquote p { margin: 0.32rem 0 !important; }
+    .production-note { color: #38414b; background: #f3efe5; border-left: 0.32rem solid #8a7350; }
+    .safety-note { color: #f7f3e8; background: #111820; border: 2px solid var(--amber); box-shadow: 0 0.6rem 1.4rem rgba(8, 24, 39, 0.18); }
+    .safety-note strong { color: var(--amber-light); }
+    .note { background: #fff1cf; border-left: 0.32rem solid var(--amber); }
+    .site-footer { padding: 2rem 1rem; color: #dfe7ec; text-align: center; background: var(--navy-950); }
+    .site-footer p { margin: 0; }
+
+    @media (max-width: 640px) {
+      html { scroll-padding-top: 7rem; }
+      .header-inner { width: min(100% - 1.25rem, 72rem); min-height: 5rem; align-items: flex-start; padding: 0.75rem 0; flex-direction: column; gap: 0.2rem; }
+      .main-book-link { text-align: left; font-size: 0.9rem; }
+      .hero-inner, .layout { width: min(100% - 1.25rem, 72rem); }
+      .hero-inner { padding: 2.6rem 0 2.4rem; }
+      .toc ol { columns: 1; }
+      .chapter { padding: 1rem; }
+      .chapter ol, .chapter ul { padding-left: 1.35rem; }
+      pre { padding: 0.85rem; font-size: 0.88rem; }
+    }
+
+    @media print {
+      .site-header, .skip-link { display: none; }
+      body { background: #fff; }
+      .chapter { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">本文へ移動</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="brand">Claude Code 超入門</span>
+      <a class="main-book-link" href="../../cc-v2/claude-code-blog-experiential-edition/site/complete.html" target="_blank" rel="noopener">本編（実践教科書）へ</a>
+    </div>
+  </header>
+  <section class="hero" aria-labelledby="page-title">
+    <div class="hero-inner">
+      <p class="eyebrow">はじめての画面操作から、仕事の成果物まで</p>
+      <h1 id="page-title">Claude Code 超入門教科書</h1>
+      <p class="lead">コードを書かずに、読む・頼む・確かめるを順番に練習します。1章ずつ、自分のペースで進められます。</p>
+    </div>
+  </section>
+  <main id="main-content" class="layout">
+    <nav class="toc" aria-labelledby="toc-title">
+      <h2 id="toc-title">目次</h2>
+      <ol>
+        <li><a href="#zch-00">第0章 この教科書の使い方（10分）</a></li>
+<li><a href="#zch-01">第1章 Claude Codeって何？（15分）</a></li>
+<li><a href="#zch-02">第2章 準備する（20分）</a></li>
+<li><a href="#zch-03">第3章 はじめての依頼（20分）</a></li>
+<li><a href="#zch-04">第4章 安全の4つの約束（20分）</a></li>
+<li><a href="#zch-05">第5章 ファイルを作ってもらう（30分）</a></li>
+<li><a href="#zch-06">第6章 思い通りに直してもらう（30分）</a></li>
+<li><a href="#zch-07">第7章 失敗しても戻せる（20分）</a></li>
+<li><a href="#zch-08">第8章 毎週の仕事を「レシピ」にする（30分）</a></li>
+<li><a href="#zch-09">第9章 見せられる資料にする（30分）</a></li>
+<li><a href="#zch-10">第10章 事故カタログ（20分）</a></li>
+<li><a href="#zch-11">第11章 卒業制作（60分）</a></li>
+<li><a href="#zch-12">第12章 質問のしかた・調べ方（15分）</a></li>
+<li><a href="#zch-final">終章 次へ進む（5分）</a></li>
+      </ol>
+    </nav>
+    <section class="chapter" aria-labelledby="zch-00">
+<h2 id="zch-00">第0章 この教科書の使い方（10分）</h2>
+<h3 id="zch-00-s1">今日のゴール</h3>
+<p>この教科書の進め方を知り、安心して学び始められるようになる。</p>
+<h3 id="zch-00-s2">たとえで言うと</h3>
+<p>この教科書は、新人アシスタントとの仕事初日に使う案内書です。あなたは仕事を一つずつ渡します。1章が終わるたびに、休憩してかまいません。</p>
+<h3 id="zch-00-s3">やってみる</h3>
+<ol>
+<li>手元にパソコンがあることを確認します。</li>
+<li>Claudeのアカウントを使えることを確認します。</li>
+<li>今日取り組む章を一つだけ決めます。</li>
+<li>次の依頼文を選択します。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">私は画面操作に慣れていません。
+作業は一度に一つずつ案内してください。
+何かを変更する前に、することを短く説明してください。</code></pre></div>
+<ol start="5">
+<li>選択した依頼文をコピーします。</li>
+<li>自分のメモに貼り付けて、あとで使えるようにします。</li>
+<li>この章の「できたの確認」まで進みます。</li>
+<li>ここで一度、手を休めます。</li>
+</ol>
+<p>この教科書では、コードを1行も書きません。あなたが入力する文章は、すべて枠の中に全文を載せます。枠の中をそのままコピーしてください。</p>
+<p>ABC商事の佐藤さんは、営業事務の定型業務で練習します。会社名と人物は、すべて架空です。あなたも本物の顧客情報を使わずに進めます。</p>
+<h3 id="zch-00-s4">できたの確認</h3>
+<p>自分のメモに、3行の依頼文があれば合格です。今日取り組む章を一つ決めていれば、次へ進めます。</p>
+<h3 id="zch-00-s5">困ったときは</h3>
+<p><strong>Q. 一度に最後まで読む必要がありますか？</strong></p>
+<p>A. ありません。1章ごとに休み、別の日に続きを始められます。</p>
+<p><strong>Q. パソコン操作に自信がありません。</strong></p>
+<p>A. 枠内の文章をコピーして進めます。分からない画面では、先へ進まず止まってください。</p>
+<p><strong>Q. 自分の仕事をすぐ使ってよいですか？</strong></p>
+<p>A. 第4章までは架空の例だけを使います。安全の約束を知ってから、自分の練習用コピーを使います。</p>
+<h3 id="zch-00-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>Claude</strong>：文章で相談できるAIの名前です。</li>
+<li><strong>アカウント</strong>：あなたがサービスを使うための本人用の入り口です。</li>
+<li><strong>コード</strong>：コンピューター向けに書く特別な指示文です。この教科書では書きません。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-01">
+<h2 id="zch-01">第1章 Claude Codeって何？（15分）</h2>
+<h3 id="zch-01-s1">今日のゴール</h3>
+<p>Claude Codeに任せられることと、安全確認が必要な理由を説明できるようになる。</p>
+<h3 id="zch-01-s2">たとえで言うと</h3>
+<p>Claude Codeは、あなたの仕事机の前に座る新人アシスタントです。質問に答えるだけでなく、渡した資料を読んだり、新しいファイルを作ったりします。手を動かせるため、仕事の範囲を先に伝えることが大切です。</p>
+<h3 id="zch-01-s3">やってみる</h3>
+<ol>
+<li>Claudeを使える画面を開きます。</li>
+<li>文章を入力する場所を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">あなたはABC商事の佐藤さんを支える新人アシスタントです。
+営業事務で手伝えることを3つ挙げてください。
+まだファイルは読まず、変更もしないでください。</code></pre></div>
+<ol start="4">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>返ってきた3つの案を読みます。</li>
+<li>ファイルを変更していないという説明を確認します。</li>
+</ol>
+<p>一般的なチャットAIは、会話の中で答えを返します。Claude Codeは、許可された仕事場所にあるファイルも扱えます。だからこそ、任せる範囲と確認方法を決めて使います。</p>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-01-img1</strong></p>
+<p>配置：手順3の依頼文を貼り付けた直後。</p>
+<p>代替テキスト：依頼文を入力し、変更しない条件を確認する画面の例。</p>
+<p>Caption：最初は「変更しない」と伝え、返答だけを確認します。画面の文言はVersionにより異なります。</p>
+</blockquote>
+<h3 id="zch-01-s4">できたの確認</h3>
+<p>画面に営業事務の手伝い方が3つあれば合格です。ファイルが増えたり、内容が変わったりしていないことも確認します。</p>
+<h3 id="zch-01-s5">困ったときは</h3>
+<p><strong>Q. 3つより多く表示されました。</strong></p>
+<p>A. 問題ありません。「3つに絞ってください」と送り、返答を短くします。</p>
+<p><strong>Q. 英語が混ざりました。</strong></p>
+<p>A. 「すべて日本語で書き直してください」と送ります。ほかの条件は変えなくてかまいません。</p>
+<p><strong>Q. 何かを変える許可を求められました。</strong></p>
+<p>A. 今回は許可しません。変更せず、返答だけにするよう伝えます。</p>
+<h3 id="zch-01-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>Claude Code</strong>：会話しながら、許可した範囲のファイルを扱えるAIです。</li>
+<li><strong>チャットAI</strong>：文章を送り、会話の形で返答を受け取るAIです。</li>
+<li><strong>許可</strong>：お願いされた作業を進めてよいか、あなたが決めることです。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-02">
+<h2 id="zch-02">第2章 準備する（20分）</h2>
+<h3 id="zch-02-s1">今日のゴール</h3>
+<p>Claude Codeを使う準備を整え、練習用フォルダを仕事場所にできるようになる。</p>
+<h3 id="zch-02-s2">たとえで言うと</h3>
+<p>フォルダは、新人アシスタントに渡す仕事机です。机の上に置いたものだけを、今回の仕事に使います。練習専用の机を作ると、大切な資料と混ざりません。</p>
+<h3 id="zch-02-s3">やってみる</h3>
+<ol>
+<li>パソコンのデスクトップを表示します。</li>
+<li>新しいフォルダを作る意味の操作を選びます。</li>
+<li>フォルダ名を「Claude練習」にします。</li>
+<li>ブラウザでClaude Codeの公式案内を開きます。</li>
+<li>あなたのパソコンに合うデスクトップアプリを選びます。</li>
+<li>画面の案内に沿ってアプリを入れます。</li>
+<li>入れ終わったアプリを開きます。</li>
+<li>サインインする意味の操作を選びます。</li>
+<li>あなたのClaudeアカウントでサインインします。</li>
+<li>仕事場所を選ぶ意味の操作を選びます。</li>
+<li>デスクトップの「Claude練習」を選びます。</li>
+<li>文章を入力する場所を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">これから練習を始めます。
+私は画面操作に慣れていません。
+案内は一度に一つずつ、短い日本語で伝えてください。</code></pre></div>
+<ol start="14">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+</ol>
+<p>画面の文言はVersionにより異なります。ボタン名が違う場合は、同じ意味の操作を選びます。見つからないときは、公式案内の表示と見比べます。</p>
+<p>デスクトップアプリを使えない場合は、Webアプリを使えます。Webアプリにサインインし、練習用コピーだけを添えて進めます。作ってもらったファイルは、自分で「Claude練習」に保存します。</p>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-02-img1</strong></p>
+<p>配置：手順11で練習用フォルダを選んだ直後。</p>
+<p>代替テキスト：Claude練習フォルダを仕事場所として選んだ画面の例。</p>
+<p>Caption：大切な資料と分けた練習用フォルダだけを選びます。画面の文言はVersionにより異なります。</p>
+</blockquote>
+<h3 id="zch-02-s4">できたの確認</h3>
+<p>デスクトップに「Claude練習」フォルダがあれば合格です。Claude Codeの画面で依頼への返答も見えていれば、準備は完了です。</p>
+<h3 id="zch-02-s5">困ったときは</h3>
+<p><strong>Q. 自分のパソコンに合う種類が分かりません。</strong></p>
+<p>A. パソコンの設定画面で、MacかWindowsかを確認します。公式案内で同じ名前の種類を選びます。</p>
+<p><strong>Q. サインインできません。</strong></p>
+<p>A. メールアドレスの入力間違いを確認します。解決しない場合は、新しい登録を増やさず管理者へ相談します。</p>
+<p><strong>Q. 「Claude練習」が選べません。</strong></p>
+<p>A. いったん画面を閉じ、フォルダがデスクトップにあるか確認します。その後、仕事場所を選ぶ意味の操作からやり直します。</p>
+<h3 id="zch-02-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>フォルダ</strong>：複数のファイルをまとめて置く入れ物です。</li>
+<li><strong>デスクトップアプリ</strong>：パソコンに入れて使う種類のアプリです。</li>
+<li><strong>Webアプリ</strong>：ブラウザの中で使う種類のアプリです。</li>
+<li><strong>サインイン</strong>：自分のアカウントで利用を始めることです。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-03">
+<h2 id="zch-03">第3章 はじめての依頼（20分）</h2>
+<h3 id="zch-03-s1">今日のゴール</h3>
+<p>練習用の文書を読むだけの依頼を送り、要約を確認できるようになる。</p>
+<h3 id="zch-03-s2">たとえで言うと</h3>
+<p>最初の仕事は、新人アシスタントに資料を読んでもらうことです。机の上の紙を読んで、付せんに要点を書く場面と同じです。原本には書き込ませません。</p>
+<h3 id="zch-03-s3">やってみる</h3>
+<ol>
+<li>文章を書けるアプリを開きます。</li>
+<li>次の練習用メモをコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">ABC商事 営業会議メモ
+担当：佐藤さん（営業事務）
+日時：4月8日 10時
+参加者：佐藤さん、営業担当2名
+
+・見積書のひな形を金曜日までに見直す。
+・佐藤さんが木曜日に確認用一覧を用意する。
+・来週の会議で新しいひな形を確認する。</code></pre></div>
+<ol start="3">
+<li>開いたアプリへ練習用メモを貼り付けます。</li>
+<li>「Claude練習」フォルダに保存する意味の操作を選びます。</li>
+<li>ファイル名を「営業会議メモ.txt」にします。</li>
+<li>Claude Codeの画面を開きます。</li>
+<li>「Claude練習」が仕事場所になっていることを確認します。</li>
+<li>文章を入力する場所を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">「営業会議メモ.txt」を読んでください。
+大事な点を3つに要約し、この画面に表示してください。
+読むだけにして、ファイルは何も変更しないでください。
+書かれていない内容は推測しないでください。</code></pre></div>
+<ol start="10">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>表示された要約を元のメモと見比べます。</li>
+</ol>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-03-img1</strong></p>
+<p>配置：手順12で要約と元のメモを見比べる箇所。</p>
+<p>代替テキスト：元の営業会議メモと3点の要約を見比べる画面の例。</p>
+<p>Caption：最初の依頼は読むだけです。元のファイルには手を加えません。</p>
+</blockquote>
+<h3 id="zch-03-s4">できたの確認</h3>
+<p>画面に要点が3つ表示されていれば合格です。「営業会議メモ.txt」を自分で開き、元の文章が変わっていないことも確認します。</p>
+<p>3つの要点が元のメモに書かれていれば成功です。新しい日付や担当者が足されていたら、その部分は採用しません。</p>
+<h3 id="zch-03-s5">困ったときは</h3>
+<p><strong>Q. ファイルが見つからないと言われました。</strong></p>
+<p>A. 「営業会議メモ.txt」が「Claude練習」の中にあるか確認します。別の場所にあれば、練習用フォルダへ移します。</p>
+<p><strong>Q. 要点が3つになりません。</strong></p>
+<p>A. 「3つだけにして、1つを1文で書いてください」と送ります。元のファイルは変更しない条件も残します。</p>
+<p><strong>Q. 元の文章が変わったように見えます。</strong></p>
+<p>A. 先へ進まず、元のメモを閉じます。練習用コピーを作り直し、読むだけの依頼からやり直します。</p>
+<h3 id="zch-03-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>ファイル</strong>：文章や表などを、名前を付けて保存したものです。</li>
+<li><strong>要約</strong>：元の内容から、大事な点だけを短くまとめることです。</li>
+<li><strong>原本</strong>：変更せずに残しておく、元になる資料です。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-04">
+<h2 id="zch-04">第4章 安全の4つの約束（20分）</h2>
+<h3 id="zch-04-s1">今日のゴール</h3>
+<p>安全の4つの約束を使い、進めるか止めるかを自分で判断できるようになる。</p>
+<h3 id="zch-04-s2">たとえで言うと</h3>
+<p>新人アシスタントにも、勝手にしてはいけない仕事があります。大切な書類を捨てることや、社外へ送ることです。あなたが仕事の境界線を示すと、安全に任せられます。</p>
+<h3 id="zch-04-s3">やってみる</h3>
+<ol>
+<li>次の4つの約束を声に出して読みます。</li>
+</ol>
+<p><strong>約束1：練習用コピーで試します。</strong></p>
+<p>原本はそのまま残します。「Claude練習」の中に置いたコピーだけを使います。</p>
+<p><strong>約束2：秘密を貼りません。</strong></p>
+<p>パスワードや本物の顧客情報は入力しません。練習では、架空のABC商事と佐藤さんだけを使います。</p>
+<p><strong>約束3：削除・送信・公開・購入の前で止まります。</strong></p>
+<p>取り返しにくい作業は、その場で止めます。内容を理解してから、あなたが進めるか決めます。</p>
+<p><strong>約束4：「できた」は成果物と証拠で確認します。</strong></p>
+<p>返答だけで終わりにしません。ファイルを自分で開き、頼んだ内容になっているか確かめます。</p>
+<ol start="2">
+<li>「Claude練習」フォルダを開きます。</li>
+<li>本物の顧客情報がないことを確認します。</li>
+<li>Claude Codeの文章入力欄を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">これからは、次の条件を守ってください。
+使うのは「Claude練習」フォルダの中だけです。
+削除、送信、公開、購入が必要なら、作業前に止まってください。
+何をするのか、やさしい日本語で私に確認してください。</code></pre></div>
+<ol start="6">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>4つの条件を守るという返答を確認します。</li>
+</ol>
+<blockquote class="safety-note">
+<p><strong>読めない黒い文字が出たら（読めなくてOK）</strong></p>
+<p>表示された文字を読解する必要はありません。見るのは3点だけ:</p>
+<p>①「削除」「送信」「公開」「購入」にあたる言葉が説明に含まれていないか</p>
+<p>②対象が自分の練習用フォルダの中か</p>
+<p>③少しでも不安なら「許可しない」を選び、</p>
+<p>「いま何をしようとしたのか、小学生にもわかるように説明して」と打ち返す</p>
+<p>断っても壊れません。何度断ってもClaudeは怒りません。</p>
+</blockquote>
+<p>画面の文言はVersionにより異なります。「許可しない」と同じ意味の選択肢を探します。見つからなければ、画面を閉じずに人へ相談します。</p>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-04-img1</strong></p>
+<p>配置：黒画面ボックスの直後。</p>
+<p>代替テキスト：許可を求める画面で、対象と作業内容を確認する3つの視点。</p>
+<p>Caption：読めない文字ではなく、対象と「削除・送信・公開・購入」の有無を見ます。画面の文言はVersionにより異なります。</p>
+</blockquote>
+<h3 id="zch-04-s4">できたの確認</h3>
+<p>4つの約束を、画面を見ずに言えれば合格です。「Claude練習」に本物の顧客情報がないことも、自分の目で確認します。</p>
+<p>許可を求める表示で不安を感じたら、止める選択ができます。止めたあとに説明を求められれば、安全確認はできています。</p>
+<h3 id="zch-04-s5">困ったときは</h3>
+<p><strong>Q. 表示された文字の意味が分かりません。</strong></p>
+<p>A. 許可しない選択をします。その後、何をしようとしたのか、やさしい言葉で説明してもらいます。</p>
+<p><strong>Q. 顧客名を一つだけ貼ってもよいですか？</strong></p>
+<p>A. 練習では貼りません。架空の「ABC商事」に置き換えてから使います。</p>
+<p><strong>Q. 間違えて許可したかもしれません。</strong></p>
+<p>A. その場で作業を止めます。何を変えたか確認し、判断できなければ管理者へ相談します。</p>
+<h3 id="zch-04-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>秘密</strong>：パスワードや、本物の顧客情報など、外へ出してはいけない情報です。</li>
+<li><strong>成果物</strong>：依頼の結果として作られたファイルや文章です。</li>
+<li><strong>証拠</strong>：頼んだ結果になったと、自分の目で確認できるものです。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-05">
+<h2 id="zch-05">第5章 ファイルを作ってもらう（30分）</h2>
+<h3 id="zch-05-s1">今日のゴール</h3>
+<p>会議メモから議事録ファイルを作ってもらい、自分で開いて確認できるようになる。</p>
+<h3 id="zch-05-s2">たとえで言うと</h3>
+<p>新人アシスタントに、走り書きのメモを渡します。アシスタントは決めた書式に清書し、仕事机へ新しい紙を置きます。あなたは原本と清書を見比べて受け取ります。</p>
+<h3 id="zch-05-s3">やってみる</h3>
+<ol>
+<li>「Claude練習」フォルダを開きます。</li>
+<li>「営業会議メモ.txt」があることを確認します。</li>
+<li>ファイルを自分で開きます。</li>
+<li>ABC商事の架空メモであることを確認します。</li>
+<li>ファイルを閉じます。</li>
+<li>Claude Codeの画面を開きます。</li>
+<li>「Claude練習」が仕事場所になっていることを確認します。</li>
+<li>文章を入力する場所を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">「営業会議メモ.txt」を読んでください。
+同じフォルダに「営業会議_議事録.txt」を新しく作ってください。
+元のファイルは変更しないでください。
+
+議事録は、次の順にしてください。
+1. 件名
+2. 日時
+3. 参加者
+4. 決まったこと
+5. 担当と期限
+6. 次回確認すること
+
+元のメモにない内容は推測しないでください。
+分からない項目には「記載なし」と書いてください。</code></pre></div>
+<ol start="10">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>許可を求める表示が出たら、対象を確認します。</li>
+</ol>
+<blockquote class="safety-note">
+<p><strong>読めない黒い文字が出たら（読めなくてOK）</strong></p>
+<p>表示された文字を読解する必要はありません。見るのは3点だけ:</p>
+<p>①「削除」「送信」「公開」「購入」にあたる言葉が説明に含まれていないか</p>
+<p>②対象が自分の練習用フォルダの中か</p>
+<p>③少しでも不安なら「許可しない」を選び、</p>
+<p>「いま何をしようとしたのか、小学生にもわかるように説明して」と打ち返す</p>
+<p>断っても壊れません。何度断ってもClaudeは怒りません。</p>
+</blockquote>
+<ol start="13">
+<li>説明に削除・送信・公開・購入がないことを確認します。</li>
+<li>対象が「Claude練習」の中だけだと確認します。</li>
+<li>2つとも問題なければ、進める意味の操作を選びます。</li>
+<li>完了を知らせる返答が出るまで待ちます。</li>
+<li>「Claude練習」フォルダを開きます。</li>
+<li>「営業会議_議事録.txt」を開きます。</li>
+<li>元のメモと議事録を見比べます。</li>
+</ol>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-05-img1</strong></p>
+<p>配置：手順19で2つのファイルを見比べる箇所。</p>
+<p>代替テキスト：元の営業会議メモと、整えられた議事録ファイルを並べた例。</p>
+<p>Caption：成果物は自分で開き、元のメモにない内容が増えていないか確認します。</p>
+</blockquote>
+<h3 id="zch-05-s4">できたの確認</h3>
+<p>「Claude練習」の中に、2つのファイルがあれば合格です。元の「営業会議メモ.txt」と、新しい「営業会議_議事録.txt」です。</p>
+<p>議事録を開き、6つの項目が順に並んでいることを確認します。担当と期限が元のメモと一致し、推測した情報がなければ成功です。</p>
+<h3 id="zch-05-s5">困ったときは</h3>
+<p><strong>Q. 新しいファイルが見つかりません。</strong></p>
+<p>A. Claudeの返答で、保存した場所を確認します。「Claude練習」の中へ作り直すよう頼みます。</p>
+<p><strong>Q. 元のメモまで変わりました。</strong></p>
+<p>A. その場で作業を止めます。原本から練習用コピーを作り直し、元は変えない条件を入れて再開します。</p>
+<p><strong>Q. 書かれていない内容が足されています。</strong></p>
+<p>A. その議事録は採用しません。「推測した内容を除き、分からない項目は記載なしにしてください」と頼みます。</p>
+<h3 id="zch-05-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>議事録</strong>：会議で決まったことや担当を、あとで確認できる形にした記録です。</li>
+<li><strong>書式</strong>：見出しの順番や、文章の並べ方の決まりです。</li>
+<li><strong>記載なし</strong>：元の資料に情報がなく、推測していないことを示す言葉です。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-06">
+<h2 id="zch-06">第6章 思い通りに直してもらう（30分）</h2>
+<h3 id="zch-06-s1">今日のゴール</h3>
+<p>依頼の型4点セットを使い、望む形へ直してもらえるようになる。</p>
+<h3 id="zch-06-s2">たとえで言うと</h3>
+<p>新人アシスタントは、指示が具体的なほど動きやすくなります。渡す資料と完成見本があれば、迷う範囲が減ります。仕事を頼む前の伝票を整える場面と同じです。</p>
+<h3 id="zch-06-s3">やってみる</h3>
+<ol>
+<li>依頼の型4点セットを読みます。</li>
+</ol>
+<ul>
+<li>①何を：頼みたい仕事</li>
+<li>②どこから：使う元ネタ</li>
+<li>③どんな形に：成果物の名前と並び</li>
+<li>④どうなったら完成：自分で確かめる条件</li>
+</ul>
+<ol start="2">
+<li>1組目の悪い依頼を読みます。</li>
+</ol>
+<p><strong>悪い依頼1</strong></p>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">議事録をいい感じに直してください。</code></pre></div>
+<p>何を使うかも、完成の条件も分かりません。新人アシスタントが自分で決める範囲が広すぎます。</p>
+<ol start="3">
+<li>1組目の良い依頼を読みます。</li>
+</ol>
+<p><strong>良い依頼1</strong></p>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">「営業会議_議事録.txt」を直してください。
+元ネタは「営業会議メモ.txt」です。
+同じフォルダに「営業会議_議事録_修正版.txt」を新しく作ってください。
+元の2つのファイルは変更しないでください。
+
+見出しは、次の順にしてください。
+1. 件名
+2. 日時
+3. 参加者
+4. 決まったこと
+5. 担当と期限
+6. 次回確認すること
+
+完成条件は、日時、参加者、担当、期限が元ネタと一致することです。
+元ネタにない内容は足さないでください。
+分からない項目は「記載なし」にしてください。</code></pre></div>
+<ol start="4">
+<li>良い依頼1に4点があることを指で追います。</li>
+<li>Claude Codeの画面を開きます。</li>
+<li>「Claude練習」が仕事場所になっていることを確認します。</li>
+<li>良い依頼1の全文をコピーします。</li>
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>完了を知らせる返答が出るまで待ちます。</li>
+<li>2組目の悪い依頼を読みます。</li>
+</ol>
+<p><strong>悪い依頼2</strong></p>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">上司向けにしてください。</code></pre></div>
+<p>対象も、上司が知りたい内容も分かりません。完成したかを判断する条件もありません。</p>
+<ol start="12">
+<li>2組目の良い依頼を読みます。</li>
+</ol>
+<p><strong>良い依頼2</strong></p>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">「営業会議_議事録_修正版.txt」を使ってください。
+同じフォルダに「上司確認用_営業会議.txt」を新しく作ってください。
+元のファイルは変更しないでください。
+
+上から、次の順に並べてください。
+1. 会議の結論
+2. 担当と期限
+3. 次回確認すること
+4. 記載が足りない点
+
+完成条件は、10行以内で元ネタの内容だけを使っていることです。
+判断できない内容は「記載なし」にしてください。</code></pre></div>
+<ol start="13">
+<li>良い依頼2に4点があることを指で追います。</li>
+<li>良い依頼2の全文をコピーします。</li>
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>完了を知らせる返答が出るまで待ちます。</li>
+</ol>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-06-img1</strong></p>
+<p>配置：良い依頼2の直後。</p>
+<p>代替テキスト：依頼の型4点が、良い依頼のどこに入っているかを示す例。</p>
+<p>Caption：何を、どこから、どんな形に、完成条件の順で伝えます。</p>
+</blockquote>
+<h3 id="zch-06-s4">できたの確認</h3>
+<p>「Claude練習」に、修正版と上司確認用の2つがあれば合格です。両方を自分で開き、元のファイルと見比べます。</p>
+<p>見出しの順、10行以内、推測なしを確認します。元の2つのファイルが変わっていないことも証拠です。</p>
+<h3 id="zch-06-s5">困ったときは</h3>
+<p><strong>Q. 頼んだ見出しの順になりません。</strong></p>
+<p>A. 良い依頼をもう一度送ります。「見出し名と順番を変えないでください」と添えます。</p>
+<p><strong>Q. 元ネタにない説明が増えました。</strong></p>
+<p>A. その成果物は採用しません。増えた箇所を除き、分からない点を「記載なし」に直してもらいます。</p>
+<p><strong>Q. どこまで細かく書けばよいですか？</strong></p>
+<p>A. 4点セットが入り、自分で合否を決められれば十分です。見た目の好みは、確認後に追加できます。</p>
+<h3 id="zch-06-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>元ネタ</strong>：成果物を作るときに使う、元の資料です。</li>
+<li><strong>完成条件</strong>：成果物を受け取れる状態か、自分で確かめる基準です。</li>
+<li><strong>修正版</strong>：元の内容を残しながら、指定した点を直した別のファイルです。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-07">
+<h2 id="zch-07">第7章 失敗しても戻せる（20分）</h2>
+<h3 id="zch-07-s1">今日のゴール</h3>
+<p>わざと間違った変更を試し、直前の状態へ戻せるようになる。</p>
+<h3 id="zch-07-s2">たとえで言うと</h3>
+<p>作業履歴ノートには、アシスタントが直した順番が残ります。書き間違えても、一つ前のページを見て戻せます。戻し方を知ると、安心して仕事を任せられます。</p>
+<h3 id="zch-07-s3">やってみる</h3>
+<ol>
+<li>「Claude練習」フォルダを開きます。</li>
+<li>「営業会議_議事録_修正版.txt」を開きます。</li>
+<li>「次回会議は12月31日」という行がないことを確認します。</li>
+<li>ファイルを閉じます。</li>
+<li>Claude Codeの画面を開きます。</li>
+<li>文章を入力する場所を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">「営業会議_議事録_修正版.txt」の最後に、
+「次回会議は12月31日に決定」と1行追加してください。
+これは、戻す練習のためのわざと間違った変更です。
+ほかの行と、ほかのファイルは変更しないでください。</code></pre></div>
+<ol start="8">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>完了を知らせる返答が出るまで待ちます。</li>
+<li>「営業会議_議事録_修正版.txt」を開きます。</li>
+<li>間違った1行が増えたことを確認します。</li>
+<li>ファイルを閉じます。</li>
+<li>Claude Codeの文章入力欄を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">直前に「営業会議_議事録_修正版.txt」へ加えた、
+「次回会議は12月31日に決定」という1行だけを取り消してください。
+それより前の内容と、ほかのファイルは変更しないでください。
+終わったら、取り消した行をこの画面に表示してください。</code></pre></div>
+<ol start="16">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+</ol>
+<blockquote class="safety-note">
+<p><strong>読めない黒い文字が出たら（読めなくてOK）</strong></p>
+<p>表示された文字を読解する必要はありません。見るのは3点だけ:</p>
+<p>①「削除」「送信」「公開」「購入」にあたる言葉が説明に含まれていないか</p>
+<p>②対象が自分の練習用フォルダの中か</p>
+<p>③少しでも不安なら「許可しない」を選び、</p>
+<p>「いま何をしようとしたのか、小学生にもわかるように説明して」と打ち返す</p>
+<p>断っても壊れません。何度断ってもClaudeは怒りません。</p>
+</blockquote>
+<ol start="18">
+<li>対象が修正版の1つだけか確認します。</li>
+<li>問題がなければ、進める意味の操作を選びます。</li>
+<li>完了を知らせる返答が出るまで待ちます。</li>
+<li>「営業会議_議事録_修正版.txt」を開きます。</li>
+<li>間違った1行が消えたことを確認します。</li>
+</ol>
+<p>画面の文言はVersionにより異なります。やり直しにあたる表示が見つからなくても、同じ会話で直前の変更を具体的に伝えられます。</p>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-07-img1</strong></p>
+<p>配置：手順22の直後。</p>
+<p>代替テキスト：間違った1行が追加され、その1行だけを取り消した前後の比較。</p>
+<p>Caption：何を加えたかを確かめ、その変更だけを戻します。</p>
+</blockquote>
+<h3 id="zch-07-s4">できたの確認</h3>
+<p>修正版に「次回会議は12月31日」がなければ合格です。それ以外の内容が、練習前と同じことも確認します。</p>
+<p>Claudeの返答だけを証拠にしません。自分でファイルを開き、戻った状態を見ます。</p>
+<h3 id="zch-07-s5">困ったときは</h3>
+<p><strong>Q. 違う行まで消えました。</strong></p>
+<p>A. その場で止めます。元ネタと見比べ、直前の変更だけを取り消すよう頼み直します。</p>
+<p><strong>Q. 何を戻すのか聞かれました。</strong></p>
+<p>A. ファイル名と、追加した1行をそのまま伝えます。ほかは変えない条件も残します。</p>
+<p><strong>Q. 元の状態が分からなくなりました。</strong></p>
+<p>A. 第6章で残した元のファイルと見比べます。判断できなければ、練習を止めて人へ相談します。</p>
+<h3 id="zch-07-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>作業履歴ノート</strong>：何をどの順に変えたかを振り返るための記録です。</li>
+<li><strong>取り消す</strong>：直前の変更をやめ、変更前の状態へ戻すことです。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-08">
+<h2 id="zch-08">第8章 毎週の仕事を「レシピ」にする（30分）</h2>
+<h3 id="zch-08-s1">今日のゴール</h3>
+<p>良い依頼をレシピカードとして保存し、同じ仕事に使えるようになる。</p>
+<h3 id="zch-08-s2">たとえで言うと</h3>
+<p>毎週の料理を、記憶だけで作る必要はありません。材料と完成の見分け方をレシピカードに残せます。仕事の依頼も同じ形で使い回せます。</p>
+<h3 id="zch-08-s3">やってみる</h3>
+<ol>
+<li>Claude Codeの画面を開きます。</li>
+<li>「Claude練習」が仕事場所になっていることを確認します。</li>
+<li>文章を入力する場所を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">同じフォルダに「週次議事録レシピ.txt」を新しく作ってください。
+内容は、次の文章だけにしてください。
+
+週次議事録レシピ
+
+何を：会議メモを議事録へ整える。
+どこから：依頼時に指定された会議メモのファイル。
+どんな形に：依頼時に指定された新しいファイル。
+
+見出しの順番：
+1. 件名
+2. 日時
+3. 参加者
+4. 決まったこと
+5. 担当と期限
+6. 次回確認すること
+
+完成条件：
+・元のメモにある内容だけを使う。
+・分からない項目は「記載なし」にする。
+・元のファイルは変更しない。
+・同じ名前の成果物があれば、変更前に止まる。</code></pre></div>
+<ol start="5">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>完了を知らせる返答が出るまで待ちます。</li>
+<li>「週次議事録レシピ.txt」を開きます。</li>
+<li>4点セットが入っていることを確認します。</li>
+<li>ファイルを閉じます。</li>
+<li>Claude Codeの文章入力欄を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">「週次議事録レシピ.txt」を読んでください。
+元ネタは「営業会議メモ.txt」です。
+成果物は「営業会議_議事録_レシピ確認.txt」です。
+レシピどおりに作ってください。
+作業後に、完成条件を一つずつ確認して結果を表示してください。</code></pre></div>
+<ol start="13">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>完了を知らせる返答が出るまで待ちます。</li>
+</ol>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-08-img1</strong></p>
+<p>配置：手順15の直後。</p>
+<p>代替テキスト：週次議事録レシピと、それを使って作った確認用議事録の例。</p>
+<p>Caption：毎回の共通条件をレシピに残し、元ネタと成果物だけを伝えます。</p>
+</blockquote>
+<h3 id="zch-08-s4">できたの確認</h3>
+<p>「Claude練習」にレシピと確認用議事録があれば合格です。レシピを開き、4点セットと6つの見出しを確認します。</p>
+<p>確認用議事録も自分で開きます。元のメモと一致し、元のファイルが変わっていなければ成功です。</p>
+<h3 id="zch-08-s5">困ったときは</h3>
+<p><strong>Q. レシピだけで元ネタが決まりません。</strong></p>
+<p>A. 毎回、元ネタのファイル名を伝えます。似た名前が複数あるときは、作業前に止めてもらいます。</p>
+<p><strong>Q. 前の成果物が上書きされそうです。</strong></p>
+<p>A. 許可しません。新しいファイル名を決めてから、もう一度頼みます。</p>
+<p><strong>Q. 毎週、条件が少し変わります。</strong></p>
+<p>A. 変わらない条件だけをレシピに残します。その週だけの条件は、依頼時に追加します。</p>
+<h3 id="zch-08-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>レシピカード</strong>：繰り返す仕事の材料、手順、完成条件を残したファイルです。</li>
+<li><strong>使い回す</strong>：同じ決まりを、次の仕事でも利用することです。</li>
+<li><strong>上書き</strong>：同じ名前のファイルへ新しい内容を重ね、前の内容を置き換えることです。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-09">
+<h2 id="zch-09">第9章 見せられる資料にする（30分）</h2>
+<h3 id="zch-09-s1">今日のゴール</h3>
+<p>議事録から1枚のレポートを作り、ブラウザとPDFで確認できるようになる。</p>
+<h3 id="zch-09-s2">たとえで言うと</h3>
+<p>新人アシスタントが、文字だけの報告を1枚の掲示物へ整えます。大事な結論が先に見え、担当と期限も探しやすくなります。あなたは印刷前の見本を確認します。</p>
+<h3 id="zch-09-s3">やってみる</h3>
+<ol>
+<li>「営業会議_議事録_修正版.txt」を開きます。</li>
+<li>ABC商事の架空資料であることを確認します。</li>
+<li>ファイルを閉じます。</li>
+<li>Claude Codeの画面を開きます。</li>
+<li>「Claude練習」が仕事場所になっていることを確認します。</li>
+<li>文章を入力する場所を選びます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">「営業会議_議事録_修正版.txt」を使ってください。
+同じフォルダに「営業会議_1枚レポート.html」を新しく作ってください。
+元のファイルは変更しないでください。
+
+上から、次の順に見せてください。
+1. ABC商事 営業会議レポート
+2. 会議の結論
+3. 担当と期限
+4. 次回確認すること
+5. 記載が足りない点
+
+落ち着いた紺色と白を使ってください。
+文字は読みやすい大きさにしてください。
+印刷したときにA4用紙1枚へ収まる形にしてください。
+元ネタにない内容や、外から集めた情報は入れないでください。
+完成後に、入れた内容をこの画面で報告してください。</code></pre></div>
+<ol start="8">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>許可を求める表示では、対象を確認します。</li>
+<li>対象が練習用フォルダの中なら、進める意味の操作を選びます。</li>
+<li>完了を知らせる返答が出るまで待ちます。</li>
+<li>「営業会議_1枚レポート.html」を選びます。</li>
+<li>ブラウザで開く意味の操作を選びます。</li>
+<li>5つの項目が上から並ぶことを確認します。</li>
+<li>ブラウザで印刷する意味の操作を選びます。</li>
+<li>保存先をPDFにする意味の選択肢を選びます。</li>
+<li>用紙が1枚になることを確認します。</li>
+<li>「Claude練習」へ保存する意味の操作を選びます。</li>
+<li>ファイル名を「営業会議_1枚レポート.pdf」にします。</li>
+<li>保存する意味の操作を選びます。</li>
+</ol>
+<p>画面の文言はVersionにより異なります。同じ意味の操作を選び、保存前の見本で1枚かを確かめます。</p>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-09-img1</strong></p>
+<p>配置：手順15の直後。</p>
+<p>代替テキスト：紺色と白で整理された、ABC商事の1枚会議レポート。</p>
+<p>Caption：結論、担当、期限を1枚で確認できる形に整えます。</p>
+</blockquote>
+<h3 id="zch-09-s4">できたの確認</h3>
+<p>同じ内容のHTMLとPDFが1つずつあれば合格です。両方を自分で開き、見出しと文章を見比べます。</p>
+<p>PDFが1枚で、文字が途中で切れていないことを確認します。元ネタにない内容がなければ、人へ見せる前の確認は完了です。</p>
+<h3 id="zch-09-s5">困ったときは</h3>
+<p><strong>Q. ブラウザで文字だけが並びます。</strong></p>
+<p>A. ファイル名の最後が「.html」か確認します。違っていれば、その名前で作り直してもらいます。</p>
+<p><strong>Q. PDFが2枚になります。</strong></p>
+<p>A. 保存前の見本を閉じます。「A4用紙1枚へ収まるよう、余白と文字の大きさを整えてください」と頼みます。</p>
+<p><strong>Q. 文字が小さすぎます。</strong></p>
+<p>A. その資料は採用しません。内容を短くし、本文を読みやすい大きさへ直してもらいます。</p>
+<h3 id="zch-09-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>HTML</strong>：ブラウザで開ける、見出しや色を付けた文書の形です。</li>
+<li><strong>PDF</strong>：パソコンが違っても、同じ見た目を保ちやすい文書の形です。</li>
+<li><strong>印刷前の見本</strong>：用紙へ出す前に、枚数や切れを確認する画面です。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-10">
+<h2 id="zch-10">第10章 事故カタログ（20分）</h2>
+<h3 id="zch-10-s1">今日のゴール</h3>
+<p>事故につながる初期症状を見つけ、作業前に正しい行動を選べるようになる。</p>
+<h3 id="zch-10-s2">たとえで言うと</h3>
+<p>新人アシスタントとの仕事にも、立入禁止の札が必要です。小さな違和感は、事故を避けるための早い合図です。合図を見たら、進まずに境界線を確かめます。</p>
+<h3 id="zch-10-s3">やってみる</h3>
+<ol>
+<li>次の10例を一つずつ読みます。</li>
+</ol>
+<p><strong>事故1：本物の顧客名簿で練習する</strong></p>
+<p>初期症状→練習用フォルダに、本物の会社名や連絡先があります。 なぜ危ない→秘密を、練習のために扱うことになります。 正しい行動→原本を閉じ、架空のABC商事と佐藤さんに置き換えます。</p>
+<p><strong>事故2：「全部消して整理して」と頼む</strong></p>
+<p>初期症状→対象を決めずに、全部を消す依頼を書いています。 なぜ危ない→必要なファイルまで失うおそれがあります。 正しい行動→依頼を送らず、残す物と対象を一つずつ決めます。</p>
+<p><strong>事故3：パスワードを貼る</strong></p>
+<p>初期症状→依頼文や元ネタに、パスワードが入っています。 なぜ危ない→本人だけが知る秘密として守れなくなります。 正しい行動→貼らずに伏せ字へ置き換え、必要なら管理者へ相談します。</p>
+<p><strong>事故4：確認画面を読まずに進める</strong></p>
+<p>初期症状→対象や作業の説明を見ず、すぐ許可しようとしています。 なぜ危ない→想定外の変更を見逃します。 正しい行動→許可せず、対象と「削除・送信・公開・購入」を確認します。</p>
+<p><strong>事故5：仕事場所を広くしすぎる</strong></p>
+<p>初期症状→パソコン上の多くのファイルがある場所を選んでいます。 なぜ危ない→練習と関係のない資料まで対象になりえます。 正しい行動→「Claude練習」だけを仕事場所に選び直します。</p>
+<p><strong>事故6：確認前に人へ送る</strong></p>
+<p>初期症状→成果物を開く前に、メールなどで送ろうとしています。 なぜ危ない→誤りや秘密を含んだまま相手へ届くおそれがあります。 正しい行動→送信前に止め、自分で開いて元ネタと見比べます。</p>
+<p><strong>事故7：確認前に公開する</strong></p>
+<p>初期症状→内容や見える相手を確かめず、公開しようとしています。 なぜ危ない→取り消す前に、多くの人へ見られるおそれがあります。 正しい行動→公開前に止め、内容と見える相手を人と確認します。</p>
+<p><strong>事故8：内容を見ずに購入する</strong></p>
+<p>初期症状→金額や期間を確認せず、購入へ進もうとしています。 なぜ危ない→不要な費用や継続支払いが発生するおそれがあります。 正しい行動→購入前に止め、金額、期間、解約条件を人と確認します。</p>
+<p><strong>事故9：原本だけで試す</strong></p>
+<p>初期症状→戻すための練習用コピーがありません。 なぜ危ない→変更後に、正しい元の状態を確認できません。 正しい行動→原本を閉じ、練習用コピーを作ってから始めます。</p>
+<p><strong>事故10：返答だけで「できた」と決める</strong></p>
+<p>初期症状→完了という返答を見て、成果物を開かず終えようとしています。 なぜ危ない→保存場所、内容、元ネタとの違いを見落とします。 正しい行動→成果物を自分で開き、完成条件を一つずつ確認します。</p>
+<ol start="2">
+<li>最も起きそうな例を一つ選びます。</li>
+<li>その例の正しい行動を声に出します。</li>
+<li>Claude Codeの画面を開きます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">この会話では、安全確認役もしてください。
+私の依頼に、削除、送信、公開、購入、本物の顧客情報、秘密が含まれたら、
+作業を始めず、どこが危ないかをやさしい日本語で説明してください。
+使う場所が「Claude練習」の外なら、作業を始めないでください。</code></pre></div>
+<ol start="6">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>条件を確認したという返答を読みます。</li>
+</ol>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-10-img1</strong></p>
+<p>配置：事故10の直後。</p>
+<p>代替テキスト：10の初期症状から、止まる、確かめる、正しい行動を選ぶ流れ。</p>
+<p>Caption：違和感を見つけた時点で止まると、事故を作業前に避けられます。</p>
+</blockquote>
+<h3 id="zch-10-s4">できたの確認</h3>
+<p>10例のうち3例を、何も見ずに説明できれば合格です。それぞれの正しい行動まで言います。</p>
+<p>Claudeの返答に、安全確認の条件が6つあれば成功です。削除、送信、公開、購入、顧客情報、仕事場所の6つです。</p>
+<h3 id="zch-10-s5">困ったときは</h3>
+<p><strong>Q. 危ないか判断できません。</strong></p>
+<p>A. 許可せず止めます。作業内容をやさしい日本語で説明してもらい、人にも相談します。</p>
+<p><strong>Q. 本物か架空か分かりません。</strong></p>
+<p>A. 本物として扱います。確認できるまで、依頼文や練習用フォルダへ入れません。</p>
+<p><strong>Q. もう送ってしまいました。</strong></p>
+<p>A. 追加の送信を止めます。送った相手と内容を確認し、すぐ管理者へ報告します。</p>
+<h3 id="zch-10-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>初期症状</strong>：事故になる前に現れる、小さな違和感や合図です。</li>
+<li><strong>伏せ字</strong>：秘密の部分を、別の記号や架空の文字へ置き換えたものです。</li>
+<li><strong>解約条件</strong>：支払いを終えるための時期や方法の決まりです。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-11">
+<h2 id="zch-11">第11章 卒業制作（60分）</h2>
+<h3 id="zch-11-s1">今日のゴール</h3>
+<p>自分の定型業務を一つ選び、成果物と証拠まで自走できるようになる。</p>
+<h3 id="zch-11-s2">たとえで言うと</h3>
+<p>今日は、新人アシスタントへ一つの仕事を任せる日です。あなたは仕事机を整え、レシピカードを渡します。最後は作業履歴ノートと成果物を自分で確認します。</p>
+<h3 id="zch-11-s3">やってみる</h3>
+<p>次のチェック欄を、上から順に進めます。飛ばした欄があれば、その一つ前へ戻ります。</p>
+<ol>
+<li>[ ] 毎週か毎月に繰り返す仕事を一つ選びます。</li>
+<li>[ ] 削除、送信、公開、購入を含まない仕事だと確認します。</li>
+<li>[ ] 元ネタの原本を閉じます。</li>
+<li>[ ] 元ネタの練習用コピーを作ります。</li>
+<li>[ ] 練習用コピーを「Claude練習」へ移します。</li>
+<li>[ ] 本物の顧客情報と秘密がないことを確認します。</li>
+<li>[ ] Claude Codeの画面を開きます。</li>
+<li>[ ] 「Claude練習」が仕事場所になっていることを確認します。</li>
+<li>[ ] 次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">卒業制作として、私の定型業務を一つ整えます。
+最初に、次の4点を一つずつ質問してください。
+
+1. 何をしてほしいか
+2. どのファイルを元ネタにするか
+3. どんな名前と形の成果物にするか
+4. どうなったら完成か
+
+4点がそろうまで、ファイルは変更しないでください。
+4点がそろったら、私が送る依頼文の案を画面に表示してください。
+その時点でも、まだファイルは変更しないでください。</code></pre></div>
+<ol start="10">
+<li>[ ] コピーした依頼文を貼り付けます。</li>
+<li>[ ] 依頼を送る意味の操作を選びます。</li>
+<li>[ ] 最初の質問を読みます。</li>
+<li>[ ] 1つ目の答えを入力します。</li>
+<li>[ ] 答えを送る意味の操作を選びます。</li>
+<li>[ ] 次の質問を読みます。</li>
+<li>[ ] 2つ目の答えを入力します。</li>
+<li>[ ] 答えを送る意味の操作を選びます。</li>
+<li>[ ] 次の質問を読みます。</li>
+<li>[ ] 3つ目の答えを入力します。</li>
+<li>[ ] 答えを送る意味の操作を選びます。</li>
+<li>[ ] 次の質問を読みます。</li>
+<li>[ ] 4つ目の答えを入力します。</li>
+<li>[ ] 答えを送る意味の操作を選びます。</li>
+<li>[ ] 表示された依頼文案を読みます。</li>
+<li>[ ] 4点セットが入っていることを確認します。</li>
+<li>[ ] 次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">今まとめた依頼文案に、次の安全条件を加えてください。
+使うのは「Claude練習」フォルダの中だけです。
+元ネタは変更しないでください。
+元ネタにない内容は推測しないでください。
+削除、送信、公開、購入が必要なら、作業前に止まってください。
+同じ名前の成果物がある場合も、作業前に止まってください。
+
+条件を加えた依頼文の全文を画面に表示し、まだ作業は始めないでください。</code></pre></div>
+<ol start="27">
+<li>[ ] コピーした依頼文を貼り付けます。</li>
+<li>[ ] 依頼を送る意味の操作を選びます。</li>
+<li>[ ] 安全条件を加えた全文を読みます。</li>
+<li>[ ] 元ネタと成果物の名前を確認します。</li>
+<li>[ ] 次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">いま確認した依頼文の内容で、成果物を作ってください。
+終わったら、完成条件を一つずつ確認してください。
+確認結果と成果物の保存場所を、この画面に表示してください。</code></pre></div>
+<ol start="32">
+<li>[ ] コピーした依頼文を貼り付けます。</li>
+<li>[ ] 依頼を送る意味の操作を選びます。</li>
+</ol>
+<blockquote class="safety-note">
+<p><strong>読めない黒い文字が出たら（読めなくてOK）</strong></p>
+<p>表示された文字を読解する必要はありません。見るのは3点だけ:</p>
+<p>①「削除」「送信」「公開」「購入」にあたる言葉が説明に含まれていないか</p>
+<p>②対象が自分の練習用フォルダの中か</p>
+<p>③少しでも不安なら「許可しない」を選び、</p>
+<p>「いま何をしようとしたのか、小学生にもわかるように説明して」と打ち返す</p>
+<p>断っても壊れません。何度断ってもClaudeは怒りません。</p>
+</blockquote>
+<ol start="34">
+<li>[ ] 作業の説明に4つの危険な行動がないことを確認します。</li>
+<li>[ ] 対象が「Claude練習」の中だけだと確認します。</li>
+<li>[ ] 2つとも問題なければ、進める意味の操作を選びます。</li>
+<li>[ ] 完了を知らせる返答が出るまで待ちます。</li>
+<li>[ ] 「Claude練習」フォルダを開きます。</li>
+<li>[ ] 成果物を自分で開きます。</li>
+<li>[ ] 元ネタと成果物を見比べます。</li>
+<li>[ ] 完成条件を一つずつ確認します。</li>
+<li>[ ] 元ネタが変わっていないことを確認します。</li>
+</ol>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-11-img1</strong></p>
+<p>配置：手順42の直後。</p>
+<p>代替テキスト：練習用コピー、4点の依頼、成果物、証拠確認までの卒業制作チェック表。</p>
+<p>Caption：チェック欄を上から進め、最後は自分の目で成果物を確認します。</p>
+</blockquote>
+<h3 id="zch-11-s4">できたの確認</h3>
+<p>次の5つすべてに印を付けられれば合格です。</p>
+<ul>
+<li>[ ] 練習用コピーだけを使いました。</li>
+<li>[ ] 依頼に4点セットを入れました。</li>
+<li>[ ] 成果物が指定した場所にあります。</li>
+<li>[ ] 成果物が完成条件を満たしています。</li>
+<li>[ ] 元ネタが変わっていません。</li>
+</ul>
+<p>成果物を開いた画面が証拠です。完成条件の確認結果も、同じ会話に残します。</p>
+<h3 id="zch-11-s5">困ったときは</h3>
+<p><strong>Q. 定型業務を一つに絞れません。</strong></p>
+<p>A. 元ネタが一つで、成果物も一つの仕事を選びます。ABC商事の議事録作りでも合格です。</p>
+<p><strong>Q. 4つの質問に答えられません。</strong></p>
+<p>A. 分からない点を「未確認」と答えます。推測で埋めず、その点を完成条件から外しません。</p>
+<p><strong>Q. 途中で危険な行動が必要になりました。</strong></p>
+<p>A. その場で止めます。今回は成果物を練習用フォルダへ作るところまでにします。</p>
+<h3 id="zch-11-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>定型業務</strong>：同じ流れで、定期的に繰り返す仕事です。</li>
+<li><strong>自走</strong>：次の行動と確認方法を、自分で選んで進めることです。</li>
+<li><strong>チェックリスト</strong>：確認する項目を順に並べ、終わった印を付ける表です。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-12">
+<h2 id="zch-12">第12章 質問のしかた・調べ方（15分）</h2>
+<h3 id="zch-12-s1">今日のゴール</h3>
+<p>困った表示を「読む・写す・聞く」の3手順で解決へ進められるようになる。</p>
+<h3 id="zch-12-s2">たとえで言うと</h3>
+<p>新人アシスタントへ、電話の伝言を正確に渡す場面と同じです。見えた文章を省かずに渡すと、状況を調べやすくなります。分からないまま先へ進む必要はありません。</p>
+<h3 id="zch-12-s3">やってみる</h3>
+<ol>
+<li>困った表示が出たら、その場で作業を止めます。</li>
+<li>表示の最初から最後までを読みます。</li>
+<li>秘密が含まれていないことを確認します。</li>
+<li>表示された文章を選択します。</li>
+<li>選択した文章をコピーします。</li>
+<li>Claude Codeの文章入力欄を選びます。</li>
+<li>コピーした文章を貼り付けます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">上に貼った表示について教えてください。
+私は画面操作に慣れていません。
+何が起きたのかを、やさしい日本語で説明してください。
+まだ同じ作業をやり直さず、次に確認することを一つだけ教えてください。
+ファイルは変更しないでください。</code></pre></div>
+<ol start="9">
+<li>貼り付けた表示の末尾に依頼文を貼り付けます。</li>
+<li>秘密が混ざっていないことをもう一度確認します。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>説明と、次に確認する一つを読みます。</li>
+<li>案内された一つだけを確認します。</li>
+</ol>
+<p>いまの画面だけで質問したいときは、次の依頼文も使えます。</p>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">いまの画面で、私は何をすればよいですか？
+作業は進めず、最初に確認する場所を一つだけ教えてください。
+画面の言葉が違う場合は、同じ意味の目印を教えてください。</code></pre></div>
+<p>画面の文言はVersionにより異なります。正確なボタン名ではなく、同じ意味の目印を聞きます。</p>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-12-img1</strong></p>
+<p>配置：2つ目の依頼文の直後。</p>
+<p>代替テキスト：困った表示を、読む、写す、聞くの順に扱う3段階。</p>
+<p>Caption：表示を省略せずに渡し、次の確認を一つだけ聞きます。</p>
+</blockquote>
+<h3 id="zch-12-s4">できたの確認</h3>
+<p>「読む・写す・聞く」を順番どおり言えれば合格です。返答に、起きたことと次の確認が一つずつあれば成功です。</p>
+<p>案内を受けても、すぐに変更はしません。対象と影響を理解してから、進めるか決めます。</p>
+<h3 id="zch-12-s5">困ったときは</h3>
+<p><strong>Q. 表示された文章を選べません。</strong></p>
+<p>A. 画面を閉じず、見える範囲を正確にメモします。省いた部分があることも伝えます。</p>
+<p><strong>Q. 表示に秘密が含まれています。</strong></p>
+<p>A. そのまま貼りません。秘密の部分を伏せ字にし、伏せた場所があると伝えます。</p>
+<p><strong>Q. 説明を読んでも分かりません。</strong></p>
+<p>A. 「小学生にも分かる言葉で、一つずつ説明してください」と聞き直します。分かるまで作業は止めます。</p>
+<h3 id="zch-12-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>エラー</strong>：作業を続けられない理由や、確認が必要な点を知らせる表示です。</li>
+<li><strong>目印</strong>：画面の場所を見つけるための、見出しや形の手がかりです。</li>
+</ul>
+</section>
+<section class="chapter" aria-labelledby="zch-final">
+<h2 id="zch-final">終章 次へ進む（5分）</h2>
+<h3 id="zch-final-s1">今日のゴール</h3>
+<p>身につけたことを棚卸しし、本編で次に学ぶ内容を選べるようになる。</p>
+<h3 id="zch-final-s2">たとえで言うと</h3>
+<p>新人アシスタントとの初日が終わりました。あなたの仕事机には、依頼の型と安全の約束があります。次は、任せる仕事の種類を少しずつ増やします。</p>
+<h3 id="zch-final-s3">やってみる</h3>
+<ol>
+<li>次の5項目を上から読みます。</li>
+</ol>
+<ul>
+<li>練習用コピーで始められる。</li>
+<li>4点セットで依頼できる。</li>
+<li>許可の前で止まれる。</li>
+<li>間違った変更を戻せる。</li>
+<li>成果物を自分の目で確認できる。</li>
+</ul>
+<ol start="2">
+<li>できる項目に印を付けます。</li>
+<li>Claude Codeの画面を開きます。</li>
+<li>次の依頼文をコピーします。</li>
+</ol>
+<div class="copy-block" aria-label="コピー用の文章"><span class="copy-label">このままコピー</span><pre><code class="language-text">この会話で私が取り組んだ内容を振り返ってください。
+できるようになったことを3つにまとめてください。
+次に練習するとよい仕事を一つ提案してください。
+まだファイルは変更しないでください。</code></pre></div>
+<ol start="5">
+<li>コピーした依頼文を貼り付けます。</li>
+<li>依頼を送る意味の操作を選びます。</li>
+<li>3つの振り返りを読みます。</li>
+<li>次に練習する仕事を自分で一つ決めます。</li>
+<li>このページ上部の「本編（実践教科書）へ」を選びます。</li>
+<li>新しいタブで本編が開くことを確認します。</li>
+<li>本編の目次から、非エンジニア向けの読み方を探します。</li>
+</ol>
+<p>本編では、扱う仕事と新しい言葉が増えます。分からない言葉は、第12章の聞き方で一つずつ確認します。安全の4つの約束は、そのまま使い続けます。</p>
+<blockquote class="production-note">
+<p><strong>画像制作指示：zch-final-img1</strong></p>
+<p>配置：手順10の直後。</p>
+<p>代替テキスト：超入門版から、別のタブで本編を開いた画面の例。</p>
+<p>Caption：超入門版を残したまま、本編で次の学びを選びます。</p>
+</blockquote>
+<h3 id="zch-final-s4">できたの確認</h3>
+<p>5項目すべてに印があれば、この教科書は修了です。足りない項目があれば、その章だけやり直せます。</p>
+<p>新しいタブに本編の目次が見えれば、次へ進む準備も完了です。元のタブには、この教科書が残ります。</p>
+<h3 id="zch-final-s5">困ったときは</h3>
+<p><strong>Q. 5項目すべてに印が付きません。</strong></p>
+<p>A. 修了を急ぐ必要はありません。印がない項目に対応する章を、もう一度試します。</p>
+<p><strong>Q. 本編を開くと知らない言葉が増えます。</strong></p>
+<p>A. 分からない言葉を一つだけ選び、やさしく説明してもらいます。全部を一度に覚える必要はありません。</p>
+<p><strong>Q. 次に何を練習するか決まりません。</strong></p>
+<p>A. ABC商事の議事録レシピを、別の架空メモで繰り返します。慣れてから自分の定型業務へ広げます。</p>
+<h3 id="zch-final-s6">ことばのミニ辞典</h3>
+<ul>
+<li><strong>棚卸し</strong>：できることと、まだ練習することを分けて確認することです。</li>
+<li><strong>本編</strong>：超入門版の次に、より多くの仕事の進め方を学ぶ教科書です。</li>
+<li><strong>修了</strong>：決めた学習と確認を終えた状態です。</li>
+</ul>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Claude Code 超入門教科書</p>
+  </footer>
+</body>
+</html>
