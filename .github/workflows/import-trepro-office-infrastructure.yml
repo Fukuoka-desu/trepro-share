@@ -1,0 +1,50 @@
+name: Publish TrePro office infrastructure HTML
+
+on:
+  push:
+    paths:
+      - '.github/workflows/import-trepro-office-infrastructure.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download generated HTML
+        env:
+          SOURCE_URL: "https://trepro-office-infrastructure-fukuoka-desus-projects.vercel.app/?_vercel_share=dj9AKevutOqBOjQhmYCJ7DfPx7CWuqvq"
+        run: |
+          set -euo pipefail
+          mkdir -p docs
+          curl \
+            --fail \
+            --location \
+            --retry 3 \
+            --retry-all-errors \
+            --cookie-jar /tmp/vercel-cookies.txt \
+            --cookie /tmp/vercel-cookies.txt \
+            --user-agent "Mozilla/5.0" \
+            "$SOURCE_URL" \
+            --output docs/trepro-office-infrastructure.html
+
+          test "$(wc -c < docs/trepro-office-infrastructure.html)" -gt 100000
+          grep -q "TREPRO Office Infrastructure Master" docs/trepro-office-infrastructure.html
+
+      - name: Commit published page
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/trepro-office-infrastructure.html
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+            exit 0
+          fi
+          git commit -m "Publish TrePro office infrastructure master"
+          git push
