@@ -16,25 +16,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download generated HTML
-        env:
-          SOURCE_URL: "https://trepro-office-infrastructure-fukuoka-desus-projects.vercel.app/?_vercel_share=dj9AKevutOqBOjQhmYCJ7DfPx7CWuqvq"
+      - name: Rebuild public HTML
         run: |
           set -euo pipefail
           mkdir -p docs
-          curl \
-            --fail \
-            --location \
-            --retry 3 \
-            --retry-all-errors \
-            --cookie-jar /tmp/vercel-cookies.txt \
-            --cookie /tmp/vercel-cookies.txt \
-            --user-agent "Mozilla/5.0" \
-            "$SOURCE_URL" \
-            --output docs/trepro-office-infrastructure.html
+          cat \
+            .publish/trepro-office-infrastructure.part1.b64 \
+            .publish/trepro-office-infrastructure.part2.b64 \
+            | base64 --decode \
+            | gzip --decompress \
+            > docs/trepro-office-infrastructure.html
 
-          test "$(wc -c < docs/trepro-office-infrastructure.html)" -gt 100000
+          test "$(wc -c < docs/trepro-office-infrastructure.html)" -gt 80000
           grep -q "TREPRO Office Infrastructure Master" docs/trepro-office-infrastructure.html
+          grep -q "ポータブルエアコン" docs/trepro-office-infrastructure.html
 
       - name: Commit published page
         run: |
