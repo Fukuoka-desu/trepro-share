@@ -1,0 +1,156 @@
+{
+  "cover:navy": {
+    "slide": "cover",
+    "theme": "navy",
+    "runs": 7,
+    "cr": 5.474490453562846,
+    "t": 33.3,
+    "text": "明日から何を任せられるか",
+    "px": 39.36,
+    "bgMin": 0.005976020867525304,
+    "bgMax": 0.07998311156244105
+  },
+  "cover:white": {
+    "slide": "cover",
+    "theme": "white",
+    "runs": 7,
+    "cr": 5.811152671358122,
+    "t": 37,
+    "text": "特別講演 ｜ 2026.10.06",
+    "px": 25.92,
+    "bgMin": 0.8705527517676591,
+    "bgMax": 0.9816600623369479
+  },
+  "section:navy": {
+    "slide": "section",
+    "theme": "navy",
+    "runs": 5,
+    "cr": 5.3821147355203225,
+    "t": 33.3,
+    "text": "従来のAIと今のAIを、仕事の目線で比べ",
+    "px": 37.44,
+    "bgMin": 0.005268490402297355,
+    "bgMax": 0.08221407166902098
+  },
+  "section:white": {
+    "slide": "section",
+    "theme": "white",
+    "runs": 5,
+    "cr": 5.7159258877943735,
+    "t": 37,
+    "text": "第3章",
+    "px": 25.92,
+    "bgMin": 0.8554677449524613,
+    "bgMax": 0.971648006593743
+  },
+  "statement:navy": {
+    "slide": "statement",
+    "theme": "navy",
+    "runs": 4,
+    "cr": 5.379556366455464,
+    "t": 0,
+    "text": "その3つを、AIが一度にこなす時代です。",
+    "px": 39.36,
+    "bgMin": 0.02022613693482589,
+    "bgMax": 0.08227694904549133
+  },
+  "statement:white": {
+    "slide": "statement",
+    "theme": "white",
+    "runs": 4,
+    "cr": 6.793228685818832,
+    "t": 29.6,
+    "text": "その3つを、AIが一度にこなす時代です。",
+    "px": 39.36,
+    "bgMin": 0.6972763886566787,
+    "bgMax": 0.9352365700802584
+  },
+  "content:navy": {
+    "slide": "content",
+    "theme": "navy",
+    "runs": 19,
+    "cr": 9.381697685167357,
+    "t": 25.9,
+    "text": "例：月ごとの売上メモ",
+    "px": 33.6,
+    "bgMin": 0.006497783159590857,
+    "bgMax": 0.0258488844186503
+  },
+  "content:white": {
+    "slide": "content",
+    "theme": "white",
+    "runs": 19,
+    "cr": 6.4452789703842,
+    "t": 37,
+    "text": "まとめる",
+    "px": 74.88,
+    "bgMin": 0.9710055780053615,
+    "bgMax": 0.9917445257022113
+  },
+  "visual:navy": {
+    "slide": "visual",
+    "theme": "navy",
+    "runs": 19,
+    "cr": 6.323305834758566,
+    "t": 33.3,
+    "text": "2026",
+    "px": 63.36,
+    "bgMin": 0.013957658284328066,
+    "bgMax": 0.057944601751514564
+  },
+  "visual:white": {
+    "slide": "visual",
+    "theme": "white",
+    "runs": 19,
+    "cr": 5.624004110463076,
+    "t": 33.3,
+    "text": "2026",
+    "px": 63.36,
+    "bgMin": 0.8409062887569001,
+    "bgMax": 0.8815244367054507
+  },
+  "video:navy": {
+    "slide": "video",
+    "theme": "navy",
+    "runs": 2,
+    "cr": 6.088681845825861,
+    "t": 0,
+    "text": "agent_browser.mp4",
+    "px": 23.04,
+    "bgMin": 0.011298451815594222,
+    "bgMax": 0.011298451815594222
+  },
+  "video:white": {
+    "slide": "video",
+    "theme": "white",
+    "runs": 2,
+    "cr": 6.088681845825861,
+    "t": 0,
+    "text": "agent_browser.mp4",
+    "px": 23.04,
+    "bgMin": 0.011298451815594222,
+    "bgMax": 0.011298451815594222
+  },
+  "ending:navy": {
+    "slide": "ending",
+    "theme": "navy",
+    "runs": 5,
+    "cr": 7.963759269846033,
+    "t": 29.6,
+    "text": "明日、ひとつだけ",
+    "px": 107.52,
+    "bgMin": 0.00940373834322711,
+    "bgMax": 0.08184728021296657
+  },
+  "ending:white": {
+    "slide": "ending",
+    "theme": "white",
+    "runs": 5,
+    "cr": 12.702187188878222,
+    "t": 3.7,
+    "text": "明日、ひとつだけ",
+    "px": 107.52,
+    "bgMin": 0.6941406736162182,
+    "bgMax": 0.9898626868566318
+  }
+}

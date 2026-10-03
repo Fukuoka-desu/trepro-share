@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>エネルギー体背景</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout: a projection booth. One 16:9 screen, with a confidence-monitor console docked beneath it. */
+  --room: #05070F;
+  --console: #0C1222;
+  --rule: #1B2440;
+  --text: #E9EEF9;
+  --muted: #8E9AB8;
+  --signal: #FFC857;
+  --font-display: "Hiragino Sans", "Hiragino Kaku Gothic StdN", "Noto Sans JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  --font-body: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--room); }
+body {
+  background: var(--room);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.65;
+  word-break: auto-phrase;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+
+.page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-inline: 16px;
+  padding-block: 28px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- masthead ---------- */
+.masthead { display: grid; gap: 6px; }
+.kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; color: var(--muted); }
+.masthead h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(26px, 3.4vw, 36px);
+  line-height: 1.2;
+  font-feature-settings: "palt" 1;
+  letter-spacing: 0.02em;
+}
+.lede { max-width: 44em; color: var(--muted); text-wrap: pretty; }
+
+/* ---------- stage (the projected screen) ---------- */
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #050B1F;
+  box-shadow: 0 0 0 1px var(--rule), 0 34px 80px -34px rgba(0, 0, 0, 0.85);
+}
+.frame {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+  overflow: hidden;
+}
+.stage:fullscreen { width: 100vw; height: 100vh; aspect-ratio: auto; border-radius: 0; }
+.stage:fullscreen .frame { inset: auto; left: 50%; top: 50%; width: min(100vw, 177.78vh); aspect-ratio: 16 / 9; transform: translate(-50%, -50%); }
+.stage:-webkit-full-screen { width: 100vw; height: 100vh; aspect-ratio: auto; border-radius: 0; }
+.stage:-webkit-full-screen .frame { inset: auto; left: 50%; top: 50%; width: min(100vw, 177.78vh); aspect-ratio: 16 / 9; transform: translate(-50%, -50%); }
+
+/* ---------- deck themes (the deck's own two looks) ---------- */
+.frame[data-deck-theme="navy"] {
+  --ink: #FFFFFF;
+  --ink-2: #C8D5F0;
+  --accent: #FFC857;
+  --line: rgba(160, 185, 255, 0.30);
+  --card: rgba(8, 18, 46, 0.58);
+  --card-line: rgba(140, 170, 255, 0.24);
+  --dot-ring: rgba(255, 255, 255, 0.16);
+}
+.frame[data-deck-theme="white"] {
+  --ink: #0B1630;
+  --ink-2: #3A4560;
+  --accent: #1F4FD8;
+  --line: rgba(20, 40, 90, 0.20);
+  --card: rgba(255, 255, 255, 0.74);
+  --card-line: rgba(20, 40, 90, 0.14);
+  --dot-ring: rgba(31, 79, 216, 0.14);
+}
+
+/* ---------- slide typography: bold gothic for the room ---------- */
+.frame {
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
+  word-break: auto-phrase;
+}
+.frame p, .frame li { text-wrap: pretty; }
+.frame h1, .frame h2, .frame h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  font-feature-settings: "palt" 1;
+  text-wrap: balance;
+  word-break: auto-phrase;
+}
+.ph { display: inline-block; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 6.2cqw 7cqw;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s linear 0.5s, color 0.35s ease;
+}
+.slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, color 0.35s ease;
+}
+.slide * { transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease; }
+
+.eyebrow { font-size: 1.35cqw; font-weight: 800; letter-spacing: 0.14em; color: var(--accent); }
+
+/* 表紙 */
+.s-cover { display: flex; flex-direction: column; justify-content: center; gap: 2.1cqw; padding-right: 40cqw; }
+.cover-title { font-size: 5.4cqw; }
+.cover-sub { font-size: 2.05cqw; color: var(--ink-2); }
+.cover-by { margin-top: 1.8cqw; font-size: 1.55cqw; color: var(--ink-2); }
+
+/* 扉 */
+.s-section { display: flex; align-items: center; gap: 4cqw; padding-right: 34cqw; }
+.sec-no {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 12cqw;
+  line-height: 0.9;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.sec-body { display: grid; gap: 1.4cqw; }
+.sec-title { font-size: 4.6cqw; }
+.sec-sub { font-size: 1.95cqw; color: var(--ink-2); }
+
+/* 主張 */
+.s-statement { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 2.6cqw; padding-bottom: 11cqw; }
+.st-text { font-size: 6.6cqw; font-weight: 900; }
+.st-note { max-width: 66cqw; font-size: 2.05cqw; color: var(--ink-2); text-wrap: balance; }
+
+/* 本文カード */
+.s-content { display: flex; flex-direction: column; gap: 2.6cqw; }
+.ct-head { display: grid; gap: 0.9cqw; }
+.ct-title { font-size: 3.6cqw; }
+.cards { flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2cqw; }
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3cqw;
+  padding: 2.5cqw 2.4cqw;
+  border-radius: 1.2cqw;
+  background: var(--card);
+  border: 0.12cqw solid var(--card-line);
+}
+.card-title { font-size: 3.9cqw; font-weight: 900; color: var(--accent); }
+.card-text { font-size: 2.35cqw; line-height: 1.55; }
+.card-eg { margin-top: auto; padding-top: 1.3cqw; border-top: 0.12cqw solid var(--card-line); font-size: 1.75cqw; color: var(--ink-2); }
+
+/* 図解: 年表 */
+.s-visual { display: flex; flex-direction: column; gap: 2cqw; }
+.timeline {
+  flex: 1;
+  position: relative;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 2cqw;
+  right: 2cqw;
+  top: 50%;
+  height: 0.25cqw;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, var(--line), var(--accent));
+}
+.timeline li { display: grid; grid-template-rows: 1fr auto 1fr; justify-items: center; text-align: center; }
+.tl-year { align-self: end; padding-bottom: 1.6cqw; font-family: var(--font-display); font-weight: 900; font-size: 3.3cqw; line-height: 1; font-variant-numeric: tabular-nums; }
+.tl-dot { position: relative; width: 1.5cqw; height: 1.5cqw; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 0.55cqw var(--dot-ring); }
+.tl-text { align-self: start; max-width: 15.5cqw; padding-top: 1.6cqw; font-size: 1.85cqw; line-height: 1.5; }
+.is-now .tl-year { color: var(--accent); }
+.is-now .tl-dot { background: var(--accent); }
+
+/* 動画 */
+.s-video { display: flex; align-items: center; justify-content: center; }
+.video-frame {
+  width: 72cqw;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1cqw;
+  background: #0A0F1C;
+  border: 0.12cqw solid rgba(140, 170, 255, 0.22);
+  box-shadow: 0 2cqw 5cqw rgba(0, 0, 0, 0.35);
+}
+.vf-bar { display: flex; align-items: center; gap: 0.7cqw; height: 3cqw; padding: 0 1.4cqw; background: #141B2E; color: #8E9AB8; font: 600 1.2cqw var(--font-mono); }
+.vf-bar i { width: 0.9cqw; height: 0.9cqw; border-radius: 50%; background: #2A3352; }
+.vf-bar span { margin-left: 1cqw; }
+.vf-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2cqw; color: #DCE4F5; }
+.vf-play { position: relative; width: 7cqw; height: 7cqw; border-radius: 50%; border: 0.3cqw solid #DCE4F5; }
+.vf-play::after { content: ""; position: absolute; left: 2.75cqw; top: 1.95cqw; border-left: 2.3cqw solid #DCE4F5; border-top: 1.45cqw solid transparent; border-bottom: 1.45cqw solid transparent; }
+.vf-body p { font-size: 1.9cqw; font-weight: 700; }
+
+/* 締め */
+.s-ending { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 3cqw; padding-top: 8.5cqw; }
+.end-title { font-size: 5.6cqw; font-weight: 900; }
+.takeaways { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.6cqw; }
+.takeaways li { padding: 1.1cqw 2.1cqw; border-radius: 99cqw; background: var(--card); border: 0.12cqw solid var(--card-line); font-size: 1.95cqw; font-weight: 800; }
+
+/* ---------- console ---------- */
+.console {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--console);
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button, .btn {
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: transparent;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.seg button:hover, .btn:hover { border-color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--signal); border-color: var(--signal); color: #1C1400; }
+.btn[aria-pressed="true"] { border-color: var(--signal); color: var(--signal); }
+button:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.spacer { flex: 1; }
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+.readout div { min-width: 0; }
+.readout dt { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: var(--muted); }
+.readout dd { font-family: var(--font-display); font-weight: 800; font-size: 19px; line-height: 1.35; font-variant-numeric: tabular-nums; }
+.readout dd small { font-size: 12px; font-weight: 700; color: var(--muted); }
+.keys { font-size: 12px; color: var(--muted); }
+.notes { display: grid; gap: 6px; max-width: 54em; font-size: 13px; color: var(--muted); }
+
+/* ---------- screenshot mode (?shot) ---------- */
+body.shot .masthead, body.shot .console, body.shot .notes { display: none; }
+body.shot .page { max-width: none; padding: 0; }
+body.shot .stage { position: fixed; inset: 0; width: 100vw; height: 100vh; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+body.shot .slide, body.shot .slide * { transition: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide, .slide.is-active, .slide * { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="page" lang="ja">
+  <header class="masthead">
+    <p class="kicker">講演スライド用の背景部品</p>
+    <h1>エネルギー体背景</h1>
+    <p class="lede">スライドの後ろで、AIの気配がじんわり動きます。画面の種類に合わせて強さと位置が変わり、文字の読みやすさは明るさの上限で守ります。下のボタンで画面とテーマを切り替えて確かめてください。</p>
+  </header>
+
+  <div class="stage" id="stage">
+    <div class="frame" id="frame" data-deck-theme="navy">
+
+      <section class="slide s-cover is-active" data-slide="cover" aria-label="表紙">
+        <p class="eyebrow">特別講演 ｜ 2026.10.06</p>
+        <h1 class="cover-title"><span class="ph">AIは、</span><span class="ph">「使う道具」から</span><span class="ph">「任せる相棒」へ。</span></h1>
+        <p class="cover-sub"><span class="ph">いま何ができて、</span><span class="ph">明日から何を任せられるか</span></p>
+        <p class="cover-by">株式会社トレプロ</p>
+      </section>
+
+      <section class="slide s-section" data-slide="section" aria-label="セクション扉" aria-hidden="true">
+        <p class="sec-no">03</p>
+        <div class="sec-body">
+          <p class="eyebrow">第3章</p>
+          <h2 class="sec-title"><span class="ph">いまのAIは、</span><span class="ph">何が違うのか</span></h2>
+          <p class="sec-sub">従来のAIと今のAIを、仕事の目線で比べます</p>
+        </div>
+      </section>
+
+      <section class="slide s-statement" data-slide="statement" aria-label="主張" aria-hidden="true">
+        <h2 class="st-text"><span class="ph">調べる時間は、</span><span class="ph">ゼロに近づく。</span></h2>
+        <p class="st-note"><span class="ph">検索して、読んで、まとめる。</span><span class="ph">その3つを、AIが一度にこなす時代です。</span></p>
+      </section>
+
+      <section class="slide s-content" data-slide="content" aria-label="本文カード" aria-hidden="true">
+        <header class="ct-head">
+          <p class="eyebrow">明日から任せられること</p>
+          <h2 class="ct-title">AIに任せられる、3つの仕事</h2>
+        </header>
+        <div class="cards">
+          <article class="card">
+            <h3 class="card-title">書く</h3>
+            <p class="card-text">チラシ、告知文、お礼状。下書きなら30秒で出てきます。</p>
+            <p class="card-eg">例：秋のセールの告知文</p>
+          </article>
+          <article class="card">
+            <h3 class="card-title">調べる</h3>
+            <p class="card-text">補助金、仕入れ先、近くの競合。いくつものサイトを読んで、要点だけを返します。</p>
+            <p class="card-eg">例：使える補助金の一覧</p>
+          </article>
+          <article class="card">
+            <h3 class="card-title">まとめる</h3>
+            <p class="card-text">会議のメモや売上の振り返りを、1枚の表に整理します。</p>
+            <p class="card-eg">例：月ごとの売上メモ</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide s-visual" data-slide="visual" aria-label="図解" aria-hidden="true">
+        <header class="ct-head">
+          <p class="eyebrow">AIの70年</p>
+          <h2 class="ct-title">AIは、何度も「冬の時代」を越えてきた</h2>
+        </header>
+        <ol class="timeline">
+          <li><span class="tl-year">1956</span><span class="tl-dot"></span><span class="tl-text">「人工知能」という言葉が生まれる</span></li>
+          <li><span class="tl-year">1997</span><span class="tl-dot"></span><span class="tl-text">チェスの世界王者に勝つ</span></li>
+          <li><span class="tl-year">2012</span><span class="tl-dot"></span><span class="tl-text">画像を見分ける力が急に伸びる</span></li>
+          <li><span class="tl-year">2022</span><span class="tl-dot"></span><span class="tl-text">ChatGPTが公開される</span></li>
+          <li class="is-now"><span class="tl-year">2026</span><span class="tl-dot"></span><span class="tl-text"><span class="ph">AIが</span><span class="ph">作業そのものを</span><span class="ph">代わりにこなす</span></span></li>
+        </ol>
+      </section>
+
+      <section class="slide s-video" data-slide="video" aria-label="動画" aria-hidden="true">
+        <div class="video-frame">
+          <div class="vf-bar"><i></i><i></i><i></i><span>agent_browser.mp4</span></div>
+          <div class="vf-body">
+            <span class="vf-play" aria-hidden="true"></span>
+            <p>実演：AIがブラウザを操作して、調べ物を終わらせる</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide s-ending" data-slide="ending" aria-label="締め" aria-hidden="true">
+        <h2 class="end-title"><span class="ph">明日、ひとつだけ</span><span class="ph">試してください。</span></h2>
+        <ul class="takeaways">
+          <li>告知文を1本、書かせてみる</li>
+          <li>気になる制度を、調べさせてみる</li>
+          <li>会議のメモを、まとめさせてみる</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <section class="console" aria-label="操作">
+    <div class="row">
+      <div class="seg" role="group" aria-label="画面の種類" id="slideSeg">
+        <button type="button" id="s-cover" data-slide="cover" aria-pressed="true">表紙</button>
+        <button type="button" id="s-section" data-slide="section" aria-pressed="false">扉</button>
+        <button type="button" id="s-statement" data-slide="statement" aria-pressed="false">主張</button>
+        <button type="button" id="s-content" data-slide="content" aria-pressed="false">本文カード</button>
+        <button type="button" id="s-visual" data-slide="visual" aria-pressed="false">図解</button>
+        <button type="button" id="s-video" data-slide="video" aria-pressed="false">動画</button>
+        <button type="button" id="s-ending" data-slide="ending" aria-pressed="false">締め</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="seg" role="group" aria-label="テーマ" id="themeSeg">
+        <button type="button" id="t-navy" data-theme="navy" aria-pressed="true">濃紺</button>
+        <button type="button" id="t-white" data-theme="white" aria-pressed="false">白地</button>
+      </div>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="autoBtn" aria-pressed="false">自動で回す</button>
+      <button type="button" class="btn" id="fsBtn">全画面</button>
+    </div>
+    <dl class="readout">
+      <div><dt>画面の種類</dt><dd id="rType">表紙</dd></div>
+      <div><dt>背景の強さ</dt><dd id="rInt">100%</dd></div>
+      <div><dt>文字の上で測った最低コントラスト</dt><dd id="rCon">—</dd></div>
+    </dl>
+    <p class="keys">キー操作：← → 画面を切り替え ・ T 濃紺と白地 ・ A 自動で回す ・ F 全画面</p>
+  </section>
+
+  <footer class="notes">
+    <p>コントラストは、文字の後ろの背景を37秒ぶん（呼吸のひと回り以上）10回撮って、いちばん悪い値を出しています。目安は WCAG の 4.5 : 1 です。</p>
+    <p>部品は energy-field.js の1ファイルです。1秒30コマ、画面の半分の解像度で描くので、90分つけっぱなしでも重くなりにくい作りです。</p>
+  </footer>
+</div>
+
+<script src="energy-field.js"></script>
+<script>
+(function () {
+  'use strict';
+  var SLIDES = ['cover', 'section', 'statement', 'content', 'visual', 'video', 'ending'];
+  var LABEL = { cover: '表紙', section: '扉', statement: '主張', content: '本文カード', visual: '図解', video: '動画', ending: '締め' };
+  // test/contrast.mjs が書き込む実測値 (画面:テーマ → 最低コントラスト)
+  var MEASURED = /*CONTRAST:BEGIN*/{"cover:navy":5.4,"cover:white":5.8,"section:navy":5.3,"section:white":5.7,"statement:navy":5.3,"statement:white":6.7,"content:navy":9.3,"content:white":6.4,"visual:navy":6.3,"visual:white":5.6,"video:navy":6,"video:white":6,"ending:navy":7.9,"ending:white":12.7}/*CONTRAST:END*/;
+
+  var q = new URLSearchParams(location.search);
+  var idx = Math.max(0, SLIDES.indexOf(q.get('slide') || 'cover'));
+  var theme = q.get('theme') === 'white' ? 'white' : 'navy';
+  var shot = q.has('shot');
+  var soak = q.has('soak');
+  if (shot) document.body.classList.add('shot');
+
+  var stage = document.getElementById('stage');
+  var frame = document.getElementById('frame');
+  var rType = document.getElementById('rType');
+  var rInt = document.getElementById('rInt');
+  var rCon = document.getElementById('rCon');
+  var autoBtn = document.getElementById('autoBtn');
+  var timer = 0;
+  var steps = 0;
+
+  var ef = EnergyField.mount({
+    container: stage,
+    preset: SLIDES[idx],
+    theme: theme,
+    protect: '.slide.is-active',
+    autoQuality: !shot && !soak
+  });
+
+  function show(i) {
+    idx = (i + SLIDES.length) % SLIDES.length;
+    var id = SLIDES[idx];
+    var slides = frame.querySelectorAll('.slide');
+    for (var n = 0; n < slides.length; n++) {
+      var on = slides[n].getAttribute('data-slide') === id;
+      slides[n].classList.toggle('is-active', on);
+      slides[n].setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+    var btns = document.querySelectorAll('#slideSeg button');
+    for (var m = 0; m < btns.length; m++) btns[m].setAttribute('aria-pressed', String(btns[m].getAttribute('data-slide') === id));
+    ef.set({ preset: id });
+    updateReadout();
+  }
+
+  function setTheme(t) {
+    theme = t === 'white' ? 'white' : 'navy';
+    frame.setAttribute('data-deck-theme', theme);
+    document.getElementById('t-navy').setAttribute('aria-pressed', String(theme === 'navy'));
+    document.getElementById('t-white').setAttribute('aria-pressed', String(theme === 'white'));
+    ef.set({ theme: theme });
+    updateReadout();
+  }
+
+  function updateReadout() {
+    var id = SLIDES[idx];
+    rType.textContent = LABEL[id];
+    rInt.textContent = Math.round(EnergyField.presets[id].intensity * 100) + '%';
+    var m = MEASURED && MEASURED[id + ':' + theme];
+    if (m) {
+      rCon.innerHTML = '';
+      rCon.appendChild(document.createTextNode(m.toFixed(1) + ' : 1 '));
+      var s = document.createElement('small');
+      s.textContent = m >= 7 ? 'AAA' : m >= 4.5 ? 'AA' : '要確認';
+      rCon.appendChild(s);
+    } else {
+      rCon.textContent = '—';
+    }
+  }
+
+  function setAuto(on) {
+    if (timer) { clearInterval(timer); timer = 0; }
+    autoBtn.setAttribute('aria-pressed', String(on));
+    if (!on) return;
+    timer = setInterval(function () {
+      steps++;
+      if (soak && steps % 3 === 0) setTheme(theme === 'navy' ? 'white' : 'navy');
+      show(idx + 1);
+    }, soak ? 4000 : 6000);
+  }
+
+  function fullscreen() {
+    var req = stage.requestFullscreen || stage.webkitRequestFullscreen;
+    if (!req) return;
+    try {
+      var p = req.call(stage);
+      if (p && p.catch) p.catch(function () {});
+    } catch (e) { /* 全画面が使えない環境 */ }
+  }
+
+  document.getElementById('slideSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-slide]');
+    if (b) show(SLIDES.indexOf(b.getAttribute('data-slide')));
+  });
+  document.getElementById('themeSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-theme]');
+    if (b) setTheme(b.getAttribute('data-theme'));
+  });
+  autoBtn.addEventListener('click', function () { setAuto(autoBtn.getAttribute('aria-pressed') !== 'true'); });
+  document.getElementById('fsBtn').addEventListener('click', fullscreen);
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'ArrowRight') { show(idx + 1); e.preventDefault(); }
+    else if (k === 'ArrowLeft') { show(idx - 1); e.preventDefault(); }
+    else if (k === 't' || k === 'T') setTheme(theme === 'navy' ? 'white' : 'navy');
+    else if (k === 'a' || k === 'A') setAuto(autoBtn.getAttribute('aria-pressed') !== 'true');
+    else if (k === 'f' || k === 'F') fullscreen();
+  });
+
+  setTheme(theme);
+  show(idx);
+  if (soak || q.has('autoplay')) setAuto(true);
+
+  window.demo = { show: show, setTheme: setTheme, slides: SLIDES, ef: ef };
+})();
+</script>
+</body>
+</html>
